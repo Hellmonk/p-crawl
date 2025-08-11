@@ -2231,24 +2231,13 @@ bool load_level(dungeon_feature_type stair_taken, load_mode_type load_mode,
     if (load_mode != LOAD_VISITOR)
         you.set_level_visited(level_id::current());
 
-    const bool descent_downclimb = crawl_state.game_is_descent()
-                                   && feat_stair_direction(stair_taken) == CMD_GO_DOWNSTAIRS
-                                   && !feat_is_descent_exitable(stair_taken);
-    const bool descent_peek = descent_downclimb
-                              && !feat_is_escape_hatch(stair_taken)
-                              && stair_taken != DNGN_TRAP_SHAFT
-                              && old_level.branch == you.where_are_you;
-
     // Markers must be activated early, since they may rely on
     // events issued later, e.g. DET_ENTERING_LEVEL or
     // the DET_TURN_ELAPSED from update_level.
     if (make_changes || load_mode == LOAD_RESTART_GAME)
-    {
-        bool message = !(load_mode == LOAD_RESTART_GAME && descent_peek);
-        env.markers.activate_all(message);
-    }
+        env.markers.activate_all();
 
-    if (make_changes && env.elapsed_time && !just_created_level && !descent_peek)
+    if (make_changes && env.elapsed_time && !just_created_level)
         update_level(you.elapsed_time - env.elapsed_time);
 
     // Apply all delayed actions, if any. TODO: logic for marshalling this is
@@ -2282,9 +2271,6 @@ bool load_level(dungeon_feature_type stair_taken, load_mode_type load_mode,
     if (just_created_level && make_changes)
         replace_boris();
 
-    if (descent_peek && just_created_level)
-        descent_reveal_stairs();
-
     if (make_changes)
     {
         // Tell stash-tracker and travel that we've changed levels.
@@ -2307,21 +2293,13 @@ bool load_level(dungeon_feature_type stair_taken, load_mode_type load_mode,
     // Things to update for player entering level
     if (load_mode == LOAD_ENTER_LEVEL)
     {
-        if (descent_downclimb)
-        {
-            you.time_taken = 0; // free takebacks
-            if (!descent_peek)
-                descent_crumble_stairs(); // no sense waiting
-        }
-        else
-        {
-            // new stairs have less wary monsters, and we don't
-            // want them to attack players quite as soon.
-            // (just_created_level only relevant if we crashed.)
-            const bool fast_entry = fast || just_created_level;
-            you.time_taken *= fast_entry ? 1 : 2;
-            you.time_taken = div_rand_round(you.time_taken * 3, 4);
-        }
+        descent_crumble_stairs();
+        // new stairs have less wary monsters, and we don't
+        // want them to attack players quite as soon.
+        // (just_created_level only relevant if we crashed.)
+        const bool fast_entry = fast || just_created_level;
+        you.time_taken *= fast_entry ? 1 : 2;
+        you.time_taken = div_rand_round(you.time_taken * 3, 4);
 
         if (just_created_level)
             run_map_epilogues();
