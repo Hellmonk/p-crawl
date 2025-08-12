@@ -1397,27 +1397,6 @@ static bool _can_take_stairs(dungeon_feature_type ftype, bool down,
         }
     }
 
-    // Rune locks
-    switch (ftype)
-    {
-    case DNGN_EXIT_VAULTS:
-        if (runes_in_pack() < 1)
-        {
-            mpr("You need a rune to leave the Vaults.");
-            return false;
-        }
-        break;
-    case DNGN_ENTER_ZOT:
-        if (runes_in_pack() < 3 && !crawl_state.game_is_descent())
-        {
-            mpr("You need at least three runes to enter the Realm of Zot.");
-            return false;
-        }
-        break;
-    default:
-        break;
-    }
-
     return true;
 }
 
@@ -1449,13 +1428,6 @@ static bool _prompt_stairs(dungeon_feature_type ygrd, bool down, bool shaft)
 {
     // Certain portal types always carry warnings.
     if (!prompt_dangerous_portal(ygrd))
-    {
-        canned_msg(MSG_OK);
-        return false;
-    }
-
-    // Descent mode prompts for "atypical" branch order that skips content
-    if (crawl_state.game_is_descent() && !prompt_descent_shortcut(ygrd))
     {
         canned_msg(MSG_OK);
         return false;
@@ -1565,17 +1537,6 @@ static bool _prompt_stairs(dungeon_feature_type ygrd, bool down, bool shaft)
         }
     }
 
-    if (down && ygrd == DNGN_ENTER_VAULTS && !runes_in_pack())
-    {
-        if (!confirm_prompt("yes", "You cannot leave the Vaults without holding a Rune of "
-                                   "Zot, and the runes within are jealously guarded."
-                                   " Continue?"))
-        {
-            canned_msg(MSG_OK);
-            return false;
-        }
-    }
-
     return true;
 }
 
@@ -1674,8 +1635,6 @@ static void _take_stairs(bool down)
         tag_followers(); // Only those beside us right now can follow.
         if (down)
             start_delay<DescendingStairsDelay>(1);
-        else if (crawl_state.game_is_descent())
-            up_stairs();
         else
             start_delay<AscendingStairsDelay>(1);
         id_floor_items();

@@ -50,9 +50,6 @@
 #define DISABLED_BY_KEY "disabled_by"
 #define FROZEN_RAMPARTS_KEY "frozen_ramparts_position"
 #define DREAMSHARD_KEY "dreamshard"
-#define DESCENT_DEBT_KEY "descent_debt"
-#define DESCENT_WATER_BRANCH_KEY "descent_water_branch"
-#define DESCENT_POIS_BRANCH_KEY "descent_poison_branch"
 #define RAMPAGE_HEAL_KEY "rampage_heal_strength"
 #define RAMPAGE_HEAL_MAX 7
 #define BLIND_COLOUR_KEY "blind_colour"

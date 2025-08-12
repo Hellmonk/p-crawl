@@ -1950,21 +1950,8 @@ bool pregen_dungeon(const level_id &stopping_point)
         for (const level_id &new_level : to_generate)
         {
             string status = "\nbuilding ";
+            status += branches[new_level.branch].longname;
 
-            switch (new_level.branch)
-            {
-            case BRANCH_SPIDER:
-            case BRANCH_SNAKE:
-                status += "a lair branch";
-                break;
-            case BRANCH_SHOALS:
-            case BRANCH_SWAMP:
-                status += "another lair branch";
-                break;
-            default:
-                status += branches[new_level.branch].longname;
-                break;
-            }
             progress.set_status_text(status);
             dprf("Pregenerating %s:%d",
                 branches[new_level.branch].abbrevname, new_level.depth);
@@ -2133,9 +2120,6 @@ bool load_level(dungeon_feature_type stair_taken, load_mode_type load_mode,
         // games.
         if (old_level.depth != -1)
         {
-            if (!crawl_state.game_is_descent())
-                _grab_followers_and_expire_summons();
-
             if (env.level_state & LSTATE_DELETED)
                 delete_level(old_level), dprf("<lightmagenta>Deleting level.</lightmagenta>");
             else

@@ -1182,8 +1182,7 @@ static void _ensure_exit(branch_type br)
 
 static void _add_missing_branches()
 {
-    if (crawl_state.game_is_descent())
-        return;
+    return;
 
     const level_id lc = level_id::current();
 

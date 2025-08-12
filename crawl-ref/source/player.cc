@@ -7975,9 +7975,7 @@ bool player::shaftable() const
 // different effect from the player invokable ability.
 bool player::do_shaft()
 {
-    // disabled in descent mode
-    if (crawl_state.game_is_descent())
-        return false;
+    return false;
 
     if (!shaftable()
         || resists_dislodge("falling into an unexpected shaft"))

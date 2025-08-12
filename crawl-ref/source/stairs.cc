@@ -387,7 +387,7 @@ static bool _check_fall_down_stairs(const dungeon_feature_type ftype, bool going
     if (!you.airborne()
         && you.confused()
         && !feat_is_escape_hatch(ftype)
-        && !crawl_state.game_is_descent()
+        && !true
         && coinflip())
     {
         const char* fall_where = "down the stairs";
@@ -942,12 +942,6 @@ void floor_transition(dungeon_feature_type how,
         }
         print_gem_warnings(gem_for_branch(branch), 0);
 
-        if (how == DNGN_ENTER_VAULTS && !runes_in_pack())
-        {
-            lock_vaults();
-            mpr("The door slams shut behind you.");
-        }
-
         if (branch == BRANCH_ARENA)
             okawaru_duel_healing();
 
@@ -999,10 +993,6 @@ void floor_transition(dungeon_feature_type how,
         _new_level_amuses_xom(how, whence, shaft,
                               (shaft ? whither.depth - old_level.depth : 1),
                               !forced);
-
-        // scary hack!
-        if (crawl_state.game_is_descent() && !env.properties.exists(DESCENT_STAIRS_KEY))
-            load_level(how, LOAD_RESTART_GAME, old_level);
     }
 
     // This should maybe go in load_level?

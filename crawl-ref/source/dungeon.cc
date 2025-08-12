@@ -490,13 +490,6 @@ static bool _build_level_vetoable(bool enable_random_maps)
 
     _dgn_set_floor_colours();
 
-    if (crawl_state.game_has_random_floors()
-        && !crawl_state.game_is_descent()
-        && !_valid_dungeon_level())
-    {
-        return false;
-    }
-
 #ifdef DEBUG_MONS_SCAN
     // If debug_mons_scan() finds a problem while crawl_state.generating_level is
     // still true then it will announce that a problem was caused
@@ -3588,15 +3581,6 @@ static void _place_traps()
         env.trap[ts.pos] = ts;
         dprf("placed %s trap", article_a(trap_name(type)).c_str());
     }
-
-    if (player_in_branch(BRANCH_SPIDER))
-    {
-        // Max webs ranges from around 35 (Spider:1) to 220 (Spider:5), actual
-        // amount will be much lower.
-        int max_webs = 35 * pow(2, (you.depth - 1) / 1.5) - num_traps;
-        max_webs /= 2;
-        place_webs(max_webs + random2(max_webs));
-    }
 }
 
 // Create randomly-placed stone stairs.
@@ -3782,8 +3766,7 @@ static void _place_branch_entrances(bool use_vaults)
             && !is_hell_subbranch(it->id)
             && ((you.depth >= it->mindepth
                  && you.depth <= it->maxdepth)
-                || level_id::current() == brentry[it->id]
-                || crawl_state.game_is_descent()))
+                || level_id::current() == brentry[it->id]))
         {
             could_be_placed = true;
         }
@@ -3809,12 +3792,6 @@ static void _place_branch_entrances(bool use_vaults)
             }
     }
 
-    if (crawl_state.game_is_descent())
-    {
-        ASSERT(you.props.exists(DESCENT_WATER_BRANCH_KEY));
-        ASSERT(you.props.exists(DESCENT_POIS_BRANCH_KEY));
-    }
-
     // Place actual branch entrances.
     for (branch_iterator it; it; ++it)
     {
@@ -3823,22 +3800,9 @@ static void _place_branch_entrances(bool use_vaults)
         if (is_hell_branch(it->id) || branch_entrance_placed[it->id])
             continue;
 
-        bool brentry_allowed = false;
-
-        if (crawl_state.game_is_descent())
-        {
-            brentry_allowed = it->entry_stairs != NUM_FEATURES
+        bool brentry_allowed = it->entry_stairs != NUM_FEATURES
                 && in_descent_parent(it->id)
-                && it->id != you.props[DESCENT_WATER_BRANCH_KEY].get_int()
-                && it->id != you.props[DESCENT_POIS_BRANCH_KEY].get_int()
                 && at_branch_bottom();
-        }
-        else
-        {
-            brentry_allowed = it->entry_stairs != NUM_FEATURES
-                && player_in_branch(parent_branch(it->id))
-                && level_id::current() == brentry[it->id];
-        }
 
         if (brentry_allowed)
         {
@@ -4524,7 +4488,7 @@ static const vault_placement *_build_vault_impl(const map_def *vault,
             throw dgn_veto_exception("Pan map with disconnected zones");
     }
 
-    if (crawl_state.game_is_descent() && vault->get_tags_unsorted().count("no_descent"))
+    if (vault->get_tags_unsorted().count("no_descent"))
         throw dgn_veto_exception("Illegal map for descent");
 
     unwind_var<string> placing(env.placing_vault, vault->name);
@@ -7651,11 +7615,7 @@ static void _mark_solid_squares()
 int starting_absdepth()
 {
     if (you.char_class == JOB_DELVER)
-    {
-        // makes delver sort of work in descent
-        if (crawl_state.game_is_descent())
-            return 1;
         return 4;
-    }
+
     return 0; // (absdepth is 0-indexed)
 }

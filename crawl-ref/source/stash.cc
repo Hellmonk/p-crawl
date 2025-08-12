@@ -1442,8 +1442,7 @@ void StashTracker::search_stashes(string search_term)
     if (!curr_lev)
         results = _inventory_search(*search);
     // allowing offlevel stash searching is not useful in descent mode
-    get_matching_stashes(*search, results, curr_lev
-                                           || crawl_state.game_is_descent());
+    get_matching_stashes(*search, results, true);
 
     if (results.empty())
     {

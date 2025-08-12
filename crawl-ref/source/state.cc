@@ -556,12 +556,12 @@ bool game_state::player_is_dead() const
 
 bool game_state::game_has_random_floors() const
 {
-    return game_is_normal() || game_is_hints() || game_is_descent();
+    return game_is_normal() || game_is_hints();
 }
 
 bool game_state::game_saves_prefs() const
 {
-    return game_is_normal() || game_is_hints() || game_is_descent();
+    return game_is_normal() || game_is_hints();
 }
 
 bool game_state::game_is_valid_type() const

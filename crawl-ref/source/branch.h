@@ -128,7 +128,3 @@ vector<branch_type> descent_parents(branch_type branch);
 string branch_noise_desc(branch_type br);
 string branch_rune_desc(branch_type br, bool remaining_only);
 branch_type rune_location(rune_type rune);
-
-bool vaults_is_locked();
-void lock_vaults();
-void unlock_vaults();
