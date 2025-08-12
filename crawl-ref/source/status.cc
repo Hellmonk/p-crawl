@@ -1065,8 +1065,8 @@ static void _describe_zot(status_info& inf)
     const int lvl = bezotting_level();
     if (lvl > 0)
     {
-        inf.short_text = "bezotted";
-        inf.long_text = "Zot is approaching!";
+        inf.short_text = "Remaining turns";
+        inf.long_text = "Time remaining on this floor.";
     }
     else if (!Options.always_show_zot && !you.has_mutation(MUT_SHORT_LIFESPAN)
              || !zot_clock_active())
@@ -1075,7 +1075,7 @@ static void _describe_zot(status_info& inf)
     }
 
     // XX code dup with overview screen
-    inf.light_text = make_stringf("Zot (%d)", turns_until_zot());
+    inf.light_text = make_stringf("Time (%d)", turns_until_zot());
     switch (lvl)
     {
         case 0:

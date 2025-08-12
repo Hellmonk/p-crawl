@@ -2460,7 +2460,7 @@ bool load_level(dungeon_feature_type stair_taken, load_mode_type load_mode,
     }
 
     if (just_created_level && make_changes)
-        decr_zot_clock();
+        reset_zot_clock();
 
     // Initialize halos, etc.
     invalidate_agrid(true);
