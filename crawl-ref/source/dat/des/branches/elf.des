@@ -49,7 +49,6 @@ function hall_of_blades_monsters(e)
            / deep elf zephyrmancer w:1")
     e.mons("deep elf blademaster")
     e.mons("dancing weapon")
-    hall_of_blades_weapon(e)
 end
 
 -- Some thematic, limited extra rewards for opening the Hall of Blades.

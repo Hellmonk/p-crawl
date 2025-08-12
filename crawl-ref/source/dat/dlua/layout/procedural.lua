@@ -145,7 +145,7 @@ end
 -- a specified number of padding squares.
 function procedural.border(params)
   local x1,y1 = 0,0
-  local x2,y2 = dgn.builder_bounds()
+  local x2,y2 = dgn.large_builder_bounds()
   x2 = x2 - 1
   y2 = y2 - 1
   if params.x1 ~= nil then x1 = params.x1 end

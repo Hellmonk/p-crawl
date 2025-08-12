@@ -124,25 +124,6 @@ function serpent_of_hell_setup(e)
   end
 end
 
--- Guarantee two or three rare base types with a brand
-function hall_of_blades_weapon(e)
-  local long_blade_type = crawl.one_chance_in(2) and "double sword"
-                                                  or "triple sword"
-  local polearm_type = crawl.one_chance_in(2) and "partisan"
-                                               or "bardiche"
-  local types = {"eveningstar", "executioner's axe", polearm_type,
-                 "lajatang",  "quick blade", long_blade_type}
-  local egos = {"flaming", "freezing", "electrocution", "heavy",
-                "holy_wrath", "pain", "vampirism",
-                "antimagic", "distortion", "spectral"}
-  local weapon_t = util.random_subset(types, 3)
-  local weapon_e = util.random_subset(egos, 3)
-  e.mons("dancing weapon; good_item " .. weapon_t[1] .. " ego:" .. weapon_e[1])
-  e.mons("dancing weapon; good_item " .. weapon_t[2] .. " ego:" .. weapon_e[2])
-  e.mons("dancing weapon; good_item " .. weapon_t[3] .. " ego:" ..
-          weapon_e[3] .. " / nothing")
-end
-
 -- Setup for door vaults to define a common loot set and create the door
 -- markers.
 function door_vault_setup(e)
