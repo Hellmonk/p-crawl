@@ -828,9 +828,7 @@ the same dungeon level.
 %%%%
 A pressure plate
 
-A trigger of some sort. You cannot tell what kind of trap it is attached to.
-Its complicated detection system will trigger the trap even when someone flies
-over it.
+A trigger of some sort. It will unlock the stairs on this level.
 %%%%
 A spike launcher
 
