@@ -2503,15 +2503,6 @@ static void _check_sanctuary()
     decrease_sanctuary_radius();
 }
 
-static void _check_trapped()
-{
-    if (you.trapped)
-    {
-        do_trap_effects();
-        you.trapped = false;
-    }
-}
-
 static void _update_golubria_traps(int dur)
 {
     vector<coord_def> traps = find_golubria_on_level();
@@ -2590,7 +2581,6 @@ void world_reacts()
 
     check_banished();
     _check_sanctuary();
-    _check_trapped();
     check_spectral_weapon(you);
 
     run_environment_effects();
