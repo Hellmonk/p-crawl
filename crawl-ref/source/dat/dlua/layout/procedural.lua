@@ -145,7 +145,7 @@ end
 -- a specified number of padding squares.
 function procedural.border(params)
   local x1,y1 = 0,0
-  local x2,y2 = dgn.large_builder_bounds()
+  local x2,y2 = dgn.builder_bounds()
   x2 = x2 - 1
   y2 = y2 - 1
   if params.x1 ~= nil then x1 = params.x1 end
@@ -460,7 +460,7 @@ end
 -- Render functions
 function procedural.render_map(e, fval, fresult)
 
-  local gxm,gym = dgn.builder_bounds()
+  local gxm,gym = dgn.large_builder_bounds()
   e.extend_map { width = gxm, height = gym, fill = 'x' }
   for x = 1,gxm-2,1 do
     for y = 1,gym-2,1 do
