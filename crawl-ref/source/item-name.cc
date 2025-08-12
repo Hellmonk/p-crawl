@@ -2305,8 +2305,6 @@ void RuneMenu::set_normal_runes()
     for (branch_iterator it(branch_iterator_type::danger); it; ++it)
     {
         const branch_type br = it->id;
-        if (!connected_branch_can_exist(br))
-            continue;
 
         for (auto rune : branches[br].runes)
         {
@@ -2345,8 +2343,6 @@ void RuneMenu::set_gems()
     for (branch_iterator it(branch_iterator_type::danger); it; ++it)
     {
         const branch_type br = it->id;
-        if (!connected_branch_can_exist(br))
-            continue;
         const gem_type gem = gem_for_branch(br);
         if (gem == NUM_GEM_TYPES)
             continue;
