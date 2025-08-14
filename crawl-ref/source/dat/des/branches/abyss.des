@@ -426,40 +426,6 @@ ENDMAP
 ###############################################################################
 # Non-combined rune vaults (see the combined rune vault header).
 
-NAME:    hangedman_abyss_rune_flesh_and_stone
-TAGS:    abyss_rune unrand no_monster_gen no_item_gen no_pool_fixup
-WEIGHT:  5
-MONS:    catoblepas, earth elemental, basilisk, boulder beetle
-MONS:    air elemental, death drake
-ITEM:    potion of enlightenment q:1 ident:type
-KMONS:   O = patrolling war gargoyle
-KITEM:   O = abyssal rune of Zot
-KFEAT:   A = stone_arch
-KFEAT:   "@6 = runelight
-SHUFFLE: 23 / 57
-SUBST:   ! = 2, 0 = 222234555
-KPROP:   l = no_cloud_gen
-FTILE:   AO = floor_crystal_squares
-COLOUR:  O = lightmagenta
-MAP
-    @d0A0d@
-6ccccGclcGcccc6
- .cOccclccccc.
-  c+c0"l"0ccc
-"cc1ccclcccccc"
- .c4c0"l"0ccc.
-  c5c clc ccc
-"cc.c0"l"0cccc"
- .c.ccclccccc.
-  c.c0"l"0ccc
-"cc.ccclcccdcc"
- .c+c2c!c5c+c.
-  c 3 c1c 7 c
-6cc2 2+ +5 5cc6
- .ccccccccccc.
-  .c c. .c c.
-ENDMAP
-
 # This vault would really appreciate "warning door" and "locked door"
 # being separated from their forced union as runed doors...
 NAME:   hangedman_abyss_rune_macabre_mess
@@ -667,48 +633,6 @@ X ccccx4.1.2xx X
       X X xx...+'
        X X xx++x@
         X X x''@A
-ENDMAP
-
-NAME:    evilmike_abyss_rune_elephants_shrine
-TAGS:    abyss_rune unrand
-KMONS:   1 = elephant
-KMONS:   23 = dire elephant
-KMONS:   45 = hellephant
-KMONS:   67 = generate_awake spatial vortex
-KMONS:   89 = draconian shifter
-KMONS:   _ = patrolling spatial maelstrom
-ITEM:    potion of enlightenment q:1 ident:type
-KITEM:   _ = abyssal rune of Zot
-KFEAT:   _ = altar_lugonu
-KFEAT:   A = stone_arch
-KFEAT:   " = runelight
-# Two rings of opposite sides on the inside / outside of the octagon lava moat,
-# with one to three (mostly two) pairs of opposite sides made floor or wall.
-SHUFFLE: HIJKL, MNOPQ
-SUBST:   HIMN = l, J : ll. KL = ., O : llP, PQ : xxxxb, c : ccv
-NSUBST:  ' = 1:4 / 1:8 / 1 = 22248 / 10 = 2216 / *:., d = 1:dddd. / *:.
-MARKER:  F = lua:fog_machine { cloud_type = "translocational energy", \
-             pow_max = 2, delay_min = 10, delay_max = 20, walk_dist = 0, size = 1 }
-FTILE:   AF3579_OG+ = floor_crystal_squares
-COLOUR:  F3579 = lightmagenta
-MAP
-  l".HIIIIIIIIJ."l
- l".HllllllllllJ."l
-l"dHlMNNNNNNNNOlJd"l
-".HlMMllllKlllOOlJ."
-.HlMMlJ''''''HlOOlJ.
-HlMMlJ''''G'''HlOOlJ
-KlPlJ'FccccccF'HlPlK
-KlPl''ccG"79cc''lPlK
-KlPII''+"5_7cc'IIPlKA
-KlPl''ccG37"cc''lPlK
-KlPlH'FccccccF'JlPlK
-JlOOlH''''G'''JlMMlH
-.JlOOlH''''''JlMMlH.
-".JlOOllllKlllMMlH."
-l"dJlONNNNNNNNMlHd"l
- l".JllllllllllH."l
-  l".JIIIIIIIIH."l
 ENDMAP
 
 NAME:   evilmike_nicolae_abyss_rune_containment_curve

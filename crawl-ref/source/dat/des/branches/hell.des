@@ -76,8 +76,8 @@ MONS:   sun demon / smoke demon / soul eater / hell hog
 MONS:   hellion / balrug / reaper / hell beast / hell knight
 ITEM:   good_item demon blade / good_item demon whip / \
         good_item demon trident
-ITEM:   ring of fire ident:type / Necronomicon / \
-        grand grimoire / scroll of torment ident:type
+ITEM:   ring of fire / Necronomicon / \
+        grand grimoire / scroll of torment
 SUBST:  d=de, ?:?.l, ?=l.
 : hell_entry_feature(_G, 'A')
 : hell_entry_tier(_G, "mid")
@@ -112,8 +112,8 @@ MONS:   sun demon / smoke demon / soul eater / hell hog / nothing w:20
 MONS:   hellion / balrug / reaper / hell beast / hell knight
 ITEM:   good_item demon blade / good_item demon whip /\
         good_item demon trident
-ITEM:   ring of fire ident:type / Necronomicon / \
-        grand grimoire / scroll of torment ident:type
+ITEM:   ring of fire / Necronomicon / \
+        grand grimoire / scroll of torment
 ITEM:   good_item demon blade / good_item demon whip /\
         good_item demon trident / w:30 nothing
 SUBST:  d=de, ?:?.l, ?=l.
