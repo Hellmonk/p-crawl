@@ -25,7 +25,7 @@ NSUBST:  . = 2:1 / 1:0 / 2:9 / 4 = 0:3 1:1 / 1 = 9:6 / 2:1 / *:.
 NSUBST:  . = 1:^ / 1:^~ / 1:F~ / 4 = F~~ / 1:{ / 1:} / *:.
 KFEAT:   ^ = zot trap
 : if you.in_branch("Geh") then
-MONS:    zombie / skeleton
+MONS:    zombie
 MONS:    brimstone fiend / hellephant
 MARKER:  F = lua:fog_machine {cloud_type = "flame", \
              pow_min = 8, pow_max = 10, delay = 100, \
@@ -52,7 +52,7 @@ SUBST:   ~ = G
 FTILE:   F = floor_crystal_squares
 COLOUR:  F = lightmagenta
 : elseif you.in_branch("Dis") then
-MONS:    zombie / skeleton
+MONS:    zombie
 MONS:    hell sentinel / iron giant
 SUBST:   xc = v, F~ = G
 COLOUR:  G = cyan

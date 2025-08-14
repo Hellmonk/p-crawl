@@ -1262,17 +1262,6 @@ MAP
 ..__..
 ENDMAP
 
-NAME:   dpeg_vaults_monster_row
-TAGS:   vaults_room
-SUBST:  0 : 0000000z, z : z., 0 = 0009..
-KMONS:  z = human skeleton
-MAP
-xxxxxxxxxxxxxxxxxxxxxxxxxx
-xx00xx00xx00xx00xx00xx00xx
-xx..xx..xx..xx..xx..xx..xx
-..........................
-ENDMAP
-
 NAME: nicolae_vaults_mini_display_case
 TAGS: vaults_room vaults_orient_w no_monster_gen
 SUBST: % = %%$*

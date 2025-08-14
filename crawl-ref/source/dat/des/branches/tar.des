@@ -191,7 +191,7 @@ KITEM:   | = nothing
 KMONS:   12 = patrolling lich / ancient lich / dread lich
 KMONS:   34 = patrolling curse toe
 KMONS:   56 = patrolling bone dragon
-KMONS:   7 = death cob w:12 / zombie w:4 / skeleton w:4 / guardian mummy w:4
+KMONS:   7 = death cob w:12 / zombie w:4 / guardian mummy w:4
 KMONS:   8 = patrolling death cob
 KMONS:   ABCD = shadow dragon
 KMONS:   EF = death drake
@@ -274,9 +274,8 @@ MARKER:  F = lua:fog_machine { cloud_type = "foul pestilence", pow_min = 200, \
              pow_max = 300, delay = 25, size = 1, walk_dist = 0, excl_rad = 0 }
 {{
 dgn.delayed_decay(_G, 'd', 'base draconian corpse w:5 / ' ..
-                           'base draconian skeleton / ' ..
                            'shadow dragon corpse w:5 / ' ..
-                           'shadow dragon skeleton')
+                           'shadow dragon')
 }}
 MAP
  .@xxxxxxxxxxxxxxxxxxxxxxx@.
@@ -1125,7 +1124,7 @@ MONS:    tzitzimitl
 KMONS:   8 = bone dragon
 KMONS:   9 = doom hound
 KMONS:   0 = eidolon
-KMONS:   Z = skeleton / zombie
+KMONS:   Z = zombie
 SUBST:   ? = ?..., ? = 2., 0 = 002
 SHUFFLE: 3569
 : serpent_of_hell_setup(_G)

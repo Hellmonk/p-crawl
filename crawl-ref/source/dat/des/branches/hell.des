@@ -26,7 +26,6 @@ end
 
 function hell_water_abbrev(e, type, baseweight)
     return "patrolling " .. type .. " zombie w:" .. math.floor(baseweight/2) ..
-        " / patrolling " .. type .. " skeleton w:" .. math.floor(baseweight/3) ..
         " / patrolling " .. type .. " simulacrum w:" .. math.floor(baseweight/6)
 end
 
@@ -189,7 +188,7 @@ MONS:   sun demon / smoke demon / soul eater / ynoxinul / sixfirhy \
 MONS:   blizzard demon / hell beast / cacodemon / green death / reaper \
         / balrug / hellion w:5 / tormentor w:5 / nothing w:30
 MONS:
-ITEM:   skeleton
+ITEM:   any
 KFEAT:  b = .
 KMONS:  A = obsidian statue
 MARKER: A = lua:fog_machine { cloud_type = "grey smoke", \
@@ -222,39 +221,6 @@ xxbbbbGbbbbbGdbbbxx
   xxxbbbbb%bbbxxx
     xxxHdbbIxxx
     xxxv+++vxxx
-ENDMAP
-
-###############################################################################
-
-NAME: lightli_too_deep
-TAGS: no_monster_gen nolayout_encompass uniq_hell_entry_high
-ORIENT: northeast
-MONS: balrug
-MONS: sun demon / smoke demon
-: hell_entry_feature(_G, 'H')
-SUBST: y = x..
-SUBST: ; = %A.....l
-: dgn.delayed_decay(_G, '%', 'dwarf skeleton')
-KITEM: A = any weapon w:20 / chain mail w:60 / plate armour w:19 / \
-           crystal plate armour w:1
-: hell_entry_tier(_G, "mid")
-MAP
-xxxxxxxxxxxxxxx
-xxxxcccccccxxxx
-xxxxcA;H;Acxxxx
-xxxxc;;1;;cxxxx
-xxxxc;2|2;cxxxx
-xxxxc;;;;;cxxxx
-xxxxccc.cccxxxx
-xxxxxxy.yxxxxxx
-xxxxxxy.yxxxxxx
-xxxxxxy.yxxxxxx
-xxxxxxy.yxxxxxx
-xxxxxy%yxxxxxxx
-xxxxxy.yxxxxxxx
-xxxxxy.yxxxxxxx
-xxxxy...yxxxxxx
-xxxy.%...yxxxxx
 ENDMAP
 
 ##############################################################################
