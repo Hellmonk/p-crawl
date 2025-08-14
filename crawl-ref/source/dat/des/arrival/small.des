@@ -2855,45 +2855,6 @@ MAP
 ENDMAP
 
 ##############################################################
-NAME:    heliophobic_arrival_battle_scene
-TAGS:    arrival no_monster_gen no_trap_gen no_pool_fixup
-ORIENT:  float
-NSUBST:  - = 6:u / 12:v / *:.
-KPROP:   uv = bloody
-KPROP:   . = bloody / w:30 nothing
-TILE:    c = wall_hall
-FTILE:   .{uvt+ = floor_marble
-COLOUR:  .c = white
-: local race = you.race()
-: local ally = you.monster()
-: -- do the roll unconditionally, for seed stability
-: local humanoid_ally = util.random_from({"dwarf", "human"})
-: -- The corpseless. Before the game starts, you.monster() is "program bug".
-: if (not crawl.game_started()) or race == "Vampire"
-:     or race == "Mummy" or race == "Ghoul" or race == "Octopode"
-:     or race == "Gargoyle" or race == "Vine Stalker"
-:     or race == "Djinni" or race == "Yak" or race == "Formicid" then
-:   ally = humanoid_ally
-: end
-:
-: local axis = util.random_from({"goblin", "gnoll", "kobold", "orc"})
-:
-: dgn.delayed_decay(_G, 'u', ally .. " skeleton")
-: dgn.delayed_decay(_G, 'v', axis .. " skeleton")
-MAP
-cc+ccc+cc
-cc-ccc-cc
-c--->---c
-c---c---c
-c---c---c
-c---c---c
-c-------c
-c---{---c
-c-------c
-ccccccccc
-ENDMAP
-
-##############################################################
 NAME:    heliophobic_arrival_enchanted_forest
 TAGS:    arrival no_monster_gen no_trap_gen
 ORIENT:  float
@@ -3032,56 +2993,6 @@ MAP
    s.rr.--cc
    s....ccc
     uuuu
-ENDMAP
-
-NAME:     amcnicky_arrival_wind_blow
-TAGS:     arrival no_monster_gen no_trap_gen
-ORIENT:   float
-NSUBST:   _ = 4:p / 4=p:2 . / *=.
-: dgn.delayed_decay(_G, 'p', 'deep dwarf skeleton')
-MAP
-      xxxxx
-      x__{xxx
-     xx.__..x
-     x_.....xx  xxxx
-    xx_...__.x xx..@
-xxxxx._.xx...xxx__.@
-x.___._.xxx......xx@
-x....__xx xx._.__xx@
-x.xx___x   x..._...@
-x.xx._.xx  xxxxxx..@
-x.._._..xx      xxxx
-x____.._.x
-xxxxxxx..x
-      x@@x
-ENDMAP
-
-NAME:     amcnicky_arrival_abandoned_market
-TAGS:     arrival no_monster_gen no_trap_gen
-ORIENT:   float
-NSUBST:   _ = 4:q / 4=q:2 . / *=.
-: dgn.delayed_decay(_G, 'q', 'deep dwarf skeleton')
-NSUBST:   - = 6=p / 6=p. / 6=px / *=.x
-SUBST:    r = x.
-KFEAT:    p = abandoned_shop
-MAP
-xxxxxxxxxxxxxxxxxxxxx
-xxxxx--xx--xx--xx---x
-xxxxx....._......_.-x
-x{_._.._.._.._._...xx
-xx_.._..........._.xx
-xxx.....__...._....xx
-xxxxx......_.......-x
-xxxxxxxppprrrrrr.._-x
-      xxxxrr_--.._.xx
-          rr.--_...xx
-          rr..__.._-x
-           x.xx..._.@
-           x_xx_._..@
-           x__......@
-           x....___-x
-           x--xxx--xx
-           xxxxxxxxxx
 ENDMAP
 
 ##############################################################
