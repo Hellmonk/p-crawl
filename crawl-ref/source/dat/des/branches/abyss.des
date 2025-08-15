@@ -865,7 +865,7 @@ MONS:   wretched star
 SUBST:  3=3334
 MONS:   tentacled starspawn / starcursed mass / demonic plant / oklob plant w:20
 # generic abyss badthings who don't mind if their target is moved around (4)
-MONS:   lich / wizard / thrashing horror
+MONS:   lich / thrashing horror
 KITEM:  O = abyssal rune of Zot
 COLOUR: cO = magenta
 SUBST:  c = ccccb
