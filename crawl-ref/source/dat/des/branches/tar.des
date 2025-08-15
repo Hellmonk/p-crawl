@@ -184,7 +184,7 @@ KMONS:   56 = patrolling profane servitor
 KMONS:   7 = eidolon
 KMONS:   8 = patrolling shadow wraith
 KMONS:   AB = ancient lich / dread lich
-KMONS:   CD : doom hound
+KMONS:   CD : ancient lich
 KMONS:   EF : putrid mouth
 KITEM:   | = nothing
 : else
@@ -1122,7 +1122,7 @@ MONS:    patrolling Ereshkigal, tainted leviathan, profane servitor
 MONS:    shadow wraith, ancient lich / dread lich, putrid mouth
 MONS:    tzitzimitl
 KMONS:   8 = bone dragon
-KMONS:   9 = doom hound
+KMONS:   9 = bone dragon
 KMONS:   0 = eidolon
 KMONS:   Z = zombie
 SUBST:   ? = ?..., ? = 2., 0 = 002
@@ -1558,7 +1558,7 @@ ENDMAP
 
 NAME:   tar_grunt_small_loot
 TAGS:   tar_grunt_small_loot allow_dup unrand no_exits
-MONS:   doom hound w:20 / profane servitor w:15 / shadow wraith w:10 / \
+MONS:   profane servitor w:15 / shadow wraith w:10 / \
         putrid mouth w:5
 NSUBST: x = 1:m / *:x
 MAP
@@ -1732,7 +1732,7 @@ ENDMAP
 NAME:     tar_grunt_cathedral
 ORIENT:   encompass
 MONS:     patrolling Ereshkigal, patrolling tzitzimitl, tainted leviathan
-MONS:     doom hound, ancient lich / dread lich, bone dragon
+MONS:     ancient lich / dread lich, bone dragon
 MONS:     shadow wraith / eidolon
 NSUBST:   K = 1:D / *:.
 : serpent_of_hell_setup(_G)
