@@ -10,7 +10,6 @@ function init_demonic(e)
   e.weight('2')
   e.kprop('_ = bloody')
 
-  e.nsubst('. = 1:$ / *:.')
   e.subst('S = ......S')
   e.lua_marker('S', fog_machine { pow_max = 10, delay_min = 10, delay_max = 10,
                                   size = 2, start_clouds = 1,
@@ -18,32 +17,23 @@ function init_demonic(e)
   e.subst('S = .')
 
   if you.absdepth() <= 8 then
-    e.kmons('._ = ufetubus / white imp / shadow imp / drude w:5 / w:300 nothing')
-  elseif you.absdepth() <= 10 then
-    e.kmons('._ = drude w:1 / rust devil / orange demon / ice devil / ' ..
-                 'red devil / chaos spawn w:5 / hellwing w:1 / ' ..
-                 'ynoxinul w:5 / w:460 nothing')
+    e.kmons('._ = brain imp / white imp / shadow imp / w:300 nothing')
   elseif you.absdepth() <= 12 then
-    e.kmons('._ = rust devil / orange demon / ice devil w:5 / ' ..
-                 'red devil w:5 / neqoxec w:5 / chaos spawn / ynoxinul / ' ..
-                 'smoke demon / soul eater w:5 / w:530 nothing')
+    e.kmons('._ = w:30 any common demon /  w:300 nothing')
   else
     e.kmons('._ = w:60 any common demon / w:300 nothing')
   end
   e.kmons('P = demonic plant')
-  e.kitem('$ = $ no_pickup')
   e.kfeat('t = demonic_tree')
-  e.ftile('.A = floor_pebble_lightred')
-  e.ftile('_$YSPt = floor_pebble_lightmagenta')
 end
 }}
 
 NAME:   serial_demonic
-DEPTH:  D:4-
+DEPTH:  D:3-
 TAGS:   extra luniq_serial nolayout_encompass
 CHANCE: 1%
 {{
-  local c = 4 + crawl.random2(3) * crawl.random2(4)
+  local c = 2 + crawl.random2(3) * crawl.random2(3)
   hook("post_place", function()
     dgn.place_maps{tag="serial_demonic", count=c}
   end)
@@ -107,7 +97,6 @@ MAP
 ENDMAP
 
 NAME:   serial_demonic_f
-WEIGHT: 5
 SUBST:  . = .......__ttPP
 SUBST:  w = .wwW
 : init_demonic(_G)

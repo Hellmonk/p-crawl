@@ -44,7 +44,6 @@ function init_forest(e, base_weight, lair_weight)
   end
   e.mons('bush')
   e.mons('plant')
-  e.kfeat('% = cache of fruit')
   e.kprop('1 = no_tele_into')
   e.kprop('2 = no_tele_into')
   e.kprop('E = no_tele_into')
@@ -80,8 +79,8 @@ TAGS:   allow_dup extra luniq_serial nolayout_encompass
 DEPTH:  D:1-4, Lair
 CHANCE: 3% (D:1), 2% (D:2), 1% (D:3-4), 1% (Lair)
 {{
-  -- between 5 and 11 forests
-  local c = 4 + crawl.random2(4) + crawl.random2(4)
+  -- between 2 and 7 forests
+  local c = 2 + crawl.random2(4) + crawl.random2(3)
   hook("post_place", function()
     dgn.place_maps{tag="serial_forest", count=c}
   end)
@@ -560,13 +559,12 @@ ENDMAP
 
 NAME:    infiniplex_forest_lined_4_way
 TAGS:    transparent
-SUBST:   % = %.
 : init_forest(_G, 1, 1)
 MAP
   t@t
    .
 t t.t t
-@..%..@
+@.....@
 t t.t t
    .
   t@t
@@ -575,7 +573,8 @@ ENDMAP
 NAME:    infiniplex_forest_lined_room_
 TAGS:    transparent
 SHUFFLE: JK
-SUBST:   J = t, K = .
+SUBST:   J = t
+SUBST:   K = .
 : init_forest(_G, 1, 1)
 MAP
 t t t
@@ -588,13 +587,14 @@ ENDMAP
 NAME:    infiniplex_forest_lined_room_2
 TAGS:    transparent
 SHUFFLE: JK
-SUBST:   J = t, K = ., % = %.
+SUBST:   J = t
+SUBST:   K = .
 : init_forest(_G, 2, 2)
 MAP
 t t t t
  .....
 t.J.J.t
- ..%..
+ .....
 t.J.J.t
  .....
 t t t t

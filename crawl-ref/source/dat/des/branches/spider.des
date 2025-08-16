@@ -12,7 +12,7 @@
 # Functions for the spider trap and endvault loot
 {{
 function setup_endvault_loot(e)
-  e.item("potion of ambrosia ident:all")
+  e.item("potion of ambrosia")
   e.item(dgn.loot_potions)
   e.item("hat good_item w:20 / pair of gloves good_item / " ..
          "pair of boots good_item / scarf w:40 / orb w:40")
