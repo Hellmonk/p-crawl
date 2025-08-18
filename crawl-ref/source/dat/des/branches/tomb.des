@@ -181,7 +181,7 @@ NAME:   tomb_entry_simple_bobbens
 ORIENT: float
 TAGS:   tomb_entry no_monster_gen no_item_gen transparent
 MONS:   guardian mummy
-MONS:   sphinx
+MONS:   guardian mummy
 # crawl will rotate for the rest of possibilities
 SHUFFLE: AB
 SUBST:  A = +, B = c
@@ -203,7 +203,7 @@ ENDMAP
 NAME:   tomb_entry_pyramid_bobbens
 ORIENT: float
 TAGS:   tomb_entry no_monster_gen transparent
-MONS:   sphinx
+MONS:   guardian mummy
 MONS:   w:1 mummy / w:9 guardian mummy
 MONS:   mummy priest
 KFEAT:  O = enter_tomb
@@ -243,7 +243,7 @@ NAME:   tomb_entry_sphere_bobbens
 ORIENT: float
 TAGS:   tomb_entry no_monster_gen no_rotate transparent
 MONS:   w:1 mummy / w:9 guardian mummy
-MONS:   sphinx
+MONS:   guardian mummy
 MONS:   mummy priest
 KFEAT:  O = enter_tomb
 MAP
@@ -467,7 +467,7 @@ SUBVAULT: A : tomb_1_centre
 SUBVAULT: B : tomb_1_hall_stairs
 : tomb_guardian_set(_G, true)
 MONS:     royal mummy / nothing
-MONS:     sphinx / nothing
+MONS:     guardian mummy / nothing
 MONS:     obsidian statue / orange crystal statue
 NSUBST:   ( = 1:( / *:.
 # Set up decorative statues.

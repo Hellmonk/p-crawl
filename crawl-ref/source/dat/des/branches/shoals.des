@@ -632,8 +632,8 @@ ORIENT: encompass
 PLACE:  Shoals:$
 WEIGHT: 3
 KITEM:  O = barnacled rune of Zot
-MONS:   faun w:15 / manticore / harpy, satyr, minotaur, sphinx
-KMONS:  O = sphinx
+MONS:   faun w:15 / manticore / harpy, satyr, minotaur, minotaur
+KMONS:  O = minotaur
 KMONS:  P = plant
 SUBST:  1 = 1.., 2 = 2.., 3 = 334, G = G.
 SUBST:  ; : W.., p : W.., q : W.., r : W.., s : W.., y : W.., z : W..
