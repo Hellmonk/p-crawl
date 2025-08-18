@@ -489,56 +489,6 @@ x........2.3.2.......x
 xxxxxxxxxxxxxxxxxxxxxx
 ENDMAP
 
-NAME:    ossuary_crypta
-WEIGHT:  20
-ORIENT:  encompass
-TAGS:    no_item_gen no_monster_gen no_rotate no_vmirror
-MONS:    mummy
-MONS:    gnoll zombie / hobgoblin zombie / orc zombie / \
-         human zombie / kobold zombie / goblin zombie / \
-         centaur zombie
-# mix of good items with useless ones
-: item( dgn.loot_scrolls .. " / " .. dgn.loot_potions .. " / " ..
-:       "scroll of noise w:33 / " ..
-:       "potion of degeneration w:33" )
-# and sometimes mostly useless ones
-ITEM:    scroll of noise w:30 / scroll of immolation / \
-         potion of mutation w:5 / \
-         potion of degeneration w:40
-# occasionally just use this
-ITEM:    any potion / any scroll w:5 / nothing
-SHUFFLE: hjkl
-SUBST:   h:d, j:e, k:de, l:.de
-NSUBST:  f = 6:f / *:e
-NSUBST:  d = 2:M / *:d
-NSUBST:  e = 2:M / *:e
-SUBST:   M = 1f, d = dddf, e = eeef
-NSUBST:  . = 6:^ / *:.
-KFEAT:   ^ = alarm trap / floor w:20
-: ossuary_setup_features(_G)
-MAP
-          vvv
-        vvv1vvv
- ccccc vvfffffvv ccccc
- clllc vfff1fffv chhhc
- clllc vvvv^vvvv chhhc
- cc^cc    c^c    cc^cc
-ccc.c   ccc+ccc   c.ccc
-c2+.cc cc.....cc cc.+2c
-ccc..ccc.......ccc..ccc
-c2+...c.........c...+2c
-ccc...+....U....+...ccc
-c2+...c.........c...+2c
-ccc..ccc.......ccc..ccc
-c2+.cc cc.....cc cc.+2c
-ccc.c   ccc+ccc   c.ccc
- cc^cc    c.c    cc^cc
- ckkkc   cc.cc   cjjjc
- ckkkc   c.A.c   cjjjc
- ccccc   c.<.c   ccccc
-         ccccc
-ENDMAP
-
 # Scorpions, and lots of them. Hope you weren't expecting to breeze through
 # the ossuary just because you found a mace of holy wrath!
 NAME:   ossuary_minmay_scorpions
