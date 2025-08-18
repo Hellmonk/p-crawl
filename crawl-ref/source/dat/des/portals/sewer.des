@@ -1348,7 +1348,7 @@ NSUBST:  . = 20 = 2. / *:.
 :if crawl.random2(2) == 0 then
 KMONS:   3 = kobold brigand
 KMONS:   4 = kobold brigand
-KMONS:   5 = drain imp
+KMONS:   5 = kobold brigand
 KFEAT:   B = altar_makhleb
 MARKER:  F = lua:fog_machine { cloud_type = "flame", pow_min = 100, \
                                pow_max = 100, delay = 10, size = 1, \
