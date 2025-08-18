@@ -14,12 +14,20 @@ explorer.generation_order = {
                 "Armory:1", "Armory:2", "Armory:3",
                 "Forge:1", "Forge:2", "Forge:3",
                 "Workshop:1", "Workshop:2", "Workshop:3",
+                "Shoals:1", "Shoals:2", "Shoals:3", "Shoals:4",
                 "Storage:1", "Storage:2", "Storage:3",
                 "Fortress:1",
                 "Crypt:1", "Crypt:2", "Crypt:3",
                 "Depths:1", "Depths:2", "Depths:3",
+                "Hell",
                 "Tower:1", "Tower:2", "Tower:3",
                 "Sanctum:1", "Sanctum:2", "Sanctum:3", "Sanctum:4", "Sanctum:5",
+                "Slime:1", "Slime:2", "Slime:3", "Slime:4", "Slime:5",
+                "Tomb:1", "Tomb:2", "Tomb:3",
+                "Tar:1", "Tar:2", "Tar:3", "Tar:4", "Tar:5", "Tar:6", "Tar:7",
+                "Coc:1", "Coc:2", "Coc:3", "Coc:4", "Coc:5", "Coc:6", "Coc:7",
+                "Dis:1", "Dis:2", "Dis:3", "Dis:4", "Dis:5", "Dis:6", "Dis:7",
+                "Geh:1", "Geh:2", "Geh:3", "Geh:4", "Geh:5", "Geh:6", "Geh:7",
             }
 -- generation order continues: pan, zig. However, these are really only in the
 -- official generation order so that entering them forces the rest of the
@@ -79,7 +87,7 @@ function explorer.to_gendepth(depth)
 end
 
 -- a useful depth preset
-explorer.zot_depth = explorer.to_gendepth("Zot")
+explorer.zot_depth = explorer.to_gendepth("Sanctum")
 assert(explorer.zot_depth ~= 0)
 
 -- TODO: generalize, allow changing?
