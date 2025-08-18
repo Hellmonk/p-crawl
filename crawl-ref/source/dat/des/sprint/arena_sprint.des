@@ -506,7 +506,7 @@ function arena_sprint_get_monster_set(round, boss)
                 "unseen horror / shadow wraith / ghost moth",
                 "curse toe / w:20 wandering mushroom / w:4 murray",
                 "reaper / geryon w:1",
-                "ghost moth / quicksilver ooze",
+                "ghost moth / void ooze",
                 "ettin",
                 "executioner / w:1 ignacio",
                 "ghost moth / moth of wrath / w:30 vampire mosquito"
@@ -531,7 +531,7 @@ function arena_sprint_get_monster_set(round, boss)
                     ghost moth / moth of wrath",
                 "place:Workshop:$ w:2 / w:40 nagaraja / guardian serpent / w:5 anaconda",
                 "place:Slime:$ / w:30 acid blob / azure jelly /\
-                    quicksilver ooze",
+                    void ooze",
                 "dancing weapon ; bardiche",
                 "spriggan defender / spriggan air mage / spriggan druid /\
                     spriggan berserker / spriggan rider",
@@ -571,7 +571,7 @@ function arena_sprint_get_monster_set(round, boss)
                 "shining eye", "tormentor",
                 "unseen horror / shadow wraith / ghost moth",
                 "reaper / geryon w:1",
-                "ghost moth / quicksilver ooze",
+                "ghost moth / void ooze",
                 "tentacled monstrosity",
                 "executioner / w:1 ignacio / w:5 death drake",
                 "ghost moth / moth of wrath / vampire mosquito",
@@ -603,7 +603,7 @@ function arena_sprint_get_monster_set(round, boss)
                 "green death / death drake w:15",
                 "orb spider / emperor scorpion / ghost moth / moth of wrath",
                 "w:40 nagaraja / guardian serpent / w:5 anaconda",
-                "w:30 acid blob / azure jelly / quicksilver ooze",
+                "w:30 acid blob / azure jelly / void ooze",
                 "dancing weapon ; bardiche ego:speed",
                 "spriggan air mage",
                 "w:15 ancient lich / w:6 curse toe",
@@ -642,7 +642,7 @@ function arena_sprint_get_monster_set(round, boss)
                 "shining eye", "tormentor",
                 "unseen horror / shadow wraith / ghost moth",
                 "reaper / geryon w:1",
-                "ghost moth / quicksilver ooze",
+                "ghost moth / void ooze",
                 "tentacled monstrosity",
                 "executioner / w:1 ignacio / w:5 death drake",
                 -- Just die already!

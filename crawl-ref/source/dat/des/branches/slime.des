@@ -864,7 +864,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ENDMAP
 
 NAME:  slime_pit_nicolae_royal_road_to_ruin
-KMONS: R = rockslime / quicksilver ooze
+KMONS: R = rockslime / rockslime
 SUBST: " = cx, ! = cxx.., ' = x., R = RR., 4 = 444.
 : setup_slime_pit_ending(_G)
 MAP
