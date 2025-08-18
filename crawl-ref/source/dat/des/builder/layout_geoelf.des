@@ -174,8 +174,8 @@ TAGS:   no_rotate no_vmirror no_hmirror
   local depth_fraction = you.depth_fraction()
 
   -- some parameters
-  local rooms_across = 4
-  local room_spacing = 10
+  local rooms_across = 3
+  local room_spacing = 9
   local offset_max = 1
   local radius_min = 2
   local radius_max = math.floor(4 + depth_fraction + crawl.random_real())
