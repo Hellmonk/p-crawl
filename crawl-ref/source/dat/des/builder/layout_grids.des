@@ -323,7 +323,7 @@ TAGS:   overwritable layout allow_dup unrand layout_type_open_caves
 
   local cavey = you.in_branch("crypt")
                 or (you.in_branch("pan") and crawl.coinflip())
-  local distort = you.in_branch("zot")
+  local distort = false
 
   local max_corridor = crawl.random_range((cavey or distort) and 4 or 2,10)
   local bounds = omnigrid.padded_bounds(max_corridor,max_corridor + crawl.random_range(1,6))
