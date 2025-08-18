@@ -221,7 +221,7 @@ TAGS: ziggurat_pillar centered unrand no_exits
 # and teleports are more risky.
 MONS: dread lich / shadow demon / curse skull / \
       ironbound convoker / demonspawn corrupter / deep elf demonologist
-MONS: eye of devastation / ghost moth / demonspawn black sun / \
+MONS: eye of devastation / ghost moth / \
       torpor snail
 MONS: plant
 : if you.depth() > 21 then
