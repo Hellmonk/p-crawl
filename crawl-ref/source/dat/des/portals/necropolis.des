@@ -36,11 +36,9 @@
 
 {{
 function necropolis_tag()
-    if you.in_branch("D") or you.in_branch("Lair") or you.in_branch("Orc") then
+    if you.in_branch("D") then
       return "uniq_necropolis_early"
-    elseif you.in_branch("Swamp") or you.in_branch("Snake") or
-           you.in_branch("Shoals") or you.in_branch("Spider") or
-           you.in_branch("Vaults") then
+    elseif you.in_branch("D") then
       return "uniq_necropolis_mid"
     else
       return "uniq_necropolis_late"
@@ -88,7 +86,6 @@ function necropolis_portal_entry(e)
     -- placed seperately via vaults_default_options() and pick_room().
     e.chance(350)
     e.depth_chance("D:5-7", 275)
-    e.depth_chance("Vaults", 0)
     if crawl.game_started() then
       e.tags(necropolis_tag())
     end
@@ -122,17 +119,9 @@ function necropolis_difficulty()
     else
       return "post_lair_d"
     end
-  elseif you.in_branch("Lair") or you.in_branch("Orc") or
-         you.in_branch("Swamp") or you.in_branch("Snake") or
-         you.in_branch("Shoals") or you.in_branch("Spider") then
+  elseif you.in_branch("D") then
     return you.branch():lower()
-  elseif you.in_branch("Vaults") or you.in_branch("Elf") then
-    return "vaults_elf"
   else -- Depths, Crypt.
-    if not you.in_branch("Depths") and not you.in_branch("Crypt") then
-      crawl.mpr("<red>Location " .. you.where() .. " is not a valid " ..
-                "Necropolis depth, deploying a Depths Necropolis.</red>")
-    end
     return "depths_crypt"
   end
 end
@@ -200,7 +189,7 @@ function necropolis_generic_spawns(e, _0, _9, _8)
                       anaconda zombie w:5 / wolf spider zombie w:5 / \
                       skyshark zombie w:5 / alligator zombie w:5")
   elseif dgn.persist.necropolis_difficulty == "orc" then
-    e.kmons(_0 .. " = place:Orc:1 w:15 / two-headed ogre / \
+    e.kmons(_0 .. " = two-headed ogre / \
                       spectral orc warrior / warg zombie w:5")
     e.kmons(_9 .. " = kobold blastminer / orc knight / \
                       orc high priest / orc sorcerer")
@@ -582,19 +571,16 @@ One-off and two-off vault functions left in ghost.lua:
 # the point is to be burying the dead only inside the Necropolis.
 #############################################################################
 
-default-depth: D:5-, Lair, Orc, Elf, Snake, !Snake:$, Swamp, !Swamp:$, \
-               Shoals, !Shoals:$, Spider, !Spider:$, Vaults, !Vaults:$, \
-               Depths, Crypt
+default-depth: Shoals
 
 NAME:    index_necropolis_entry_arbor_square
 veto {{ return necropolis_veto() }}
-WEIGHT:  10 (Lair, Elf, Depths), 0 (Snake, Spider), 5
 : necropolis_portal_entry(_G)
-: if you.in_branch("Vaults") then
+: if you.in_branch("D") then
 CLEAR:   c
 : else
 CLEAR:   -
-:   if you.in_branch("Crypt") then
+:   if you.in_branch("D") then
 COLOUR:  t = lightblue
 TILE:    t = dngn_dead_tree_of_woe
 :   end
@@ -613,7 +599,6 @@ ENDMAP
 
 NAME:    index_necropolis_entry_arbor_path
 veto {{ return necropolis_veto() }}
-WEIGHT:  10 (Lair, Elf, Crypt, Depths), 0 (Orc, Snake, Spider, Vaults), 5
 : necropolis_portal_entry(_G)
 COLOUR:  t = lightblue
 TILE:    t = dngn_dead_tree_of_woe
@@ -633,17 +618,16 @@ ENDMAP
 
 NAME:    index_necropolis_entry_crossroads
 veto {{ return necropolis_veto() }}
-WEIGHT:  0 (D, Spider), 10
 : necropolis_portal_entry(_G)
-: if you.in_branch("Vaults") then
+: if you.in_branch("D") then
 SUBST:   x = c, @ = .
-: elseif (you.in_branch("Lair") or you.in_branch("Depths"))
-:   or you.in_branch("Elf") and crawl.coinflip() then
+: elseif (you.in_branch("D") or you.in_branch("Depths"))
+:   or you.in_branch("D") and crawl.coinflip() then
 SUBST:   v = t
 COLOUR:  t = blue
 TILE:    t = dngn_tree_of_woe
-: elseif you.in_branch("Swamp")
-:   or (you.in_branch("Crypt") and crawl.coinflip()) then
+: elseif you.in_branch("D")
+:   or (you.in_branch("D") and crawl.coinflip()) then
 COLOUR:  t = lightblue
 TILE:    t = dngn_dead_tree_of_woe
 : end
@@ -662,8 +646,7 @@ ENDMAP
 NAME:    index_necropolis_entry_wine_dark_sea
 veto {{ return necropolis_veto() }}
 TAGS:    no_pool_fixup vaults_orient_s
-WEIGHT:  20 (Shoals), 10 (D, Orc, Swamp), 0 (Snake, Spider), 5
-: if you.in_branch("Vaults") then
+: if you.in_branch("D") then
 CLEAR:   x
 : end
 : necropolis_portal_entry(_G)
@@ -682,8 +665,7 @@ ENDMAP
 
 NAME:   index_necropolis_entry_etched_script
 veto {{ return necropolis_veto() }}
-WEIGHT: 10 (Orc, Snake, Shoals, Swamp, Vaults), 0 (D, Lair, Spider), 5
-: if you.in_branch("Vaults") then
+: if you.in_branch("D") then
 TAGS:   no_wall_fixup
 SUBST:  x = c
 : end
@@ -704,7 +686,7 @@ ENDMAP
 NAME:    index_necropolis_entry_repeat_visits
 veto {{ return necropolis_veto() }}
 : necropolis_portal_entry(_G)
-: if not you.in_branch("Vaults") then
+: if not you.in_branch("D") then
 CLEAR:   -
 : end
 FTILE:   A = floor_necropolis_squares
@@ -726,11 +708,11 @@ ENDMAP
 
 NAME:    index_necropolis_entry_life_lattice
 veto {{ return necropolis_veto() }}
-: if you.in_branch("Swamp") then
+: if you.in_branch("Shoals") then
 SUBST:   x = w
-: elseif you.in_branch("Vaults") then
+: elseif you.in_branch("D") then
 SUBST:   x = a
-: elseif you.in_branch("Crypt") then
+: elseif you.in_branch("D") then
 SUBST:   x = v
 : end
 : necropolis_portal_entry(_G)
@@ -749,13 +731,12 @@ ENDMAP
 NAME:    index_necropolis_entry_open_halls
 veto {{ return necropolis_veto() }}
 TAGS:    vaults_orient_n vaults_orient_s
-WEIGHT:  5 (Shoals), 10
 : necropolis_portal_entry(_G)
-: if you.in_branch("Swamp") then
+: if you.in_branch("D") then
 SUBST:   x = t, z = w
 : elseif you.in_branch("Shoals") then
 SUBST:   z = w
-: elseif you.in_branch("Vaults") or you.in_branch("Crypt") then
+: elseif you.in_branch("D") or you.in_branch("D") then
 SUBST:   z = v
 : else
 SUBST:   z : xxxaan
@@ -779,11 +760,10 @@ ENDMAP
 NAME:    index_necropolis_entry_miniature_reverse
 veto {{ return necropolis_veto() }}
 TAGS:    vaults_orient_n
-WEIGHT:  10 (Orc, Elf, Snake, Shoals, Vaults), 0 (Lair, Spider, Swamp), 5
 KFEAT:   - = +
 SHUFFLE: G` / T'
 SUBST:   " = '
-: if not you.in_branch("Vaults") then
+: if not you.in_branch("D") then
 CLEAR:   ;
 : end
 FTILE:   +TA = floor_necropolis_squares
@@ -807,11 +787,10 @@ ENDMAP
 
 NAME:    index_necropolis_entry_not_quite_thereafter
 veto {{ return necropolis_veto() }}
-WEIGHT:  0 (D, Lair, Spider), 5
 : necropolis_portal_entry(_G)
 SHUFFLE: nGT- / nGT- / nnn" / TGT- / GnG-
 FTILE:   '"+ = floor_necropolis_squares
-: if you.in_branch("Vaults") then
+: if you.in_branch("D") then
 CLEAR:   x
 : end
 MAP
@@ -1934,7 +1913,7 @@ SUBST:  d = *, e = *%, f = %$$$, ghij = $
 NSUBST: 1 = 2:1 / * = 1-
 :   sl = 7
 : elseif dgn.persist.necropolis_difficulty == "lair" then
-MONS:   place:Lair:$ spectre / place:Lair:$ simulacrum
+MONS:   place:D:1 spectre / place:D:1 simulacrum
 KITEM:  ? = dagger ego:pain good_item / dagger ego:draining good_item
 SUBST:  f = *%, g = %$$$, hij = $
 NSUBST: 1 = 4:1 / 1-, - = 2=1- / -
@@ -1946,7 +1925,7 @@ SUBST:  f = *, g = %$, hij = $
 NSUBST: 1 = 5:1 / 1-, - = 3=1- / -
 :   sl = 12
 : elseif dgn.persist.necropolis_difficulty == "post_lair_d" then
-MONS:   place:D:$ zombie w:5 / place:D:$ spectre / place:D:$ simulacrum / \
+MONS:   place:D:1 zombie w:5 / place:D:1 spectre / place:D:1 simulacrum / \
 MONS:   place:Depths:1 zombie / place:Depths:1 spectre / \
         place:Depths:1 simulacrum
 KITEM:  ? = dagger ego:pain randart pre_id / \
@@ -1964,7 +1943,7 @@ SUBST:  f = |*, g = *, h = %$, ij = $
 NSUBST: - = 2:1 / 2:2 / 4=1- / -
 :   sl = 18
 : elseif dgn.persist.necropolis_difficulty == "vaults_elf" then
-MONS:   place:Vaults:$ spectre / place:Vaults:$ simulacrum / flayed ghost w:2
+MONS:   place:D:$ spectre / place:D:$ simulacrum / flayed ghost w:2
 MONS:   lich / deep elf death mage w:4
 KITEM:  ? = quick blade ego:pain randart pre_id / \
             quick blade ego:spectral randart pre_id
@@ -2513,9 +2492,9 @@ NSUBST: ' = 1:1 / 1:1- / 1:2 / 1:2- / 1:3 / 1:4- / *:-
 SUBST:  f = *%, g = %$$$
 NSUBST: ' = 1:1 / 1:1122 / 1:244. / 1:5 / 1:6 / *:.
 : elseif dgn.persist.necropolis_difficulty == "swamp" then
-KMONS:  0 = place:Swamp w:11 / tarantella w:1 / faun w:1
-KMONS:  9 = place:Swamp:$ w:11 / orb spider w:1 / satyr w:1
-KMONS:  8 = place:Swamp:$ 8 band w:11 / sun moth w:1 / sphinx marauder w:1
+KMONS:  0 = tarantella w:1 / faun w:1
+KMONS:  9 = orb spider w:1 / satyr w:1
+KMONS:  8 = sun moth w:1 / sphinx marauder w:1
 SUBST:  fg = |*
 NSUBST: ' = 1:098 / 1:098- / 1:444- / 1:5 / 1:7 / *:-
 : elseif dgn.persist.necropolis_difficulty == "shoals" then
@@ -2706,7 +2685,7 @@ KITEM:  ! = wellspring talisman / wellspring talisman randart
 SUBST:  f = |*, g = *%$, h = ~?, ij = $
 NSUBST: - = 4:0 / 6 = 0' / 2=34 / 3=34'' / 1:56 / 1:7''' / *:'
 : elseif dgn.persist.necropolis_difficulty == "lair" then
-KMONS:  0 = place:Lair:$ simulacrum
+KMONS:  0 = place:D:$ simulacrum
 KITEM:  o = ring of fire pre_id / ring of fire randart pre_id
 KITEM:  P = fire dragon scales good_item
 KITEM:  ? = rimehorn talisman / rimehorn talisman randart
@@ -2714,7 +2693,7 @@ KITEM:  ! = wellspring talisman / wellspring talisman randart
 SUBST:  f = *%, g = ~?, hij = $
 NSUBST: - = 4:0 / 5 = 0' / 2=3 / 2=3' / 1:5''' / *:'
 : elseif dgn.persist.necropolis_difficulty == "vaults_elf" then
-KMONS:  0 = place:Vaults:$ simulacrum
+KMONS:  0 = place:D:$ simulacrum
 KITEM:  o = ring of fire randart pre_id
 KITEM:  P = fire dragon scales randart
 KITEM:  ? = rimehorn talisman randart
