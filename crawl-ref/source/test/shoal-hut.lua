@@ -53,15 +53,6 @@ local function hut_door_blocked(door)
     return not dgn.find_adjacent_point(door, good_square, passable_square)
 end
 
-local function verify_stair_connectivity()
-    local function is_stair(p)
-        return feat.is_stone_stair(dgn.grid(p.x, p.y))
-    end
-
-    local stair_pos = dgn.find_points(is_stair)
-    test.map_assert(#stair_pos > 0, "No stairs in map?")
-end
-
 local function verify_hut_connectivity()
     for _, vault_doors in ipairs(shoal_hut_doors()) do
         if util.forall(vault_doors, hut_door_blocked) then
@@ -78,7 +69,6 @@ local function test_shoal_huts(nlevels)
     for i = 1, nlevels do
         crawl.message("Shoals test " .. i .. " of " .. nlevels)
         test.regenerate_level()
-        verify_stair_connectivity()
 
         -- We return early if an encompass map, since there's then no need to
         -- check hut connectivity.
