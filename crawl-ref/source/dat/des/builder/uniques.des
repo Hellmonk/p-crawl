@@ -105,10 +105,6 @@ NAME:   uniq_azrael
 DEPTH:  D:12-, Armory:$, Tower, !Tower:$, Workshop, !Workshop:$, Forge, !Forge:$
 : place_unique(_G, "Azrael band")
 
-NAME:   uniq_blork_the_orc
-DEPTH:  D:4-6
-: place_unique(_G, "Blork the orc")
-
 # Crazy Yuif's hut is bottom of this file.
 
 NAME:   uniq_duvessa
