@@ -275,7 +275,7 @@ MARKER:  F = lua:fog_machine { cloud_type = "foul pestilence", pow_min = 200, \
 {{
 dgn.delayed_decay(_G, 'd', 'base draconian corpse w:5 / ' ..
                            'shadow dragon corpse w:5 / ' ..
-                           'shadow dragon')
+                           'shadow dragon corpse')
 }}
 MAP
  .@xxxxxxxxxxxxxxxxxxxxxxx@.
