@@ -505,7 +505,7 @@ TAGS:   overwritable layout allow_dup unrand central layout_type_open_caves
   end
 
   -- Sanctum:5 always gets a polar layout.
-  if you.in_branch("zot") and you.at_branch_bottom() then
+  if you.in_branch("Sanctum") and you.at_branch_bottom() then
     polarise = true
   end
 
