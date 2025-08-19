@@ -35,7 +35,7 @@ const Branch branches[NUM_BRANCHES] =
       {} },
 
     { BRANCH_ORC, BRANCH_DUNGEON, 5, 5, 3, 10,
-      brflag::spotty,
+      brflag::none,
       DNGN_ENTER_ORC, DNGN_EXIT_ORC, NUM_FEATURES,
       "Armory", "the Armory", "Armory",
       nullptr,
