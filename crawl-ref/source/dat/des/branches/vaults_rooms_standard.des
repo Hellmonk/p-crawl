@@ -2367,40 +2367,6 @@ MAP
       %K%
 ENDMAP
 
-NAME:  nicolae_vaults_storage_closets_1
-TAGS:  vaults_room vaults_orient_w vaults_orient_e
-KITEM: L = % w:20 / nothing w:30
-KMONS: L = 0 / nothing w:15
-MAP
-xLLxLLxLLx
-x..x..x..x
-x+xx+xx+xx
-..........
-..........
-..........
-xx+xx+xx+x
-x..x..x..x
-xLLxLLxLLx
-ENDMAP
-
-NAME:    nicolae_vaults_storage_closets_2
-TAGS:    vaults_room vaults_orient_e
-KITEM:   L = % w:20 / nothing w:30
-KMONS:   L = 0 / nothing w:15
-SHUFFLE: DE
-SUBST:   D = +, E = x
-MAP
-L.E...D.Lx
-L.D...E.Lx
-xxx...xxxx
-L.x.......
-L.+.......
-L.x.......
-xxx...xxxx
-L.D...E.Lx
-L.E...D.Lx
-ENDMAP
-
 NAME:   nicolae_vaults_storage_closets_3
 TAGS:   vaults_room
 KITEM:  L = % w:20 / nothing w:30

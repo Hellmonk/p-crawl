@@ -255,18 +255,12 @@ set<string> &get_uniq_map_names()
 // TODO: datify into branch data
 int dgn_builder_x()
 {
-    if (is_hell_subbranch(you.where_are_you) && !at_branch_bottom())
-        return GXM / 2;
-    else
-        return GXM;
+    return GXM / 2;
 }
 
 int dgn_builder_y()
 {
-    if (is_hell_subbranch(you.where_are_you) && !at_branch_bottom())
         return GYM / 2;
-    else
-        return GYM;
 }
 
 int dgn_large_builder_x()
@@ -2257,10 +2251,6 @@ static bool _add_connecting_escape_hatches()
     if (!_add_feat_if_missing(_is_perm_down_stair, DNGN_ESCAPE_HATCH_DOWN))
         return false;
 
-    // FIXME: shouldn't depend on branch.
-    if (!player_in_branch(BRANCH_ORC))
-        return true;
-
     return _add_feat_if_missing(_is_upwards_exit_stair, DNGN_ESCAPE_HATCH_UP);
 }
 
@@ -4186,11 +4176,6 @@ static void _builder_items()
         items_levels *= 15;
         items_levels /= 10;
     }
-    else if (player_in_branch(BRANCH_ORC))
-    {
-        specif_type = OBJ_GOLD;  // Lots of gold in the orcish mines.
-        items_levels *= 2;       // Four levels' worth, in fact.
-    }
 
     for (i = 0; i < items_wanted; i++)
     {
@@ -5908,13 +5893,6 @@ static dungeon_feature_type _pick_an_altar()
         {
         case BRANCH_CRYPT:
             god = random_choose(GOD_KIKUBAAQUDGHA, GOD_YREDELEMNUL);
-            break;
-
-        case BRANCH_ORC: // There are a few heretics
-            if (one_chance_in(5))
-                god = random_choose(GOD_TROG, GOD_MAKHLEB, GOD_VEHUMET);
-            else
-                god = GOD_BEOGH;
             break;
 
         case BRANCH_ELF: // magic gods

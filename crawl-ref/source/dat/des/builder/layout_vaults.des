@@ -70,7 +70,7 @@ default-depth: Fortress
 # Apologies if this is just too little code.
 NAME: layout_vaults_omnibox
 DEPTH:  Armory, Workshop
-WEIGHT: 10
+WEIGHT: 1
 ORIENT: encompass
 TAGS: overwritable layout allow_dup unrand no_rotate no_pool_fixup
 TAGS: no_hmirror no_vmirror chance_vaults uniq_vaults_box layout_type_vaults
@@ -182,7 +182,6 @@ NAME: layout_vaults_big_cross
 DEPTH: Armory, Fortress
 WEIGHT: 10
 ORIENT: encompass
-CHANCE: 100%
 TAGS: overwritable layout allow_dup unrand no_rotate no_pool_fixup
 TAGS: no_hmirror no_vmirror chance_vaults layout_type_vaults
 : build_vaults_cross_layout(_G)
