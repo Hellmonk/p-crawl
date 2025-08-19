@@ -218,8 +218,7 @@ bool check_moveto_trap(const coord_def& p, const string &move_verb,
         if (prompted)
             *prompted = true;
         prompt = make_stringf("Really %s %s that %s?", move_verb.c_str(),
-                              (trap->type == TRAP_ALARM
-                               || trap->type == TRAP_PLATE) ? "onto"
+                              (trap->type == TRAP_ALARM) ? "onto"
                               : "into",
                               feature_description_at(p, false, DESC_BASENAME).c_str());
         if (!yesno(prompt.c_str(), true, 'n'))
@@ -7976,9 +7975,7 @@ bool player::shaftable() const
 // different effect from the player invokable ability.
 bool player::do_shaft()
 {
-    // disabled in descent mode
-    if (crawl_state.game_is_descent())
-        return false;
+    return false;
 
     if (!shaftable()
         || resists_dislodge("falling into an unexpected shaft"))

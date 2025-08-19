@@ -23,19 +23,6 @@
 #include "stringutil.h" // make_stringf
 #include "view.h" // flash_view_delay
 
-#if TAG_MAJOR_VERSION == 34
-static int _old_zot_clock(const string& branch_name) {
-    // The old clock was measured in turns (deca-auts), not aut.
-    static const string OLD_KEY = "ZOT_CLOCK";
-    if (!you.props.exists(OLD_KEY))
-        return -1;
-    CrawlHashTable &branch_clock = you.props[OLD_KEY];
-    if (!branch_clock.exists(branch_name))
-        return -1;
-    return branch_clock[branch_name].get_int();
-}
-#endif
-
 // Returns -1 if the player hasn't been in this branch before.
 static int& _zot_clock_for(branch_type br)
 {
@@ -44,16 +31,7 @@ static int& _zot_clock_for(branch_type br)
     // When entering a new branch, start with an empty clock.
     // (You'll get the usual time when you finish entering.)
     if (!branch_clock.exists(branch_name))
-    {
-#if TAG_MAJOR_VERSION == 34
-        // The old clock was measured in turns (deca-auts), not aut.
-        const int old_clock = _old_zot_clock(branch_name);
-        if (old_clock != -1)
-            branch_clock[branch_name].get_int() = old_clock;
-        else
-#endif
-            branch_clock[branch_name].get_int() = -1;
-    }
+        branch_clock[branch_name].get_int() = -1;
     return branch_clock[branch_name].get_int();
 }
 
@@ -93,11 +71,6 @@ int turns_until_zot()
     return turns_until_zot_in(you.where_are_you);
 }
 
-static int _zot_lifespan_div()
-{
-    return you.has_mutation(MUT_SHORT_LIFESPAN) ? 10 : 1;
-}
-
 // A scale from 0 to 3 of how much danger the player is in of
 // reaching the end of the zot clock. 0 is no danger, 3 is almost dead.
 int bezotting_level_in(branch_type br)
@@ -105,12 +78,12 @@ int bezotting_level_in(branch_type br)
     if (!_zot_clock_active_in(br))
         return 0;
 
-    const int remaining_turns = turns_until_zot_in(br) * _zot_lifespan_div();
-    if (remaining_turns < 100)
+    const int remaining_turns = turns_until_zot_in(br);
+    if (remaining_turns < 50)
         return 3;
-    if (remaining_turns < 500)
+    if (remaining_turns < 100)
         return 2;
-    if (remaining_turns < 1000)
+    if (remaining_turns < 250)
         return 1;
     return 0;
 }
@@ -140,35 +113,14 @@ bool should_fear_zot()
     return bezotted();
 }
 
-// Decrease the zot clock when the player enters a new level.
-void decr_zot_clock(bool extra_life)
+// Reset the zot clock when the player enters a new level.
+void reset_zot_clock()
 {
     if (!zot_clock_active())
         return;
     int &zot = _zot_clock();
 
-    const int div = _zot_lifespan_div();
-    if (zot == -1)
-    {
-        // new branch
-        zot = MAX_ZOT_CLOCK - ZOT_CLOCK_PER_FLOOR / div;
-    }
-    else
-    {
-        // old branch, new floor
-        if (bezotted())
-        {
-            if (extra_life)
-                mpr("As you die, Zot loses track of you.");
-            else
-                mpr("As you enter the new level, Zot loses track of you.");
-        }
-        zot = max(0, zot - ZOT_CLOCK_PER_FLOOR / div);
-    }
-#if TAG_MAJOR_VERSION == 34
-    if (you.species == SP_METEORAN)
-        update_vision_range();
-#endif
+    zot = 0;
 }
 
 static int _added_zot_time()
@@ -190,7 +142,7 @@ void incr_zot_clock()
 
     if (_zot_clock() >= MAX_ZOT_CLOCK)
     {
-        mpr("Zot's power touches on you...");
+        mpr("Your time has run out...");
         // Use your 'base' MHP (excluding forms, berserk, artefacts...)
         // to calculate loss, so that Dragon Form doesn't penalize extra HP
         // and players in unskilled talisman forms don't lose less HP.
@@ -198,42 +150,24 @@ void incr_zot_clock()
         const int mhp = get_real_hp(false, false);
         // However, use your current hp_max to set the max loss, so that you
         // can't go below 1 MHP ever.
-        const int loss = min(3 + mhp / 6, you.hp_max - 1);
+        const int loss = min(mhp / 3, you.hp_max - 1);
         // Take the note before decrementing max HP, so the notes have cause
         // before effect. Not sure if this should use current or base MHP.
         take_note(Note(NOTE_ZOT_TOUCHED, you.hp_max, you.hp_max - loss));
         dec_max_hp(loss);
         interrupt_activity(activity_interrupt::force);
 
-        set_turns_until_zot(you.has_mutation(MUT_SHORT_LIFESPAN) ? 200 : 1000);
+        set_turns_until_zot(50);
     }
 
     const int lvl = bezotting_level();
     if (old_lvl >= lvl)
         return;
 
-    switch (lvl)
-    {
-        case 1:
-            mpr("You have lingered too long. Zot senses you. "
-                "Dive deeper or flee this branch before you suffer!");
-            break;
-        case 2:
-            mpr("Zot draws nearer. "
-                "Dive deeper or flee this branch before you suffer!");
-            break;
-        case 3:
-            mpr("Zot has nearly found you. Suffering is imminent. "
-                "Descend or flee this branch!");
-            break;
-    }
+    if (lvl == 3)
+        mprf("Time is running out! Proceed quickly to the next floor.");
 
-#if TAG_MAJOR_VERSION == 34
-    if (you.species == SP_METEORAN)
-        update_vision_range();
-#endif
-
-    take_note(Note(NOTE_MESSAGE, 0, 0, "Glimpsed the power of Zot."));
+    take_note(Note(NOTE_MESSAGE, 0, 0, "Ran out of time."));
     interrupt_activity(activity_interrupt::force);
 }
 
@@ -244,18 +178,12 @@ void set_turns_until_zot(int turns_left)
 
     int &clock = _zot_clock();
     clock = MAX_ZOT_CLOCK - turns_left * BASELINE_DELAY;
-#if TAG_MAJOR_VERSION == 34
-    if (you.species == SP_METEORAN)
-        update_vision_range();
-#endif
 }
 
 
 bool gem_clock_active()
 {
-    return !player_has_orb()
-           && !crawl_state.game_is_sprint()
-           && !crawl_state.game_is_descent();
+    return false;
 }
 
 /// Destroy all gems on the current floor. Note that there may be multiple, if

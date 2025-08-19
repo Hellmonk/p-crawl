@@ -45,4 +45,3 @@ class writer;
 class reader;
 void marshallUniqueAnnotations(writer& outf);
 void unmarshallUniqueAnnotations(reader& inf);
-bool connected_branch_can_exist(branch_type br);

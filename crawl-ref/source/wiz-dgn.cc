@@ -111,12 +111,6 @@ void wizard_level_travel(bool down)
 
     if (down)
         down_stairs(stairs, false, false);
-    else if (stairs == DNGN_EXIT_VAULTS && vaults_is_locked())
-    {
-        unlock_vaults();
-        up_stairs(stairs, false);
-        lock_vaults();
-    }
     else
         up_stairs(stairs, false);
 
@@ -360,11 +354,6 @@ void wizard_list_branches()
         {
             mprf(MSGCH_DIAGNOSTICS, "Branch %d (%s) is on %s",
                  it->id, it->longname, brentry[it->id].describe().c_str());
-        }
-        else if (is_random_subbranch(it->id))
-        {
-            mprf(MSGCH_DIAGNOSTICS, "Branch %d (%s) was not generated "
-                 "this game", it->id, it->longname);
         }
     }
 

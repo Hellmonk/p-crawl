@@ -372,16 +372,12 @@ static string _get_unseen_branches()
     char buffer[100];
     string disp;
 
-    const bool descent = crawl_state.game_is_descent();
-
     for (branch_iterator it; it; ++it)
     {
         if (it->id < BRANCH_FIRST_NON_DUNGEON)
             continue;
 
         const branch_type branch = it->id;
-        if (!connected_branch_can_exist(branch))
-            continue;
 
         if (branch == BRANCH_VESTIBULE || !is_connected_branch(branch))
             continue;
@@ -396,61 +392,25 @@ static string _get_unseen_branches()
             if (parent == NUM_BRANCHES)
                 continue;
 
-            if (descent)
-            {
-                if (!in_descent_parent(branch))
+            if (!in_descent_parent(branch))
                     continue;
 
-                bool in_dungeon = you.where_are_you == BRANCH_DUNGEON;
+            bool in_dungeon = you.where_are_you == BRANCH_DUNGEON;
 
-                snprintf(buffer, sizeof buffer,
+            snprintf(buffer, sizeof buffer,
                     "<darkgrey>%6s: %s:%d</darkgrey>",
                     it->abbrevname,
                     branches[you.where_are_you].abbrevname,
                     in_dungeon ? 12 : branches[you.where_are_you].numlevels);
 
-                disp += buffer;
-                num_printed_branches++;
+            disp += buffer;
+            num_printed_branches++;
 
-                disp += (num_printed_branches % 4) == 0
+            disp += (num_printed_branches % 4) == 0
                         ? "\n"
                         // Each branch entry takes up 20 spaces
                         : string(20 + 21 - strlen(buffer), ' ');
-            }
-            else
-            {
-                level_id lid(parent, 0);
-                lid = find_deepest_explored(lid);
-                if (lid.depth >= it->mindepth)
-                {
-                    if (it->mindepth != it->maxdepth)
-                    {
-                        snprintf(buffer, sizeof buffer,
-                            "<darkgrey>%6s: %s:%d-%d</darkgrey>",
-                                it->abbrevname,
-                                branches[parent].abbrevname,
-                                it->mindepth,
-                                it->maxdepth);
-                    }
-                    else
-                    {
-                        snprintf(buffer, sizeof buffer,
-                            "<darkgrey>%6s: %s:%d</darkgrey>",
-                                it->abbrevname,
-                                branches[parent].abbrevname,
-                                it->mindepth);
-                    }
 
-                    disp += buffer;
-                    num_printed_branches++;
-
-                    disp += (num_printed_branches % 4) == 0
-                            ? "\n"
-                            // Each branch entry takes up 20 spaces
-                            : string(20 + 21 - strlen(buffer), ' ');
-                }
-
-            }
         }
     }
 
@@ -1132,25 +1092,6 @@ void unmarshallUniqueAnnotations(reader& inf)
         level.load(inf);
         auto_unique_annotations.insert(make_pair(name, level));
     }
-}
-
-/**
- * Can the player encounter the given connected branch, given their
- * knowledge of which have been seen so far?
- * @param br A connected branch.
- * @returns True if the branch can exist, false otherwise.
-*/
-bool connected_branch_can_exist(branch_type br)
-{
-    if (br == BRANCH_SPIDER && stair_level.count(BRANCH_SNAKE)
-        || br == BRANCH_SNAKE && stair_level.count(BRANCH_SPIDER)
-        || br == BRANCH_SWAMP && stair_level.count(BRANCH_SHOALS)
-        || br == BRANCH_SHOALS && stair_level.count(BRANCH_SWAMP))
-    {
-        return false;
-    }
-
-    return true;
 }
 
 /**

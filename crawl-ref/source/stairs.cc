@@ -387,7 +387,7 @@ static bool _check_fall_down_stairs(const dungeon_feature_type ftype, bool going
     if (!you.airborne()
         && you.confused()
         && !feat_is_escape_hatch(ftype)
-        && !crawl_state.game_is_descent()
+        && !true
         && coinflip())
     {
         const char* fall_where = "down the stairs";
@@ -411,81 +411,6 @@ static bool _check_fall_down_stairs(const dungeon_feature_type ftype, bool going
     }
 
     return false;
-}
-
-static void _rune_effect(dungeon_feature_type ftype)
-{
-    vector<int> runes;
-    for (int i = 0; i < NUM_RUNE_TYPES; i++)
-        if (you.runes[i])
-            runes.push_back(i);
-
-    ASSERT(runes.size() >= 1);
-    shuffle_array(runes);
-
-    // Zot is extra flashy.
-    if (ftype == DNGN_ENTER_ZOT)
-    {
-        ASSERT(runes.size() >= 3);
-
-        mprf("You insert the %s rune into the lock.", rune_type_name(runes[2]));
-#ifdef USE_TILE_LOCAL
-        view_add_tile_overlay(you.pos(), tileidx_zap(rune_colour(runes[2])));
-        viewwindow(false);
-        update_screen();
-#else
-        flash_view(UA_BRANCH_ENTRY, rune_colour(runes[2]));
-#endif
-        mpr("The lock glows eerily!");
-        // included in default force_more_message
-
-        mprf("You insert the %s rune into the lock.", rune_type_name(runes[1]));
-        big_cloud(CLOUD_BLUE_SMOKE, &you, you.pos(), 20, 7 + random2(7));
-        viewwindow();
-        update_screen();
-        mpr("Heavy smoke blows from the lock!");
-        // included in default force_more_message
-    }
-
-    mprf("You insert the %s rune into the lock.", rune_type_name(runes[0]));
-
-    if (silenced(you.pos()))
-        mpr("The gate opens wide!");
-    else
-        mpr("With a soft hiss the gate opens wide!");
-    // these are included in default force_more_message
-}
-
-static void _maybe_use_runes(dungeon_feature_type ftype)
-{
-    switch (ftype)
-    {
-    case DNGN_ENTER_ZOT:
-        if (!you.level_visited(level_id(BRANCH_ZOT, 1)) && !crawl_state.game_is_descent())
-            _rune_effect(ftype);
-        break;
-    case DNGN_EXIT_VAULTS:
-        if (vaults_is_locked())
-        {
-            unlock_vaults();
-            _rune_effect(ftype);
-        }
-        break;
-    default:
-        break;
-    }
-}
-
-static void _gauntlet_effect()
-{
-    // already doomed
-    if (you.stasis())
-        return;
-
-    mprf(MSGCH_WARN, "The nature of this place prevents you from teleporting.");
-
-    if (you.get_base_mutation_level(MUT_TELEPORT))
-        mpr("You feel stable on this floor.");
 }
 
 static void _hell_effects()
@@ -674,10 +599,6 @@ static level_id _travel_destination(const dungeon_feature_type how,
         mpr("The shaft crumbles and collapses.");
         _maybe_destroy_shaft(you.pos());
     }
-
-    // Maybe perform the entry sequence (we check that they have enough runes
-    // in main.cc: _can_take_stairs())
-    _maybe_use_runes(how);
 
     // Markers might be deleted when removing portals.
     const string dst = env.markers.property_at(you.pos(), MAT_ANY, "dst");
@@ -1021,15 +942,6 @@ void floor_transition(dungeon_feature_type how,
         }
         print_gem_warnings(gem_for_branch(branch), 0);
 
-        if (how == DNGN_ENTER_VAULTS && !runes_in_pack())
-        {
-            lock_vaults();
-            mpr("The door slams shut behind you.");
-        }
-
-        if (branch == BRANCH_GAUNTLET)
-            _gauntlet_effect();
-
         if (branch == BRANCH_ARENA)
             okawaru_duel_healing();
 
@@ -1081,10 +993,6 @@ void floor_transition(dungeon_feature_type how,
         _new_level_amuses_xom(how, whence, shaft,
                               (shaft ? whither.depth - old_level.depth : 1),
                               !forced);
-
-        // scary hack!
-        if (crawl_state.game_is_descent() && !env.properties.exists(DESCENT_STAIRS_KEY))
-            load_level(how, LOAD_RESTART_GAME, old_level);
     }
 
     // This should maybe go in load_level?
@@ -1335,6 +1243,22 @@ level_id stair_destination(dungeon_feature_type feat, const string &dst,
     return level_id();
 }
 
+
+
+
+static void _lock_stairs()
+{
+    for (rectangle_iterator ri(0); ri; ++ri)
+    {
+        const dungeon_feature_type feat = env.grid(*ri);
+        if (feat_is_travelable_stair(feat) && feat_stair_direction(feat) == CMD_GO_DOWNSTAIRS)
+        {
+            temp_change_terrain(*ri, DNGN_SEALED_STAIRS_DOWN, INFINITE_DURATION,
+                                TERRAIN_CHANGE_DOOR_SEAL);
+        }
+    }
+}
+
 void down_stairs(dungeon_feature_type force_stair, bool force_known_shaft, bool update_travel_cache)
 {
     take_stairs(force_stair, false, force_known_shaft, update_travel_cache);
@@ -1411,6 +1335,8 @@ void new_level(bool restore)
 
     if (restore)
         return;
+
+    _lock_stairs();
 
     cancel_polar_vortex();
 

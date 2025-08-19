@@ -170,7 +170,7 @@ bool monster_habitable_grid(monster_type mt, const coord_def& pos)
 
 static int _ood_fuzzspan(level_id &place)
 {
-    if (place.branch != BRANCH_DUNGEON || place.depth >= 5)
+    if (place.branch != BRANCH_DUNGEON)
         return 5;
 
     // Literally any OOD is too nasty for D:1.

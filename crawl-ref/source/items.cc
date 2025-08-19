@@ -1926,20 +1926,11 @@ static bool _is_disabled_gem(gem_type gem)
     }
 }
 
-static bool _is_ungenerated_gem(gem_type gem)
-{
-    branch_type br = branch_for_gem(gem);
-
-    return !brentry[br].is_valid() && is_random_subbranch(br);
-}
-
 static bool _got_all_gems()
 {
     for (int gem = GEM_DUNGEON; gem < NUM_GEM_TYPES; ++gem)
     {
         if (_is_disabled_gem(static_cast<gem_type>(gem)))
-            continue;
-        if (_is_ungenerated_gem(static_cast<gem_type>(gem)))
             continue;
         if (!you.gems_found[static_cast<gem_type>(gem)])
             return false;

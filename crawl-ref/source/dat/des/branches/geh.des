@@ -20,6 +20,7 @@ function geh_setup(e)
 end
 }}
 
+
 ##############################################################################
 # Gehenna
 ##############################################################################
@@ -40,22 +41,19 @@ ENDMAP
 
 ##############################################################################
 
-NAME:   lemuel_hellion_isle
-TAGS:   no_monster_gen
-DEPTH:  Geh
-KMONS:  1 = hellion
-KMONS:  2 = brimstone fiend
-SUBST:  L = l@, 1 = l:2 1
-KPROP:  12 = no_tele_into
-: decorative_floor(_G, '2', "infernal standard")
+NAME:  lemuel_hellion_isle
+DEPTH: Geh
+MONS:  hellion, brimstone fiend
+SUBST: L = l.
+SUBST: 1 = l:2 1
 MAP
       lL
      llL
     LlLLL
-   LLlllL
-llLLllllLLL
+   LLllLL
+llLLLlllLLL
 LllllllllllLL
-LLllll11lllllLL
+LLLlll11lllllLL
  LLLll111llllL
   LLlll121llLL
   Lllll111lLL
@@ -72,7 +70,7 @@ NAME:    hangedman_generic_boss_arena
 TAGS:    no_monster_gen
 DEPTH:   Geh, !Geh:$
 ORIENT:  encompass
-MONS:    salamander tyrant, hellion, balrug, oni incarcerator
+MONS:    salamander tyrant, hellion, balrug, balrug
 MONS:    fire giant, searing wretch, hell hog
 KFEAT:   L = l
 SHUFFLE: dD, eE / fF / 56, 56 / 65 / 55 / 66 / 77 / '', ABC / 234 / <<<, 234 / 322
@@ -105,36 +103,32 @@ ENDMAP
 
 NAME:    hangedman_hellfire_club
 TAGS:    transparent no_monster_gen
-DEPTH:   Geh, !Geh:$, Zot:1-4
-MONS:    red draconian scorcher, red draconian stormcaller
-MONS:    hellion, oni incarcerator
-KMONS:   L = patrolling creeping inferno / nothing w:15
+DEPTH:   Geh, !Geh:$
+MONS:    red draconian scorcher
+MONS:    red draconian stormcaller
+MONS:    hellion
 ITEM:    any potion good_item
+KMONS:   L = patrolling creeping inferno / nothing w:30
 KFEAT:   L = l
-SHUFFLE: 13 / 13 / 31, 24 / 24 / 42
-SHUFFLE: 12 / 12 / 12 / 11 / 11 / 22, {}~- / {}~- / -~{}
-SUBST:   { = {( <:4, }) = } >:4, ~- = .
-: if you.in_branch("Geh") then
-SUBST:   d$ = ., 2 = 1
-: else
-SUBST:   L = l, 4 = 3
-: end
-SUBST:   g : GGg
 KPROP:   l = no_cloud_gen
-: vault_metal_statue_setup(_G, "g", "fiery conduit")
+SHUFFLE: 13, 24, 12 / 12 / 12 / 11 / 11 / 22, {}~- / {}~- / -~{}
+SUBST:   4 = 3, { = { <:2, } = } >:2, ~- = .
+: if you.in_branch("Geh") then
+SUBST:   d$ = .
+: end
 MAP
 xxxxxxxx.@.xxxxxxxx
 xccccccxx.xxccccccx
 xcd$$1cc...cc2$$dcx
-xcd$3cc.....cc$$dcx
-xc$$cc..x.x..cc$$cx
-xc~cc..Gxlxg..cc.cx
+xcd$$cc.....cc$$dcx
+xc.~cc..x.x..cc..cx
+xc.cc..GxlxG..cc.cx
 xc....xxLllxx....cx
 xc.{...llLll...}.cx
 xc....xxllLxx....cx
-xc.cc..gxlxG..cc-cx
-xc$$cc..x.x..cc$$cx
-xcd$$cc.....cc2$dcx
+xc.cc..GxlxG..cc.cx
+xc..cc..x.x..cc-.cx
+xcd$$cc.....cc$$dcx
 xcd$$3cc...cc4$$dcx
 xccccccxx.xxccccccx
 xxxxxxxx.@.xxxxxxxx
@@ -143,8 +137,8 @@ ENDMAP
 ##############################################################################
 
 NAME:    nicolae_geh_sunburst
-TAGS:    transparent extra decor
 DEPTH:   Geh, !Geh:$
+TAGS:    transparent extra decor
 SHUFFLE: abcdefgh/!''''!!!/!!''!!''/!''!!''!/!'!'!'!'/!!!'!!!'/!!!!!!!'/''''''''
 SUBST:   { = }}}{
 SUBST:   'abcd = ., !efgh = l
@@ -249,11 +243,10 @@ MARKER:  " = lua:fog_machine {cloud_type = "flame", \
              pow_min = 8, pow_max = 10, delay = 100, \
              size_min = 1, size_max = 1, start_clouds = 1, excl_rad = 0 }
 FTILE:   " = floor_volcanic
-: decorative_floor(_G, '?', "infernal standard")
 MAP
        cc@.c
    DDDcc...cc
-  DD``C..?..c
+  DD``C.....c
   D```C.....ccccccc
   ccc-cc+c+cccccGGc
   cclllc........llc
@@ -269,24 +262,23 @@ cll...."...clllcccc
 cll........clllcc
 cGGccccc+c+cc-ccc
 ccccccc.....C```D
-      c..?..C``DD
+      c.....C``DD
       cc...ccDDD
        c.@cc
 ENDMAP
 
-NAME:   nicolae_geh_amphitheater
-TAGS:   transparent extra decor
-DEPTH:  Geh:2-
-: decorative_floor(_G, 'f', "infernal standard")
+NAME: nicolae_geh_amphitheater
+TAGS: extra decor transparent
+DEPTH: Geh, !Geh:1
 MAP
    lllll
  lllclclll
  lclllllcl
-llll.f.lll
+llll...lll
 lcl......@
 lll..{...@
 lcl......@
-llll.f.lll
+llll...lll
  lclllllcl
  lllclclll
    lllll
@@ -326,9 +318,8 @@ DEPTH:  Geh, !Geh:$
 KMONS:  } = 9 / 8
 KFEAT:  } = }
 NSUBST: DEON = 1=+, FHOP = 1=+, JKPQ = 1=+, LMNQ = 1=+, DEFHJKLM = 1=+, \
-        Z = + / +cc, } = }9ff / 9f
+        Z = + / +cc, } = }9.. / 9.
 SUBST:  DEFHJKLMNOPQ = c
-: decorative_floor(_G, 'f', "infernal standard")
 MAP
   cEc   cFc
  cc.cc cc.cc
@@ -409,11 +400,10 @@ ENDMAP
 NAME:    nicolae_geh_isolated_escape
 TAGS:    no_exits
 DEPTH:   Geh, !Geh:$
-SHUFFLE: DE, FG
-NSUBST:  D = 1:+ / *:n
-SUBST:   E = c, G = .
-KMASK:   .>F = no_monster_gen
-: decorative_floor(_G, 'F', "infernal standard")
+KMASK:   .> = no_monster_gen
+SHUFFLE: DE
+NSUBST:  D = + / n
+SUBST:   E = c
 MAP
           ll
         llllll
@@ -421,9 +411,9 @@ MAP
 lllllllllllllll
 lllllccDcclllll
 llllcE...Ecllll
-llllc..G..clll
-llllD.F>F.Dlll
- lllc..G..cll
+llllc.....clll
+llllD..>..Dlll
+ lllc.....cll
   llcE...Ecll
    llccDccllll
     llllllllll
@@ -432,27 +422,26 @@ llllD.F>F.Dlll
        lllll
 ENDMAP
 
-NAME:   nicolae_geh_lava_lounge
-TAGS:   transparent
-DEPTH:  Geh
+NAME:  nicolae_geh_lava_lounge
+TAGS:  transparent
+DEPTH: Geh
 : if you.depth() == 1 then
-SUBST:  S = }G
-: elseif you.depth() ~= dgn.br_depth(you.branch()) then
-SUBST:  S = {}GG
+SUBST: S = }G
+: elseif you.depth_fraction() < 1 then
+SUBST: S = {}GG
 : else
-SUBST:  S = {G
+SUBST: S = {G
 : end
-SUBST:  D = +c@l, 0 = .009, 9 = 998
-: decorative_floor(_G, 'f', "infernal standard")
+SUBST: D = +c@l, 0 = .009, 9 = 998
 MAP
    ccc+ccc
  cccl...lccc
  clll...lllc
 cclll.0.lllcc
 cllll...llllc
-c......f....c
+c...........c
 D..0..S..0..D
-c....f......c
+c...........c
 cllll...llllc
 cclll.0.lllcc
  clll...lllc
@@ -488,19 +477,18 @@ TAGS:   transparent
 DEPTH:  Geh
 NSUBST: D = + / c, E = + / c, F = + / c, H = + / c
 SUBST:  L = l.
-: decorative_floor(_G, 'f', "infernal standard")
 MAP
  llL.......Lll
 llll.EEEEE.llll
 lllcEE...EEclll
 Llcc.......cclL
-..D.f.LLL...F..
+..D...LLL...F..
 .DD..LlllL..FF.
 .D..LlllllL..F.
 .D..LlllllL..F.
 .D..LlllllL..F.
 .DD..LlllL..FF.
-..D...LLL.f.F..
+..D...LLL...F..
 Llcc.......cclL
 lllcHH...HHclll
 llll.HHHHH.llll
@@ -565,11 +553,11 @@ MAP
 .lcl..LLlllcc
 .LlLM..MLLllcc
 ...M.....MLllc
-cL...x....MLlcc
-clL.....x..Lllc
+cL........MLlcc
+clL........Lllc
 clLM...{...MLlc
-cllL..x.....Llc
-cclLM....x...Lc
+cllL........Llc
+cclLM........Lc
  cllLM.....M...
  ccllLLM..MLlL.
   cclllLL..lcl.
@@ -581,7 +569,6 @@ NAME:  nicolae_geh_niches_of_the_damned
 TAGS:  transparent
 DEPTH: Geh, !Geh:$
 KMONS: 2 = stoker / searing wretch / spectral thing
-KMONS: 3 = oni incarcerator
 SUBST: ` = lx
 MAP
 xxxxxxxxxxxxxxx
@@ -590,7 +577,7 @@ xxxlx2xlx`xxx`x
 xxx2...2xlx`xlx
 x`x`...``2xlx2x
 xl2.......`2`.@
-x`x3.}........@
+x`x..}........@
 xl2.......`2`.@
 x`x`...``2xlx2x
 xxx2...2xlx`xlx
@@ -602,16 +589,14 @@ ENDMAP
 NAME:    nicolae_geh_realm_of_the_lava_sea
 DEPTH:   Geh:2-, !Geh:$
 ORIENT:  encompass
-KMONS:   f = 9
 KMONS:   } = 8
 KFEAT:   ~ = endless_lava
 KFEAT:   } = }
+: set_border_fill_type('endless_lava')
 SHUFFLE: DE, FH, JK/LM, NO/PQ/RS, pq/rs, Zz/ay, '"/-_
 SUBST:   DFJNPpZ' = l, EHLRra- = ., KOQqz" = c, MSsy_ = +, ` = l., \
          0 = 0009, 9 = 9998, ! = }.., 7 = cccccccl
-NSUBST:  } = 1:} / 3:f / *:9
-: decorative_floor(_G, 'f', "infernal standard")
-: set_border_fill_type('endless_lava')
+NSUBST:  } = } / 9
 MAP
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~llllllllllllllllcccccllllllllllllll~
@@ -676,50 +661,11 @@ MAP
       .....
 ENDMAP
 
-# Combining cantos 12 and 13 of the Inferno: Phlegethon, the river of boiling
-# blood, and the Forest of Suicides. Centaurs wouldn't be much of a threat at
-# this point, so instead those immersed in Phlegethon are shot by ancient
-# champions. Actually, you'll be the one getting shot by ancient champions.
-# I may be taking liberties with the source material. Much of the forest will
-# probably be burnt up by the stokers, which is fine.
-NAME:   nicolae_geh_seventh_circle
-TAGS:   transparent
-DEPTH:  Geh
-ORIENT: centre
-KMONS:  1 = ancient champion ; longbow ego:flaming | arbalest ego:flaming
-KMONS:  2 = stoker
-KMONS:  3 = spectral harpy
-KFEAT:  t = demonic_tree
-KFEAT:  2 = l
-SUBST:  L = l., 1 = 11., 2 = 22l, T = tttt3, 7 = tt_
-CLEAR:  _
-TILE:   t = dngn_demonic_tree_1 w:1 / dngn_demonic_tree_2 w:3 / \
-            dngn_demonic_tree_3 w:3 / dngn_demonic_tree_4 / \
-            dngn_demonic_tree_5 / dngn_demonic_tree_16 w:1
-MAP
-    77777777777ttt
-  77ttttttttttttTTT...
- 7tttTTTtTTTtttTT.....
- 7tTTT.TTT.TTtTT..1ll.
- TTT....1...TTT...llL.
- .....Ll2lL...1..l2L..
-...1Llllll2lL..LllL...
-...LllL..Ll2lllllL1...
-..L2l...1..Ll2lL.....
-.Lll...TTT...1....TTT
-.ll1..TTtTT.TTT.TTTt7
-.....TTtttTTTtTTTttt7
-...TTTtttttttttttt77
-    ttt77777777777
-ENDMAP
-
 NAME:   nicolae_geh_split_lavaduct
 TAGS:   transparent
 DEPTH:  Geh
 ORIENT: centre
-KMONS:  8 = 8
 SUBST:  ` = lc, L = l.
-: decorative_floor(_G, '8', "infernal standard")
 MAP
         ...........
         ....c+c....
@@ -767,21 +713,19 @@ KMONS:   J = hell hog
 KMONS:   K = hellion
 KMONS:   L = crystal echidna
 KMONS:   M = iron dragon
-KMONS:   N = oblivion hound
+KMONS:   N = iron dragon
 # Only one type of crab in the menagerie
 KMONS:   O = ghost crab
 KMONS:   P = apocalypse crab
 KMONS:   Q = fire crab
 # The hellephants kept blinking out of their enclosure, they get to roam around
-KMONS:   1} = fire giant w:8 / balrug w:6 / \
-              hellephant w:4 / oni incarcerator w:2
+KMONS:   1} = balrug w:8 / fire giant w:8 / hellephant w:4 / nothing w:5
 KMONS:   2 = salamander tyrant
-KMONS:   3 = sin beast / nothing w:5
+KMONS:   3 = nothing w:5
 KFEAT:   } = }
 KMASK:   JKLMNOPQ- = opaque
 KMASK:   JKLMNOPQ- = no_monster_gen
 SHUFFLE: JKLMNO, OPQ
-SUBST:   1 = 1:24 .:5
 NSUBST:  J = 2=J / 2=J- / -, K = 2=K / 2=K- / -, L = 2=L / 2=L- / -, \
          M = 2=M / 2=M- / -, N = 2=N / 2=N- / -, O = 2=O / 2=O- / -, \
          P = 2=P / 2=P- / -, Q = 2=Q / 2=Q- / -, } = } / 1
@@ -801,29 +745,6 @@ cLLLl...lMMMcl.lc
 ccccc.@.ccccccccc
 ENDMAP
 
-NAME:    tekkud_geh_sculpture_garden
-TAGS:    transparent
-DEPTH:   Geh
-MONS:    red draconian scorcher, salamander tyrant, oni incarcerator
-MONS:    hellion, balrug, hellephant, searing wretch
-SUBST:   G = GGx, g = GGx..
-SHUFFLE: 123, 4567
-KPROP:   G' = bloody
-TILE:    G = dngn_statue_demonic_bust / dngn_statue_imp / \
-             dngn_statue_ancient_evil / dngn_statue_dragon w:30
-MAP
-GGG'GGGG
-G5....4G
-G.g.6g.G
-G7g73g.G
-G.g1.g.'
-'.g.2g.G
-'.g37g7G
-Ggg6.g.G
-G4....5G
-GGGG'GGG
-ENDMAP
-
 ##############################################################################
 # Asmodeus (Gehenna) - the original
 ##############################################################################
@@ -831,9 +752,8 @@ ENDMAP
 NAME:   geh_old
 TAGS:   no_rotate
 ORIENT: encompass
-MONS:   patrolling Asmodeus, brimstone fiend
-MONS:   balrug, searing wretch / stoker w:1, oni incarcerator
-NSUBST: { = 1:{ / *:., 3 = 1 = 5 3:1 / *:3
+MONS:   patrolling Asmodeus, brimstone fiend, Balrug, searing wretch / stoker w:1
+NSUBST: { = 1:{ / *:.
 : serpent_of_hell_setup(_G)
 : geh_setup(_G)
 MAP
@@ -908,12 +828,12 @@ NAME:   geh_mu
 ORIENT: encompass
 TAGS:   no_rotate
 MONS:   patrolling Asmodeus, brimstone fiend
-MONS:   balrug, searing wretch, hellion, fire giant, hellephant
-KMONS:  8 = oni incarcerator
+MONS:   balrug, searing wretch, hellion, fire giant
+KMONS:  7 = hellephant
 # Place one Serpent in the inner circle.
 : serpent_of_hell_setup(_G)
 KFEAT:  D = lava
-NSUBST: X = 1:D / *:l, 8 = 1 = 8 4:1 / 1 = 4 8:1 / *:4
+NSUBST: X = 1:D / *:l
 SUBST:  4 = 3445677, % = $|
 SUBST:  " : """.l , " : ""; , " = .l , ; = ...l
 SUBST:  ' : '''.x , ' : ''; , ' = .x , ; = ...x
@@ -936,12 +856,12 @@ x'."llllv.v....lllllllccc..........ccccccccccclllllllll....v.vlll".'xx
 x'."llllv.v....lllllllccc..........c..c....ccclllllllll....v.vlll"..'x
 x'."llllv.v...lllcccccc.+..........c..+..1.cccllllllllll...v.vllll".'x
 x'.."lllv.v...lllc$$$$c.+..........c..c....cccccccclllll...v.vllll".{x
-xx."llllv.v...lllc$$$$c.c.48....84.c..c2.2.c|||.nOclllll...v.vllll".'x
+xx."llllv.v...lllc$$$$c.c.44....44.c..c2.2.c|||.nOclllll...v.vllll".'x
 x'.."lllv.v...lllc$2..c.cccccccccccc..c....c|||.n.clllll...v.vllll".'x
 x'.."lllv.v...lllc$...c.+..........c..c....c|||.n+clllll...v.vlll"..'x
 x'.."lllv.v...lllcccc+c.+..4..vvvv.c..cc++cc......clllll...v.vll"...'x
 x'."llllv.v...llllllc.ccc.....n||+.c..c....c.%%%%%clllll...v.vll"...'x
-x'.."lllv.v...llllllc.ccc..8..n||+.c..c%%%.c.%%%%%clllll...v.vll"...'x
+x'.."lllv.v...llllllc.ccc..4..n||+.c..c%%%.c.%%%%%clllll...v.vll"...'x
 x'.."lllv.v...llllllc...+.....vvvv.c..c%%%.+.%%%%%clllll...v.vll"...'x
 xx.."lllv.v....lllllccccc..........c..c%%%.c.%%%%%cllll....v.vll"...'x
 xx.."lllv.v....lllllcccccccc+ccccccc..cccccc.%%%%%cllll....v.vll"...'x
@@ -961,7 +881,7 @@ x'.."lvv.4.++............................................++.4.vvl"..'x
 x'."llvv.4.vvvvvnnnvvvvvvnnnvvvvvv+++vvvvvvnnnvvvvvvnnnvvvv.4.vvll".'x
 x'."llvv...vvvvvnnnvvvvvvnnnvvvvvv+++vvvvvvnnnvvvvvvnnnvvvv...vvll".'x
 x'.."lvvvvvvvllllllllllllllllllll.....lllllllllllllllllllvvvvvvvll".'x
-x'.."llvvvvvlllllllllllllllllllll.8.8.llllllllllllllllllllvvvvvll"..'x
+x'.."llvvvvvlllllllllllllllllllll.4.4.llllllllllllllllllllvvvvvll"..'x
 x'.."llllllllllllllllllllllllllll.....llllllllllllllllllllllllll"".'xx
 x'..."lllllllllllllllllllllllllll.....lllllllllllllllllllllllll"..'xxx
 x'..."lllllllllllllllllllllllllll.....lllllllllllllllllllllllll".'xxxx
@@ -1098,13 +1018,11 @@ NAME:    geh_grunt
 ORIENT:  encompass
 MONS:    patrolling Asmodeus, Brimstone Fiend, balrug
 MONS:    hellion, searing wretch, fire giant, salamander tyrant / stoker w:1
-KMONS:   8 = oni incarcerator
 KMONS:   9 = molten gargoyle
-KFEAT:   L = endless_lava
 SHUFFLE: {<
 SUBST:   - = ll.
 SUBST:   _ = ..l
-NSUBST:  9 = 1 = 8 9:1 / 1 = 9 8:1 / *:9
+KFEAT:   L = endless_lava
 : serpent_of_hell_setup(_G)
 : set_border_fill_type("endless_lava")
 : geh_setup(_G)
@@ -1183,8 +1101,7 @@ ENDMAP
 
 ##############################################################################
 # Asmodeus (Gehenna) by Lightli
-# XXX: Disabled pending rebalancing and updated monsters.
-# Probably should just cut it in half for Gehenna encompass vaults?
+# XXX: Disabled pending rebalancing. Needs new monsters now
 ##############################################################################
 
 NAME: lightli_geh_unto_the_cruel
@@ -1200,7 +1117,7 @@ NSUBST: 4  = 2:4 / *:.
 KFEAT:  g  = iron_grate
 NSUBST: l  = 3:L / *:l
 KMONS:  G  = cacodemon
-KMONS:  L  = laughing skull
+KMONS:  L  = cacodemon
 KFEAT:  GL = lava
 KITEM:  A  = any weapon good_item / any armour good_item
 : serpent_of_hell_setup(_G)
@@ -1256,13 +1173,10 @@ MONS:    hellion, fire giant, salamander tyrant, hell hog
 KMONS:   y = creeping inferno / nothing w:30
 KMONS:   Y = molten gargoyle
 KMONS:   zZ = searing wretch / hellephant / stoker w:2
-KMONS:   & = patrolling brimstone fiend
 KITEM:   $ = $ no_pickup
-KITEM:   M = *
-KFEAT:   ~ = .
-KFEAT:   yYZ& = lava
+KFEAT:   yYZ = lava
 KFEAT:   L = endless_lava
-# Swap trios of salamander tyrants with fire giants.
+# Swap trios of hell knights with fire giants.
 SHUFFLE: 5A6B / 5A6B / 6B5A
 SUBST:   A = ., B = 6
 # Just some pillar, door, and floor/wall/lava edge randomization.
@@ -1272,10 +1186,9 @@ SHUFFLE: EF / EF / FE, GH / GH / HG, IJ / IJ / JI
 SHUFFLE: PQ / PQ / QP, RS / RS / SR, TU / TU / UT
 SUBST:   X : ^<>, ^ = xxx., < = xx., > = x.
 SUBST:   ` : `'", ` = ll., ' = l., " = l..
-SUBST:   =! = +, -? = ., dg = v, efhi = ~
+SUBST:   =! = +, -? = ., dg = v, efhi = .
 SUBST:   EGIPRT = x, FHJQSU = l
-KMASK:   ~Ml = no_monster_gen
-KPROP:   ~MZ = no_tele_into
+KMASK:   l = no_monster_gen
 : serpent_of_hell_setup(_G)
 : set_border_fill_type("endless_lava")
 : geh_setup(_G)
@@ -1289,21 +1202,21 @@ LLll.6...........ll````````llcc.........ccc..```````x```````x...{.XxLL
 LLllB.vv-vvvvvvvvllllllllllll+...vd3dv...cc..llllllllllllllllll...XxLL
 LLll..v...v$$$.vvYlllllllllllc..f..e..f..cc..lllllllllllllllllll..XxLL
 LLll..-.$..$.2$vvllllllFFllllc..f..e..f..cc..lllllllllllllllllll..XxLL
-LLll..v...v$..$vvYlllllxxllll+...vd.dv...cc.xlllllll~xllllllllllx.XxLL
-LLll..vv.vv.$$$vvllllllEEllllc.....v.....cc..llxllll~xlllllxllll`.XxLL
+LLll..v...v$..$vvYlllllxxllll+...vd.dv...cc.xlllllll.xllllllllllx.XxLL
+LLll..vv.vv.$$$vvllllllEEllllc.....v.....cc..llxllll.xlllllxllll`.XxLL
 LLll..v$$$.vv=vvvYlllllllllllccc...v...cccc..lllllllllllllllllll`.XxLL
-LLll..v$..$v%%.vvlll~~llllllllccv+++++vccc7.lllllxxlllllxxllllll`.XxLL
-LLll..v$2.$=%0%vvlllxx~lllllllc....v....cc..lllllxxlllllxxllllll`.XxLL
-LLll..v.$$$v.%|vvlllxx~llHHlll+.ef*z*fe.cc..lllllllylll~llllllll`.XxLL
-LLll..vvvvvvvvvvvllllllllxxllyc.fdededf.cc..llllllll~l~lllllllll`.XxLL
-LLll..vvvvvvvvvvvl~3lllllGGlll+.ef*+*fe.cc..llxxllllM~lllllxxlll`.XxLL
-LLl..llYlYlYllllllM~llllllllllc....v....cc.xll~~llll~M~llll~~lllx.XxLL
-LLl..lllllllllll~MM~Zlllllllllccc..v..cccc..lllllll&lllyllllllll`.XxLL
-LLl..`llllllllll3~~&lllllllllllccv+++vccc7..lllllxxlllllxxllllll`.XxLL
-LLl..`llllll~xxlllZllllllllllllc...v...cc..llllllxxlllllxxllllll`.XxLL
-LLl..`llllll~xxllllllllllllllll+...v...cc..lllllllllllllllllllll`.XxLL
-LLl..`lllllll~~lllllllEElllllll+..vzv..cc..llxxxllll~xlllllxllll`.XxLL
-LLl..`llFxElllllllllllExFllllllc...v...cc.xllxxxllll~xllllllllll`.XxLL
+LLll..v$..$v%%.vvlll..llllllllccv+++++vccc7.lllllxxlllllxxllllll`.XxLL
+LLll..v$2.$=%0%vvlllxx.lllllllc....v....cc..lllllxxlllllxxllllll`.XxLL
+LLll..v.$$$v.%|vvlllxx.llHHlll+.ef*z*fe.cc..lllllllylll.llllllll`.XxLL
+LLll..vvvvvvvvvvvllllllllxxllyc.fdededf.cc..llllllll.$.lllllllll`.XxLL
+LLll..vvvvvvvvvvvl.3lllllGGlll+.ef*+*fe.cc..llxxllll$.$llllxxlll`.XxLL
+LLl..llYlYlYllllll*.llllllllllc....v....cc.xll..llll3$.llll..lllx.XxLL
+LLl..lllllllllll.**.Zlllllllllccc..v..cccc..lllllll.lllyllllllll`.XxLL
+LLl..`llllllllll3..2lllllllllllccv+++vccc7..lllllxxlllllxxllllll`.XxLL
+LLl..`llllll.xxlllZllllllllllllc...v...cc..llllllxxlllllxxllllll`.XxLL
+LLl..`llllll.xxllllllllllllllll+...v...cc..lllllllllllllllllllll`.XxLL
+LLl..`lllllll..lllllllEElllllll+..vzv..cc..llxxxllll.xlllllxllll`.XxLL
+LLl..`llFxElllllllllllExFllllllc...v...cc.xllxxxllll.xllllllllll`.XxLL
 LLl..`llFxEllllllllllllFFllllllccc.v.cccc..llxxxllllllllllllllll`.XxLL
 LLl..`llllllllGxHlllllllllllllllcc+v+ccc7..lllllllllllllll..x.....XxLL
 LLl..`llllllllGxHlllllllllllllllc.A5A.cc..llllllll..x............XXxLL
@@ -1327,24 +1240,24 @@ LLl..`llldlllllllllllllllllllllc.A5A.clllllllllllllllSxRllllllll`..lLL
 LLl..`lldllllllllllllllllllllllcc+v+cclllllllllllllllSxRllllllll`..lLL
 LLll..llllllllllllllllllllllllccc.v.cccllllllUUllllllllllllPxQll`..lLL
 LLll..`llellllllllllllllllllllc...v...cllllllUxTlllllllllllPxQll`..lLL
-LLll..`lelllllllllllllllllllll+..vzv..+lllllllTTlllllll~~lllllll`..lLL
-LLll..`lllllllllllllllllllllll+...v...+llllllllllllllllxx~llllll`..lLL
-LLlll..lllflllllllllllllllllllc...v...cllllllllllllZlllxx~llllll`..lLL
-LLlll..`lfllllllllllllllllllllccv+++vcclllllllllll&~~3llllllllll`..lLL
-LLlll..`lllZlllllllllllllllllccc..v..ccclllllllllZ~MM~lllllllllll..lLL
-LLlll..`llgllllllllllllllllllc....v....cllllllllll~MllllllYlYlYll..lLL
-LLlll..`lglllllllllllllllllllc.ef*+*fe.+lllSSlllll3~lvvvvvvvvvvv..llLL
+LLll..`lelllllllllllllllllllll+..vzv..+lllllllTTlllllll..lllllll`..lLL
+LLll..`lllllllllllllllllllllll+...v...+llllllllllllllllxx.llllll`..lLL
+LLlll..lllflllllllllllllllllllc...v...cllllllllllllZlllxx.llllll`..lLL
+LLlll..`lfllllllllllllllllllllccv+++vcclllllllllll2..3llllllllll`..lLL
+LLlll..`lllZlllllllllllllllllccc..v..ccclllllllllZ.**.lllllllllll..lLL
+LLlll..`llgllllllllllllllllllc....v....cllllllllll.*llllllYlYlYll..lLL
+LLlll..`lglllllllllllllllllllc.ef*+*fe.+lllSSlllll3.lvvvvvvvvvvv..llLL
 LLllll..lllllllllllllllllllly+.fdededf.cyllxxllllllllvvvvvvvvvvv..llLL
-LLllll..`llhlllllllllllllllllc.ef*z*fe.+lllRRll~xxlllvvO%.v$$$.v..llLL
-LLllll..`lhllllllllllllllllllc....v....clllllll~xxlllvv%1%!$.2$v..llLL
-LLllll..`llllllllllllllllllllccv+++++vccllllllll~~lllvv.%%v$..$v..llLL
+LLllll..`llhlllllllllllllllllc.ef*z*fe.+lllRRll.xxlllvvO%.v$$$.v..llLL
+LLllll..`lhllllllllllllllllllc....v....clllllll.xxlllvv%1%!$.2$v..llLL
+LLllll..`llllllllllllllllllllccv+++++vccllllllll..lllvv.%%v$..$v..llLL
 LLllll..`llillhlllZlllllllllccc...v...ccclllllllllllYvvv!vv.$$$v..llLL
 LLllll..`lillhlllgllflllllllc.....v.....cllllPPllllllvv$$$.vv.vv..llLL
 LLlllll..lllllllgllflllelldl+...vd.dv...+llllxxlllllYvv$..$v...v..llLL
 LLlllll.2.`````lllllllelldllc..f..e..f..cllllQQllllllvv$2.$..$.?..llLL
 LLllv+vv........````llllllllc..f..e..f..clllllllllllYvv.$$$v...v..llLL
-LLllv~~vll...........```llll+...vd3dv...+llllllllllllvvvvvvvv?vv.BllLL
-LLllvM~+llllllll.........``lcc.........ccll````````ll...........6.llLL
+LLllv..vll...........```llll+...vd3dv...+llllllllllllvvvvvvvv?vv.BllLL
+LLllv*.+llllllll.........``lcc.........ccll````````ll...........6.llLL
 LLllvvvvlllllllllllll........cc++c+c++cc.......................B.lllLL
 LLlllllllllllllllllllllll....+....4....+..............llllllllllllllLL
 LLlllllllllllllllllllllllllllcccccccccccllllllllllllllllllllllllllllLL
@@ -1360,12 +1273,11 @@ NAME:    geh_grunt_pentagon
 ORIENT:  encompass
 MONS:    patrolling Asmodeus, Brimstone Fiend, balrug
 MONS:    hellion, searing wretch, fire giant, salamander tyrant
-KMONS:   8 = oni incarcerator
 KMONS:   9 = molten gargoyle
 SUBST:   - = ll.
 SUBST:   _ = ..l
 SUBST:   d = x.
-NSUBST:  P = 1:O / *:|, 9 = 1 = 8 9:1 / 1 = 9 8:1 / *:9
+NSUBST:  P = 1:O / *:|
 KFEAT:   L = endless_lava
 : serpent_of_hell_setup(_G)
 : set_border_fill_type("endless_lava")

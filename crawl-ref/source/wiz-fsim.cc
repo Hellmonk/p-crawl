@@ -230,7 +230,7 @@ static bool _fsim_kit_equip(const string &kit, string &error)
     {
         if (!_equip_weapon(weapon, abort))
         {
-            int item = create_item_named("mundane ident:all " + weapon,
+            int item = create_item_named("mundane" + weapon,
                                          you.pos(), &error);
             if (item == NON_ITEM)
                 return false;

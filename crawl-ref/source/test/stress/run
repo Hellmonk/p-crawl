@@ -9,11 +9,11 @@ run_one()
     case "$*" in
     1|woken_rest)
         echo "rc: test/stress/woken_rest.rc" 1>&2
-        $CRAWL_PTY -rc test/stress/woken_rest.rc -sprint -sprint-map dungeon_sprint_1
+        $CRAWL_PTY -rc test/stress/woken_rest.rc -sprint -sprint-map arena_sprint
     ;;
     2|unwoken_rest)
         echo "rc: test/stress/unwoken_rest.rc" 1>&2
-        $CRAWL_PTY -rc test/stress/unwoken_rest.rc -sprint -sprint-map dungeon_sprint_1
+        $CRAWL_PTY -rc test/stress/unwoken_rest.rc -sprint -sprint-map arena_sprint
     ;;
     3|fireworks)
         echo "rc: test/stress/fireworks.rc" 1>&2

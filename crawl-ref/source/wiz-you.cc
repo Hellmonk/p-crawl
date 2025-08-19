@@ -252,7 +252,7 @@ void wizard_heal(bool super_heal)
         you.duration[DUR_FIRE_VULN] = 0;
         you.duration[DUR_POISON_VULN] = 0;
         delete_all_temp_mutations("Super heal");
-        decr_zot_clock();
+        reset_zot_clock();
         you.redraw_stats = true;
         gain_draconian_breath_uses(MAX_DRACONIAN_BREATH);
         gain_grave_claw_soul(true, true);

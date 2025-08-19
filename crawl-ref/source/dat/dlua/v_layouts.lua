@@ -67,9 +67,10 @@ function vaults_default_options()
       { generator = "tagged", tag = "vaults_empty", weight = 40 },
       { generator = "tagged", tag = "vaults_hard", weight = 10, max_rooms = 1 },
       { generator = "tagged", tag = "vaults_entry_crypt", weight = (you.where() == dgn.level_name(dgn.br_entrance("Crypt"))) and 25 or 0, max_rooms = 1 },
-      -- Create tagged generators to represent portal entry vaults. Weights
-      -- should be 0 since these generators are only chosen through chance rolls.
-      { generator = "tagged", tag = "vaults_necropolis", weight = 0, max_rooms = 1 },
+      -- Create tagged generators to represent ghost vaults and Wizlab and
+      -- Desolation portal entry vaults. The weights should be 0 since these
+      -- generators are only chosen through a chance rolls.
+      { generator = "tagged", tag = "vaults_ghost", weight = 0, max_rooms = 1 },
       { generator = "tagged", tag = "vaults_wizlab", weight = 0, max_rooms = 1 },
       { generator = "tagged", tag = "vaults_desolation", weight = 0, max_rooms = 1 },
 -- start TAG_MAJOR_VERSION == 34
@@ -160,7 +161,7 @@ end
 
 function build_vaults_ring_layout(e, corridorWidth, outerPadding)
 
-  local gxm, gym = dgn.max_bounds()
+  local gxm, gym = dgn.builder_bounds()
 
   local c1 = { x = outerPadding, y = outerPadding }
   local c2 = { x = outerPadding + corridorWidth, y = outerPadding + corridorWidth }
@@ -173,14 +174,14 @@ function build_vaults_ring_layout(e, corridorWidth, outerPadding)
     { type = "wall", corner1 = c2, corner2 = c3 }
   }
 
-  build_vaults_layout(e, "Ring", paint, { max_room_depth = 3 })
+  build_vaults_layout(e, "Ring", paint, { max_room_depth = 2 })
 
 end
 
 function build_vaults_cross_layout(e, corridorWidth, intersect)
 
   -- Ignoring intersect for now
-  local gxm, gym = dgn.max_bounds()
+  local gxm, gym = dgn.builder_bounds()
 
   local corridorWidth = 3 + crawl.random2avg(3,2)
 
@@ -191,42 +192,42 @@ function build_vaults_cross_layout(e, corridorWidth, intersect)
     { type = "floor", corner1 = { x = 1, y = yc }, corner2 = { x = gxm - 2, y = yc + corridorWidth - 1 } }
   }
 
-  build_vaults_layout(e, "Cross", paint, { max_room_depth = 4 })
+  build_vaults_layout(e, "Cross", paint, { max_room_depth = 2 })
 
 end
 
 function build_vaults_big_room_layout(e, minPadding,maxPadding)
   -- The Big Room
-  local gxm, gym = dgn.max_bounds()
+  local gxm, gym = dgn.builder_bounds()
   local padx,pady = crawl.random_range(minPadding,maxPadding),crawl.random_range(minPadding,maxPadding)
 
   -- Will have a ring of outer rooms but the central area will be chaotic city
   local paint = {
     { type = "floor", corner1 = { x = padx, y = pady }, corner2 = { x = gxm - padx - 1, y = gym - pady - 1 } }
   }
-  build_vaults_layout(e, "Big Room", paint, { max_room_depth = 4, max_rooms = 23, max_room_tries = 12, max_place_tries = 30 })
+  build_vaults_layout(e, "Big Room", paint, { max_room_depth = 2, max_rooms = 12, max_room_tries = 12, max_place_tries = 30 })
 
 end
 
 function build_vaults_chaotic_city_layout(e)
-  local gxm, gym = dgn.max_bounds()
+  local gxm, gym = dgn.builder_bounds()
 
   -- Paint entire level with floor
   local paint = {
     { type = "floor", corner1 = { x = 1, y = 1 }, corner2 = { x = gxm - 2, y = gym - 2 } }
   }
 
-  build_vaults_layout(e, "Chaotic City", paint, { max_room_depth = 5, max_rooms = 25, max_room_tries = 10, max_place_tries = 20 })
+  build_vaults_layout(e, "Chaotic City", paint, { max_room_depth = 2, max_rooms = 12, max_room_tries = 10, max_place_tries = 20 })
 
 end
 
 function build_vaults_maze_layout(e,veto_callback, name)
-  local gxm, gym = dgn.max_bounds()
+  local gxm, gym = dgn.large_builder_bounds()
   if name == nil then name = "Maze" end
 
   -- Put a single empty room somewhere roughly central. All rooms will be built off from each other following this
-  local x1 = crawl.random_range(30, gxm-70)
-  local y1 = crawl.random_range(30, gym-70)
+  local x1 = crawl.random_range(15, gxm-35)
+  local y1 = crawl.random_range(15, gym-35)
 
   local paint = {
     { type = "floor", corner1 = { x = x1, y = y1 }, corner2 = { x = x1 + crawl.random_range(4,10), y = y1 + crawl.random_range(4,10) } }
@@ -296,7 +297,7 @@ end
 -- Builds the paint array for omnigrid
 function layout_primitive_omnigrid()
 
-  local gxm,gym = dgn.max_bounds()
+  local gxm,gym = dgn.builder_bounds()
   local options = {
     subdivide_initial_chance = 100, -- % chance of subdividing at first level, if < 100 then we might just get chaotic city
     subdivide_level_multiplier = 0.80,   -- Multiply subdivide chance by this amount with each level

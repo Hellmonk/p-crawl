@@ -1178,10 +1178,6 @@ static void _handle_trickster_decay(int delay)
 
 void player_reacts()
 {
-    // don't allow reactions while stair peeking in descent mode
-    if (crawl_state.game_is_descent() && !env.properties.exists(DESCENT_STAIRS_KEY))
-        return;
-
     // This happens as close as possible after the player acts, for better messaging
     if (you_worship(GOD_BEOGH))
         beogh_ally_healing();

@@ -26,7 +26,7 @@ function fixup_slime_vaults(data, triggerable, triggerer, marker, ev)
     end
   end
 
-  local gxm, gym = dgn.max_bounds()
+  local gxm, gym = dgn.builder_bounds()
   for p in iter.rect_iterator(dgn.point(1, 1), dgn.point(gxm-1, gym-1)) do
     if dgn.fprop_at(p.x, p.y, "no_jiyva") then
       dgn.fprop_changed(p.x, p.y, "no_jiyva")
@@ -39,14 +39,6 @@ function fixup_slime_vaults(data, triggerable, triggerer, marker, ev)
   triggerable:remove(marker)
 end
 
-function slime_pits_entry(e)
-  e.tags("slime_entry")
-  e.kfeat("O = enter_slime_pits")
-  e.kfeat("_ = altar_jiyva")
-  e.kfeat("S = slimy_wall")
-  e.subst("_ = __'")
-end
-
 function setup_slime_pit_ending(e)
   e.place("Slime:$")
   e.orient("encompass")
@@ -54,7 +46,6 @@ function setup_slime_pit_ending(e)
   e.mons("acid blob")
   e.mons("great orb of eyes / nothing")
   e.kfeat("Z = altar_jiyva")
-  e.kitem("k = |, starry gem")
   e.kitem("O = slimy rune of Zot")
 
 -- Attach function to the Royal Jelly itself. This will follow it wherever
@@ -84,9 +75,9 @@ function setup_slime_pit_ending(e)
 
   e.lua_marker("1", MonPropsMarker:new {monster_dies_lua_key = trj_die})
   e.lua_marker("Z", wall_fixup_marker)
-  e.kmask("|Ok* = no_monster_gen")
-  e.kprop("|Ok* = no_jiyva")
-  e.kprop("|Ok* = no_tele_into")
+  e.kmask("|O* = no_monster_gen")
+  e.kprop("|O* = no_jiyva")
+  e.kprop("|O* = no_tele_into")
   e.shuffle("{[(")
   e.set_feature_name("stone_wall", "rune-carved stone wall")
   e.set_feature_name("clear_stone_wall", "rune-carved clear stone wall")
@@ -98,30 +89,21 @@ end
 ##############################################################################
 
 NAME:   slime_entry_1
+TAGS:   slime_entry
 WEIGHT: 40
-: slime_pits_entry(_G)
+KFEAT:  _ = altar_jiyva / floor w:5
+KFEAT:  O = enter_slime_pits
 MAP
 ....
 .O_.
 ....
 ENDMAP
 
-NAME:    slime_entry_2
-MONS:    jelly / endoplasm, acid blob / slime creature w:5, azure jelly
-SHUFFLE: 1+ / 1+ / 1+ / 2= / 2= / 3=
-NSUBST:  1 = 3:1 / * = 1' , 2 = 1:2 / * = 2''' , 3 = 1:3 / * = 3''''
-: slime_pits_entry(_G)
-KPROP:   123'O_ = no_tele_into
-MAP
-ccccc
-c111m.
-cO1_+@
-c111m.
-ccccc
-ENDMAP
-
 NAME:  dpeg_slime_entry_enclosed
-: slime_pits_entry(_G)
+TAGS:  slime_entry
+KFEAT: O = enter_slime_pits
+KFEAT: S = slimy_wall
+KFEAT: _ = altar_jiyva / floor w:5
 MAP
   .....
  .ccccc.
@@ -135,109 +117,13 @@ MAP
   .....
 ENDMAP
 
-NAME:   minmay_slime_entry_eyes
-TAGS:   ruin_lair
-WEIGHT: 2
-MONS:   eye of devastation, glass eye
-: slime_pits_entry(_G)
-MAP
- ....   ....
-..xx..x..xx..
-.xxxx.x.xxxx.
-.xxx.....xxx.
-..x.S...S.x..
- ...........
- xxS.1O2.Sxx
- ....._.....
-..x.S...S.x..
-.xxx.....xxx.
-.xxxx.x.xxxx.
-..xx..x..xx..
- ....   ....
-ENDMAP
-
-NAME:   minmay_slime_entry_pillars
-TAGS:   ruin_lair
-MONS:   jelly / slime creature
-: slime_pits_entry(_G)
-MAP
-...........
-.ccc...ccc.
-.ccc.1.ccc.
-.ccc...ccc.
-...........
-..1..O..1..
-....._.....
-.ccc...ccc.
-.ccc.1.ccc.
-.ccc...ccc.
-...........
-ENDMAP
-
-# In-game the boxes rarely stay closed due to ruination; this is intentional.
-NAME:   minmay_slime_entry_jelly_boxes
-TAGS:   ruin_lair
-WEIGHT: 5
-MONS:   jelly / endoplasm w:1
-NSUBST: 1 = 2:1 / * = 1:11 .:1
-: slime_pits_entry(_G)
-MAP
-.............
-.xxxxx.xxxxx.
-.xxx1x.x11xx.
-.xx11x.xx1xx.
-.xx1x...x1xx.
-.xxxx.._.xxx.
-......O......
-.xxxx...xxxx.
-.xx1.x.x.1xx.
-.x11x.xx11xx.
-.xx1x.xxxxxx.
-.xxxxx.xxxxx.
-.............
-ENDMAP
-
-NAME:   minmay_slime_entry_oklob_open
-WEIGHT: 5
-KMONS:  1_ = oklob plant / nothing w:20
-NSUBST: 1 = 1:_ / *:1
-: slime_pits_entry(_G)
-MAP
- .....
-.......
-..111..
-..1O1..
-..111..
-.......
- .....
-ENDMAP
-
-NAME:   minmay_slime_entry_oklob_enclosed
-TAGS:   ruin_lair
-ORIENT: northeast
-WEIGHT: 5
-MONS:   oklob plant
-SUBST:  1 = 1..
-: slime_pits_entry(_G)
-MAP
-xxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxx......xxxxxx
-xxSSxx...........xxxx
-xxS111......xx....xxx
-xSS.11_...xxxx....xxx
-xS..O11.xxxxx....xxxx
-xSS..1xxxxxx.....xxxx
-xxSSSSxxxxx.....xxxxx
-xxxxxxxxxx.....xxxxxx
-xxxxxxxx.....xxxxxxxx
-xxxxxxx.@..xxxxxxxxxx
-ENDMAP
-
 NAME:   dpeg_slime_entry_corner
-TAGS:   ruin_lair
+TAGS:   slime_entry ruin_lair
 ORIENT: northwest
 WEIGHT: 5
-: slime_pits_entry(_G)
+KFEAT:  O = enter_slime_pits
+KFEAT:  S = slimy_wall
+KFEAT:  _ = altar_jiyva / floor w:5
 MAP
 xxxxxxxxxxx
 xSSSxxxxxx
@@ -249,98 +135,9 @@ xxx...xx.
 xx..
 ENDMAP
 
-NAME:    nicolae_slime_entry_slimehenge
-TAGS:    transparent
-NSUBST:  A = 1:. / *:A, B = 1:. / *:B, C = 1:. / *:C
-SHUFFLE: ABCD
-SUBST:   A = S, BCD = .
-KMONS:   1 = endoplasm / jelly
-: slime_pits_entry(_G)
-MAP
-  .........
- ...........
-.....DAD.....
-...A.CBC.A...
-....B.1.B....
-..DC.1.1.CD..
-..AB1.O.1BA..
-..DC.1_1.CD..
-....B.1.B....
-...A.CBC.A...
-.....DAD.....
- ...........
-  .........
-ENDMAP
-
-NAME:  nicolae_slime_entry_field_trip
-TAGS:  transparent
-KMONS: F = fungus
-KMONS: JO_ = jelly / nothing w:5
-ITEM:  human skeleton
-: slime_pits_entry(_G)
-SUBST: ' = G
-MAP
-...J..J...
-....FF....
-.O.FddF._.
-....FF....
-...J..J...
-ENDMAP
-
 ################################################################################
 # Slime Pit specific non-ending non-entry vaults
 ################################################################################
-NAME:    nicolae_slime_pool
-TAGS:    transparent
-DEPTH:   Slime, !Slime:$
-ORIENT:  float
-MONS:    slime creature
-SHUFFLE: abcd
-SUBST:   ab : @, cd : .
-KPROP:   f = no_tele_into
-SUBST:   f = W'1
-KMASK:   wW = no_monster_gen
-MAP
-   cccc
- ..........
-d.w.wwwf..w.
-d..wwfwwf....
-d.fwwfffwffbb
-d..fwwwfww.b
- ...ffwwww.b
-  ..wffw...b
-  ..wfwfw.fw
- ...ffffw.ww
-.ff.wwwwf.f
- .....f..ff
-    aaaa..fw
-ENDMAP
-
-NAME: nicolae_slime_jelly_donut
-DEPTH: Slime, !Slime:$
-ORIENT: float
-KMONS: j = jelly
-SHUFFLE: abcdefgh
-SUBST: a = @, b : @., c : @.., d : @..., efgh = .
-MAP
-      aaaaa
-    hh.....bb
-   h.........b
-  h...........b
- h....x.x.x....b
- h...x.x.x.x...b
-g...x.x.x.x.x...c
-g....x.jjj.x....c
-g...x.xjjjx.x...c
-g....x.jjj.x....c
-g...x.x.x.x.x...c
- f...x.x.x.x...d
- f....x.x.x....d
-  f...........d
-   f.........d
-    ff.....dd
-      eeeee
-ENDMAP
 
 NAME: nicolae_slime_barrier
 TAGS: transparent extra
@@ -375,102 +172,12 @@ c..........b
                   aaaaa
 ENDMAP
 
-NAME: nicolae_slime_welcoming_committee
-TAGS: no_monster_gen no_item_gen no_trap_gen
-DEPTH: Slime:2-, !Slime:$
-SUBST: X = x., { = {[(
-KMONS: 1 : jelly w:20 / endoplasm / slime creature w:30 / \
-   acid blob w:5 / rockslime w:5 / void ooze w:5 /\
-   azure jelly w:5
-MAP
-      xxx
-   xxxxxxxx
- xxxxXXX..1@
-xxxXX.....1.@
-xxX.......1..@
-xxX.{.....1...@
-xxX.......1..@
-xxxXX.....1.@
- xxxxXXX..1@
-   xxxxxxxx
-      xxx
-ENDMAP
-
-NAME: nicolae_slime_phagocytosis
+NAME: nicolae_slime_ancient_tower_intersection
 DEPTH: Slime, !Slime:$
-TAGS: transparent
-SUBST: a : .x, b : .x, c : .x, d : .x, e : .x, { = {[(, X = Wx, ' = ._
-NSUBST: W = 4:1 / *:W
-KMONS: 1 = slime creature
-KFEAT: 1 = W
-CLEAR: _
-MAP
-       '.......'
-      '..........'
-    '.....................'
- '........ee...............'
-'........exxe...............'
-.......eexxxxeee.xxxxxxx.....'
-....ddxxxxxxxxxxxxxxxxxxx.....
-@..dxxxxxXXXXxxxxx.....xxx....
-@..dxxxxXWWWWXx.........xxx...
-@...ddxxXWWWW............xx...
-@.....cxXWWWW....{..x....x....
-@.....cxXWWWWXx.....xx........
-'....cxxxXXXXxxx...xxx.......'
- ...cxxxxxxxxxxxxxxxx.......'
- ...cxxxxabxxxxxxxxx.......
- ....axxa..bxxxb.........'
- .....aa....bbb.........'
- '....................'
-  '...............'
-   ''...........''
-ENDMAP
-
-NAME: nicolae_slime_round_cave
-DEPTH: Slime:2-, !Slime:$
-TAGS: no_monster_gen no_descent
-SHUFFLE: {}/()/[]
-NSUBST: a = X / .
-SUBST: X = x., z = x_, 0 = 0009.., 9 = 9998
-CLEAR: _
-MAP
-       zzzzzzzzzzz
-     zzzXXXXXXXXXzzz
-    zzXXX.X.X.X.XXXzz
-   zzXX...........XXzz
-  zzXX...0..0..0...XXzz
- zzXX..0............XXzz
- zXX.....XXX.XXX..0..XXz
-zzX..0..XXxx.xxXX.....Xzz
-zXX....XXxxX.XxxXX....XXz
-zX..0.XXxxXX.XXxxXX.9..Xz
-zXX..aXxxXX...XxxxX...XXz
-zX....XxXX.............Xz
-zXX.{.......}....9..0.XXz
-zX....XxXX.............Xz
-zXX..aXxxXX...XxxxX...XXz
-zX..0.XXxxXX.XXxxXX.9..Xz
-zXX....XXxxX.XxxXX....XXz
-zzX..0..XXxx.xxXX.....Xzz
- zXX.....XXX.XXX..0..XXz
- zzXX..0............XXzz
-  zzXX...0..0..0...XXzz
-   zzXX...........XXzz
-    zzXXX.X.X.X.XXXzz
-     zzzXXXXXXXXXzzz
-       zzzzzzzzzzz
-ENDMAP
-
-# XXX: Would prefer to have different tiles for slimy rock rather than
-#      break the rule of no regular walls for early Slime floors....
-NAME:   nicolae_slime_ancient_tower_intersection
-TAGS:   extra decor transparent
-DEPTH:  Slime, !Slime:$
 WEIGHT: 2
-KFEAT:  + = broken_door
-SUBST:  c = ccc., z = xx., X = x_, V = V..
-CLEAR:  _
+TAGS: extra decor transparent
+SUBST: c = ccc., X = x_, V = V..
+CLEAR: _
 MAP
   XXXX         XXXX
  XXxxXX       XXxxXX
@@ -478,15 +185,15 @@ XXxxxxxx@@@@@xxxxxxXX
 Xxxxx...........xxxxX
 Xxxx.............xxxX
 XXx...............xXX
- Xx.....zc+cz.....xX
-  x....zc...cz....x
-  @...zc.....cz...@
-  @...z..V.V..c...@
+ Xx.....ccccc.....xX
+  x....cc...cc....x
+  @...cc.....cc...@
+  @...c..V.V..c...@
   @...c.......+...@
-  @...z..V.V..c...@
-  @...zc.....cz...@
-  x....zc...cz....x
- Xx.....zzczz.....xX
+  @...c..V.V..c...@
+  @...cc.....cc...@
+  x....cc...cc....x
+ Xx.....ccccc.....xX
 XXx...............xXX
 Xxxx.............xxxX
 Xxxxx...........xxxxX
@@ -690,65 +397,6 @@ MAP
 ....@..........
 ENDMAP
 
-# inspired by a comment of spacejung on SomethingAwful (dpeg)
-NAME:   dissolution_awaits
-DEPTH:  Slime:2-, !Slime:$
-KMONS:  1 = patrolling Dissolution, azure jelly / great orb of eyes
-MAP
- .....
-...{...
-.......
-...1...
-.[...(.
-.......
-ENDMAP
-
-# On average, generates the equivalent of 15 slime creatures.
-NAME:  nicolae_slime_crime_time
-TAGS:  transparent
-DEPTH: Slime:2-
-KMONS: S = nothing / slime creature / large slime creature / \
-           very large slime creature / enormous slime creature / \
-           titanic slime creature
-SUBST: - = x.., _ = _x, { = {[(
-CLEAR: _
-MAP
- _________________
- xxxxxxxxxxxxxxxxx
-@.---------------.@
-@.S.............S.@
-@.S......{......S.@
-@.S.............S.@
-@.---------------.@
- xxxxxxxxxxxxxxxxx
- _________________
-ENDMAP
-
-NAME:    nicolae_slime_getting_an_eyeful
-TAGS:    transparent patrolling
-DEPTH:   Slime
-KMONS:   1 = glowing orange brain
-KMONS:   2 = glass eye / golden eye / shining eye / eye of devastation / \
-             great orb of eyes
-SHUFFLE: DEF
-SUBST:   ` = 2..., D = @, E : @., F : @..., - = _x
-CLEAR:   _
-MAP
-   -DDDDD-
-  --.....--
- --.......--
---...`2`...--
-@...`...`...E
-@..`.....`..E
-@..2..1..2..E
-@..`.....`..E
-@...`...`...E
---...`2`...--
- --.......--
-  --.....--
-   -FFFFF-
-ENDMAP
-
 NAME:    nicolae_slime_infinislime
 TAGS:    transparent
 DEPTH:   Slime, !Slime:$
@@ -777,49 +425,13 @@ MAP
     '''''''''''   '''''''''''
 ENDMAP
 
-NAME:   nicolae_slime_rock_hall_of_fame
-TAGS:   transparent
-DEPTH:  Slime:2-, !Slime:$
-KMONS:  R = rockslime
-SUBST:  { = {[(, - = x_
-NSUBST: D = 1=x / 2=x. / 1=R.. / ., E = 1=x / 2=x. / 1=R.. / ., \
-        F = 1=x / 2=x. / 1=R.. / ., H = 1=x / 2=x. / 1=R.. / ., \
-        J = 1=x / 2=x. / 1=R.. / ., K = 1=x / 2=x. / 1=R.. / ., \
-        L = 1=x / 2=x. / 1=R.. / ., M = 1=x / 2=x. / 1=R.. / ., \
-        N = 1=x / 2=x. / 1=R.. / ., O = 1=x / 2=x. / 1=R.. / ., \
-        P = 1=x / 2=x. / 1=R.. / .
-CLEAR:  _
-MAP
-    ---------
- ----xxxxxxx----
- -xxxx.....xxxx-
- -x....LLL....x-
---x.KKKLLLMMM.x--
--xx.KKKLLLMMM.xx----
--x..KKK...MMM..xxxx-
--x.JJJ.....NNN....x-
--x.JJJ..{..NNNOOO.x--
--x.JJJ.....NNNOOO.xx-
--x..HHH.......OOO..x-
--xx.HHHFFF.....PPP.x-
---x.HHHFFF.....PPP.x-
- -x....FFF.....PPP.x-
- -xxxx..EEE........x-
- ----xx.EEEDDD.....
-    --x.EEEDDD....@
-     -x....DDD....@
-     -xxxx......@@@
-     ----xxxxxx
-        -------
-ENDMAP
-
 # Intended as an ending, but I didn't like how it turned out, so I reused the
 # layout and turned it into an ordinary level encompass.
 NAME:    nicolae_slime_spelunking
 DEPTH:   Slime:2-, !Slime:$
 ORIENT:  encompass
 WEIGHT:  5
-SUBST:   " = cx, ! = cx., ' = x., 0 = 0009..
+SUBST:   " = cx, ! = cx., ' = x.
 SHUFFLE: {[(, )]}
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -843,24 +455,24 @@ xxxxxxxxxxxxxxxxx'...........'xx'.......'xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxx''...........'xxx'........'xxx'''xxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxx'.............'xxxx'........'''...'''xxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxx'...............'xxxx'................'xxxxxxxxxxxxxxxxxx
-xxxxxxxxxx'''......''........'xxxxx''...........0...'xxxxxxxxxxxxxxxxx
-xxxx''''''........'xx'.......'xxxxxxx'...0...........'xxxx''''''xxxxxx
+xxxxxxxxxx'''......''........'xxxxx''...............'xxxxxxxxxxxxxxxxx
+xxxx''''''........'xx'.......'xxxxxxx'...............'xxxx''''''xxxxxx
 xx''..............'xxx'....'xxxxxxxxxx'.......''.....'xxx'......''xxxx
 xx...............'xxxx'...'xxxxxxxxxx'.......'xx'....'xxx.........'xxx
 xx'.....{.......'xxx''....'xxxxxxxxxx'.......'xxx'...'xx.....}....'xxx
 x'...............'''.....'xxxxxxxxxxx'........'''....'xx..........'xxx
 x'......................'xxxxxxxxxxxxxx'..............'x'..........'xx
-x'....[................'xxxxxxxxxxxxxxxx'..0...........'...0...]...'xx
-x'......................''xxxxxxxxxxxxx'...........0...............'xx
+x'....[................'xxxxxxxxxxxxxxxx'..............'.......]...'xx
+x'......................''xxxxxxxxxxxxx'...........................'xx
 x'........................xxxxxxxxxxxx'.....''.....................'xx
 x'......(......'..........'xxxxxxxxxxx'....'xx'..............).....'xx
 xx'...........'x''........'xxxxxxxxxxx'...'xxxx'......''..........'xxx
-xxx'''.......'xx'........'xxxxxxx''xx'..0..'xxx'.....'xx'.........'xxx
+xxx'''.......'xx'........'xxxxxxx''xx'.....'xxx'.....'xx'.........'xxx
 xxxxxx'''''''xxx'......''xxxxxx''..x'.......'x'.....'xxxx''.....''xxxx
 xxxxxxxxxxxxxxxx'........'xxx''....'...'....'''....'xxxxxxx'''''xxxxxx
 xxxxxxxxxxxxxxx'..........'''.........'x''.........'xxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxx'.............'........''xxx'.........'xxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxx'.....''.............''xxxxx'....0.....xxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxx'.....''.............''xxxxx'..........xxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxx'...''xx'...........'xxxxxxxx'.......''xxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxx'''xxxxx'......'''..'xxxxxxx'......'xxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxx'.....'xxx'..'xxxx''.......'xxxxxxxxxxxxxxxxxxx
@@ -881,11 +493,10 @@ ENDMAP
 ################################################################################
 
 # The original!
-NAME:    slime_pit
-SHUFFLE: Oo / Pp / Qq / Rr
-SUBST:   o = k, pqr = |, PQR = *|
-SUBST:   ' : ' .:1,  ' : ' x:1,  ' = .x
-SUBST:   " : " .:3,  " = .c
+NAME:   slime_pit
+SUBST:  ' : ' .:1,  ' : ' x:1,  ' = .x
+SUBST:  " : " .:3,  " = .c
+NSUBST: P = O / *|
 : setup_slime_pit_ending(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -915,16 +526,16 @@ xxxxxxxxx'x.................."cccc2ccccc".................'xxxxxxxxxxx
 xxxxxxxxx'.'................"cc*cc..cc*cc".................''xxxxxxxxx
 xxxxxxxxx'................."cc***cc4c***cc".................xxxxxxxxxx
 xxxxxxxxx'................"cc*|*cc..cc*|*cc"................'xxxxxxxxx
-xxxxxxxx''..............."cc*|O|*n4nn*|P|*cc"...............'xxxxxxxxx
+xxxxxxxx''..............."cc*|P|*n4nn*|P|*cc"...............'xxxxxxxxx
 xxxxxxxx'................"cc**|*nn..nn*|**cc"................'''xxxxxx
-xxxxxxxx'................"ccc**nonn4npn**ccc"..................xxxxxxx
+xxxxxxxx'................"ccc**n|nn4n|n**ccc"..................xxxxxxx
 xxxxxxx'................."ccccnnnn.3nnnncccc"..................'xxxxxx
 xxxxxxx'................."c.4.n.4.1..4.n.4.c"..................''xxxxx
 xxxxxxx'..................2.c.4.n..Z.n.4.c.2....................'xxxxx
 xxxxxx'.................."ccccnnnn3.nnnncccc"...................'xxxxx
-xxxxxx'.................."ccc**nqnn4nrn**ccc"...................'xxxxx
+xxxxxx'.................."ccc**n|nn4n|n**ccc"...................'xxxxx
 xxxxxx'.................."cc**|*nn..nn*|**cc"..................'xxxxxx
-xxxxx'..................."cc*|Q|*n4nn*|R|*cc"..................'xxxxxx
+xxxxx'..................."cc*|P|*n4nn*|P|*cc"..................'xxxxxx
 xxxxx''..................."cc*|*cc..cc*|*cc"..................'xxxxxxx
 xxxxxxx'..................."cc***cc4c***cc"...................'xxxxxxx
 xxxxxxxx'..................."cc*cc..cc*cc"....................'xxxxxxx
@@ -962,7 +573,7 @@ ENDMAP
 
 NAME:    slime_pit_nicolae_amoeboid
 SHUFFLE: PQRS
-NSUBST:  k = 1:k / *:*, P = 1 / Z, QRS = 4=2 / 2=3 / 230, { = { / [ / ( / 4..
+NSUBST:  P = 1 / Z, QRS = 4=2 / 2=3 / 230, { = { / [ / ( / 4..
 SUBST:   QRS = 4, ' = x., - = c.
 : setup_slime_pit_ending(_G)
 MAP
@@ -999,9 +610,9 @@ xxxxxxxxx''...............c.....c...c.....c..................''''xxxx
 xxxxxxxxxxx'.............n4n..P..nQn..R..n4n................'xxxxxxxx
 xxxxxxxxxxx'............c...c..4..c..4..c...c..............'xxxxxxxxx
 xxxxxxxxxx'.............ccncc..ccncncc..ccncc..............'xxxxxxxxx
-xxxxxxxx''..............n*|*n.n.ck|kc.n.n*|*n...............''xxxxxxx
+xxxxxxxx''..............n*|*n.n.c*|*c.n.n*|*n...............''xxxxxxx
 xxxxxx''...............cc|*|ccS.n|O|n.Scc|*|cc................'xxxxxx
-xxxxx'..................n*|*n.n.ck|kc.n.n*|*n..................'xxxxx
+xxxxx'..................n*|*n.n.c*|*c.n.n*|*n..................'xxxxx
 xxxx'...................ccncc..ccncncc..ccncc...................'xxxx
 xxxx'...................c...c..4..c..4..c...c...............{...'xxxx
 xxxx'....................n4n..R..nQn..P..n4n....................'xxxx
@@ -1038,10 +649,9 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ENDMAP
 
 NAME:    slime_pit_nicolae_block_by_block
-SHUFFLE: {[(<, Pp / Qq / Rr / Ss
-SUBST:   P = O, p = k, QRS = n, qrs = |
+SHUFFLE: {[(<
 SUBST:   ` = x., 2 = 2., 4 = 444., 0 = 0.., 9 = 9998
-NSUBST:  1 = 1 / 3
+NSUBST:  P = O / n, 1 = 1 / 3
 NSUBST:  { = { / 9..., [ = [ / 9..., ( = ( / 9..., < = < / 9...
 : setup_slime_pit_ending(_G)
 KPROP:   `- = no_tele_into
@@ -1073,10 +683,10 @@ xx`...{.cxxxc...........cxxxc.4...n...4.cxxxc...........cxxxc.[...`xx
 x`..c...cxxxc...c...c...cxxxc...c...c...cxxxc...c...c...cxxxc...c..`x
 x`.ccccccxxxcccccc.ccccccxnxcccccc.ccccccxnxcccccc.ccccccxxxcccccc.`x
 x`..cxxxxxxxxxxxc...cxxxxnnnn|**c...c**|nnnnxxxxc...cxxxxxxxxxxxc..`x
-x``.cxxxxxxxxxxxc...cxxxnnPnn|**c.c.c**|nnQnnxxxc...cxxxxxxxxxxxc.``x
+x``.cxxxxxxxxxxxc...cxxxnnPnn|**c.c.c**|nnPnnxxxc...cxxxxxxxxxxxc.``x
 x`..cxxxxxxxxxxxc...cxxxxnnnn|**c...c**|nnnnxxxxc...cxxxxxxxxxxxc..`x
 x`.ccccccxxxcccccc.ccccccnnncnnncc.ccnnncnnncccccc.ccccccxxxcccccc.`x
-x`..cxxxcxxxc...c...c...c|p|n..nc...cn..n|q|c...c...c...cxxxcxxxc..`x
+x`..cxxxcxxxc...c...c...c|||n..nc...cn..n|||c...c...c...cxxxcxxxc..`x
 x`..`xxxcxxxc.4...n...4.c***n.3...c...3.n***c.4...n...4.cxxxcxxx`..`x
 xx``cxxxcxxxc...c...c...c***nn..c...c..nn***c...c...c...cxxxcxxxc``xx
 xxxcccxccccccc.ccc.ccc.ccccccc.ccc2ccc.ccccccc.ccc.ccc.cccccccxcccxxx
@@ -1086,10 +696,10 @@ xxxxcxxxc`..c...c...c...c...c...c1.1c...c...c...c...c...c..`cxxxcxxxx
 xxxcccxccccccc.ccc.ccc.ccccccc.ccc2ccc.ccccccc.ccc.ccc.cccccccxcccxxx
 xx``cxxxcxxxc...c...c...c***nn..c...c..nn***c...c...c...cxxxcxxxc``xx
 x`..`xxxcxxxc.4...n...4.c***n.3...c...3.n***c.4...n...4.cxxxcxxx`..`x
-x`..cxxxcxxxc...c...c...c|r|n..nc...cn..n|s|c...c...c...cxxxcxxxc..`x
+x`..cxxxcxxxc...c...c...c|||n..nc...cn..n|||c...c...c...cxxxcxxxc..`x
 x`.ccccccxxxcccccc.ccccccnnncnnncc.ccnnncnnncccccc.ccccccxxxcccccc.`x
 x`..cxxxxxxxxxxxc...cxxxxnnnn|**c...c**|nnnnxxxxc...cxxxxxxxxxxxc..`x
-x``.cxxxxxxxxxxxc...cxxxnnRnn|**c.c.c**|nnSnnxxxc...cxxxxxxxxxxxc.``x
+x``.cxxxxxxxxxxxc...cxxxnnPnn|**c.c.c**|nnPnnxxxc...cxxxxxxxxxxxc.``x
 x`..cxxxxxxxxxxxc...cxxxxnnnn|**c...c**|nnnnxxxxc...cxxxxxxxxxxxc..`x
 x`.ccccccxxxcccccc.ccccccxnxcccccc.ccccccxnxcccccc.ccccccxxxcccccc.`x
 x`..c...cxxxc...c...c...cxxxc...c...c...cxxxc...c...c...cxxxc...c..`x
@@ -1119,18 +729,15 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ENDMAP
 
 # An acidless path to the center is likely, but not guaranteed. You'll be fine.
-NAME:    slime_pit_nicolae_inversion
-SHUFFLE: Pp / Oo / Qq / Rr
-SUBST:   o = k, pqr = |, PQR = *|
-SUBST:   3 = 33., 4 = 444.., ' = x.
-NSUBST:  D = 1:S / * = 4.., E = 1:S / * = 4..
-NSUBST:  F = 1:S / * = 4.., H = 1:S / * = 4..
-NSUBST:  S = { / [ / ( / 4.., P = O / *|
+NAME:   slime_pit_nicolae_inversion
+SUBST:  3 = 33., 4 = 444.., ' = x.
+NSUBST: D = S / 4.., E = S / 4.., F = S / 4.., H = S / 4.., \
+        S = { / [ / ( / 4.., P = O / *|
 : setup_slime_pit_ending(_G)
 MAP
                            cccccccccc
-                           c*n|P||n*c
-                           c**n|pn**c
+                           c*n|PP|n*c
+                           c**n||n**c
                           ccc**nn**ccc
                         cccncc*|**ccnccc
                       ccc....cnnnnc....ccc
@@ -1159,8 +766,8 @@ ccccn.H..........'xxxxxxxxxxx'....'xxxxxxxxxxx'..........E.ncccc
 c**cc............''xxxxxxxxx'''.3.''xxxxxxxxx''............cc**c
 cn**cc............'''''''''''2....2'''''''''''............cc**nc
 c|n**n............'...'...'........'...'...'..............n**n|c
-c|on*n..............4...4...3..1.....4...4...4............n|nq|c
-cO|n|n............4...4...4.....Z..3...4...4..............n*n|Qc
+cP|n*n..............4...4...3..1.....4...4...4............n|n|Pc
+cP|n|n............4...4...4.....Z..3...4...4..............n*n|Pc
 c|n**n..............'...'...'........'...'...'............n**n|c
 cn**cc............'''''''''''2....2'''''''''''............cc**nc
 c**cc............''xxxxxxxxx''.3.'''xxxxxxxxx''............cc**c
@@ -1189,17 +796,16 @@ ccccn.H..........'xxxxxxxxxxx'....'xxxxxxxxxxx'..........E.ncccc
                       ccc....cnnnnc....ccc
                         cccncc**|*ccnccc
                           ccc**nn**ccc
-                           c**nr|n**c
-                           c*n||R|n*c
+                           c**n||n**c
+                           c*n|PP|n*c
                            cccccccccc
 ENDMAP
 
 NAME:    slime_pit_nicolae_jellycorners
-SHUFFLE: Dd / Ee / Ff / Gg, Pp / Qq / Rr / Ss
-SUBST:   D = O, d = k, efg = |, EFG = *|
+SHUFFLE: Pp/Qq/Rr/Ss
 SUBST:   ' = x., ! = cx., - = cccx., " = cx, P = 1, QRS = 998, pqr = 4.....
-NSUBST:  p = 2=2 / 2=2. / 2=3 / 3. / 4.
-NSUBST:  D = O / *|, { = { / [ / ( / Z
+NSUBST:  p = 2=2 / 2=2. / 2=3 / 3. / 4., \
+         D = O / *|, { = { / [ / ( / Z
 : setup_slime_pit_ending(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -1226,11 +832,11 @@ xxxxx'...........'xxxxxnnncnnnxxxxx'............'xxxx
 xxxxxx'...........'xxccn**c**nccxx'.............'xxxx
 xxxxxxx'...........'xc|***c***|cx'..............'xxxx
 xxxxxxxx'...........nn***|c|***nn................'xxx
-xxxxxxxxx'..........n***d|c|e***n.................'xx
-xxxxxxxxx'..........n**||DcE||**n.................'xx
+xxxxxxxxx'..........n***||c||***n.................'xx
+xxxxxxxxx'..........n**||DcD||**n.................'xx
 xxxxxxxxx'........{.ccccccccccccc.{................'x
-xxxxxxxxx'..........n**||FcG||**n..........''......'x
-xxxxxxx''...........n***f|c|g***n.........'xx'.....'x
+xxxxxxxxx'..........n**||DcD||**n..........''......'x
+xxxxxxx''...........n***||c||***n.........'xx'.....'x
 xxxxx''.............nn***|c|***nn'.......'xxx'.....'x
 xxx'...............'xc|***c***|cxx'......'xxx'....'xx
 xx'.........'x....'xxccn**c**nccxxx'...''xxx'.....'xx
@@ -1257,10 +863,9 @@ xcccc"""""cccc!!'xxxxxxxxxxxxxxxxxxx'!!cccc""""xxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ENDMAP
 
-NAME:   slime_pit_nicolae_royal_road_to_ruin
-KMONS:  R = rockslime / void ooze
-SUBST:  " = cx, ! = cxx.., ' = x., r = rr., 4 = 444.
-NSUBST: k = 1:k / *:|
+NAME:  slime_pit_nicolae_royal_road_to_ruin
+KMONS: R = rockslime / rockslime
+SUBST: " = cx, ! = cxx.., ' = x., R = RR., 4 = 444.
 : setup_slime_pit_ending(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -1294,9 +899,9 @@ xxxxccc.c.ccc..........!!....cc".!....'xxxccxx''..'''x""c.!.nnn|***cxx
 xxccc.......ccc.........!.4""".......!""4'"'''......!"".......nn|**ccx
 xxxc.........c.........""........4...."...!!.........!....3....n|***cx
 xxcc.........cc........".......R...R..!!...!..4..4..!!.........nn|**cx
-xxc..........."........cc..............!........................nk|kcx
+xxc..........."........cc..............!........................n|||cx
 xxcc....{....""........".2."".4..V..4.....2.....4...2..3.1Z..3.nn|O|cx
-xxc...........!........""..!....................................nk|kcx
+xxc...........!........""..!....................................n|||cx
 xxcc..........!........"...!!..R...R..........4..4..!!.........nn|**cx
 xxxc...................""...!....4........!!.........!....3....n|***cx
 xxccc...................!.4""".....".cc!4.!.........""".......nn|**ccx
@@ -1330,13 +935,10 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxcxcccccxcxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ENDMAP
 
-NAME:    slime_pit_nicolae_trefoil
-SUBST:   ' = x., 4 = 4.
-SHUFFLE: Pp / Oo / Qq
-NSUBST:  o = 1:k / *:|
-SUBST:   pq = |, PQ = *|
-NSUBST:  1 = 1 / *:M, M = 4:2 / 3:3 / 2 = 23 / *:4
-NSUBST:  { = 1:{ / *:., [ = 1:[ / *:., ( = 1:( / *:.
+NAME:   slime_pit_nicolae_trefoil
+SUBST:  ' = x., 4 = 4.
+NSUBST: 1 = 1 / M, M = 4=2 / 3=3 / 2=23 / 4, P = O / *|
+NSUBST: { = { / ., [ = [ / ., ( = ( / .
 : setup_slime_pit_ending(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -1353,9 +955,9 @@ x'..{{{{{.....................'c*c'.....................[[[[[..'x
 x'..{{{{{....................'cc*cc'....................[[[[[..'x
 x'..{{{{{....................'c***c'....................[[[[[..'x
 x'...{{{....................'cc***cc'....................[[[...'x
-x'..........................'c*p|p*c'..........................'x
+x'..........................'c*|||*c'..........................'x
 x'.........................'cc*|P|*cc'.........................'x
-x'.........................'c**p|p**c'.........................'x
+x'.........................'c**|||**c'.........................'x
 x'...............''''...'''cc*******cc'''...''''...............'x
 x'..............'ccccc.ccccccnnnnnnncccccc.ccccc'..............'x
 xx'..............'ccc.4.ccc...........ccc.4.ccc'..............'xx
@@ -1373,9 +975,9 @@ xxxxxxxx'...........'c*n.....M.1.1.M.....n*c'...........'xxxxxxxx
 xxxxxxxxx'.........'cc*nn...............nn*cc'.........'xxxxxxxxx
 xxxxxxxxxx'........'c***n.....4.M.4.....n***c'........'xxxxxxxxxx
 xxxxxxxxxxx'......'cc***nn.............nn***cc'......'xxxxxxxxxxx
-xxxxxxxxxxxx'.....'c*o|o*n.............n*q|q*c'.....'xxxxxxxxxxxx
-xxxxxxxxxxxxx'...'cc*|O|*nn...........nn*|Q|*cc'...'xxxxxxxxxxxxx
-xxxxxxxxxxxxxx'..'c**o|o**n...........n**q|q**c'..'xxxxxxxxxxxxxx
+xxxxxxxxxxxx'.....'c*|||*n.............n*|||*c'.....'xxxxxxxxxxxx
+xxxxxxxxxxxxx'...'cc*|P|*nn...........nn*|P|*cc'...'xxxxxxxxxxxxx
+xxxxxxxxxxxxxx'..'c**|||**n...........n**|||**c'..'xxxxxxxxxxxxxx
 xxxxxxxxxxxxxxx''cc*******cc.........cc*******cc''xxxxxxxxxxxxxxx
 xxxxxxxxxxxccccccccccccccccccccc.cccccccccccccccccccccxxxxxxxxxxx
 xxxxxxxxxxxccccccc''''''''''ccc.4.ccc''''''''''cccccccxxxxxxxxxxx

@@ -184,4 +184,3 @@ void ice_wall_damage(monster &victim, int delay);
 void frigid_walls_damage(int delay);
 
 void descent_crumble_stairs();
-void descent_reveal_stairs();
