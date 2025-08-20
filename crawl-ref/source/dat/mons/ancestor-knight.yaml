@@ -16,6 +16,6 @@ ev: 10
 shout: shout
 intelligence: human
 energy: {attack: 15}
-uses: starting_equipment
+uses: open_doors
 size: medium
 shape: humanoid

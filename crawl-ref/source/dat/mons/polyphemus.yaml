@@ -16,6 +16,6 @@ spells: polyphemus
 has_corpse: true
 shout: shout
 intelligence: human
-uses: starting_equipment
+uses: open_doors
 size: giant
 shape: humanoid

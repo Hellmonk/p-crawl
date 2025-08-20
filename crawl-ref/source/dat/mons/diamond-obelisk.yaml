@@ -10,6 +10,6 @@ hp_10x: 96000
 ac: 12
 ev: 1
 intelligence: human
-uses: starting_equipment
+uses: open_doors
 size: large
 shape: misc

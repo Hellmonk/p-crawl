@@ -12,6 +12,6 @@ hp_10x: 710
 ac: 15
 ev: 10
 intelligence: human
-uses: starting_equipment
+uses: open_doors
 size: medium
 shape: humanoid

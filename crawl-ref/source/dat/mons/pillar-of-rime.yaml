@@ -10,7 +10,7 @@ hp_10x: 375
 ac: 15
 ev: 0
 intelligence: brainless
-uses: starting_equipment
+uses: open_doors
 size: medium
 shape: misc
 habitat: amphibious

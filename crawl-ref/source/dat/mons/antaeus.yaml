@@ -18,6 +18,6 @@ spells: antaeus
 shout: demon_taunt
 intelligence: human
 habitat: amphibious
-uses: weapons_armour
+uses: open_doors
 size: giant
 shape: humanoid

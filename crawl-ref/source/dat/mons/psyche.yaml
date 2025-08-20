@@ -15,6 +15,6 @@ has_corpse: true
 shout: shout
 intelligence: human
 speed: 13
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid

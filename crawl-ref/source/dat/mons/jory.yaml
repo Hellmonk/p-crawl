@@ -16,6 +16,6 @@ ev: 15
 spells: jory
 shout: shout
 intelligence: human
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid

@@ -14,6 +14,6 @@ ac: 10
 ev: 6
 spells: royal_mummy
 intelligence: human
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid

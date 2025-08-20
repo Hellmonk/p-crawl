@@ -11,7 +11,7 @@ hp_10x: 720
 ac: 12
 ev: 1
 intelligence: human
-uses: starting_equipment
+uses: open_doors
 size: large
 shape: humanoid
 tile: obsidian_statue

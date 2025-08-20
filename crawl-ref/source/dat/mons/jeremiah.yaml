@@ -17,6 +17,6 @@ shout: shout
 intelligence: human
 habitat: amphibious
 energy: {move: 12}
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid

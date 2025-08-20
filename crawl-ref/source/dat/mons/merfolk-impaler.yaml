@@ -15,7 +15,7 @@ shout: shout
 intelligence: human
 habitat: amphibious
 energy: {swim: 6, attack: 6}
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid
 tile_variance: water

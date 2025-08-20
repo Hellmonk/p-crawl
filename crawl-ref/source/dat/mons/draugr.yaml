@@ -15,4 +15,4 @@ speed: 5
 size: small
 shape: misc
 tile: draugr_small
-uses: starting_equipment
+uses: open_doors

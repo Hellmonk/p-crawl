@@ -16,7 +16,7 @@ ev: 28
 spells: mennas
 intelligence: human
 speed: 15
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid_winged
 god: Zin

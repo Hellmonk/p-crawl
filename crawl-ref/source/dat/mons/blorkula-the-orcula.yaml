@@ -16,6 +16,6 @@ ev: 9
 spells: blorkula
 shout: shout
 intelligence: human
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid

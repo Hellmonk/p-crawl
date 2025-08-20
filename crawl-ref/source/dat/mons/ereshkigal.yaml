@@ -16,6 +16,6 @@ spells: ereshkigal
 shout: shout
 intelligence: human
 speed: 14
-uses: weapons_armour
+uses: open_doors
 size: large
 shape: humanoid

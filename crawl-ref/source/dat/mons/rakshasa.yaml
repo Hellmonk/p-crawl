@@ -13,6 +13,6 @@ ac: 6
 ev: 14
 spells: rakshasa
 intelligence: human
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid

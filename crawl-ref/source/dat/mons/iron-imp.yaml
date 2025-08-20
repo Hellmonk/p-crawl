@@ -14,6 +14,6 @@ ev: 8
 shout: shout
 intelligence: human
 speed: 8
-uses: weapons_armour
+uses: open_doors
 size: small
 shape: humanoid

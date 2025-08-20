@@ -15,7 +15,7 @@ ev: 11
 spells: grinder
 shout: shout
 intelligence: human
-uses: starting_equipment
+uses: open_doors
 size: little
 shape: humanoid
 god: Makhleb

@@ -12,6 +12,6 @@ ev: 18
 has_corpse: true
 shout: hiss
 intelligence: human
-uses: starting_equipment
+uses: open_doors
 size: little
 shape: quadruped

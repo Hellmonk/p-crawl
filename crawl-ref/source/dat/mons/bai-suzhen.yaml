@@ -16,6 +16,6 @@ ev: 8
 spells: bai_suzhen
 shout: roar
 intelligence: human
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid_tailed

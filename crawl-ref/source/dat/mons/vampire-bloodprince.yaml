@@ -16,6 +16,6 @@ ev: 10
 spells: vampire_bloodprince
 shout: shout
 intelligence: human
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid

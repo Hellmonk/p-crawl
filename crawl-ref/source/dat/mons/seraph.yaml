@@ -17,7 +17,7 @@ spells: seraph
 shout: shout
 intelligence: human
 speed: 15
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid_winged
 god: Shining One

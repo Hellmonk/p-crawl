@@ -11,6 +11,6 @@ hp_10x: 165
 ac: 4
 ev: 10
 intelligence: human
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid

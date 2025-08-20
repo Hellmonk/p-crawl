@@ -16,6 +16,6 @@ ev: 21
 spells: josephina
 shout: shout
 intelligence: human
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid

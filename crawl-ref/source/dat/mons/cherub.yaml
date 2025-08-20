@@ -16,6 +16,6 @@ ev: 20
 spells: battlecry
 shout: cherub
 intelligence: human
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid_winged

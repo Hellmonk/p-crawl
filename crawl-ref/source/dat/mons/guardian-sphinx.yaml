@@ -17,6 +17,6 @@ has_corpse: true
 shout: shout
 intelligence: human
 speed: 12
-uses: starting_equipment
+uses: open_doors
 size: giant
 shape: quadruped_winged
