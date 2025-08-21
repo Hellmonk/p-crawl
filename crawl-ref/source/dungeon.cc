@@ -6140,6 +6140,27 @@ static void _stock_shop_item(int j, shop_type shop_type_,
                     item.name(DESC_PLAIN, false, true).c_str());
 }
 
+static void _stock_acquirement_item(shop_struct &shop, object_class_type base = OBJ_UNASSIGNED)
+{
+    int item_index;
+    object_class_type type = base;
+    
+    if (type >= OBJ_UNASSIGNED)
+        type = shuffled_acquirement_classes(false)[0];
+    
+    item_index = acquirement_create_item(type, AQ_SHRINE, true);
+    
+    if (item_index != NON_ITEM)
+    {
+        item_def item = env.item[item_index];
+        item.flags |= ISFLAG_IDENTIFIED;
+        dec_mitm_item_quantity(item_index, item.quantity, false);
+        item.pos = shop.pos;
+        item.link = ITEM_IN_SHOP;
+        shop.stock.push_back(item);
+    }
+}
+
 static shop_type _random_shop()
 {
     return random_choose(SHOP_WEAPON, SHOP_ARMOUR, SHOP_WEAPON_ANTIQUE,
@@ -6165,34 +6186,15 @@ void place_spec_shop(const coord_def& where, shop_spec &spec, int shop_level)
 
     shop_struct& shop = env.shop[where];
 
-    const int level_number = shop_level ? shop_level : env.absdepth0;
-
-    for (int j = 0; j < 3; j++)
-        shop.keeper_name[j] = 1 + random2(200);
-    shop.shop_name = spec.name;
-    shop.shop_type_name = spec.type;
-    shop.shop_suffix_name = spec.suffix;
-    shop.level = level_number * 2;
-    shop.type = spec.sh_type;
-    if (shop.type == SHOP_RANDOM)
-        shop.type = _random_shop();
-    shop.greed = _shop_greed(shop.type, level_number, spec.greed);
+    shop.shop_name = "Acquirement Shrine";
+    shop.type = SHOP_GENERAL;
     shop.pos = where;
-
     _set_grd(where, DNGN_ENTER_SHOP);
-
-    const int num_items = _shop_num_items(spec);
-
-    // For books shops, store how many copies of a given book are on display.
-    // This increases the diversity of books in a shop.
-    int stocked[NUM_BOOKS] = { 0 };
-    // We want to do the same thing for parchments. Book stocking is retained
-    // because it could be relevant for special shops.
-    int supplied[NUM_SPELLS] = { 0 };
+    const int num_items = 4;
 
     shop.stock.clear();
-    for (int j = 0; j < num_items; j++)
-        _stock_shop_item(j, shop.type, stocked, supplied, spec, shop, shop_level);
+    for (int j = 0; j < num_items -1; j++)
+        _stock_acquirement_item(shop);
 }
 
 object_class_type item_in_shop(shop_type shop_type)

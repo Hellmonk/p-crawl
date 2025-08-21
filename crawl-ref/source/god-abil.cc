@@ -3567,7 +3567,7 @@ static string _describe_gozag_shop(int index)
         apostrophise(you.props[make_stringf(GOZAG_SHOPKEEPER_NAME_KEY,
                                             index)].get_string());
     const shop_type type = _gozag_shop_type(index);
-    const string type_name = shop_type_name(type);
+    const string type_name = "";
     const string suffix =
         you.props[make_stringf(GOZAG_SHOP_SUFFIX_KEY, index)].get_string();
 
@@ -3663,7 +3663,7 @@ static void _gozag_place_shop(int index)
     mprf(MSGCH_GOD, "%s invites you to visit %s %s%s%s.",
                     shop->shop_name.c_str(),
                     decline_pronoun(gender, PRONOUN_POSSESSIVE),
-                    shop_type_name(shop->type).c_str(),
+                    "",
                     !shop->shop_suffix_name.empty() ? " " : "",
                     shop->shop_suffix_name.c_str());
 }
