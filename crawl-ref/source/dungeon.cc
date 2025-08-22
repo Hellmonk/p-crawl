@@ -98,6 +98,7 @@ static void _builder_monsters();
 static coord_def _place_specific_feature(dungeon_feature_type feat);
 static void _place_specific_trap(const coord_def& where, trap_spec* spec,
                                  int charges = 0);
+static void _place_shrines();
 static void _place_branch_entrances(bool use_vaults);
 static void _place_extra_vaults();
 static void _place_chance_vaults();
@@ -2720,6 +2721,9 @@ static void _build_dungeon_level()
     // no guarantees, seeing this is a minivault.
     if (crawl_state.game_has_random_floors())
     {
+        // These are required for item progression to work, so do them first
+        _place_shrines();
+
         if (place_vaults)
         {
             // Moved branch entries to place first so there's a good
@@ -3738,6 +3742,30 @@ bool in_descent_parent(branch_type branch)
         if (player_in_branch(parent))
             return true;
     return false;
+}
+
+static void _place_shrines()
+{
+    // no shrines in the fortress level
+    if (player_in_branch(BRANCH_VAULTS) || player_in_branch(BRANCH_VESTIBULE))
+        return;
+
+    if (!_place_vault_by_tag("shrine_major"))
+    {
+        const map_def* dummy = find_map_by_name("acquirement_shrine_dummy");
+        if (!dummy || !_build_secondary_vault(dummy))
+            throw dgn_veto_exception("Failed to place major shrine.");
+    }
+
+    if (!_place_vault_by_tag("shrine_minor"))
+    {
+        const map_def* dummy = find_map_by_name("parchment_shrine_dummy");
+        if (!dummy || !_build_secondary_vault(dummy))
+            throw dgn_veto_exception("Failed to place minor shrine.");
+    }
+
+    if (coinflip())
+        return; // third shrine type goes here.
 }
 
 static void _place_branch_entrances(bool use_vaults)
@@ -6144,12 +6172,12 @@ static void _stock_acquirement_item(shop_struct &shop, object_class_type base = 
 {
     int item_index;
     object_class_type type = base;
-    
+
     if (type >= OBJ_UNASSIGNED)
         type = shuffled_acquirement_classes(false)[0];
-    
+
     item_index = acquirement_create_item(type, AQ_SHRINE, true);
-    
+
     if (item_index != NON_ITEM)
     {
         item_def item = env.item[item_index];

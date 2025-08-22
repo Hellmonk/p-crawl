@@ -2009,18 +2009,18 @@ void vend()
 {
     if (env.grid(you.pos()) != DNGN_ENTER_SHOP)
         return;
-    
+
     shop_struct& vendor = *shop_at(you.pos());
 
     CrawlVector &vendor_items = you.props[VENDOR_ITEMS_KEY].get_vector();
     vendor_items.empty();
-    
+
     for (const item_def &item : vendor.stock)
     {
         if (item.defined())
             vendor_items.push_back(item);
     }
-    
+
     AcquireMenu acq_menu(vendor_items, VENDOR_ITEMS_KEY);
     acq_menu.show();
 

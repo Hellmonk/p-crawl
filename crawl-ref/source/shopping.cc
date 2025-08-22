@@ -1624,7 +1624,7 @@ string shop_name(const shop_struct& shop)
 #endif
     if (!shop.shop_name.empty())
         sh_name += "An " + shop.shop_name + "";
-    
+
     return sh_name;
 }
 
