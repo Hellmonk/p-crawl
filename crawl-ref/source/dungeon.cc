@@ -6189,6 +6189,21 @@ static void _stock_acquirement_item(shop_struct &shop, object_class_type base = 
     }
 }
 
+static void _stock_gold(shop_struct &shop)
+{
+    int item_index = acquirement_create_item(OBJ_GOLD, AQ_SHRINE, true);
+
+    if (item_index != NON_ITEM)
+    {
+        item_def item = env.item[item_index];
+        item.flags |= ISFLAG_IDENTIFIED;
+        dec_mitm_item_quantity(item_index, item.quantity, false);
+        item.pos = shop.pos;
+        item.link = ITEM_IN_SHOP;
+        shop.stock.push_back(item);
+    }
+}
+
 static shop_type _random_shop()
 {
     return random_choose(SHOP_WEAPON, SHOP_ARMOUR, SHOP_WEAPON_ANTIQUE,
@@ -6213,16 +6228,33 @@ void place_spec_shop(const coord_def& where, shop_spec &spec, int shop_level)
     no_notes nx;
 
     shop_struct& shop = env.shop[where];
+    int num_items;
+    object_class_type item_type = OBJ_UNASSIGNED;
+    shop_type type = spec.sh_type;
 
-    shop.shop_name = "Acquirement Shrine";
-    shop.type = SHOP_GENERAL;
+    switch (type)
+    {
+    case SHOP_BOOK:
+        shop.shop_name = "Spell Shrine";
+        shop.type = SHOP_BOOK;
+        num_items = 2;
+        item_type = OBJ_BOOKS;
+        break;
+    default:
+        shop.shop_name = "Acquirement Shrine";
+        shop.type = SHOP_GENERAL;
+        num_items = 4;
+        break;
+    }
+
     shop.pos = where;
     _set_grd(where, DNGN_ENTER_SHOP);
-    const int num_items = 4;
 
     shop.stock.clear();
-    for (int j = 0; j < num_items -1; j++)
-        _stock_acquirement_item(shop);
+    for (int j = 0; j < num_items; j++)
+        _stock_acquirement_item(shop, item_type);
+
+    _stock_gold(shop);
 }
 
 object_class_type item_in_shop(shop_type shop_type)
