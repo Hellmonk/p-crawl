@@ -13,7 +13,7 @@ ac: 5
 ev: 5
 shout: shout
 intelligence: human
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid
 tile: efreet

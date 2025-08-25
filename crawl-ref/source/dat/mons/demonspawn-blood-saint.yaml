@@ -16,7 +16,7 @@ spells: demonspawn_blood_saint
 has_corpse: true
 shout: shout
 intelligence: human
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid
 god: Makhleb

@@ -15,7 +15,7 @@ has_corpse: true
 shout: roar
 intelligence: human
 habitat: amphibious
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid_tailed
 tile: program_bug

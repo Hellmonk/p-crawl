@@ -12,6 +12,6 @@ hp_10x: 315
 ac: 7
 ev: 13
 intelligence: human
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid_winged

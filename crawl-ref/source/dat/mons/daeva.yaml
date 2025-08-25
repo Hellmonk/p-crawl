@@ -16,7 +16,7 @@ ev: 13
 spells: daeva
 shout: shout
 intelligence: human
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid_winged
 god: Shining One

@@ -15,7 +15,7 @@ has_corpse: true
 shout: shout
 intelligence: human
 energy: {move: 6}
-uses: weapons_armour
+uses: open_doors
 size: little
 shape: humanoid
 god: Trog

@@ -19,7 +19,7 @@ spells: ignacio
 shout: shout
 intelligence: human
 speed: 20
-uses: starting_equipment
+uses: open_doors
 size: large
 shape: humanoid
 god: Makhleb

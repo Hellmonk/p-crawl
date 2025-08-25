@@ -13,6 +13,6 @@ spells: boggart
 shout: shout
 intelligence: human
 speed: 12
-uses: weapons_armour
+uses: open_doors
 size: little
 shape: humanoid

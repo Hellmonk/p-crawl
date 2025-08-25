@@ -17,6 +17,6 @@ has_corpse: true
 intelligence: human
 habitat: amphibious_lava
 energy: {swim: 7}
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: naga

@@ -15,6 +15,6 @@ ac: 10
 ev: 10
 spells: vampire_mage
 intelligence: human
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid

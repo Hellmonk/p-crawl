@@ -1461,7 +1461,7 @@ AcquireMenu::AcquireMenu(CrawlVector &aitems, string ikey,
     if (is_gizmo)
         set_title("Choose a gizmo to assemble.");
     else
-        set_title("Choose an item to acquire.");
+        set_title("Choose an item to obtain.");
 }
 
 static void _create_acquirement_item(item_def &item, string items_key,
@@ -2003,4 +2003,31 @@ void coglin_announce_gizmo_name()
 
     mprf("Your brain swirls with designs for %s. You just need some more time...",
          article_a(name).c_str());
+}
+
+void vend()
+{
+    if (env.grid(you.pos()) != DNGN_ENTER_SHOP)
+        return;
+
+    shop_struct& vendor = *shop_at(you.pos());
+
+    CrawlVector &vendor_items = you.props[VENDOR_ITEMS_KEY].get_vector();
+    vendor_items.empty();
+
+    for (const item_def &item : vendor.stock)
+    {
+        if (item.defined())
+            vendor_items.push_back(item);
+    }
+
+    AcquireMenu acq_menu(vendor_items, VENDOR_ITEMS_KEY);
+    acq_menu.show();
+
+    if (!you.props.exists(VENDOR_ITEMS_KEY))
+        destroy_shop_at(you.pos());
+
+    you.props.erase(VENDOR_ITEMS_KEY);
+    redraw_screen();
+    update_screen();
 }

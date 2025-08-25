@@ -15,6 +15,6 @@ ev: 4
 spells: war_gargoyle
 intelligence: human
 speed: 14
-uses: starting_equipment
+uses: open_doors
 size: medium
 shape: humanoid_winged_tailed

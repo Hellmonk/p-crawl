@@ -13,6 +13,6 @@ ac: 10
 ev: 5
 spells: efreet
 intelligence: human
-uses: weapons_armour
+uses: open_doors
 size: large
 shape: humanoid

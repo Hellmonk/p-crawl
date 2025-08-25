@@ -14,7 +14,7 @@ spells: orc_high_priest
 has_corpse: true
 shout: shout
 intelligence: human
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid
 god: Beogh

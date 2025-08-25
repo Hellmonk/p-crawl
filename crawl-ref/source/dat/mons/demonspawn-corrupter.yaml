@@ -17,7 +17,7 @@ spells: demonspawn_corrupter
 has_corpse: true
 shout: shout
 intelligence: human
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid
 god: Lugonu

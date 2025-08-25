@@ -1588,34 +1588,10 @@ string shop_type_name(shop_type type)
 {
     switch (type)
     {
-        case SHOP_WEAPON_ANTIQUE:
-            return "Antique Weapon";
-        case SHOP_ARMOUR_ANTIQUE:
-            return "Antique Armour";
-        case SHOP_WEAPON:
-            return "Weapon";
-        case SHOP_ARMOUR:
-            return "Armour";
-        case SHOP_JEWELLERY:
-            return "Jewellery";
-        case SHOP_BOOK:
-            return "Book";
-#if TAG_MAJOR_VERSION == 34
-        case SHOP_EVOKABLES:
-            return "Gadget";
-        case SHOP_FOOD:
-            return "Removed Food";
-#endif
-        case SHOP_SCROLL:
-            return "Magic Scroll";
-        case SHOP_GENERAL_ANTIQUE:
-            return "Assorted Antiques";
-        case SHOP_DISTILLERY:
-            return "Distillery";
         case SHOP_GENERAL:
-            return "General Store";
+            return "";
         default:
-            return "Bug";
+            return "";
     }
 }
 
@@ -1647,29 +1623,7 @@ string shop_name(const shop_struct& shop)
         return shop.shop_type_name;
 #endif
     if (!shop.shop_name.empty())
-        sh_name += apostrophise(shop.shop_name) + " ";
-    else
-    {
-        uint32_t seed = static_cast<uint32_t>(shop.keeper_name[0])
-            | (static_cast<uint32_t>(shop.keeper_name[1]) << 8)
-            | (static_cast<uint32_t>(shop.keeper_name[1]) << 16);
-
-        sh_name += apostrophise(make_name(seed)) + " ";
-    }
-
-    if (!shop.shop_type_name.empty())
-        sh_name += shop.shop_type_name;
-    else
-        sh_name += shop_type_name(type);
-
-    if (!shop.shop_suffix_name.empty())
-        sh_name += " " + shop.shop_suffix_name;
-    else
-    {
-        string sh_suffix = _shop_type_suffix(type, shop.pos);
-        if (!sh_suffix.empty())
-            sh_name += " " + sh_suffix;
-    }
+        sh_name += "An " + shop.shop_name + "";
 
     return sh_name;
 }

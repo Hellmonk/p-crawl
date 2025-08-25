@@ -15,7 +15,7 @@ has_corpse: true
 spells: ghost
 shout: shout
 intelligence: human
-uses: starting_equipment
+uses: open_doors
 size: medium
 habitat: amphibious
 shape: humanoid

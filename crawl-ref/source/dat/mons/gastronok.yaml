@@ -16,7 +16,7 @@ shout: gurgle
 intelligence: human
 habitat: amphibious
 speed: 5
-uses: starting_equipment
+uses: open_doors
 size: giant
 shape: snail
 tile_variance: mod

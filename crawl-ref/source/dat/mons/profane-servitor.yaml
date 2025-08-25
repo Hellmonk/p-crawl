@@ -15,7 +15,7 @@ ac: 10
 ev: 20
 intelligence: human
 speed: 15
-uses: starting_equipment
+uses: open_doors
 size: medium
 shape: humanoid_winged
 god: Yredelemnul

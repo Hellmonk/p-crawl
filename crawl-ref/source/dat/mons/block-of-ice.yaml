@@ -10,7 +10,7 @@ hp_10x: 285
 ac: 15
 ev: 0
 intelligence: brainless
-uses: starting_equipment
+uses: open_doors
 size: medium
 shape: misc
 tile_variance: mod

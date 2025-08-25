@@ -13,6 +13,6 @@ ac: 20
 ev: 0
 spells: roxanne
 intelligence: human
-uses: starting_equipment
+uses: open_doors
 size: large
 shape: humanoid

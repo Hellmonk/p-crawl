@@ -15,6 +15,6 @@ ev: 7
 spells: mummy_priest
 intelligence: human
 speed: 8
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid

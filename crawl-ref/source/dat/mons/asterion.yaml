@@ -15,7 +15,7 @@ spells: asterion
 has_corpse: true
 shout: bellow
 intelligence: human
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid
 god: Makhleb

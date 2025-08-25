@@ -11,7 +11,7 @@ hp_10x: 10
 ac: 7
 ev: 20
 intelligence: human
-uses: weapons_armour
+uses: open_doors
 size: medium
 shape: humanoid
 tile: player_shadow

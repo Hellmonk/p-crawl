@@ -11,6 +11,6 @@ hp_10x: 60
 ac: 0
 ev: 0
 intelligence: human
-uses: starting_equipment
+uses: open_doors
 size: large
 shape: humanoid

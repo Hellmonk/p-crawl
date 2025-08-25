@@ -248,13 +248,10 @@ to it.
 ########################################################################
 ### Features
 ########################################################################
-A shop
+An acquirement shrine
 
-A shop in the dungeon, beyond sight of the world above, manned by a secretive
-and reclusive shopkeeper who cannot be bargained with, grants no refunds, and
-is interested in nothing you may have to sell. Some shops hawk antiques of
-unknown provenance, and offer little hint as to the quality or nature of their
-goods.
+A shrine that allows visitors to obtain a single item from a small selection.
+Choose wisely.
 %%%%
 A stone staircase leading down
 
