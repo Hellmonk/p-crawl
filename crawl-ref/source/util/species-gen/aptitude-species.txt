@@ -1,11 +1,13 @@
 {tag_major_version_opener}
     {{{enum}, SK_FIGHTING,       {fighting}}},
     {{{enum}, SK_MELEE_WEAPONS,  {melee_weapons}}},
+#if TAG_MAJOR_VERSION == 34
     {{{enum}, SK_LONG_BLADES,    UNUSABLE_SKILL}},
     {{{enum}, SK_AXES,           UNUSABLE_SKILL}},
     {{{enum}, SK_MACES_FLAILS,   UNUSABLE_SKILL}},
     {{{enum}, SK_POLEARMS,       UNUSABLE_SKILL}},
     {{{enum}, SK_STAVES,         UNUSABLE_SKILL}},
+#endif
     {{{enum}, SK_RANGED_WEAPONS, {ranged weapons}}},
     {{{enum}, SK_THROWING,       {throwing}}},
     {{{enum}, SK_ARMOUR,         {armour}}},
