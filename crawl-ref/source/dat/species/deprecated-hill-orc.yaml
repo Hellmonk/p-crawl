@@ -10,27 +10,6 @@ aptitudes:
   hp: 1
   mp_mod: 0
   wl: 3
-  fighting: 2
-  long_blades: 1
-  axes: 3
-  maces_and_flails: 1
-  polearms: 1
-  staves: -1
-  ranged weapons: -1
-  throwing: -1
-  armour: 1
-  dodging: -2
-  stealth: -1
-  shields: 1
-  unarmed_combat: 1
-  spellcasting: -3
-  translocations: -2
-  shapeshifting: -2
-  fire_magic: 1
-  ice_magic: -1
-  air_magic: -2
-  alchemy: -2
-  invocations: 3
 str: 10
 int: 8
 dex: 6

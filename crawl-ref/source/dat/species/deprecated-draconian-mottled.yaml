@@ -14,16 +14,6 @@ aptitudes:
   hp: 1
   mp_mod: 0
   wl: 3
-  fighting: 1
-  ranged weapons: -1
-  throwing: -1
-  armour: False
-  dodging: -1
-  spellcasting: -1
-  hexes: -1
-  invocations: 1
-  # Mottled Draconian specific
-  fire_magic: 1
 str: 10
 int: 8
 dex: 6

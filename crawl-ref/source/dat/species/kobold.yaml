@@ -8,23 +8,6 @@ aptitudes:
   hp: -2
   mp_mod: 0
   wl: 3
-  fighting: 1
-  short_blades: 3
-  long_blades: -2
-  axes: -2
-  maces_and_flails: -1
-  polearms: -2
-  staves: -1
-  ranged weapons: 3
-  throwing: 1
-  armour: -2
-  dodging: 2
-  stealth: 4
-  shields: -2
-  shapeshifting: -1
-  invocations: 1
-  evocations: 2
-
 size: small
 str: 5
 int: 9
@@ -40,9 +23,5 @@ recommended_jobs:
   - enchanter
   - conjurer
   - earth elementalist
-recommended_weapons:
-  - short blades
-  - maces and flails
-  - staves
 
 orc_name: Orcobold

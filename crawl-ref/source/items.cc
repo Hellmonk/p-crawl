@@ -3466,28 +3466,16 @@ colour_t item_def::weapon_colour() const
     if (is_demonic(*this))
         return LIGHTRED;
 
-    switch (item_attack_skill(*this))
-    {
-        case SK_RANGED_WEAPONS:
-            return BLUE;
-        case SK_THROWING:
-            return WHITE;
-        case SK_SHORT_BLADES:
-            return CYAN;
-        case SK_LONG_BLADES:
-            return LIGHTCYAN;
-        case SK_AXES:
-            return MAGENTA;
-        case SK_MACES_FLAILS:
-            return LIGHTGREY;
-        case SK_POLEARMS:
-            return RED;
-        case SK_STAVES:
-            return GREEN;
-        default:
-            die("Unknown weapon attack skill %d", item_attack_skill(*this));
-            // XXX: give more info!
-    }
+    if (is_short_blade(*this))
+        return CYAN;
+
+    if (is_axe(*this))
+        return MAGENTA;
+
+    if (is_polearm(*this))
+        return RED;
+
+    return GREEN;
 }
 
 /**

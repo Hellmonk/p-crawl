@@ -17,12 +17,6 @@ aptitudes:
   mp_mod: 0
   wl: 3
   armour: False
-  stealth: 4
-  spellcasting: -1
-  alchemy: 1
-  shapeshifting: -1
-  invocations: 1
-  evocations: 1
 can_swim: true
 str: 7
 int: 10

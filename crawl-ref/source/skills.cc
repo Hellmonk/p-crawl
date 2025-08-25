@@ -70,13 +70,13 @@ static const char *skill_titles[NUM_SKILLS][7] =
 {
   //  Skill name        levels 1-7       levels 8-14        levels 15-20       levels 21-26      level 27       skill abbr
     {"Fighting",       "Trooper",       "Fighter",         "Warrior",         "Slayer",         "Conqueror",    "Fgt"},
-    {"Short Blades",   "Cutter",        "Slicer",          "Swashbuckler",    "Cutthroat",      "Politician",   "SBl"},
+    {"Melee Weapons",  "Cutter",        "Slicer",          "Swashbuckler",    "Cutthroat",      "Politician",   "Mel"},
+#if TAG_MAJOR_VERSION == 34
     {"Long Blades",    "Slasher",       "Carver",          "Fencer",          "@Adj@ Blade",    "Swordmaster",  "LBl"},
     {"Axes",           "Chopper",       "Cleaver",         "Severer",         "Executioner",    "Axe Maniac",   "Axs"},
     {"Maces & Flails", "Cudgeller",     "Basher",          "Bludgeoner",      "Shatterer",      "Skullcrusher", "M&F"},
     {"Polearms",       "Poker",         "Spear-Bearer",    "Impaler",         "Phalangite",     "@Adj@ Porcupine", "Pla"},
     {"Staves",         "Twirler",       "Cruncher",        "Stickfighter",    "Pulveriser",     "Chief of Staff", "Stv"},
-#if TAG_MAJOR_VERSION == 34
     {"Slings",         "Vandal",        "Slinger",         "Whirler",         "Slingshot",      "@Adj@ Catapult", "Slg"},
 #endif
     {"Ranged Weapons", "Shooter",       "Skirmisher",      "Marks@genus@",    "Crack Shot",     "Merry @Genus@",  "Rng"},
@@ -2026,11 +2026,6 @@ string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
                 result = "Death Knight";
             break;
 
-        case SK_POLEARMS:
-            if (species == SP_ARMATAUR && skill_rank == 5)
-                result = "Prickly Pangolin";
-            break;
-
         case SK_UNARMED_COMBAT:
             if (species == SP_MUMMY && skill_rank == 5)
                 result = "Pharaoh";
@@ -2056,22 +2051,6 @@ string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
             {
                 result = dex > str ? martial_arts_titles[skill_rank]
                                     : skill_titles[best_skill][skill_rank];
-            }
-            break;
-
-        case SK_SHORT_BLADES:
-            if (species::is_elven(species) && skill_rank == 5)
-            {
-                result = "Blademaster";
-                break;
-            }
-            break;
-
-        case SK_LONG_BLADES:
-            if (species == SP_MERFOLK && skill_rank == 5)
-            {
-                result = "Swordfish";
-                break;
             }
             break;
 
@@ -2387,6 +2366,11 @@ bool is_removed_skill(skill_type skill)
     case SK_CHARMS:
     case SK_SLINGS:
     case SK_CROSSBOWS:
+    case SK_LONG_BLADES:
+    case SK_MACES_FLAILS:
+    case SK_AXES:
+    case SK_POLEARMS:
+    case SK_STAVES:
         return true;
     default:
         break;
@@ -2555,25 +2539,7 @@ float species_apt_factor(skill_type sk, species_type sp)
 
 vector<skill_type> get_crosstrain_skills(skill_type sk)
 {
-    // Gnolls do not have crosstraining.
-    if (you.has_mutation(MUT_DISTRIBUTED_TRAINING))
-        return {};
-
-    switch (sk)
-    {
-    case SK_SHORT_BLADES:
-        return { SK_LONG_BLADES };
-    case SK_LONG_BLADES:
-        return { SK_SHORT_BLADES };
-    case SK_AXES:
-    case SK_STAVES:
-        return { SK_POLEARMS, SK_MACES_FLAILS };
-    case SK_MACES_FLAILS:
-    case SK_POLEARMS:
-        return { SK_AXES, SK_STAVES };
-    default:
-        return {};
-    }
+    return {};
 }
 
 /**

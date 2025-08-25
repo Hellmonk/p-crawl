@@ -55,32 +55,8 @@ static void _give_wanderer_weapon(skill_type wpn_skill, bool good_item)
     // Now fill in the type according to the random wpn_skill.
     switch (wpn_skill)
     {
-    case SK_SHORT_BLADES:
+    case SK_MELEE_WEAPONS:
         sub_type = WPN_SHORT_SWORD;
-        break;
-
-    case SK_LONG_BLADES:
-        sub_type = WPN_FALCHION;
-        break;
-
-    case SK_MACES_FLAILS:
-        sub_type = WPN_MACE;
-        break;
-
-    case SK_AXES:
-        sub_type = WPN_HAND_AXE;
-        break;
-
-    case SK_POLEARMS:
-        sub_type = WPN_SPEAR;
-        break;
-
-    case SK_STAVES:
-        // We only reach here for good quality staves skill.
-        // A +0 quarterstaff is plenty good enough for good staves skill.
-        sub_type = WPN_QUARTERSTAFF;
-        upgrade_base = false;
-        good_item = false;
         break;
 
     case SK_RANGED_WEAPONS:
@@ -121,16 +97,10 @@ static void _assign_wanderer_stats(skill_type sk1, skill_type sk2,
         skill_type sk = skills[i];
         switch (sk)
         {
-            case SK_AXES:
-            case SK_MACES_FLAILS:
-            case SK_ARMOUR:
-            case SK_POLEARMS:
-            case SK_STAVES:
+            case SK_MELEE_WEAPONS:
                 str_count++;
                 break;
 
-            case SK_SHORT_BLADES:
-            case SK_LONG_BLADES:
             case SK_RANGED_WEAPONS:
             case SK_DODGING:
             case SK_SHIELDS:
@@ -218,17 +188,12 @@ static bool _wanderer_is_useful_skill(skill_type skill,
     if (skill == sk1 || skill == sk2)
         return false;
 
-    // Reroll decent staves skill, as no corresponding appropriate equipment
-    if (skill == SK_STAVES && sk1 != SK_NONE)
-        return false;
-
     // Don't give a shield with good staves / ranged weapons
     // (except for formicids, obviously)
     if (!you.has_mutation(MUT_QUADRUMANOUS)
         && skill == SK_SHIELDS
-        && (sk1 == SK_STAVES
-            || sk1 == SK_RANGED_WEAPONS || sk2 == SK_RANGED_WEAPONS
-            || sk1 == SK_POLEARMS && you.body_size() <= SIZE_SMALL))
+        && (sk1 == SK_RANGED_WEAPONS || sk2 == SK_RANGED_WEAPONS
+            && you.body_size() <= SIZE_SMALL))
     {
         return false;
     }
@@ -248,8 +213,8 @@ static skill_type _wanderer_role_skill_select(bool defense,
 {
     skill_type skill = NUM_SKILLS;
     const skill_type offense_skills[] =
-        { SK_AXES, SK_MACES_FLAILS, SK_RANGED_WEAPONS, SK_POLEARMS,
-          SK_SHORT_BLADES, SK_LONG_BLADES, SK_STAVES, SK_UNARMED_COMBAT,
+        { SK_RANGED_WEAPONS,
+          SK_MELEE_WEAPONS, SK_UNARMED_COMBAT,
           SK_SUMMONINGS, SK_NECROMANCY, SK_TRANSLOCATIONS,
           SK_ALCHEMY, SK_CONJURATIONS, SK_FORGECRAFT,
           SK_HEXES, SK_FIRE_MAGIC, SK_ICE_MAGIC, SK_SPELLCASTING,
@@ -258,8 +223,8 @@ static skill_type _wanderer_role_skill_select(bool defense,
     int offense_size = ARRAYSZ(offense_skills);
 
     const skill_type physical_skills[] =
-        { SK_AXES, SK_MACES_FLAILS, SK_RANGED_WEAPONS, SK_POLEARMS,
-          SK_SHORT_BLADES, SK_LONG_BLADES, SK_STAVES, SK_UNARMED_COMBAT,
+        { SK_RANGED_WEAPONS,
+          SK_MELEE_WEAPONS, SK_UNARMED_COMBAT,
           SK_SHAPESHIFTING, SK_FIGHTING };
 
     int physical_size = ARRAYSZ(physical_skills);
@@ -271,8 +236,8 @@ static skill_type _wanderer_role_skill_select(bool defense,
     int defense_size = ARRAYSZ(defense_skills);
 
     const skill_type weapon_skills[] =
-        { SK_AXES, SK_MACES_FLAILS, SK_RANGED_WEAPONS, SK_POLEARMS,
-          SK_SHORT_BLADES, SK_LONG_BLADES, SK_STAVES, SK_UNARMED_COMBAT };
+        { SK_RANGED_WEAPONS,
+          SK_MELEE_WEAPONS, SK_UNARMED_COMBAT };
 
     int weapons_size = ARRAYSZ(weapon_skills);
 
@@ -647,14 +612,9 @@ static vector<spell_type> _wanderer_good_equipment(skill_type skill)
 {
     switch (skill)
     {
-    case SK_MACES_FLAILS:
-    case SK_AXES:
-    case SK_POLEARMS:
     case SK_THROWING:
-    case SK_SHORT_BLADES:
-    case SK_LONG_BLADES:
+    case SK_MELEE_WEAPONS:
     case SK_RANGED_WEAPONS:
-    case SK_STAVES:
         _give_wanderer_weapon(skill, true);
         break;
 
@@ -776,14 +736,9 @@ static vector<spell_type> _wanderer_decent_equipment(skill_type skill,
 
     switch (skill)
     {
-    case SK_MACES_FLAILS:
-    case SK_AXES:
-    case SK_POLEARMS:
     case SK_RANGED_WEAPONS:
     case SK_THROWING:
-    case SK_STAVES:
-    case SK_SHORT_BLADES:
-    case SK_LONG_BLADES:
+    case SK_MELEE_WEAPONS:
         _give_wanderer_weapon(skill, false);
         break;
 

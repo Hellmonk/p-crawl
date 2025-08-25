@@ -1652,7 +1652,7 @@ static string _handedness_string(const item_def &item)
 
 }
 
-static string _category_string(const item_def &item, bool monster)
+static string _category_string(const item_def &item)
 {
     if (is_unrandom_artefact(item, UNRAND_LOCHABER_AXE))
         return ""; // handled in art-data DBRAND
@@ -1671,31 +1671,16 @@ static string _category_string(const item_def &item, bool monster)
         make_stringf(" '%s' category. ",
                      skill == SK_FIGHTING ? "buggy" : skill_name(skill));
 
-    switch (item_attack_skill(item))
+    if (is_polearm(item))
+        description += "It has an extended reach (target with [<white>v</white>]).";
+    if (is_axe(item))
+        description += "It hits all enemies adjacent to the wielder, dealing less damage to those not targeted.";
+    if (is_short_blade(item))
     {
-    case SK_POLEARMS:
-        // TODO(PF): maybe remove this whole section for util/monster summaries..?
-        description += "It has an extended reach";
-        if (!monster)
-            description += " (target with [<white>v</white>])";
-        description += ". ";
-        break;
-    case SK_AXES:
-        description += "It hits all enemies adjacent to the wielder";
-        if (!is_unrandom_artefact(item, UNRAND_WOE))
-            description += ", dealing less damage to those not targeted";
-        description += ". ";
-        break;
-    case SK_SHORT_BLADES:
-        {
-            description += make_stringf(
-                "It is%s good for stabbing helpless or unaware enemies. ",
-                (item.sub_type == WPN_DAGGER) ? " extremely" : "");
+        description += make_stringf(
+            "It is%s good for stabbing helpless or unaware enemies. ",
+            (item.sub_type == WPN_DAGGER) ? " extremely" : "");
 
-        }
-        break;
-    default:
-        break;
     }
 
     return description;
@@ -2125,7 +2110,7 @@ static string _describe_weapon(const item_def &item, bool verbose, bool monster)
 
     if (verbose)
     {
-        description += "\n\n" + _category_string(item, monster);
+        description += "\n\n" + _category_string(item);
 
 
 

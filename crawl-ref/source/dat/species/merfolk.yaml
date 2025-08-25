@@ -10,29 +10,6 @@ aptitudes:
   hp: 0
   mp_mod: 0
   wl: 3
-  fighting: 1
-  short_blades: 2
-  long_blades: 1
-  axes: -2
-  maces_and_flails: -2
-  polearms: 4
-  staves: -2
-  ranged weapons: -2
-  armour: -3
-  dodging: 3
-  stealth: 2
-  unarmed_combat: 1
-  spellcasting: -1
-  conjurations: -2
-  necromancy: -2
-  translocations: -2
-  shapeshifting: 2
-  fire_magic: -3
-  ice_magic: 1
-  air_magic: -2
-  earth_magic: -2
-  alchemy: 3
-  invocations: 1
 can_swim: true
 str: 8
 int: 7
@@ -49,8 +26,5 @@ recommended_jobs:
   - summoner
   - ice elementalist
   - alchemist
-recommended_weapons:
-  - polearms
-  - long blades
 
 orc_name: Merforc
