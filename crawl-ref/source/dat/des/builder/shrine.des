@@ -1,0 +1,72 @@
+# Shrine vaults, largely based off old shop vaults
+
+############################################################################
+#
+# <<1>> Major (acquirement) shrines
+#
+############################################################################
+
+NAME:   acquirement_shrine_dummy
+TAGS:   allow_dup extra shrine_major transparent
+WEIGHT: 270
+KFEAT:  O = general shop
+MAP
+O
+ENDMAP
+
+NAME:   shrine_fountains
+TAGS:   allow_dup extra shrine_major transparent
+KFEAT:  O = general shop
+MAP
+T.T
+.O.
+T.T
+ENDMAP
+
+NAME: nicolae_shop_behind_doors
+TAGS: allow_dup extra shrine_major transparent
+KFEAT: O = general shop
+MAP
+x+x
++O+
+x+x
+ENDMAP
+
+############################################################################
+#
+# <<2>> Minor (non-acquirement item-based) shrines
+#
+############################################################################
+
+NAME:   parchment_shrine_dummy
+TAGS:   allow_dup extra shrine_minor transparent
+KFEAT:  O = book shop
+MAP
+O
+ENDMAP
+
+NAME: nicolae_shop_crystal
+TAGS: allow_dup extra shrine_minor transparent
+KFEAT: O = book shop
+MAP
+b.b
+.O.
+b.b
+ENDMAP
+
+NAME: nicolae_shop_stone
+TAGS: allow_dup extra shrine_minor transparent
+KFEAT: O = book shop
+MAP
+  c
+ ...
+c.O.c
+ ...
+  c
+ENDMAP
+
+############################################################################
+#
+# <<3>> Variable non-item shrines
+#
+############################################################################

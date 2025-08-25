@@ -2722,7 +2722,8 @@ static void _build_dungeon_level()
     if (crawl_state.game_has_random_floors())
     {
         // These are required for item progression to work, so do them first
-        _place_shrines();
+        if (!crawl_state.test)
+            _place_shrines();
 
         if (place_vaults)
         {
