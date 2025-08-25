@@ -106,14 +106,16 @@ static const char *skill_titles[NUM_SKILLS][7] =
     {"Summonings",     "Caller",        "Summoner",        "Convoker",        "Worldbinder",    "Planerender",  "Summ"},
     {"Necromancy",     "Grave Robber",  "Reanimator",      "Necromancer",     "Thanatomancer",  "@Genus_Short@ of Death", "Necr"},
     {"Translocations", "Grasshopper",   "Placeless @Genus@", "Blinker",       "Portalist",      "Plane @Walker@", "Tloc"},
+#if TAG_MAJOR_VERSION == 34
     {"Forgecraft",     "Tinkerer",      "Fabricator",      "Mechanist",       "Siegecrafter",   "Architect of Ages", "Frge"},
-
+#endif
     {"Fire Magic",     "Firebug",       "Arsonist",        "Scorcher",        "Pyromancer",     "Infernalist",  "Fire"},
     {"Ice Magic",      "Chiller",       "Frost Mage",      "Gelid",           "Cryomancer",     "Englaciator",  "Ice"},
     {"Air Magic",      "Gusty",         "Zephyrmancer",    "Stormcaller",     "Cloud Mage",     "Meteorologist", "Air"},
     {"Earth Magic",    "Digger",        "Geomancer",       "Earth Mage",      "Metallomancer",  "Petrodigitator", "Erth"},
+#if TAG_MAJOR_VERSION == 34
     {"Alchemy",        "Apothecary",    "Toxicologist",    "Hermetic",        "Philosopher",    "Quintessent", "Alch"},
-
+#endif
     // These titles apply to atheists only, worshippers of the various gods
     // use the god titles instead, depending on piety or, in Gozag's case, gold.
     // or, in U's case, invocations skill.
@@ -2113,13 +2115,6 @@ string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
                 result = god_title(god, species, piety);
             break;
 
-        case SK_FORGECRAFT:
-            if (species == SP_ONI && skill_rank == 4)
-                result = "Brimstone Smiter";
-            else if (species == SP_ONI && skill_rank == 5)
-                result = "Titancaster";
-            break;
-
         case SK_SUMMONINGS:
             if (is_evil_god(god))
             {
@@ -2136,11 +2131,6 @@ string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
                 result = "Teletunneler";
             else if (species == SP_POLTERGEIST && skill_rank == 5)
                 result = "Spatial Maelstrom";
-            break;
-
-        case SK_ALCHEMY:
-            if (species::is_draconian(species) && skill_rank == 5)
-                result = "Swamp Dragon";
             break;
 
         case SK_FIRE_MAGIC:
@@ -2371,6 +2361,8 @@ bool is_removed_skill(skill_type skill)
     case SK_AXES:
     case SK_POLEARMS:
     case SK_STAVES:
+    case SK_ALCHEMY:
+    case SK_FORGECRAFT:
         return true;
     default:
         break;
@@ -2386,12 +2378,10 @@ static map<skill_type, mutation_type> skill_sac_muts = {
     { SK_FIRE_MAGIC,     MUT_NO_FIRE_MAGIC },
     { SK_EARTH_MAGIC,    MUT_NO_EARTH_MAGIC },
     { SK_ICE_MAGIC,      MUT_NO_ICE_MAGIC },
-    { SK_ALCHEMY,        MUT_NO_ALCHEMY_MAGIC },
     { SK_HEXES,          MUT_NO_HEXES_MAGIC },
     { SK_TRANSLOCATIONS, MUT_NO_TRANSLOCATION_MAGIC },
     { SK_CONJURATIONS,   MUT_NO_CONJURATION_MAGIC },
     { SK_NECROMANCY,     MUT_NO_NECROMANCY_MAGIC },
-    { SK_FORGECRAFT,     MUT_NO_FORGECRAFT_MAGIC },
     { SK_SUMMONINGS,     MUT_NO_SUMMONING_MAGIC },
 
     { SK_DODGING,        MUT_NO_DODGING },
@@ -2567,7 +2557,7 @@ static bool _skill_is_elemental(skill_type sk, bool ext)
     if (ext)
     {
         return sk == SK_FIRE_MAGIC || sk == SK_EARTH_MAGIC || sk == SK_AIR_MAGIC
-               || sk == SK_ICE_MAGIC || sk == SK_ALCHEMY || sk == SK_CONJURATIONS;
+               || sk == SK_ICE_MAGIC || sk == SK_CONJURATIONS;
     }
     else
     {

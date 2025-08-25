@@ -3221,20 +3221,6 @@ static void _tag_read_you(reader &th)
             you.skill_manual_points[j] = 0;
 #endif
     }
-#if TAG_MAJOR_VERSION == 34
-    if (th.getMinorVersion() < TAG_MINOR_SHAPESHIFTING)
-    {
-        // Historical note: SK_FORGECRAFT was SK_TRANSMUTATIONS at the time
-        you.skills[SK_SHAPESHIFTING]              = you.skills[SK_FORGECRAFT];
-        you.train[SK_SHAPESHIFTING]               = you.train[SK_FORGECRAFT];
-        you.train_alt[SK_SHAPESHIFTING]           = you.train_alt[SK_FORGECRAFT];
-        you.training[SK_SHAPESHIFTING]            = you.training[SK_FORGECRAFT];
-        you.skill_points[SK_SHAPESHIFTING]        = you.skill_points[SK_FORGECRAFT];
-        you.skill_order[SK_SHAPESHIFTING]         = you.skill_order[SK_FORGECRAFT] + 1;
-        you.training_targets[SK_SHAPESHIFTING]    = you.training_targets[SK_FORGECRAFT];
-        you.skill_manual_points[SK_SHAPESHIFTING] = you.skill_manual_points[SK_FORGECRAFT];
-    }
-#endif
 
     you.auto_training = unmarshallBoolean(th);
 
@@ -3300,32 +3286,6 @@ static void _tag_read_you(reader &th)
         }
         // Based on this, reset skill distribution percentages.
         reset_training();
-    }
-
-    if (th.getMinorVersion() < TAG_MINOR_ALCHEMY_MERGER)
-    {
-        // Historical note: SK_FORGECRAFT was SK_TRANSMUTATIONS at the time
-        if (you.species != SP_GNOLL)
-            you.skill_points[SK_ALCHEMY] += you.skill_points[SK_FORGECRAFT];
-
-        you.train[SK_ALCHEMY] = max(you.train[SK_ALCHEMY],
-                                    you.train[SK_FORGECRAFT]);
-        you.train_alt[SK_ALCHEMY] = max(you.train_alt[SK_ALCHEMY],
-                                        you.train_alt[SK_FORGECRAFT]);
-        you.training_targets[SK_ALCHEMY] = max(you.training_targets[SK_ALCHEMY],
-                                               you.training_targets[SK_FORGECRAFT]);
-    }
-
-    if (th.getMinorVersion() < TAG_MINOR_ADD_FORGECRAFT)
-    {
-        you.skills[SK_FORGECRAFT]              = you.skills[SK_SUMMONINGS];
-        you.train[SK_FORGECRAFT]               = you.train[SK_SUMMONINGS];
-        you.train_alt[SK_FORGECRAFT]           = you.train_alt[SK_SUMMONINGS];
-        you.training[SK_FORGECRAFT]            = you.training[SK_SUMMONINGS];
-        you.skill_points[SK_FORGECRAFT]        = you.skill_points[SK_SUMMONINGS];
-        you.skill_order[SK_FORGECRAFT]         = you.skill_order[SK_SUMMONINGS] + 1;
-        you.training_targets[SK_FORGECRAFT]    = you.training_targets[SK_SUMMONINGS];
-        you.skill_manual_points[SK_FORGECRAFT] = you.skill_manual_points[SK_SUMMONINGS];
     }
 #endif
 

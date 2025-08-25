@@ -280,27 +280,6 @@ static const map<spschool, miscast_datum> miscast_effects = {
             }
         },
     },
-    {
-        spschool::alchemy,
-        {
-            BEAM_NONE,
-            [] (actor& target, actor* source, miscast_source_info /*mc_info*/,
-                int dam, string /*cause*/)
-            {
-                target.poison(source, dam * 5 / 2);
-            },
-        },
-    },
-    {
-        spschool::forgecraft,
-        {
-            BEAM_NONE,
-            [] (actor& target, actor* source, miscast_source_info /*mc_info*/,
-                int dam, string /*cause*/) {
-                target.corrode(source, "wild magic", 4 + div_rand_round(dam, 4));
-            }
-        },
-    },
 };
 
 // Spell miscasts, contamination pluss the miscast effect

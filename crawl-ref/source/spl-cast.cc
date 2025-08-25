@@ -597,12 +597,6 @@ static int _spell_enhancement(spell_type spell)
     if (typeflags & spschool::summoning)
         enhanced += player_spec_summ();
 
-    if (typeflags & spschool::forgecraft)
-        enhanced += player_spec_forgecraft();
-
-    if (typeflags & spschool::alchemy)
-        enhanced += player_spec_alchemy();
-
     if (typeflags & spschool::necromancy)
         enhanced += player_spec_death();
 

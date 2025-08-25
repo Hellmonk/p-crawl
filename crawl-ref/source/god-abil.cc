@@ -2157,11 +2157,11 @@ static map<curse_type, curse_data> _ashenzari_curses =
     } },
     { CURSE_SORCERY, {
         "Sorcery", "Sorc",
-        { SK_CONJURATIONS, SK_ALCHEMY },
+        { SK_CONJURATIONS },
     } },
     { CURSE_COMPANIONS, {
         "Companions", "Comp",
-        { SK_SUMMONINGS, SK_NECROMANCY, SK_FORGECRAFT },
+        { SK_SUMMONINGS, SK_NECROMANCY },
     } },
     { CURSE_BEGUILING, {
         "Beguiling", "Bglg",

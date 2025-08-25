@@ -20,13 +20,17 @@
     {{{enum}, SK_HEXES,          {hexes}}},
     {{{enum}, SK_SUMMONINGS,     {summoning}}},
     {{{enum}, SK_NECROMANCY,     {necromancy}}},
-    {{{enum}, SK_FORGECRAFT,     {forgecraft}}},
+#if TAG_MAJOR_VERSION == 34
+    {{{enum}, SK_FORGECRAFT,     UNUSABLE_SKILL}},
+#endif
     {{{enum}, SK_TRANSLOCATIONS, {translocations}}},
     {{{enum}, SK_FIRE_MAGIC,     {fire_magic}}},
     {{{enum}, SK_ICE_MAGIC,      {ice_magic}}},
     {{{enum}, SK_AIR_MAGIC,      {air_magic}}},
     {{{enum}, SK_EARTH_MAGIC,    {earth_magic}}},
-    {{{enum}, SK_ALCHEMY,        {alchemy}}},
+#if TAG_MAJOR_VERSION == 34
+    {{{enum}, SK_ALCHEMY,        UNUSABLE_SKILL}},
+#endif
     {{{enum}, SK_INVOCATIONS,    {invocations}}},
     {{{enum}, SK_EVOCATIONS,     {evocations}}},
     {{{enum}, SK_SHAPESHIFTING,  {shapeshifting}}},

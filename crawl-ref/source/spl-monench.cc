@@ -473,7 +473,7 @@ bool is_valid_tempering_target(const monster& mon, const actor& caster)
         // XXX: Bomblets are marked as created by the player cast of Monarch
         //      Bomb in order to track all detontation targets, but should *not*
         //      count as valid targets for Percussive Tempering despite this.
-        if (!!(get_spell_disciplines(spell) & spschool::forgecraft))
+        if (!!(get_spell_disciplines(spell) & spschool::summoning))
             return mon.type != MONS_BOMBLET && mon.type != MONS_BLAZEHEART_CORE;
     }
 
