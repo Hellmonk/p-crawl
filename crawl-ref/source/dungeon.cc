@@ -90,7 +90,6 @@
 // DUNGEON BUILDERS
 static bool _build_level_vetoable(bool enable_random_maps);
 static void _build_dungeon_level();
-static bool _valid_dungeon_level();
 
 static bool _builder_by_type();
 static bool _builder_normal();
@@ -1462,17 +1461,6 @@ static bool _ensure_vault_placed_ex(bool vault_success, const map_def *vault)
                                     vault->name);
 }
 
-static coord_def _find_level_feature(int feat)
-{
-    for (rectangle_iterator ri(1); ri; ++ri)
-    {
-        if (env.grid(*ri) == feat)
-            return *ri;
-    }
-
-    return coord_def(0, 0);
-}
-
 static bool _has_connected_stone_stairs_from(const coord_def &c)
 {
     flood_find<feature_grid, coord_predicate> ff(env.grid, in_bounds);
@@ -1485,38 +1473,6 @@ static bool _has_connected_stone_stairs_from(const coord_def &c)
 
     coord_def where = ff.find_first_from(c, env.level_map_mask);
     return where.x || !ff.did_leave_vault();
-}
-
-static bool _has_connected_downstairs_from(const coord_def &c)
-{
-    flood_find<feature_grid, coord_predicate> ff(env.grid, in_bounds);
-    ff.add_feat(DNGN_STONE_STAIRS_DOWN_I);
-    ff.add_feat(DNGN_STONE_STAIRS_DOWN_II);
-    ff.add_feat(DNGN_STONE_STAIRS_DOWN_III);
-    ff.add_feat(DNGN_ESCAPE_HATCH_DOWN);
-
-    coord_def where = ff.find_first_from(c, env.level_map_mask);
-    return where.x || !ff.did_leave_vault();
-}
-
-static bool _is_level_stair_connected(dungeon_feature_type feat)
-{
-    coord_def up = _find_level_feature(feat);
-    if (up.x && up.y)
-        return _has_connected_downstairs_from(up);
-
-    return false;
-}
-
-static bool _valid_dungeon_level()
-{
-    // D:1 only.
-    // Also, what's the point of this check?  Regular connectivity should
-    // do that already.
-    if (player_in_branch(BRANCH_DUNGEON) && you.depth == 1)
-        return _is_level_stair_connected(branches[BRANCH_DUNGEON].exit_stairs);
-
-    return true;
 }
 
 void dgn_reset_level(bool enable_random_maps)
@@ -1604,16 +1560,6 @@ void dgn_reset_level(bool enable_random_maps)
     tile_env.names.clear();
 
     update_portal_entrances();
-}
-
-static int _num_items_wanted(int absdepth0)
-{
-    if (branches[you.where_are_you].branch_flags & brflag::no_items)
-        return 0;
-    else if (absdepth0 > 5 && one_chance_in(500 - 5 * absdepth0))
-        return 9 + random2avg(80, 2); // rich level!
-    else
-        return 3 + roll_dice(3, 9);
 }
 
 static int _mon_die_size()
@@ -4151,40 +4097,6 @@ static void _builder_monsters()
         _place_assorted_zombies();
 }
 
-/**
- * Randomly place a single item
- *
- * @param item   The item slot of the item being randomly placed
- */
-static void _randomly_place_item(int item)
-{
-    coord_def itempos;
-    bool found = false;
-    for (int i = 0; i < 500 && !found; ++i)
-    {
-        itempos = random_in_bounds();
-        const monster* mon = monster_at(itempos);
-        found = env.grid(itempos) == DNGN_FLOOR
-                && !map_masked(itempos, MMT_NO_ITEM)
-                // oklobs or statues are ok
-                && (!mon || !mon->is_firewood());
-    }
-    if (!found)
-    {
-        dprf(DIAG_DNGN, "Builder failed to place %s",
-            env.item[item].name(DESC_PLAIN, false, true).c_str());
-        // Couldn't find a single good spot!
-        destroy_item(item);
-    }
-    else
-    {
-        dprf(DIAG_DNGN, "Builder placing %s at %d,%d",
-            env.item[item].name(DESC_PLAIN, false, true).c_str(),
-            itempos.x, itempos.y);
-        move_item_to_grid(&item, itempos);
-    }
-}
-
 static bool _connect_vault_exit(const coord_def& exit)
 {
     flood_find<feature_grid, coord_predicate> ff(env.grid, in_bounds, true,
@@ -4995,21 +4907,6 @@ void dgn_place_multiple_items(item_list &list, const coord_def& where)
     const int size = list.size();
     for (int i = 0; i < size; ++i)
         dgn_place_item(list.get_item(i), where);
-}
-
-static void _dgn_place_item_explicit(int index, const coord_def& where,
-                                     vault_placement &place)
-{
-    item_list &sitems = place.map.items;
-
-    if ((index < 0 || index >= static_cast<int>(sitems.size())) &&
-        !crawl_state.game_is_sprint())
-    {
-        return;
-    }
-
-    const item_spec spec = sitems.get_item(index);
-    dgn_place_item(spec, where);
 }
 
 static void _dgn_give_mon_spec_items(mons_spec &mspec, monster *mon)
@@ -5925,250 +5822,6 @@ int greed_for_shop_type(shop_type shop, int level_number)
     return 10 + rand + level_greed;
 }
 
-/**
- * How greedy should a given shop be? (Applies a multiplier to prices.)
- *
- * @param type              The type of the shop. (E.g. SHOP_WEAPON_ANTIQUE.)
- * @param level_number      The depth in which the shop is placed.
- * @param spec_greed        An override for the greed, based on a vault
- *                          specification; if not -1, will override other
- *                          calculations & give a debug message.
- * @return                  The greed for the shop.
- */
-static int _shop_greed(shop_type type, int level_number, int spec_greed)
-{
-    const int base_greed = greed_for_shop_type(type, level_number);
-    int adj_greed = base_greed;
-
-    // Allow bargains in bazaars, prices randomly between 50% and 85%.
-    if (player_in_branch(BRANCH_BAZAAR))
-    {
-        // divided by 20, so each is 5% of original price
-        // 10-17 = 50-85%, per above
-        const int factor = random2(8) + 10;
-
-        dprf(DIAG_DNGN, "Shop type %d: original greed = %d, factor = %d,"
-             " discount = %d%%.",
-             type, base_greed, factor, (20-factor)*5);
-
-        adj_greed = factor * adj_greed / 20;
-    }
-
-    if (spec_greed != -1)
-    {
-        dprf(DIAG_DNGN, "Shop spec overrides greed: %d becomes %d.",
-             adj_greed, spec_greed);
-        return spec_greed;
-    }
-
-    return adj_greed;
-}
-
-/**
- * How many items should be placed in a given shop?
- *
- * @param spec              A vault shop spec; may override default results.
- * @return                  The number of items the shop should be generated
- *                          to hold.
- */
-static int _shop_num_items(const shop_spec &spec)
-{
-    if (spec.num_items != -1)
-    {
-        dprf(DIAG_DNGN, "Shop spec overrides number of items to %d.",
-             spec.num_items);
-        return spec.num_items;
-    }
-
-    if (spec.use_all && !spec.items.empty())
-    {
-        dprf(DIAG_DNGN, "Shop spec wants all items placed: %u of them.",
-             (unsigned int)spec.items.size());
-        return (int) spec.items.size();
-    }
-
-    // "normal" book shop containing parchments
-    if (spec.sh_type == SHOP_BOOK)
-        return 7 + random2avg(13, 3);
-
-    return 5 + random2avg(8, 3);
-}
-
-/**
- * What 'level' should an item from the given shop type be generated at?
- *
- * @param shop_type_        The type of shop the item is to be sold from.
- * @param level_number      The depth of the level the shop is on.
- * @return                  An "item level" to generate an item at.
- */
-static int _choose_shop_item_level(shop_type shop_type_, int level_number)
-{
-    const int shop_multiplier = shoptype_identifies_stock(shop_type_) ? 2 : 3;
-    const int base_level = level_number
-                            + random2((level_number + 1) * shop_multiplier);
-
-    // Make bazaar items more valuable (up to double value).
-    if (!player_in_branch(BRANCH_BAZAAR))
-        return base_level;
-
-    const int bazaar_bonus = random2(base_level) + 1;
-    return min(base_level + bazaar_bonus, level_number * 5);
-}
-
-/**
- * Is the given item valid for placement in the given shop?
- *
- * @param item_index    An index into env.item; may be NON_ITEM.
- * @param shop_type_    The type of shop being generated.
- * @param spec          The specification for the shop.
- * @return              Whether the item is valid.
- */
-static bool _valid_item_for_shop(int item_index, shop_type shop_type_,
-                                 shop_spec &spec)
-{
-    if (item_index == NON_ITEM)
-        return false;
-
-    const item_def &item = env.item[item_index];
-    ASSERT(item.defined());
-
-    // Don't generate gold in shops! This used to be possible with
-    // general stores (GDL)
-    if (item.base_type == OBJ_GOLD)
-        return false;
-
-    // Don't place missiles or books in general antique shops...
-    if (shop_type_ == SHOP_GENERAL_ANTIQUE
-            && (item.base_type == OBJ_MISSILES
-                || item.base_type == OBJ_BOOKS))
-    {
-        // ...unless they're specified by the item spec.
-        return !spec.items.empty();
-    }
-
-    // Book/scroll shops only place parchments and manuals unless specified.
-    // (General stores are rarely allowed to roll an actual book.)
-    if ((shop_type_ == SHOP_BOOK || shop_type_ == SHOP_SCROLL)
-        && item.base_type == OBJ_BOOKS && item.sub_type != BOOK_PARCHMENT
-        && item.sub_type != BOOK_MANUAL)
-    {
-        return !spec.items.empty();
-    }
-
-    return true;
-}
-
-/**
- * Create an item and place it in a shop.
- *
- * FIXME: I'm pretty sure this will go into an infinite loop if env.item is full.
- * items() uses get_mitm_slot with culling, so i think this is ok --wheals
- *
- * @param j                 The index of the item being created in the shop's
- *                          inventory.
- * @param shop_type_        The type of shop. (E.g. SHOP_WEAPON_ANTIQUE.)
- * @param stocked[in,out]   An array mapping book types to the # in the shop.
- * @param spec              The specification of the shop.
- * @param shop              The shop.
- * @param shop_level        The effective depth to use for the shop.
- */
-static void _stock_shop_item(int j, shop_type shop_type_,
-                             int stocked[NUM_BOOKS],
-                             int supplied[NUM_SPELLS],
-                             shop_spec &spec, shop_struct &shop,
-                             int shop_level)
-{
-    const int level_number = shop_level ? shop_level : env.absdepth0;
-    const int item_level = _choose_shop_item_level(shop_type_, level_number);
-
-    int item_index; // index into env.item (global item array)
-                    // where the generated item will be stored
-
-    // XXX: this scares the hell out of me. should it be a for (...1000)?
-    // also, it'd be nice if it was just a function that returned an
-    // item index, maybe
-    while (true)
-    {
-        object_class_type basetype = item_in_shop(shop_type_);
-        int subtype = OBJ_RANDOM;
-
-        if (!spec.items.empty() && !spec.use_all)
-        {
-            // shop spec lists a random set of items; choose one
-            item_index = dgn_place_item(spec.items.random_item_weighted(),
-                                        coord_def(), item_level);
-        }
-        else if (!spec.items.empty() && spec.use_all
-                 && j < (int)spec.items.size())
-        {
-            // shop lists ordered items; take the one at the right index
-            item_index = dgn_place_item(spec.items.get_item(j), coord_def(),
-                                        item_level);
-        }
-        else
-        {
-            // make an item randomly
-            // gozag shop items are better
-            const bool good_item = spec.gozag || one_chance_in(4);
-            const int level = good_item ? ISPEC_GOOD_ITEM : item_level;
-            item_index = items(true, basetype, subtype, level);
-        }
-
-        // Try for a better selection for bookshops.
-        if (item_index != NON_ITEM && shop_type_ == SHOP_BOOK)
-        {
-            // Try hard to discard duplicate parchments
-            if (env.item[item_index].sub_type == BOOK_PARCHMENT)
-            {
-                if (supplied[env.item[item_index].plus] > 0)
-                {
-                    env.item[item_index].clear();
-                    item_index = NON_ITEM; // try again
-                }
-            }
-            // if this book type is already in the shop, maybe discard it
-            else if (!one_chance_in(stocked[env.item[item_index].sub_type] + 1))
-            {
-                env.item[item_index].clear();
-                item_index = NON_ITEM; // try again
-            }
-        }
-
-        if (_valid_item_for_shop(item_index, shop_type_, spec))
-            break;
-
-        // Reset object and try again.
-        if (item_index != NON_ITEM)
-            env.item[item_index].clear();
-    }
-
-    ASSERT(item_index != NON_ITEM);
-
-    item_def item = env.item[item_index];
-
-    // If this is a book or parchment, note it down in the appropriate array
-    // (unless it's a randbook)
-    if (shop_type_ == SHOP_BOOK && !is_artefact(item))
-    {
-        if (item.sub_type == BOOK_PARCHMENT)
-            supplied[item.plus]++;
-        else
-            stocked[item.sub_type]++;
-    }
-
-    // Identify the item, unless we don't do that.
-    if (shoptype_identifies_stock(shop_type_))
-        item.flags |= ISFLAG_IDENTIFIED;
-
-    // Now move it into the shop!
-    dec_mitm_item_quantity(item_index, item.quantity, false);
-    item.pos = shop.pos;
-    item.link = ITEM_IN_SHOP;
-    shop.stock.push_back(item);
-    dprf(DIAG_DNGN, "shop spec: placing %s",
-                    item.name(DESC_PLAIN, false, true).c_str());
-}
-
 static void _stock_acquirement_item(shop_struct &shop, object_class_type base = OBJ_UNASSIGNED)
 {
     int item_index;
@@ -6204,15 +5857,6 @@ static void _stock_gold(shop_struct &shop)
         shop.stock.push_back(item);
     }
 }
-
-static shop_type _random_shop()
-{
-    return random_choose(SHOP_WEAPON, SHOP_ARMOUR, SHOP_WEAPON_ANTIQUE,
-                         SHOP_ARMOUR_ANTIQUE, SHOP_GENERAL_ANTIQUE,
-                         SHOP_JEWELLERY, SHOP_BOOK,
-                         SHOP_DISTILLERY, SHOP_SCROLL, SHOP_GENERAL);
-}
-
 
 /**
  * Attempt to place a shop in a given location.
