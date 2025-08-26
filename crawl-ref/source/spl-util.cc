@@ -952,10 +952,8 @@ skill_type spell_type2skill(spschool spelltype)
     case spschool::fire:           return SK_FIRE_MAGIC;
     case spschool::ice:            return SK_ICE_MAGIC;
     case spschool::necromancy:     return SK_NECROMANCY;
-    case spschool::forgecraft:     return SK_FORGECRAFT;
     case spschool::summoning:      return SK_SUMMONINGS;
     case spschool::translocation:  return SK_TRANSLOCATIONS;
-    case spschool::alchemy:        return SK_ALCHEMY;
     case spschool::earth:          return SK_EARTH_MAGIC;
     case spschool::air:            return SK_AIR_MAGIC;
 
@@ -977,9 +975,7 @@ spschool skill2spell_type(skill_type spell_skill)
     case SK_ICE_MAGIC:       return spschool::ice;
     case SK_NECROMANCY:      return spschool::necromancy;
     case SK_SUMMONINGS:      return spschool::summoning;
-    case SK_FORGECRAFT:      return spschool::forgecraft;
     case SK_TRANSLOCATIONS:  return spschool::translocation;
-    case SK_ALCHEMY:         return spschool::alchemy;
     case SK_EARTH_MAGIC:     return spschool::earth;
     case SK_AIR_MAGIC:       return spschool::air;
 
