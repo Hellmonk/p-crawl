@@ -129,11 +129,8 @@ static bool _god_fits_artefact(const god_type which_god, const item_def &item,
             return false;
         }
 
-        if (artefact_property(item, ARTP_MAGICAL_POWER) > 0
-            || artefact_property(item, ARTP_INTELLIGENCE) > 0)
-        {
+        if (artefact_property(item, ARTP_MAGICAL_POWER) > 0)
             return false;
-        }
         break;
 
     case GOD_CHEIBRIADOS:
@@ -326,10 +323,7 @@ static void _populate_armour_intrinsic_artps(const armour_type arm,
 {
     proprt[ARTP_FIRE] += armour_type_prop(arm, ARMF_RES_FIRE);
     proprt[ARTP_COLD] += armour_type_prop(arm, ARMF_RES_COLD);
-    proprt[ARTP_NEGATIVE_ENERGY] += armour_type_prop(arm, ARMF_RES_NEG);
-    proprt[ARTP_POISON] += armour_type_prop(arm, ARMF_RES_POISON);
     proprt[ARTP_ELECTRICITY] += armour_type_prop(arm, ARMF_RES_ELEC);
-    proprt[ARTP_RCORR] += armour_type_prop(arm, ARMF_RES_CORR);
     proprt[ARTP_WILLPOWER] += armour_type_prop(arm, ARMF_WILLPOWER);
     proprt[ARTP_STEALTH] += armour_type_prop(arm, ARMF_STEALTH);
     proprt[ARTP_REGENERATION] += armour_type_prop(arm, ARMF_REGENERATION);
@@ -338,8 +332,6 @@ static void _populate_armour_intrinsic_artps(const armour_type arm,
 static map<stave_type, artefact_prop_type> staff_resist_artps = {
     { STAFF_FIRE,    ARTP_FIRE },
     { STAFF_COLD,    ARTP_COLD },
-    { STAFF_ALCHEMY, ARTP_POISON },
-    { STAFF_DEATH,   ARTP_NEGATIVE_ENERGY },
     { STAFF_AIR,     ARTP_ELECTRICITY },
     // nothing for conj or earth
 };
@@ -384,24 +376,17 @@ static map<jewellery_type, vector<artp_value>> jewellery_artps = {
     { RING_MAGICAL_POWER, { { ARTP_MAGICAL_POWER, 9 } } },
     { RING_WIZARDRY, { { ARTP_WIZARDRY, 1} } },
     { RING_FLIGHT, { { ARTP_FLY, 1 } } },
-    { RING_SEE_INVISIBLE, { { ARTP_SEE_INVISIBLE, 1 } } },
     { RING_STEALTH, { { ARTP_STEALTH, 1 } } },
 
     { RING_PROTECTION_FROM_FIRE, { { ARTP_FIRE, 1 } } },
     { RING_PROTECTION_FROM_COLD, { { ARTP_COLD, 1 } } },
-    { RING_POISON_RESISTANCE, { { ARTP_POISON, 1 } } },
-    { RING_POSITIVE_ENERGY, { { ARTP_NEGATIVE_ENERGY, 1 } } },
     { RING_WILLPOWER, { { ARTP_WILLPOWER, 1 } } },
-    { RING_RESIST_CORROSION, { { ARTP_RCORR, 1 } } },
 
     { RING_FIRE, { { ARTP_FIRE, 1 }, { ARTP_COLD, -1 },
                    { ARTP_ENHANCE_FIRE, 1} } },
     { RING_ICE, { { ARTP_COLD, 1 }, { ARTP_FIRE, -1 },
                   { ARTP_ENHANCE_ICE, 1} } },
 
-    { RING_STRENGTH, { { ARTP_STRENGTH, 0 } } },
-    { RING_INTELLIGENCE, { { ARTP_INTELLIGENCE, 0 } } },
-    { RING_DEXTERITY, { { ARTP_DEXTERITY, 0 } } },
     { RING_PROTECTION, { { ARTP_AC, 0 } } },
     { RING_EVASION, { { ARTP_EVASION, 0 } } },
     { RING_SLAYING, { { ARTP_SLAYING, 0 } } },
@@ -430,21 +415,14 @@ static void _populate_jewel_intrinsic_artps(const item_def &item,
 //       it is possible to generate randarts that give that resistance, which
 //       I think is still an appropriate bonus.
 static map<talisman_type, vector<artp_value>> talisman_artps = {
-    { TALISMAN_INKWELL,     {{ARTP_POISON, 1}}},
     { TALISMAN_RIMEHORN,    {{ARTP_COLD, 2}}},
     { TALISMAN_SCARAB,      {{ARTP_FIRE, 2}}},
-    { TALISMAN_MEDUSA,      {{ARTP_POISON, 1}}},
-    { TALISMAN_SERPENT,     {{ARTP_POISON, 1}}},
     { TALISMAN_SPIDER,      {{ARTP_RAMPAGING, 1}}},
-    { TALISMAN_FORTRESS,    {{ARTP_RCORR, 1}}},
-    { TALISMAN_STATUE,  {{ARTP_POISON, 1}, {ARTP_ELECTRICITY, 1},
-                         {ARTP_NEGATIVE_ENERGY, 1}}},
-    { TALISMAN_DRAGON,  {{ARTP_FIRE, 1}, {ARTP_COLD, 1}, {ARTP_POISON, 1}, {ARTP_FLY, 1}}},
+    { TALISMAN_STATUE,  {{ARTP_ELECTRICITY, 1}}},
+    { TALISMAN_DRAGON,  {{ARTP_FIRE, 1}, {ARTP_COLD, 1}, {ARTP_FLY, 1}}},
     { TALISMAN_SPHINX,  {{ARTP_FLY, 1}}},
-    { TALISMAN_STORM,   {{ARTP_POISON, 1}, {ARTP_ELECTRICITY, 1}, {ARTP_FLY, 1}}},
-    { TALISMAN_DEATH,   {{ARTP_POISON, 1}, {ARTP_NEGATIVE_ENERGY, 3},
-                        {ARTP_COLD, 1}}},
-    { TALISMAN_VAMPIRE, {{ARTP_COLD, 1}, {ARTP_NEGATIVE_ENERGY, 1}}},
+    { TALISMAN_STORM,   {{ARTP_ELECTRICITY, 1}, {ARTP_FLY, 1}}},
+    { TALISMAN_VAMPIRE, {{ARTP_COLD, 1}}},
 };
 
 /**
@@ -644,13 +622,7 @@ static bool _artp_can_go_on_item(artefact_prop_type prop, int prop_val,
         // weapons already have slaying. feels weird on staves
         case ARTP_SLAYING:
             return item_class != OBJ_WEAPONS && item_class != OBJ_STAVES;
-        // prevent properties that conflict with each other
-        case ARTP_CORRODE:
-            return !_any_artps_in_item_props({ ARTP_RCORR }, intrinsic_props,
-                                             extant_props);
-        case ARTP_RCORR:
-            return !_any_artps_in_item_props({ ARTP_CORRODE }, intrinsic_props,
-                                             extant_props);
+
         case ARTP_MAGICAL_POWER:
             return item_class != OBJ_WEAPONS && item_class != OBJ_STAVES
                    || extant_props[ARTP_BRAND] != SPWPN_ANTIMAGIC;
@@ -790,26 +762,32 @@ static const artefact_prop_data artp_data[] =
     { "Brand", ARTP_VAL_BRAND, 0, nullptr, nullptr, 0, 0 }, // ARTP_BRAND,
     { "AC", ARTP_VAL_ANY, 0, nullptr, nullptr, 0, 0}, // ARTP_AC,
     { "EV", ARTP_VAL_ANY, 0, nullptr, nullptr, 0, 0 }, // ARTP_EVASION,
-    { "Str", ARTP_VAL_ANY, 100,     // ARTP_STRENGTH,
+#if TAG_MAJOR_VERSION == 34
+    { "Str", ARTP_VAL_ANY, 0,     // ARTP_STRENGTH,
         _gen_good_stat_artp, _gen_bad_stat_artp, 7, 1 },
-    { "Int", ARTP_VAL_ANY, 100,     // ARTP_INTELLIGENCE,
+    { "Int", ARTP_VAL_ANY, 0,     // ARTP_INTELLIGENCE,
         _gen_good_stat_artp, _gen_bad_stat_artp, 7, 1 },
-    { "Dex", ARTP_VAL_ANY, 100,     // ARTP_DEXTERITY,
+    { "Dex", ARTP_VAL_ANY, 0,     // ARTP_DEXTERITY,
         _gen_good_stat_artp, _gen_bad_stat_artp, 7, 1 },
+#endif
     { "rF", ARTP_VAL_ANY, 60,       // ARTP_FIRE,
         _gen_good_res_artp, _gen_bad_res_artp, 2, 4},
     { "rC", ARTP_VAL_ANY, 60,       // ARTP_COLD,
         _gen_good_res_artp, _gen_bad_res_artp, 2, 4 },
     { "rElec", ARTP_VAL_BOOL, 55,   // ARTP_ELECTRICITY,
         []() { return 1; }, nullptr, 0, 0  },
-    { "rPois", ARTP_VAL_BOOL, 55,   // ARTP_POISON,
+#if TAG_MAJOR_VERSION == 34
+    { "rPois", ARTP_VAL_BOOL, 0,   // ARTP_POISON,
         []() { return 1; }, nullptr, 0, 0 },
-    { "rN", ARTP_VAL_ANY, 55,       // ARTP_NEGATIVE_ENERGY,
+    { "rN", ARTP_VAL_ANY, 0,       // ARTP_NEGATIVE_ENERGY,
         _gen_good_res_artp, nullptr, 2, 4 },
+#endif
     { "Will", ARTP_VAL_ANY, 50,       // ARTP_WILLPOWER,
         _gen_good_res_artp, _gen_bad_res_artp, 2, 4 },
-    { "SInv", ARTP_VAL_BOOL, 30,    // ARTP_SEE_INVISIBLE,
+#if TAG_MAJOR_VERSION == 34
+    { "SInv", ARTP_VAL_BOOL, 0,    // ARTP_SEE_INVISIBLE,
         []() { return 1; }, nullptr, 0, 0 },
+#endif
     { "+Inv", ARTP_VAL_BOOL, 15,    // ARTP_INVISIBLE,
         []() { return 1; }, nullptr, 0, 0 },
     { "Fly", ARTP_VAL_BOOL, 15,    // ARTP_FLY,
@@ -866,8 +844,10 @@ static const artefact_prop_data artp_data[] =
     { "SustAt", ARTP_VAL_BOOL, 0, nullptr, nullptr, 0, 0 }, // ARTP_SUSTAT,
 #endif
     { "nupgr", ARTP_VAL_BOOL, 0, nullptr, nullptr, 0, 0 },// ARTP_NO_UPGRADE,
-    { "rCorr", ARTP_VAL_BOOL, 40,   // ARTP_RCORR,
+#if TAG_MAJOR_VERSION == 34
+    { "rCorr", ARTP_VAL_BOOL, 0,   // ARTP_RCORR,
         []() { return 1; }, nullptr, 0, 0 },
+#endif
     { "rMut", ARTP_VAL_BOOL, 0, nullptr, nullptr, 0, 0 }, // ARTP_RMUT,
 #if TAG_MAJOR_VERSION == 34
     { "+Twstr", ARTP_VAL_BOOL, 0,   // ARTP_TWISTER,
@@ -880,7 +860,7 @@ static const artefact_prop_data artp_data[] =
     { "*Slow", ARTP_VAL_BOOL, 25, // ARTP_SLOW,
         nullptr, []() { return 1; }, 0, 0 },
 #if TAG_MAJOR_VERSION == 34
-    { "^Fragile", ARTP_VAL_BOOL, 30, // ARTP_FRAGILE,
+    { "^Fragile", ARTP_VAL_BOOL, 0, // ARTP_FRAGILE,
         nullptr, []() { return 1; }, 0, 0 },
 #endif
     { "SH", ARTP_VAL_ANY, 0, nullptr, nullptr, 0, 0 }, // ARTP_SHIELDING,
@@ -1048,14 +1028,6 @@ static bool _add_good_randart_prop(artefact_prop_type prop, const item_def &item
                                    artefact_properties_t &item_props)
 {
     int prop_val = item_props[prop];
-    // Add one to the starting value for stat bonuses.
-    if ((prop == ARTP_STRENGTH
-         || prop == ARTP_INTELLIGENCE
-         || prop == ARTP_DEXTERITY)
-        && prop_val == 0)
-    {
-        prop_val++;
-    }
 
     prop_val += artp_data[prop].gen_good_value();
     if (!_artp_can_go_on_item(prop, prop_val, item, intrinsic_props,
@@ -1792,8 +1764,7 @@ static bool _randart_is_conflicting(const item_def &item,
                                      artefact_properties_t &proprt)
 {
     if (proprt[ARTP_PREVENT_SPELLCASTING]
-        && (proprt[ARTP_INTELLIGENCE] > 0
-            || proprt[ARTP_MAGICAL_POWER] > 0
+        && (proprt[ARTP_MAGICAL_POWER] > 0
             || proprt[ARTP_ARCHMAGI]
             || item.base_type == OBJ_STAVES))
     {
@@ -1803,12 +1774,6 @@ static bool _randart_is_conflicting(const item_def &item,
     if (item.base_type == OBJ_WEAPONS
         && get_weapon_brand(item) == SPWPN_HOLY_WRATH
         && is_demonic(item))
-    {
-        return true;
-    }
-
-    if (item.is_type(OBJ_JEWELLERY, RING_WIZARDRY)
-        && proprt[ARTP_INTELLIGENCE] < 0)
     {
         return true;
     }
@@ -2020,8 +1985,6 @@ static void _apply_gizmo_prop(item_def& gizmo, gizmo_prop_type prop)
             break;
 
         case GIZMO_RPOIS:
-            artefact_set_property(gizmo, ARTP_POISON, 1);
-            artefact_set_property(gizmo, ARTP_RCORR, 1);
             break;
 
         case GIZMO_SLAY:

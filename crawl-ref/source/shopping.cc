@@ -102,9 +102,6 @@ int artefact_value(const item_def &item)
            + 6 * prop[ARTP_EVASION]
            + 5 * prop[ARTP_SHIELDING]
            + 6 * prop[ARTP_SLAYING]
-           + 3 * prop[ARTP_STRENGTH]
-           + 3 * prop[ARTP_INTELLIGENCE]
-           + 3 * prop[ARTP_DEXTERITY]
            + 4 * prop[ARTP_HP]
            + 3 * prop[ARTP_MAGICAL_POWER];
 
@@ -124,33 +121,19 @@ int artefact_value(const item_def &item)
     else if (prop[ARTP_WILLPOWER] < 0)
         ret -= 6;
 
-    if (prop[ARTP_NEGATIVE_ENERGY] > 0)
-        ret += 3 + 3 * (prop[ARTP_NEGATIVE_ENERGY] * prop[ARTP_NEGATIVE_ENERGY]);
-
     // Discount Stlth-, charge for Stlth+
     ret += 2 * prop[ARTP_STEALTH];
     // Stlth+ costs more than Stlth- cheapens
     if (prop[ARTP_STEALTH] > 0)
         ret += 2 * prop[ARTP_STEALTH];
 
-    // only one meaningful level:
-    if (prop[ARTP_POISON])
-        ret += 6;
-
     // only one meaningful level (hard to get):
     if (prop[ARTP_ELECTRICITY])
         ret += 10;
 
     // only one meaningful level (hard to get):
-    if (prop[ARTP_RCORR])
-        ret += 8;
-
-    // only one meaningful level (hard to get):
     if (prop[ARTP_RMUT])
         ret += 8;
-
-    if (prop[ARTP_SEE_INVISIBLE])
-        ret += 6;
 
     // abilities:
     if (prop[ARTP_FLY])

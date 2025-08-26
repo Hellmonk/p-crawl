@@ -1672,17 +1672,6 @@ void equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
     if (proprt[ARTP_EVASION])
         you.redraw_evasion = true;
 
-    if (proprt[ARTP_SEE_INVISIBLE])
-        autotoggle_autopickup(false);
-
-    // Modify ability scores.
-    notify_stat_change(STAT_STR, proprt[ARTP_STRENGTH],
-                       !(msg && proprt[ARTP_STRENGTH] && !unmeld));
-    notify_stat_change(STAT_INT, proprt[ARTP_INTELLIGENCE],
-                       !(msg && proprt[ARTP_INTELLIGENCE] && !unmeld));
-    notify_stat_change(STAT_DEX, proprt[ARTP_DEXTERITY],
-                       !(msg && proprt[ARTP_DEXTERITY] && !unmeld));
-
     if (proprt[ARTP_FLY])
         _flight_equip();
 
@@ -1769,9 +1758,6 @@ void unequip_artefact_effect(item_def &item,  bool *show_msgs, bool meld)
 
     if (proprt[ARTP_DRAIN] && !meld)
         drain_player(150, true, true);
-
-    if (proprt[ARTP_SEE_INVISIBLE])
-        _mark_unseen_monsters();
 
     if (is_unrandom_artefact(item))
     {

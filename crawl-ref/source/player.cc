@@ -1400,8 +1400,7 @@ int player_res_corrosion(bool allow_random, bool temp, bool items)
 
     if (items)
     {
-        if (you.scan_artefacts(ARTP_RCORR)
-            || you.wearing(OBJ_ARMOUR, ARM_ACID_DRAGON_ARMOUR)
+        if (you.wearing(OBJ_ARMOUR, ARM_ACID_DRAGON_ARMOUR)
             || you.wearing_jewellery(RING_RESIST_CORROSION)
             || you.wearing_ego(OBJ_ARMOUR, SPARM_PRESERVATION))
         {
@@ -1502,9 +1501,6 @@ int player_res_poison(bool allow_random, bool temp, bool items, bool forms)
         const item_def *body_armour = you.body_armour();
         if (body_armour)
             rp += armour_type_prop(body_armour->sub_type, ARMF_RES_POISON);
-
-        // rPois+ artefacts
-        rp += you.scan_artefacts(ARTP_POISON);
 
         // dragonskin cloak: 0.5 to draconic resistances
         if (allow_random && you.unrand_equipped(UNRAND_DRAGONSKIN)
@@ -1692,9 +1688,6 @@ int player_prot_life(bool allow_random, bool temp, bool items)
         const item_def *body_armour = you.body_armour();
         if (body_armour)
             pl += armour_type_prop(body_armour->sub_type, ARMF_RES_NEG);
-
-        // randart wpns
-        pl += you.scan_artefacts(ARTP_NEGATIVE_ENERGY);
 
         // dragonskin cloak: 0.5 to draconic resistances
         if (allow_random && you.unrand_equipped(UNRAND_DRAGONSKIN)
@@ -7489,7 +7482,6 @@ bool player::can_see_invisible() const
     if (wearing_jewellery(RING_SEE_INVISIBLE)
         || wearing_ego(OBJ_ARMOUR, SPARM_SEE_INVISIBLE)
         // randart gear
-        || scan_artefacts(ARTP_SEE_INVISIBLE) > 0
         || you.duration[DUR_REVELATION])
     {
         return true;

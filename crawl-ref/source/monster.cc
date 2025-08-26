@@ -3760,28 +3760,6 @@ int monster::res_poison(bool temp) const
     if (u > 0)
         return u;
 
-    if (mons_itemuse(*this) >= MONUSE_STARTING_EQUIPMENT)
-    {
-        u += scan_artefacts(ARTP_POISON);
-
-        const int armour    = inv[MSLOT_ARMOUR];
-        const int shld      = inv[MSLOT_SHIELD];
-        const int jewellery = inv[MSLOT_JEWELLERY];
-
-        if (armour != NON_ITEM && env.item[armour].base_type == OBJ_ARMOUR)
-            u += get_armour_res_poison(env.item[armour], false);
-
-        if (shld != NON_ITEM && env.item[shld].base_type == OBJ_ARMOUR)
-            u += get_armour_res_poison(env.item[shld], false);
-
-        if (jewellery != NON_ITEM && env.item[jewellery].base_type == OBJ_JEWELLERY)
-            u += get_jewellery_res_poison(env.item[jewellery], false);
-
-        const item_def *w = primary_weapon();
-        if (w && w->is_type(OBJ_STAVES, STAFF_ALCHEMY))
-            u++;
-    }
-
     if (has_ench(ENCH_RESISTANCE))
         u++;
 
@@ -3854,28 +3832,6 @@ int monster::res_negative_energy(bool intrinsic_only) const
 
     int u = get_mons_resist(*this, MR_RES_NEG);
 
-    if (mons_itemuse(*this) >= MONUSE_STARTING_EQUIPMENT && !intrinsic_only)
-    {
-        u += scan_artefacts(ARTP_NEGATIVE_ENERGY);
-
-        const int armour    = inv[MSLOT_ARMOUR];
-        const int shld      = inv[MSLOT_SHIELD];
-        const int jewellery = inv[MSLOT_JEWELLERY];
-
-        if (armour != NON_ITEM && env.item[armour].base_type == OBJ_ARMOUR)
-            u += get_armour_life_protection(env.item[armour], false);
-
-        if (shld != NON_ITEM && env.item[shld].base_type == OBJ_ARMOUR)
-            u += get_armour_life_protection(env.item[shld], false);
-
-        if (jewellery != NON_ITEM && env.item[jewellery].base_type == OBJ_JEWELLERY)
-            u += get_jewellery_life_protection(env.item[jewellery], false);
-
-        const item_def *w = primary_weapon();
-        if (w && w->is_type(OBJ_STAVES, STAFF_DEATH))
-            u++;
-    }
-
     if (u > 3)
         u = 3;
 
@@ -3916,7 +3872,6 @@ int monster::res_corr() const
         u += wearing(OBJ_ARMOUR, ARM_ACID_DRAGON_ARMOUR);
         u += wearing_jewellery(RING_RESIST_CORROSION);
         u += wearing_ego(OBJ_ARMOUR, SPARM_PRESERVATION);
-        u += scan_artefacts(ARTP_RCORR);
     }
 
     if (has_ench(ENCH_RESISTANCE))
@@ -5013,13 +4968,6 @@ bool monster::can_see_invisible() const
     else if (mons_class_sees_invis(type, base_monster))
         return true;
     else if (has_facet(BF_WEIRD))
-        return true;
-
-    if (scan_artefacts(ARTP_SEE_INVISIBLE) > 0)
-        return true;
-    else if (wearing_jewellery(RING_SEE_INVISIBLE))
-        return true;
-    else if (wearing_ego(OBJ_ARMOUR, SPARM_SEE_INVISIBLE))
         return true;
 
     return false;

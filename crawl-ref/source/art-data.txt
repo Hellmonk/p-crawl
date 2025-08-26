@@ -76,7 +76,6 @@
 # * drain:    Causes draining when unequipped.
 # * elec:     Grants electrical resistance.
 # * evil:     Is treated as an evil item (hated by good gods).
-# * fragile:  Is destroyed when unequipped.
 # * holy:     Is treated as a holy item.
 # * inv:      Lets wearer evoke invisibility ability.
 # * fly:      Grants wearer flight.
@@ -90,11 +89,8 @@
 # * notelep:  Prevents wearer from teleporting or blinking.
 # * no_upgrade: Don't regenerate this item on load. Used for items with mutable
 #             state, e.g. Wyrmbane's growing enchantment.
-# * poison:   Grants poison resistance.
-# * rcorr:    Grants corrosion resistance.
 # * rmsl:     Passively repels missiles.
 # * rmut:     Grants mutation resistance.
-# * seeinv:   Lets wearer see invisible.
 # * skip_ego: The item's ego is skipped in its inscription and description, to
 #             be replaced by INSCRIP: and DBRAND: entries.
 # * slow:     Randomly causes slowing when taking damage.
@@ -156,18 +152,14 @@
 #           (e.g., LIGHTRED) or as listed under element_type in view.h
 #           (e.g., ETC_FIRE)
 # SLAY:     Slaying modifier (for non-weapon artefacts).
-# DEX:      Dexterity modifier.
 # EV:       Evasion modifier.
 # FIRE:     Fire resistance/vulnerability.
-# INT:      Intelligence modifier.
-# LIFE:     Negative energy resistance/vulnerability.
 # WILL:     Willpower increase/decrease.
 # MP:       Mana capacity modifier.
 # NAME:     Name of artefact when identified.
 # REGEN:    Health regeneration, in units of HP healed every 12.5 aut
 #           (1.25 normal turns).
 # STEALTH:  Stealth modifier.
-# STR:      Strength modifier.
 # TILE:     The file containing the artefact's tile, with file type png.
 #           See Tiles section above.
 # TILE_EQ:  The file containing the equipment tile for the player doll as
@@ -406,7 +398,7 @@ TILE_EQ: flaming_death
 BRAND:   SPWPN_FLAMING
 FIRE:    2
 COLD:    -1
-BOOL:    poison, skip_ego, deleted
+BOOL:    skip_ego, deleted
 WILL:    1
 # end TAG_MAJOR_VERSION
 
@@ -430,7 +422,6 @@ COLOUR:  ETC_DARK
 TILE:    urand_leech
 TILE_EQ: leech
 BRAND:   SPWPN_VAMPIRISM
-LIFE:    1
 BOOL:    drain, harm, skip_ego
 DBRAND:  Evervamp:  It heals its wielder for a portion of the damage dealt every
  time it strikes a living foe.
@@ -447,7 +438,7 @@ BRAND:   SPWPN_FREEZING
 FIRE:    -1
 COLD:    2
 WILL:    1
-BOOL:    poison, skip_ego, deleted
+BOOL:    skip_ego, deleted
 # end TAG_MAJOR_VERSION
 
 # start TAG_MAJOR_VERSION == 34
@@ -458,7 +449,6 @@ COLOUR:   LIGHTRED
 TILE:     urand_morg
 TILE_EQ:  morg
 BRAND:    SPWPN_PAIN
-INT:      5
 WILL:     1
 BOOL:     deleted
 # end TAG_MAJOR_VERSION
@@ -489,7 +479,6 @@ TILE_EQ: punk
 BRAND:   SPWPN_ACID
 # random fallback brand
 FB_BRAND: SPWPN_NORMAL
-BOOL:    rCorr
 
 NAME:     longbow "Zephyr"
 OBJ:      OBJ_WEAPONS/WPN_LONGBOW
@@ -498,8 +487,6 @@ COLOUR:   ETC_GOLD
 TILE:     urand_zephyr
 TILE_EQ:  zephyr
 BRAND:    SPWPN_SPEED
-DEX:      3
-BOOL:     seeinv
 
 NAME:    giant club "Skullcrusher"
 OBJ:     OBJ_WEAPONS/WPN_GIANT_CLUB
@@ -508,7 +495,6 @@ COLOUR:  BROWN
 TILE:    urand_skullcrusher
 TILE_EQ: skullcrusher
 BRAND:   SPWPN_SPEED
-STR:     7
 
 NAME:     glaive of the Guard
 OBJ:      OBJ_WEAPONS/WPN_GLAIVE
@@ -535,7 +521,6 @@ BRAND:    SPWPN_HOLY_WRATH
 FB_BRAND: SPWPN_HOLY_WRATH
 EV:       3
 ANGRY:    20
-LIFE:     1
 DESCRIP:  Zealotry:  Whenever the wielder enters a berserk rage, their allies
  are berserked alongside them.
 
@@ -592,8 +577,7 @@ TILE_EQ:  botono
 BRAND:    SPWPN_REAPING
 FB_BRAND: SPWPN_PAIN
 HP:       -6
-LIFE:     1
-BOOL:     poison, deleted
+BOOL:     deleted
 # end TAG_MAJOR_VERSION
 
 NAME:     trident of the Octopus King
@@ -603,7 +587,7 @@ COLOUR:   ETC_WATER
 TILE:     urand_octopus_king
 TILE_EQ:  trident_octopus_king
 BRAND:    SPWPN_VENOM
-BOOL:     elec, poison, no_upgrade
+BOOL:     elec, no_upgrade
 
 NAME:    mithril axe "Arga"
 OBJ:     OBJ_WEAPONS/WPN_BROAD_AXE
@@ -641,7 +625,6 @@ VALUE:    800
 TILE_EQ:  sniper
 BASE_DELAY: +2
 BRAND:    SPWPN_HEAVY
-BOOL:     seeinv
 INSCRIP:  Acc+∞
 DESCRIP:  Acc+∞:     It never misses its target.
 
@@ -686,7 +669,7 @@ TILE_EQ: wyrmbane
 AC:      3
 FIRE:    1
 COLD:    1
-BOOL:    poison, no_upgrade
+BOOL:    no_upgrade
 DBRAND:  Slay Drac: It inflicts extra damage against dragons and draconians.
 
 NAME:     Spriggan's Knife
@@ -724,7 +707,6 @@ PLUS:     +7
 COLOUR:   LIGHTGREY
 TILE:     urand_undeadhunter
 TILE_EQ:  undeadhunter
-LIFE:     1
 DBRAND:   Deathbane: It inflicts significantly more damage against the undead.
 
 NAME:    whip "Snakebite"
@@ -736,7 +718,6 @@ COLOUR:  DARKGREY
 TILE:    urand_snakebite
 TILE_EQ: snakebite
 BRAND:   SPWPN_VENOM
-BOOL:    poison
 DBRAND:  Curare:    It occasionally inflicts asphyxiating poison on those it
  strikes, dealing poison damage and causing slowness.
 
@@ -760,7 +741,6 @@ PLUS:     +6
 COLOUR:   GREEN
 TILE:     urand_crystal_spear
 TILE_EQ:  crystal_spear
-INT:      3
 BOOL:     deleted
 # end TAG_MAJOR_VERSION
 
@@ -796,8 +776,6 @@ PLUS:    +10
 COLOUR:  BROWN
 TILE:    urand_ignorance
 TILE_EQ: tower_shield_of_ignorance
-INT:     -4
-LIFE:    1
 
 NAME:    robe of Augmentation
 OBJ:     OBJ_ARMOUR/ARM_ROBE
@@ -805,9 +783,6 @@ PLUS:    +4
 COLOUR:  LIGHTRED
 TILE:    urand_augmentation
 TILE_EQ: augmentation
-STR:     4
-INT:     4
-DEX:     4
 
 NAME:     cloak of the Thief
 OBJ:      OBJ_ARMOUR/ARM_CLOAK
@@ -817,7 +792,6 @@ COLOUR:   ETC_DARK
 TILE:     urand_thief
 TILE_EQ:  black
 STEALTH:  1
-BOOL:     seeinv
 DESCRIP:  Quiet:      All noise in your surroundings is dampened.
 
 # start TAG_MAJOR_VERSION == 34
@@ -838,8 +812,7 @@ PLUS:    +3
 COLOUR:  ETC_JEWEL
 TILE:    urand_dyrovepreva
 TILE_EQ: dyrovepreva
-INT:     2
-BOOL:    elec, seeinv
+BOOL:    elec
 
 NAME:     hat of the Bear Spirit
 OBJ:      OBJ_ARMOUR/ARM_HAT
@@ -912,7 +885,6 @@ COLOUR:  BROWN
 TILE:    urand_zhor
 TILE_EQ: zhor
 COLD:    3
-BOOL:    seeinv
 INSCRIP: *Englaciate
 DESCRIP: *Englaciate: It radiates cold, occasionally slowing all nearby
  creatures who are not resistant to cold.
@@ -956,7 +928,6 @@ PLUS:    4
 COLOUR:  LIGHTGREY
 TILE:    urand_folly
 TILE_EQ: robe_of_folly
-INT:     8
 INSCRIP: Brill Will-∞
 DESCRIP: Brill:     It increases the power of your magical spells and halves
  their MP cost (rounding up).
@@ -970,7 +941,7 @@ COLOUR:  LIGHTGREEN
 TILE:    urand_maxwell
 TILE_EQ: maxwell
 WILL:    1
-BOOL:    silence, notelep, elec, rCorr
+BOOL:    silence, notelep, elec
 
 ENUM:    DRAGONMASK
 NAME:    mask of the Dragon
@@ -980,7 +951,6 @@ TILE:    urand_dragonmask
 TILE_EQ: art_dragonhelm
 WILL:    1
 SLAY:    3
-BOOL:    seeinv
 
 NAME:     robe of Night
 OBJ:      OBJ_ARMOUR/ARM_ROBE
@@ -991,7 +961,6 @@ COLOUR:   ETC_DARK
 TILE:     urand_night
 TILE_EQ:  robe_of_night
 WILL:     1
-BOOL:     seeinv
 VALUE:    600
 DESCRIP:  Dark:      It shrouds the wearer in darkness, reducing the range at
  which they can see and be seen by others.
@@ -1013,8 +982,7 @@ TILE_EQ: turban_purple
 FIRE:    1
 COLD:    1
 WILL:    1
-LIFE:    1
-BOOL:    elec, poison, rMut, rCorr
+BOOL:    elec, rMut
 
 ENUM:    FENCERS
 NAME:    fencer's gloves
@@ -1024,7 +992,6 @@ PLUS:    +0
 COLOUR:  WHITE
 TILE:    urand_fencer
 TILE_EQ: glove_white
-DEX:     3
 VALUE:   400
 DESCRIP: Riposte:   It allows the wearer to riposte with melee weapons, swiftly
  retaliating against missed or blocked melee attacks.
@@ -1048,11 +1015,6 @@ COLOUR:   ETC_BEOGH
 TILE:     urand_ratskin_cloak
 TILE_EQ:  ratskin
 INSCRIP:  *Rats
-STR:      -1
-INT:      -1
-DEX:      1
-LIFE:     1
-BOOL:     poison
 DESCRIP:  *Rats:     When the wearer is hurt, rats may emerge from it to assist
  them.
 
@@ -1066,8 +1028,6 @@ TILE:     urand_gong
 TILE_EQ:  kite_shield_gong
 EV:       -5
 WILL:     1
-LIFE:     1
-BOOL:     rcorr
 DESCRIP:  Loud:      It is deafeningly noisy when blocking attacks.
 
 NAME:    amulet of the Air
@@ -1095,15 +1055,13 @@ COLOUR:  ETC_SILVER
 TILE:    urand_cekugob
 AC:      1
 EV:      1
-LIFE:    2
-BOOL:    elec, poison, notelep, deleted
+BOOL:    elec, notelep, deleted
 # end TAG_MAJOR_VERSION
 
 NAME:    amulet of the Four Winds
 OBJ:     OBJ_JEWELLERY/AMU_NOTHING
 COLOUR:  ETC_POISON
 TILE:    urand_four_winds
-LIFE:    1
 WILL:    3
 BOOL:    clarity
 
@@ -1111,7 +1069,6 @@ NAME:    necklace of Bloodlust
 OBJ:     OBJ_JEWELLERY/AMU_NOTHING
 COLOUR:  ETC_BLOOD
 TILE:    urand_bloodlust
-INT:     -3
 WILL:    2
 ANGRY:   50
 SLAY:    6
@@ -1161,7 +1118,6 @@ COLOUR:   LIGHTRED
 TILE:     urand_pondering
 TILE_EQ:  wizard_bluegreen
 BRAND:    SPARM_PONDEROUSNESS
-INT:      +5
 MP:       +10
 WILL:     1
 
@@ -1174,7 +1130,7 @@ TILE:     spwpn_demon_axe
 TILE_EQ:  demon_axe
 BRAND:    SPWPN_DRAINING
 FB_BRAND: SPWPN_PAIN
-BOOL:     seeinv, fly, drain
+BOOL:     fly, drain
 INSCRIP:  demonic, Mesm
 DBRAND:   Demonic:   It occasionally summons demons to assist the wielder when
  it strikes in combat.
@@ -1199,8 +1155,7 @@ TILE:     urand_bk_barding
 TILE_EQ:  black_knight
 COLOUR:   ETC_UNHOLY
 BRAND:    SPARM_PONDEROUSNESS
-LIFE:     1
-BOOL:     poison, evil
+BOOL:     evil
 
 NAME:     amulet of Vitality
 OBJ:      OBJ_JEWELLERY/AMU_NOTHING
@@ -1296,7 +1251,6 @@ OBJ:      OBJ_JEWELLERY/AMU_NOTHING
 TILE:     urand_finger
 COLOUR:   ETC_BONE
 BOOL:     evil
-LIFE:     1
 HP:       +7
 VALUE:    400
 INSCRIP:  Ring+
@@ -1402,7 +1356,6 @@ COLOUR:   LIGHTRED
 TILE:     urand_orange_crystal
 TILE_EQ:  orange_crystal
 PLUS:     8
-INT:      3
 BRAND:    SPARM_ARCHMAGI
 FB_BRAND: SPWPN_NORMAL
 BOOL:     clarity
@@ -1420,7 +1373,6 @@ COLOUR:   ETC_UNHOLY
 TILE:     spwpn_majin
 TILE_EQ:  majin
 MP:       6
-INT:      6
 BRAND:    SPWPN_VAMPIRISM
 BOOL:     skip_ego
 DBRAND:   Spellvamp: It heals its wielder for a portion of the damage dealt when
@@ -1461,8 +1413,7 @@ COLOUR:  ETC_DARK
 TILE:    urand_eternal_torment
 TILE_EQ: eternal_torment
 INSCRIP: rTorment HP--
-LIFE:    3
-BOOL:    evil, seeinv, drain, deleted
+BOOL:    evil, drain, deleted
 # end TAG_MAJOR_VERSION
 
 ENUM:    VINES
@@ -1585,7 +1536,6 @@ COLOUR:   ETC_UNHOLY
 TILE:     urand_cigotuvi
 TILE_EQ:  bplate_green
 # XXX TODO: tiles
-LIFE:     1
 INSCRIP:  Corpsefed rMiasma
 BOOL:     drain, evil, special, no_upgrade
 DESCRIP:  Corpsefed: It gathers nearby corpses to temporarily increase the
@@ -1674,7 +1624,6 @@ PLUS:     8
 COLOUR:   ETC_HOLY
 BRAND:    SPWPN_HOLY_WRATH
 FB_BRAND: SPWPN_HOLY_WRATH
-LIFE:     1
 BOOL:     fly, noises
 INSCRIP:  anguish,
 DBRAND:   Anguish:   It makes its victims' attacks reflect back on them.
@@ -1686,7 +1635,6 @@ OBJ:     OBJ_JEWELLERY/AMU_NOTHING
 COLOUR:  ETC_VEHUMET
 TILE:    urand_elemental_vulnerability
 AC:      8
-BOOL:    poison
 FIRE:    -2
 COLD:    -2
 
@@ -1765,7 +1713,7 @@ COLOUR:   ETC_HOLY
 TILE:     spwpn_holy_axe
 TILE_EQ:  holy_axe
 BRAND:    SPWPN_HOLY_WRATH
-BOOL:     no_upgrade, fly, seeinv, fragile
+BOOL:     no_upgrade, fly
 INSCRIP:  Valiant
 DESCRIP:  Valiant:   It becomes more powerful as more dangerous foes come into
  view.
@@ -1774,7 +1722,6 @@ NAME:     toga "Victory"
 OBJ:      OBJ_ARMOUR/ARM_ROBE
 PLUS:     +0 # varies with kills and consumable use
 SLAY:     +0 # varies
-INT:      +0 # varies
 COLOUR:   LIGHTCYAN
 TILE:     urand_victor
 TILE_EQ:  arwen
@@ -1824,7 +1771,6 @@ PLUS:    +0
 COLOUR:  MAGENTA
 TILE:    urand_gadgeteer
 TILE_EQ: glove_purple
-BOOL:    fragile
 VALUE:   400
 DESCRIP: Gadgeteer:   Your evocable items recharge 30% faster and wands have a 30%
  chance to not spend a charge.
@@ -1845,7 +1791,6 @@ NAME:    justicar's regalia
 INSCRIP: Inspire Amulet+
 OBJ:     OBJ_ARMOUR/ARM_SCALE_MAIL
 PLUS:    +5
-STR:     4
 COLOUR:  WHITE
 TILE:    urand_justicars_regalia
 TILE_EQ: justicar
@@ -1857,8 +1802,6 @@ ENUM:    SKULL_OF_ZONGULDROK
 NAME:    skull of Zonguldrok
 INSCRIP: Reaping Hat+
 OBJ:     OBJ_ARMOUR/ARM_ORB
-INT:     4
-LIFE:    1
 COLOUR:  BLUE
 TILE:    urand_skull_of_zonguldrok
 TILE_EQ: skull_of_zonguldrok
@@ -1874,8 +1817,6 @@ INSCRIP: Shroompunch Gloves+
 OBJ:     OBJ_ARMOUR/ARM_CLOAK
 PLUS:    +3
 HP:      -10
-INT:     -2
-STR:     -2
 COLOUR:  MAGENTA
 TILE:    urand_fungal_fisticloak
 TILE_EQ: fungal_fisticloak_back
@@ -1890,7 +1831,6 @@ INSCRIP: Majesty Ring++
 OBJ:     OBJ_ARMOUR/ARM_HAT
 PLUS:    +3
 WILL:    1
-BOOL:    fragile
 COLOUR:  YELLOW
 TILE:    urand_crown_of_vainglory
 TILE_EQ: vainglory
