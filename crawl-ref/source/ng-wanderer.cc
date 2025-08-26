@@ -122,7 +122,7 @@ static void _assign_wanderer_stats(skill_type sk1, skill_type sk2,
             case SK_SUMMONINGS:
             case SK_NECROMANCY:
             case SK_TRANSLOCATIONS:
-            case SK_CONJURATIONS:
+            case SK_ENCHANTMENTS:
             case SK_HEXES:
             case SK_FIRE_MAGIC:
             case SK_ICE_MAGIC:
@@ -214,7 +214,7 @@ static skill_type _wanderer_role_skill_select(bool defense,
         { SK_RANGED_WEAPONS,
           SK_MELEE_WEAPONS, SK_UNARMED_COMBAT,
           SK_SUMMONINGS, SK_NECROMANCY, SK_TRANSLOCATIONS,
-          SK_CONJURATIONS,
+          SK_ENCHANTMENTS,
           SK_HEXES, SK_FIRE_MAGIC, SK_ICE_MAGIC, SK_SPELLCASTING,
           SK_AIR_MAGIC, SK_EARTH_MAGIC, SK_SHAPESHIFTING, SK_FIGHTING };
 
@@ -665,7 +665,7 @@ static vector<spell_type> _wanderer_good_equipment(skill_type skill)
             newgame_make_item(OBJ_ARMOUR, ARM_BUCKLER, 1, 2);
         break;
 
-    case SK_CONJURATIONS:
+    case SK_ENCHANTMENTS:
     case SK_SUMMONINGS:
     case SK_NECROMANCY:
     case SK_TRANSLOCATIONS:
@@ -755,7 +755,7 @@ static vector<spell_type> _wanderer_decent_equipment(skill_type skill,
         break;
 
     case SK_SPELLCASTING:
-    case SK_CONJURATIONS:
+    case SK_ENCHANTMENTS:
     case SK_SUMMONINGS:
     case SK_NECROMANCY:
     case SK_TRANSLOCATIONS:

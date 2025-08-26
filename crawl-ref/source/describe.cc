@@ -4476,7 +4476,7 @@ int hex_chance(const spell_type spell, const monster_info* mi, bool is_wand)
 static string _miscast_damage_string(spell_type spell)
 {
     const map <spschool, string> damage_flavor = {
-        { spschool::conjuration, "irresistible" },
+        { spschool::enchantments, "irresistible" },
         { spschool::necromancy, "draining" },
         { spschool::fire, "fire" },
         { spschool::ice, "cold" },

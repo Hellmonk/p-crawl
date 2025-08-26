@@ -638,10 +638,6 @@ void monster::bind_melee_flags()
 
 static bool _needs_ranged_attack(const monster* mon)
 {
-    // Prevent monsters that have conjurations from grabbing missiles.
-    if (mon->has_spell_of_type(spschool::conjuration))
-        return false;
-
     // Same for summonings, but make an exception for friendlies.
     if (!mon->friendly() && mon->has_spell_of_type(spschool::summoning))
         return false;
@@ -4084,7 +4080,7 @@ int monster::skill(skill_type sk, int scale, bool /*real*/, bool /*temp*/) const
     case SK_NECROMANCY:
         return (has_spell_of_type(spschool::necromancy)) ? hd * 2 : hd/2;
 
-    case SK_CONJURATIONS:
+    case SK_ENCHANTMENTS:
     case SK_FIRE_MAGIC:
     case SK_ICE_MAGIC:
     case SK_EARTH_MAGIC:

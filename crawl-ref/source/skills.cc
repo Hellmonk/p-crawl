@@ -2089,12 +2089,6 @@ string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
                 result = "Ascendant";
             break;
 
-        case SK_CONJURATIONS:
-            // Stay safe, Winslem :(
-            if (species == SP_TROLL && skill_rank > 3)
-                result = "Wallbreaker";
-            break;
-
         // For all draconian titles, intentionally don't restrict by drac
         // colour to avoid frustrating players deliberately trying for these
         case SK_HEXES:
@@ -2380,7 +2374,7 @@ static map<skill_type, mutation_type> skill_sac_muts = {
     { SK_ICE_MAGIC,      MUT_NO_ICE_MAGIC },
     { SK_HEXES,          MUT_NO_HEXES_MAGIC },
     { SK_TRANSLOCATIONS, MUT_NO_TRANSLOCATION_MAGIC },
-    { SK_CONJURATIONS,   MUT_NO_CONJURATION_MAGIC },
+    { SK_ENCHANTMENTS,   MUT_NO_CONJURATION_MAGIC },
     { SK_NECROMANCY,     MUT_NO_NECROMANCY_MAGIC },
     { SK_SUMMONINGS,     MUT_NO_SUMMONING_MAGIC },
 
@@ -2557,7 +2551,7 @@ static bool _skill_is_elemental(skill_type sk, bool ext)
     if (ext)
     {
         return sk == SK_FIRE_MAGIC || sk == SK_EARTH_MAGIC || sk == SK_AIR_MAGIC
-               || sk == SK_ICE_MAGIC || sk == SK_CONJURATIONS;
+               || sk == SK_ICE_MAGIC;
     }
     else
     {

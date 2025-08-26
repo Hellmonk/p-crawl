@@ -177,7 +177,7 @@ SPECIES_GROUP_TEMPLATE = """
 """
 ALL_APTITUDES = ('fighting', 'melee_weapons', 'ranged weapons',
     'throwing', 'armour', 'dodging', 'stealth', 'shields', 'unarmed_combat',
-    'spellcasting', 'conjurations', 'hexes', 'summoning',
+    'spellcasting', 'enchantments', 'hexes', 'summoning',
     'necromancy', 'forgecraft', 'translocations', 'fire_magic',
     'ice_magic', 'air_magic', 'earth_magic', 'alchemy', 'invocations',
     'evocations', 'shapeshifting')

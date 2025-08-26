@@ -790,14 +790,14 @@ static const staff_def Staff_prop[] =
         63, ac_type::normal, BEAM_FIRE },
     { STAFF_COLD,        "cold",        SK_ICE_MAGIC,
         63, ac_type::normal, BEAM_COLD },
-    { STAFF_ALCHEMY,     "alchemy",     SK_ALCHEMY,
+    { STAFF_ALCHEMY,     "alchemy",     SK_ENCHANTMENTS,
         63, ac_type::normal, BEAM_POISON },
 #if TAG_MAJOR_VERSION == 34
     { STAFF_ENERGY,      "energy" },
 #endif
     { STAFF_DEATH,       "death",       SK_NECROMANCY,
         63, ac_type::normal,   BEAM_NEG },
-    { STAFF_CONJURATION, "conjuration", SK_CONJURATIONS,
+    { STAFF_CONJURATION, "conjuration", SK_ENCHANTMENTS,
         50, ac_type::normal, BEAM_MMISSILE },
 #if TAG_MAJOR_VERSION == 34
     { STAFF_ENCHANTMENT, "enchantment" },

@@ -22,7 +22,7 @@ void set_tutorial_skill(const char *skill, int level)
     if (strcmp(skill, "spellcasting") == 0)
         you.skills[SK_SPELLCASTING] = level;
     else if (strcmp(skill, "conjurations") == 0)
-        you.skills[SK_CONJURATIONS] = level;
+        you.skills[SK_ENCHANTMENTS] = level;
     else if (strcmp(skill, "invocations") == 0)
         you.skills[SK_INVOCATIONS] = level;
     else

@@ -119,15 +119,13 @@ Spellcasting
     end
 }}
 %%%%
-Conjurations
+Enchantments
 
-Conjurations are battle oriented spells, which often work by conjuring up a
-chunk of short-lived matter and propelling it towards the victim to deal direct
-damage. Being skilled in Conjurations usually increases the damage and accuracy
-of such spells, and sometimes affects their range or the size of the area
-affected.
+Enchantment spells apply buffs to the caster or beneficial status effects to
+their allies or some area of the dungeon. These effects tend to expire after a
+short duration, or under some conditions.
 
-Being skilled in Conjurations increases the success rate and spell power of
+Being skilled in Enchantments increases the success rate and spell power of
 spells in this school. Many spells belong to a combination of several schools,
 in which case spellcasting success and power will depend on the average skill
 in these schools.

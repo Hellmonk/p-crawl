@@ -1425,7 +1425,7 @@ static void _BATTLE_world_reacts(item_def */*item*/)
         && there_are_monsters_nearby(true, true, false)
         && you_can_see_habitable_spot_near(HT_FLYER, 2))
     {
-        const int pow = div_rand_round(15 + you.skill(SK_CONJURATIONS, 15), 3);
+        const int pow = div_rand_round(15 + you.skill(SK_ENCHANTMENTS, 15), 3);
         cast_battlesphere(&you, pow, false);
         did_god_conduct(DID_WIZARDLY_ITEM, 10);
     }

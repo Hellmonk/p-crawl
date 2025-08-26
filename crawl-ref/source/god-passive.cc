@@ -1727,7 +1727,7 @@ static spell_type _get_shadow_spell(spell_type player_spell)
         spells.push_back(SPELL_SHADOW_SHARD);
     if (schools & spschool::air)
         spells.push_back(SPELL_SHADOW_TEMPEST);
-    if (schools & spschool::conjuration)
+    if (schools & spschool::enchantments)
         spells.push_back(SPELL_SHADOW_BEAM);
     if (schools & spschool::necromancy)
         spells.push_back(SPELL_SHADOW_DRAINING);

@@ -3707,7 +3707,7 @@ tileidx_t tileidx_skill(skill_type skill, int train)
         }
         break;
     case SK_SPELLCASTING:   ch = TILEG_SPELLCASTING_ON; break;
-    case SK_CONJURATIONS:   ch = TILEG_CONJURATIONS_ON; break;
+    case SK_ENCHANTMENTS:   ch = TILEG_CONJURATIONS_ON; break;
     case SK_HEXES:          ch = TILEG_HEXES_ON; break;
     case SK_SUMMONINGS:     ch = TILEG_SUMMONINGS_ON; break;
     case SK_NECROMANCY:
@@ -4930,7 +4930,7 @@ static colour_t _school_to_colour(spschool school)
         case spschool::ice:             return LIGHTBLUE;
         case spschool::air:             return LIGHTCYAN;
         case spschool::earth:           return BROWN;
-        case spschool::conjuration:     return LIGHTMAGENTA;
+        case spschool::enchantments:    return LIGHTMAGENTA;
         case spschool::translocation:   return MAGENTA;
         case spschool::alchemy:         return LIGHTGREEN;
         case spschool::necromancy:      return GREEN;
