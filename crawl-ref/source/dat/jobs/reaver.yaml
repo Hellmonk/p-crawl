@@ -24,6 +24,5 @@ skills:
   fighting: 2
   dodging: 2
   spellcasting: 2
-  conjurations: 3
   weapon: 3
 create_enum: false

@@ -24,6 +24,5 @@ recommended_species:
 skills:
   dodging: 2
   spellcasting: 2
-  conjurations: 4
   stealth: 2
 create_enum: false
