@@ -893,12 +893,8 @@ const char* spelltype_short_name(spschool which_spelltype)
         return "Necr";
     case spschool::summoning:
         return "Summ";
-    case spschool::forgecraft:
-        return "Frge";
     case spschool::translocation:
         return "Tloc";
-    case spschool::alchemy:
-        return "Alch";
     case spschool::earth:
         return "Erth";
     case spschool::air:
@@ -926,12 +922,8 @@ const char* spelltype_long_name(spschool which_spelltype)
         return "Necromancy";
     case spschool::summoning:
         return "Summoning";
-    case spschool::forgecraft:
-        return "Forgecraft";
     case spschool::translocation:
         return "Translocation";
-    case spschool::alchemy:
-        return "Alchemy";
     case spschool::earth:
         return "Earth";
     case spschool::air:
