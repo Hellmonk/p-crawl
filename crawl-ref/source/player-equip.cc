@@ -831,10 +831,6 @@ static bool _forced_removal_goodness(player_equip_entry* entry1, player_equip_en
         return false;
     else if (item2.cursed())
         return true;
-    else if (is_artefact(item1) && artefact_property(item1, ARTP_FRAGILE))
-        return false;
-    else if (is_artefact(item2) && artefact_property(item2, ARTP_FRAGILE))
-        return true;
     else if (is_artefact(item1) && (artefact_property(item1, ARTP_CONTAM)
                                     || artefact_property(item1, ARTP_DRAIN)))
     {
@@ -856,7 +852,7 @@ static bool _forced_removal_goodness(player_equip_entry* entry1, player_equip_en
  *
  * If the player has multiple items in a given slot that they've lost, and they
  * do not need to remove all of them, this function will prefer non-cursed items
- * and then items without things like {Contam} or {Fragile}. Otherwise, it will
+ * and then items without things like {Contam}. Otherwise, it will
  * pick the first it sees.
  *
  * @param force_full_check   If true, checks all slots for items that shouldn't
@@ -1642,8 +1638,8 @@ void unequip_effect(int item_slot, bool meld, bool msg)
     else if (item.base_type == OBJ_JEWELLERY)
         _unequip_jewellery_effect(item, meld);
 
-    // Cursed items should always be destroyed on unequip.
-    if (item.cursed() && !meld)
+    // items should always be destroyed on unequip.
+    if (!meld)
         destroy_item(item);
 }
 
@@ -1783,16 +1779,6 @@ void unequip_artefact_effect(item_def &item,  bool *show_msgs, bool meld)
 
         if (entry->unequip_func)
             entry->unequip_func(&item, show_msgs);
-    }
-
-    if (artefact_property(item, ARTP_FRAGILE) && !meld)
-    {
-        mprf("%s crumbles to dust!", item.name(DESC_THE).c_str());
-        dec_inv_item_quantity(item.link, 1);
-
-        // Hide unwield messages for weapons that have already been destroyed.
-        if (item.base_type == OBJ_WEAPONS)
-            *show_msgs = false;
     }
 }
 

@@ -189,9 +189,6 @@ int artefact_value(const item_def &item)
     if (prop[ARTP_SILENCE])
         ret -= 8;
 
-    if (prop[ARTP_FRAGILE])
-        ret -= 8;
-
     if (prop[ARTP_RMSL])
         ret += 20;
 

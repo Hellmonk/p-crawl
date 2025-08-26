@@ -387,9 +387,6 @@ static const vector<property_descriptor> & _get_all_artp_desc_data()
         { ARTP_SLOW,
             "It may slow you when you take damage.",
             prop_note::plain },
-        { ARTP_FRAGILE,
-            "It will be destroyed if unequipped.",
-            prop_note::plain },
         { ARTP_SHIELDING,
             "It affects your SH (%d).",
             prop_note::numeral },
@@ -495,7 +492,6 @@ static const vector<artefact_prop_type> artprop_annotation_order =
     ARTP_DRAIN,
     ARTP_SLOW,
     ARTP_SILENCE,
-    ARTP_FRAGILE,
 
     // Evokable abilities come second
     ARTP_BLINK,

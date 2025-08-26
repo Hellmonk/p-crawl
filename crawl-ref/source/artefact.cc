@@ -684,13 +684,6 @@ static bool _artp_can_go_on_item(artefact_prop_type prop, int prop_val,
         case ARTP_RAMPAGING:
             // only on items that can't be quickly swapped
             return non_swappable;
-        // prevent on armour/talismans (since they're swapped infrequently) and
-        // rings (since 2 slots reduces the pressure to swap)
-        case ARTP_FRAGILE:
-            return item_class != OBJ_ARMOUR
-                   && item_class != OBJ_TALISMANS
-                   && (item_class != OBJ_JEWELLERY
-                       || jewellery_is_amulet(item));
         case ARTP_DRAIN:
         case ARTP_CONTAM:
             return item_class != OBJ_TALISMANS; // TODO: support..?
@@ -886,8 +879,10 @@ static const artefact_prop_data artp_data[] =
         nullptr, []() { return 1; }, 0, 0 },
     { "*Slow", ARTP_VAL_BOOL, 25, // ARTP_SLOW,
         nullptr, []() { return 1; }, 0, 0 },
+#if TAG_MAJOR_VERSION == 34
     { "^Fragile", ARTP_VAL_BOOL, 30, // ARTP_FRAGILE,
         nullptr, []() { return 1; }, 0, 0 },
+#endif
     { "SH", ARTP_VAL_ANY, 0, nullptr, nullptr, 0, 0 }, // ARTP_SHIELDING,
     { "Harm", ARTP_VAL_BOOL, 25, // ARTP_HARM,
         []() {return 1;}, nullptr, 0, 0},
