@@ -19,6 +19,7 @@
 #include "output.h"
 #include "player.h"
 #include "religion.h"
+#include "skill-menu.h"
 #include "stat-type.h"
 #include "state.h"
 #include "stringutil.h"
@@ -73,89 +74,8 @@ static void _handle_stat_change(stat_type stat);
  */
 bool attribute_increase()
 {
-    const bool need_caps = Options.easy_confirm != easy_confirm_type::all;
-
-    const int statgain = you.has_mutation(MUT_DIVINE_ATTRS) ? 4 : 2;
-
-    const string stat_gain_message = make_stringf("Your experience leads to a%s "
-                                                  "increase in your attributes!",
-                                                  (statgain > 2) ?
-                                                  " dramatic" : "n");
-    crawl_state.stat_gain_prompt = true;
-    mprf(MSGCH_INTRINSIC_GAIN, "%s", stat_gain_message.c_str());
-    learned_something_new(HINT_CHOOSE_STAT);
-    if (innate_stat(STAT_STR) != you.strength()
-        || innate_stat(STAT_INT) != you.intel()
-        || innate_stat(STAT_DEX) != you.dex())
-    {
-        mprf(MSGCH_PROMPT, "Your base attributes are Str %d, Int %d, Dex %d.",
-             innate_stat(STAT_STR),
-             innate_stat(STAT_INT),
-             innate_stat(STAT_DEX));
-    }
-    mprf(MSGCH_PROMPT, need_caps
-        ? "Increase (S)trength, (I)ntelligence, or (D)exterity? "
-        : "Increase (s)trength, (i)ntelligence, or (d)exterity? ");
-    mouse_control mc(MOUSE_MODE_PROMPT);
-
-    bool tried_lua = false;
-    int keyin;
-    while (true)
-    {
-        // Calling a user-defined lua function here to let players reply to
-        // the prompt automatically. Either returning a string or using
-        // crawl.sendkeys will work.
-        if (!tried_lua && clua.callfn("choose_stat_gain", 0, 1))
-        {
-            string result;
-            clua.fnreturns(">s", &result);
-            keyin = toupper_safe(result[0]);
-        }
-        else
-        {
-            while ((keyin = getchm()) == CK_REDRAW)
-            {
-                redraw_screen();
-                update_screen();
-            }
-        }
-        tried_lua = true;
-
-        if (!need_caps)
-            keyin = toupper_safe(keyin);
-
-        switch (keyin)
-        {
-        CASE_ESCAPE
-            // It is unsafe to save the game here; continue with the turn
-            // normally, when the player reloads, the game will re-prompt
-            // for their level-up stat gain.
-            if (crawl_state.seen_hups)
-                return false;
-            break;
-
-        case 'S':
-            for (int i = 0; i < statgain; i++)
-                modify_stat(STAT_STR, 1, false);
-            return true;
-
-        case 'I':
-            for (int i = 0; i < statgain; i++)
-                modify_stat(STAT_INT, 1, false);
-            return true;
-
-        case 'D':
-            for (int i = 0; i < statgain; i++)
-                modify_stat(STAT_DEX, 1, false);
-            return true;
-
-        case 's':
-        case 'i':
-        case 'd':
-            mprf(MSGCH_PROMPT, "Uppercase letters only, please.");
-            break;
-        }
-    }
+    skill_menu(SKMF_EXPERIENCE, 1);
+    return true;
 }
 
 static const char* descs[NUM_STATS][NUM_STAT_DESCS] =

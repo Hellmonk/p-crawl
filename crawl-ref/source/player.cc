@@ -2547,15 +2547,6 @@ void apply_exp()
     else
         you.experience += exp_gained;
 
-    you.exp_available += 10 * skill_xp;
-
-    train_skills();
-    while (check_selected_skills()
-           && you.exp_available >= calc_skill_cost(you.skill_cost_level))
-    {
-        train_skills();
-    }
-
     level_change();
 }
 
@@ -2852,13 +2843,9 @@ void level_change(bool skip_attribute_increase)
                      new_exp);
             }
 
-            const bool manual_stat_level = you.has_mutation(MUT_DIVINE_ATTRS)
-                ? (new_exp % 3 == 0)  // 3,6,9,12...
-                : (new_exp % 6 == 3); // 3,9,15,21,27
-
             // Must do this before actually changing experience_level,
             // so we will re-prompt on load if a hup is received.
-            if (manual_stat_level && !skip_attribute_increase)
+            if (!skip_attribute_increase)
                 if (!attribute_increase())
                     return; // abort level gain, the xp is still there
 
@@ -3497,86 +3484,7 @@ bool player::cloud_immune(bool items) const
  */
 unsigned int exp_needed(int lev, int exp_apt)
 {
-    unsigned int level = 0;
-
-    // Note: For historical reasons, all of the following numbers are for a
-    // species (like human) with XP aptitude 1, not 0 as one might expect.
-
-    // Basic plan:
-    // Section 1: levels  1- 5, second derivative goes 10-10-20-30.
-    // Section 2: levels  6-13, second derivative is exponential/doubling.
-    // Section 3: levels 14-27, second derivative is constant at 8470.
-
-    // Here's a table:
-    //
-    // level      xp      delta   delta2
-    // =====   =======    =====   ======
-    //   1           0        0       0
-    //   2          10       10      10
-    //   3          30       20      10
-    //   4          70       40      20
-    //   5         140       70      30
-    //   6         270      130      60
-    //   7         520      250     120
-    //   8        1010      490     240
-    //   9        1980      970     480
-    //  10        3910     1930     960
-    //  11        7760     3850    1920
-    //  12       15450     7690    3840
-    //  13       26895    11445    3755
-    //  14       45585    18690    7245
-    //  15       72745    27160    8470
-    //  16      108375    35630    8470
-    //  17      152475    44100    8470
-    //  18      205045    52570    8470
-    //  19      266085    61040    8470
-    //  20      335595    69510    8470
-    //  21      413575    77980    8470
-    //  22      500025    86450    8470
-    //  23      594945    94920    8470
-    //  24      698335    103390   8470
-    //  25      810195    111860   8470
-    //  26      930525    120330   8470
-    //  27     1059325    128800   8470
-
-    // If you've sacrificed experience, XP costs are adjusted as if
-    // you were still your original (higher) level.
-    if (exp_apt == -99)
-        lev += RU_SAC_XP_LEVELS * you.get_mutation_level(MUT_INEXPERIENCED);
-
-    switch (lev)
-    {
-    case 1:
-        level = 1;
-        break;
-    case 2:
-        level = 10;
-        break;
-    case 3:
-        level = 30;
-        break;
-    case 4:
-        level = 70;
-        break;
-
-    default:
-        if (lev < 13)
-        {
-            lev -= 4;
-            level = 10 + 10 * lev + (60 << lev);
-        }
-        else
-        {
-            lev -= 12;
-            level = 16675 + 5985 * lev + 4235 * lev * lev;
-        }
-        break;
-    }
-
-    if (exp_apt == -99)
-        exp_apt = species::get_exp_modifier(you.species);
-
-    return (unsigned int) ((level - 1) * apt_to_factor(exp_apt - 1));
+    return 100 * (lev - 1);
 }
 
 // returns bonuses from rings of slaying, etc.
