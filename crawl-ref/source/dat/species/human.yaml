@@ -8,10 +8,6 @@ aptitudes:
   hp: 0
   mp_mod: 0
   wl: 3
-  stealth: 1
-  spellcasting: -1
-  shapeshifting: -1
-  invocations: 1
 str: 8
 int: 8
 dex: 8

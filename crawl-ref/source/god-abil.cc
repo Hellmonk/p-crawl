@@ -1393,8 +1393,7 @@ bool vehumet_supports_spell(spell_type spell)
     // propelling it towards the victim. This is the most popular way, but
     // by no means it has a monopoly for being destructive.
     // Vehumet loves all direct physical destruction.
-    return spell_typematch(spell, spschool::conjuration)
-           || (get_spell_flags(spell) & spflag::destructive);
+    return spell && (get_spell_flags(spell) & spflag::destructive);
 }
 
 void trog_do_trogs_hand(int pow)
@@ -2145,8 +2144,7 @@ static map<curse_type, curse_data> _ashenzari_curses =
 {
     { CURSE_MELEE, {
         "Melee Combat", "Melee",
-        { SK_SHORT_BLADES, SK_LONG_BLADES, SK_AXES, SK_MACES_FLAILS,
-            SK_POLEARMS, SK_STAVES, SK_UNARMED_COMBAT },
+        { SK_MELEE_WEAPONS, SK_UNARMED_COMBAT },
     } },
     { CURSE_RANGED, {
         "Ranged Combat", "Range",
@@ -2158,11 +2156,11 @@ static map<curse_type, curse_data> _ashenzari_curses =
     } },
     { CURSE_SORCERY, {
         "Sorcery", "Sorc",
-        { SK_CONJURATIONS, SK_ALCHEMY },
+        { SK_ENCHANTMENTS },
     } },
     { CURSE_COMPANIONS, {
         "Companions", "Comp",
-        { SK_SUMMONINGS, SK_NECROMANCY, SK_FORGECRAFT },
+        { SK_SUMMONINGS, SK_NECROMANCY },
     } },
     { CURSE_BEGUILING, {
         "Beguiling", "Bglg",

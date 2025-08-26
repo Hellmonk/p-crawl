@@ -1286,7 +1286,7 @@ static spell_type _get_hostile_shadow_spell()
             spells.push_back(SPELL_CREEPING_SHADOW);
         if (schools & spschool::earth)
             spells.push_back(SPELL_SHADOW_SHARD);
-        if (schools & spschool::conjuration)
+        if (schools & spschool::enchantments)
             spells.push_back(SPELL_SHADOW_BEAM);
         if (schools & spschool::hexes)
             spells.push_back(SPELL_SHADOW_TORPOR);

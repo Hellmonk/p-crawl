@@ -65,7 +65,6 @@ class Species(MutableMapping):
             return
         if not weapons:
             weapons = list(ALL_WEAPON_SKILLS)
-            weapons.remove('short blades')
             weapons.remove('unarmed combat')
         out = []
         for weap in weapons:
@@ -176,10 +175,9 @@ SPECIES_GROUP_TEMPLATE = """
         {{ {species} }}
     }},
 """
-ALL_APTITUDES = ('fighting', 'short_blades', 'long_blades', 'axes',
-    'maces_and_flails', 'polearms', 'staves', 'ranged weapons',
+ALL_APTITUDES = ('fighting', 'melee_weapons', 'ranged weapons',
     'throwing', 'armour', 'dodging', 'stealth', 'shields', 'unarmed_combat',
-    'spellcasting', 'conjurations', 'hexes', 'summoning',
+    'spellcasting', 'enchantments', 'hexes', 'summoning',
     'necromancy', 'forgecraft', 'translocations', 'fire_magic',
     'ice_magic', 'air_magic', 'earth_magic', 'alchemy', 'invocations',
     'evocations', 'shapeshifting')
@@ -187,8 +185,7 @@ UNDEAD_TYPES = ('alive', 'undead', 'semi_undead')
 SIZES = ('SIZE_TINY', 'SIZE_LITTLE', 'SIZE_SMALL', 'SIZE_MEDIUM', 'SIZE_LARGE',
     'SIZE_GIANT')
 ALL_STATS = ('str', 'int', 'dex')
-ALL_WEAPON_SKILLS = ('short blades', 'long blades', 'axes',
-    'maces and flails', 'polearms', 'staves', 'unarmed combat')
+ALL_WEAPON_SKILLS = ('melee weapons', 'unarmed combat')
 
 ALL_SPECIES_FLAGS = {'draconian', 'no_hair', 'no_bones',
     'small_torso', 'barding', 'no_feet',

@@ -588,20 +588,11 @@ static int _spell_enhancement(spell_type spell)
     const spschools_type typeflags = get_spell_disciplines(spell);
     int enhanced = 0;
 
-    if (typeflags & spschool::conjuration)
-        enhanced += player_spec_conj();
-
     if (typeflags & spschool::hexes)
         enhanced += player_spec_hex();
 
     if (typeflags & spschool::summoning)
         enhanced += player_spec_summ();
-
-    if (typeflags & spschool::forgecraft)
-        enhanced += player_spec_forgecraft();
-
-    if (typeflags & spschool::alchemy)
-        enhanced += player_spec_alchemy();
 
     if (typeflags & spschool::necromancy)
         enhanced += player_spec_death();
@@ -2257,22 +2248,6 @@ spret your_spells(spell_type spell, int powc, bool actual_spell,
                            spell_difficulty(spell),
                            you.experience_level,
                            "the malice of Kikubaaqudgha");
-        }
-        else if (vehumet_supports_spell(spell)
-                 && !you_worship(GOD_VEHUMET)
-                 && you.penance[GOD_VEHUMET]
-                 && one_chance_in(20))
-        {
-            // And you thought you'd Fire Storm your way out of penance...
-            simple_god_message(" does not allow the disloyal to dabble in "
-                               "destruction!", false, GOD_VEHUMET);
-
-            // The spell still goes through, but you get a miscast anyway.
-            miscast_effect(you, nullptr, {miscast_source::god, GOD_VEHUMET},
-                           spschool::conjuration,
-                           spell_difficulty(spell),
-                           you.experience_level,
-                           "the malice of Vehumet");
         }
 
         const int spfail_chance = raw_spell_fail(spell);

@@ -4,16 +4,11 @@ Fighting
 Fighting skill increases your accuracy and damage in physical combat, and
 also increases your maximum health.
 %%%%
-Short Blades
+Melee Weapons
 
-Short Blades are more effective than any other weapon type at stabbing helpless
-foes.
-
-Being skilled with Short Blades will allow you to attack more quickly with all
-weapons of this type, as well as increasing your accuracy and damage with them.
-
-Being skilled with Short Blades increases your effectiveness with Long Blades,
-and vice versa.
+Melee weapons deal damage in melee range. Some types of melee weapons, such as
+axes and polearms, have additional special properties. Being skilled with melee
+weapons will increase your damage with all weapons of this type.
 %%%%
 Long Blades
 
@@ -124,15 +119,13 @@ Spellcasting
     end
 }}
 %%%%
-Conjurations
+Enchantments
 
-Conjurations are battle oriented spells, which often work by conjuring up a
-chunk of short-lived matter and propelling it towards the victim to deal direct
-damage. Being skilled in Conjurations usually increases the damage and accuracy
-of such spells, and sometimes affects their range or the size of the area
-affected.
+Enchantment spells apply buffs to the caster or beneficial status effects to
+their allies or some area of the dungeon. These effects tend to expire after a
+short duration, or under some conditions.
 
-Being skilled in Conjurations increases the success rate and spell power of
+Being skilled in Enchantments increases the success rate and spell power of
 spells in this school. Many spells belong to a combination of several schools,
 in which case spellcasting success and power will depend on the average skill
 in these schools.

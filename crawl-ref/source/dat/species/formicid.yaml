@@ -12,20 +12,6 @@ aptitudes:
   hp: 0
   mp_mod: 0
   wl: 4
-  fighting: 1
-  armour: 1
-  dodging: -1
-  stealth: 3
-  shields: 3
-  conjurations: -1
-  hexes: 2
-  translocations: 2
-  shapeshifting: 0
-  air_magic: -2
-  earth_magic: 2
-  alchemy: 3
-  invocations: 2
-  evocations: 1
 str: 12
 int: 7
 dex: 9
@@ -49,11 +35,6 @@ recommended_jobs:
   - earth elementalist
   - alchemist
   - forgewright
-recommended_weapons:
-  - maces and flails
-  - axes
-  - polearms
-  - staves
 
 child_name: Larva
 orc_name: Orcmicid

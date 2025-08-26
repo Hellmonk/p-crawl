@@ -70,13 +70,13 @@ static const char *skill_titles[NUM_SKILLS][7] =
 {
   //  Skill name        levels 1-7       levels 8-14        levels 15-20       levels 21-26      level 27       skill abbr
     {"Fighting",       "Trooper",       "Fighter",         "Warrior",         "Slayer",         "Conqueror",    "Fgt"},
-    {"Short Blades",   "Cutter",        "Slicer",          "Swashbuckler",    "Cutthroat",      "Politician",   "SBl"},
+    {"Melee Weapons",  "Cutter",        "Slicer",          "Swashbuckler",    "Cutthroat",      "Politician",   "Mel"},
+#if TAG_MAJOR_VERSION == 34
     {"Long Blades",    "Slasher",       "Carver",          "Fencer",          "@Adj@ Blade",    "Swordmaster",  "LBl"},
     {"Axes",           "Chopper",       "Cleaver",         "Severer",         "Executioner",    "Axe Maniac",   "Axs"},
     {"Maces & Flails", "Cudgeller",     "Basher",          "Bludgeoner",      "Shatterer",      "Skullcrusher", "M&F"},
     {"Polearms",       "Poker",         "Spear-Bearer",    "Impaler",         "Phalangite",     "@Adj@ Porcupine", "Pla"},
     {"Staves",         "Twirler",       "Cruncher",        "Stickfighter",    "Pulveriser",     "Chief of Staff", "Stv"},
-#if TAG_MAJOR_VERSION == 34
     {"Slings",         "Vandal",        "Slinger",         "Whirler",         "Slingshot",      "@Adj@ Catapult", "Slg"},
 #endif
     {"Ranged Weapons", "Shooter",       "Skirmisher",      "Marks@genus@",    "Crack Shot",     "Merry @Genus@",  "Rng"},
@@ -106,14 +106,16 @@ static const char *skill_titles[NUM_SKILLS][7] =
     {"Summonings",     "Caller",        "Summoner",        "Convoker",        "Worldbinder",    "Planerender",  "Summ"},
     {"Necromancy",     "Grave Robber",  "Reanimator",      "Necromancer",     "Thanatomancer",  "@Genus_Short@ of Death", "Necr"},
     {"Translocations", "Grasshopper",   "Placeless @Genus@", "Blinker",       "Portalist",      "Plane @Walker@", "Tloc"},
+#if TAG_MAJOR_VERSION == 34
     {"Forgecraft",     "Tinkerer",      "Fabricator",      "Mechanist",       "Siegecrafter",   "Architect of Ages", "Frge"},
-
+#endif
     {"Fire Magic",     "Firebug",       "Arsonist",        "Scorcher",        "Pyromancer",     "Infernalist",  "Fire"},
     {"Ice Magic",      "Chiller",       "Frost Mage",      "Gelid",           "Cryomancer",     "Englaciator",  "Ice"},
     {"Air Magic",      "Gusty",         "Zephyrmancer",    "Stormcaller",     "Cloud Mage",     "Meteorologist", "Air"},
     {"Earth Magic",    "Digger",        "Geomancer",       "Earth Mage",      "Metallomancer",  "Petrodigitator", "Erth"},
+#if TAG_MAJOR_VERSION == 34
     {"Alchemy",        "Apothecary",    "Toxicologist",    "Hermetic",        "Philosopher",    "Quintessent", "Alch"},
-
+#endif
     // These titles apply to atheists only, worshippers of the various gods
     // use the god titles instead, depending on piety or, in Gozag's case, gold.
     // or, in U's case, invocations skill.
@@ -2026,11 +2028,6 @@ string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
                 result = "Death Knight";
             break;
 
-        case SK_POLEARMS:
-            if (species == SP_ARMATAUR && skill_rank == 5)
-                result = "Prickly Pangolin";
-            break;
-
         case SK_UNARMED_COMBAT:
             if (species == SP_MUMMY && skill_rank == 5)
                 result = "Pharaoh";
@@ -2056,22 +2053,6 @@ string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
             {
                 result = dex > str ? martial_arts_titles[skill_rank]
                                     : skill_titles[best_skill][skill_rank];
-            }
-            break;
-
-        case SK_SHORT_BLADES:
-            if (species::is_elven(species) && skill_rank == 5)
-            {
-                result = "Blademaster";
-                break;
-            }
-            break;
-
-        case SK_LONG_BLADES:
-            if (species == SP_MERFOLK && skill_rank == 5)
-            {
-                result = "Swordfish";
-                break;
             }
             break;
 
@@ -2108,12 +2089,6 @@ string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
                 result = "Ascendant";
             break;
 
-        case SK_CONJURATIONS:
-            // Stay safe, Winslem :(
-            if (species == SP_TROLL && skill_rank > 3)
-                result = "Wallbreaker";
-            break;
-
         // For all draconian titles, intentionally don't restrict by drac
         // colour to avoid frustrating players deliberately trying for these
         case SK_HEXES:
@@ -2134,13 +2109,6 @@ string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
                 result = god_title(god, species, piety);
             break;
 
-        case SK_FORGECRAFT:
-            if (species == SP_ONI && skill_rank == 4)
-                result = "Brimstone Smiter";
-            else if (species == SP_ONI && skill_rank == 5)
-                result = "Titancaster";
-            break;
-
         case SK_SUMMONINGS:
             if (is_evil_god(god))
             {
@@ -2157,11 +2125,6 @@ string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
                 result = "Teletunneler";
             else if (species == SP_POLTERGEIST && skill_rank == 5)
                 result = "Spatial Maelstrom";
-            break;
-
-        case SK_ALCHEMY:
-            if (species::is_draconian(species) && skill_rank == 5)
-                result = "Swamp Dragon";
             break;
 
         case SK_FIRE_MAGIC:
@@ -2387,6 +2350,13 @@ bool is_removed_skill(skill_type skill)
     case SK_CHARMS:
     case SK_SLINGS:
     case SK_CROSSBOWS:
+    case SK_LONG_BLADES:
+    case SK_MACES_FLAILS:
+    case SK_AXES:
+    case SK_POLEARMS:
+    case SK_STAVES:
+    case SK_ALCHEMY:
+    case SK_FORGECRAFT:
         return true;
     default:
         break;
@@ -2402,12 +2372,10 @@ static map<skill_type, mutation_type> skill_sac_muts = {
     { SK_FIRE_MAGIC,     MUT_NO_FIRE_MAGIC },
     { SK_EARTH_MAGIC,    MUT_NO_EARTH_MAGIC },
     { SK_ICE_MAGIC,      MUT_NO_ICE_MAGIC },
-    { SK_ALCHEMY,        MUT_NO_ALCHEMY_MAGIC },
     { SK_HEXES,          MUT_NO_HEXES_MAGIC },
     { SK_TRANSLOCATIONS, MUT_NO_TRANSLOCATION_MAGIC },
-    { SK_CONJURATIONS,   MUT_NO_CONJURATION_MAGIC },
+    { SK_ENCHANTMENTS,   MUT_NO_CONJURATION_MAGIC },
     { SK_NECROMANCY,     MUT_NO_NECROMANCY_MAGIC },
-    { SK_FORGECRAFT,     MUT_NO_FORGECRAFT_MAGIC },
     { SK_SUMMONINGS,     MUT_NO_SUMMONING_MAGIC },
 
     { SK_DODGING,        MUT_NO_DODGING },
@@ -2555,25 +2523,7 @@ float species_apt_factor(skill_type sk, species_type sp)
 
 vector<skill_type> get_crosstrain_skills(skill_type sk)
 {
-    // Gnolls do not have crosstraining.
-    if (you.has_mutation(MUT_DISTRIBUTED_TRAINING))
-        return {};
-
-    switch (sk)
-    {
-    case SK_SHORT_BLADES:
-        return { SK_LONG_BLADES };
-    case SK_LONG_BLADES:
-        return { SK_SHORT_BLADES };
-    case SK_AXES:
-    case SK_STAVES:
-        return { SK_POLEARMS, SK_MACES_FLAILS };
-    case SK_MACES_FLAILS:
-    case SK_POLEARMS:
-        return { SK_AXES, SK_STAVES };
-    default:
-        return {};
-    }
+    return {};
 }
 
 /**
@@ -2601,7 +2551,7 @@ static bool _skill_is_elemental(skill_type sk, bool ext)
     if (ext)
     {
         return sk == SK_FIRE_MAGIC || sk == SK_EARTH_MAGIC || sk == SK_AIR_MAGIC
-               || sk == SK_ICE_MAGIC || sk == SK_ALCHEMY || sk == SK_CONJURATIONS;
+               || sk == SK_ICE_MAGIC;
     }
     else
     {

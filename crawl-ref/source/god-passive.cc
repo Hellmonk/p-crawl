@@ -1727,9 +1727,7 @@ static spell_type _get_shadow_spell(spell_type player_spell)
         spells.push_back(SPELL_SHADOW_SHARD);
     if (schools & spschool::air)
         spells.push_back(SPELL_SHADOW_TEMPEST);
-    if (schools & spschool::alchemy)
-        spells.push_back(SPELL_SHADOW_PRISM);
-    if (schools & spschool::conjuration)
+    if (schools & spschool::enchantments)
         spells.push_back(SPELL_SHADOW_BEAM);
     if (schools & spschool::necromancy)
         spells.push_back(SPELL_SHADOW_DRAINING);
@@ -1739,8 +1737,6 @@ static spell_type _get_shadow_spell(spell_type player_spell)
         spells.push_back(SPELL_SHADOW_TORPOR);
     if (schools & spschool::summoning)
         spells.push_back(SPELL_SHADOW_PUPPET);
-    if (schools & spschool::forgecraft)
-        spells.push_back(SPELL_SHADOW_TURRET);
 
     return spells[random2(spells.size())];
 }

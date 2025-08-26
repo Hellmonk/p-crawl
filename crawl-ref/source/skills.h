@@ -152,18 +152,18 @@ static const skill_type skill_display_order[] =
 
     SK_BLANK_LINE,
 
-    // Strength skills.
-    SK_MACES_FLAILS, SK_AXES, SK_POLEARMS, SK_STAVES, SK_UNARMED_COMBAT, SK_THROWING,
-
-    SK_BLANK_LINE,
-
-    // Dex skills.
-    SK_SHORT_BLADES, SK_LONG_BLADES, SK_RANGED_WEAPONS,
+    // Damage skills.
+    SK_MELEE_WEAPONS, SK_RANGED_WEAPONS, SK_UNARMED_COMBAT, SK_THROWING,
 
     SK_BLANK_LINE,
 
     // 'Defensive' skills.
     SK_ARMOUR, SK_DODGING, SK_SHIELDS, SK_STEALTH,
+
+    SK_BLANK_LINE,
+
+    // Miscellaneous nonmagical skills.
+    SK_INVOCATIONS, SK_EVOCATIONS,
 
     SK_COLUMN_BREAK, SK_TITLE,
 
@@ -171,14 +171,16 @@ static const skill_type skill_display_order[] =
 
     SK_BLANK_LINE,
 
-    SK_CONJURATIONS, SK_HEXES, SK_SUMMONINGS,
-    SK_NECROMANCY, SK_FORGECRAFT, SK_TRANSLOCATIONS, SK_ALCHEMY,
+    SK_ENCHANTMENTS, SK_HEXES, SK_SUMMONINGS,
+    SK_NECROMANCY, SK_TRANSLOCATIONS,
     SK_FIRE_MAGIC, SK_ICE_MAGIC, SK_AIR_MAGIC, SK_EARTH_MAGIC,
 
     SK_BLANK_LINE,
 
-    // Supernatural but nonmagical skills.
-    SK_INVOCATIONS, SK_EVOCATIONS, SK_SHAPESHIFTING,
+    // Shapeshifting, all by itself
+    SK_SHAPESHIFTING,
+
+    SK_BLANK_LINE,
 
     SK_COLUMN_BREAK,
 };

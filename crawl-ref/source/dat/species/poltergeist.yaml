@@ -17,32 +17,8 @@ aptitudes:
   hp: -1
   mp_mod: 0
   wl: 4
-  fighting: -1
-  short_blades: +1
-  axes: -1
-  maces_and_flails: -2
-  polearms: -1
-  staves: -2
-  ranged weapons: -2
-  throwing: +2
   armour: False
-  dodging: 1
-  stealth: 5
-  shields: -1
-  unarmed_combat: -3
-  spellcasting: -1
-  conjurations: -3
-  hexes: 4
-  necromancy: 1
-  forgecraft: -1
   shapeshifting: False
-  fire_magic: -1
-  earth_magic: -1
-  ice_magic: 1
-  air_magic: 1
-  alchemy: 1
-  invocations: -1
-  evocations: -1
 undead_type: undead
 str: 4
 int: 10
@@ -73,10 +49,6 @@ recommended_jobs:
   - earth elementalist
   - ice elementalist
   - alchemist
-recommended_weapons:
-  - short blades
-  - axes
-  - long blades
 
 orc_name: Phantasmorc
 walking_verb: Float

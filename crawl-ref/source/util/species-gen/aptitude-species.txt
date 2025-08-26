@@ -1,11 +1,13 @@
 {tag_major_version_opener}
     {{{enum}, SK_FIGHTING,       {fighting}}},
-    {{{enum}, SK_SHORT_BLADES,   {short_blades}}},
-    {{{enum}, SK_LONG_BLADES,    {long_blades}}},
-    {{{enum}, SK_AXES,           {axes}}},
-    {{{enum}, SK_MACES_FLAILS,   {maces_and_flails}}},
-    {{{enum}, SK_POLEARMS,       {polearms}}},
-    {{{enum}, SK_STAVES,         {staves}}},
+    {{{enum}, SK_MELEE_WEAPONS,  {melee_weapons}}},
+#if TAG_MAJOR_VERSION == 34
+    {{{enum}, SK_LONG_BLADES,    UNUSABLE_SKILL}},
+    {{{enum}, SK_AXES,           UNUSABLE_SKILL}},
+    {{{enum}, SK_MACES_FLAILS,   UNUSABLE_SKILL}},
+    {{{enum}, SK_POLEARMS,       UNUSABLE_SKILL}},
+    {{{enum}, SK_STAVES,         UNUSABLE_SKILL}},
+#endif
     {{{enum}, SK_RANGED_WEAPONS, {ranged weapons}}},
     {{{enum}, SK_THROWING,       {throwing}}},
     {{{enum}, SK_ARMOUR,         {armour}}},
@@ -14,17 +16,21 @@
     {{{enum}, SK_SHIELDS,        {shields}}},
     {{{enum}, SK_UNARMED_COMBAT, {unarmed_combat}}},
     {{{enum}, SK_SPELLCASTING,   {spellcasting}}},
-    {{{enum}, SK_CONJURATIONS,   {conjurations}}},
+    {{{enum}, SK_ENCHANTMENTS,   {enchantments}}},
     {{{enum}, SK_HEXES,          {hexes}}},
     {{{enum}, SK_SUMMONINGS,     {summoning}}},
     {{{enum}, SK_NECROMANCY,     {necromancy}}},
-    {{{enum}, SK_FORGECRAFT,     {forgecraft}}},
+#if TAG_MAJOR_VERSION == 34
+    {{{enum}, SK_FORGECRAFT,     UNUSABLE_SKILL}},
+#endif
     {{{enum}, SK_TRANSLOCATIONS, {translocations}}},
     {{{enum}, SK_FIRE_MAGIC,     {fire_magic}}},
     {{{enum}, SK_ICE_MAGIC,      {ice_magic}}},
     {{{enum}, SK_AIR_MAGIC,      {air_magic}}},
     {{{enum}, SK_EARTH_MAGIC,    {earth_magic}}},
-    {{{enum}, SK_ALCHEMY,        {alchemy}}},
+#if TAG_MAJOR_VERSION == 34
+    {{{enum}, SK_ALCHEMY,        UNUSABLE_SKILL}},
+#endif
     {{{enum}, SK_INVOCATIONS,    {invocations}}},
     {{{enum}, SK_EVOCATIONS,     {evocations}}},
     {{{enum}, SK_SHAPESHIFTING,  {shapeshifting}}},

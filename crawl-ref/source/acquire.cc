@@ -328,37 +328,6 @@ static armour_type _useless_armour_type()
     }
 }
 
-static bool _regular_staves_useless()
-{
-    // stave OBJ_WEAPONS are useless to regular size chars with a missing hand,
-    // but we don't want to mark the skill as useless in general, because it
-    // also applies to OBJ_STAVES, which are one-handed. Also a bunch of
-    // unrands, which this code probably prevents from generating for this
-    // case.
-    if (!you.has_mutation(MUT_MISSING_HAND))
-        return false;
-
-    item_def item_considered;
-    item_considered.base_type = OBJ_WEAPONS;
-
-    // try to find a useful regular staff
-    for (int i = 0; i < NUM_WEAPONS; ++i)
-    {
-        // ignore non-staves
-        if (i == WPN_STAFF)
-            continue;
-
-        item_considered.sub_type = i;
-        if (item_attack_skill(OBJ_WEAPONS, i) == SK_STAVES
-            && you.hands_reqd(item_considered) != HANDS_TWO)
-        {
-            // found something!
-            return false;
-        }
-    }
-    return true;
-}
-
 /**
  * Randomly choose a class of weapons (those using a specific weapon skill)
  * for acquirement to give the player. Weight toward the player's skills.
@@ -371,15 +340,10 @@ static skill_type _acquirement_weapon_skill(int agent)
     // reservoir sample.
     int count = 0;
     skill_type skill = SK_FIGHTING;
-    for (skill_type sk = SK_FIRST_WEAPON;
-         sk <= (agent == GOD_TROG ? SK_LAST_MELEE_WEAPON : SK_LAST_WEAPON);
-         ++sk)
+    for (skill_type sk = SK_FIRST_WEAPON; sk <= SK_LAST_WEAPON; ++sk)
     {
         // Don't choose a skill that's useless
         if (is_useless_skill(sk))
-            continue;
-
-        if (sk == SK_STAVES && _regular_staves_useless())
             continue;
 
         // Adding a small constant allows for the occasional

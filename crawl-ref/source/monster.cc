@@ -638,10 +638,6 @@ void monster::bind_melee_flags()
 
 static bool _needs_ranged_attack(const monster* mon)
 {
-    // Prevent monsters that have conjurations from grabbing missiles.
-    if (mon->has_spell_of_type(spschool::conjuration))
-        return false;
-
     // Same for summonings, but make an exception for friendlies.
     if (!mon->friendly() && mon->has_spell_of_type(spschool::summoning))
         return false;
@@ -1185,10 +1181,6 @@ bool monster::pickup_launcher(item_def &launch, bool msg, bool force)
 
 static bool _is_signature_weapon(const monster* mons, const item_def &weapon)
 {
-    // Don't pick up items that would interfere with our special ability
-    if (mons->type == MONS_RED_DEVIL)
-        return item_attack_skill(weapon) == SK_POLEARMS;
-
     // Some other uniques have a signature weapon, usually because they
     // always spawn with it, or because it is referenced in their speech
     // and/or descriptions.
@@ -1239,12 +1231,6 @@ static bool _is_signature_weapon(const monster* mons, const item_def &weapon)
         if (mons->type == MONS_NIKOLA)
             return get_weapon_brand(weapon) == SPWPN_ELECTROCUTION;
 
-        if (mons->type == MONS_DUVESSA)
-        {
-            return item_attack_skill(weapon) == SK_SHORT_BLADES
-                   || item_attack_skill(weapon) == SK_LONG_BLADES;
-        }
-
         if (mons->type == MONS_IGNACIO)
             return wtype == WPN_EXECUTIONERS_AXE;
 
@@ -1275,13 +1261,6 @@ static bool _is_signature_weapon(const monster* mons, const item_def &weapon)
         // Jerry: I gotta have my orb!
         if (mons->type == MONS_DONALD || mons->type == MONS_JEREMIAH)
             return mons->hands_reqd(weapon) == HANDS_ONE;
-
-        // What kind of assassin would forget her dagger somewhere else?
-        if (mons->type == MONS_SONJA)
-            return item_attack_skill(weapon) == SK_SHORT_BLADES;
-
-        if (mons->type == MONS_IMPERIAL_MYRMIDON)
-            return item_attack_skill(weapon) == SK_LONG_BLADES;
     }
 
     if (mons->is_holy())
@@ -4101,32 +4080,13 @@ int monster::skill(skill_type sk, int scale, bool /*real*/, bool /*temp*/) const
     case SK_NECROMANCY:
         return (has_spell_of_type(spschool::necromancy)) ? hd * 2 : hd/2;
 
-    case SK_CONJURATIONS:
-    case SK_ALCHEMY:
+    case SK_ENCHANTMENTS:
     case SK_FIRE_MAGIC:
     case SK_ICE_MAGIC:
     case SK_EARTH_MAGIC:
     case SK_AIR_MAGIC:
     case SK_SUMMONINGS:
-    case SK_FORGECRAFT:
         return is_actual_spellcaster() ? hd : hd / 3;
-
-    // Weapon skills for spectral weapon
-    case SK_SHORT_BLADES:
-    case SK_LONG_BLADES:
-    case SK_AXES:
-    case SK_MACES_FLAILS:
-    case SK_POLEARMS:
-    case SK_STAVES:
-        ret = hd;
-        if (weapon()
-            && sk == item_attack_skill(*weapon())
-            && _is_signature_weapon(this, *weapon()))
-        {
-            // generally slightly skilled if it's a signature weapon
-            ret = ret * 5 / 4;
-        }
-        return ret;
 
     default:
         return 0;

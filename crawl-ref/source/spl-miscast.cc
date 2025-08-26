@@ -144,7 +144,7 @@ static void _ouch(actor& target, actor * source, miscast_source_info mc_info, in
 
 static const map<spschool, miscast_datum> miscast_effects = {
     {
-        spschool::conjuration,
+        spschool::enchantments,
         {
             BEAM_MMISSILE,
             nullptr
@@ -277,27 +277,6 @@ static const map<spschool, miscast_datum> miscast_effects = {
                 int dam, string cause) {
                 dam = target.apply_ac(dam, 0, ac_type::triple);
                 _ouch(target, source, mc_info, dam, BEAM_FRAG, cause);
-            }
-        },
-    },
-    {
-        spschool::alchemy,
-        {
-            BEAM_NONE,
-            [] (actor& target, actor* source, miscast_source_info /*mc_info*/,
-                int dam, string /*cause*/)
-            {
-                target.poison(source, dam * 5 / 2);
-            },
-        },
-    },
-    {
-        spschool::forgecraft,
-        {
-            BEAM_NONE,
-            [] (actor& target, actor* source, miscast_source_info /*mc_info*/,
-                int dam, string /*cause*/) {
-                target.corrode(source, "wild magic", 4 + div_rand_round(dam, 4));
             }
         },
     },
