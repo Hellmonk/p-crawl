@@ -3787,8 +3787,6 @@ tileidx_t tileidx_command(const command_type cmd)
 {
     switch (cmd)
     {
-    case CMD_REST:
-        return TILEG_CMD_REST;
     case CMD_EXPLORE:
         return TILEG_CMD_EXPLORE;
     case CMD_INTERLEVEL_TRAVEL:

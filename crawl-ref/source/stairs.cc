@@ -1243,9 +1243,6 @@ level_id stair_destination(dungeon_feature_type feat, const string &dst,
     return level_id();
 }
 
-
-
-
 static void _lock_stairs()
 {
     for (rectangle_iterator ri(0); ri; ++ri)
@@ -1257,6 +1254,67 @@ static void _lock_stairs()
                                 TERRAIN_CHANGE_DOOR_SEAL);
         }
     }
+}
+
+static void _player_stair_clear_status()
+{
+    undrain_hp(9999);
+    you.magic_contamination = 0;
+    you.props[CORROSION_KEY] = 0;
+    you.attribute[ATTR_BARBS_POW] = 0;
+    you.props.erase(BARBS_MOVE_KEY);
+    you.duration[DUR_STICKY_FLAME] = 0;
+    you.duration[DUR_PETRIFIED] = 0;
+    you.duration[DUR_PETRIFYING] = 0;
+    you.duration[DUR_CORROSION] = 0;
+    you.duration[DUR_OBLIVION_HOWL] = 0;
+    you.duration[DUR_WEAK] = 0;
+    you.duration[DUR_NO_HOP] = 0;
+    you.duration[DUR_DIMENSION_ANCHOR] = 0;
+    you.duration[DUR_NO_MOMENTUM] = 0;
+    you.props[CORROSION_KEY] = 0;
+    you.duration[DUR_BARBS] = 0;
+    you.duration[DUR_SICKNESS]  = 0;
+    you.duration[DUR_EXHAUSTED] = 0;
+    you.duration[DUR_NO_CAST] = 0;
+    you.duration[DUR_NO_POTIONS] = 0;
+    you.duration[DUR_NO_SCROLLS] = 0;
+    you.duration[DUR_LOWERED_WL] = 0;
+    you.duration[DUR_VERTIGO] = 0;
+    you.duration[DUR_VITRIFIED] = 0;
+    you.duration[DUR_FROZEN] = 0;
+    you.duration[DUR_SAP_MAGIC] = 0;
+    you.duration[DUR_SLOW] = 0;
+    you.duration[DUR_BLIND] = 0;
+    you.duration[DUR_SIGN_OF_RUIN] = 0;
+    you.duration[DUR_SENTINEL_MARK] = 0;
+    you.duration[DUR_CANINE_FAMILIAR_DEAD] = 0;
+    you.duration[DUR_VORTEX_COOLDOWN] = 0;
+    you.duration[DUR_DRAGON_CALL_COOLDOWN] = 0;
+    you.duration[DUR_DEATHS_DOOR_COOLDOWN] = 0;
+    you.duration[DUR_BERSERK_COOLDOWN] = 0;
+    you.duration[DUR_BLINK_COOLDOWN] = 0;
+    you.duration[DUR_SIPHON_COOLDOWN] = 0;
+    you.duration[DUR_RECITE_COOLDOWN] = 0;
+    you.duration[DUR_GAVOTTE_COOLDOWN] = 0;
+    you.duration[DUR_WORD_OF_CHAOS_COOLDOWN] = 0;
+    you.duration[DUR_FIRE_VULN] = 0;
+    you.duration[DUR_POISON_VULN] = 0;
+    you.duration[DUR_CONF]      = 0;
+    you.duration[DUR_POISONING] = 0;
+}
+
+static void _player_stair_healing()
+{
+    int heal_fraction = 3;
+    you.heal((you.hp_max - you.hp) * heal_fraction / 4);
+    inc_mp((you.max_magic_points - you.magic_points) * heal_fraction / 4);
+    _player_stair_clear_status();
+
+    you.redraw_hit_points = true;
+    you.redraw_armour_class = true;
+    you.redraw_evasion = true;
+    you.redraw_stats = true;
 }
 
 void down_stairs(dungeon_feature_type force_stair, bool force_known_shaft, bool update_travel_cache)
@@ -1336,6 +1394,7 @@ void new_level(bool restore)
     if (restore)
         return;
 
+    _player_stair_healing();
     _lock_stairs();
 
     cancel_polar_vortex();
