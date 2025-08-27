@@ -851,12 +851,9 @@ static int _beam_to_resist(const actor* defender, beam_type flavour)
 /**
  * Adjusts damage for elemental resists, electricity and poison.
  *
- * For players, damage is reduced to 1/2, 1/3, or 1/5 if res has values 1, 2,
- * or 3, respectively. "Boolean" resists (rElec, rPois) reduce damage to 1/3.
- * rN is a special case that reduces damage to 1/2, 1/4, 0 instead.
- *
- * For monsters, damage is reduced to 1/2, 1/5, and 0 for 1/2/3 resistance.
- * "Boolean" resists give 1/3, 1/6, 0 instead.
+ * For players, damage is reduced to 1/2, with no ability to become immune
+ * For monsters, damage is reduced to 1/2 at + and immune at ++
+ * Vulnerability is 150% damage.
  *
  * @param defender      The victim of the attack.
  * @param flavour       The type of attack having its damage adjusted.
@@ -880,27 +877,10 @@ int resist_adjust_damage(const actor* defender, beam_type flavour, int rawdamage
 
     if (res > 0)
     {
-        const bool immune_at_3_res = is_mon
-                                     || base_flavour == BEAM_NEG
-                                     || base_flavour == BEAM_POISON
-                                     || flavour == BEAM_HOLY
-                                     || flavour == BEAM_FOUL_FLAME;
-
-        if (immune_at_3_res && res >= 3 || res > 3)
+        if (is_mon && res >= 2 || res > 2)
             resistible = 0;
         else
-        {
-            // Is this a resist that claims to be boolean for damage purposes?
-            const int bonus_res = (_is_boolean_resist(base_flavour) ? 1 : 0);
-
-            // Monster resistances are stronger than player versions.
-            if (is_mon)
-                resistible /= 1 + bonus_res + res * res;
-            else if (base_flavour == BEAM_NEG)
-                resistible /= res * 2;
-            else
-                resistible /= (3 * res + 1) / 2 + bonus_res;
-        }
+            resistible /= 2;
     }
     else if (res < 0)
         resistible = resistible * 15 / 10;
