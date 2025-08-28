@@ -197,7 +197,7 @@ static void _do_wizard_command(int wiz_command)
         mprf("Cost level: %d  Total experience: %d  Next cost level: %d Skill cost: %d",
               you.skill_cost_level, you.total_experience,
               skill_cost_needed(you.skill_cost_level + 1),
-              calc_skill_cost(you.skill_cost_level));
+              calc_skill_cost());
         break;
     case '+': wizard_make_object_randart(); break;
 

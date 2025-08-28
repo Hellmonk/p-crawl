@@ -1552,11 +1552,11 @@ static int _get_monster_armour_value(const monster *mon,
     // Poison becomes much less valuable if the monster is
     // intrinsically resistant.
     if (get_mons_resist(*mon, MR_RES_POISON) <= 0)
-        value += get_armour_res_poison(item, true);
+        value += get_armour_res_poison(item);
 
     // Same for life protection.
     if (mon->holiness() & MH_NATURAL)
-        value += get_armour_life_protection(item, true);
+        value += get_armour_life_protection(item);
 
     // See invisible also is only useful if not already intrinsic.
     if (!mons_class_flag(mon->type, M_SEE_INVIS))
@@ -1720,11 +1720,11 @@ static int _get_monster_jewellery_value(const monster *mon,
     // Poison becomes much less valuable if the monster is
     // intrinsically resistant.
     if (get_mons_resist(*mon, MR_RES_POISON) <= 0)
-        value += get_jewellery_res_poison(item, true);
+        value += get_jewellery_res_poison(item);
 
     // Same for life protection.
     if (mon->holiness() & MH_NATURAL)
-        value += get_jewellery_life_protection(item, true);
+        value += get_jewellery_life_protection(item);
 
     // See invisible also is only useful if not already intrinsic.
     if (!mons_class_flag(mon->type, M_SEE_INVIS))
@@ -4025,7 +4025,7 @@ int monster::skill(skill_type sk, int scale, bool /*real*/, bool /*temp*/) const
         return 0;
 
     const int hd = scale * get_hit_dice();
-    int ret;
+
     switch (sk)
     {
     case SK_INVOCATIONS:

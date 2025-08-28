@@ -5867,7 +5867,7 @@ static void _stock_gold(shop_struct &shop)
  * @param shop_level        The effective depth to use for the shop.
 
  */
-void place_spec_shop(const coord_def& where, shop_spec &spec, int shop_level)
+void place_spec_shop(const coord_def& where, shop_spec &spec)
 {
     rng::subgenerator shop_rng; // isolate shop rolls from levelgen
     no_notes nx;

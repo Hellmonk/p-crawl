@@ -734,22 +734,6 @@ int stab_bonus_denom(stab_type stab)
     }
 }
 
-static bool _is_boolean_resist(beam_type flavour)
-{
-    switch (flavour)
-    {
-    case BEAM_ELECTRICITY:
-    case BEAM_MIASMA:
-    case BEAM_STICKY_FLAME:
-    case BEAM_WATER:  // water asphyxiation damage,
-                      // bypassed by being water inhabitant.
-    case BEAM_POISON:
-        return true;
-    default:
-        return false;
-    }
-}
-
 // Gets the percentage of the total damage of this damage flavour that can
 // be resisted.
 static inline int _get_resistible_fraction(beam_type flavour)
@@ -1725,14 +1709,6 @@ int archer_bonus_damage(int hd)
 }
 
 /**
- * Do weapons that use the given skill use strength or dex to increase damage?
- */
-bool weapon_uses_strength(skill_type wpn_skill, bool using_weapon)
-{
-    return true;
-}
-
-/**
  * Apply the player's attributes to multiply damage dealt with the given weapon skill.
  */
 int stat_modify_damage(int damage, skill_type wpn_skill, bool using_weapon)
@@ -1742,7 +1718,7 @@ int stat_modify_damage(int damage, skill_type wpn_skill, bool using_weapon)
     // strength below 10 reduces the multiplied by the same amount.
     // Minimum multiplier is 0.01 (1%) (reached at -30 str).
     // Ranged weapons and short/long blades use dex instead.
-    const bool use_str = weapon_uses_strength(wpn_skill, using_weapon);
+    const bool use_str = true;
     const int attr = use_str ? you.strength() : you.dex();
     damage *= max(1.0, 75 + 2.5 * attr);
     damage /= 100;

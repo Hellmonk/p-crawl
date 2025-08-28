@@ -2423,7 +2423,7 @@ int mons_max_hp(monster_type mc)
  *               historical (pre-2eadbcd) behaviour.
  * @return How much XP this monster is worth.
  */
-int exp_value(const monster& mon, bool real, bool legacy)
+int exp_value(const monster& mon)
 {
     int x_val = 0;
 
@@ -4879,7 +4879,7 @@ mon_threat_level_type mons_threat_level(const monster &mon, bool real)
         return MTHRT_TRIVIAL; // ignores 'real', sorry...
 
     const double factor = sqrt(exp_needed(you.experience_level) / 30.0);
-    const int tension = exp_value(threat, real, true) / (1 + factor);
+    const int tension = exp_value(threat);
 
     if (tension <= 1)
     {

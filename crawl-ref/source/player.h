@@ -531,7 +531,7 @@ public:
     int visible_igrd(const coord_def&) const;
     bool rampaging() const override;
     bool is_banished() const override;
-    bool is_sufficiently_rested(bool starting=false) const; // Up to rest_wait_percent HP and MP.
+    bool is_sufficiently_rested() const; // Up to rest_wait_percent HP and MP.
     bool is_web_immune() const override;
     bool is_binding_sigil_immune() const override;
     bool cannot_speak() const;
@@ -1096,7 +1096,7 @@ int player_monster_detect_radius();
 
 int slaying_bonus(bool throwing = false, bool random = true);
 
-unsigned int exp_needed(int lev, int exp_apt = -99);
+unsigned int exp_needed(int lev);
 bool will_gain_life(int lev);
 
 bool dur_expiring(duration_type dur);

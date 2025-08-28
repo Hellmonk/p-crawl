@@ -2230,8 +2230,8 @@ static void _recharge_xp_evokers(int exp)
     FixedVector<item_def*, NUM_MISCELLANY> evokers(nullptr);
     list_charging_evokers(evokers);
 
-    const int xp_by_xl = exp_needed(you.experience_level+1, 0)
-                       - exp_needed(you.experience_level, 0);
+    const int xp_by_xl = exp_needed(you.experience_level+1)
+                       - exp_needed(you.experience_level);
     const int skill_denom = 3 + you.skill_rdiv(SK_EVOCATIONS, 1, 9);
     const int xp_factor = max(xp_by_xl / 5, 100) / skill_denom;
 
@@ -2267,7 +2267,7 @@ static void _reduce_abyss_xp_timer(int exp)
         return;
 
     const int xp_factor =
-        max(min((int)exp_needed(you.experience_level+1, 0) / 7,
+        max(min((int)exp_needed(you.experience_level+1) / 7,
                 you.experience_level * 425),
             you.experience_level*2 + 15) / 5;
     // Reduce abyss exit spawns in the Deep Abyss (J:6+) to preserve challenge.
@@ -2306,7 +2306,7 @@ static void _handle_hp_drain(int exp)
         return;
 
     const int mul = you.has_mutation(MUT_PERSISTENT_DRAIN) ? 2 : 1;
-    int loss = div_rand_round(exp, 4 * mul * calc_skill_cost(you.skill_cost_level));
+    int loss = div_rand_round(exp, 4 * mul * calc_skill_cost());
 
     // Make it easier to recover from very heavy levels of draining
     // (they're nasty enough as it is)
@@ -2338,7 +2338,7 @@ static void _handle_breath_recharge(int exp)
     if (!you.props.exists(DRACONIAN_BREATH_RECHARGE_KEY))
         you.props[DRACONIAN_BREATH_RECHARGE_KEY] = 50;
 
-    int loss = div_rand_round(exp, calc_skill_cost(you.skill_cost_level));
+    int loss = div_rand_round(exp, calc_skill_cost());
     if (you.form == transformation::dragon)
         loss *= 2;
     you.props[DRACONIAN_BREATH_RECHARGE_KEY].get_int() -= loss;
@@ -2356,7 +2356,7 @@ static void _handle_cacophony_recharge(int exp)
     if (!you.props.exists(CACOPHONY_XP_KEY))
         return;
 
-    int loss = div_rand_round(exp, calc_skill_cost(you.skill_cost_level));
+    int loss = div_rand_round(exp, calc_skill_cost());
     you.props[CACOPHONY_XP_KEY].get_int() -= loss;
 
     if (you.props[CACOPHONY_XP_KEY].get_int() <= 0)
@@ -2374,7 +2374,7 @@ static void _handle_batform_recharge(int exp)
         return;
     }
 
-    int loss = div_rand_round(exp, calc_skill_cost(you.skill_cost_level));
+    int loss = div_rand_round(exp, calc_skill_cost());
     you.props[BATFORM_XP_KEY].get_int() -= loss;
 
     if (you.props[BATFORM_XP_KEY].get_int() <= 0)
@@ -2392,7 +2392,7 @@ static void _handle_watery_grave_recharge(int exp)
         return;
     }
 
-    int loss = div_rand_round(exp, calc_skill_cost(you.skill_cost_level));
+    int loss = div_rand_round(exp, calc_skill_cost());
     you.props[WATERY_GRAVE_XP_KEY].get_int() -= loss;
 
     if (you.props[WATERY_GRAVE_XP_KEY].get_int() <= 0)
@@ -2404,7 +2404,7 @@ static void _handle_watery_grave_recharge(int exp)
 
 static void _handle_banes(int exp)
 {
-    int loss = div_rand_round(exp * 10, calc_skill_cost(you.skill_cost_level));
+    int loss = div_rand_round(exp * 10, calc_skill_cost());
 
     if (you.has_mutation(MUT_ACCURSED) || you.undead_state() != US_ALIVE)
         loss /= 2;
@@ -2437,7 +2437,7 @@ static void _handle_ostracism(int exp)
     if (you.attribute[ATTR_OSTRACISM] == 0)
         return;
 
-    int loss = div_rand_round(exp, calc_skill_cost(you.skill_cost_level) * 4 / 3);
+    int loss = div_rand_round(exp, calc_skill_cost() * 4 / 3);
     player_change_ostracism(-loss);
 }
 
@@ -3454,7 +3454,7 @@ bool player::cloud_immune(bool items) const
  *  @param exp_apt      The XP aptitude to use. If -99, use the current species'.
  *  @return     The total number of XP points needed to get to the given XL.
  */
-unsigned int exp_needed(int lev, int exp_apt)
+unsigned int exp_needed(int lev)
 {
     return 100 * (lev - 1);
 }
@@ -5552,7 +5552,7 @@ bool player::is_banished() const
     return banished;
 }
 
-bool player::is_sufficiently_rested(bool starting) const
+bool player::is_sufficiently_rested() const
 {
     // Only return false if resting will actually help. Anything here should
     // explicitly trigger an appropriate activity interrupt to prevent infinite
@@ -5944,8 +5944,6 @@ int player::skill(skill_type sk, int scale, bool real, bool temp) const
     // skill training, so make sure to use the correct value.
     int actual_skill = skills[sk];
     unsigned int effective_points = skill_points[sk];
-    if (!real)
-        effective_points += get_crosstrain_points(sk);
     effective_points = min(effective_points, skill_exp_needed(MAX_SKILL_LEVEL, sk));
     actual_skill = calc_skill_level_change(sk, actual_skill, effective_points);
 
@@ -9102,7 +9100,7 @@ void maybe_harvest_memory(const monster& victim)
     if (crawl_state.game_is_sprint())
         xp = sprint_modify_exp(xp);
 
-    progress += div_rand_round(xp, calc_skill_cost(you.skill_cost_level));
+    progress += div_rand_round(xp, calc_skill_cost());
 
     if (progress < ENKINDLE_CHARGE_COST)
         return;

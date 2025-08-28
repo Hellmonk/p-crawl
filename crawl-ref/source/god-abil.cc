@@ -3564,7 +3564,6 @@ static string _describe_gozag_shop(int index)
     const string shop_name =
         apostrophise(you.props[make_stringf(GOZAG_SHOPKEEPER_NAME_KEY,
                                             index)].get_string());
-    const shop_type type = _gozag_shop_type(index);
     const string type_name = "";
     const string suffix =
         you.props[make_stringf(GOZAG_SHOP_SUFFIX_KEY, index)].get_string();
@@ -3646,7 +3645,7 @@ static void _gozag_place_shop(int index)
     feature_spec feat = kmspec.get_feat();
     if (!feat.shop)
         die("Invalid shop spec?");
-    place_spec_shop(you.pos(), *feat.shop, you.experience_level);
+    place_spec_shop(you.pos(), *feat.shop);
 
     link_items();
     env.markers.add(new map_feature_marker(you.pos(), DNGN_ABANDONED_SHOP));

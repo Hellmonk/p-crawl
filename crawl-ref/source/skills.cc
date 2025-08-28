@@ -159,13 +159,12 @@ static int _spec_skills[NUM_SPECIES][NUM_SKILLS];
 // 130 exp apt is midway between +0 and -1 now. -- elliptic
 unsigned int skill_cost_needed(int level)
 {
-    return exp_needed(level, 1) * 13;
+    return exp_needed(level) * 13;
 }
 
 static const int MAX_SKILL_COST_LEVEL = 27;
 
-// skill_cost_level makes skills more expensive for more experienced characters
-int calc_skill_cost(int skill_cost_level)
+int calc_skill_cost()
 {
     return 1;
 }
@@ -1043,7 +1042,7 @@ static int _min_points_to_raise_all(int min_training)
 static bool _xp_available_for_skill_points(int points)
 {
     int cost_level = you.skill_cost_level;
-    int cost = calc_skill_cost(cost_level);
+    int cost = calc_skill_cost();
     int xp_needed = 0;
     // XXX: could do this more efficiently
     for (int i = 0; i < points; ++i)
@@ -1057,7 +1056,7 @@ static bool _xp_available_for_skill_points(int points)
         if (new_level != cost_level)
         {
             cost_level = new_level;
-            cost = calc_skill_cost(cost_level);
+            cost = calc_skill_cost();
         }
     }
     return true;
@@ -1111,7 +1110,7 @@ static void _train_with_innate_casting(bool simu)
             int p = you.training[i] / min;
             if (is_magic_skill((skill_type)i) && p > max_magic_skill_spend)
                 p = max_magic_skill_spend;
-            int xp = calc_skill_cost(you.skill_cost_level) * p;
+            int xp = calc_skill_cost() * p;
             // We don't want to disable training for magic skills midway.
             // Finish training all skills and check targets afterward.
             const auto sk = static_cast<skill_type>(i);
@@ -1129,7 +1128,7 @@ static void _train_with_innate_casting(bool simu)
                 if (!_is_sacrificed_skill(sk))
                     continue;
                 const int p = magic_training / min;
-                const int xp = calc_skill_cost(you.skill_cost_level) * p;
+                const int xp = calc_skill_cost() * p;
                 you.exp_available -= xp;
                 you.total_experience += xp;
             }
@@ -1150,7 +1149,7 @@ void train_skills(bool simu)
             cost = _gnoll_total_skill_cost();
             if (exp >= cost)
             {
-                _train_skills(exp, calc_skill_cost(you.skill_cost_level), simu);
+                _train_skills(exp, calc_skill_cost(), simu);
                 dprf(DIAG_SKILLS,
                     "Trained all gnoll skills by 1 at total cost %d.", cost);
             }
@@ -1163,7 +1162,7 @@ void train_skills(bool simu)
     {
         do
         {
-            cost = calc_skill_cost(you.skill_cost_level);
+            cost = calc_skill_cost();
             exp = you.exp_available;
             if (you.skill_cost_level == MAX_SKILL_COST_LEVEL)
                 _train_skills(exp, cost, simu);
@@ -1464,7 +1463,7 @@ int _gnoll_total_skill_cost()
         if (!you.training[i])
             continue;
         cur_cost_level = calc_skill_cost_level(you.total_experience + total_cost, cur_cost_level);
-        this_cost = calc_skill_cost(cur_cost_level);
+        this_cost = calc_skill_cost();
         if (num != denom)
             this_cost = (num * this_cost + denom - 1) / denom;
         total_cost += this_cost;
@@ -1503,7 +1502,7 @@ static int _training_target_skill_point_diff(skill_type exsk, int training_targe
                             * target_fractional, 10);
     }
 
-    int you_skill_points = you.skill_points[exsk] + get_crosstrain_points(exsk);
+    int you_skill_points = you.skill_points[exsk];
     if (ash_has_skill_boost(exsk))
         you_skill_points += ash_skill_point_boost(exsk, training_target);
 
@@ -1522,7 +1521,7 @@ static int _train(skill_type exsk, int &max_exp, bool simu, bool check_targets)
     int skill_inc = 1;
 
     // This will be deducted from you.exp_available.
-    int cost = calc_skill_cost(you.skill_cost_level);
+    int cost = calc_skill_cost();
 
     if (you.has_mutation(MUT_DISTRIBUTED_TRAINING))
     {
@@ -1637,11 +1636,6 @@ skill_diff skill_level_to_diffs(skill_type skill, double amount,
 
     if (!base_only)
     {
-        // Factor in crosstraining bonus at the time of the query.
-        // This will not address the case where some cross-training skills are
-        // also being trained.
-        you_skill += get_crosstrain_points(skill);
-
         // Estimate the ash bonus, based on current skill levels and piety.
         // This isn't perfectly accurate, because the boost changes as
         // skill increases. TODO: exact solution.
@@ -1684,7 +1678,7 @@ skill_diff skill_level_to_diffs(skill_type skill, double amount,
         if (decrease_skill && you_skill_cost_level)
             ++max_xp;
 
-        const int cost = calc_skill_cost(you_skill_cost_level);
+        const int cost = calc_skill_cost();
         // Maximum number of skill points to transfer in one go.
         // It's max_xp/cost rounded up.
         const int max_skp = max((max_xp + cost - 1) / cost, 1);
@@ -2489,23 +2483,6 @@ float species_apt_factor(skill_type sk, species_type sp)
     return apt_to_factor(species_apt(sk, sp));
 }
 
-vector<skill_type> get_crosstrain_skills(skill_type sk)
-{
-    return {};
-}
-
-/**
- * Calculate the current crosstraining bonus for skill `sk`, in skill points.
- */
-int get_crosstrain_points(skill_type sk)
-{
-    int points = 0;
-    for (skill_type cross : get_crosstrain_skills(sk))
-        points += you.skill_points[cross] * 2 / 5;
-    return points;
-
-}
-
 /**
  * Is the provided skill one of the elemental spellschools?
  *
@@ -2663,7 +2640,7 @@ void fixup_skills()
     init_can_currently_train();
     reset_training();
 
-    if (you.exp_available >= 10 * calc_skill_cost(you.skill_cost_level)
+    if (you.exp_available >= 10 * calc_skill_cost()
         && !you.has_mutation(MUT_DISTRIBUTED_TRAINING)
         && !you.has_mutation(MUT_INNATE_CASTER))
     {

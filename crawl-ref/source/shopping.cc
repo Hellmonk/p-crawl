@@ -1567,26 +1567,8 @@ string shop_type_name(shop_type type)
     }
 }
 
-static const char *_shop_type_suffix(shop_type type, const coord_def &where)
-{
-    if (type == SHOP_GENERAL
-        || type == SHOP_GENERAL_ANTIQUE
-        || type == SHOP_DISTILLERY)
-    {
-        return "";
-    }
-
-    static const char * const suffixnames[] =
-    {
-        "Shoppe", "Boutique", "Emporium", "Shop"
-    };
-    return suffixnames[(where.x + where.y) % ARRAYSZ(suffixnames)];
-}
-
 string shop_name(const shop_struct& shop)
 {
-    const shop_type type = shop.type;
-
     string sh_name = "";
 
 #if TAG_MAJOR_VERSION == 34

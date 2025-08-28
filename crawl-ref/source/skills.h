@@ -59,7 +59,7 @@ float scaled_skill_cost(skill_type sk);
 
 unsigned int skill_cost_needed(int level);
 int calc_skill_cost_level(int xp, int start);
-int calc_skill_cost(int skill_cost_level);
+int calc_skill_cost();
 void check_skill_cost_change(bool quiet = false);
 
 bool skill_default_shown(skill_type sk);
@@ -125,9 +125,6 @@ unsigned int skill_exp_needed(int lev, skill_type sk,
                               species_type sp = you.species);
 skill_diff skill_level_to_diffs(skill_type skill, double amount,
     int scaled_training=100, bool base_only=true);
-
-vector<skill_type> get_crosstrain_skills(skill_type sk);
-int get_crosstrain_points(skill_type sk);
 
 int destructive_elemental_preference(spell_type spell, int scale = 1);
 
