@@ -1395,25 +1395,18 @@ string damage_rating(const item_def *item, int *rating_value)
                                !item ? unarmed_base_damage_bonus(false) :
                                     heavy_dam; // 0 for non-heavy weapons
     const skill_type skill = item ? _item_training_skill(*item) : SK_UNARMED_COMBAT;
-    const int stat_mult = stat_modify_damage(100, skill, true);
-    const bool use_str = true;
     // Throwing weapons and UC only get a damage mult from Fighting skill,
     // not from Throwing/UC skill.
     const bool use_weapon_skill = item && !thrown;
-    const int weapon_skill_mult = use_weapon_skill ? apply_weapon_skill(100, skill, false) : 100;
-    const int skill_mult = apply_fighting_skill(weapon_skill_mult, false, false);
 
     const int slaying = slaying_bonus(thrown, false);
     const int ench = item && item->is_identified() ? item->plus : 0;
     const int plusses = slaying + ench;
+    const bool weapon_penalty = false;
 
-    const int DAM_RATE_SCALE = 100;
-    int rating = (base_dam + extra_base_dam) * DAM_RATE_SCALE;
-    rating = stat_modify_damage(rating, skill, true);
+    int rating = (base_dam + extra_base_dam);
     if (use_weapon_skill)
-        rating = apply_weapon_skill(rating, skill, false);
-    rating = apply_fighting_skill(rating, false, false);
-    rating /= DAM_RATE_SCALE;
+        rating = apply_weapon_skill(rating, skill, weapon_penalty);
     rating += plusses;
 
     if (rating_value)
@@ -1427,6 +1420,8 @@ string damage_rating(const item_def *item, int *rating_value)
                                                        base_dam, extra_base_dam) :
                                           make_stringf("%d", base_dam);
 
+    string skill_desc = use_weapon_skill ? make_stringf("Skill %d", you.skill(skill))
+                                         : "";
     string plusses_desc;
     if (plusses)
     {
@@ -1441,13 +1436,10 @@ string damage_rating(const item_def *item, int *rating_value)
     const string brand_desc = thrown ? _describe_missile_brand(*item) : "";
 
     return make_stringf(
-        "%d (Base %s x %d%% (%s) x %d%% (%s)%s)%s.",
+        "%d (Base %s + %s%s)%s.",
         rating,
         base_dam_desc.c_str(),
-        stat_mult,
-        use_str ? "Str" : "Dex",
-        skill_mult,
-        use_weapon_skill ? "Skill" : "Fight",
+        skill_desc.c_str(),
         plusses_desc.c_str(),
         brand_desc.c_str());
 }
