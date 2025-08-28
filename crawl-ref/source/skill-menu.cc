@@ -24,6 +24,7 @@
 #include "hints.h"
 #include "options.h"
 #include "output.h"
+#include "player.h"
 #include "religion.h"
 #include "state.h"
 #include "stringutil.h"
@@ -578,6 +579,8 @@ string SkillMenuSwitch::get_help()
                 causes.push_back("cross-training");
             if (_hermit_bonus())
                 causes.push_back("the Hermit's pendant");
+            if (artefacts_enhance_skill())
+                causes.push_back("your equipment");
             if (_charlatan_bonus())
                 causes.push_back("the Charlatan's Orb");
             if (you.form == transformation::walking_scroll)

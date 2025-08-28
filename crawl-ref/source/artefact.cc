@@ -339,10 +339,8 @@ static map<stave_type, artefact_prop_type> staff_resist_artps = {
 static map<stave_type, artefact_prop_type> staff_enhancer_artps = {
     { STAFF_FIRE,           ARTP_ENHANCE_FIRE },
     { STAFF_COLD,           ARTP_ENHANCE_ICE },
-    { STAFF_ALCHEMY,        ARTP_ENHANCE_ALCHEMY },
     { STAFF_DEATH,          ARTP_ENHANCE_NECRO },
     { STAFF_AIR,            ARTP_ENHANCE_AIR },
-    { STAFF_CONJURATION,    ARTP_ENHANCE_CONJ },
     { STAFF_EARTH,          ARTP_ENHANCE_EARTH },
 };
 
@@ -642,11 +640,10 @@ static bool _artp_can_go_on_item(artefact_prop_type prop, int prop_val,
         case ARTP_SILENCE:
             return non_swappable
                 && !item.is_type(OBJ_JEWELLERY, AMU_MANA_REGENERATION)
-                && !_any_artps_in_item_props({ ARTP_ENHANCE_CONJ,
-                    ARTP_ENHANCE_HEXES, ARTP_ENHANCE_SUMM, ARTP_ENHANCE_NECRO,
+                && !_any_artps_in_item_props({ ARTP_ENHANCE_HEXES,
+                    ARTP_ENHANCE_SUMM, ARTP_ENHANCE_NECRO,
                     ARTP_ENHANCE_TLOC, ARTP_ENHANCE_FIRE, ARTP_ENHANCE_ICE,
-                    ARTP_ENHANCE_AIR, ARTP_ENHANCE_EARTH, ARTP_ENHANCE_ALCHEMY,
-                    ARTP_ENHANCE_FORGECRAFT }, intrinsic_props, extant_props);
+                    ARTP_ENHANCE_AIR, ARTP_ENHANCE_EARTH}, intrinsic_props, extant_props);
         case ARTP_REGENERATION:
             // XXX: regen disabled on talismans because of an untransform crash
             // related to talismans being slotless
@@ -664,7 +661,7 @@ static bool _artp_can_go_on_item(artefact_prop_type prop, int prop_val,
             return item_class == OBJ_ARMOUR || item_class == OBJ_WEAPONS;
         case ARTP_ARCHMAGI:
             return item.is_type(OBJ_ARMOUR, ARM_ROBE);
-        case ARTP_ENHANCE_CONJ:
+        case ARTP_ENHANCE_ENCH:
         case ARTP_ENHANCE_HEXES:
         case ARTP_ENHANCE_SUMM:
         case ARTP_ENHANCE_NECRO:
@@ -673,13 +670,9 @@ static bool _artp_can_go_on_item(artefact_prop_type prop, int prop_val,
         case ARTP_ENHANCE_ICE:
         case ARTP_ENHANCE_AIR:
         case ARTP_ENHANCE_EARTH:
-        case ARTP_ENHANCE_ALCHEMY:
-        case ARTP_ENHANCE_FORGECRAFT:
             // Maybe we should allow these for robes, too?  And hats? And
             // gloves and cloaks and scarves?
-            return (item.base_type == OBJ_STAVES
-                       || item.is_type(OBJ_ARMOUR, ARM_ORB))
-                   && !_any_artps_in_item_props({ ARTP_PREVENT_SPELLCASTING },
+            return !_any_artps_in_item_props({ ARTP_PREVENT_SPELLCASTING },
                                              intrinsic_props, extant_props);
         default:
             return true;
@@ -870,39 +863,42 @@ static const artefact_prop_data artp_data[] =
         []() {return 1;}, nullptr, 0, 0},
     { "Archmagi", ARTP_VAL_BOOL, 40, // ARTP_ARCHMAGI,
         []() {return 1;}, nullptr, 0, 0},
-    { "Conj", ARTP_VAL_BOOL, 20, // ARTP_ENHANCE_CONJ,
+    { "Ench", ARTP_VAL_ANY, 20, // ARTP_ENHANCE_ENCH,
         []() {return 1;}, nullptr, 0, 0},
-    { "Hexes", ARTP_VAL_BOOL, 20, // ARTP_ENHANCE_HEXES,
+    { "Hexes", ARTP_VAL_ANY, 20, // ARTP_ENHANCE_HEXES,
         []() {return 1;}, nullptr, 0, 0},
-    { "Summ", ARTP_VAL_BOOL, 20, // ARTP_ENHANCE_SUMM,
+    { "Summ", ARTP_VAL_ANY, 20, // ARTP_ENHANCE_SUMM,
         []() {return 1;}, nullptr, 0, 0},
-    { "Necro", ARTP_VAL_BOOL, 20, // ARTP_ENHANCE_NECRO,
+    { "Necro", ARTP_VAL_ANY, 20, // ARTP_ENHANCE_NECRO,
         []() {return 1;}, nullptr, 0, 0},
-    { "Tloc", ARTP_VAL_BOOL, 20, // ARTP_ENHANCE_TLOC,
+    { "Tloc", ARTP_VAL_ANY, 20, // ARTP_ENHANCE_TLOC,
         []() {return 1;}, nullptr, 0, 0},
 #if TAG_MAJOR_VERSION == 34
     { "Tmut", ARTP_VAL_BOOL, 0, // ARTP_ENHANCE_TMUT,
         []() {return 1;}, nullptr, 0, 0},
 #endif
-    { "Fire", ARTP_VAL_BOOL, 20, // ARTP_ENHANCE_FIRE,
+    { "Fire", ARTP_VAL_ANY, 20, // ARTP_ENHANCE_FIRE,
         []() {return 1;}, nullptr, 0, 0},
-    { "Ice", ARTP_VAL_BOOL, 20, // ARTP_ENHANCE_ICE,
+    { "Ice", ARTP_VAL_ANY, 20, // ARTP_ENHANCE_ICE,
         []() {return 1;}, nullptr, 0, 0},
-    { "Air", ARTP_VAL_BOOL, 20, // ARTP_ENHANCE_AIR,
+    { "Air", ARTP_VAL_ANY, 20, // ARTP_ENHANCE_AIR,
         []() {return 1;}, nullptr, 0, 0},
-    { "Earth", ARTP_VAL_BOOL, 20, // ARTP_ENHANCE_EARTH,
+    { "Earth", ARTP_VAL_ANY, 20, // ARTP_ENHANCE_EARTH,
         []() {return 1;}, nullptr, 0, 0},
-    { "Alch", ARTP_VAL_BOOL, 20, // ARTP_ENHANCE_ALCHEMY,
+#if TAG_MAJOR_VERSION == 34
+    { "Alch", ARTP_VAL_BOOL, 0, // ARTP_ENHANCE_ALCHEMY,
         []() {return 1;}, nullptr, 0, 0},
-
+#endif
     { "Acrobat", ARTP_VAL_BOOL, 0, // ARTP_ACROBAT,
         []() {return 1;}, nullptr, 0, 0},
     { "RegenMP", ARTP_VAL_BOOL, 0,   // ARTP_MANA_REGENERATION,
         []() { return 1; }, nullptr, 0, 0 },
     { "Wiz", ARTP_VAL_BOOL, 0,   // ARTP_WIZARDRY,
         []() { return 1; }, nullptr, 0, 0 },
-    { "Forge", ARTP_VAL_BOOL, 20, // ARTP_ENHANCE_FORGECRAFT,
+#if TAG_MAJOR_VERSION == 34
+    { "Forge", ARTP_VAL_BOOL, 0, // ARTP_ENHANCE_FORGECRAFT,
         []() {return 1;}, nullptr, 0, 0},
+#endif
     { "*Silence", ARTP_VAL_BOOL, 25, // ARTP_SILENCE,
         nullptr, []() { return 1; }, 0, 0 },
     { "Bane", ARTP_VAL_BOOL, 20,     // ARTP_BANE,

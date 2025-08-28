@@ -1543,8 +1543,6 @@ int player_spec_death()
 
     sd += you.get_mutation_level(MUT_NECRO_ENHANCER);
 
-    sd += you.scan_artefacts(ARTP_ENHANCE_NECRO);
-
     return sd;
 }
 
@@ -1555,8 +1553,6 @@ int player_spec_fire()
     sf += you.wearing(OBJ_STAVES, STAFF_FIRE);
 
     sf += you.wearing_jewellery(RING_FIRE);
-
-    sf += you.scan_artefacts(ARTP_ENHANCE_FIRE);
 
     if (you.unrand_equipped(UNRAND_ELEMENTAL_STAFF))
         sf++;
@@ -1572,8 +1568,6 @@ int player_spec_cold()
 
     sc += you.wearing_jewellery(RING_ICE);
 
-    sc += you.scan_artefacts(ARTP_ENHANCE_ICE);
-
     if (you.unrand_equipped(UNRAND_ELEMENTAL_STAFF))
         sc++;
 
@@ -1586,8 +1580,6 @@ int player_spec_earth()
 
     // Staves
     se += you.wearing(OBJ_STAVES, STAFF_EARTH);
-
-    se += you.scan_artefacts(ARTP_ENHANCE_EARTH);
 
     if (you.unrand_equipped(UNRAND_ELEMENTAL_STAFF))
         se++;
@@ -1602,8 +1594,6 @@ int player_spec_air()
     // Staves
     sa += you.wearing(OBJ_STAVES, STAFF_AIR);
 
-    sa += you.scan_artefacts(ARTP_ENHANCE_AIR);
-
     if (you.unrand_equipped(UNRAND_ELEMENTAL_STAFF))
         sa++;
 
@@ -1615,7 +1605,6 @@ int player_spec_conj()
     int sc = 0;
 
     sc += you.wearing(OBJ_STAVES, STAFF_CONJURATION);
-    sc += you.scan_artefacts(ARTP_ENHANCE_CONJ);
 
     return sc;
 }
@@ -1626,38 +1615,28 @@ int player_spec_hex()
 
     // Demonspawn mutation
     sh += you.get_mutation_level(MUT_HEX_ENHANCER);
-    sh += you.scan_artefacts(ARTP_ENHANCE_HEXES);
 
     return sh;
 }
 
 int player_spec_summ()
 {
-    return you.scan_artefacts(ARTP_ENHANCE_SUMM);
+    return 0;
 }
 
 int player_spec_forgecraft()
 {
-    return you.scan_artefacts(ARTP_ENHANCE_FORGECRAFT);
+    return 0;
 }
 
 int player_spec_alchemy()
 {
-    int sp = 0;
-
-    sp += you.wearing(OBJ_STAVES, STAFF_ALCHEMY);
-
-    sp += you.scan_artefacts(ARTP_ENHANCE_ALCHEMY);
-
-    if (you.unrand_equipped(UNRAND_OLGREB))
-        sp++;
-
-    return sp;
+    return 0;
 }
 
 int player_spec_tloc()
 {
-    return you.scan_artefacts(ARTP_ENHANCE_TLOC);
+    return 0;
 }
 
 // If temp is set to false, temporary sources of resistance won't be
@@ -5904,6 +5883,47 @@ int player::adjusted_shield_penalty(int scale) const
            / (25 + 5 * strength()) / 270;
 }
 
+static artefact_prop_type _enhancer_for_skill(skill_type sk)
+{
+    switch (sk)
+    {
+    case SK_FIRE_MAGIC:
+        return ARTP_ENHANCE_FIRE;
+    case SK_ICE_MAGIC:
+        return ARTP_ENHANCE_ICE;
+    case SK_AIR_MAGIC:
+        return ARTP_ENHANCE_AIR;
+    case SK_EARTH_MAGIC:
+        return ARTP_ENHANCE_EARTH;
+    case SK_SUMMONINGS:
+        return ARTP_ENHANCE_SUMM;
+    case SK_TRANSLOCATIONS:
+        return ARTP_ENHANCE_TLOC;
+    case SK_NECROMANCY:
+        return ARTP_ENHANCE_NECRO;
+    case SK_ENCHANTMENTS:
+        return ARTP_ENHANCE_ENCH;
+    case SK_HEXES:
+        return ARTP_ENHANCE_HEXES;
+    default:
+        return ARTP_NUM_PROPERTIES;
+    }
+}
+
+bool artefacts_enhance_skill()
+{
+    for (skill_type sk = SK_FIRST_SKILL; sk <= SK_LAST_SKILL; sk++)
+    {
+        artefact_prop_type p = _enhancer_for_skill(sk);
+        if (p == ARTP_NUM_PROPERTIES)
+            continue;
+        if (you.scan_artefacts(p))
+            return true;
+    }
+
+    return false;
+}
+
 /**
  * Get the player's skill level for sk.
  *
@@ -5934,20 +5954,7 @@ int player::skill(skill_type sk, int scale, bool real, bool temp) const
     if (real)
         return level;
 
-    if (you.unrand_equipped(UNRAND_HERMITS_PENDANT))
-    {
-        if (sk == SK_INVOCATIONS)
-            return 14 * scale;
-        if (sk == SK_EVOCATIONS)
-            return 0;
-    }
-
-    if (penance[GOD_ASHENZARI])
-    {
-        if (temp)
-            level = max(level - 4 * scale, level / 2);
-    }
-    else if (ash_has_skill_boost(sk))
+    if (ash_has_skill_boost(sk))
             level = ash_skill_boost(sk, scale);
 
     if (you.unrand_equipped(UNRAND_CHARLATANS_ORB) && sk != SK_EVOCATIONS)
@@ -5968,6 +5975,48 @@ int player::skill(skill_type sk, int scale, bool real, bool temp) const
             level = level / 2;
         else
             level = level * 3 / 4;
+    }
+
+    switch (sk)
+    {
+    case SK_ENCHANTMENTS:
+        level = min(level + scan_artefacts(ARTP_ENHANCE_ENCH) * scale, 27 * scale);
+        break;
+
+    case SK_NECROMANCY:
+        level = min(level + scan_artefacts(ARTP_ENHANCE_NECRO) * scale, 27 * scale);
+        break;
+
+    case SK_HEXES:
+        level = min(level + scan_artefacts(ARTP_ENHANCE_HEXES) * scale, 27 * scale);
+        break;
+
+    case SK_SUMMONINGS:
+        level = min(level + scan_artefacts(ARTP_ENHANCE_SUMM) * scale, 27 * scale);
+        break;
+
+    case SK_TRANSLOCATIONS:
+        level = min(level + scan_artefacts(ARTP_ENHANCE_TLOC) * scale, 27 * scale);
+        break;
+
+    case SK_FIRE_MAGIC:
+        level = min(level + scan_artefacts(ARTP_ENHANCE_FIRE) * scale, 27 * scale);
+        break;
+
+    case SK_ICE_MAGIC:
+        level = min(level + scan_artefacts(ARTP_ENHANCE_ICE) * scale, 27 * scale);
+        break;
+
+    case SK_AIR_MAGIC:
+        level = min(level + scan_artefacts(ARTP_ENHANCE_AIR) * scale, 27 * scale);
+        break;
+
+    case SK_EARTH_MAGIC:
+        level = min(level + scan_artefacts(ARTP_ENHANCE_EARTH) * scale, 27 * scale);
+        break;
+
+    default:
+        break;
     }
 
     if (level > MAX_SKILL_LEVEL * scale)
