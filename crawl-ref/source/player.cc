@@ -1823,44 +1823,12 @@ void update_acrobat_status()
     you.redraw_evasion = true;
 }
 
-// An evasion factor based on the player's body size, smaller == higher
-// evasion size factor.
-static int _player_evasion_size_factor(bool base = false)
-{
-    // XXX: you.body_size() implementations are incomplete, fix.
-    const size_type size = you.body_size(PSIZE_BODY, base);
-    return 2 * (SIZE_MEDIUM - size);
-}
-
 // Determines racial shield preferences for acquirement. (Formicids get a
 // bonus for larger shields compared to other medium-sized races).
 // TODO: rethink this
 int player_shield_racial_factor()
 {
-    return you.has_mutation(MUT_QUADRUMANOUS) ? -2 // Same as trolls, etc.
-           : _player_evasion_size_factor(true);
-}
-
-
-// The total EV penalty to the player for all their worn armour items
-// with a base EV penalty (i.e. EV penalty as a base armour property,
-// not as a randart property), EXCEPT body armour. Affects evasion only.
-static int _player_aux_evasion_penalty(const int scale)
-{
-    int piece_armour_evasion_penalty = 0;
-
-    // Some lesser armours have small penalties now (barding).
-    vector<item_def*> armour = you.equipment.get_slot_items(SLOT_ALL_AUX_ARMOUR);
-    for (item_def* item : armour)
-    {
-        // [ds] Evasion modifiers for armour are negatives, change
-        // those to positive for penalty calc.
-        const int penalty = (-property(*item, PARM_EVASION))/3;
-        if (penalty > 0)
-            piece_armour_evasion_penalty += penalty;
-    }
-
-    return piece_armour_evasion_penalty * scale / 10;
+    return 0;
 }
 
 // Long-term player flat EV bonuses/penalties (eg: evasion rings, EV mutations, forms)
@@ -1948,60 +1916,15 @@ static int _player_apply_evasion_multipliers(int prescaled_ev, const int scale)
     return prescaled_ev;
 }
 
-/**
- * What is the player's bonus to EV from dodging when not paralysed, after
- * accounting for size & body armour penalties?
- *
- * First, calculate base dodge bonus (linear with dodging * dex),
- * and armour dodge penalty (base armour evp, increased for small races &
- * decreased for large, then with a magic "3" subtracted from it to make the
- * penalties not too harsh).
- *
- * If the player's strength is greater than the armour dodge penalty, return
- *      base dodge * (1 - dodge_pen / (str*2)).
- * E.g., if str is twice dodge penalty, return 3/4 of base dodge. If
- * str = dodge_pen * 4, return 7/8...
- *
- * If str is less than dodge penalty, return
- *      base_dodge * str / (dodge_pen * 2).
- * E.g., if str = dodge_pen / 2, return 1/4 of base dodge. if
- * str = dodge_pen / 4, return 1/8...
- *
- * For either equation, if str = dodge_pen, the result is base_dodge/2.
- *
- * @param scale     A scale to multiply the result by, to avoid precision loss.
- * @return          A bonus to EV, multiplied by the scale.
- */
-static int _player_armour_adjusted_dodge_bonus(int scale)
-{
-    const int dodge_bonus =
-        (800 + you.skill(SK_DODGING, 10) * you.dex() * 8) * scale
-        / (20 - _player_evasion_size_factor()) / 10 / 10;
-
-    const int armour_dodge_penalty = you.unadjusted_body_armour_penalty() - 3;
-    if (armour_dodge_penalty <= 0)
-        return dodge_bonus;
-
-    const int str = max(1, you.strength());
-    if (armour_dodge_penalty >= str)
-        return dodge_bonus * str / (armour_dodge_penalty * 2);
-    return dodge_bonus - dodge_bonus * armour_dodge_penalty / (str * 2);
-}
-
 // Total EV for player
 static int _player_evasion(int final_scale, bool ignore_temporary)
 {
-    const int size_factor = _player_evasion_size_factor();
     const int scale = 100;
-    const int size_base_ev = (10 + size_factor) * scale;
 
     // Calculate 'base' evasion from all permanent modifiers
-    const int natural_evasion =
-        size_base_ev
-        + _player_armour_adjusted_dodge_bonus(scale)
+    const int natural_evasion = you.skill(SK_DODGING, 8 * scale)
         - you.adjusted_body_armour_penalty(scale)
         - you.adjusted_shield_penalty(scale)
-        - _player_aux_evasion_penalty(scale)
         + _player_base_evasion_modifiers() * scale;
 
     // Everything below this are transient modifiers
@@ -2013,11 +1936,10 @@ static int _player_evasion(int final_scale, bool ignore_temporary)
        _player_apply_evasion_multipliers(natural_evasion, scale)
        + (_player_temporary_evasion_modifiers() * scale);
 
-    // Cap EV at a very low level if the player cannot act or is a tree.
+    // no evasion while paralyzed
     if ((you.cannot_act() || you.form == transformation::tree))
     {
-        final_evasion = min((2 + _player_evasion_size_factor() / 2) * scale,
-                            final_evasion);
+        return 0;
     }
 
     return (final_evasion * final_scale) / scale;
@@ -3272,17 +3194,6 @@ static void _display_movement_speed()
                             : "very slow");
 }
 
-static void _display_tohit()
-{
-#ifdef DEBUG_DIAGNOSTICS
-    melee_attack attk(&you, nullptr);
-
-    const int to_hit = attk.calc_to_hit(false);
-
-    dprf("To-hit: %d", to_hit);
-#endif
-}
-
 static int _delay(const item_def *weapon)
 {
     if (!weapon || !is_range_weapon(*weapon))
@@ -3387,7 +3298,6 @@ void display_char_status()
 
     const item_def* offhand = you.offhand_weapon();
     _display_movement_speed();
-    _display_tohit();
     _display_attack_delay(offhand);
     _display_damage_rating(you.weapon());
     if (offhand)
@@ -5859,10 +5769,12 @@ int player::unadjusted_body_armour_penalty() const
 int player::adjusted_body_armour_penalty(int scale) const
 {
     const int base_ev_penalty = unadjusted_body_armour_penalty();
+    const int armour_skill = you.skill(SK_ARMOUR);
 
-    // New formula for effect of str on aevp: (2/5) * evp^2 / (str+3)
-    return 2 * base_ev_penalty * base_ev_penalty * (450 - skill(SK_ARMOUR, 10))
-           * scale / (5 * (strength() + 3)) / 450;
+    if (armour_skill > base_ev_penalty)
+        return 0;
+
+    return scale * 10 * (base_ev_penalty - armour_skill);
 }
 
 /**

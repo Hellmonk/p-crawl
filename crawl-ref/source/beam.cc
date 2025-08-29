@@ -521,7 +521,7 @@ void zappy(zap_type z_type, int power, bool is_monster, bolt &pbolt)
     if (zinfo->is_enchantment)
         pbolt.hit = AUTOMATIC_HIT;
     else
-        pbolt.hit = zap_to_hit(z_type, power, is_monster);
+        pbolt.hit = 100;
 
     pbolt.damage = zap_damage(z_type, power, is_monster);
 
@@ -3219,17 +3219,14 @@ bool bolt::fuzz_invis_tracer()
 // A first step towards to-hit sanity for beams. We're still being
 // very kind to the player, but it should be fairer to monsters than
 // 4.0.
-static int _test_beam_hit(int attack, int defence, defer_rand &r)
+static int _test_beam_hit(int hit, int ev)
 {
-    if (attack == AUTOMATIC_HIT)
+    if (hit == AUTOMATIC_HIT)
         return true;
 
-    attack = r[1].random2(attack);
-    defence = r[2].random2avg(defence, 2);
+    hit = random2(hit);
 
-    dprf(DIAG_BEAM, "Beam attack: %d, defence: %d", attack, defence);
-
-    return attack - defence;
+    return hit - min(ev, 100 - MIN_HIT_PERCENTAGE) >= 0;
 }
 
 bool bolt::is_harmless(const monster* mon) const
@@ -3582,7 +3579,7 @@ bool bolt::misses_player()
     dodge += repel;
 
     const int hit_margin = you.duration[DUR_AUTODODGE] ? -1000
-                            : _test_beam_hit(real_tohit, dodge, r);
+                            : _test_beam_hit(real_tohit, dodge);
     if (hit_margin < 0)
     {
         if (hit_margin > -repel)
@@ -5705,7 +5702,7 @@ void bolt::affect_monster(monster* mon)
     const int repel = mon->missile_repulsion() ? REPEL_MISSILES_EV_BONUS : 0;
     int rand_ev = random2(mon->evasion() + repel);
 
-    int hit_margin = _test_beam_hit(beam_hit, rand_ev, r);
+    int hit_margin = _test_beam_hit(beam_hit, rand_ev);
 
     if (you.duration[DUR_BLIND] && beam_hit != AUTOMATIC_HIT && agent()
         && agent()->is_player())

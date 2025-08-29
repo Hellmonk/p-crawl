@@ -97,41 +97,12 @@ static double _to_hit_hit_chance(const monster_info& mi, attack &atk, bool melee
     if (to_land >= AUTOMATIC_HIT)
         return 1.0;
 
-    const double AUTO_MISS_CHANCE = is_aux ? 0 : 2.5;
-    const double AUTO_HIT_CHANCE = is_aux ? 3.3333 : 2.5;
-
     int ev = mi.ev + (!melee && mi.is(MB_REPEL_MSL) ? REPEL_MISSILES_EV_BONUS : 0);
 
     if (ev <= 0)
-        return 1 - AUTO_MISS_CHANCE / 200.0;
+        return 1;
 
-    int hits = 0;
-    for (int rolled_mhit = 0; rolled_mhit < to_land; rolled_mhit++)
-    {
-        // Apply post-roll manipulations:
-        int adjusted_mhit = rolled_mhit + atk.post_roll_to_hit_modifiers(rolled_mhit, false);
-
-        // But the above will bail out because there's no defender in the attack object,
-        // so we reproduce any possibly relevant effects here:
-        adjusted_mhit += mi.lighting_modifiers();
-
-        // And this duplicates ranged_attack::post_roll_to_hit_modifiers().
-        if (!melee && mi.is(MB_BULLSEYE_TARGET))
-        {
-            adjusted_mhit += calc_spell_power(SPELL_DIMENSIONAL_BULLSEYE)
-                                / 2 / BULLSEYE_TO_HIT_DIV;
-        }
-
-        // Now count the hit if it's above target ev
-        if (adjusted_mhit >= ev)
-            hits++;
-    }
-
-    double hit_chance = ((double)hits) / to_land;
-    // Apply Bayes Theorem to account for auto hit and miss.
-    hit_chance = hit_chance * (1 - AUTO_MISS_CHANCE / 200.0)
-                 + (1 - hit_chance) * AUTO_HIT_CHANCE / 200.0;
-    return hit_chance;
+    return max(MIN_HIT_PERCENTAGE / 100.0, (100 - ev) / 100.0);
 }
 
 static bool _to_hit_is_invisible(const monster_info& mi)
@@ -252,33 +223,9 @@ int mon_to_hit_pct(int to_land, int scaled_ev)
         return 100;
 
     if (scaled_ev <= 0)
-        return 100 - MIN_HIT_MISS_PERCENTAGE / 2;
+        return 100;
 
-    ++to_land; // per calc_to_hit()
-
-    const int ev = scaled_ev/100;
-
-    // EV is random-rounded, so the actual value might be either ev or ev+1.
-    // We repeat the calculation below once for each case
-    int hits_lower = 0;
-    for (int ev1 = 0; ev1 < ev; ev1++)
-        for (int ev2 = 0; ev2 < ev; ev2++)
-            hits_lower += max(0, to_land - (ev1 + ev2));
-    double hit_chance_lower = ((double)hits_lower) / (to_land * ev * ev);
-
-    int hits_upper = 0;
-    for (int ev1 = 0; ev1 < ev+1; ev1++)
-        for (int ev2 = 0; ev2 < ev+1; ev2++)
-            hits_upper += max(0, to_land - (ev1 + ev2));
-    double hit_chance_upper = ((double)hits_upper) / (to_land * (ev+1) * (ev+1));
-
-    double hit_chance = ((100 - (scaled_ev % 100)) * hit_chance_lower + (scaled_ev % 100) * hit_chance_upper) / 100;
-
-    // Apply Bayes Theorem to account for auto hit and miss.
-    hit_chance = hit_chance * (1 - MIN_HIT_MISS_PERCENTAGE / 200.0)
-              + (1 - hit_chance) * MIN_HIT_MISS_PERCENTAGE / 200.0;
-
-    return (int)(hit_chance*100);
+    return max(MIN_HIT_PERCENTAGE, 100 - scaled_ev);
 }
 
 int mon_beat_sh_pct(int bypass, int scaled_sh)
