@@ -639,8 +639,6 @@ public:
     vorpal_damage_type damage_type(int which_attack = -1) override;
     random_var  attack_delay(const item_def *projectile = nullptr,
                              bool rescale = true) const override;
-    random_var  attack_delay_with(const item_def *projectile, bool rescale,
-                                  const item_def *weapon) const;
     int         constriction_damage(constrict_type typ) const override;
 
     int       has_claws(bool allow_tran = true) const override;
