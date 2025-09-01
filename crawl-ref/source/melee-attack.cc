@@ -2242,7 +2242,6 @@ bool melee_attack::player_do_aux_attack(unarmed_attack_type atk)
         return false;
 
     to_hit = random2(aux_to_hit());
-    to_hit += post_roll_to_hit_modifiers(to_hit, false);
 
     handle_noise(defender->pos());
     alert_nearby_monsters();
@@ -3129,17 +3128,6 @@ int melee_attack::calc_to_hit(bool random)
         return AUTOMATIC_HIT;
 
     return mhit;
-}
-
-int melee_attack::post_roll_to_hit_modifiers(int mhit, bool random)
-{
-    int modifiers = attack::post_roll_to_hit_modifiers(mhit, random);
-
-    // Electric charges feel bad when they miss, so make them miss less often.
-    if (charge_pow > 0)
-        modifiers += 5;
-
-    return modifiers;
 }
 
 void melee_attack::player_stab_check()

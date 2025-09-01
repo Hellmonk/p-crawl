@@ -1923,8 +1923,8 @@ static int _player_evasion(int final_scale, bool ignore_temporary)
 
     // Calculate 'base' evasion from all permanent modifiers
     const int natural_evasion = you.skill(SK_DODGING, 8 * scale)
-        - you.adjusted_body_armour_penalty(scale)
-        - you.adjusted_shield_penalty(scale)
+        - you.adjusted_body_armour_penalty()
+        - you.adjusted_shield_penalty()
         + _player_base_evasion_modifiers() * scale;
 
     // Everything below this are transient modifiers
@@ -1947,10 +1947,9 @@ static int _player_evasion(int final_scale, bool ignore_temporary)
 // player's worn body armour and shield.
 int player_armour_shield_spell_penalty()
 {
-    const int scale = 100;
 
     int body_armour_penalty =
-        max(19 * you.adjusted_body_armour_penalty(scale), 0);
+        max(19 * you.adjusted_body_armour_penalty(), 0);
 
     // This is actually cutting the base ER of our armour by half (not 1/4th),
     // since that ER has already been squared by this point.
@@ -1958,9 +1957,9 @@ int player_armour_shield_spell_penalty()
         body_armour_penalty /= 4;
 
     const int total_penalty = body_armour_penalty
-                 + 19 * you.adjusted_shield_penalty(scale);
+                 + 19 * you.adjusted_shield_penalty();
 
-    return max(total_penalty, 0) / scale;
+    return max(total_penalty, 0);
 }
 
 /**
@@ -3202,26 +3201,7 @@ static void _display_attack_delay(const item_def *offhand)
     const item_def* weapon = you.weapon();
     const int delay = _delay(weapon);
 
-    // Assume that we never have a shield penalty with an offhand weapon,
-    // and we only have an armour penalty with the offhand if we do with
-    // the primary.
-    const bool shield_penalty = you.adjusted_shield_penalty(2) > 0;
-    const bool armour_penalty = is_slowed_by_armour(weapon)
-                                && you.adjusted_body_armour_penalty(2) > 0;
-    string penalty_msg = "";
-    if (shield_penalty || armour_penalty)
-    {
-        // TODO: add amount, as in item description (see _describe_armour)
-        // double parens are awkward
-        penalty_msg =
-            make_stringf( " (and is slowed by your %s)",
-                         shield_penalty && armour_penalty ? "shield and armour" :
-                         shield_penalty ? "shield" : "armour");
-    }
-
-    mprf("Your attack delay is about %.1f%s.",
-         (float)delay / 10,
-         penalty_msg.c_str());
+    mprf("Your attack delay is about %.1f.", delay / 10.0f);
 }
 
 /**
@@ -5745,15 +5725,15 @@ int player::unadjusted_body_armour_penalty() const
  * @return          A penalty to EV based quadratically on body armour
  *                  encumbrance.
  */
-int player::adjusted_body_armour_penalty(int scale) const
+int player::adjusted_body_armour_penalty() const
 {
     const int base_ev_penalty = unadjusted_body_armour_penalty();
     const int armour_skill = you.skill(SK_ARMOUR);
 
-    if (armour_skill > base_ev_penalty)
+    if (armour_skill >= base_ev_penalty)
         return 0;
 
-    return scale * 10 * (base_ev_penalty - armour_skill);
+    return 10 * (base_ev_penalty - armour_skill);
 }
 
 /**
@@ -5762,16 +5742,19 @@ int player::adjusted_body_armour_penalty(int scale) const
  * @param scale     A scale to multiply the result by, to avoid precision loss.
  * @return          A penalty to EV based on shield weight.
  */
-int player::adjusted_shield_penalty(int scale) const
+int player::adjusted_shield_penalty() const
 {
     const item_def *shield_l = shield();
     if (!shield_l)
         return 0;
 
     const int base_shield_penalty = -property(*shield_l, PARM_EVASION) / 10;
-    return 2 * base_shield_penalty * base_shield_penalty
-           * (270 - skill(SK_SHIELDS, 10)) * scale
-           / (25 + 5 * strength()) / 270;
+    const int sh_skill = you.skill(SK_SHIELDS);
+
+    if (sh_skill >= base_shield_penalty)
+        return 0;
+
+    return base_shield_penalty - sh_skill;
 }
 
 static artefact_prop_type _enhancer_for_skill(skill_type sk)

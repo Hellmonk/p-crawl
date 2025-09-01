@@ -1486,36 +1486,6 @@ static void _append_weapon_stats(string &description, const item_def &item)
 
     _append_skill_needed(description, item);
 
-    if (is_slowed_by_armour(&item))
-    {
-        const int penalty_scale = 100;
-        const int armour_penalty = you.adjusted_body_armour_penalty(penalty_scale);
-        description += "\n";
-        if (armour_penalty)
-        {
-            const item_def *body_armour = you.body_armour();
-            description += (body_armour ? uppercase_first(
-                                              body_armour->name(DESC_YOUR))
-                                        : "Your heavy armour");
-
-            const bool significant = armour_penalty >= penalty_scale;
-            if (significant)
-            {
-                description +=
-                    make_stringf(" slows your attacks with this weapon by %.1f",
-                                 armour_penalty / (10.0f * penalty_scale));
-            }
-            else
-                description += " slightly slows your attacks with this weapon";
-        }
-        else
-        {
-            description += "Wearing heavy armour would reduce your attack "
-                           "speed with this weapon";
-        }
-        description += ".";
-    }
-
     const bool want_player_stats = !is_useless_item(item) && crawl_state.need_save;
     if (want_player_stats)
     {
@@ -2375,26 +2345,6 @@ static string _describe_armour(const item_def &item, bool verbose, bool monster)
         && item.is_identified())
     {
         description += _equipment_property_change(item);
-    }
-
-    const int DELAY_SCALE = 100;
-    const int aevp = you.adjusted_body_armour_penalty(DELAY_SCALE);
-    if (crawl_state.need_save
-        && verbose
-        && aevp
-        && !is_shield(item)
-        && item_is_equipped(item)
-        && is_slowed_by_armour(you.weapon()))
-    {
-        // TODO: why doesn't this show shield effect? Reconcile with
-        // _display_attack_delay
-        description += "\n\nYour current strength and Armour skill "
-                       "slows attacks with missile weapons (like "
-                        + you.weapon()->name(DESC_YOUR) + ") ";
-        if (aevp >= DELAY_SCALE)
-            description += make_stringf("by %.1f.", aevp / (10.0f * DELAY_SCALE));
-        else
-            description += "only slightly.";
     }
 
     return description;

@@ -871,8 +871,8 @@ public:
 
     // Combat-related adjusted penalty calculation methods
     int unadjusted_body_armour_penalty() const;
-    int adjusted_body_armour_penalty(int scale = 1) const;
-    int adjusted_shield_penalty(int scale = 1) const;
+    int adjusted_body_armour_penalty() const;
+    int adjusted_shield_penalty() const;
 
     // Calculates total permanent AC/EV/SH if the player was/wasn't wearing a
     // given item, along with the fail rate on all their known spells.
