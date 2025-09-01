@@ -206,11 +206,6 @@ int attack::post_roll_to_hit_modifiers(int mhit, bool /*random*/)
         if (defender->is_player() && how_transparent)
             modifiers += TRANSLUCENT_SKIN_TO_HIT_MALUS * how_transparent;
 
-        // defender backlight bonus and umbra penalty.
-        if (defender->backlit(false))
-            modifiers += BACKLIGHT_TO_HIT_BONUS;
-        if (!attacker->nightvision() && defender->umbra())
-            modifiers += UMBRA_TO_HIT_MALUS;
     }
 
     return modifiers;
@@ -1337,9 +1332,7 @@ int attack::player_stab_weapon_bonus(int damage)
     damage += stab_skill;
 
     if (player_good_stab())
-    {
         damage *= 4;
-    }
 
     return damage;
 }

@@ -3294,32 +3294,12 @@ int monster::evasion(bool ignore_temporary, const actor* /*act*/) const
 {
     int ev = base_evasion();
 
-    // account for armour
-    for (int slot = MSLOT_ARMOUR; slot <= MSLOT_SHIELD; slot++)
-    {
-        const item_def* armour = mslot_item(static_cast<mon_inv_type>(slot));
-        if (armour)
-            ev += property(*armour, PARM_EVASION) / 60;
-    }
-
-    // evasion from jewellery
-    const item_def *ring = mslot_item(MSLOT_JEWELLERY);
-    if (ring && ring->sub_type == RING_EVASION)
-    {
-        const int jewellery_plus = ring->plus;
-        ASSERT(abs(jewellery_plus) < 30); // sanity check
-        ev += jewellery_plus;
-    }
-
-    // evasion from artefacts
-    ev += scan_artefacts(ARTP_EVASION);
-
     // Only temporary modifiers after this
     if (ignore_temporary)
         return max(ev, 0);
 
     if (paralysed() || petrified() || petrifying() || asleep()
-        || has_ench(ENCH_MAGNETISED))
+        || has_ench(ENCH_MAGNETISED) || backlit())
     {
         return 0;
     }

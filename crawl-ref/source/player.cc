@@ -1937,10 +1937,8 @@ static int _player_evasion(int final_scale, bool ignore_temporary)
        + (_player_temporary_evasion_modifiers() * scale);
 
     // no evasion while paralyzed
-    if ((you.cannot_act() || you.form == transformation::tree))
-    {
+    if ((you.cannot_act() || you.form == transformation::tree) || you.backlit())
         return 0;
-    }
 
     return (final_evasion * final_scale) / scale;
 }

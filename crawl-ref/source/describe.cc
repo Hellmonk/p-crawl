@@ -5873,10 +5873,7 @@ static void _describe_mons_to_hit(const monster_info& mi, ostringstream &result)
     {
         post_roll_modifiers += TRANSLUCENT_SKIN_TO_HIT_MALUS
                                * you.get_mutation_level(MUT_TRANSLUCENT_SKIN);
-        if (you.backlit(false))
-            post_roll_modifiers += BACKLIGHT_TO_HIT_BONUS;
-        if (you.umbra() && !mi.nightvision())
-            post_roll_modifiers += UMBRA_TO_HIT_MALUS;
+
     }
     // We ignore pproj because monsters never have it passively.
 

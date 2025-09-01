@@ -13,8 +13,6 @@ const int HIT_WEAK   = 7;
 const int HIT_MED    = 18;
 const int HIT_STRONG = 36;
 
-const int BACKLIGHT_TO_HIT_BONUS = 5;
-const int UMBRA_TO_HIT_MALUS = -3;
 const int CONFUSION_TO_HIT_MALUS = -5;
 const int TRANSLUCENT_SKIN_TO_HIT_MALUS = -2;
 
