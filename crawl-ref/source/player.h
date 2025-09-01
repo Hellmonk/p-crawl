@@ -637,8 +637,7 @@ public:
                           bool base = false) const override;
     brand_type  damage_brand(int which_attack = -1) override;
     vorpal_damage_type damage_type(int which_attack = -1) override;
-    random_var  attack_delay(const item_def *projectile = nullptr,
-                             bool rescale = true) const override;
+    random_var  attack_delay() const override;
     int         constriction_damage(constrict_type typ) const override;
 
     int       has_claws(bool allow_tran = true) const override;

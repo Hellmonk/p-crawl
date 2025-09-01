@@ -515,8 +515,7 @@ bool mons_is_recallable(const actor* caller, const monster& targ);
 void init_anon();
 actor *find_agent(mid_t m, kill_category kc);
 const char* mons_class_name(monster_type mc);
-mon_threat_level_type mons_threat_level(const monster &mon,
-                                        bool real = false);
+mon_threat_level_type mons_threat_level(const monster &mon);
 
 bool mons_foe_is_marked(const monster& mons);
 

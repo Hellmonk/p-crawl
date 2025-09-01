@@ -268,7 +268,7 @@ static void _maybe_mortality_summon()
     for (monster_near_iterator mi(you.pos(), LOS_NO_TRANS); mi; ++mi)
     {
         if (!mi->wont_attack() && !mi->is_firewood()
-            && mons_threat_level(**mi, true) > MTHRT_TRIVIAL)
+            && mons_threat_level(**mi) > MTHRT_TRIVIAL)
         {
             return;
         }

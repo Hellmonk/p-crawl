@@ -1166,7 +1166,6 @@ static string _describe_mutant_beast(const monster_info &mi)
  */
 static int _item_training_target(const item_def &item)
 {
-    const int throw_dam = property(item, PWPN_DAMAGE);
     if (item.base_type == OBJ_WEAPONS || item.base_type == OBJ_STAVES)
         return weapon_skill_requirement(item) * 10;
     if (item.base_type == OBJ_MISSILES && is_throwable(&you, item))
@@ -1488,9 +1487,7 @@ static void _append_weapon_stats(string &description, const item_def &item)
 
     const bool want_player_stats = !is_useless_item(item) && crawl_state.need_save;
     if (want_player_stats)
-    {
         description += "\nDamage rating: " + damage_rating(&item);
-    }
 
     const string brand_desc = _describe_weapon_brand(item);
     if (!brand_desc.empty())
@@ -5701,7 +5698,7 @@ void describe_to_hit(const monster_info &mi, ostringstream &result,
         vector<string> aux_names = get_player_aux_names();
         if (!aux_names.empty())
         {
-            acc_pct = to_hit_pct_aux(mi, attk);
+            acc_pct = to_hit_pct_aux(mi);
             _describe_aux_hit_chance(result, aux_names, acc_pct);
         }
 

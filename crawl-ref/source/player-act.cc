@@ -278,7 +278,7 @@ brand_type player::damage_brand(int)
  *                   attack delay. It can be casted to an int, in which case
  *                   its value is determined by the appropriate rolls.
  */
-random_var player::attack_delay(const item_def *projectile, bool rescale) const
+random_var player::attack_delay() const
 {
     return random_var(10);
 }

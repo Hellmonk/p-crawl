@@ -400,7 +400,7 @@ static void _do_one_fsim_round(monster &mon, fight_data &fd, bool defend)
                 did_hit = true;
                 fd.player.hits++;
             }
-            you.time_taken = you.attack_delay(&you.inv[missile]).roll();
+            you.time_taken = you.attack_delay().roll();
         }
         // launchers
         else if (iweap && iweap->base_type == OBJ_WEAPONS
@@ -416,7 +416,7 @@ static void _do_one_fsim_round(monster &mon, fight_data &fd, bool defend)
                 did_hit = true;
                 fd.player.hits++;
             }
-            you.time_taken = you.attack_delay(&fake_proj).roll();
+            you.time_taken = you.attack_delay().roll();
         }
         else // otherwise, melee combat
         {

@@ -91,8 +91,7 @@ int aux_to_hit()
 
 }
 
-static double _to_hit_hit_chance(const monster_info& mi, attack &atk, bool melee,
-                                 int to_land, bool is_aux = false)
+static double _to_hit_hit_chance(const monster_info& mi, bool melee, int to_land)
 {
     if (to_land >= AUTOMATIC_HIT)
         return 1.0;
@@ -172,7 +171,7 @@ int to_hit_pct(const monster_info& mi, attack &atk, bool melee,
                bool penetrating, int distance)
 {
     const int to_land = atk.calc_pre_roll_to_hit(false);
-    const double hit_chance = _to_hit_hit_chance(mi, atk, melee, to_land);
+    const double hit_chance = _to_hit_hit_chance(mi, melee, to_land);
     const double shield_chance = _to_hit_shield_chance(mi, melee, to_land, penetrating);
     const int blind_miss_chance = player_blind_miss_chance(distance);
     return (int)(hit_chance * (1.0 - shield_chance) * 100 * (100 - blind_miss_chance) / 100);
@@ -182,10 +181,10 @@ int to_hit_pct(const monster_info& mi, attack &atk, bool melee,
  * Return the odds of the player hitting a defender defined as a
  * monster_info with an auxiliary melee attack, rounded to the nearest percent.
  */
-int to_hit_pct_aux(const monster_info& mi, attack &atk)
+int to_hit_pct_aux(const monster_info& mi)
 {
     const int to_land = aux_to_hit();
-    const double hit_chance = _to_hit_hit_chance(mi, atk, true, to_land, true);
+    const double hit_chance = _to_hit_hit_chance(mi, true, to_land);
     const double shield_chance = _to_hit_shield_chance(mi, true, to_land, false);
     const int blind_miss_chance = player_blind_miss_chance(1);
     return (int)(hit_chance * (1.0 - shield_chance) * 100 * (100 - blind_miss_chance) / 100);

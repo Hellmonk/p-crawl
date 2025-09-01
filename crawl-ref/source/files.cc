@@ -1194,33 +1194,6 @@ static void _clear_env_map()
     env.map_forgotten.reset();
 }
 
-static void _grab_follower(monster* fol)
-{
-    level_id dest = level_id::current();
-
-    dprf("%s is following to %s.", fol->name(DESC_THE, true).c_str(),
-         dest.describe().c_str());
-    bool could_see = you.can_see(*fol);
-    fol->set_transit(dest);
-    fol->destroy_inventory();
-    monster_cleanup(fol);
-    if (could_see)
-        view_update_at(fol->pos());
-}
-
-// Expire all friendly summons / zombies / etc. when the player is leaving a floor.
-static void _expire_temporary_allies()
-{
-    for (auto &mons : menv_real)
-    {
-        if (!mons.alive())
-            continue;
-
-        if (mons.was_created_by(you))
-            monster_die(mons, KILL_TIMEOUT, NON_MONSTER, true);
-    }
-}
-
 static void _do_lost_monsters()
 {
     // Uniques can be considered wandering Pan just like you, so they're not

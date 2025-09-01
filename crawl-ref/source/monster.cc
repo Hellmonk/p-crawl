@@ -401,8 +401,7 @@ vorpal_damage_type monster::damage_type(int which_attack)
  * @return            The time taken by an attack with the monster's weapon
  *                    and the given projectile, in aut.
  */
-random_var monster::attack_delay(const item_def *projectile,
-                                 bool /*rescale*/) const
+random_var monster::attack_delay() const
 {
     return random_var(10);
 }
@@ -3784,7 +3783,7 @@ int monster::res_foul_flame() const
     return 0;
 }
 
-int monster::res_negative_energy(bool intrinsic_only) const
+int monster::res_negative_energy(bool /*intrinsic_only*/) const
 {
     // If you change this, also change get_mons_resists.
     if (!(holiness() & (MH_NATURAL | MH_PLANT)))

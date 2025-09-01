@@ -3189,14 +3189,14 @@ static int _delay(const item_def *weapon)
         return you.attack_delay().expected();
     item_def fake_proj;
     populate_fake_projectile(*weapon, fake_proj);
-    return you.attack_delay(&fake_proj).expected();
+    return you.attack_delay().expected();
 }
 
 /**
  * Print a message indicating the player's attack delay with their current
  * weapon(s) (if applicable).
  */
-static void _display_attack_delay(const item_def *offhand)
+static void _display_attack_delay()
 {
     const item_def* weapon = you.weapon();
     const int delay = _delay(weapon);
@@ -3257,7 +3257,7 @@ void display_char_status()
 
     const item_def* offhand = you.offhand_weapon();
     _display_movement_speed();
-    _display_attack_delay(offhand);
+    _display_attack_delay();
     _display_damage_rating(you.weapon());
     if (offhand)
         _display_damage_rating(offhand);

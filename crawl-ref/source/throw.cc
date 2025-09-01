@@ -54,7 +54,6 @@
 
 static shared_ptr<quiver::action> _fire_prompt_for_item();
 static int  _get_dart_chance(const int hd);
-static bool _thrown_object_destroyed(const item_def &item);
 
 bool is_penetrating_attack(const actor& attacker, const item_def* weapon,
                            const item_def& projectile)
@@ -715,7 +714,7 @@ void throw_it(quiver::action &a)
     // want to use tx, ty to make the missile fly to map edge.
     pbolt.set_target(a.target);
 
-    you.time_taken = you.attack_delay(&item).roll();
+    you.time_taken = you.attack_delay().roll();
     _player_shoot(pbolt, item, launcher);
     if (ammo_slot != -1 && (pbolt.item_mulches || !_returning(item)))
         dec_inv_item_quantity(ammo_slot, 1);
@@ -798,7 +797,7 @@ static void _player_shoot(bolt &pbolt, item_def &item, item_def const *launcher)
     // when we walk over it.
     if (item.base_type == OBJ_MISSILES)
         item.flags |= ISFLAG_THROWN;
-    pbolt.item_mulches = !tossing && _thrown_object_destroyed(item);
+    pbolt.item_mulches = !tossing;
     pbolt.drop_item = !pbolt.item_mulches && !returning;
     pbolt.hit = 0;
 
@@ -872,7 +871,7 @@ bool mons_throw(monster* mons, bolt &beam, bool teleport)
     if (!teleport)
     {
         const int energy = mons->action_energy(EUT_MISSILE);
-        const int delay = mons->attack_delay(&missile).roll();
+        const int delay = mons->attack_delay().roll();
         ASSERT(energy > 0);
         ASSERT(delay > 0);
         mons->speed_increment -= div_rand_round(energy * delay, 10);
@@ -933,10 +932,5 @@ bool mons_throw(monster* mons, bolt &beam, bool teleport)
     if (mons->alive() && mons->weapon())
         _handle_cannon_fx(*mons, *(mons->weapon()), target);
 
-    return true;
-}
-
-static bool _thrown_object_destroyed(const item_def &item)
-{
     return true;
 }

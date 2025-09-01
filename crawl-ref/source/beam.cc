@@ -5970,7 +5970,7 @@ bool ench_flavour_affects_monster(actor *agent, beam_type flavour,
         break;
 
     case BEAM_PAIN:
-        rc = mon->res_negative_energy(intrinsic_only) < 3;
+        rc = mon->res_negative_energy() < 3;
         break;
 
     case BEAM_AGONY:
@@ -5997,12 +5997,12 @@ bool ench_flavour_affects_monster(actor *agent, beam_type flavour,
         break;
 
     case BEAM_MALIGN_OFFERING:
-        rc = (mon->res_negative_energy(intrinsic_only) < 3);
+        rc = (mon->res_negative_energy() < 3);
         break;
 
     case BEAM_VAMPIRIC_DRAINING:
         rc = actor_is_susceptible_to_vampirism(*mon)
-                && (mon->res_negative_energy(intrinsic_only) < 3);
+                && (mon->res_negative_energy() < 3);
         break;
 
     case BEAM_VIRULENCE:
