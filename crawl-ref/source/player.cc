@@ -1989,19 +1989,11 @@ int player_channelling()
 
 static int _sh_from_shield(const item_def &item)
 {
-    const int base_shield = property(item, PARM_AC) * 2;
+    const int base_shield = property(item, PARM_AC);
 
-    // bonus applied only to base, see above for effect:
-    int shield = base_shield * 50;
-    shield += base_shield * you.skill(SK_SHIELDS, 5) / 2;
+    int shield = base_shield * (100 + you.skill(SK_SHIELDS, 25));
+    shield += item.plus * 100;
 
-    shield += item.plus * 200;
-
-    shield += you.skill(SK_SHIELDS, 38);
-
-    shield += 3 * 38;
-
-    shield += you.dex() * 38 * (base_shield + 13) / 26;
     return shield;
 }
 
@@ -2029,7 +2021,7 @@ int player_shield_class(int scale, bool random, bool ignore_temporary)
     // mutations
     // +4, +6, +8 (displayed values)
     shield += (you.get_mutation_level(MUT_LARGE_BONE_PLATES) > 0
-               ? you.get_mutation_level(MUT_LARGE_BONE_PLATES) * 400 + 400
+               ? you.get_mutation_level(MUT_LARGE_BONE_PLATES) * 200 + 200
                : 0);
 
     // Icemail and Ephemeral Shield aren't active all of the time, so consider
@@ -2067,7 +2059,7 @@ int player_shield_class(int scale, bool random, bool ignore_temporary)
  */
 int player_displayed_shield_class(int scale, bool ignore_temporary)
 {
-    return player_shield_class(scale, false, ignore_temporary) / 2;
+    return player_shield_class(scale, false, ignore_temporary);
 }
 
 /**

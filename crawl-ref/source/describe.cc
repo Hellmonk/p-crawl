@@ -2201,11 +2201,7 @@ static string _warlock_mirror_reflect_desc()
 {
     const int scaled_SH = crawl_state.need_save ? player_shield_class(100, false) : 0;
     const int SH = scaled_SH / 100;
-    // We use random-rounded SH, so take a weighted average of the
-    // chances with SH and SH+1.
-    const int reflect_chance_numer = (100 - (scaled_SH % 100)) * SH * omnireflect_chance_denom(SH+1) + (scaled_SH % 100) * (SH+1) * omnireflect_chance_denom(SH);
-    const int reflect_chance_denom = omnireflect_chance_denom(SH) * omnireflect_chance_denom(SH+1);
-    const int reflect_chance = reflect_chance_numer / reflect_chance_denom;
+    const int reflect_chance = min(SH, 100);
     return "\n\nWith your current SH, it has a " + to_string(reflect_chance) +
            "% chance to reflect attacks against your willpower and other "
            "normally unblockable effects.";
