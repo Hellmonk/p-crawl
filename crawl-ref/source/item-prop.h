@@ -188,7 +188,7 @@ launch_retval is_launched(const actor *actor, const item_def &missile) PURE;
 
 bool ammo_always_destroyed(const item_def &missile) PURE;
 bool ammo_never_destroyed(const item_def &missile) PURE;
-int  ammo_type_destroy_chance(int missile_type) PURE;
+int  ammo_type_skill_req(int missile_type) PURE;
 int  ammo_type_damage(int missile_type) PURE;
 
 int weapon_reach(const item_def &item) PURE;

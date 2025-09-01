@@ -938,26 +938,5 @@ bool mons_throw(monster* mons, bolt &beam, bool teleport)
 
 static bool _thrown_object_destroyed(const item_def &item)
 {
-    if (item.base_type != OBJ_MISSILES)
-        return false;
-
-    if (ammo_always_destroyed(item))
-        return true;
-
-    if (ammo_never_destroyed(item))
-        return false;
-
-    const int base_chance = ammo_type_destroy_chance(item.sub_type);
-    const int brand = get_ammo_brand(item);
-
-    // Inflate by 2 to avoid rounding errors.
-    const int mult = 2;
-    int chance = base_chance * mult;
-
-    if (brand == SPMSL_CURARE)
-        chance /= 2;
-
-    dprf("mulch chance: %d in %d", mult, chance);
-
-    return x_chance_in_y(mult, chance);
+    return true;
 }

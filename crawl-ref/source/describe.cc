@@ -1168,9 +1168,9 @@ static int _item_training_target(const item_def &item)
 {
     const int throw_dam = property(item, PWPN_DAMAGE);
     if (item.base_type == OBJ_WEAPONS || item.base_type == OBJ_STAVES)
-        return weapon_min_delay_skill(item) * 10;
+        return weapon_skill_requirement(item) * 10;
     if (item.base_type == OBJ_MISSILES && is_throwable(&you, item))
-        return (((10 + throw_dam / 2) - FASTEST_PLAYER_THROWING_SPEED) * 2) * 10;
+        return ammo_type_skill_req(item.sub_type) * 10;
     if (item.base_type == OBJ_TALISMANS)
         return get_form(form_for_talisman(item))->min_skill * 10;
     if (item.base_type == OBJ_BAUBLES)
@@ -1378,12 +1378,16 @@ string damage_rating(const item_def *item, int *rating_value)
     const int slaying = slaying_bonus(thrown, false);
     const int ench = item && item->is_identified() ? item->plus : 0;
     const int plusses = slaying + ench;
-    const bool weapon_penalty = false;
+    const bool penalty = thrown ? ammo_type_skill_req(item->sub_type) > you.skill(skill)
+                                : item ? weapon_skill_requirement(*item) > you.skill(skill)
+                                : false;
 
     int rating = (base_dam + extra_base_dam);
-    if (use_weapon_skill)
-        rating = apply_weapon_skill(rating, skill, weapon_penalty);
     rating += plusses;
+    if (use_weapon_skill)
+        rating = apply_weapon_skill(rating, skill, penalty);
+    if (thrown && penalty)
+        rating /= 2;
 
     if (rating_value)
         *rating_value = rating;
@@ -1396,8 +1400,9 @@ string damage_rating(const item_def *item, int *rating_value)
                                                        base_dam, extra_base_dam) :
                                           make_stringf("%d", base_dam);
 
-    string skill_desc = use_weapon_skill ? make_stringf("Skill %d", you.skill(skill))
+    string skill_desc = use_weapon_skill ? make_stringf(" + Skill %d", you.skill(skill))
                                          : "";
+    string penalty_desc = penalty ? " / 2" : "";
     string plusses_desc;
     if (plusses)
     {
@@ -1412,11 +1417,12 @@ string damage_rating(const item_def *item, int *rating_value)
     const string brand_desc = thrown ? _describe_missile_brand(*item) : "";
 
     return make_stringf(
-        "%d (Base %s + %s%s)%s.",
+        "%d (Base %s + %s%s%s)%s.",
         rating,
         base_dam_desc.c_str(),
         skill_desc.c_str(),
         plusses_desc.c_str(),
+        penalty_desc.c_str(),
         brand_desc.c_str());
 }
 
@@ -1445,7 +1451,7 @@ static void _append_skill_needed(string &description, const item_def &item,
 static void _append_weapon_stats(string &description, const item_def &item)
 {
     const int base_dam = property(item, PWPN_DAMAGE);
-    const int mindelay_skill = _item_training_target(item);
+    const int required_skill = _item_training_target(item);
 
     if (item.base_type == OBJ_STAVES
         && item.is_identified()
@@ -1474,12 +1480,9 @@ static void _append_weapon_stats(string &description, const item_def &item)
             base_dam);
     }
 
-    description += make_stringf(
-        "Base attack delay: %.1f\n"
-        "This weapon's minimum attack delay (%.1f) is reached at skill level %d.",
-            (float) property(item, PWPN_SPEED) / 10,
-            (float) weapon_min_delay(item, item.is_identified()) / 10,
-            mindelay_skill / 10);
+    description += make_stringf("Skill requirement: %d\n"
+        "This weapon deals half damage below skill level %d.",
+        required_skill / 10, required_skill / 10);
 
     _append_skill_needed(description, item);
 
@@ -2141,22 +2144,13 @@ static string _describe_ammo(const item_def &item)
         }
     }
 
-    const int dam = property(item, PWPN_DAMAGE);
     const bool player_throwable = is_throwable(&you, item);
     if (player_throwable)
     {
-        const int throw_delay = (10 + dam / 2);
         const int target_skill = _item_training_target(item);
 
-        description += make_stringf(
-            "\n\nBase damage: %d  Base attack delay: %.1f"
-            "\nThis projectile's minimum attack delay (%.1f) "
-                "is reached at skill level %d.",
-            dam,
-            (float) throw_delay / 10,
-            (float) FASTEST_PLAYER_THROWING_SPEED / 10,
-            target_skill / 10
-        );
+        description += make_stringf("\nIt deals half damage below skill %d.",
+                       target_skill / 10);
 
         _append_skill_needed(description, item);
 
@@ -2279,10 +2273,9 @@ static string _describe_armour(const item_def &item, bool verbose, bool monster)
             const char* cumber_desc = evp < 100 ? "slightly " :
                                       evp > 100 ? "greatly " : "";
             description += make_stringf(
-                "It is cumbersome to wear, and %simpedes the evasion, "
-                "spellcasting ability, and attack speed of the wearer. "
-                "These penalties are reduced by the wearer's Shields skill "
-                "and Strength; mastering Shields eliminates penalties.",
+                "It is cumbersome to wear, and %simpedes the evasion "
+                "and spellcasting ability of the wearer. "
+                "These penalties are reduced by the wearer's Shields skill.",
                 cumber_desc);
         }
         if (!monster)
@@ -2291,7 +2284,7 @@ static string _describe_armour(const item_def &item, bool verbose, bool monster)
         {
             description += "Base shield rating: "
                         + to_string(property(item, PARM_AC));
-            description += "     Encumbrance rating: "
+            description += "     Skill Requirement: "
                         + to_string(-property(item, PARM_EVASION) / 10);
             description += "     Max blocks/turn: "
                         + to_string(shield_block_limit(item));
@@ -2305,7 +2298,7 @@ static string _describe_armour(const item_def &item, bool verbose, bool monster)
                         + to_string(property(item, PARM_AC));
             if (get_armour_slot(item) == SLOT_BODY_ARMOUR)
             {
-                description += "       Encumbrance rating: "
+                description += "       Skill Requirement: "
                             + to_string(-evp / 10);
             }
             // Bardings reduce evasion by a fixed amount, and don't have any of

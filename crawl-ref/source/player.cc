@@ -3193,13 +3193,6 @@ static int _delay(const item_def *weapon)
     return you.attack_delay(&fake_proj).expected();
 }
 
-static bool _at_min_delay(const item_def *weapon)
-{
-    return weapon
-           && you.skill(item_attack_skill(*weapon))
-              >= weapon_min_delay_skill(*weapon);
-}
-
 /**
  * Print a message indicating the player's attack delay with their current
  * weapon(s) (if applicable).
@@ -3208,8 +3201,6 @@ static void _display_attack_delay(const item_def *offhand)
 {
     const item_def* weapon = you.weapon();
     const int delay = _delay(weapon);
-    const bool at_min_delay = _at_min_delay(weapon)
-                              && (!offhand || _at_min_delay(offhand));
 
     // Assume that we never have a shield penalty with an offhand weapon,
     // and we only have an armour penalty with the offhand if we do with
@@ -3228,10 +3219,8 @@ static void _display_attack_delay(const item_def *offhand)
                          shield_penalty ? "shield" : "armour");
     }
 
-    mprf("Your attack delay is about %.1f%s%s.",
+    mprf("Your attack delay is about %.1f%s.",
          (float)delay / 10,
-         at_min_delay ?
-            " (and cannot be improved with additional weapon skill)" : "",
          penalty_msg.c_str());
 }
 

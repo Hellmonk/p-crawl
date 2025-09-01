@@ -857,8 +857,10 @@ int attack::calc_damage()
             ? adjusted_weapon_damage() : calc_base_unarmed_damage();
 
         if (using_weapon())
-            potential_damage = apply_weapon_skill(potential_damage, wpn_skill, false);
-
+        {
+            bool penalty = weapon_skill_requirement(*weapon) > you.skill(wpn_skill);
+            potential_damage = apply_weapon_skill(potential_damage, wpn_skill, penalty);
+        }
         damage = 1 + random2(potential_damage);
 
         damage = player_apply_misc_modifiers(damage);
