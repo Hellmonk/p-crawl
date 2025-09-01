@@ -204,11 +204,6 @@ int mon_to_hit_base(int hd, bool skilled)
     return 18 + hd * hd_mult / 2;
 }
 
-int mon_shield_bypass(int hd)
-{
-    return 15 + hd * 2 / 3;
-}
-
 /**
  * Return the odds of a monster attack with the given to-hit bonus hitting the given ev (scaled by 100),
  * rounded to the nearest percent.
@@ -228,44 +223,14 @@ int mon_to_hit_pct(int to_land, int scaled_ev)
     return max(MIN_HIT_PERCENTAGE, 100 - scaled_ev);
 }
 
-int mon_beat_sh_pct(int bypass, int scaled_sh)
+int mon_beat_sh_pct(int scaled_sh)
 {
     if (scaled_sh <= 0)
         return 100;
 
     int sh = scaled_sh/100;
 
-    // SH is random-rounded, so the actual value might be either sh or sh+1.
-    // We repeat the calculation below once for each case
-    sh *= 2; // per shield_bonus()
-    int hits_lower = 0;
-    for (int sh1 = 0; sh1 < sh; sh1++)
-    {
-        for (int sh2 = 0; sh2 < sh; sh2++)
-        {
-            int adj_sh = (sh1 + sh2) / (3*2) - 1;
-            hits_lower += max(0, bypass - adj_sh);
-        }
-    }
-    const int denom_lower = sh * sh * bypass;
-    double hit_chance_lower = ((double)hits_lower * 100) / denom_lower;
-
-    sh += 2; // since we already multiplied by 2
-    int hits_upper = 0;
-    for (int sh1 = 0; sh1 < sh; sh1++)
-    {
-        for (int sh2 = 0; sh2 < sh; sh2++)
-        {
-            int adj_sh = (sh1 + sh2) / (3*2) - 1;
-            hits_upper += max(0, bypass - adj_sh);
-        }
-    }
-    const int denom_upper = sh * sh * bypass;
-    double hit_chance_upper = ((double)hits_upper * 100) / denom_upper;
-
-    double hit_chance = ((100 - (scaled_sh % 100)) * hit_chance_lower + (scaled_sh % 100) * hit_chance_upper) / 100;
-
-    return (int)hit_chance;
+    return max(0, min(100, 100 - sh));
 }
 
 /**

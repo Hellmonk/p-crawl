@@ -3026,20 +3026,7 @@ int monster::shield_class() const
     int sh = 0;
     const item_def *shld = shield();
     if (shld && is_shield(*shld))
-    {
-        // Look, this is all nonsense.
-        // First, take the item properties.
-        const int base = property(*shld, PARM_AC) + shld->plus;
-        // Double them, because we halved the size of player-visible stats many
-        // years ago but never fixed the internal math. Sorry!
-        sh += base * 2;
-        // Finally, add in monster HD as a proxy for 'shield skill'.
-        sh += get_hit_dice() * 4 / 3;
-    }
-
-    const item_def *amulet = mslot_item(MSLOT_JEWELLERY);
-    if (amulet && amulet->sub_type == AMU_REFLECTION)
-        sh += AMU_REFLECT_SH;
+        sh = property(*shld, PARM_AC) + shld->plus * 2;
 
     return sh;
 }
@@ -3049,9 +3036,7 @@ int monster::shield_bonus() const
     if (incapacitated())
         return -100;
 
-    const int cls = shield_class();
-    // I don't know why we randomize like this.
-    const int sh = random2avg(cls, 2) / 2;
+    const int sh = shield_class();
     return sh ? sh : -100;
 }
 
@@ -3064,7 +3049,7 @@ void monster::shield_block_succeeded(actor *attacker)
 
 int monster::shield_bypass_ability(int) const
 {
-    return mon_shield_bypass(get_hit_dice());
+    return 0;
 }
 
 bool monster::missile_repulsion() const
