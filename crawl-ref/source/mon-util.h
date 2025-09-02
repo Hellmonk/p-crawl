@@ -266,7 +266,6 @@ mon_holy_type mons_class_holiness(monster_type mc);
 
 const char * intelligence_description(mon_intel_type intel);
 
-void discover_mimic(const coord_def& pos);
 void discover_shifter(monster& shifter);
 
 bool mons_is_statue(monster_type mc);

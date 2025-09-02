@@ -1239,10 +1239,6 @@ void player_reacts()
         }
     }
 
-    // safety first: make absolutely sure that there's no mimic underfoot.
-    // (this can happen with e.g. apport.)
-    discover_mimic(you.pos());
-
     // Player stealth check.
     seen_monsters_react(stealth);
 
