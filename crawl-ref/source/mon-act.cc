@@ -2302,7 +2302,7 @@ void handle_monster_move(monster* mons)
 
         // Confused monsters sometimes stumble about instead of moving with
         // purpose.
-        if (mons_is_confused(*mons) && !one_chance_in(3))
+        if (mons_is_confused(*mons) && !one_chance_in(3) && !mons->asleep())
         {
             set_random_target(mons);
             mmov = _confused_move_dir(mons);
