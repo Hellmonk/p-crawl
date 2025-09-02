@@ -6200,24 +6200,6 @@ void player::refresh_rampage_hints()
                 you.rampage_hints.insert(you.pos() + delta);
 }
 
- /**
-  * Guaranteed damage reduction.
-  *
-  * The percentage of the damage received that is guaranteed to be reduced
-  * by the armour. As the AC roll is done before GDR is applied, GDR is only
-  * useful when the AC roll is inferior to it. Therefore a higher GDR means
-  * more damage reduced, but also more often.
-  *
-  * \f[ GDR = 16 \times (AC)^\frac{1}{4} \f]
-  *
-  * \return GDR as a percentage.
-  **/
-int player::gdr_perc(bool random) const
-{
-    int ac = random ? armour_class() : armour_class_scaled(1);
-    return (int)(16 * sqrt(sqrt(max(0, ac))));
-}
-
 /**
  * What is the player's actual, current EV, possibly relative to an attacker,
  * including various temporary penalties?
