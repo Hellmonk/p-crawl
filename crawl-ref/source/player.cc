@@ -3024,25 +3024,19 @@ int player_stealth()
     if (crawl_state.disables[DIS_MON_SIGHT])
         return 1000;
 
-    // berserking, sacrifice stealth.
-    if (you.berserk() || you.get_mutation_level(MUT_NO_STEALTH))
+    // berserking, sacrifice stealth, backlit.
+    if (you.berserk() || you.get_mutation_level(MUT_NO_STEALTH) || you.backlit())
         return 0;
 
-    int stealth = you.dex() * 3;
+    int stealth = 2;
 
-    stealth += you.skill(SK_STEALTH, 15);
-
-    if (you.confused())
-        stealth /= 3;
+    stealth += you.skill(SK_STEALTH);
 
     const item_def *arm = you.body_armour();
     if (arm)
     {
-        // [ds] New stealth penalty formula from rob: SP = 6 * (EP^2)
-        // Now 2 * EP^2 / 3 after EP rescaling.
-        const int evp = you.unadjusted_body_armour_penalty();
-        const int penalty = evp * evp * 2 / 3;
-        stealth -= penalty;
+        // subtract the body armour penalty
+        stealth -= you.adjusted_body_armour_penalty() / 10;
 
         const int pips = armour_type_prop(arm->sub_type, ARMF_STEALTH);
         stealth += pips * STEALTH_PIP;
@@ -3056,7 +3050,7 @@ int player_stealth()
         stealth += STEALTH_PIP * 2;
 
     // Mutations.
-    stealth += STEALTH_PIP * you.get_mutation_level(MUT_NIGHTSTALKER) / 3;
+    stealth += STEALTH_PIP * you.get_mutation_level(MUT_NIGHTSTALKER);
     stealth += STEALTH_PIP * you.get_mutation_level(MUT_THIN_SKELETAL_STRUCTURE);
     stealth += STEALTH_PIP * you.get_mutation_level(MUT_CAMOUFLAGE);
     if (you.has_mutation(MUT_TRANSLUCENT_SKIN))
@@ -3068,14 +3062,10 @@ int player_stealth()
         stealth += (STEALTH_PIP * 2);
     }
 
-    // Radiating silence is the negative complement of shouting all the
-    // time... a sudden change from background noise to no noise is going
-    // to clue anything in to the fact that something is very wrong...
-    // a personal silence spell would naturally be different, but this
-    // silence radiates for a distance and prevents monster spellcasting,
-    // which pretty much gives away the stealth game.
+    // There was a paragraph of text justifying this. Here's a sentence instead.
+    // it's a balancing factor.
     if (you.duration[DUR_SILENCE])
-        stealth -= STEALTH_PIP;
+        stealth -= STEALTH_PIP * 2;
 
     if (feat_is_water(env.grid(you.pos())))
     {
@@ -3085,30 +3075,17 @@ int player_stealth()
             stealth /= 2;       // splashy-splashy
     }
 
-    // If you've been tagged with Corona or are Glowing, the glow
-    // makes you extremely unstealthy.
-    if (you.backlit())
-        stealth = stealth * 2 / 5;
-
     // On the other hand, shrouding has the reverse effect, if you know
     // how to make use of it:
     if (you.umbra() && you.umbra_radius() >= 0)
-        stealth = stealth * 3 / 2;
+        stealth *= 2;
 
     // If you're surrounded by a storm, you're inherently pretty conspicuous.
     if (have_passive(passive_t::storm_shield))
-    {
-        stealth = stealth
-                  * (MAX_PIETY - min((int)you.piety(), piety_breakpoint(5)))
-                  / (MAX_PIETY - piety_breakpoint(0));
-    }
-    // The shifting glow from the Orb, while too unstable to negate invis
-    // or affect to-hit, affects stealth even more than regular glow.
-    if (player_has_orb() || you.unrand_equipped(UNRAND_CHARLATANS_ORB))
-        stealth /= 3;
+        stealth /= 2;
 
     // Cap minimum stealth during Nightfall at 100. (0, otherwise.)
-    stealth = max(you.duration[DUR_PRIMORDIAL_NIGHTFALL] ? 100 : 0, stealth);
+    stealth = max(0, stealth);
 
     return stealth;
 }
