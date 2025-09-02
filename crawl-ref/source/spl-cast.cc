@@ -396,27 +396,9 @@ static int _apply_spellcasting_success_boosts(spell_type spell, int chance)
     return chance * fail_reduce / 100;
 }
 
-
-
-/*
- * Given some spellpower in centis, do a stepdown at around 50 (5000 in centis)
- * and return a rescaled value.
- *
- * @param power the input spellpower in centis.
- * @param scale a value to scale the result by, between 1 and 1000. Default is
- *        1, which returns a regular spellpower. 1000 gives you millis, 100
- *        centis.
- */
-static int _stepdown_spellpower(int power)
-{
-    const int divisor = 1000;
-    int result = stepdown_value(power * 10, 50000, 50000, 150000, 200000)
-                    / divisor;
-    return result;
-}
-
 static int _skill_power(spell_type spell)
 {
+    // spell school average *2, plus spellcasting
     int power = 0;
     const spschools_type disciplines = get_spell_disciplines(spell);
     const int skillcount = count_bits(disciplines);
@@ -424,10 +406,10 @@ static int _skill_power(spell_type spell)
     {
         for (const auto bit : spschools_type::range())
             if (disciplines & bit)
-                power += you.skill(spell_type2skill(bit), 200);
+                power += you.skill(spell_type2skill(bit), 2);
         power /= skillcount;
     }
-    return power + you.skill(SK_SPELLCASTING, 50);
+    return power + you.skill(SK_SPELLCASTING);
 }
 
 
@@ -542,45 +524,36 @@ int calc_spell_power(spell_type spell)
     int power = _skill_power(spell);
 
     if (you.divine_exegesis)
-        power += you.skill(SK_INVOCATIONS, 300);
+        power += you.skill(SK_INVOCATIONS);
 
     power = (power * you.intel()) / 10;
 
-    // [dshaligram] Enhancers don't affect fail rates any more, only spell
-    // power. Note that this does not affect Vehumet's boost in castability.
-    power = _apply_enhancement(power, _spell_enhancement(spell));
-
-    // Wild magic boosts spell power but decreases success rate.
-    power *= (10 + 3 * you.get_mutation_level(MUT_WILD_MAGIC));
-    power /= (10 + 3 * you.get_mutation_level(MUT_SUBDUED_MAGIC));
+    // Wild magic boosts spell power, subdued magic decreases it.
+    power += you.get_mutation_level(MUT_WILD_MAGIC);
+    power -= you.get_mutation_level(MUT_SUBDUED_MAGIC);
 
     // Augmentation boosts spell power at high HP.
-    power *= 10 + 4 * augmentation_amount();
-    power /= 10;
+    power += augmentation_amount();
+    
+    // Enhancers boost / deboost by 3 power apiece
+    power = _apply_enhancement(power, _spell_enhancement(spell));
 
-    // Each level of horror reduces spellpower by 10%
+    // Each level of horror reduces spellpower by 1
     if (you.duration[DUR_HORROR])
-    {
-        power *= 10;
-        power /= 10 + (you.props[HORROR_PENALTY_KEY].get_int() * 3) / 2;
-    }
+        power -= 1 * you.props[HORROR_PENALTY_KEY].get_int();
 
     if (you.duration[DUR_ENKINDLED] && spell_can_be_enkindled(spell))
-        power = (power + (you.experience_level * 300)) * 3 / 2;
-
-    // at this point, `power` is assumed to be basically in centis.
-    // apply a stepdown, and scale.
-    power = _stepdown_spellpower(power);
+        power = (power + (you.experience_level)) * 3 / 2;
 
     const int cap = spell_power_cap(spell);
     if (cap > 0)
         power = min(power, cap);
 
-    // Post step-down and post-cap, so the result is more predictable to the player.
+    // post-cap, so the result is more predictable to the player.
     if (you.duration[DUR_DIMINISHED_SPELLS])
         power = power / 2;
 
-    return power;
+    return max(0, power);
 }
 
 static int _spell_enhancement(spell_type spell)
@@ -645,21 +618,7 @@ static int _apply_enhancement(const int initial_power,
 {
     int power = initial_power;
 
-    if (enhancer_levels > 0)
-    {
-        for (int i = 0; i < enhancer_levels; i++)
-        {
-            power *= 15;
-            power /= 10;
-        }
-    }
-    else if (enhancer_levels < 0)
-    {
-        for (int i = enhancer_levels; i < 0; i++)
-            power /= 2;
-    }
-
-    return power;
+    return power + enhancer_levels * 3;
 }
 
 void inspect_spells()
