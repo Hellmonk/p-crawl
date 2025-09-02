@@ -2213,7 +2213,7 @@ static void _handle_hp_drain(int exp)
         return;
 
     const int mul = you.has_mutation(MUT_PERSISTENT_DRAIN) ? 2 : 1;
-    int loss = div_rand_round(exp, 4 * mul * calc_skill_cost());
+    int loss = div_rand_round(exp, 4 * mul);
 
     // Make it easier to recover from very heavy levels of draining
     // (they're nasty enough as it is)
@@ -2245,7 +2245,7 @@ static void _handle_breath_recharge(int exp)
     if (!you.props.exists(DRACONIAN_BREATH_RECHARGE_KEY))
         you.props[DRACONIAN_BREATH_RECHARGE_KEY] = 50;
 
-    int loss = div_rand_round(exp, calc_skill_cost());
+    int loss = div_rand_round(exp, 1);
     if (you.form == transformation::dragon)
         loss *= 2;
     you.props[DRACONIAN_BREATH_RECHARGE_KEY].get_int() -= loss;
@@ -2263,7 +2263,7 @@ static void _handle_cacophony_recharge(int exp)
     if (!you.props.exists(CACOPHONY_XP_KEY))
         return;
 
-    int loss = div_rand_round(exp, calc_skill_cost());
+    int loss = div_rand_round(exp, 1);
     you.props[CACOPHONY_XP_KEY].get_int() -= loss;
 
     if (you.props[CACOPHONY_XP_KEY].get_int() <= 0)
@@ -2281,7 +2281,7 @@ static void _handle_batform_recharge(int exp)
         return;
     }
 
-    int loss = div_rand_round(exp, calc_skill_cost());
+    int loss = div_rand_round(exp, 1);
     you.props[BATFORM_XP_KEY].get_int() -= loss;
 
     if (you.props[BATFORM_XP_KEY].get_int() <= 0)
@@ -2299,7 +2299,7 @@ static void _handle_watery_grave_recharge(int exp)
         return;
     }
 
-    int loss = div_rand_round(exp, calc_skill_cost());
+    int loss = div_rand_round(exp, 1);
     you.props[WATERY_GRAVE_XP_KEY].get_int() -= loss;
 
     if (you.props[WATERY_GRAVE_XP_KEY].get_int() <= 0)
@@ -2311,7 +2311,7 @@ static void _handle_watery_grave_recharge(int exp)
 
 static void _handle_banes(int exp)
 {
-    int loss = div_rand_round(exp * 10, calc_skill_cost());
+    int loss = div_rand_round(exp * 10, 1);
 
     if (you.has_mutation(MUT_ACCURSED) || you.undead_state() != US_ALIVE)
         loss /= 2;
@@ -2344,7 +2344,7 @@ static void _handle_ostracism(int exp)
     if (you.attribute[ATTR_OSTRACISM] == 0)
         return;
 
-    int loss = div_rand_round(exp, calc_skill_cost() * 4 / 3);
+    int loss = div_rand_round(exp, 1);
     player_change_ostracism(-loss);
 }
 
@@ -8906,7 +8906,7 @@ void maybe_harvest_memory(const monster& victim)
     if (crawl_state.game_is_sprint())
         xp = sprint_modify_exp(xp);
 
-    progress += div_rand_round(xp, calc_skill_cost());
+    progress += div_rand_round(xp, 1);
 
     if (progress < ENKINDLE_CHARGE_COST)
         return;

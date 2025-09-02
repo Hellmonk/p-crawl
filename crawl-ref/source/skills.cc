@@ -164,11 +164,6 @@ unsigned int skill_cost_needed(int level)
 
 static const int MAX_SKILL_COST_LEVEL = 27;
 
-int calc_skill_cost()
-{
-    return 1;
-}
-
 /**
  * The baseline skill cost for the 'cost' interface on the m screen.
  *
@@ -995,148 +990,10 @@ bool is_magic_skill(skill_type sk)
 
 int _gnoll_total_skill_cost();
 
-static int _magic_training()
-{
-    for (skill_type sk = SK_SPELLCASTING; sk <= SK_LAST_MAGIC; ++sk)
-        if (you.training[sk])
-            return you.training[sk];
-    return 0;
-}
 
 static const int NO_TRAINING = 10000;
 
-/// What is the skill you are currently training at the lowest non-zero percent?
-static unsigned int _min_training_level()
-{
-    unsigned int min = NO_TRAINING;
-    for (skill_type i = SK_FIRST_SKILL; i < NUM_SKILLS; ++i)
-        if (you.training[i] && you.training[i] < min)
-            min = you.training[i];
-    return min;
-}
-
 static bool _is_sacrificed_skill(skill_type skill);
-
-/// If you want to raise each currently-trained skill by an amount
-/// proportionate to their training %s, how many points do you need total?
-static int _min_points_to_raise_all(int min_training)
-{
-    int points = 0;
-    for (skill_type i = SK_FIRST_SKILL; i < NUM_SKILLS; ++i)
-        if (you.training[i])
-            points += you.training[i] / min_training;
-
-    // If the player sacrificed a magic skill, if we're training any magic,
-    // waste skill point(s) on that skill.
-    const int magic_training = _magic_training();
-    if (magic_training)
-        for (skill_type sk = SK_SPELLCASTING; sk <= SK_LAST_MAGIC; ++sk)
-            if (_is_sacrificed_skill(sk))
-                points += magic_training / min_training;
-
-    return points;
-}
-
-/// Is your current `exp_available` enough to raise all of your skills
-/// proportionately to you.training?
-static bool _xp_available_for_skill_points(int points)
-{
-    int cost_level = you.skill_cost_level;
-    int cost = calc_skill_cost();
-    int xp_needed = 0;
-    // XXX: could do this more efficiently
-    for (int i = 0; i < points; ++i)
-    {
-        xp_needed += cost;
-        if (xp_needed > you.exp_available)
-            return false;
-
-        const int total_xp = you.total_experience + xp_needed;
-        const int new_level = calc_skill_cost_level(total_xp, cost_level);
-        if (new_level != cost_level)
-        {
-            cost_level = new_level;
-            cost = calc_skill_cost();
-        }
-    }
-    return true;
-}
-
-static int _innate_casting_magic_max_spend_for_target()
-{
-    int max_training = INT_MAX;
-    for (skill_type sk = SK_SPELLCASTING; sk <= SK_LAST_MAGIC; ++sk)
-    {
-        if (!you.training[sk] || !you.training_targets[sk])
-            continue;
-
-        int training_target = you.training_targets[sk];
-        if (training_target > you.skill(sk, 10, false, false))
-        {
-            int target_skill_point_diff = _training_target_skill_point_diff(
-                                                          sk, training_target);
-            if (target_skill_point_diff > 0)
-                max_training = min(max_training, target_skill_point_diff);
-        }
-    }
-    return max_training;
-}
-
-/**
- * Train Djinn skills such that the same amount of experience is put into all
- * spellcasting skills. This means that we need to make sure we have enough
- * xp to level *all* selected skills proportionate to you.training before we put
- * xp into *any* skill.
- */
-static void _train_with_innate_casting(bool simu)
-{
-    while (true) {
-        const int min = _min_training_level();
-        if (min == NO_TRAINING) // no skills set to train
-            return;
-
-        const int points = _min_points_to_raise_all(min);
-        if (!_xp_available_for_skill_points(points))
-            break;
-
-        const int max_magic_skill_spend =
-                                  _innate_casting_magic_max_spend_for_target();
-
-        // OK, we should be able to train everything.
-        for (int i = 0; i < NUM_SKILLS; ++i)
-        {
-            if (!you.training[i])
-                continue;
-            int p = you.training[i] / min;
-            if (is_magic_skill((skill_type)i) && p > max_magic_skill_spend)
-                p = max_magic_skill_spend;
-            int xp = calc_skill_cost() * p;
-            // We don't want to disable training for magic skills midway.
-            // Finish training all skills and check targets afterward.
-            const auto sk = static_cast<skill_type>(i);
-            _train(sk, xp, simu, false);
-            _level_up_check(sk, simu);
-        }
-
-        // If the player sacrificed a magic skill, if we're training any magic,
-        // waste skill point(s) on that skill.
-        const int magic_training = _magic_training();
-        if (magic_training)
-        {
-            for (skill_type sk = SK_SPELLCASTING; sk <= SK_LAST_MAGIC; ++sk)
-            {
-                if (!_is_sacrificed_skill(sk))
-                    continue;
-                const int p = magic_training / min;
-                const int xp = calc_skill_cost() * p;
-                you.exp_available -= xp;
-                you.total_experience += xp;
-            }
-        }
-
-        check_training_targets();
-    }
-}
 
 void train_skills(bool simu)
 {
@@ -1149,20 +1006,18 @@ void train_skills(bool simu)
             cost = _gnoll_total_skill_cost();
             if (exp >= cost)
             {
-                _train_skills(exp, calc_skill_cost(), simu);
+                _train_skills(exp, 1, simu);
                 dprf(DIAG_SKILLS,
                     "Trained all gnoll skills by 1 at total cost %d.", cost);
             }
         }
         while (exp != you.exp_available);
     }
-    else if (you.has_mutation(MUT_INNATE_CASTER))
-        _train_with_innate_casting(simu);
     else
     {
         do
         {
-            cost = calc_skill_cost();
+            cost = 1;
             exp = you.exp_available;
             if (you.skill_cost_level == MAX_SKILL_COST_LEVEL)
                 _train_skills(exp, cost, simu);
@@ -1463,7 +1318,7 @@ int _gnoll_total_skill_cost()
         if (!you.training[i])
             continue;
         cur_cost_level = calc_skill_cost_level(you.total_experience + total_cost, cur_cost_level);
-        this_cost = calc_skill_cost();
+        this_cost = 1;
         if (num != denom)
             this_cost = (num * this_cost + denom - 1) / denom;
         total_cost += this_cost;
@@ -1521,7 +1376,7 @@ static int _train(skill_type exsk, int &max_exp, bool simu, bool check_targets)
     int skill_inc = 1;
 
     // This will be deducted from you.exp_available.
-    int cost = calc_skill_cost();
+    int cost = 1;
 
     if (you.has_mutation(MUT_DISTRIBUTED_TRAINING))
     {
@@ -1678,7 +1533,7 @@ skill_diff skill_level_to_diffs(skill_type skill, double amount,
         if (decrease_skill && you_skill_cost_level)
             ++max_xp;
 
-        const int cost = calc_skill_cost();
+        const int cost = 1;
         // Maximum number of skill points to transfer in one go.
         // It's max_xp/cost rounded up.
         const int max_skp = max((max_xp + cost - 1) / cost, 1);
@@ -2640,7 +2495,7 @@ void fixup_skills()
     init_can_currently_train();
     reset_training();
 
-    if (you.exp_available >= 10 * calc_skill_cost()
+    if (you.exp_available >= 10
         && !you.has_mutation(MUT_DISTRIBUTED_TRAINING)
         && !you.has_mutation(MUT_INNATE_CASTER))
     {

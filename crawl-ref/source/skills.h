@@ -59,7 +59,6 @@ float scaled_skill_cost(skill_type sk);
 
 unsigned int skill_cost_needed(int level);
 int calc_skill_cost_level(int xp, int start);
-int calc_skill_cost();
 void check_skill_cost_change(bool quiet = false);
 
 bool skill_default_shown(skill_type sk);
