@@ -2582,13 +2582,13 @@ static vector<formatted_string> _get_overview_resistances(
     string out;
 
     const int rfire = player_res_fire(false);
-    out += _resist_composer("rFire", cwidth, rfire, 3, MR_RES_FIRE) + "\n";
+    out += _resist_composer("rFire", cwidth, rfire, 1, MR_RES_FIRE) + "\n";
 
     const int rcold = player_res_cold(false);
-    out += _resist_composer("rCold", cwidth, rcold, 3, MR_RES_COLD) + "\n";
+    out += _resist_composer("rCold", cwidth, rcold, 1, MR_RES_COLD) + "\n";
 
     const int rlife = player_prot_life(false);
-    out += _resist_composer("rNeg", cwidth, rlife, 3, MR_RES_NEG) + "\n";
+    out += _resist_composer("rNeg", cwidth, rlife, 1, MR_RES_NEG) + "\n";
 
     const int rpois = player_res_poison(false);
     out += _resist_composer("rPois", cwidth, rpois, 1, MR_RES_POISON) + "\n";
