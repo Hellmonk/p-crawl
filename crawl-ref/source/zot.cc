@@ -110,7 +110,7 @@ bool bezotted()
 
 bool should_fear_zot()
 {
-    return bezotted();
+    return bezotting_level_in(you.where_are_you) == 3;
 }
 
 // Reset the zot clock when the player enters a new level.
