@@ -1702,13 +1702,13 @@ spell_type player_servitor_spell()
         spell_type spell = (spell_type)you.props[SERVITOR_SPELL_KEY].get_int();
         // Double-check that we know the spell and can cast it well enough, since
         // both things may have changed since it was saved.
-        if (you.has_spell(spell) && failure_rate_to_int(raw_spell_fail(spell)) <= 20)
+        if (you.has_spell(spell))
             return spell;
     }
 
     // Fallback using default list if none was specified.
     for (const spell_type spell : servitor_spells)
-        if (you.has_spell(spell) && failure_rate_to_int(raw_spell_fail(spell)) <= 20)
+        if (you.has_spell(spell))
             return spell;
 
     return SPELL_NO_SPELL;

@@ -3745,7 +3745,7 @@ int get_real_hp(bool trans, bool drained)
 
     hitp  = 100 + you.experience_level * 2;
     hitp += you.hp_max_adj_perm;
-    
+
     // percentile boost from fighting, 4% hp per level scaling multiplicatively
     hitp *= 100 + you.skill(SK_FIGHTING, 4);
     hitp /= 100;
@@ -3807,7 +3807,7 @@ int get_real_mp(bool include_items)
     enp *= 100 + (you.get_mutation_level(MUT_HIGH_MAGIC) * 10)
                - (you.get_mutation_level(MUT_LOW_MAGIC) * 10);
     enp /= 100 * scale;
-    
+
     enp += species::get_mp_modifier(you.species);
 
     // This is our "rotted" base, applied after multipliers
@@ -6265,8 +6265,7 @@ int player::evasion_scaled(int scale, bool ignore_temporary, const actor* act) c
  *                  were equipped.
  */
 void player::preview_stats_with_specific_item(int scale, const item_def& new_item,
-                                              int *ac, int *ev, int *sh,
-                                              FixedVector<int, MAX_KNOWN_SPELLS> *fail)
+                                              int *ac, int *ev, int *sh)
 {
     // Since there are a lot of things which can affect the calculation of
     // EV/SH/fail, including artifact properties on either the item we're
@@ -6340,9 +6339,6 @@ void player::preview_stats_with_specific_item(int scale, const item_def& new_ite
     *ev = evasion_scaled(scale, true);
     *sh = player_displayed_shield_class(scale, true);
 
-    for (int i = 0; i < MAX_KNOWN_SPELLS; ++i)
-        (*fail)[i] = raw_spell_fail(spells[i]);
-
     // Clear out our preview item. (Other equipment state will be unwound
     // automatically.)
     you.inv[ENDOFPACK].clear();
@@ -6350,8 +6346,7 @@ void player::preview_stats_with_specific_item(int scale, const item_def& new_ite
 
 void player::preview_stats_without_specific_item(int scale,
                                                  const item_def& item_to_remove,
-                                                 int *ac, int *ev, int *sh,
-                                                 FixedVector<int, MAX_KNOWN_SPELLS> *fail)
+                                                 int *ac, int *ev, int *sh)
 {
     // Verify that the item is currently equipped
     // (or this function will give bogus info)
@@ -6368,8 +6363,6 @@ void player::preview_stats_without_specific_item(int scale,
     *ac = base_ac(scale);
     *ev = evasion_scaled(scale, true);
     *sh = player_displayed_shield_class(scale, true);
-    for (int i = 0; i < MAX_KNOWN_SPELLS; ++i)
-        (*fail)[i] = raw_spell_fail(spells[i]);
 }
 
 /**
@@ -6384,8 +6377,7 @@ void player::preview_stats_without_specific_item(int scale,
  *                  were equipped.
  */
 void player::preview_stats_in_specific_form(int scale, const item_def& talisman,
-    int *ac, int *ev, int *sh,
-    FixedVector<int, MAX_KNOWN_SPELLS> *fail)
+    int *ac, int *ev, int *sh)
 {
     ASSERT(talisman.base_type == OBJ_TALISMANS);
 
@@ -6415,9 +6407,6 @@ void player::preview_stats_in_specific_form(int scale, const item_def& talisman,
     *ac = base_ac(scale);
     *ev = evasion_scaled(scale, true);
     *sh = player_displayed_shield_class(scale, true);
-
-    for (int i = 0; i < MAX_KNOWN_SPELLS; ++i)
-        (*fail)[i] = raw_spell_fail(spells[i]);
 
     // Player state should revert to its previous one automatically.
 }

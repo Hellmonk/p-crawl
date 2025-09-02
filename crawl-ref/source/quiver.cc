@@ -1086,7 +1086,7 @@ namespace quiver
             else
             {
                 col_cache = spell_highlight_by_utility(spell,
-                                failure_rate_colour(spell), true, false);
+                                LIGHTGREY, true, false);
             }
         }
 
@@ -1215,12 +1215,6 @@ namespace quiver
                                         , GRAVE_CLAW_MAX_CHARGES);
             }
 
-            if (fail_severity(spell) > 0)
-            {
-                qdesc.cprintf(" (%s)",
-                        failure_rate_to_string(raw_spell_fail(spell)).c_str());
-            }
-
             return qdesc;
         }
 
@@ -1230,9 +1224,8 @@ namespace quiver
                 && (allow_disabled || is_enabled())
                 && (menu || Options.fire_order_spell.count(spell))
                 // some extra stuff for fire order in particular: don't
-                // show spells that are dangerous to cast or forbidden.
+                // show spells that are forbidden.
                 // These can still be force-quivered.
-                && fail_severity(spell) < Options.fail_severity_to_quiver
                 && spell_highlight_by_utility(spell, COL_UNKNOWN) != COL_FORBIDDEN;
         }
 

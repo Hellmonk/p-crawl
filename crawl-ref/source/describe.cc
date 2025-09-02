@@ -1763,41 +1763,33 @@ static string _equipment_property_change_description(const item_def &item,
     const int cur_ac = you.base_ac(100);
     const int cur_ev = you.evasion_scaled(100, true);
     const int cur_sh = player_displayed_shield_class(100, true);
+    const int cur_spell_pen = max(0, you.adjusted_body_armour_penalty());
     int new_ac, new_ev, new_sh;
-    FixedVector<int, MAX_KNOWN_SPELLS> cur_fail, new_fail;
-    for (int i = 0; i < MAX_KNOWN_SPELLS; ++i)
-        cur_fail[i] = raw_spell_fail(you.spells[i]);
 
     if (remove)
-        you.preview_stats_without_specific_item(100, item, &new_ac, &new_ev, &new_sh, &new_fail);
+        you.preview_stats_without_specific_item(100, item, &new_ac, &new_ev, &new_sh);
     else if (item.base_type == OBJ_TALISMANS)
-        you.preview_stats_in_specific_form(100, item, &new_ac, &new_ev, &new_sh, &new_fail);
+        you.preview_stats_in_specific_form(100, item, &new_ac, &new_ev, &new_sh);
     else
-        you.preview_stats_with_specific_item(100, item, &new_ac, &new_ev, &new_sh, &new_fail);
+        you.preview_stats_with_specific_item(100, item, &new_ac, &new_ev, &new_sh);
 
-    // Check if any spell failures changed, and save the greatest magnitude that
-    // any of them changed.
-    int fail_change = 0;
-    int visible_fail_change = 0;
-    for (int i = 0; i < MAX_KNOWN_SPELLS; ++i)
+    int spell_penalty = 0;
+    if (item.base_type == OBJ_ARMOUR && get_armour_slot(item) == SLOT_BODY_ARMOUR)
     {
-        if (cur_fail[i] != new_fail[i])
-        {
-            int new_fail_change = new_fail[i] - cur_fail[i];
-            int new_visible_fail_change = failure_rate_to_int(new_fail[i])
-                                            - failure_rate_to_int(cur_fail[i]);
-            if (abs(new_fail_change) > abs(fail_change))
-                fail_change = new_fail_change;
-            if (abs(new_visible_fail_change) > abs(visible_fail_change))
-                visible_fail_change = new_visible_fail_change;
-        }
+        // penalty with the new item
+        spell_penalty = max(0, -property(item, PARM_EVASION) / 10
+                  - you.get_mutation_level(MUT_STURDY_FRAME) * 2
+                  - you.skill(SK_ARMOUR));
+
+        // the difference; this can be negative so we report the change.
+        spell_penalty -= cur_spell_pen;
     }
 
     // If we're previewing non-armour and there is no AC/EV/SH change, print no
     // extra description at all (since almost all items of these types will
     // change nothing)
     if (cur_ac == new_ac && cur_ev == new_ev && cur_sh == new_sh
-        && fail_change == 0
+        && spell_penalty == 0
         && (item.base_type != OBJ_ARMOUR || item.sub_type == ARM_ORB))
     {
         return "";
@@ -1848,124 +1840,16 @@ static string _equipment_property_change_description(const item_def &item,
                        + _describe_point_diff(cur_sh, new_sh) + ".";
     }
 
-    if (fail_change != 0)
+    if (spell_penalty != 0)
     {
-        description += "\nYour spell failure would ";
-        description += (fail_change > 0) ? "worsen" : "improve";
-        if (visible_fail_change == 0)
-            description += " trivially.";
-        else
-        {
-            description += make_stringf(" by up to %d%% (press '!' for details).",
-                                    abs(visible_fail_change)).c_str();
-        }
+        description += "\nYour spell penalty would ";
+        description += (spell_penalty > 0) ? "worsen" : "improve";
+        description += make_stringf(" by %d level",
+                                    abs(spell_penalty)).c_str();
+        description += (abs(spell_penalty) > 1) ? "s" : "";
     }
 
     return description;
-}
-
-static string _spell_fail_change_description(const item_def &item,
-                                             bool remove = false)
-{
-    int dummy1, dummy2, dummy3;
-    FixedVector<int, MAX_KNOWN_SPELLS> cur_fail, new_fail;
-    for (int i = 0; i < MAX_KNOWN_SPELLS; ++i)
-        cur_fail[i] = raw_spell_fail(you.spells[i]);
-
-    if (remove)
-        you.preview_stats_without_specific_item(100, item, &dummy1, &dummy2, &dummy3, &new_fail);
-    else if (item.base_type == OBJ_TALISMANS)
-        you.preview_stats_in_specific_form(100, item, &dummy1, &dummy2, &dummy3, &new_fail);
-    else
-        you.preview_stats_with_specific_item(100, item, &dummy1, &dummy2, &dummy3, &new_fail);
-
-    // Check if any spell failures changed.
-    int fail_change = 0;
-    for (int i = 0; i < MAX_KNOWN_SPELLS; ++i)
-    {
-        if (cur_fail[i] != new_fail[i])
-        {
-            fail_change = new_fail[i] - cur_fail[i];
-            break;
-        }
-    }
-
-    // If nothing changed, generate no text
-    if (fail_change == 0)
-        return "";
-
-    // If they did, convert all failures into percentages to see whether any
-    // change was non-trivial
-    fail_change = 0;
-    for (int i = 0; i < MAX_KNOWN_SPELLS; ++i)
-    {
-        if (cur_fail[i] == new_fail[i])
-            continue;
-
-        cur_fail[i] = failure_rate_to_int(cur_fail[i]);
-        new_fail[i] = failure_rate_to_int(new_fail[i]);
-
-        if (cur_fail[i] != new_fail[i])
-            fail_change = cur_fail[i] - new_fail[i];
-    }
-
-    // If nothing changed *meaningfully*, generate no text
-    if (fail_change == 0)
-        return "";
-
-    // Otherwise, generate a complete list of all non-trivial changes
-    string desc;
-    desc = make_stringf("If you %s this item, your spell failure would %s:\n",
-                        remove ? "removed" : "equipped",
-                        fail_change < 0 ? "worsen" : "improve");
-
-    // Sort spells by degree of change in their fail rates (and then by
-    // absolute fail rate after that)
-    vector<pair<int, int>> spell_sort;
-    for (int i = 0; i < MAX_KNOWN_SPELLS; ++i)
-    {
-        if (cur_fail[i] == new_fail[i])
-            continue;
-
-        spell_sort.push_back({i, abs(cur_fail[i] - new_fail[i])});
-    }
-    sort(spell_sort.begin( ), spell_sort.end( ),
-            [cur_fail](const pair<int, int>& a, const pair<int, int>& b)
-                { return cur_fail[a.first] > cur_fail[b.first];});
-    sort(spell_sort.begin( ), spell_sort.end( ),
-            [](const pair<int, int>& a, const pair<int, int>& b)
-                { return a.second > b.second;});
-
-
-    // vector<string> entries;
-    for (size_t i = 0; i < spell_sort.size(); ++i)
-    {
-        int index = spell_sort[i].first;
-
-        int diff = new_fail[index] - cur_fail[index];
-        string colour;
-        if (diff > 20)
-            colour = "magenta";
-        else if (diff > 11)
-            colour = "lightred";
-        else if (diff > 5)
-            colour = "yellow";
-        else if (diff < -11)
-            colour = "lightblue";
-        else if (diff < -5)
-            colour = "white";
-        else
-            colour = "lightgrey";
-
-        string entry = make_stringf("<%s>%s%3d%%-> %3d%%</%s>\n",
-                colour.c_str(),
-                chop_string(spell_title(you.spells[index]), 32).c_str(),
-                cur_fail[index], new_fail[index], colour.c_str());
-
-        desc += entry;
-    }
-
-    return desc;
 }
 
 static string _equipment_property_change(const item_def &item)
@@ -4026,7 +3910,7 @@ command_type describe_item_popup(const item_def &item,
             // Only switch tab if there's any spell rate changes.
             if (!show_spell_success)
             {
-                spell_success = _spell_fail_change_description(item, item_is_equipped(item));
+                spell_success = "";
                 if (spell_success.empty())
                     return false;
             }
@@ -4156,21 +4040,6 @@ static string _player_spell_stats(const spell_type spell)
     {
         return description; // all other info is player-dependent
     }
-
-
-    string failure;
-    if (you.divine_exegesis)
-        failure = "0%";
-    else if (spell_can_be_enkindled(spell) && you.has_mutation(MUT_MNEMOPHAGE)
-             && !you.duration[DUR_ENKINDLED])
-    {
-        failure = make_stringf("%d%% <darkgrey>(%d%%)</darkgrey>",
-                                    failure_rate_to_int(raw_spell_fail(spell)),
-                                    failure_rate_to_int(raw_spell_fail(spell, true)));
-    }
-    else
-        failure = failure_rate_to_string(raw_spell_fail(spell));
-    description += make_stringf("        Fail: %s", failure.c_str());
 
     const string damage_string = spell_damage_string(spell);
     const string max_dam_string = spell_max_damage_string(spell);
@@ -4332,53 +4201,6 @@ int hex_chance(const spell_type spell, const monster_info* mi, bool is_wand)
 }
 
 /**
- * Describe miscast effects from a spell
- *
- * @param spell
- */
-static string _miscast_damage_string(spell_type spell)
-{
-    const map <spschool, string> damage_flavor = {
-        { spschool::enchantments, "irresistible" },
-        { spschool::necromancy, "draining" },
-        { spschool::fire, "fire" },
-        { spschool::ice, "cold" },
-        { spschool::air, "electric" },
-        { spschool::earth, "fragmentation" },
-    };
-
-    const map <spschool, string> special_flavor = {
-        { spschool::summoning, "summons a nameless horror" },
-        { spschool::translocation, "anchors you in place" },
-        { spschool::hexes, "slows you" },
-    };
-
-    spschools_type disciplines = get_spell_disciplines(spell);
-    vector <string> descs;
-
-    for (const auto &flav : special_flavor)
-        if (disciplines & flav.first)
-            descs.push_back(flav.second);
-
-    int dam = max_miscast_damage(spell);
-    vector <string> dam_flavors;
-    for (const auto &flav : damage_flavor)
-        if (disciplines & flav.first)
-            dam_flavors.push_back(flav.second);
-
-    if (!dam_flavors.empty())
-    {
-        descs.push_back(make_stringf("deals up to %d %s damage", dam,
-                                     comma_separated_line(dam_flavors.begin(),
-                                                         dam_flavors.end(),
-                                                         " or ").c_str()));
-    }
-
-    return (descs.size() > 1 ? "either " : "")
-         + comma_separated_line(descs.begin(), descs.end(), " or ", "; ");
-}
-
-/**
  * Describe mostly non-numeric player-specific information about a spell.
  *
  * (E.g., your god's opinion of it, whether it's in a high-level book that
@@ -4396,11 +4218,6 @@ static string _player_spell_desc(spell_type spell)
     }
 
     ostringstream description;
-
-    description << "Miscasting this spell causes magic contamination"
-                << (fail_severity(spell) ?
-                    " and also " + _miscast_damage_string(spell) : "")
-                << ".\n";
 
     if (spell == SPELL_BATTLESPHERE)
     {
@@ -4441,7 +4258,7 @@ static string _player_spell_desc(spell_type spell)
     }
     else if (you.has_spell(SPELL_SPELLSPARK_SERVITOR) && spell_servitorable(spell))
     {
-        if (failure_rate_to_int(raw_spell_fail(spell)) <= 20)
+        if (true)
             description << "Your servitor can be imbued with this spell.\n";
         else
         {

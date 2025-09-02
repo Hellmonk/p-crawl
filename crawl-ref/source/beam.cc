@@ -521,7 +521,7 @@ void zappy(zap_type z_type, int power, bool is_monster, bolt &pbolt)
     if (zinfo->is_enchantment)
         pbolt.hit = AUTOMATIC_HIT;
     else
-        pbolt.hit = 100;
+        pbolt.hit = max(100, zap_to_hit(z_type, power, is_monster));
 
     pbolt.damage = zap_damage(z_type, power, is_monster);
 
