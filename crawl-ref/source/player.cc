@@ -3743,15 +3743,12 @@ int get_real_hp(bool trans, bool drained)
 {
     int hitp;
 
-    hitp  = you.experience_level * 11 / 2 + 8;
+    hitp  = 100 + you.experience_level * 2;
     hitp += you.hp_max_adj_perm;
-    // Important: we shouldn't add Heroism boosts here.
-    // ^ The above is a 2011 comment from 1kb, in 2021 this isn't
-    // archaeologied for further explanation, but the below now adds Ash boosts
-    // to fighting to the HP calculation while preventing it for Heroism
-    // - eb
-    hitp += you.experience_level * you.skill(SK_FIGHTING, 5, false, false) / 70
-          + (you.skill(SK_FIGHTING, 3, false, false) + 1) / 2;
+    
+    // percentile boost from fighting, 4% hp per level scaling multiplicatively
+    hitp *= 100 + you.skill(SK_FIGHTING, 4);
+    hitp /= 100;
 
     // Racial modifier.
     hitp *= 10 + species::get_hp_modifier(you.species);
@@ -3802,29 +3799,20 @@ int get_real_mp(bool include_items)
         return 0;
 
     const int scale = 100;
-    int spellcasting = you.skill(SK_SPELLCASTING, 1 * scale, false, false);
-    int scaled_xl = you.experience_level * scale;
 
-    // the first 4 experience levels give an extra .5 mp up to your spellcasting
-    // the last 4 give no mp
-    int enp = min(23 * scale, scaled_xl);
-
-    int spell_extra = spellcasting; // 100%
-    int invoc_extra = you.skill(SK_INVOCATIONS, 1 * scale, false, false) / 2; // 50%
-    int highest_skill = max(spell_extra, invoc_extra);
-    enp += highest_skill + min(8 * scale, min(highest_skill, scaled_xl)) / 2;
+    int enp = 20 * scale;
+    enp += you.skill(SK_SPELLCASTING) * scale;
 
     // Analogous to ROBUST/FRAIL
     enp *= 100 + (you.get_mutation_level(MUT_HIGH_MAGIC) * 10)
                - (you.get_mutation_level(MUT_LOW_MAGIC) * 10);
     enp /= 100 * scale;
-//    enp = stepdown_value(enp, 9, 18, 45, 100)
+    
     enp += species::get_mp_modifier(you.species);
 
     // This is our "rotted" base, applied after multipliers
     enp += you.mp_max_adj;
 
-    // Now applied after scaling so that power items are more useful -- bwr
     if (include_items)
     {
         enp += 9 * you.wearing_jewellery(RING_MAGICAL_POWER);
