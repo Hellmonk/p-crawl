@@ -911,6 +911,7 @@ public:
     void rev_down(int time_taken);
 
     bool allies_forbidden();
+    int adjusted_casting_level(skill_type skill);
 
     // TODO: move this somewhere else
     void refresh_rampage_hints();

@@ -127,6 +127,7 @@ bool cannot_use_schools(spschools_type schools);
 
 bool casting_is_useless(spell_type spell, bool temp);
 string casting_uselessness_reason(spell_type spell, bool temp);
+bool meets_casting_requirement(spell_type spell);
 bool spell_is_useless(spell_type spell, bool temp = true,
                       bool prevent = false, bool fake_spell = false) PURE;
 string spell_uselessness_reason(spell_type spell, bool temp = true,
