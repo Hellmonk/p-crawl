@@ -4992,11 +4992,7 @@ static string _monster_staff_damage_string(const monster_info &mi,
     // "earth" tries to communicate the damage reduction when flying
     // XXX "conj" isn't a damage type, but we want to communicate
     // that the damage is flat staff bonus damage somehow.
-    string dam_type_string = staff == STAFF_FIRE          ? "fire"
-                           : staff == STAFF_COLD          ? "cold"
-                           : staff == STAFF_AIR           ? "elec"
-                           : staff == STAFF_EARTH         ? "earth"
-                           : staff == STAFF_DEATH         ? "drain";
+    string dam_type_string = "";
 
     return make_stringf(" + %d (%s)",
                         _staff_max_damage(staff, staff_skill, evo_skill),

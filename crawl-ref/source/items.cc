@@ -1834,12 +1834,8 @@ static void _get_book(item_def& it)
         return;
     }
 
-    if (you.skill_manual_points[sk])
-        mprf("You pick up another %s and continue studying.", it.name(DESC_PLAIN).c_str());
-    else
-        mprf("You pick up %s and begin studying.", it.name(DESC_A).c_str());
-    you.skill_manual_points[sk] += it.skill_points;
-    you.skills_to_show.insert(sk);
+    mprf("You pick up %s and study its contents.", it.name(DESC_A).c_str());
+    you.skill_points[sk]++;
 }
 
 static void _get_voucher(item_def& it)
