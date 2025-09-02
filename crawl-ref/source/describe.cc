@@ -2696,24 +2696,29 @@ string get_item_description(const item_def &item,
                 description << "\n\n";
                 // slightly redundant with uselessness desc..
                 const int charges = evoker_charges(item.sub_type);
+                const int debt = evoker_charge_xp_debt(item.sub_type);
                 if (charges > 1)
-                    description << "Charges: " << charges << ". Once all charges have been used";
+                {
+                    description << "Charges: " << charges << ".";
+                    description << "This device gains a charge every ";
+                }
                 else
-                    description << "Once activated";
-                description << ", this device is rendered temporarily inert. "
-                            << "However, it recharges as you gain experience.";
+                    description << "This device recharges every ";
+
+                description << debt << "% of an experience level you gain";
 
                 if (evoker_plus(item.sub_type) < MAX_EVOKER_ENCHANT)
                 {
-                    description << "\n\nAdditional devices of the same type "
-                            << "can be combined with it to improve the rate at "
-                            << "which it recharges.";
+                    description << "\n\nIncreasing its enchantment by finding "
+                            << "another item of the same type will improve its "
+                            << "recharge rate (-5% xp required).";
                 }
                 if (!is_useless_skill(SK_EVOCATIONS)
                        && you.skill(SK_EVOCATIONS) < MAX_SKILL_LEVEL)
                 {
                     description << "\n\nIncreasing your evocations skill will "
-                                << "improve the rate at which it recharges.";
+                                << "improve the rate at which it recharges "
+                                << "(-5% xp required).";
                 }
 
                 const string damage_str = evoke_damage_string(item);

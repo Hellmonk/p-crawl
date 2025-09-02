@@ -3353,7 +3353,12 @@ int evoker_charge_xp_debt(int evoker_type)
     const evoker_data* edata = map_find(xp_evoker_data,
                                         static_cast<misc_item_type>(evoker_type));
     ASSERT(edata);
-    return edata->charge_xp_debt;
+    int scaled_debt = edata->charge_xp_debt;
+    scaled_debt -= 5 * you.props[edata->plus].get_int();
+    scaled_debt -= 5 * you.skill(SK_EVOCATIONS);
+
+    return max(1, scaled_debt);
+
 }
 
 /**

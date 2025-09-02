@@ -2137,17 +2137,6 @@ static void _recharge_xp_evokers(int exp)
     FixedVector<item_def*, NUM_MISCELLANY> evokers(nullptr);
     list_charging_evokers(evokers);
 
-    const int xp_by_xl = exp_needed(you.experience_level+1)
-                       - exp_needed(you.experience_level);
-    const int skill_denom = 3 + you.skill_rdiv(SK_EVOCATIONS, 1, 9);
-    const int xp_factor = max(xp_by_xl / 5, 100) / skill_denom;
-
-    if (you.wearing_ego(OBJ_GIZMOS, SPGIZMO_GADGETEER)
-        || you.unrand_equipped(UNRAND_GADGETEER))
-    {
-        exp = exp * 130 / 100;
-    }
-
     for (int i = 0; i < NUM_MISCELLANY; ++i)
     {
         item_def* evoker = evokers[i];
@@ -2158,9 +2147,8 @@ static void _recharge_xp_evokers(int exp)
         if (debt == 0)
             continue;
 
-        int plus_factor = div_rand_round(5 * xp_factor, 5 + evoker_plus(evoker->sub_type));
         const int old_charges = evoker_charges(i);
-        debt = max(0, debt - div_rand_round(exp, plus_factor));
+        debt = max(0, debt - exp);
         const int gained = evoker_charges(i) - old_charges;
         if (gained)
             print_xp_evoker_recharge(*evoker, gained, silenced(you.pos()));
