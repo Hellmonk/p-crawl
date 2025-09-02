@@ -4996,9 +4996,7 @@ static string _monster_staff_damage_string(const monster_info &mi,
                            : staff == STAFF_COLD          ? "cold"
                            : staff == STAFF_AIR           ? "elec"
                            : staff == STAFF_EARTH         ? "earth"
-                           : staff == STAFF_DEATH         ? "drain"
-                           : staff == STAFF_ALCHEMY       ? "poison"
-                           /*staff == STAFF_CONJURATION*/ : "conj";
+                           : staff == STAFF_DEATH         ? "drain";
 
     return make_stringf(" + %d (%s)",
                         _staff_max_damage(staff, staff_skill, evo_skill),
