@@ -287,7 +287,7 @@ LUAFN(l_spells_god_likes)
 }
 
 /*** Does our god hate this spell?
- * Casting this will result in pennance or excommunication.
+ * Casting this is banned.
  * @tparam string name
  * @treturn boolean
  * @function god_hates

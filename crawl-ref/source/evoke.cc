@@ -1014,8 +1014,7 @@ static bool _evoke_talisman(item_def &talisman)
 
     count_action(CACT_FORM, (int)trans);
     start_delay<TransformDelay>(trans, &talisman);
-    if (god_despises_item(talisman, you.religion))
-        excommunication();
+
     you.turn_is_over = true;
     return true;
 }
