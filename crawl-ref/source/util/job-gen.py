@@ -123,7 +123,7 @@ JOB_GROUP_TEMPLATE = """
 ALL_SKILLS = ('fighting', 'short blades', 'long blades', 'axes',
     'maces and flails', 'polearms', 'staves', 'ranged weapons',
     'throwing', 'armour', 'dodging', 'stealth',
-    'shields', 'unarmed combat', 'spellcasting', 'conjurations',
+    'shields', 'unarmed combat', 'spellcasting', 'enchantments',
     'hexes', 'summonings', 'necromancy', 'translocations',
     'fire magic', 'ice magic', 'air magic', 'earth magic',
     'alchemy', 'invocations', 'evocations', 'shapeshifting', 'forgecraft',

@@ -729,12 +729,6 @@ struct artefact_prop_data
     int odds_inc;
 };
 
-/// Generate 'good' values for stat artps (e.g. ARTP_STRENGTH)
-static int _gen_good_stat_artp() { return 1 + coinflip() + one_chance_in(4); }
-
-/// Generate 'bad' values for stat artps (e.g. ARTP_STRENGTH)
-static int _gen_bad_stat_artp() { return -2 - random2(4); }
-
 /// Generate 'good' values for resist-ish artps (e.g. ARTP_FIRE)
 static int _gen_good_res_artp() { return 1; }
 
@@ -757,11 +751,11 @@ static const artefact_prop_data artp_data[] =
     { "EV", ARTP_VAL_ANY, 0, nullptr, nullptr, 0, 0 }, // ARTP_EVASION,
 #if TAG_MAJOR_VERSION == 34
     { "Str", ARTP_VAL_ANY, 0,     // ARTP_STRENGTH,
-        _gen_good_stat_artp, _gen_bad_stat_artp, 7, 1 },
+        nullptr, nullptr, 0, 0 },
     { "Int", ARTP_VAL_ANY, 0,     // ARTP_INTELLIGENCE,
-        _gen_good_stat_artp, _gen_bad_stat_artp, 7, 1 },
+        nullptr, nullptr, 0, 0 },
     { "Dex", ARTP_VAL_ANY, 0,     // ARTP_DEXTERITY,
-        _gen_good_stat_artp, _gen_bad_stat_artp, 7, 1 },
+        nullptr, nullptr, 0, 0 },
 #endif
     { "rF", ARTP_VAL_ANY, 60,       // ARTP_FIRE,
         []() { return 1; }, nullptr, 0, 0  },
