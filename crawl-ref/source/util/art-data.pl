@@ -37,7 +37,7 @@ my %field_type = (
     DESCRIP  => "str",
     DRAIN    => "bool",
     ELEC     => "bool",
-    ENH_CONJ => "bool",
+    ENH_ENCH => "bool",
     ENH_HEXES => "bool",
     ENH_SUMM => "bool",
     ENH_NECRO => "bool",
@@ -545,18 +545,18 @@ my @art_order = (
 # start TAG_MAJOR_VERSION == 34
     # Remove six copies of "unused", when
     # it is no longer the case that TAG_MAJOR_VERSION == 34
-    "{", "BRAND", "AC", "EV", "STR", "INT", "DEX", "\n",
-    "FIRE", "COLD", "ELEC", "POISON", "LIFE", "WILL", "\n",
-    "SEEINV", "INV", "FLY", "BLINK", "unused",  "NOISES", "\n",
+    "{", "BRAND", "AC", "EV", "unused", "unused", "unused", "\n",
+    "FIRE", "COLD", "ELEC", "unused", "unused", "WILL", "\n",
+    "unused", "INV", "FLY", "BLINK", "unused",  "NOISES", "\n",
     "NOSPELL", "unused", "NOTELEP", "ANGRY", "unused", "\n",
     "MUTATE", "unused", "SLAY", "unused", "STEALTH", "MP", "\n",
     "BASE_DELAY", "HP", "CLARITY", "BASE_ACC", "BASE_DAM", "\n",
-    "RMSL", "unused", "REGEN", "unused", "NO_UPGRADE", "RCORR", "\n",
-    "RMUT", "unused", "CORRODE", "DRAIN", "SLOW", "FRAGILE", "\n",
-    "SH", "HARM", "RAMPAGE", "ARCHMAGI", "ENH_CONJ", "ENH_HEXES", "\n",
+    "RMSL", "unused", "REGEN", "unused", "NO_UPGRADE", "unused", "\n",
+    "RMUT", "unused", "CORRODE", "DRAIN", "SLOW", "unused", "\n",
+    "SH", "HARM", "RAMPAGE", "ARCHMAGI", "ENH_ENCH", "ENH_HEXES", "\n",
     "ENH_SUMM", "ENH_NECRO", "ENH_TLOC", "unused", "ENH_FIRE", "\n",
-    "ENH_ICE", "ENH_AIR", "ENH_EARTH", "ENH_ALCH", "\n",
-    "ACROBAT", "REGEN_MP", "WIZ", "ENH_FORGE", "SILENCE", "BANE",
+    "ENH_ICE", "ENH_AIR", "ENH_EARTH", "unused", "\n",
+    "ACROBAT", "REGEN_MP", "WIZ", "unused", "SILENCE", "BANE",
     "}",
 # end TAG_MAJOR_VERSION
 # start TAG_MAJOR_VERSION == 35

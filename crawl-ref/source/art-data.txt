@@ -1237,7 +1237,6 @@ DESCRIP:  Infuse+∞:  It empowers its wearer's blows with all of their magic.
 NAME:    mountain boots
 OBJ:     OBJ_ARMOUR/ARM_BOOTS
 TILE:    urand_mountain
-TILE_EQ: spider
 PLUS:    +3
 COLOUR:  ETC_MOUNTAIN
 BOOL:    special
