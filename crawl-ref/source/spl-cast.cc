@@ -582,30 +582,6 @@ static void _handle_channelling(int cost, spret cast_result)
 }
 
 /**
- * Let the Majin-Bo congratulate you on casting a spell while using it.
- *
- * @param spell     The spell just successfully cast.
- */
-static void _majin_speak(spell_type spell)
-{
-    // since this isn't obviously mental communication, let it be silenced
-    if (silenced(you.pos()))
-        return;
-
-    const int level = spell_difficulty(spell);
-    const bool weak = level <= 4;
-    const string lookup = weak ? "majin-bo cast weak" : "majin-bo cast";
-    const string msg = "A voice whispers, \"" + getSpeakString(lookup) + "\"";
-    mprf(MSGCH_TALK, "%s", msg.c_str());
-}
-
-static bool _majin_charge_hp()
-{
-    return you.unrand_equipped(UNRAND_MAJIN) && !you.duration[DUR_DEATHS_DOOR];
-}
-
-
-/**
  * Cast a spell.
  *
  * Handles general preconditions & costs.
@@ -799,8 +775,6 @@ spret cast_a_spell(bool check_range, spell_type spell, dist *_target,
     // Majin Bo HP cost taken at the same time
     // (but after hp costs from HP casting)
     const int hp_cost = min(spell_mana(spell), you.hp - 1);
-    if (_majin_charge_hp())
-        pay_hp(hp_cost);
 
     const spret cast_result = your_spells(spell, 0, !you.divine_exegesis,
                                           nullptr, _target, force_failure);
@@ -811,8 +785,6 @@ spret cast_a_spell(bool check_range, spell_type spell, dist *_target,
             crawl_state.zero_turns_taken();
         // Return the MP since the spell is aborted.
         refund_mp(cost);
-        if (_majin_charge_hp())
-            refund_hp(hp_cost);
 
         redraw_screen();
         update_screen();
@@ -823,13 +795,11 @@ spret cast_a_spell(bool check_range, spell_type spell, dist *_target,
     _handle_channelling(cost, cast_result);
     if (cast_result == spret::success)
     {
-        if (you.unrand_equipped(UNRAND_MAJIN) && one_chance_in(500))
-            _majin_speak(spell);
         did_god_conduct(DID_SPELL_CASTING, 1 + random2(5));
         count_action(CACT_CAST, spell);
     }
 
-    finalize_mp_cost(_majin_charge_hp() ? hp_cost : 0);
+    finalize_mp_cost(0);
     // Check if an HP payment brought us low enough
     // to trigger Celebrant or time-warped blood.
     makhleb_celebrant_bloodrite();

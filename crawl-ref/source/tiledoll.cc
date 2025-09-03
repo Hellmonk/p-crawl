@@ -628,13 +628,7 @@ void fill_doll_equipment(dolls_data &result)
     if (result.parts[TILEP_PART_CLOAK] == TILEP_SHOW_EQUIP)
     {
         if (item_def* cloak = you.equipment.get_first_slot_item(SLOT_CLOAK))
-        {
             result.parts[TILEP_PART_CLOAK] = tilep_equ_cloak(*cloak);
-
-            // Gets an additional tile on the head
-            if (is_unrandom_artefact(*cloak, UNRAND_FISTICLOAK))
-                result.parts[TILEP_PART_HELM] = TILEP_HELM_FUNGAL_FISTICLOAK_FRONT;
-        }
         else
             result.parts[TILEP_PART_CLOAK] = 0;
     }

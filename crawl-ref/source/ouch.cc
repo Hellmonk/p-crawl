@@ -1296,17 +1296,8 @@ void ouch(int dam, kill_method_type death_type, mid_t source, const char *aux,
     {
         // death's door protects against everything but falling into
         // water/lava, Zot, excessive rot, leaving the dungeon, or quitting.
-        // Likewise, dreamshard protects you until the start of your next turn.
-        if (you.duration[DUR_DEATHS_DOOR] || you.props.exists(DREAMSHARD_KEY))
+        if (you.duration[DUR_DEATHS_DOOR])
             return;
-        // the dreamshard necklace protects from any fatal blow or death source
-        // that death's door would protect from.
-        else if (you.unrand_equipped(UNRAND_DREAMSHARD_NECKLACE)
-                 && dam >= you.hp)
-        {
-            dreamshard_shatter();
-            return;
-        }
     }
 
     if (dam != INSTANT_DEATH)
@@ -1395,7 +1386,6 @@ void ouch(int dam, kill_method_type death_type, mid_t source, const char *aux,
             _maybe_medusa_lithotoxin();
             if (sanguine_armour_valid())
                 activate_sanguine_armour();
-            refresh_meek_bonus();
             if (death_type != KILLED_BY_POISON)
             {
                 _maybe_corrode();

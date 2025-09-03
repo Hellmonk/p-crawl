@@ -1551,9 +1551,6 @@ static string _handedness_string(const item_def &item)
 
 static string _category_string(const item_def &item)
 {
-    if (is_unrandom_artefact(item, UNRAND_LOCHABER_AXE))
-        return ""; // handled in art-data DBRAND
-
     string description = "";
     description += "This ";
     if (is_unrandom_artefact(item))

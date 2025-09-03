@@ -184,7 +184,7 @@ string item_def::name(description_level_type descrip, bool terse, bool ident,
         || item_is_orb(*this)
         || item_is_horn_of_geryon(*this)
         || (ident || is_identified())
-           && is_artefact(*this) && special != UNRAND_OCTOPUS_KING_RING
+           && is_artefact(*this)
            && base_type != OBJ_GIZMOS)
     {
         // Artefacts always get "the" unless we just want the plain name.
@@ -1553,8 +1553,7 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
             buff << make_stringf("%+d ", plus);
 
         if ((item_typ == ARM_GLOVES || item_typ == ARM_BOOTS)
-            && !is_unrandom_artefact(*this, UNRAND_POWER_GLOVES)
-            && !is_unrandom_artefact(*this, UNRAND_DELATRAS_GLOVES))
+            && !is_unrandom_artefact(*this, UNRAND_POWER_GLOVES))
         {
             buff << "pair of ";
         }
@@ -2919,11 +2918,6 @@ bool is_bad_item(const item_def &item)
         }
 
     case OBJ_ARMOUR:
-        if (is_unrandom_artefact(item, UNRAND_CHARLATANS_ORB)
-            && you.has_mutation(MUT_NO_ARTIFICE))
-        {
-            return true;
-        }
         return false;
 
     default:

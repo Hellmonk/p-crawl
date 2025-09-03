@@ -619,12 +619,7 @@ public:
             mpr("Magic washes over you without effect.");
         else
         {
-            if (is_potion && you.unrand_equipped(UNRAND_KRYIAS))
-            {
-                mprf("%s enhances the restoration.",
-                     you.body_armour()->name(DESC_THE, false, false, false).c_str());
-            }
-            else if (is_potion && you.has_mutation(MUT_DOUBLE_POTION_HEAL))
+            if (is_potion && you.has_mutation(MUT_DOUBLE_POTION_HEAL))
                 mpr("You savour every drop.");
 
             mpr("Magic courses through your body.");

@@ -4336,9 +4336,6 @@ bool player_has_ability(ability_type abil, bool include_unusable)
     case ABIL_EVOKE_DISPATER:
         return you.unrand_equipped(UNRAND_DISPATER)
                && !you.has_mutation(MUT_NO_ARTIFICE);
-    case ABIL_EVOKE_OLGREB:
-        return you.unrand_equipped(UNRAND_OLGREB)
-               && !you.has_mutation(MUT_NO_ARTIFICE);
     default:
         // removed abilities handled here
         return false;

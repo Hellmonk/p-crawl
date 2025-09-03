@@ -476,9 +476,6 @@ void wizard_value_item()
  */
 void wizard_create_all_artefacts(bool override_unique)
 {
-    you.octopus_king_rings = 0x00;
-    int octorings = 8;
-
     // Create all unrandarts.
     for (int i = 0; i < NUM_UNRANDARTS; ++i)
     {
@@ -534,10 +531,6 @@ void wizard_create_all_artefacts(bool override_unique)
                                             << ")" << endl;
         }
         move_item_to_grid(&islot, you.pos());
-
-        // Make all eight.
-        if (index == UNRAND_OCTOPUS_KING_RING && --octorings)
-            i--;
     }
 
     // Create Horn of Geryon

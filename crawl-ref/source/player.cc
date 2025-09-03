@@ -1249,13 +1249,6 @@ int player_res_fire(bool allow_random, bool temp, bool items)
 
         // randart weapons:
         rf += you.scan_artefacts(ARTP_FIRE);
-
-        // dragonskin cloak: 0.5 to draconic resistances
-        if (allow_random && you.unrand_equipped(UNRAND_DRAGONSKIN)
-            && coinflip())
-        {
-            rf++;
-        }
     }
 
     // mutations:
@@ -1353,13 +1346,6 @@ int player_res_cold(bool allow_random, bool temp, bool items)
 
         // randart weapons:
         rc += you.scan_artefacts(ARTP_COLD);
-
-        // dragonskin cloak: 0.5 to draconic resistances
-        if (allow_random && you.unrand_equipped(UNRAND_DRAGONSKIN)
-            && coinflip())
-        {
-            rc++;
-        }
     }
 
     // mutations:
@@ -1402,10 +1388,6 @@ int player_res_corrosion(bool allow_random, bool temp, bool items)
         {
             return 1;
         }
-
-        // dragonskin cloak: 0.5 to draconic resistances
-        if (allow_random && you.unrand_equipped(UNRAND_DRAGONSKIN) && coinflip())
-            return 1;
     }
 
     return 0;
@@ -1427,13 +1409,6 @@ int player_res_electricity(bool allow_random, bool temp, bool items)
 
         // randart weapons:
         re += you.scan_artefacts(ARTP_ELECTRICITY);
-
-        // dragonskin cloak: 0.5 to draconic resistances
-        if (allow_random && you.unrand_equipped(UNRAND_DRAGONSKIN)
-            && coinflip())
-        {
-            re++;
-        }
     }
 
     // mutations:
@@ -1474,7 +1449,6 @@ int player_res_poison(bool allow_random, bool temp, bool items, bool forms)
     if (you.is_nonliving(temp, forms)
         || you.is_lifeless_undead(temp)
         || form_rp == 3
-        || items && you.unrand_equipped(UNRAND_OLGREB)
         || temp && you.duration[DUR_DIVINE_STAMINA])
     {
         return 3;
@@ -1497,13 +1471,6 @@ int player_res_poison(bool allow_random, bool temp, bool items, bool forms)
         const item_def *body_armour = you.body_armour();
         if (body_armour)
             rp += armour_type_prop(body_armour->sub_type, ARMF_RES_POISON);
-
-        // dragonskin cloak: 0.5 to draconic resistances
-        if (allow_random && you.unrand_equipped(UNRAND_DRAGONSKIN)
-            && coinflip())
-        {
-            rp++;
-        }
     }
 
     // mutations:
@@ -1664,13 +1631,6 @@ int player_prot_life(bool allow_random, bool temp, bool items)
         if (body_armour)
             pl += armour_type_prop(body_armour->sub_type, ARMF_RES_NEG);
 
-        // dragonskin cloak: 0.5 to draconic resistances
-        if (allow_random && you.unrand_equipped(UNRAND_DRAGONSKIN)
-            && coinflip())
-        {
-            pl++;
-        }
-
         pl += you.wearing(OBJ_STAVES, STAFF_DEATH);
     }
 
@@ -1703,10 +1663,6 @@ int player_movement_speed(bool check_terrain, bool temp)
     {
         mv += 3;
     }
-
-    // armour
-    if (you.unrand_equipped(UNRAND_LIGHTNING_SCALES))
-        mv -= 1;
 
     mv += you.wearing_ego(OBJ_ARMOUR, SPARM_PONDEROUSNESS);
 
@@ -3858,12 +3814,7 @@ void contaminate_player(int change, bool controlled, bool msg)
 
     if (change > 0)
     {
-        const int mul = you.has_mutation(MUT_CONTAMINATION_SUSCEPTIBLE)
-#if TAG_MAJOR_VERSION == 34
-                            || you.unrand_equipped(UNRAND_ETHERIC_CAGE)
-#endif
-                            ? 2 : 1;
-
+        const int mul = you.has_mutation(MUT_CONTAMINATION_SUSCEPTIBLE) ? 2 : 1;
         change *= mul;
     }
 
@@ -4738,12 +4689,6 @@ bool invis_allowed(bool quiet, string *fail_reason, bool temp)
     else if (you.haloed() && you.halo_radius() != -1)
     {
         vector<string> sources;
-
-        if (temp && you.unrand_equipped(UNRAND_EOS))
-            sources.push_back("weapon");
-
-        if (temp && you.unrand_equipped(UNRAND_VAINGLORY))
-            sources.push_back("crown");
 
         if (temp && you.wearing_ego(OBJ_ARMOUR, SPARM_LIGHT))
             sources.push_back("orb");
@@ -5767,9 +5712,6 @@ int player::skill(skill_type sk, int scale, bool real, bool temp) const
     if (ash_has_skill_boost(sk))
             level = ash_skill_boost(sk, scale);
 
-    if (you.unrand_equipped(UNRAND_CHARLATANS_ORB) && sk != SK_EVOCATIONS)
-        level += skill(SK_EVOCATIONS, 10, true, false) * scale / 50;
-
     if (temp && duration[DUR_HEROISM] && sk <= SK_LAST_MUNDANE)
         level += 5 * scale;
 
@@ -6079,15 +6021,6 @@ int player::corrosion_amount() const
     return corrosion;
 }
 
-static int _meek_bonus()
-{
-    const int scale_bottom = 27; // full bonus given at this HP and below
-    const int hp_per_ac = 4;
-    const int max_ac = 7;
-    const int scale_top = scale_bottom + hp_per_ac * max_ac;
-    return min(max(0, (scale_top - you.hp) / hp_per_ac), max_ac);
-}
-
 int player::armour_class() const
 {
     return div_rand_round(armour_class_scaled(100), 100);
@@ -6116,11 +6049,7 @@ int player::armour_class_scaled(int scale) const
         AC += 300;
 
     if (duration[DUR_SPWPN_PROTECTION])
-    {
         AC += 700;
-        if (you.unrand_equipped(UNRAND_MEEK))
-            AC += _meek_bonus() * 100;
-    }
 
     if (you.wearing_ego(OBJ_GIZMOS, SPGIZMO_PARRYREV))
     {
@@ -6542,11 +6471,7 @@ bool player::res_torment() const
 
     return get_form()->res_neg() == 3
            || you.petrified()
-           || bool(you.holiness() & MH_PLANT)
-#if TAG_MAJOR_VERSION == 34
-           || you.unrand_equipped(UNRAND_ETERNAL_TORMENT)
-#endif
-           ;
+           || bool(you.holiness() & MH_PLANT);
 }
 
 bool player::res_polar_vortex() const
@@ -6762,7 +6687,7 @@ bool player::permanent_flight(bool include_equip) const
  */
 bool player::spellcasting_unholy() const
 {
-    return you.unrand_equipped(UNRAND_MAJIN);
+    return false;
 }
 
 /**
@@ -8166,14 +8091,7 @@ static int _get_potion_heal_factor(bool temp=true)
     // healing factor is expressed in halves, so default is 2/2 -- 100%.
     int factor = 2;
 
-    // start with penalties
-    if (temp)
-        factor -= you.unrand_equipped(UNRAND_VINES) ? 2 : 0;
     factor -= you.mutation[MUT_NO_POTION_HEAL];
-
-    // then apply bonuses - Kryia's doubles potion healing
-    if (temp)
-        factor *= you.unrand_equipped(UNRAND_KRYIAS) ? 2 : 1;
 
     if (you.mutation[MUT_DOUBLE_POTION_HEAL])
         factor *= 2;
@@ -8188,12 +8106,7 @@ void print_potion_heal_message()
     // and reduced healing.
     if (_get_potion_heal_factor() > 2)
     {
-        if (you.unrand_equipped(UNRAND_KRYIAS))
-        {
-            mprf("%s enhances the healing.",
-                 you.body_armour()->name(DESC_THE, false, false, false).c_str());
-        }
-        else if (you.has_mutation(MUT_DOUBLE_POTION_HEAL))
+        if (you.has_mutation(MUT_DOUBLE_POTION_HEAL))
             mpr("You savour every drop.");
         else
             mpr("The healing is enhanced."); // bad message, but this should
@@ -8217,12 +8130,6 @@ int player::scale_potion_healing(int healing_amount)
 
 int player::scale_potion_mp_healing(int healing_amount)
 {
-    // Slightly ugly to partially duplicate the logic of _get_potion_heal_factor()
-    // but vine stalkers shouldn't be unable to get value out of !magic, and so
-    // this must ignore MUT_NO_POTION_HEAL
-    if (you.unrand_equipped(UNRAND_KRYIAS))
-        healing_amount *= 2;
-
     if (you.mutation[MUT_DOUBLE_POTION_HEAL])
         healing_amount *= 2;
 
@@ -8728,30 +8635,6 @@ void refresh_weapon_protection()
         mpr("Your weapon exudes an aura of protection.");
 
     you.increase_duration(DUR_SPWPN_PROTECTION, 3 + random2(2), 5);
-    you.redraw_armour_class = true;
-}
-
-void refresh_meek_bonus()
-{
-    const string MEEK_KEY = "meek_ac_key";
-    const bool meek_possible = you.duration[DUR_SPWPN_PROTECTION]
-                            && you.unrand_equipped(UNRAND_MEEK);
-    const int bonus_ac = _meek_bonus();
-    if (!meek_possible || !bonus_ac)
-    {
-        if (you.props.exists(MEEK_KEY))
-        {
-            you.props.erase(MEEK_KEY);
-            you.redraw_armour_class = true;
-        }
-        return;
-    }
-
-    const int last_bonus = you.props[MEEK_KEY].get_int();
-    if (last_bonus == bonus_ac)
-        return;
-
-    you.props[MEEK_KEY] = bonus_ac;
     you.redraw_armour_class = true;
 }
 

@@ -567,8 +567,7 @@ int attack::inflict_damage(int dam, beam_type flavour, bool clean)
         flavour = special_damage_flavour;
     // Auxes temporarily clear damage_brand so we don't need to check
     if (damage_brand == SPWPN_REAPING
-        || damage_brand == SPWPN_CHAOS && one_chance_in(100)
-        || attacker->is_player() && you.unrand_equipped(UNRAND_SKULL_OF_ZONGULDROK))
+        || damage_brand == SPWPN_CHAOS && one_chance_in(100))
     {
         defender->props[REAPING_DAMAGE_KEY].get_int() += dam;
         // With two reapers of different friendliness, the most recent one
@@ -1230,11 +1229,6 @@ bool attack::apply_damage_brand(const char *what)
         if (responsible->is_player())
             did_god_conduct(DID_CHAOS, 2 + random2(3));
     }
-
-    // Since this adds the reaping brand to all attacks, check it after all
-    // other brands.
-    if (attacker->is_player() && you.unrand_equipped(UNRAND_SKULL_OF_ZONGULDROK))
-        did_god_conduct(DID_EVIL, 2 + random2(3));
 
     if (!obvious_effect)
         obvious_effect = !special_damage_message.empty();

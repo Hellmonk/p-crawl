@@ -1081,15 +1081,13 @@ bool attack_cleaves(const actor &attacker, const item_def *weap)
 
 bool weapon_cleaves(const item_def &weap)
 {
-    return is_axe(weap) || is_unrandom_artefact(weap, UNRAND_LOCHABER_AXE);
+    return is_axe(weap);
 }
 
 int weapon_hits_per_swing(const item_def &weap)
 {
     if (!weap.is_type(OBJ_WEAPONS, WPN_QUICK_BLADE))
         return 1;
-    if (is_unrandom_artefact(weap, UNRAND_GYRE))
-        return 4;
     return 2;
 }
 

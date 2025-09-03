@@ -1231,12 +1231,6 @@ static bool _is_signature_weapon(const monster* mons, const item_def &weapon)
         if (mons->type == MONS_MENNAS)
             return get_weapon_brand(weapon) == SPWPN_HOLY_WRATH;
 
-        if (mons->type == MONS_ARACHNE)
-        {
-            return weapon.is_type(OBJ_STAVES, STAFF_ALCHEMY)
-                   || is_unrandom_artefact(weapon, UNRAND_OLGREB);
-        }
-
         if (mons->type == MONS_FANNAR)
             return weapon.is_type(OBJ_STAVES, STAFF_COLD);
 
@@ -3706,12 +3700,6 @@ bool monster::res_water_drowning() const
 int monster::res_poison(bool temp) const
 {
     int u = get_mons_resist(*this, MR_RES_POISON);
-
-    if (const item_def* w = primary_weapon())
-    {
-        if (is_unrandom_artefact(*w, UNRAND_OLGREB))
-            return 3;
-    }
 
     if (temp && has_ench(ENCH_POISON_VULN))
         u--;

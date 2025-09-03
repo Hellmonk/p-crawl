@@ -1685,16 +1685,6 @@ bool can_unequip_item(item_def& item, bool silent)
         return false;
     }
 
-    if (you.duration[DUR_VAINGLORY] && is_unrandom_artefact(item, UNRAND_VAINGLORY))
-    {
-        if (!silent)
-        {
-            mprf(MSGCH_PROMPT, "It would be unfitting for someone so glorious to "
-                               "remove their crown in front of an audience.");
-        }
-        return false;
-    }
-
     return true;
 }
 
@@ -1973,23 +1963,6 @@ bool drink(item_def* potion)
     }
 
     const bool nearby_mons = there_are_monsters_nearby(true, true, false);
-    if (you.unrand_equipped(UNRAND_VICTORY, true)
-        && !you.props.exists(VICTORY_CONDUCT_KEY))
-    {
-        item_def *item = you.equipment.get_first_slot_item(SLOT_BODY_ARMOUR, true);
-        string unrand_prompt = make_stringf("Really quaff with monsters nearby "
-                                            "while wearing %s?",
-                                            item->name(DESC_THE, false, true,
-                                                       false).c_str());
-
-        if (item->props[VICTORY_STAT_KEY].get_int() > 0
-            && nearby_mons
-            && !yesno(unrand_prompt.c_str(), false, 'n'))
-        {
-            canned_msg(MSG_OK);
-            return false;
-        }
-    }
 
     // The "> 1" part is to reduce the amount of times that Xom is
     // stimulated when you are a low-level 1 trying your first unknown
@@ -2013,8 +1986,7 @@ bool drink(item_def* potion)
         oni_drunken_swing();
     }
 
-    // Check for Delatra's gloves before potentially melding them.
-    bool heal_on_id = you.unrand_equipped(UNRAND_DELATRAS_GLOVES);
+    bool heal_on_id = false;
 
     if (!quaff_potion(*potion))
         return false;
@@ -2051,10 +2023,6 @@ bool drink(item_def* potion)
             xom_is_stimulated(200);
         }
     }
-
-    // Drinking with hostile visible mons nearby resets unrand "Victory" stats.
-    if (you.unrand_equipped(UNRAND_VICTORY, true) && nearby_mons)
-        you.props[VICTORY_CONDUCT_KEY] = true;
 
     // We'll need this later, after destroying the item.
     const bool was_exp = potion->sub_type == POT_EXPERIENCE;
@@ -2854,23 +2822,6 @@ bool read(item_def* scroll, dist *target)
     }
 
     const bool nearby_mons = there_are_monsters_nearby(true, true, false);
-    if (you.unrand_equipped(UNRAND_VICTORY, true)
-        && !you.props.exists(VICTORY_CONDUCT_KEY))
-    {
-        item_def *item = you.equipment.get_first_slot_item(SLOT_BODY_ARMOUR, true);
-        string unrand_prompt = make_stringf("Really read with monsters nearby "
-                                            "while wearing %s?",
-                                            item->name(DESC_THE, false, true,
-                                                       false).c_str());
-
-        if (item->props[VICTORY_STAT_KEY].get_int() > 0
-            && nearby_mons
-            && !yesno(unrand_prompt.c_str(), false, 'n'))
-        {
-            canned_msg(MSG_OK);
-            return false;
-        }
-    }
 
     // Ok - now we FINALLY get to read a scroll !!! {dlb}
     you.turn_is_over = true;
@@ -3169,31 +3120,6 @@ bool read(item_def* scroll, dist *target)
         mprf("It %s %s.",
              scroll->quantity < prev_quantity ? "was" : "is",
              article_a(scroll_name).c_str());
-    }
-
-    if (!alreadyknown)
-    {
-        if (you.unrand_equipped(UNRAND_DELATRAS_GLOVES))
-        {
-            mpr("The energy of discovery flows from your fingertips!");
-            potionlike_effect(POT_MAGIC, 40);
-        }
-
-        if (dangerous)
-        {
-            // Xom loves it when you read an unknown scroll and there is a
-            // dangerous monster nearby... (though not as much as potions
-            // since there are no *really* bad scrolls, merely useless ones).
-            xom_is_stimulated(bad_effect ? 100 : 50);
-        }
-    }
-
-    // Reading with hostile visible mons nearby resets unrand "Victory" stats.
-    if (you.unrand_equipped(UNRAND_VICTORY, true)
-        && nearby_mons
-        && !cancel_scroll)
-    {
-        you.props[VICTORY_CONDUCT_KEY] = true;
     }
 
     if (!alreadyknown)

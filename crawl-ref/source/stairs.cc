@@ -447,25 +447,6 @@ static void _hell_effects()
     }
 }
 
-static void _vainglory_arrival()
-{
-    vector<monster*> mons;
-    for (monster_near_iterator mi(you.pos()); mi; ++mi)
-    {
-        if (!mi->is_firewood() && !mi->wont_attack())
-            mons.push_back(*mi);
-    }
-
-    if (!mons.empty())
-    {
-        mprf(MSGCH_WARN, "You announce your regal presence to all who would look upon you.");
-        for (monster* mon : mons)
-            behaviour_event(mon, ME_ANNOY, &you);
-
-        you.duration[DUR_VAINGLORY] = random_range(120, 220);
-    }
-}
-
 static void _new_level_amuses_xom(dungeon_feature_type feat,
                                   dungeon_feature_type old_feat,
                                   bool shaft, int shaft_depth, bool voluntary)
@@ -1014,9 +995,6 @@ void floor_transition(dungeon_feature_type how,
     if (is_hell_subbranch(you.where_are_you))
         _hell_effects();
 
-    if (you.unrand_equipped(UNRAND_VAINGLORY))
-        _vainglory_arrival();
-
     trackers_init_new_level();
 
     if (update_travel_cache && !shaft)
@@ -1376,7 +1354,7 @@ static void _update_level_state()
     env.orb_pos = coord_def();
     if (item_def* orb = find_floor_item(OBJ_ORBS, ORB_ZOT))
         env.orb_pos = orb->pos;
-    else if (player_has_orb() || you.unrand_equipped(UNRAND_CHARLATANS_ORB))
+    else if (player_has_orb())
     {
         if (player_has_orb())
             env.orb_pos = you.pos();

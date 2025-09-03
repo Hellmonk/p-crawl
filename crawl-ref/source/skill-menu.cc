@@ -467,37 +467,6 @@ skill_menu_state SkillMenuSwitch::get_state()
     return m_state;
 }
 
-static bool _charlatan_bonus()
-{
-    if (you.unrand_equipped(UNRAND_CHARLATANS_ORB)
-        && you.skill(SK_EVOCATIONS, 10, true) > 0)
-    {
-        return true;
-    }
-    return false;
-}
-
-static bool _hermit_bonus()
-{
-    if (you.unrand_equipped(UNRAND_HERMITS_PENDANT)
-        && you.skill(SK_INVOCATIONS, 10,  true) < 140)
-    {
-        return true;
-    }
-    return false;
-}
-
-static bool _hermit_penalty()
-{
-    if (you.unrand_equipped(UNRAND_HERMITS_PENDANT))
-    {
-        if (you.skill(SK_EVOCATIONS, 10, true) > 0
-            || you.skill(SK_INVOCATIONS, 10, true) > 140)
-        return true;
-    }
-    return false;
-}
-
 string SkillMenuSwitch::get_help()
 {
     switch (m_state)
@@ -532,12 +501,8 @@ string SkillMenuSwitch::get_help()
                 causes.push_back(apostrophise(god_name(you.religion))
                                  + " power");
             }
-            if (_hermit_bonus())
-                causes.push_back("the Hermit's pendant");
             if (artefacts_enhance_skill())
                 causes.push_back("your equipment");
-            if (_charlatan_bonus())
-                causes.push_back("the Charlatan's Orb");
             if (you.form == transformation::walking_scroll)
                 causes.push_back("scribal knowledge");
             result = "Skills enhanced by "
@@ -550,8 +515,6 @@ string SkillMenuSwitch::get_help()
             vector<const char *> causes;
             if (player_under_penance(GOD_ASHENZARI))
                 causes.push_back("Ashenzari's anger");
-            if (_hermit_penalty())
-                causes.push_back("the Hermit's pendant");
             if (!result.empty())
                 result += "\n";
             result += "Skills reduced by "

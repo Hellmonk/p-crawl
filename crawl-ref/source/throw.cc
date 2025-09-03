@@ -538,9 +538,6 @@ static void _handle_cannon_fx(actor &act, const item_def &weapon, coord_def targ
         break;
     }
 
-    if (!is_unrandom_artefact(weapon, UNRAND_MULE))
-        return;
-
     // knock back
     if (coinflip())
         act.stumble_away_from(targ, "Mule's kick");
@@ -691,19 +688,6 @@ void throw_it(quiver::action &a)
         {
             you.turn_is_over = false;
             return;
-        }
-
-        // Warn about Mule potentially knocking the player back into a trap.
-        if (launcher && is_unrandom_artefact(*launcher, UNRAND_MULE))
-        {
-            const coord_def back = you.stumble_pos(a.target.target);
-            if (!back.origin()
-                && back != you.pos()
-                && !check_moveto(back, "potentially stumble back", false))
-            {
-                you.turn_is_over = false;
-                return;
-            }
         }
     }
 

@@ -191,7 +191,7 @@ static void _update_agrid()
     for (monster_iterator mi; mi; ++mi)
         _actor_areas(*mi);
 
-    if ((player_has_orb() || you.unrand_equipped(UNRAND_CHARLATANS_ORB))
+    if ((player_has_orb())
          && !you.pos().origin())
     {
         const int r = 2;
@@ -593,8 +593,6 @@ int player::halo_radius() const
         size = max(size, 3);
     else if (you.props.exists(WU_JIAN_HEAVENLY_STORM_KEY))
         size = max(size, 2);
-    if (you.unrand_equipped(UNRAND_VAINGLORY))
-        size = max(size, 0);
 
     return size;
 }

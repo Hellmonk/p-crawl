@@ -1576,45 +1576,6 @@ const unrandart_entry* get_unrand_entry(int unrand_index)
         return &unranddata[unrand_index];
 }
 
-static int _preferred_max_level(int unrand_index)
-{
-    // TODO: turn this into a max preferred level field in art-data.txt
-    switch (unrand_index)
-    {
-    case UNRAND_DELATRAS_GLOVES:
-        return 6;
-    case UNRAND_WOODCUTTERS_AXE:
-    case UNRAND_THROATCUTTER:
-    case UNRAND_HERMITS_PENDANT:
-        return 9;
-    case UNRAND_DEVASTATOR:
-    case UNRAND_RATSKIN_CLOAK:
-    case UNRAND_KRYIAS:
-    case UNRAND_LEAR:
-    case UNRAND_OCTOPUS_KING:
-    case UNRAND_AUGMENTATION:
-    case UNRAND_MEEK:
-    case UNRAND_ELEMENTAL_VULNERABILITY:
-    case UNRAND_MISFORTUNE:
-    case UNRAND_FORCE_LANCE:
-    case UNRAND_VICTORY:
-        return 11;
-    default:
-        return -1;
-    }
-}
-
-static int _unrand_weight(int unrand_index, int item_level)
-{
-    // Early-game unrands (with a preferred max depth != -1) are
-    // weighted higher within their depth and lower past it.
-    // Normal unrands have a flat weight at all depths.
-    const int pref_max_level = _preferred_max_level(unrand_index);
-    if (pref_max_level == -1)
-        return 10;
-    return item_level <= pref_max_level ? 100 : 1;
-}
-
 int find_okay_unrandart(uint8_t aclass, uint8_t atype, int item_level, bool in_abyss)
 {
     int chosen_unrand_idx = -1;
@@ -1646,17 +1607,6 @@ int find_okay_unrandart(uint8_t aclass, uint8_t atype, int item_level, bool in_a
             continue;
         }
 
-        if (in_abyss && status == UNIQ_LOST_IN_ABYSS
-            && index == UNRAND_OCTOPUS_KING_RING
-            && you.octopus_king_rings == 0xff)
-        {
-            // the last octopus ring is lost in the abyss. We don't have the
-            // machinery to bring back the correct one, and it doesn't seem
-            // worth implementing. So just skip it. (TODO: clear the flag for
-            // a lost octoring on losing it?)
-            continue;
-        }
-
         // If an item does not generate randomly, we can only produce its index
         // here if it was lost in the abyss
         if ((!in_abyss || status != UNIQ_LOST_IN_ABYSS)
@@ -1679,7 +1629,7 @@ int find_okay_unrandart(uint8_t aclass, uint8_t atype, int item_level, bool in_a
             continue;
         }
 
-        const int weight = _unrand_weight(index, item_level);
+        const int weight = 100;
         seen_weight += weight;
         if (x_chance_in_y(weight, seen_weight))
             chosen_unrand_idx = index;
@@ -2115,37 +2065,6 @@ static void _make_faerie_armour(item_def &item)
     item.plus = 2 + random2(4) + random2(4);
 }
 
-static jewellery_type octoring_types[8] =
-{
-    RING_SEE_INVISIBLE, RING_PROTECTION_FROM_FIRE, RING_PROTECTION_FROM_COLD,
-    RING_RESIST_CORROSION, RING_FLIGHT, RING_WIZARDRY, RING_MAGICAL_POWER,
-    RING_POSITIVE_ENERGY
-};
-
-static void _make_octoring(item_def &item)
-{
-    if (you.octopus_king_rings == 0xff)
-    {
-        // possible this is too narrow: if this causes unexpected wizmode
-        // crashes, just back off to asserting you.wizard.
-        ASSERT(crawl_state.prev_cmd == CMD_WIZARD);
-        item.sub_type = octoring_types[random2(8)];
-        return;
-    }
-
-    int which = 0;
-    do which = random2(8); while (you.octopus_king_rings & (1 << which));
-
-    item.sub_type = octoring_types[which];
-
-    // Save that we've found that particular type
-    you.octopus_king_rings |= 1 << which;
-
-    // If there are any types left, unset the 'already found' flag
-    if (you.octopus_king_rings != 0xff)
-        _set_unique_item_existence(UNRAND_OCTOPUS_KING_RING, false);
-}
-
 bool make_item_unrandart(item_def &item, int unrand_index)
 {
     ASSERT_RANGE(unrand_index, UNRAND_START + 1, (UNRAND_START + NUM_UNRANDARTS));
@@ -2168,8 +2087,6 @@ bool make_item_unrandart(item_def &item, int unrand_index)
 
     if (unrand_index == UNRAND_FAERIE)
         _make_faerie_armour(item);
-    else if (unrand_index == UNRAND_OCTOPUS_KING_RING)
-        _make_octoring(item);
     else if (unrand_index == UNRAND_WOE && !you.has_mutation(MUT_NO_GRASPING)
              && !can_equip_item(item))
     {

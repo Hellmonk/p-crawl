@@ -1731,8 +1731,6 @@ hands_reqd_type basic_hands_reqd(const item_def &item, size_type size)
     // Non-weapons.
     if (wpn_type == WPN_UNKNOWN)
         return HANDS_ONE;
-    if (is_unrandom_artefact(item, UNRAND_GYRE))
-        return HANDS_TWO;
     return size >= Weapon_prop[Weapon_index[wpn_type]].min_1h_size ? HANDS_ONE
                                                                    : HANDS_TWO;
 }
@@ -1942,12 +1940,6 @@ skill_type item_attack_skill(object_class_type wclass, int wtype)
 // True if item is a staff that deals extra damage based on Evocations skill.
 static bool _staff_uses_evocations(const item_def &item)
 {
-    if (is_unrandom_artefact(item, UNRAND_ELEMENTAL_STAFF)
-        || is_unrandom_artefact(item, UNRAND_OLGREB))
-    {
-        return true;
-    }
-
     return item.base_type == OBJ_STAVES;
 }
 
@@ -2279,7 +2271,7 @@ int weapon_reach(const item_def &item)
 {
     if (is_unrandom_artefact(item, UNRAND_RIFT))
         return 3;
-    if (is_polearm(item) || is_unrandom_artefact(item, UNRAND_LOCHABER_AXE))
+    if (is_polearm(item))
         return 2;
 
     return 1;
@@ -2828,8 +2820,7 @@ bool gives_ability(const item_def &item)
     // Check for evokable artefact properties.
     if (artefact_property(item, ARTP_INVISIBLE)
         || artefact_property(item, ARTP_BLINK)
-        || is_unrandom_artefact(item, UNRAND_DISPATER)
-        || is_unrandom_artefact(item, UNRAND_OLGREB))
+        || is_unrandom_artefact(item, UNRAND_DISPATER))
     {
         return true;
     }
@@ -3015,10 +3006,7 @@ vector<equipment_slot> get_all_item_slots(const item_def& item)
                 return {SLOT_BARDING};
 
             case SLOT_CLOAK:
-                if (is_unrandom_artefact(item, UNRAND_FISTICLOAK))
-                    return {SLOT_CLOAK, SLOT_HELMET};
-                else
-                    return {SLOT_CLOAK};
+                return {SLOT_CLOAK};
 
             case SLOT_HELMET:
                 return {SLOT_HELMET};
@@ -3686,18 +3674,7 @@ bool item_gives_equip_slots(const item_def& item)
     if (!is_unrandom_artefact(item))
         return false;
 
-    switch (item.unrand_idx)
-    {
-        case UNRAND_FINGER_AMULET:
-        case UNRAND_JUSTICARS_REGALIA:
-        case UNRAND_FISTICLOAK:
-        case UNRAND_SKULL_OF_ZONGULDROK:
-        case UNRAND_VAINGLORY:
-            return true;
-
-        default:
-            return false;
-    }
+    return false;
 }
 
 bool item_grants_flight(const item_def& item)
