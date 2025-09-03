@@ -3222,17 +3222,6 @@ void display_char_status()
     _display_damage_rating(you.weapon());
     if (offhand)
         _display_damage_rating(offhand);
-
-    // Display base attributes, if necessary.
-    if (innate_stat(STAT_STR) != you.strength()
-        || innate_stat(STAT_INT) != you.intel()
-        || innate_stat(STAT_DEX) != you.dex())
-    {
-        mprf("Your base attributes are Str %d, Int %d, Dex %d.",
-             innate_stat(STAT_STR),
-             innate_stat(STAT_INT),
-             innate_stat(STAT_DEX));
-    }
 }
 
 bool player::clarity(bool items) const
