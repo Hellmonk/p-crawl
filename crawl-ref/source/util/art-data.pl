@@ -613,7 +613,7 @@ sub art_to_str
 
         if (!defined($field_type{$part}))
         {
-            print STDERR "No field type for part '$part'\n";
+            # print STDERR "No field type for part '$part'\n";
             next;
         }
 

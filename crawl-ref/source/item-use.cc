@@ -1962,8 +1962,6 @@ bool drink(item_def* potion)
         return false;
     }
 
-    const bool nearby_mons = there_are_monsters_nearby(true, true, false);
-
     // The "> 1" part is to reduce the amount of times that Xom is
     // stimulated when you are a low-level 1 trying your first unknown
     // potions on monsters.
@@ -2821,8 +2819,6 @@ bool read(item_def* scroll, dist *target)
         }
     }
 
-    const bool nearby_mons = there_are_monsters_nearby(true, true, false);
-
     // Ok - now we FINALLY get to read a scroll !!! {dlb}
     you.turn_is_over = true;
 
@@ -2853,11 +2849,8 @@ bool read(item_def* scroll, dist *target)
         // Actual removal of scroll done afterwards. -- bwr
     }
 
-    const bool dangerous = player_in_a_dangerous_place();
-
     // ... but some scrolls may still be cancelled afterwards.
     bool cancel_scroll = false;
-    bool bad_effect = false; // for Xom: result is bad (or at least dangerous)
 
     switch (which_scroll)
     {
@@ -2948,7 +2941,6 @@ bool read(item_def* scroll, dist *target)
 
         // This is only naughty if you know you're doing it.
         did_god_conduct(DID_EVIL, 10, item_type_known(*scroll));
-        bad_effect = !you.res_torment();
         break;
 
     case SCR_IMMOLATION:
@@ -2971,8 +2963,6 @@ bool read(item_def* scroll, dist *target)
             mpr("The creatures around you are filled with an inner flame!");
         else
             mpr("The air around you briefly surges with heat, but it dissipates.");
-
-        bad_effect = true;
         break;
     }
 
@@ -2982,8 +2972,6 @@ bool read(item_def* scroll, dist *target)
         cancel_scroll = result == spret::abort;
         if (!cancel_scroll)
             mpr(pre_succ_msg);
-        // amusing to Xom, at least
-        bad_effect = result == spret::success && !player_res_poison();
         break;
     }
 
