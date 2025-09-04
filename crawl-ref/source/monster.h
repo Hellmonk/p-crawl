@@ -281,8 +281,7 @@ public:
                           bool base = false) const override;
     brand_type  damage_brand(int which_attack = -1) override;
     vorpal_damage_type damage_type(int which_attack = -1) override;
-    random_var  attack_delay(const item_def *projectile = nullptr,
-                             bool rescale = true) const override;
+    random_var  attack_delay() const override;
     int         has_claws(bool allow_tran = true) const override;
 
     int wearing(object_class_type obj_type, int sub_type,
@@ -393,7 +392,7 @@ public:
     bool res_sticky_flame() const override;
     int res_holy_energy() const override;
     int res_foul_flame() const override;
-    int res_negative_energy(bool intrinsic_only = false) const override;
+    int res_negative_energy(bool /*intrinsic_only*/ = false) const override;
     bool res_torment() const override;
     int res_corr() const override;
     bool res_polar_vortex() const override;
@@ -470,7 +469,6 @@ public:
 
     int base_armour_class() const;
     int armour_class() const override;
-    int gdr_perc(bool) const override { return 0; }
     int base_evasion() const;
     int evasion(bool ignore_temporary = false,
                 const actor* /*attacker*/ = nullptr) const override;

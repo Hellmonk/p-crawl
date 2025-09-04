@@ -171,8 +171,7 @@ LUAFN(l_spells_path)
  */
 LUAFN(l_spells_fail)
 {
-    spell_type spell = spell_by_name(luaL_checkstring(ls, 1), false);
-    PLUARET(number, failure_rate_to_int(raw_spell_fail(spell)));
+    PLUARET(number, 0);
 }
 
 /*** The miscast severity of the spell as a number in [0,5].
@@ -188,8 +187,7 @@ LUAFN(l_spells_fail)
  */
 LUAFN(l_spells_fail_severity)
 {
-    spell_type spell = spell_by_name(luaL_checkstring(ls, 1), false);
-    PLUARET(number, fail_severity(spell));
+    PLUARET(number, 0);
 }
 
 /*** The current spellpower (as an integer percentage 0-100).
@@ -211,7 +209,7 @@ LUAFN(l_spells_power_perc)
 LUAFN(l_spells_power)
 {
     spell_type spell = spell_by_name(luaL_checkstring(ls, 1), false);
-    PLUARET(number, power_to_barcount(calc_spell_power(spell)));
+    PLUARET(number, calc_spell_power(spell));
 }
 
 /*** The maximum spellpower (in bars).
@@ -222,7 +220,7 @@ LUAFN(l_spells_power)
 LUAFN(l_spells_max_power)
 {
     spell_type spell = spell_by_name(luaL_checkstring(ls, 1), false);
-    PLUARET(number, power_to_barcount(spell_power_cap(spell)));
+    PLUARET(number, spell_power_cap(spell));
 }
 
 /*** Does this spell take a direction or target?
@@ -289,7 +287,7 @@ LUAFN(l_spells_god_likes)
 }
 
 /*** Does our god hate this spell?
- * Casting this will result in pennance or excommunication.
+ * Casting this is banned.
  * @tparam string name
  * @treturn boolean
  * @function god_hates

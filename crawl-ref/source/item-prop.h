@@ -180,7 +180,6 @@ bool is_crossbow(const item_def &item) PURE;
 bool is_axe(const item_def &item) PURE;
 bool is_polearm(const item_def &item) PURE;
 bool is_short_blade(const item_def &item) PURE;
-bool is_slowed_by_armour(const item_def *item) PURE;
 const char *ammo_name(missile_type ammo) IMMUTABLE;
 bool is_throwable(const actor *actor, const item_def &wpn) PURE;
 bool is_launcher_ammo(const item_def &wpn) PURE;
@@ -188,7 +187,7 @@ launch_retval is_launched(const actor *actor, const item_def &missile) PURE;
 
 bool ammo_always_destroyed(const item_def &missile) PURE;
 bool ammo_never_destroyed(const item_def &missile) PURE;
-int  ammo_type_destroy_chance(int missile_type) PURE;
+int  ammo_type_skill_req(int missile_type) PURE;
 int  ammo_type_damage(int missile_type) PURE;
 
 int weapon_reach(const item_def &item) PURE;
@@ -230,9 +229,9 @@ int armour_type_prop(const uint8_t arm, const armour_flag prop) PURE;
 
 int get_armour_res_fire(const item_def &arm, bool check_artp) PURE;
 int get_armour_res_cold(const item_def &arm, bool check_artp) PURE;
-int get_armour_res_poison(const item_def &arm, bool check_artp) PURE;
+int get_armour_res_poison(const item_def &arm) PURE;
 int get_armour_res_elec(const item_def &arm, bool check_artp) PURE;
-int get_armour_life_protection(const item_def &arm, bool check_artp) PURE;
+int get_armour_life_protection(const item_def &arm) PURE;
 int get_armour_willpower(const item_def &arm, bool check_artp) PURE;
 int get_armour_res_corr(const item_def &arm) PURE;
 bool get_armour_see_invisible(const item_def &arm, bool check_artp) PURE;
@@ -240,9 +239,9 @@ bool get_armour_rampaging(const item_def &arm, bool check_artp) PURE;
 
 int get_jewellery_res_fire(const item_def &ring, bool check_artp) PURE;
 int get_jewellery_res_cold(const item_def &ring, bool check_artp) PURE;
-int get_jewellery_res_poison(const item_def &ring, bool check_artp) PURE;
+int get_jewellery_res_poison(const item_def &ring) PURE;
 int get_jewellery_res_elec(const item_def &ring, bool check_artp) PURE;
-int get_jewellery_life_protection(const item_def &ring, bool check_artp) PURE;
+int get_jewellery_life_protection(const item_def &ring) PURE;
 int get_jewellery_willpower(const item_def &ring, bool check_artp) PURE;
 bool get_jewellery_see_invisible(const item_def &ring, bool check_artp) PURE;
 

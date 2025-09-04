@@ -300,15 +300,6 @@ static const vector<property_descriptor> & _get_all_artp_desc_data()
         { ARTP_EVASION,
             "It affects your evasion (%d).",
             prop_note::numeral },
-        { ARTP_STRENGTH,
-            "It affects your strength (%d).",
-            prop_note::numeral },
-        { ARTP_INTELLIGENCE,
-            "It affects your intelligence (%d).",
-            prop_note::numeral },
-        { ARTP_DEXTERITY,
-            "It affects your dexterity (%d).",
-            prop_note::numeral },
         { ARTP_SLAYING,
             "It affects your accuracy & damage with ranged weapons and melee (%d).",
             prop_note::numeral },
@@ -321,12 +312,6 @@ static const vector<property_descriptor> & _get_all_artp_desc_data()
         { ARTP_ELECTRICITY,
             "It insulates you from electricity.",
             prop_note::plain },
-        { ARTP_POISON,
-            "It protects you from poison.",
-            prop_note::plain },
-        { ARTP_NEGATIVE_ENERGY,
-            "negative energy",
-            prop_note::symbolic },
         { ARTP_WILLPOWER,
             "buggy willpower",
             prop_note::symbolic },
@@ -336,9 +321,6 @@ static const vector<property_descriptor> & _get_all_artp_desc_data()
         { ARTP_MAGICAL_POWER,
             "It affects your magic capacity (%d).",
             prop_note::numeral },
-        { ARTP_SEE_INVISIBLE,
-            "It lets you see invisible.",
-            prop_note::plain },
         { ARTP_INVISIBLE,
             "It lets you turn invisible.",
             prop_note::plain },
@@ -372,9 +354,6 @@ static const vector<property_descriptor> & _get_all_artp_desc_data()
         { ARTP_REGENERATION,
             "It increases your rate of health regeneration.",
             prop_note::symbolic },
-        { ARTP_RCORR,
-            "It protects you from acid and corrosion.",
-            prop_note::plain },
         { ARTP_RMUT,
             "It protects you from mutation.",
             prop_note::plain },
@@ -386,9 +365,6 @@ static const vector<property_descriptor> & _get_all_artp_desc_data()
             prop_note::plain },
         { ARTP_SLOW,
             "It may slow you when you take damage.",
-            prop_note::plain },
-        { ARTP_FRAGILE,
-            "It will be destroyed if unequipped.",
             prop_note::plain },
         { ARTP_SHIELDING,
             "It affects your SH (%d).",
@@ -405,39 +381,33 @@ static const vector<property_descriptor> & _get_all_artp_desc_data()
         { ARTP_ARCHMAGI,
             "It increases the power of your magical spells.",
             prop_note::plain },
-        { ARTP_ENHANCE_CONJ,
-            "It increases the power of your Conjurations spells.",
-            prop_note::plain },
+        { ARTP_ENHANCE_ENCH,
+            "It increases your Enchantments skill (%d).",
+            prop_note::numeral },
         { ARTP_ENHANCE_HEXES,
-            "It increases the power of your Hexes spells.",
-            prop_note::plain },
+            "It increases your Hexes skill (%d).",
+            prop_note::numeral },
         { ARTP_ENHANCE_SUMM,
-            "It increases the power of your Summonings spells.",
-            prop_note::plain },
+            "It increases your Summoning skill (%d).",
+            prop_note::numeral },
         { ARTP_ENHANCE_NECRO,
-            "It increases the power of your Necromancy spells.",
-            prop_note::plain },
+            "It increases your Necromancy skill (%d).",
+            prop_note::numeral },
         { ARTP_ENHANCE_TLOC,
-            "It increases the power of your Translocations spells.",
-            prop_note::plain },
+            "It increases your Translocations skill (%d).",
+            prop_note::numeral },
         { ARTP_ENHANCE_FIRE,
-            "It increases the power of your Fire spells.",
-            prop_note::plain },
+            "It increases your Fire Magic skill (%d).",
+            prop_note::numeral },
         { ARTP_ENHANCE_ICE,
-            "It increases the power of your Ice spells.",
-            prop_note::plain },
+            "It increases your Ice Magic skill (%d).",
+            prop_note::numeral },
         { ARTP_ENHANCE_AIR,
-            "It increases the power of your Air spells.",
-            prop_note::plain },
+            "It increases your Air Magic skill (%d).",
+            prop_note::numeral },
         { ARTP_ENHANCE_EARTH,
-            "It increases the power of your Earth spells.",
-            prop_note::plain },
-        { ARTP_ENHANCE_ALCHEMY,
-            "It increases the power of your Alchemy spells.",
-            prop_note::plain },
-        { ARTP_ENHANCE_FORGECRAFT,
-            "It increases the power of your Forgecraft spells.",
-            prop_note::plain },
+            "It increases your Earth Magic skill (%d).",
+            prop_note::numeral },
         { ARTP_ACROBAT,
             "It increases your evasion after moving or waiting.",
             prop_note::plain },
@@ -495,7 +465,6 @@ static const vector<artefact_prop_type> artprop_annotation_order =
     ARTP_DRAIN,
     ARTP_SLOW,
     ARTP_SILENCE,
-    ARTP_FRAGILE,
 
     // Evokable abilities come second
     ARTP_BLINK,
@@ -504,15 +473,12 @@ static const vector<artefact_prop_type> artprop_annotation_order =
 
     // Resists, also really important
     ARTP_ELECTRICITY,
-    ARTP_POISON,
     ARTP_FIRE,
     ARTP_COLD,
-    ARTP_NEGATIVE_ENERGY,
     ARTP_WILLPOWER,
     ARTP_REGENERATION,
     ARTP_MANA_REGENERATION,
     ARTP_RMUT,
-    ARTP_RCORR,
 
     // Quantitative attributes
     ARTP_HP,
@@ -520,31 +486,25 @@ static const vector<artefact_prop_type> artprop_annotation_order =
     ARTP_WIZARDRY,
     ARTP_AC,
     ARTP_EVASION,
-    ARTP_STRENGTH,
-    ARTP_INTELLIGENCE,
-    ARTP_DEXTERITY,
     ARTP_SLAYING,
     ARTP_SHIELDING,
 
     // Qualitative attributes (and Stealth)
-    ARTP_SEE_INVISIBLE,
     ARTP_STEALTH,
     ARTP_CLARITY,
     ARTP_RMSL,
 
     // spell enhancers
     ARTP_ARCHMAGI,
-    ARTP_ENHANCE_CONJ,
+    ARTP_ENHANCE_ENCH,
     ARTP_ENHANCE_HEXES,
     ARTP_ENHANCE_SUMM,
     ARTP_ENHANCE_NECRO,
-    ARTP_ENHANCE_FORGECRAFT,
     ARTP_ENHANCE_TLOC,
     ARTP_ENHANCE_FIRE,
     ARTP_ENHANCE_ICE,
     ARTP_ENHANCE_AIR,
     ARTP_ENHANCE_EARTH,
-    ARTP_ENHANCE_ALCHEMY,
 };
 
 static vector<string> _randart_propnames(const item_def& item,
@@ -1206,11 +1166,10 @@ static string _describe_mutant_beast(const monster_info &mi)
  */
 static int _item_training_target(const item_def &item)
 {
-    const int throw_dam = property(item, PWPN_DAMAGE);
     if (item.base_type == OBJ_WEAPONS || item.base_type == OBJ_STAVES)
-        return weapon_min_delay_skill(item) * 10;
+        return weapon_skill_requirement(item) * 10;
     if (item.base_type == OBJ_MISSILES && is_throwable(&you, item))
-        return (((10 + throw_dam / 2) - FASTEST_PLAYER_THROWING_SPEED) * 2) * 10;
+        return ammo_type_skill_req(item.sub_type) * 10;
     if (item.base_type == OBJ_TALISMANS)
         return get_form(form_for_talisman(item))->min_skill * 10;
     if (item.base_type == OBJ_BAUBLES)
@@ -1361,30 +1320,6 @@ static void _append_skill_target_desc(string &description, skill_type skill,
     }
 }
 
-static int _get_delay(const item_def &item)
-{
-    if (!is_range_weapon(item))
-        return you.attack_delay_with(nullptr, false, &item).expected();
-    item_def fake_proj;
-    populate_fake_projectile(item, fake_proj);
-    return you.attack_delay_with(&fake_proj, false, &item).expected();
-}
-
-static string _desc_attack_delay(const item_def &item)
-{
-    const int base_delay = property(item, PWPN_SPEED);
-
-    // Hide speed/heavy brand from unidentified weapons.
-    item_def dummy = item;
-    if (!item.is_identified())
-        dummy.brand = SPWPN_NORMAL;
-
-    const int cur_delay = _get_delay(dummy);
-    if (weapon_adjust_delay(item, base_delay, false) == cur_delay)
-        return "";
-    return make_stringf("\n    Current attack delay: %.1f.", (float)cur_delay / 10);
-}
-
 static string _describe_missile_brand(const item_def &item)
 {
     switch (item.brand)
@@ -1435,26 +1370,23 @@ string damage_rating(const item_def *item, int *rating_value)
                                !item ? unarmed_base_damage_bonus(false) :
                                     heavy_dam; // 0 for non-heavy weapons
     const skill_type skill = item ? _item_training_skill(*item) : SK_UNARMED_COMBAT;
-    const int stat_mult = stat_modify_damage(100, skill, true);
-    const bool use_str = weapon_uses_strength(skill, true);
     // Throwing weapons and UC only get a damage mult from Fighting skill,
     // not from Throwing/UC skill.
     const bool use_weapon_skill = item && !thrown;
-    const int weapon_skill_mult = use_weapon_skill ? apply_weapon_skill(100, skill, false) : 100;
-    const int skill_mult = apply_fighting_skill(weapon_skill_mult, false, false);
 
     const int slaying = slaying_bonus(thrown, false);
     const int ench = item && item->is_identified() ? item->plus : 0;
     const int plusses = slaying + ench;
+    const bool penalty = thrown ? ammo_type_skill_req(item->sub_type) > you.skill(skill)
+                                : item ? weapon_skill_requirement(*item) > you.skill(skill)
+                                : false;
 
-    const int DAM_RATE_SCALE = 100;
-    int rating = (base_dam + extra_base_dam) * DAM_RATE_SCALE;
-    rating = stat_modify_damage(rating, skill, true);
-    if (use_weapon_skill)
-        rating = apply_weapon_skill(rating, skill, false);
-    rating = apply_fighting_skill(rating, false, false);
-    rating /= DAM_RATE_SCALE;
+    int rating = (base_dam + extra_base_dam);
     rating += plusses;
+    if (use_weapon_skill)
+        rating = apply_weapon_skill(rating, skill, penalty);
+    if (thrown && penalty)
+        rating /= 2;
 
     if (rating_value)
         *rating_value = rating;
@@ -1467,6 +1399,9 @@ string damage_rating(const item_def *item, int *rating_value)
                                                        base_dam, extra_base_dam) :
                                           make_stringf("%d", base_dam);
 
+    string skill_desc = use_weapon_skill ? make_stringf(" + Skill %d", you.skill(skill))
+                                         : "";
+    string penalty_desc = penalty ? " / 2" : "";
     string plusses_desc;
     if (plusses)
     {
@@ -1481,14 +1416,12 @@ string damage_rating(const item_def *item, int *rating_value)
     const string brand_desc = thrown ? _describe_missile_brand(*item) : "";
 
     return make_stringf(
-        "%d (Base %s x %d%% (%s) x %d%% (%s)%s)%s.",
+        "%d (Base %s + %s%s%s)%s.",
         rating,
         base_dam_desc.c_str(),
-        stat_mult,
-        use_str ? "Str" : "Dex",
-        skill_mult,
-        use_weapon_skill ? "Skill" : "Fight",
+        skill_desc.c_str(),
         plusses_desc.c_str(),
+        penalty_desc.c_str(),
         brand_desc.c_str());
 }
 
@@ -1517,7 +1450,7 @@ static void _append_skill_needed(string &description, const item_def &item,
 static void _append_weapon_stats(string &description, const item_def &item)
 {
     const int base_dam = property(item, PWPN_DAMAGE);
-    const int mindelay_skill = _item_training_target(item);
+    const int required_skill = _item_training_target(item);
 
     if (item.base_type == OBJ_STAVES
         && item.is_identified()
@@ -1546,51 +1479,15 @@ static void _append_weapon_stats(string &description, const item_def &item)
             base_dam);
     }
 
-    description += make_stringf(
-        "Base attack delay: %.1f\n"
-        "This weapon's minimum attack delay (%.1f) is reached at skill level %d.",
-            (float) property(item, PWPN_SPEED) / 10,
-            (float) weapon_min_delay(item, item.is_identified()) / 10,
-            mindelay_skill / 10);
+    description += make_stringf("Skill requirement: %d\n"
+        "This weapon deals half damage below skill level %d.",
+        required_skill / 10, required_skill / 10);
 
     _append_skill_needed(description, item);
 
-    if (is_slowed_by_armour(&item))
-    {
-        const int penalty_scale = 100;
-        const int armour_penalty = you.adjusted_body_armour_penalty(penalty_scale);
-        description += "\n";
-        if (armour_penalty)
-        {
-            const item_def *body_armour = you.body_armour();
-            description += (body_armour ? uppercase_first(
-                                              body_armour->name(DESC_YOUR))
-                                        : "Your heavy armour");
-
-            const bool significant = armour_penalty >= penalty_scale;
-            if (significant)
-            {
-                description +=
-                    make_stringf(" slows your attacks with this weapon by %.1f",
-                                 armour_penalty / (10.0f * penalty_scale));
-            }
-            else
-                description += " slightly slows your attacks with this weapon";
-        }
-        else
-        {
-            description += "Wearing heavy armour would reduce your attack "
-                           "speed with this weapon";
-        }
-        description += ".";
-    }
-
     const bool want_player_stats = !is_useless_item(item) && crawl_state.need_save;
     if (want_player_stats)
-    {
-        description += _desc_attack_delay(item);
         description += "\nDamage rating: " + damage_rating(&item);
-    }
 
     const string brand_desc = _describe_weapon_brand(item);
     if (!brand_desc.empty())
@@ -1654,9 +1551,6 @@ static string _handedness_string(const item_def &item)
 
 static string _category_string(const item_def &item)
 {
-    if (is_unrandom_artefact(item, UNRAND_LOCHABER_AXE))
-        return ""; // handled in art-data DBRAND
-
     string description = "";
     description += "This ";
     if (is_unrandom_artefact(item))
@@ -1866,41 +1760,33 @@ static string _equipment_property_change_description(const item_def &item,
     const int cur_ac = you.base_ac(100);
     const int cur_ev = you.evasion_scaled(100, true);
     const int cur_sh = player_displayed_shield_class(100, true);
+    const int cur_spell_pen = max(0, you.adjusted_body_armour_penalty());
     int new_ac, new_ev, new_sh;
-    FixedVector<int, MAX_KNOWN_SPELLS> cur_fail, new_fail;
-    for (int i = 0; i < MAX_KNOWN_SPELLS; ++i)
-        cur_fail[i] = raw_spell_fail(you.spells[i]);
 
     if (remove)
-        you.preview_stats_without_specific_item(100, item, &new_ac, &new_ev, &new_sh, &new_fail);
+        you.preview_stats_without_specific_item(100, item, &new_ac, &new_ev, &new_sh);
     else if (item.base_type == OBJ_TALISMANS)
-        you.preview_stats_in_specific_form(100, item, &new_ac, &new_ev, &new_sh, &new_fail);
+        you.preview_stats_in_specific_form(100, item, &new_ac, &new_ev, &new_sh);
     else
-        you.preview_stats_with_specific_item(100, item, &new_ac, &new_ev, &new_sh, &new_fail);
+        you.preview_stats_with_specific_item(100, item, &new_ac, &new_ev, &new_sh);
 
-    // Check if any spell failures changed, and save the greatest magnitude that
-    // any of them changed.
-    int fail_change = 0;
-    int visible_fail_change = 0;
-    for (int i = 0; i < MAX_KNOWN_SPELLS; ++i)
+    int spell_penalty = 0;
+    if (item.base_type == OBJ_ARMOUR && get_armour_slot(item) == SLOT_BODY_ARMOUR)
     {
-        if (cur_fail[i] != new_fail[i])
-        {
-            int new_fail_change = new_fail[i] - cur_fail[i];
-            int new_visible_fail_change = failure_rate_to_int(new_fail[i])
-                                            - failure_rate_to_int(cur_fail[i]);
-            if (abs(new_fail_change) > abs(fail_change))
-                fail_change = new_fail_change;
-            if (abs(new_visible_fail_change) > abs(visible_fail_change))
-                visible_fail_change = new_visible_fail_change;
-        }
+        // penalty with the new item
+        spell_penalty = max(0, -property(item, PARM_EVASION) / 10
+                  - you.get_mutation_level(MUT_STURDY_FRAME) * 2
+                  - you.skill(SK_ARMOUR));
+
+        // the difference; this can be negative so we report the change.
+        spell_penalty -= cur_spell_pen;
     }
 
     // If we're previewing non-armour and there is no AC/EV/SH change, print no
     // extra description at all (since almost all items of these types will
     // change nothing)
     if (cur_ac == new_ac && cur_ev == new_ev && cur_sh == new_sh
-        && fail_change == 0
+        && spell_penalty == 0
         && (item.base_type != OBJ_ARMOUR || item.sub_type == ARM_ORB))
     {
         return "";
@@ -1951,124 +1837,16 @@ static string _equipment_property_change_description(const item_def &item,
                        + _describe_point_diff(cur_sh, new_sh) + ".";
     }
 
-    if (fail_change != 0)
+    if (spell_penalty != 0)
     {
-        description += "\nYour spell failure would ";
-        description += (fail_change > 0) ? "worsen" : "improve";
-        if (visible_fail_change == 0)
-            description += " trivially.";
-        else
-        {
-            description += make_stringf(" by up to %d%% (press '!' for details).",
-                                    abs(visible_fail_change)).c_str();
-        }
+        description += "\nYour spell penalty would ";
+        description += (spell_penalty > 0) ? "worsen" : "improve";
+        description += make_stringf(" by %d level",
+                                    abs(spell_penalty)).c_str();
+        description += (abs(spell_penalty) > 1) ? "s" : "";
     }
 
     return description;
-}
-
-static string _spell_fail_change_description(const item_def &item,
-                                             bool remove = false)
-{
-    int dummy1, dummy2, dummy3;
-    FixedVector<int, MAX_KNOWN_SPELLS> cur_fail, new_fail;
-    for (int i = 0; i < MAX_KNOWN_SPELLS; ++i)
-        cur_fail[i] = raw_spell_fail(you.spells[i]);
-
-    if (remove)
-        you.preview_stats_without_specific_item(100, item, &dummy1, &dummy2, &dummy3, &new_fail);
-    else if (item.base_type == OBJ_TALISMANS)
-        you.preview_stats_in_specific_form(100, item, &dummy1, &dummy2, &dummy3, &new_fail);
-    else
-        you.preview_stats_with_specific_item(100, item, &dummy1, &dummy2, &dummy3, &new_fail);
-
-    // Check if any spell failures changed.
-    int fail_change = 0;
-    for (int i = 0; i < MAX_KNOWN_SPELLS; ++i)
-    {
-        if (cur_fail[i] != new_fail[i])
-        {
-            fail_change = new_fail[i] - cur_fail[i];
-            break;
-        }
-    }
-
-    // If nothing changed, generate no text
-    if (fail_change == 0)
-        return "";
-
-    // If they did, convert all failures into percentages to see whether any
-    // change was non-trivial
-    fail_change = 0;
-    for (int i = 0; i < MAX_KNOWN_SPELLS; ++i)
-    {
-        if (cur_fail[i] == new_fail[i])
-            continue;
-
-        cur_fail[i] = failure_rate_to_int(cur_fail[i]);
-        new_fail[i] = failure_rate_to_int(new_fail[i]);
-
-        if (cur_fail[i] != new_fail[i])
-            fail_change = cur_fail[i] - new_fail[i];
-    }
-
-    // If nothing changed *meaningfully*, generate no text
-    if (fail_change == 0)
-        return "";
-
-    // Otherwise, generate a complete list of all non-trivial changes
-    string desc;
-    desc = make_stringf("If you %s this item, your spell failure would %s:\n",
-                        remove ? "removed" : "equipped",
-                        fail_change < 0 ? "worsen" : "improve");
-
-    // Sort spells by degree of change in their fail rates (and then by
-    // absolute fail rate after that)
-    vector<pair<int, int>> spell_sort;
-    for (int i = 0; i < MAX_KNOWN_SPELLS; ++i)
-    {
-        if (cur_fail[i] == new_fail[i])
-            continue;
-
-        spell_sort.push_back({i, abs(cur_fail[i] - new_fail[i])});
-    }
-    sort(spell_sort.begin( ), spell_sort.end( ),
-            [cur_fail](const pair<int, int>& a, const pair<int, int>& b)
-                { return cur_fail[a.first] > cur_fail[b.first];});
-    sort(spell_sort.begin( ), spell_sort.end( ),
-            [](const pair<int, int>& a, const pair<int, int>& b)
-                { return a.second > b.second;});
-
-
-    // vector<string> entries;
-    for (size_t i = 0; i < spell_sort.size(); ++i)
-    {
-        int index = spell_sort[i].first;
-
-        int diff = new_fail[index] - cur_fail[index];
-        string colour;
-        if (diff > 20)
-            colour = "magenta";
-        else if (diff > 11)
-            colour = "lightred";
-        else if (diff > 5)
-            colour = "yellow";
-        else if (diff < -11)
-            colour = "lightblue";
-        else if (diff < -5)
-            colour = "white";
-        else
-            colour = "lightgrey";
-
-        string entry = make_stringf("<%s>%s%3d%%-> %3d%%</%s>\n",
-                colour.c_str(),
-                chop_string(spell_title(you.spells[index]), 32).c_str(),
-                cur_fail[index], new_fail[index], colour.c_str());
-
-        desc += entry;
-    }
-
-    return desc;
 }
 
 static string _equipment_property_change(const item_def &item)
@@ -2214,22 +1992,13 @@ static string _describe_ammo(const item_def &item)
         }
     }
 
-    const int dam = property(item, PWPN_DAMAGE);
     const bool player_throwable = is_throwable(&you, item);
     if (player_throwable)
     {
-        const int throw_delay = (10 + dam / 2);
         const int target_skill = _item_training_target(item);
 
-        description += make_stringf(
-            "\n\nBase damage: %d  Base attack delay: %.1f"
-            "\nThis projectile's minimum attack delay (%.1f) "
-                "is reached at skill level %d.",
-            dam,
-            (float) throw_delay / 10,
-            (float) FASTEST_PLAYER_THROWING_SPEED / 10,
-            target_skill / 10
-        );
+        description += make_stringf("\nIt deals half damage below skill %d.",
+                       target_skill / 10);
 
         _append_skill_needed(description, item);
 
@@ -2249,11 +2018,7 @@ static string _warlock_mirror_reflect_desc()
 {
     const int scaled_SH = crawl_state.need_save ? player_shield_class(100, false) : 0;
     const int SH = scaled_SH / 100;
-    // We use random-rounded SH, so take a weighted average of the
-    // chances with SH and SH+1.
-    const int reflect_chance_numer = (100 - (scaled_SH % 100)) * SH * omnireflect_chance_denom(SH+1) + (scaled_SH % 100) * (SH+1) * omnireflect_chance_denom(SH);
-    const int reflect_chance_denom = omnireflect_chance_denom(SH) * omnireflect_chance_denom(SH+1);
-    const int reflect_chance = reflect_chance_numer / reflect_chance_denom;
+    const int reflect_chance = min(SH, 100);
     return "\n\nWith your current SH, it has a " + to_string(reflect_chance) +
            "% chance to reflect attacks against your willpower and other "
            "normally unblockable effects.";
@@ -2356,10 +2121,9 @@ static string _describe_armour(const item_def &item, bool verbose, bool monster)
             const char* cumber_desc = evp < 100 ? "slightly " :
                                       evp > 100 ? "greatly " : "";
             description += make_stringf(
-                "It is cumbersome to wear, and %simpedes the evasion, "
-                "spellcasting ability, and attack speed of the wearer. "
-                "These penalties are reduced by the wearer's Shields skill "
-                "and Strength; mastering Shields eliminates penalties.",
+                "It is cumbersome to wear, and %simpedes the evasion "
+                "and spellcasting ability of the wearer. "
+                "These penalties are reduced by the wearer's Shields skill.",
                 cumber_desc);
         }
         if (!monster)
@@ -2368,7 +2132,7 @@ static string _describe_armour(const item_def &item, bool verbose, bool monster)
         {
             description += "Base shield rating: "
                         + to_string(property(item, PARM_AC));
-            description += "     Encumbrance rating: "
+            description += "     Skill Requirement: "
                         + to_string(-property(item, PARM_EVASION) / 10);
             description += "     Max blocks/turn: "
                         + to_string(shield_block_limit(item));
@@ -2382,7 +2146,7 @@ static string _describe_armour(const item_def &item, bool verbose, bool monster)
                         + to_string(property(item, PARM_AC));
             if (get_armour_slot(item) == SLOT_BODY_ARMOUR)
             {
-                description += "       Encumbrance rating: "
+                description += "       Skill Requirement: "
                             + to_string(-evp / 10);
             }
             // Bardings reduce evasion by a fixed amount, and don't have any of
@@ -2459,26 +2223,6 @@ static string _describe_armour(const item_def &item, bool verbose, bool monster)
         && item.is_identified())
     {
         description += _equipment_property_change(item);
-    }
-
-    const int DELAY_SCALE = 100;
-    const int aevp = you.adjusted_body_armour_penalty(DELAY_SCALE);
-    if (crawl_state.need_save
-        && verbose
-        && aevp
-        && !is_shield(item)
-        && item_is_equipped(item)
-        && is_slowed_by_armour(you.weapon()))
-    {
-        // TODO: why doesn't this show shield effect? Reconcile with
-        // _display_attack_delay
-        description += "\n\nYour current strength and Armour skill "
-                       "slows attacks with missile weapons (like "
-                        + you.weapon()->name(DESC_YOUR) + ") ";
-        if (aevp >= DELAY_SCALE)
-            description += make_stringf("by %.1f.", aevp / (10.0f * DELAY_SCALE));
-        else
-            description += "only slightly.";
     }
 
     return description;
@@ -2949,24 +2693,29 @@ string get_item_description(const item_def &item,
                 description << "\n\n";
                 // slightly redundant with uselessness desc..
                 const int charges = evoker_charges(item.sub_type);
+                const int debt = evoker_charge_xp_debt(item.sub_type);
                 if (charges > 1)
-                    description << "Charges: " << charges << ". Once all charges have been used";
+                {
+                    description << "Charges: " << charges << ".";
+                    description << "This device gains a charge every ";
+                }
                 else
-                    description << "Once activated";
-                description << ", this device is rendered temporarily inert. "
-                            << "However, it recharges as you gain experience.";
+                    description << "This device recharges every ";
+
+                description << debt << "% of an experience level you gain";
 
                 if (evoker_plus(item.sub_type) < MAX_EVOKER_ENCHANT)
                 {
-                    description << "\n\nAdditional devices of the same type "
-                            << "can be combined with it to improve the rate at "
-                            << "which it recharges.";
+                    description << "\n\nIncreasing its enchantment by finding "
+                            << "another item of the same type will improve its "
+                            << "recharge rate (-5% xp required).";
                 }
                 if (!is_useless_skill(SK_EVOCATIONS)
                        && you.skill(SK_EVOCATIONS) < MAX_SKILL_LEVEL)
                 {
                     description << "\n\nIncreasing your evocations skill will "
-                                << "improve the rate at which it recharges.";
+                                << "improve the rate at which it recharges "
+                                << "(-5% xp required).";
                 }
 
                 const string damage_str = evoke_damage_string(item);
@@ -4163,7 +3912,7 @@ command_type describe_item_popup(const item_def &item,
             // Only switch tab if there's any spell rate changes.
             if (!show_spell_success)
             {
-                spell_success = _spell_fail_change_description(item, item_is_equipped(item));
+                spell_success = "";
                 if (spell_success.empty())
                     return false;
             }
@@ -4293,21 +4042,6 @@ static string _player_spell_stats(const spell_type spell)
     {
         return description; // all other info is player-dependent
     }
-
-
-    string failure;
-    if (you.divine_exegesis)
-        failure = "0%";
-    else if (spell_can_be_enkindled(spell) && you.has_mutation(MUT_MNEMOPHAGE)
-             && !you.duration[DUR_ENKINDLED])
-    {
-        failure = make_stringf("%d%% <darkgrey>(%d%%)</darkgrey>",
-                                    failure_rate_to_int(raw_spell_fail(spell)),
-                                    failure_rate_to_int(raw_spell_fail(spell, true)));
-    }
-    else
-        failure = failure_rate_to_string(raw_spell_fail(spell));
-    description += make_stringf("        Fail: %s", failure.c_str());
 
     const string damage_string = spell_damage_string(spell);
     const string max_dam_string = spell_max_damage_string(spell);
@@ -4469,53 +4203,6 @@ int hex_chance(const spell_type spell, const monster_info* mi, bool is_wand)
 }
 
 /**
- * Describe miscast effects from a spell
- *
- * @param spell
- */
-static string _miscast_damage_string(spell_type spell)
-{
-    const map <spschool, string> damage_flavor = {
-        { spschool::enchantments, "irresistible" },
-        { spschool::necromancy, "draining" },
-        { spschool::fire, "fire" },
-        { spschool::ice, "cold" },
-        { spschool::air, "electric" },
-        { spschool::earth, "fragmentation" },
-    };
-
-    const map <spschool, string> special_flavor = {
-        { spschool::summoning, "summons a nameless horror" },
-        { spschool::translocation, "anchors you in place" },
-        { spschool::hexes, "slows you" },
-    };
-
-    spschools_type disciplines = get_spell_disciplines(spell);
-    vector <string> descs;
-
-    for (const auto &flav : special_flavor)
-        if (disciplines & flav.first)
-            descs.push_back(flav.second);
-
-    int dam = max_miscast_damage(spell);
-    vector <string> dam_flavors;
-    for (const auto &flav : damage_flavor)
-        if (disciplines & flav.first)
-            dam_flavors.push_back(flav.second);
-
-    if (!dam_flavors.empty())
-    {
-        descs.push_back(make_stringf("deals up to %d %s damage", dam,
-                                     comma_separated_line(dam_flavors.begin(),
-                                                         dam_flavors.end(),
-                                                         " or ").c_str()));
-    }
-
-    return (descs.size() > 1 ? "either " : "")
-         + comma_separated_line(descs.begin(), descs.end(), " or ", "; ");
-}
-
-/**
  * Describe mostly non-numeric player-specific information about a spell.
  *
  * (E.g., your god's opinion of it, whether it's in a high-level book that
@@ -4533,11 +4220,6 @@ static string _player_spell_desc(spell_type spell)
     }
 
     ostringstream description;
-
-    description << "Miscasting this spell causes magic contamination"
-                << (fail_severity(spell) ?
-                    " and also " + _miscast_damage_string(spell) : "")
-                << ".\n";
 
     if (spell == SPELL_BATTLESPHERE)
     {
@@ -4578,7 +4260,7 @@ static string _player_spell_desc(spell_type spell)
     }
     else if (you.has_spell(SPELL_SPELLSPARK_SERVITOR) && spell_servitorable(spell))
     {
-        if (failure_rate_to_int(raw_spell_fail(spell)) <= 20)
+        if (true)
             description << "Your servitor can be imbued with this spell.\n";
         else
         {
@@ -5312,13 +4994,7 @@ static string _monster_staff_damage_string(const monster_info &mi,
     // "earth" tries to communicate the damage reduction when flying
     // XXX "conj" isn't a damage type, but we want to communicate
     // that the damage is flat staff bonus damage somehow.
-    string dam_type_string = staff == STAFF_FIRE          ? "fire"
-                           : staff == STAFF_COLD          ? "cold"
-                           : staff == STAFF_AIR           ? "elec"
-                           : staff == STAFF_EARTH         ? "earth"
-                           : staff == STAFF_DEATH         ? "drain"
-                           : staff == STAFF_ALCHEMY       ? "poison"
-                           /*staff == STAFF_CONJURATION*/ : "conj";
+    string dam_type_string = "";
 
     return make_stringf(" + %d (%s)",
                         _staff_max_damage(staff, staff_skill, evo_skill),
@@ -5835,7 +5511,7 @@ void describe_to_hit(const monster_info &mi, ostringstream &result,
         vector<string> aux_names = get_player_aux_names();
         if (!aux_names.empty())
         {
-            acc_pct = to_hit_pct_aux(mi, attk);
+            acc_pct = to_hit_pct_aux(mi);
             _describe_aux_hit_chance(result, aux_names, acc_pct);
         }
 
@@ -5925,16 +5601,10 @@ static void _describe_mons_to_hit(const monster_info& mi, ostringstream &result)
     {
         post_roll_modifiers += TRANSLUCENT_SKIN_TO_HIT_MALUS
                                * you.get_mutation_level(MUT_TRANSLUCENT_SKIN);
-        if (you.backlit(false))
-            post_roll_modifiers += BACKLIGHT_TO_HIT_BONUS;
-        if (you.umbra() && !mi.nightvision())
-            post_roll_modifiers += UMBRA_TO_HIT_MALUS;
+
     }
     // We ignore pproj because monsters never have it passively.
 
-    // We ignore the EV penalty for not being able to see an enemy because, if you
-    // can't see an enemy, you can't get a monster description for them. (Except through
-    // ?/M, but let's neglect that for now.)
     const int scaled_ev = you.evasion_scaled(100);
 
     const int to_land = weapon && is_unrandom_artefact(*weapon, UNRAND_SNIPER) ? AUTOMATIC_HIT :
@@ -5942,9 +5612,7 @@ static void _describe_mons_to_hit(const monster_info& mi, ostringstream &result)
     const int beat_ev_chance = mon_to_hit_pct(to_land, scaled_ev);
 
     const int scaled_sh = player_shield_class(100, false);
-    const int shield_bypass = mon_shield_bypass(mi.hd);
-    // ignore penalty for unseen attacker, as with EV above
-    const int beat_sh_chance = mon_beat_sh_pct(shield_bypass, scaled_sh);
+    const int beat_sh_chance = mon_beat_sh_pct(scaled_sh);
 
     const int hit_chance = beat_ev_chance * beat_sh_chance / 100;
     result << uppercase_first(mi.pronoun(PRONOUN_SUBJECTIVE)) << " "

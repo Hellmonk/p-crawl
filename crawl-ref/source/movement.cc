@@ -1258,11 +1258,8 @@ void move_player_action(coord_def move)
 
     you.apply_berserk_penalty = !attacking;
 
-    if (rampaged && !you.has_mutation(MUT_ROLLPAGE)
-        || you.unrand_equipped(UNRAND_LIGHTNING_SCALES))
-    {
+    if (rampaged && !you.has_mutation(MUT_ROLLPAGE))
         did_god_conduct(DID_HASTY, 1, true);
-    }
 
     if (you_worship(GOD_WU_JIAN) && !attacking && !dug)
         did_wu_jian_attack = wu_jian_post_move_effects(false, initial_position);

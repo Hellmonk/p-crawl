@@ -33,7 +33,7 @@
 #include "mapdef.h"
 #include "message.h"
 #include "mon-behv.h"
-#include "mon-death.h" // maybe_drop_monster_organ
+#include "mon-death.h"
 #include "mon-poly.h"
 #include "mon-tentacle.h"
 #include "nearby-danger.h"
@@ -1041,12 +1041,6 @@ static void _devour(monster &victim)
     // Devour the corpse.
     victim.props[NEVER_CORPSE_KEY] = true;
 
-    // ... but still drop dragon scales, etc, if appropriate.
-    monster_type orig = victim.type;
-    if (victim.props.exists(ORIGINAL_TYPE_KEY))
-        orig = (monster_type) victim.props[ORIGINAL_TYPE_KEY].get_int();
-    maybe_drop_monster_organ(victim.type, orig, victim.pos());
-
     // Healing.
     if (you.duration[DUR_DEATHS_DOOR])
         return;
@@ -1515,27 +1509,6 @@ bool melee_attack::attack()
         return did_hit = perceived_attack = true;
     }
 
-    string saved_gyre_name;
-    if (weapon && is_unrandom_artefact(*weapon, UNRAND_GYRE))
-    {
-        saved_gyre_name = get_artefact_name(*weapon);
-        const bool gimble = effective_attack_number % 2;
-        set_artefact_name(*mutable_wpn, gimble ? "quick blade \"Gimble\""
-                                                  : "quick blade \"Gyre\"");
-    }
-
-    // Restore gyre's name before we return. We cannot use an unwind_var here
-    // because the precise address of the ARTEFACT_NAME_KEY property might
-    // change, for example if a summoned item is reset.
-    ON_UNWIND
-    {
-        if (!saved_gyre_name.empty() && weapon
-                && is_unrandom_artefact(*weapon, UNRAND_GYRE))
-        {
-            set_artefact_name(*mutable_wpn, saved_gyre_name);
-        }
-    };
-
     // Attacker might have died from effects of cleaving handled prior to this
     if (!attacker->alive())
         return false;
@@ -1554,7 +1527,7 @@ bool melee_attack::attack()
     // Calculate various ev values and begin to check them to determine the
     // correct handle_phase_ handler.
     const int ev = defender->evasion(false, attacker);
-    ev_margin = test_hit(to_hit, ev, !attacker->is_player());
+    ev_margin = test_hit(to_hit, ev, false);
     bool shield_blocked = attack_shield_blocked(true);
 
     // Stuff for god conduct, this has to remain here for scope reasons.
@@ -2180,16 +2153,7 @@ bool melee_attack::player_aux_test_hit()
 {
     const int evasion = defender->evasion(false, attacker);
 
-    if (player_under_penance(GOD_ELYVILON)
-        && god_hates_your_god(GOD_ELYVILON)
-        && to_hit >= evasion
-        && one_chance_in(20))
-    {
-        simple_god_message(" blocks your attack.", false, GOD_ELYVILON);
-        return false;
-    }
-
-    bool auto_hit = one_chance_in(30);
+    bool auto_hit = one_chance_in(20);
 
     if (you.duration[DUR_BLIND])
     {
@@ -2197,7 +2161,7 @@ bool melee_attack::player_aux_test_hit()
             to_hit = -1;
     }
 
-    if (to_hit >= evasion || auto_hit
+    if (random2(to_hit) >= evasion || auto_hit
         || wu_jian_has_momentum(wu_jian_attack))
     {
         return true;
@@ -2251,7 +2215,6 @@ bool melee_attack::player_do_aux_attack(unarmed_attack_type atk)
         return false;
 
     to_hit = random2(aux_to_hit());
-    to_hit += post_roll_to_hit_modifiers(to_hit, false);
 
     handle_noise(defender->pos());
     alert_nearby_monsters();
@@ -2285,11 +2248,7 @@ bool melee_attack::player_aux_apply(unarmed_attack_type atk)
 
     if (atk != UNAT_TOUCH)
     {
-        aux_damage  = stat_modify_damage(aux_damage, SK_UNARMED_COMBAT, false);
-
         aux_damage  = random2(aux_damage);
-
-        aux_damage  = apply_fighting_skill(aux_damage, true, true);
 
         aux_damage  = player_apply_misc_modifiers(aux_damage);
 
@@ -3142,17 +3101,6 @@ int melee_attack::calc_to_hit(bool random)
         return AUTOMATIC_HIT;
 
     return mhit;
-}
-
-int melee_attack::post_roll_to_hit_modifiers(int mhit, bool random)
-{
-    int modifiers = attack::post_roll_to_hit_modifiers(mhit, random);
-
-    // Electric charges feel bad when they miss, so make them miss less often.
-    if (charge_pow > 0)
-        modifiers += 5;
-
-    return modifiers;
 }
 
 void melee_attack::player_stab_check()
@@ -4445,9 +4393,7 @@ void melee_attack::do_minotaur_retaliation()
 
     // Use the same damage formula as a regular headbutt.
     int dmg = AUX_HEADBUTT.get_damage(true);
-    dmg = stat_modify_damage(dmg, SK_UNARMED_COMBAT, false);
     dmg = random2(dmg);
-    dmg = apply_fighting_skill(dmg, true, true);
     dmg = player_apply_misc_modifiers(dmg);
     dmg = player_apply_slaying_bonuses(dmg, true);
     dmg = player_apply_final_multipliers(dmg, true);
@@ -4661,10 +4607,10 @@ void melee_attack::cleave_setup()
     cleave_targets.pop_front();
 }
 
-// cleave damage modifier for additional attacks: 70% of base damage
+// cleave damage modifier for additional attacks: 50% of base damage
 int melee_attack::cleave_damage_mod(int dam)
 {
-    return div_rand_round(dam * 7, 10);
+    return div_rand_round(dam * 5, 10);
 }
 
 // Martial strikes get modified by momentum and maneuver specific damage mods.

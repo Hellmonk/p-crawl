@@ -1842,10 +1842,7 @@ static void _setup_fallback_randart(const int unrand_id,
         && fallback_sub_type == WPN_STAFF)
     {
         item.base_type = OBJ_STAVES;
-        if (unrand_id == UNRAND_OLGREB)
-            force_type = STAFF_ALCHEMY;
-        else
-            force_type = OBJ_RANDOM;
+        force_type = OBJ_RANDOM;
         // XXX: small chance of other unrands under some circumstances...
     }
     else if (item.base_type == OBJ_JEWELLERY

@@ -109,8 +109,7 @@ public:
         return weapon(0);
     }
     virtual item_def *offhand_weapon() const { return nullptr; }
-    virtual random_var attack_delay(const item_def *projectile = nullptr,
-                                    bool rescale = true) const = 0;
+    virtual random_var attack_delay() const = 0;
     virtual int has_claws(bool allow_tran = true) const = 0;
     virtual item_def *shield() const = 0;
     virtual item_def *body_armour() const = 0;
@@ -233,7 +232,6 @@ public:
     virtual bool can_throw_large_rocks() const = 0;
 
     virtual int armour_class() const = 0;
-    virtual int gdr_perc(bool random = true) const = 0;
     int apply_ac(int damage, int max_damage = 0,
                  ac_type ac_rule = ac_type::normal,
                  bool for_real = true) const;

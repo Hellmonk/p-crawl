@@ -1661,15 +1661,11 @@ bool transforming_is_unsafe(transformation which_trans)
     vector<item_def*> forced_remove = you.equipment.get_forced_removal_list(true);
     for (item_def* item : forced_remove)
     {
-        // Now see if any of them would break if they did so.
-        if (item->cursed()
-            || (is_artefact(*item) && artefact_property(*item, ARTP_FRAGILE)))
-        {
-            mprf(MSGCH_PROMPT, "%s right now would shatter %s!",
-                 which_trans == transformation::none ? "Untransforming" : "Transforming",
-                 item->name(DESC_YOUR).c_str());
-            return true;
-        }
+
+        mprf(MSGCH_PROMPT, "%s right now would shatter %s!",
+             which_trans == transformation::none ? "Untransforming" : "Transforming",
+             item->name(DESC_YOUR).c_str());
+        return true;
     }
 
     return false;

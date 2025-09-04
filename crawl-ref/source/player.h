@@ -78,11 +78,11 @@ static const int MAX_STAT_VALUE = 125;
 /// The standard unit of regen; one level in artifact inscriptions
 static const int REGEN_PIP = 80;
 /// The standard unit of WL; one level in %/@ screens
-static const int WL_PIP = 40;
+static const int WL_PIP = 1;
 /// The cap for the player's Will, in units of WL\_PIP.
-static const int MAX_WILL_PIPS = 5;
+static const int MAX_WILL_PIPS = 10;
 /// The standard unit of stealth; one level in %/@ screens
-static const int STEALTH_PIP = 50;
+static const int STEALTH_PIP = 1;
 
 /// The minimum aut cost for a player move (before haste)
 static const int FASTEST_PLAYER_MOVE_SPEED = 6;
@@ -531,7 +531,7 @@ public:
     int visible_igrd(const coord_def&) const;
     bool rampaging() const override;
     bool is_banished() const override;
-    bool is_sufficiently_rested(bool starting=false) const; // Up to rest_wait_percent HP and MP.
+    bool is_sufficiently_rested() const; // Up to rest_wait_percent HP and MP.
     bool is_web_immune() const override;
     bool is_binding_sigil_immune() const override;
     bool cannot_speak() const;
@@ -637,10 +637,7 @@ public:
                           bool base = false) const override;
     brand_type  damage_brand(int which_attack = -1) override;
     vorpal_damage_type damage_type(int which_attack = -1) override;
-    random_var  attack_delay(const item_def *projectile = nullptr,
-                             bool rescale = true) const override;
-    random_var  attack_delay_with(const item_def *projectile, bool rescale,
-                                  const item_def *weapon) const;
+    random_var  attack_delay() const override;
     int         constriction_damage(constrict_type typ) const override;
 
     int       has_claws(bool allow_tran = true) const override;
@@ -855,7 +852,6 @@ public:
     int racial_ac(bool temp) const;
     int base_ac(int scale) const;
     int armour_class() const override;
-    int gdr_perc(bool random = true) const override;
     int evasion(bool ignore_temporary = false,
                 const actor *attacker = nullptr) const override;
     int evasion_scaled(int scale, bool ignore_temporary = false,
@@ -873,20 +869,17 @@ public:
 
     // Combat-related adjusted penalty calculation methods
     int unadjusted_body_armour_penalty() const;
-    int adjusted_body_armour_penalty(int scale = 1) const;
-    int adjusted_shield_penalty(int scale = 1) const;
+    int adjusted_body_armour_penalty() const;
+    int adjusted_shield_penalty() const;
 
     // Calculates total permanent AC/EV/SH if the player was/wasn't wearing a
     // given item, along with the fail rate on all their known spells.
     void preview_stats_with_specific_item(int scale, const item_def& new_item,
-                                          int *ac, int *ev, int *sh,
-                                          FixedVector<int, MAX_KNOWN_SPELLS> *fail);
+                                          int *ac, int *ev, int *sh);
     void preview_stats_without_specific_item(int scale, const item_def& item_to_remove,
-                                             int *ac, int *ev, int *sh,
-                                             FixedVector<int, MAX_KNOWN_SPELLS> *fail);
+                                             int *ac, int *ev, int *sh);
     void preview_stats_in_specific_form(int scale, const item_def& talisman,
-                                        int *ac, int *ev, int *sh,
-                                        FixedVector<int, MAX_KNOWN_SPELLS> *fail);
+                                        int *ac, int *ev, int *sh);
 
     bool wearing_light_armour(bool with_skill = false) const;
     int  skill(skill_type skill, int scale = 1, bool real = false,
@@ -918,6 +911,7 @@ public:
     void rev_down(int time_taken);
 
     bool allies_forbidden();
+    int adjusted_casting_level(skill_type skill);
 
     // TODO: move this somewhere else
     void refresh_rampage_hints();
@@ -1096,7 +1090,7 @@ int player_monster_detect_radius();
 
 int slaying_bonus(bool throwing = false, bool random = true);
 
-unsigned int exp_needed(int lev, int exp_apt = -99);
+unsigned int exp_needed(int lev);
 bool will_gain_life(int lev);
 
 bool dur_expiring(duration_type dur);
@@ -1163,7 +1157,6 @@ bool sanguine_armour_valid();
 void activate_sanguine_armour();
 
 void refresh_weapon_protection();
-void refresh_meek_bonus();
 
 void set_mp(int new_amount);
 
@@ -1239,3 +1232,5 @@ bool need_expiration_warning(coord_def p = you.pos());
 
 bool player_has_orb();
 bool player_on_orb_run();
+
+bool artefacts_enhance_skill();

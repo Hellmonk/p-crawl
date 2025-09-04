@@ -91,47 +91,17 @@ int aux_to_hit()
 
 }
 
-static double _to_hit_hit_chance(const monster_info& mi, attack &atk, bool melee,
-                                 int to_land, bool is_aux = false)
+static double _to_hit_hit_chance(const monster_info& mi, bool melee, int to_land)
 {
     if (to_land >= AUTOMATIC_HIT)
         return 1.0;
 
-    const double AUTO_MISS_CHANCE = is_aux ? 0 : 2.5;
-    const double AUTO_HIT_CHANCE = is_aux ? 3.3333 : 2.5;
-
     int ev = mi.ev + (!melee && mi.is(MB_REPEL_MSL) ? REPEL_MISSILES_EV_BONUS : 0);
 
     if (ev <= 0)
-        return 1 - AUTO_MISS_CHANCE / 200.0;
+        return 1;
 
-    int hits = 0;
-    for (int rolled_mhit = 0; rolled_mhit < to_land; rolled_mhit++)
-    {
-        // Apply post-roll manipulations:
-        int adjusted_mhit = rolled_mhit + atk.post_roll_to_hit_modifiers(rolled_mhit, false);
-
-        // But the above will bail out because there's no defender in the attack object,
-        // so we reproduce any possibly relevant effects here:
-        adjusted_mhit += mi.lighting_modifiers();
-
-        // And this duplicates ranged_attack::post_roll_to_hit_modifiers().
-        if (!melee && mi.is(MB_BULLSEYE_TARGET))
-        {
-            adjusted_mhit += calc_spell_power(SPELL_DIMENSIONAL_BULLSEYE)
-                                / 2 / BULLSEYE_TO_HIT_DIV;
-        }
-
-        // Now count the hit if it's above target ev
-        if (adjusted_mhit >= ev)
-            hits++;
-    }
-
-    double hit_chance = ((double)hits) / to_land;
-    // Apply Bayes Theorem to account for auto hit and miss.
-    hit_chance = hit_chance * (1 - AUTO_MISS_CHANCE / 200.0)
-                 + (1 - hit_chance) * AUTO_HIT_CHANCE / 200.0;
-    return hit_chance;
+    return max(MIN_HIT_PERCENTAGE / 100.0, (100 - ev) / 100.0);
 }
 
 static bool _to_hit_is_invisible(const monster_info& mi)
@@ -201,7 +171,7 @@ int to_hit_pct(const monster_info& mi, attack &atk, bool melee,
                bool penetrating, int distance)
 {
     const int to_land = atk.calc_pre_roll_to_hit(false);
-    const double hit_chance = _to_hit_hit_chance(mi, atk, melee, to_land);
+    const double hit_chance = _to_hit_hit_chance(mi, melee, to_land);
     const double shield_chance = _to_hit_shield_chance(mi, melee, to_land, penetrating);
     const int blind_miss_chance = player_blind_miss_chance(distance);
     return (int)(hit_chance * (1.0 - shield_chance) * 100 * (100 - blind_miss_chance) / 100);
@@ -211,10 +181,10 @@ int to_hit_pct(const monster_info& mi, attack &atk, bool melee,
  * Return the odds of the player hitting a defender defined as a
  * monster_info with an auxiliary melee attack, rounded to the nearest percent.
  */
-int to_hit_pct_aux(const monster_info& mi, attack &atk)
+int to_hit_pct_aux(const monster_info& mi)
 {
     const int to_land = aux_to_hit();
-    const double hit_chance = _to_hit_hit_chance(mi, atk, true, to_land, true);
+    const double hit_chance = _to_hit_hit_chance(mi, true, to_land);
     const double shield_chance = _to_hit_shield_chance(mi, true, to_land, false);
     const int blind_miss_chance = player_blind_miss_chance(1);
     return (int)(hit_chance * (1.0 - shield_chance) * 100 * (100 - blind_miss_chance) / 100);
@@ -233,11 +203,6 @@ int mon_to_hit_base(int hd, bool skilled)
     return 18 + hd * hd_mult / 2;
 }
 
-int mon_shield_bypass(int hd)
-{
-    return 15 + hd * 2 / 3;
-}
-
 /**
  * Return the odds of a monster attack with the given to-hit bonus hitting the given ev (scaled by 100),
  * rounded to the nearest percent.
@@ -252,73 +217,19 @@ int mon_to_hit_pct(int to_land, int scaled_ev)
         return 100;
 
     if (scaled_ev <= 0)
-        return 100 - MIN_HIT_MISS_PERCENTAGE / 2;
+        return 100;
 
-    ++to_land; // per calc_to_hit()
-
-    const int ev = scaled_ev/100;
-
-    // EV is random-rounded, so the actual value might be either ev or ev+1.
-    // We repeat the calculation below once for each case
-    int hits_lower = 0;
-    for (int ev1 = 0; ev1 < ev; ev1++)
-        for (int ev2 = 0; ev2 < ev; ev2++)
-            hits_lower += max(0, to_land - (ev1 + ev2));
-    double hit_chance_lower = ((double)hits_lower) / (to_land * ev * ev);
-
-    int hits_upper = 0;
-    for (int ev1 = 0; ev1 < ev+1; ev1++)
-        for (int ev2 = 0; ev2 < ev+1; ev2++)
-            hits_upper += max(0, to_land - (ev1 + ev2));
-    double hit_chance_upper = ((double)hits_upper) / (to_land * (ev+1) * (ev+1));
-
-    double hit_chance = ((100 - (scaled_ev % 100)) * hit_chance_lower + (scaled_ev % 100) * hit_chance_upper) / 100;
-
-    // Apply Bayes Theorem to account for auto hit and miss.
-    hit_chance = hit_chance * (1 - MIN_HIT_MISS_PERCENTAGE / 200.0)
-              + (1 - hit_chance) * MIN_HIT_MISS_PERCENTAGE / 200.0;
-
-    return (int)(hit_chance*100);
+    return max(MIN_HIT_PERCENTAGE, 100 - scaled_ev);
 }
 
-int mon_beat_sh_pct(int bypass, int scaled_sh)
+int mon_beat_sh_pct(int scaled_sh)
 {
     if (scaled_sh <= 0)
         return 100;
 
     int sh = scaled_sh/100;
 
-    // SH is random-rounded, so the actual value might be either sh or sh+1.
-    // We repeat the calculation below once for each case
-    sh *= 2; // per shield_bonus()
-    int hits_lower = 0;
-    for (int sh1 = 0; sh1 < sh; sh1++)
-    {
-        for (int sh2 = 0; sh2 < sh; sh2++)
-        {
-            int adj_sh = (sh1 + sh2) / (3*2) - 1;
-            hits_lower += max(0, bypass - adj_sh);
-        }
-    }
-    const int denom_lower = sh * sh * bypass;
-    double hit_chance_lower = ((double)hits_lower * 100) / denom_lower;
-
-    sh += 2; // since we already multiplied by 2
-    int hits_upper = 0;
-    for (int sh1 = 0; sh1 < sh; sh1++)
-    {
-        for (int sh2 = 0; sh2 < sh; sh2++)
-        {
-            int adj_sh = (sh1 + sh2) / (3*2) - 1;
-            hits_upper += max(0, bypass - adj_sh);
-        }
-    }
-    const int denom_upper = sh * sh * bypass;
-    double hit_chance_upper = ((double)hits_upper * 100) / denom_upper;
-
-    double hit_chance = ((100 - (scaled_sh % 100)) * hit_chance_lower + (scaled_sh % 100) * hit_chance_upper) / 100;
-
-    return (int)hit_chance;
+    return max(0, min(100, 100 - sh));
 }
 
 /**
@@ -734,22 +645,6 @@ int stab_bonus_denom(stab_type stab)
     }
 }
 
-static bool _is_boolean_resist(beam_type flavour)
-{
-    switch (flavour)
-    {
-    case BEAM_ELECTRICITY:
-    case BEAM_MIASMA:
-    case BEAM_STICKY_FLAME:
-    case BEAM_WATER:  // water asphyxiation damage,
-                      // bypassed by being water inhabitant.
-    case BEAM_POISON:
-        return true;
-    default:
-        return false;
-    }
-}
-
 // Gets the percentage of the total damage of this damage flavour that can
 // be resisted.
 static inline int _get_resistible_fraction(beam_type flavour)
@@ -851,12 +746,9 @@ static int _beam_to_resist(const actor* defender, beam_type flavour)
 /**
  * Adjusts damage for elemental resists, electricity and poison.
  *
- * For players, damage is reduced to 1/2, 1/3, or 1/5 if res has values 1, 2,
- * or 3, respectively. "Boolean" resists (rElec, rPois) reduce damage to 1/3.
- * rN is a special case that reduces damage to 1/2, 1/4, 0 instead.
- *
- * For monsters, damage is reduced to 1/2, 1/5, and 0 for 1/2/3 resistance.
- * "Boolean" resists give 1/3, 1/6, 0 instead.
+ * For players, damage is reduced to 1/2, with no ability to become immune
+ * For monsters, damage is reduced to 1/2 at + and immune at ++
+ * Vulnerability is 150% damage.
  *
  * @param defender      The victim of the attack.
  * @param flavour       The type of attack having its damage adjusted.
@@ -880,27 +772,10 @@ int resist_adjust_damage(const actor* defender, beam_type flavour, int rawdamage
 
     if (res > 0)
     {
-        const bool immune_at_3_res = is_mon
-                                     || base_flavour == BEAM_NEG
-                                     || base_flavour == BEAM_POISON
-                                     || flavour == BEAM_HOLY
-                                     || flavour == BEAM_FOUL_FLAME;
-
-        if (immune_at_3_res && res >= 3 || res > 3)
+        if (is_mon && res >= 2 || res > 2)
             resistible = 0;
         else
-        {
-            // Is this a resist that claims to be boolean for damage purposes?
-            const int bonus_res = (_is_boolean_resist(base_flavour) ? 1 : 0);
-
-            // Monster resistances are stronger than player versions.
-            if (is_mon)
-                resistible /= 1 + bonus_res + res * res;
-            else if (base_flavour == BEAM_NEG)
-                resistible /= res * 2;
-            else
-                resistible /= (3 * res + 1) / 2 + bonus_res;
-        }
+            resistible /= 2;
     }
     else if (res < 0)
         resistible = resistible * 15 / 10;
@@ -1206,15 +1081,13 @@ bool attack_cleaves(const actor &attacker, const item_def *weap)
 
 bool weapon_cleaves(const item_def &weap)
 {
-    return is_axe(weap) || is_unrandom_artefact(weap, UNRAND_LOCHABER_AXE);
+    return is_axe(weap);
 }
 
 int weapon_hits_per_swing(const item_def &weap)
 {
     if (!weap.is_type(OBJ_WEAPONS, WPN_QUICK_BLADE))
         return 1;
-    if (is_unrandom_artefact(weap, UNRAND_GYRE))
-        return 4;
     return 2;
 }
 
@@ -1330,60 +1203,9 @@ int attack_multiple_targets(actor &attacker, list<actor*> &targets,
  * @param weapon The weapon to be considered.
  * @returns The level of the relevant skill you must reach.
  */
-int weapon_min_delay_skill(const item_def &weapon)
+int weapon_skill_requirement(const item_def &weapon)
 {
-    const int speed = property(weapon, PWPN_SPEED);
-    const int mindelay = weapon_min_delay(weapon, false);
-    return (speed - mindelay) * 2;
-}
-
-/**
- * How fast will this weapon get from your skill training?
- *
- * @param weapon the weapon to be considered.
- * @param check_speed whether to take it into account if the weapon has the
- *                    speed brand.
- * @return How many aut the fastest possible attack with this weapon would take.
- */
-int weapon_min_delay(const item_def &weapon, bool check_speed)
-{
-    const int base = property(weapon, PWPN_SPEED);
-    if (is_unrandom_artefact(weapon, UNRAND_WOODCUTTERS_AXE))
-        return base;
-
-    int min_delay = base/2;
-
-    // All weapons have min delay 7 or better
-    if (min_delay > 7)
-        min_delay = 7;
-
-    // ...except crossbows...
-    if (is_crossbow(weapon) && min_delay < 10)
-        min_delay = 10;
-
-    // ... and unless it would take more than skill 27 to get there.
-    // Round up the reduction from skill, so that min delay is rounded down.
-    min_delay = max(min_delay, base - (MAX_SKILL_LEVEL + 1)/2);
-
-    if (check_speed)
-        min_delay = weapon_adjust_delay(weapon, min_delay, false);
-
-    // never go faster than speed 3 (ie 3.33 attacks per round)
-    if (min_delay < 3)
-        min_delay = 3;
-
-    return min_delay;
-}
-
-/// Adjust delay based on weapon brand.
-int weapon_adjust_delay(const item_def &weapon, int base, bool random)
-{
-    const brand_type brand = get_weapon_brand(weapon);
-    if (brand == SPWPN_SPEED)
-        return random ? div_rand_round(base * 2, 3) : (base * 2) / 3;
-    if (brand == SPWPN_HEAVY)
-        return random ? div_rand_round(base * 3, 2) : (base * 3) / 2;
-    return base;
+    return property(weapon, PWPN_SK);
 }
 
 int mons_weapon_damage_rating(const item_def &launcher)
@@ -1744,49 +1566,11 @@ int archer_bonus_damage(int hd)
     return hd * 4 / 3;
 }
 
-/**
- * Do weapons that use the given skill use strength or dex to increase damage?
- */
-bool weapon_uses_strength(skill_type wpn_skill, bool using_weapon)
+int apply_weapon_skill(int damage, skill_type wpn_skill, bool penalty)
 {
-    return true;
-}
-
-/**
- * Apply the player's attributes to multiply damage dealt with the given weapon skill.
- */
-int stat_modify_damage(int damage, skill_type wpn_skill, bool using_weapon)
-{
-    // At 10 strength, damage is multiplied by 1.0
-    // Each point of strength over 10 increases this by 0.025 (2.5%),
-    // strength below 10 reduces the multiplied by the same amount.
-    // Minimum multiplier is 0.01 (1%) (reached at -30 str).
-    // Ranged weapons and short/long blades use dex instead.
-    const bool use_str = weapon_uses_strength(wpn_skill, using_weapon);
-    const int attr = use_str ? you.strength() : you.dex();
-    damage *= max(1.0, 75 + 2.5 * attr);
-    damage /= 100;
-
-    return damage;
-}
-
-int apply_weapon_skill(int damage, skill_type wpn_skill, bool random)
-{
-    const int sklvl = you.skill(wpn_skill, 100);
-    damage *= 2500 + maybe_random2(sklvl + 1, random);
-    damage /= 2500;
-    return damage;
-}
-
-int apply_fighting_skill(int damage, bool aux, bool random)
-{
-    const int base = aux? 40 : 30;
-    const int sklvl = you.skill(SK_FIGHTING, 100);
-
-    damage *= base * 100 + maybe_random2(sklvl + 1, random);
-    damage /= base * 100;
-
-    return damage;
+    const int sklvl = you.skill(wpn_skill, 1);
+    damage += sklvl;
+    return penalty ? damage / 2 : damage;
 }
 
 int throwing_base_damage_bonus(const item_def &proj, bool random)

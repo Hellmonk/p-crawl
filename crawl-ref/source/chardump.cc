@@ -909,7 +909,7 @@ static void _sdump_spells(dump_params &par)
 
         text += "You " + verb + " the following spells:\n\n";
 
-        text += " Your Spells              Type           Power      Damage    Failure   Level" "\n";
+        text += " Your Spells              Type           Power      Damage  Level" "\n";
 
         for (int j = 0; j < 52; j++)
         {
@@ -949,10 +949,6 @@ static void _sdump_spells(dump_params &par)
 
                 spell_line = chop_string(spell_line, 62);
 
-                spell_line += failure_rate_to_string(raw_spell_fail(spell));
-
-                spell_line = chop_string(spell_line, 74);
-
                 spell_line += make_stringf("%d", spell_difficulty(spell));
 
                 spell_line += "\n";
@@ -972,7 +968,7 @@ static void _sdump_spells(dump_params &par)
     {
         verb = par.se? "contained" : "contains";
         text += "Your spell library " + verb + " the following spells:\n\n";
-        text += " Spells                   Type           Power      Damage    Failure   Level" "\n";
+        text += " Spells                   Type           Power      Damage   Level" "\n";
 
         auto const library = get_sorted_spell_list(true, false);
 
@@ -1012,13 +1008,6 @@ static void _sdump_spells(dump_params &par)
             spell_line += spell_damage.length() ? spell_damage : "N/A";
 
             spell_line = chop_string(spell_line, 62);
-
-            if (memorisable)
-                spell_line += failure_rate_to_string(raw_spell_fail(spell));
-            else
-                spell_line += "N/A";
-
-            spell_line = chop_string(spell_line, 74);
 
             spell_line += make_stringf("%d", spell_difficulty(spell));
 

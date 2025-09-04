@@ -750,9 +750,10 @@ static vector<ability_def> &_get_ability_list()
             0, 0, 12, -1, {fail_basis::invo}, abflag::quiet_fail },
         { ABIL_IGNIS_RISING_FLAME, "Rising Flame",
             0, 0, 0, -1, {fail_basis::invo}, abflag::none },
-
+#if TAG_MAJOR_VERSION == 34
         { ABIL_RENOUNCE_RELIGION, "Renounce Religion",
             0, 0, 0, -1, {fail_basis::invo}, abflag::none },
+#endif
         { ABIL_CONVERT_TO_BEOGH, "Convert to Beogh",
             0, 0, 0, -1, {fail_basis::invo}, abflag::conf_ok },
 #ifdef WIZARD
@@ -1844,7 +1845,7 @@ static bool _check_ability_possible(const ability_def& abil, bool quiet = false)
         || you.duration[DUR_WATER_HOLD] && !you.res_water_drowning())
     {
         talent tal = get_talent(abil.ability, false);
-        if (tal.is_invocation && abil.ability != ABIL_RENOUNCE_RELIGION)
+        if (tal.is_invocation)
         {
             if (!quiet)
             {
@@ -2831,12 +2832,6 @@ bool activate_talent(const talent& tal, dist *target)
             dithmenos_cache_marionette_viability();
         }
 
-        if (abil.failure.base_chance)
-        {
-            args.top_prompt +=
-                make_stringf(" <lightgrey>(%s risk of failure)</lightgrey>",
-                             failure_rate_to_string(tal.fail).c_str());
-        }
         args.behaviour = &beh;
         if (!is_targeted)
             args.default_place = you.pos();
@@ -4006,20 +4001,6 @@ static spret _do_ability(const ability_def& abil, bool fail, dist *target,
         you.one_time_ability_used.set(GOD_IGNIS);
         return spret::success;
 
-    case ABIL_RENOUNCE_RELIGION:
-        if (yesno("Really renounce your faith, foregoing its fabulous benefits?",
-                  false, 'n')
-            && yesno("Are you sure?", false, 'n'))
-        {
-            excommunication(true);
-        }
-        else
-        {
-            canned_msg(MSG_OK);
-            return spret::abort;
-        }
-        break;
-
     case ABIL_CONVERT_TO_BEOGH:
         god_pitch(GOD_BEOGH);
         if (you_worship(GOD_BEOGH))
@@ -4230,13 +4211,10 @@ string describe_talent(const talent& tal)
 {
     ASSERT(tal.which != ABIL_NON_ABILITY);
 
-    const string failure = failure_rate_to_string(tal.fail);
-
     ostringstream desc;
     desc << left
          << chop_string(ability_name(tal.which), 32)
-         << chop_string(make_cost_description(tal.which), 32)
-         << chop_string(failure, 12);
+         << chop_string(make_cost_description(tal.which), 32);
     return trimmed_string(desc.str());
 }
 
@@ -4342,8 +4320,10 @@ bool player_has_ability(ability_type abil, bool include_unusable)
         return you.form == you.default_form
                && you.default_form != transformation::none;
     // TODO: other god abilities
+#if TAG_MAJOR_VERSION == 34
     case ABIL_RENOUNCE_RELIGION:
-        return !you_worship(GOD_NO_GOD);
+        return false;
+#endif
     case ABIL_CONVERT_TO_BEOGH:
         return env.level_state & LSTATE_BEOGH && can_convert_to_beogh();
     // pseudo-evocations from equipped items
@@ -4355,9 +4335,6 @@ bool player_has_ability(ability_type abil, bool include_unusable)
                && !you.get_mutation_level(MUT_NO_ARTIFICE);
     case ABIL_EVOKE_DISPATER:
         return you.unrand_equipped(UNRAND_DISPATER)
-               && !you.has_mutation(MUT_NO_ARTIFICE);
-    case ABIL_EVOKE_OLGREB:
-        return you.unrand_equipped(UNRAND_OLGREB)
                && !you.has_mutation(MUT_NO_ARTIFICE);
     default:
         // removed abilities handled here
@@ -4416,7 +4393,9 @@ vector<talent> your_talents(bool check_confused, bool include_unusable, bool ign
             ABIL_IMPRINT_WEAPON,
             ABIL_END_TRANSFORMATION,
             ABIL_BEGIN_UNTRANSFORM,
+#if TAG_MAJOR_VERSION == 34
             ABIL_RENOUNCE_RELIGION,
+#endif
             ABIL_CONVERT_TO_BEOGH,
             ABIL_EVOKE_BLINK,
             ABIL_EVOKE_TURN_INVISIBLE,
@@ -4636,10 +4615,6 @@ int find_ability_slot(const ability_type abil, char firstletter)
 
     case ABIL_IMPRINT_WEAPON:
         first_slot = letter_to_index('w');
-        break;
-
-    case ABIL_RENOUNCE_RELIGION:
-        first_slot = letter_to_index('X');
         break;
 
 #ifdef WIZARD

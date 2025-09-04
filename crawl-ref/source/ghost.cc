@@ -1009,7 +1009,7 @@ void ghost_demon::ugly_thing_add_resistance(bool very_ugly,
 
 void ghost_demon::init_dancing_weapon(const item_def& weapon, int power)
 {
-    int delay = property(weapon, PWPN_SPEED);
+    int delay = property(weapon, PWPN_SK);
     int damg  = property(weapon, PWPN_DAMAGE);
 
     if (power > 100)
@@ -1095,7 +1095,7 @@ void ghost_demon::add_spells()
 
     for (int i = 0; i < MAX_KNOWN_SPELLS; i++)
     {
-        const int chance = max(0, 50 - failure_rate_to_int(raw_spell_fail(you.spells[i])));
+        const int chance = 50;
         const spell_type spell = translate_spell(you.spells[i]);
         if (spell != SPELL_NO_SPELL
             && !(get_spell_flags(spell) & spflag::no_ghost)

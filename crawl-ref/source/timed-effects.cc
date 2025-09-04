@@ -268,7 +268,7 @@ static void _maybe_mortality_summon()
     for (monster_near_iterator mi(you.pos(), LOS_NO_TRANS); mi; ++mi)
     {
         if (!mi->wont_attack() && !mi->is_firewood()
-            && mons_threat_level(**mi, true) > MTHRT_TRIVIAL)
+            && mons_threat_level(**mi) > MTHRT_TRIVIAL)
         {
             return;
         }
@@ -399,11 +399,9 @@ static struct timed_effect timed_effects[] =
     { _check_contamination_effects,  110,   250, false },
 #if TAG_MAJOR_VERSION == 34
     { nullptr,                         0,     0, false },
-#endif
-    { handle_god_time,               100,   300, false },
-#if TAG_MAJOR_VERSION == 34
-    { nullptr,                                0,     0, false },
-    { nullptr,            0,   0, false },
+    { nullptr,                         0,     0, false },
+    { nullptr,                         0,     0, false },
+    { nullptr,                         0,     0, false },
 #endif
     { _wait_practice,                100,   300, false },
 #if TAG_MAJOR_VERSION == 34

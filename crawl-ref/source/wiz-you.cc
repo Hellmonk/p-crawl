@@ -326,16 +326,8 @@ void wizard_set_piety_to(int newpiety, bool force)
     }
 
     if (newpiety < 1 && !force)
-    {
-        if (yesno("Are you sure you want to be excommunicated?", false, 'n'))
-        {
-            you.raw_piety = 0;
-            excommunication();
-        }
-        else
-            canned_msg(MSG_OK);
-        return;
-    }
+        newpiety = 1;
+
     mprf("Setting piety to %d.", newpiety);
     set_piety(newpiety);
 

@@ -401,15 +401,9 @@ vorpal_damage_type monster::damage_type(int which_attack)
  * @return            The time taken by an attack with the monster's weapon
  *                    and the given projectile, in aut.
  */
-random_var monster::attack_delay(const item_def *projectile,
-                                 bool /*rescale*/) const
+random_var monster::attack_delay() const
 {
-    const item_def* weap = weapon();
-    if (!weap || (projectile && is_throwable(this, *projectile)))
-        return random_var(10);
-
-    random_var delay(weapon_adjust_delay(*weap, 10));
-    return delay;
+    return random_var(10);
 }
 
 int monster::has_claws(bool /*allow_tran*/) const
@@ -1237,12 +1231,6 @@ static bool _is_signature_weapon(const monster* mons, const item_def &weapon)
         if (mons->type == MONS_MENNAS)
             return get_weapon_brand(weapon) == SPWPN_HOLY_WRATH;
 
-        if (mons->type == MONS_ARACHNE)
-        {
-            return weapon.is_type(OBJ_STAVES, STAFF_ALCHEMY)
-                   || is_unrandom_artefact(weapon, UNRAND_OLGREB);
-        }
-
         if (mons->type == MONS_FANNAR)
             return weapon.is_type(OBJ_STAVES, STAFF_COLD);
 
@@ -1552,11 +1540,11 @@ static int _get_monster_armour_value(const monster *mon,
     // Poison becomes much less valuable if the monster is
     // intrinsically resistant.
     if (get_mons_resist(*mon, MR_RES_POISON) <= 0)
-        value += get_armour_res_poison(item, true);
+        value += get_armour_res_poison(item);
 
     // Same for life protection.
     if (mon->holiness() & MH_NATURAL)
-        value += get_armour_life_protection(item, true);
+        value += get_armour_life_protection(item);
 
     // See invisible also is only useful if not already intrinsic.
     if (!mons_class_flag(mon->type, M_SEE_INVIS))
@@ -1720,11 +1708,11 @@ static int _get_monster_jewellery_value(const monster *mon,
     // Poison becomes much less valuable if the monster is
     // intrinsically resistant.
     if (get_mons_resist(*mon, MR_RES_POISON) <= 0)
-        value += get_jewellery_res_poison(item, true);
+        value += get_jewellery_res_poison(item);
 
     // Same for life protection.
     if (mon->holiness() & MH_NATURAL)
-        value += get_jewellery_life_protection(item, true);
+        value += get_jewellery_life_protection(item);
 
     // See invisible also is only useful if not already intrinsic.
     if (!mons_class_flag(mon->type, M_SEE_INVIS))
@@ -3026,20 +3014,7 @@ int monster::shield_class() const
     int sh = 0;
     const item_def *shld = shield();
     if (shld && is_shield(*shld))
-    {
-        // Look, this is all nonsense.
-        // First, take the item properties.
-        const int base = property(*shld, PARM_AC) + shld->plus;
-        // Double them, because we halved the size of player-visible stats many
-        // years ago but never fixed the internal math. Sorry!
-        sh += base * 2;
-        // Finally, add in monster HD as a proxy for 'shield skill'.
-        sh += get_hit_dice() * 4 / 3;
-    }
-
-    const item_def *amulet = mslot_item(MSLOT_JEWELLERY);
-    if (amulet && amulet->sub_type == AMU_REFLECTION)
-        sh += AMU_REFLECT_SH;
+        sh = property(*shld, PARM_AC) + shld->plus * 2;
 
     return sh;
 }
@@ -3049,9 +3024,7 @@ int monster::shield_bonus() const
     if (incapacitated())
         return -100;
 
-    const int cls = shield_class();
-    // I don't know why we randomize like this.
-    const int sh = random2avg(cls, 2) / 2;
+    const int sh = shield_class();
     return sh ? sh : -100;
 }
 
@@ -3064,7 +3037,7 @@ void monster::shield_block_succeeded(actor *attacker)
 
 int monster::shield_bypass_ability(int) const
 {
-    return mon_shield_bypass(get_hit_dice());
+    return 0;
 }
 
 bool monster::missile_repulsion() const
@@ -3309,32 +3282,12 @@ int monster::evasion(bool ignore_temporary, const actor* /*act*/) const
 {
     int ev = base_evasion();
 
-    // account for armour
-    for (int slot = MSLOT_ARMOUR; slot <= MSLOT_SHIELD; slot++)
-    {
-        const item_def* armour = mslot_item(static_cast<mon_inv_type>(slot));
-        if (armour)
-            ev += property(*armour, PARM_EVASION) / 60;
-    }
-
-    // evasion from jewellery
-    const item_def *ring = mslot_item(MSLOT_JEWELLERY);
-    if (ring && ring->sub_type == RING_EVASION)
-    {
-        const int jewellery_plus = ring->plus;
-        ASSERT(abs(jewellery_plus) < 30); // sanity check
-        ev += jewellery_plus;
-    }
-
-    // evasion from artefacts
-    ev += scan_artefacts(ARTP_EVASION);
-
     // Only temporary modifiers after this
     if (ignore_temporary)
         return max(ev, 0);
 
     if (paralysed() || petrified() || petrifying() || asleep()
-        || has_ench(ENCH_MAGNETISED))
+        || has_ench(ENCH_MAGNETISED) || backlit())
     {
         return 0;
     }
@@ -3748,39 +3701,11 @@ int monster::res_poison(bool temp) const
 {
     int u = get_mons_resist(*this, MR_RES_POISON);
 
-    if (const item_def* w = primary_weapon())
-    {
-        if (is_unrandom_artefact(*w, UNRAND_OLGREB))
-            return 3;
-    }
-
     if (temp && has_ench(ENCH_POISON_VULN))
         u--;
 
     if (u > 0)
         return u;
-
-    if (mons_itemuse(*this) >= MONUSE_STARTING_EQUIPMENT)
-    {
-        u += scan_artefacts(ARTP_POISON);
-
-        const int armour    = inv[MSLOT_ARMOUR];
-        const int shld      = inv[MSLOT_SHIELD];
-        const int jewellery = inv[MSLOT_JEWELLERY];
-
-        if (armour != NON_ITEM && env.item[armour].base_type == OBJ_ARMOUR)
-            u += get_armour_res_poison(env.item[armour], false);
-
-        if (shld != NON_ITEM && env.item[shld].base_type == OBJ_ARMOUR)
-            u += get_armour_res_poison(env.item[shld], false);
-
-        if (jewellery != NON_ITEM && env.item[jewellery].base_type == OBJ_JEWELLERY)
-            u += get_jewellery_res_poison(env.item[jewellery], false);
-
-        const item_def *w = primary_weapon();
-        if (w && w->is_type(OBJ_STAVES, STAFF_ALCHEMY))
-            u++;
-    }
 
     if (has_ench(ENCH_RESISTANCE))
         u++;
@@ -3846,35 +3771,13 @@ int monster::res_foul_flame() const
     return 0;
 }
 
-int monster::res_negative_energy(bool intrinsic_only) const
+int monster::res_negative_energy(bool /*intrinsic_only*/) const
 {
     // If you change this, also change get_mons_resists.
     if (!(holiness() & (MH_NATURAL | MH_PLANT)))
         return 3;
 
     int u = get_mons_resist(*this, MR_RES_NEG);
-
-    if (mons_itemuse(*this) >= MONUSE_STARTING_EQUIPMENT && !intrinsic_only)
-    {
-        u += scan_artefacts(ARTP_NEGATIVE_ENERGY);
-
-        const int armour    = inv[MSLOT_ARMOUR];
-        const int shld      = inv[MSLOT_SHIELD];
-        const int jewellery = inv[MSLOT_JEWELLERY];
-
-        if (armour != NON_ITEM && env.item[armour].base_type == OBJ_ARMOUR)
-            u += get_armour_life_protection(env.item[armour], false);
-
-        if (shld != NON_ITEM && env.item[shld].base_type == OBJ_ARMOUR)
-            u += get_armour_life_protection(env.item[shld], false);
-
-        if (jewellery != NON_ITEM && env.item[jewellery].base_type == OBJ_JEWELLERY)
-            u += get_jewellery_life_protection(env.item[jewellery], false);
-
-        const item_def *w = primary_weapon();
-        if (w && w->is_type(OBJ_STAVES, STAFF_DEATH))
-            u++;
-    }
 
     if (u > 3)
         u = 3;
@@ -3916,7 +3819,6 @@ int monster::res_corr() const
         u += wearing(OBJ_ARMOUR, ARM_ACID_DRAGON_ARMOUR);
         u += wearing_jewellery(RING_RESIST_CORROSION);
         u += wearing_ego(OBJ_ARMOUR, SPARM_PRESERVATION);
-        u += scan_artefacts(ARTP_RCORR);
     }
 
     if (has_ench(ENCH_RESISTANCE))
@@ -4070,7 +3972,7 @@ int monster::skill(skill_type sk, int scale, bool /*real*/, bool /*temp*/) const
         return 0;
 
     const int hd = scale * get_hit_dice();
-    int ret;
+
     switch (sk)
     {
     case SK_INVOCATIONS:
@@ -5013,13 +4915,6 @@ bool monster::can_see_invisible() const
     else if (mons_class_sees_invis(type, base_monster))
         return true;
     else if (has_facet(BF_WEIRD))
-        return true;
-
-    if (scan_artefacts(ARTP_SEE_INVISIBLE) > 0)
-        return true;
-    else if (wearing_jewellery(RING_SEE_INVISIBLE))
-        return true;
-    else if (wearing_ego(OBJ_ARMOUR, SPARM_SEE_INVISIBLE))
         return true;
 
     return false;

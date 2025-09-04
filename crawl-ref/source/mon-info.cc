@@ -964,12 +964,7 @@ int monster_info::regen_rate(int scale) const
  */
 int monster_info::lighting_modifiers() const
 {
-    int mod = 0;
-    if (backlit)
-        mod += BACKLIGHT_TO_HIT_BONUS;
-    if (umbraed && !you.nightvision())
-        mod += UMBRA_TO_HIT_MALUS;
-    return mod;
+    return 0;
 }
 
 /**

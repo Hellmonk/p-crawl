@@ -67,26 +67,6 @@ ranged_attack::ranged_attack(actor *attk, actor *defn,
     needs_message = defender_visible;
 }
 
-int ranged_attack::post_roll_to_hit_modifiers(int mhit, bool random)
-{
-    int modifiers = attack::post_roll_to_hit_modifiers(mhit, random);
-
-    if (teleport && attacker->is_monster())
-        modifiers += attacker->as_monster()->get_hit_dice() * 3 / 2;
-    // Duplicated in melee.cc _to_hit_hit_chance
-    else if (defender && attacker->is_player()
-             && you.duration[DUR_DIMENSIONAL_BULLSEYE]
-             && (mid_t)you.props[BULLSEYE_TARGET_KEY].get_int()
-                 == defender->mid)
-    {
-        modifiers += maybe_random2_div(
-                         calc_spell_power(SPELL_DIMENSIONAL_BULLSEYE),
-                         BULLSEYE_TO_HIT_DIV, random);
-    }
-
-    return modifiers;
-}
-
 bool ranged_attack::attack()
 {
     if (!handle_phase_attempted())
@@ -380,7 +360,13 @@ int ranged_attack::weapon_damage() const
     if (using_weapon())
         dam += property(*weapon, PWPN_DAMAGE);
     else if (attacker->is_player())
+    {
         dam += calc_base_unarmed_damage();
+        // insufficient skill penalty for throwing. Ranged weapons are handled
+        // alongside melee weapons in attack.cc calc_damage
+        if (you.skill(SK_THROWING) < ammo_type_skill_req(projectile->sub_type))
+            dam /= 2;
+    }
 
     return dam;
 }

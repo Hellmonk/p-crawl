@@ -953,7 +953,6 @@ static void _decrement_durations()
         activate_sanguine_armour();
     else if (!sanguine_armour_is_valid && you.duration[DUR_SANGUINE_ARMOUR])
         you.duration[DUR_SANGUINE_ARMOUR] = 1; // expire
-    refresh_meek_bonus();
 
     if (you.props.exists(WU_JIAN_HEAVENLY_STORM_KEY))
     {
@@ -1086,57 +1085,10 @@ void maybe_attune_regen_items(bool attune_regen, bool attune_mana_regen)
 // you.max_magic_points
 static void _regenerate_hp_and_mp(int delay)
 {
-    if (crawl_state.disables[DIS_PLAYER_REGEN])
+    if (delay)
         return;
 
-    const int old_hp = you.hp;
-    const int old_mp = you.magic_points;
-
-    // HP Regeneration
-    if (!you.duration[DUR_DEATHS_DOOR])
-    {
-        const int base_val = player_regen();
-        you.hit_points_regeneration += div_rand_round(base_val * delay, BASELINE_DELAY);
-    }
-
-    while (you.hit_points_regeneration >= 100)
-    {
-        // at low mp, "mana link" restores mp in place of hp
-        if (you.has_mutation(MUT_MANA_LINK)
-            && !x_chance_in_y(you.magic_points, you.max_magic_points))
-        {
-            inc_mp(1);
-        }
-        else // standard hp regeneration
-            inc_hp(1);
-        you.hit_points_regeneration -= 100;
-    }
-
-    ASSERT_RANGE(you.hit_points_regeneration, 0, 100);
-
-    // MP Regeneration
-    if (player_regenerates_mp())
-    {
-        if (you.magic_points < you.max_magic_points)
-        {
-            const int base_val = player_mp_regen();
-            int mp_regen_countup = div_rand_round(base_val * delay, BASELINE_DELAY);
-            you.magic_points_regeneration += mp_regen_countup;
-        }
-
-        while (you.magic_points_regeneration >= 100)
-        {
-            inc_mp(1);
-            you.magic_points_regeneration -= 100;
-        }
-
-        ASSERT_RANGE(you.magic_points_regeneration, 0, 100);
-    }
-
-    // Update attunement of regeneration items if our hp/mp has refilled.
-    maybe_attune_regen_items(you.hp != old_hp && you.hp == you.hp_max,
-                             you.magic_points != old_mp
-                             && you.magic_points == you.max_magic_points);
+    return;
 }
 
 static void _handle_fugue(int delay)
@@ -1285,10 +1237,6 @@ void player_reacts()
             big_cloud(CLOUD_BATS, &you, you.pos(), 8, num_clouds);
         }
     }
-
-    // safety first: make absolutely sure that there's no mimic underfoot.
-    // (this can happen with e.g. apport.)
-    discover_mimic(you.pos());
 
     // Player stealth check.
     seen_monsters_react(stealth);

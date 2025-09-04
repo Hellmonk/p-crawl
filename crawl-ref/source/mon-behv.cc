@@ -606,10 +606,9 @@ void handle_behaviour(monster* mon)
                     {
                         if (mon->foe == MHITYOU)
                         {
+                            int search = mon->get_hit_dice()*2;
                             if (in_bounds(you.pos())
-                                && (x_chance_in_y(50, you.stealth())
-                                    || you.penance[GOD_ASHENZARI]
-                                       && coinflip()))
+                                && x_chance_in_y(search, search + you.stealth()))
                             {
                                 mon->target = you.pos();
                             }

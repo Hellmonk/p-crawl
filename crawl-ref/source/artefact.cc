@@ -129,11 +129,8 @@ static bool _god_fits_artefact(const god_type which_god, const item_def &item,
             return false;
         }
 
-        if (artefact_property(item, ARTP_MAGICAL_POWER) > 0
-            || artefact_property(item, ARTP_INTELLIGENCE) > 0)
-        {
+        if (artefact_property(item, ARTP_MAGICAL_POWER) > 0)
             return false;
-        }
         break;
 
     case GOD_CHEIBRIADOS:
@@ -326,10 +323,7 @@ static void _populate_armour_intrinsic_artps(const armour_type arm,
 {
     proprt[ARTP_FIRE] += armour_type_prop(arm, ARMF_RES_FIRE);
     proprt[ARTP_COLD] += armour_type_prop(arm, ARMF_RES_COLD);
-    proprt[ARTP_NEGATIVE_ENERGY] += armour_type_prop(arm, ARMF_RES_NEG);
-    proprt[ARTP_POISON] += armour_type_prop(arm, ARMF_RES_POISON);
     proprt[ARTP_ELECTRICITY] += armour_type_prop(arm, ARMF_RES_ELEC);
-    proprt[ARTP_RCORR] += armour_type_prop(arm, ARMF_RES_CORR);
     proprt[ARTP_WILLPOWER] += armour_type_prop(arm, ARMF_WILLPOWER);
     proprt[ARTP_STEALTH] += armour_type_prop(arm, ARMF_STEALTH);
     proprt[ARTP_REGENERATION] += armour_type_prop(arm, ARMF_REGENERATION);
@@ -338,8 +332,6 @@ static void _populate_armour_intrinsic_artps(const armour_type arm,
 static map<stave_type, artefact_prop_type> staff_resist_artps = {
     { STAFF_FIRE,    ARTP_FIRE },
     { STAFF_COLD,    ARTP_COLD },
-    { STAFF_ALCHEMY, ARTP_POISON },
-    { STAFF_DEATH,   ARTP_NEGATIVE_ENERGY },
     { STAFF_AIR,     ARTP_ELECTRICITY },
     // nothing for conj or earth
 };
@@ -347,10 +339,8 @@ static map<stave_type, artefact_prop_type> staff_resist_artps = {
 static map<stave_type, artefact_prop_type> staff_enhancer_artps = {
     { STAFF_FIRE,           ARTP_ENHANCE_FIRE },
     { STAFF_COLD,           ARTP_ENHANCE_ICE },
-    { STAFF_ALCHEMY,        ARTP_ENHANCE_ALCHEMY },
     { STAFF_DEATH,          ARTP_ENHANCE_NECRO },
     { STAFF_AIR,            ARTP_ENHANCE_AIR },
-    { STAFF_CONJURATION,    ARTP_ENHANCE_CONJ },
     { STAFF_EARTH,          ARTP_ENHANCE_EARTH },
 };
 
@@ -384,24 +374,17 @@ static map<jewellery_type, vector<artp_value>> jewellery_artps = {
     { RING_MAGICAL_POWER, { { ARTP_MAGICAL_POWER, 9 } } },
     { RING_WIZARDRY, { { ARTP_WIZARDRY, 1} } },
     { RING_FLIGHT, { { ARTP_FLY, 1 } } },
-    { RING_SEE_INVISIBLE, { { ARTP_SEE_INVISIBLE, 1 } } },
     { RING_STEALTH, { { ARTP_STEALTH, 1 } } },
 
     { RING_PROTECTION_FROM_FIRE, { { ARTP_FIRE, 1 } } },
     { RING_PROTECTION_FROM_COLD, { { ARTP_COLD, 1 } } },
-    { RING_POISON_RESISTANCE, { { ARTP_POISON, 1 } } },
-    { RING_POSITIVE_ENERGY, { { ARTP_NEGATIVE_ENERGY, 1 } } },
     { RING_WILLPOWER, { { ARTP_WILLPOWER, 1 } } },
-    { RING_RESIST_CORROSION, { { ARTP_RCORR, 1 } } },
 
     { RING_FIRE, { { ARTP_FIRE, 1 }, { ARTP_COLD, -1 },
                    { ARTP_ENHANCE_FIRE, 1} } },
     { RING_ICE, { { ARTP_COLD, 1 }, { ARTP_FIRE, -1 },
                   { ARTP_ENHANCE_ICE, 1} } },
 
-    { RING_STRENGTH, { { ARTP_STRENGTH, 0 } } },
-    { RING_INTELLIGENCE, { { ARTP_INTELLIGENCE, 0 } } },
-    { RING_DEXTERITY, { { ARTP_DEXTERITY, 0 } } },
     { RING_PROTECTION, { { ARTP_AC, 0 } } },
     { RING_EVASION, { { ARTP_EVASION, 0 } } },
     { RING_SLAYING, { { ARTP_SLAYING, 0 } } },
@@ -430,21 +413,14 @@ static void _populate_jewel_intrinsic_artps(const item_def &item,
 //       it is possible to generate randarts that give that resistance, which
 //       I think is still an appropriate bonus.
 static map<talisman_type, vector<artp_value>> talisman_artps = {
-    { TALISMAN_INKWELL,     {{ARTP_POISON, 1}}},
     { TALISMAN_RIMEHORN,    {{ARTP_COLD, 2}}},
     { TALISMAN_SCARAB,      {{ARTP_FIRE, 2}}},
-    { TALISMAN_MEDUSA,      {{ARTP_POISON, 1}}},
-    { TALISMAN_SERPENT,     {{ARTP_POISON, 1}}},
     { TALISMAN_SPIDER,      {{ARTP_RAMPAGING, 1}}},
-    { TALISMAN_FORTRESS,    {{ARTP_RCORR, 1}}},
-    { TALISMAN_STATUE,  {{ARTP_POISON, 1}, {ARTP_ELECTRICITY, 1},
-                         {ARTP_NEGATIVE_ENERGY, 1}}},
-    { TALISMAN_DRAGON,  {{ARTP_FIRE, 1}, {ARTP_COLD, 1}, {ARTP_POISON, 1}, {ARTP_FLY, 1}}},
+    { TALISMAN_STATUE,  {{ARTP_ELECTRICITY, 1}}},
+    { TALISMAN_DRAGON,  {{ARTP_FIRE, 1}, {ARTP_COLD, 1}, {ARTP_FLY, 1}}},
     { TALISMAN_SPHINX,  {{ARTP_FLY, 1}}},
-    { TALISMAN_STORM,   {{ARTP_POISON, 1}, {ARTP_ELECTRICITY, 1}, {ARTP_FLY, 1}}},
-    { TALISMAN_DEATH,   {{ARTP_POISON, 1}, {ARTP_NEGATIVE_ENERGY, 3},
-                        {ARTP_COLD, 1}}},
-    { TALISMAN_VAMPIRE, {{ARTP_COLD, 1}, {ARTP_NEGATIVE_ENERGY, 1}}},
+    { TALISMAN_STORM,   {{ARTP_ELECTRICITY, 1}, {ARTP_FLY, 1}}},
+    { TALISMAN_VAMPIRE, {{ARTP_COLD, 1}}},
 };
 
 /**
@@ -644,13 +620,7 @@ static bool _artp_can_go_on_item(artefact_prop_type prop, int prop_val,
         // weapons already have slaying. feels weird on staves
         case ARTP_SLAYING:
             return item_class != OBJ_WEAPONS && item_class != OBJ_STAVES;
-        // prevent properties that conflict with each other
-        case ARTP_CORRODE:
-            return !_any_artps_in_item_props({ ARTP_RCORR }, intrinsic_props,
-                                             extant_props);
-        case ARTP_RCORR:
-            return !_any_artps_in_item_props({ ARTP_CORRODE }, intrinsic_props,
-                                             extant_props);
+
         case ARTP_MAGICAL_POWER:
             return item_class != OBJ_WEAPONS && item_class != OBJ_STAVES
                    || extant_props[ARTP_BRAND] != SPWPN_ANTIMAGIC;
@@ -670,11 +640,10 @@ static bool _artp_can_go_on_item(artefact_prop_type prop, int prop_val,
         case ARTP_SILENCE:
             return non_swappable
                 && !item.is_type(OBJ_JEWELLERY, AMU_MANA_REGENERATION)
-                && !_any_artps_in_item_props({ ARTP_ENHANCE_CONJ,
-                    ARTP_ENHANCE_HEXES, ARTP_ENHANCE_SUMM, ARTP_ENHANCE_NECRO,
+                && !_any_artps_in_item_props({ ARTP_ENHANCE_HEXES,
+                    ARTP_ENHANCE_SUMM, ARTP_ENHANCE_NECRO,
                     ARTP_ENHANCE_TLOC, ARTP_ENHANCE_FIRE, ARTP_ENHANCE_ICE,
-                    ARTP_ENHANCE_AIR, ARTP_ENHANCE_EARTH, ARTP_ENHANCE_ALCHEMY,
-                    ARTP_ENHANCE_FORGECRAFT }, intrinsic_props, extant_props);
+                    ARTP_ENHANCE_AIR, ARTP_ENHANCE_EARTH}, intrinsic_props, extant_props);
         case ARTP_REGENERATION:
             // XXX: regen disabled on talismans because of an untransform crash
             // related to talismans being slotless
@@ -684,13 +653,6 @@ static bool _artp_can_go_on_item(artefact_prop_type prop, int prop_val,
         case ARTP_RAMPAGING:
             // only on items that can't be quickly swapped
             return non_swappable;
-        // prevent on armour/talismans (since they're swapped infrequently) and
-        // rings (since 2 slots reduces the pressure to swap)
-        case ARTP_FRAGILE:
-            return item_class != OBJ_ARMOUR
-                   && item_class != OBJ_TALISMANS
-                   && (item_class != OBJ_JEWELLERY
-                       || jewellery_is_amulet(item));
         case ARTP_DRAIN:
         case ARTP_CONTAM:
             return item_class != OBJ_TALISMANS; // TODO: support..?
@@ -699,7 +661,7 @@ static bool _artp_can_go_on_item(artefact_prop_type prop, int prop_val,
             return item_class == OBJ_ARMOUR || item_class == OBJ_WEAPONS;
         case ARTP_ARCHMAGI:
             return item.is_type(OBJ_ARMOUR, ARM_ROBE);
-        case ARTP_ENHANCE_CONJ:
+        case ARTP_ENHANCE_ENCH:
         case ARTP_ENHANCE_HEXES:
         case ARTP_ENHANCE_SUMM:
         case ARTP_ENHANCE_NECRO:
@@ -708,13 +670,9 @@ static bool _artp_can_go_on_item(artefact_prop_type prop, int prop_val,
         case ARTP_ENHANCE_ICE:
         case ARTP_ENHANCE_AIR:
         case ARTP_ENHANCE_EARTH:
-        case ARTP_ENHANCE_ALCHEMY:
-        case ARTP_ENHANCE_FORGECRAFT:
             // Maybe we should allow these for robes, too?  And hats? And
             // gloves and cloaks and scarves?
-            return (item.base_type == OBJ_STAVES
-                       || item.is_type(OBJ_ARMOUR, ARM_ORB))
-                   && !_any_artps_in_item_props({ ARTP_PREVENT_SPELLCASTING },
+            return !_any_artps_in_item_props({ ARTP_PREVENT_SPELLCASTING },
                                              intrinsic_props, extant_props);
         default:
             return true;
@@ -771,12 +729,6 @@ struct artefact_prop_data
     int odds_inc;
 };
 
-/// Generate 'good' values for stat artps (e.g. ARTP_STRENGTH)
-static int _gen_good_stat_artp() { return 1 + coinflip() + one_chance_in(4); }
-
-/// Generate 'bad' values for stat artps (e.g. ARTP_STRENGTH)
-static int _gen_bad_stat_artp() { return -2 - random2(4); }
-
 /// Generate 'good' values for resist-ish artps (e.g. ARTP_FIRE)
 static int _gen_good_res_artp() { return 1; }
 
@@ -797,26 +749,32 @@ static const artefact_prop_data artp_data[] =
     { "Brand", ARTP_VAL_BRAND, 0, nullptr, nullptr, 0, 0 }, // ARTP_BRAND,
     { "AC", ARTP_VAL_ANY, 0, nullptr, nullptr, 0, 0}, // ARTP_AC,
     { "EV", ARTP_VAL_ANY, 0, nullptr, nullptr, 0, 0 }, // ARTP_EVASION,
-    { "Str", ARTP_VAL_ANY, 100,     // ARTP_STRENGTH,
-        _gen_good_stat_artp, _gen_bad_stat_artp, 7, 1 },
-    { "Int", ARTP_VAL_ANY, 100,     // ARTP_INTELLIGENCE,
-        _gen_good_stat_artp, _gen_bad_stat_artp, 7, 1 },
-    { "Dex", ARTP_VAL_ANY, 100,     // ARTP_DEXTERITY,
-        _gen_good_stat_artp, _gen_bad_stat_artp, 7, 1 },
+#if TAG_MAJOR_VERSION == 34
+    { "Str", ARTP_VAL_ANY, 0,     // ARTP_STRENGTH,
+        nullptr, nullptr, 0, 0 },
+    { "Int", ARTP_VAL_ANY, 0,     // ARTP_INTELLIGENCE,
+        nullptr, nullptr, 0, 0 },
+    { "Dex", ARTP_VAL_ANY, 0,     // ARTP_DEXTERITY,
+        nullptr, nullptr, 0, 0 },
+#endif
     { "rF", ARTP_VAL_ANY, 60,       // ARTP_FIRE,
-        _gen_good_res_artp, _gen_bad_res_artp, 2, 4},
+        []() { return 1; }, nullptr, 0, 0  },
     { "rC", ARTP_VAL_ANY, 60,       // ARTP_COLD,
-        _gen_good_res_artp, _gen_bad_res_artp, 2, 4 },
+        []() { return 1; }, nullptr, 0, 0  },
     { "rElec", ARTP_VAL_BOOL, 55,   // ARTP_ELECTRICITY,
         []() { return 1; }, nullptr, 0, 0  },
-    { "rPois", ARTP_VAL_BOOL, 55,   // ARTP_POISON,
+#if TAG_MAJOR_VERSION == 34
+    { "rPois", ARTP_VAL_BOOL, 0,   // ARTP_POISON,
         []() { return 1; }, nullptr, 0, 0 },
-    { "rN", ARTP_VAL_ANY, 55,       // ARTP_NEGATIVE_ENERGY,
+    { "rN", ARTP_VAL_ANY, 0,       // ARTP_NEGATIVE_ENERGY,
         _gen_good_res_artp, nullptr, 2, 4 },
+#endif
     { "Will", ARTP_VAL_ANY, 50,       // ARTP_WILLPOWER,
         _gen_good_res_artp, _gen_bad_res_artp, 2, 4 },
-    { "SInv", ARTP_VAL_BOOL, 30,    // ARTP_SEE_INVISIBLE,
+#if TAG_MAJOR_VERSION == 34
+    { "SInv", ARTP_VAL_BOOL, 0,    // ARTP_SEE_INVISIBLE,
         []() { return 1; }, nullptr, 0, 0 },
+#endif
     { "+Inv", ARTP_VAL_BOOL, 15,    // ARTP_INVISIBLE,
         []() { return 1; }, nullptr, 0, 0 },
     { "Fly", ARTP_VAL_BOOL, 15,    // ARTP_FLY,
@@ -873,8 +831,10 @@ static const artefact_prop_data artp_data[] =
     { "SustAt", ARTP_VAL_BOOL, 0, nullptr, nullptr, 0, 0 }, // ARTP_SUSTAT,
 #endif
     { "nupgr", ARTP_VAL_BOOL, 0, nullptr, nullptr, 0, 0 },// ARTP_NO_UPGRADE,
-    { "rCorr", ARTP_VAL_BOOL, 40,   // ARTP_RCORR,
+#if TAG_MAJOR_VERSION == 34
+    { "rCorr", ARTP_VAL_BOOL, 0,   // ARTP_RCORR,
         []() { return 1; }, nullptr, 0, 0 },
+#endif
     { "rMut", ARTP_VAL_BOOL, 0, nullptr, nullptr, 0, 0 }, // ARTP_RMUT,
 #if TAG_MAJOR_VERSION == 34
     { "+Twstr", ARTP_VAL_BOOL, 0,   // ARTP_TWISTER,
@@ -886,8 +846,10 @@ static const artefact_prop_data artp_data[] =
         nullptr, []() { return 1; }, 0, 0 },
     { "*Slow", ARTP_VAL_BOOL, 25, // ARTP_SLOW,
         nullptr, []() { return 1; }, 0, 0 },
-    { "^Fragile", ARTP_VAL_BOOL, 30, // ARTP_FRAGILE,
+#if TAG_MAJOR_VERSION == 34
+    { "^Fragile", ARTP_VAL_BOOL, 0, // ARTP_FRAGILE,
         nullptr, []() { return 1; }, 0, 0 },
+#endif
     { "SH", ARTP_VAL_ANY, 0, nullptr, nullptr, 0, 0 }, // ARTP_SHIELDING,
     { "Harm", ARTP_VAL_BOOL, 25, // ARTP_HARM,
         []() {return 1;}, nullptr, 0, 0},
@@ -895,39 +857,42 @@ static const artefact_prop_data artp_data[] =
         []() {return 1;}, nullptr, 0, 0},
     { "Archmagi", ARTP_VAL_BOOL, 40, // ARTP_ARCHMAGI,
         []() {return 1;}, nullptr, 0, 0},
-    { "Conj", ARTP_VAL_BOOL, 20, // ARTP_ENHANCE_CONJ,
+    { "Ench", ARTP_VAL_ANY, 20, // ARTP_ENHANCE_ENCH,
         []() {return 1;}, nullptr, 0, 0},
-    { "Hexes", ARTP_VAL_BOOL, 20, // ARTP_ENHANCE_HEXES,
+    { "Hexes", ARTP_VAL_ANY, 20, // ARTP_ENHANCE_HEXES,
         []() {return 1;}, nullptr, 0, 0},
-    { "Summ", ARTP_VAL_BOOL, 20, // ARTP_ENHANCE_SUMM,
+    { "Summ", ARTP_VAL_ANY, 20, // ARTP_ENHANCE_SUMM,
         []() {return 1;}, nullptr, 0, 0},
-    { "Necro", ARTP_VAL_BOOL, 20, // ARTP_ENHANCE_NECRO,
+    { "Necro", ARTP_VAL_ANY, 20, // ARTP_ENHANCE_NECRO,
         []() {return 1;}, nullptr, 0, 0},
-    { "Tloc", ARTP_VAL_BOOL, 20, // ARTP_ENHANCE_TLOC,
+    { "Tloc", ARTP_VAL_ANY, 20, // ARTP_ENHANCE_TLOC,
         []() {return 1;}, nullptr, 0, 0},
 #if TAG_MAJOR_VERSION == 34
     { "Tmut", ARTP_VAL_BOOL, 0, // ARTP_ENHANCE_TMUT,
         []() {return 1;}, nullptr, 0, 0},
 #endif
-    { "Fire", ARTP_VAL_BOOL, 20, // ARTP_ENHANCE_FIRE,
+    { "Fire", ARTP_VAL_ANY, 20, // ARTP_ENHANCE_FIRE,
         []() {return 1;}, nullptr, 0, 0},
-    { "Ice", ARTP_VAL_BOOL, 20, // ARTP_ENHANCE_ICE,
+    { "Ice", ARTP_VAL_ANY, 20, // ARTP_ENHANCE_ICE,
         []() {return 1;}, nullptr, 0, 0},
-    { "Air", ARTP_VAL_BOOL, 20, // ARTP_ENHANCE_AIR,
+    { "Air", ARTP_VAL_ANY, 20, // ARTP_ENHANCE_AIR,
         []() {return 1;}, nullptr, 0, 0},
-    { "Earth", ARTP_VAL_BOOL, 20, // ARTP_ENHANCE_EARTH,
+    { "Earth", ARTP_VAL_ANY, 20, // ARTP_ENHANCE_EARTH,
         []() {return 1;}, nullptr, 0, 0},
-    { "Alch", ARTP_VAL_BOOL, 20, // ARTP_ENHANCE_ALCHEMY,
+#if TAG_MAJOR_VERSION == 34
+    { "Alch", ARTP_VAL_BOOL, 0, // ARTP_ENHANCE_ALCHEMY,
         []() {return 1;}, nullptr, 0, 0},
-
+#endif
     { "Acrobat", ARTP_VAL_BOOL, 0, // ARTP_ACROBAT,
         []() {return 1;}, nullptr, 0, 0},
     { "RegenMP", ARTP_VAL_BOOL, 0,   // ARTP_MANA_REGENERATION,
         []() { return 1; }, nullptr, 0, 0 },
     { "Wiz", ARTP_VAL_BOOL, 0,   // ARTP_WIZARDRY,
         []() { return 1; }, nullptr, 0, 0 },
-    { "Forge", ARTP_VAL_BOOL, 20, // ARTP_ENHANCE_FORGECRAFT,
+#if TAG_MAJOR_VERSION == 34
+    { "Forge", ARTP_VAL_BOOL, 0, // ARTP_ENHANCE_FORGECRAFT,
         []() {return 1;}, nullptr, 0, 0},
+#endif
     { "*Silence", ARTP_VAL_BOOL, 25, // ARTP_SILENCE,
         nullptr, []() { return 1; }, 0, 0 },
     { "Bane", ARTP_VAL_BOOL, 20,     // ARTP_BANE,
@@ -1053,14 +1018,6 @@ static bool _add_good_randart_prop(artefact_prop_type prop, const item_def &item
                                    artefact_properties_t &item_props)
 {
     int prop_val = item_props[prop];
-    // Add one to the starting value for stat bonuses.
-    if ((prop == ARTP_STRENGTH
-         || prop == ARTP_INTELLIGENCE
-         || prop == ARTP_DEXTERITY)
-        && prop_val == 0)
-    {
-        prop_val++;
-    }
 
     prop_val += artp_data[prop].gen_good_value();
     if (!_artp_can_go_on_item(prop, prop_val, item, intrinsic_props,
@@ -1613,45 +1570,6 @@ const unrandart_entry* get_unrand_entry(int unrand_index)
         return &unranddata[unrand_index];
 }
 
-static int _preferred_max_level(int unrand_index)
-{
-    // TODO: turn this into a max preferred level field in art-data.txt
-    switch (unrand_index)
-    {
-    case UNRAND_DELATRAS_GLOVES:
-        return 6;
-    case UNRAND_WOODCUTTERS_AXE:
-    case UNRAND_THROATCUTTER:
-    case UNRAND_HERMITS_PENDANT:
-        return 9;
-    case UNRAND_DEVASTATOR:
-    case UNRAND_RATSKIN_CLOAK:
-    case UNRAND_KRYIAS:
-    case UNRAND_LEAR:
-    case UNRAND_OCTOPUS_KING:
-    case UNRAND_AUGMENTATION:
-    case UNRAND_MEEK:
-    case UNRAND_ELEMENTAL_VULNERABILITY:
-    case UNRAND_MISFORTUNE:
-    case UNRAND_FORCE_LANCE:
-    case UNRAND_VICTORY:
-        return 11;
-    default:
-        return -1;
-    }
-}
-
-static int _unrand_weight(int unrand_index, int item_level)
-{
-    // Early-game unrands (with a preferred max depth != -1) are
-    // weighted higher within their depth and lower past it.
-    // Normal unrands have a flat weight at all depths.
-    const int pref_max_level = _preferred_max_level(unrand_index);
-    if (pref_max_level == -1)
-        return 10;
-    return item_level <= pref_max_level ? 100 : 1;
-}
-
 int find_okay_unrandart(uint8_t aclass, uint8_t atype, int item_level, bool in_abyss)
 {
     int chosen_unrand_idx = -1;
@@ -1683,17 +1601,6 @@ int find_okay_unrandart(uint8_t aclass, uint8_t atype, int item_level, bool in_a
             continue;
         }
 
-        if (in_abyss && status == UNIQ_LOST_IN_ABYSS
-            && index == UNRAND_OCTOPUS_KING_RING
-            && you.octopus_king_rings == 0xff)
-        {
-            // the last octopus ring is lost in the abyss. We don't have the
-            // machinery to bring back the correct one, and it doesn't seem
-            // worth implementing. So just skip it. (TODO: clear the flag for
-            // a lost octoring on losing it?)
-            continue;
-        }
-
         // If an item does not generate randomly, we can only produce its index
         // here if it was lost in the abyss
         if ((!in_abyss || status != UNIQ_LOST_IN_ABYSS)
@@ -1716,7 +1623,7 @@ int find_okay_unrandart(uint8_t aclass, uint8_t atype, int item_level, bool in_a
             continue;
         }
 
-        const int weight = _unrand_weight(index, item_level);
+        const int weight = 100;
         seen_weight += weight;
         if (x_chance_in_y(weight, seen_weight))
             chosen_unrand_idx = index;
@@ -1797,8 +1704,7 @@ static bool _randart_is_conflicting(const item_def &item,
                                      artefact_properties_t &proprt)
 {
     if (proprt[ARTP_PREVENT_SPELLCASTING]
-        && (proprt[ARTP_INTELLIGENCE] > 0
-            || proprt[ARTP_MAGICAL_POWER] > 0
+        && (proprt[ARTP_MAGICAL_POWER] > 0
             || proprt[ARTP_ARCHMAGI]
             || item.base_type == OBJ_STAVES))
     {
@@ -1808,12 +1714,6 @@ static bool _randart_is_conflicting(const item_def &item,
     if (item.base_type == OBJ_WEAPONS
         && get_weapon_brand(item) == SPWPN_HOLY_WRATH
         && is_demonic(item))
-    {
-        return true;
-    }
-
-    if (item.is_type(OBJ_JEWELLERY, RING_WIZARDRY)
-        && proprt[ARTP_INTELLIGENCE] < 0)
     {
         return true;
     }
@@ -2025,8 +1925,6 @@ static void _apply_gizmo_prop(item_def& gizmo, gizmo_prop_type prop)
             break;
 
         case GIZMO_RPOIS:
-            artefact_set_property(gizmo, ARTP_POISON, 1);
-            artefact_set_property(gizmo, ARTP_RCORR, 1);
             break;
 
         case GIZMO_SLAY:
@@ -2161,37 +2059,6 @@ static void _make_faerie_armour(item_def &item)
     item.plus = 2 + random2(4) + random2(4);
 }
 
-static jewellery_type octoring_types[8] =
-{
-    RING_SEE_INVISIBLE, RING_PROTECTION_FROM_FIRE, RING_PROTECTION_FROM_COLD,
-    RING_RESIST_CORROSION, RING_FLIGHT, RING_WIZARDRY, RING_MAGICAL_POWER,
-    RING_POSITIVE_ENERGY
-};
-
-static void _make_octoring(item_def &item)
-{
-    if (you.octopus_king_rings == 0xff)
-    {
-        // possible this is too narrow: if this causes unexpected wizmode
-        // crashes, just back off to asserting you.wizard.
-        ASSERT(crawl_state.prev_cmd == CMD_WIZARD);
-        item.sub_type = octoring_types[random2(8)];
-        return;
-    }
-
-    int which = 0;
-    do which = random2(8); while (you.octopus_king_rings & (1 << which));
-
-    item.sub_type = octoring_types[which];
-
-    // Save that we've found that particular type
-    you.octopus_king_rings |= 1 << which;
-
-    // If there are any types left, unset the 'already found' flag
-    if (you.octopus_king_rings != 0xff)
-        _set_unique_item_existence(UNRAND_OCTOPUS_KING_RING, false);
-}
-
 bool make_item_unrandart(item_def &item, int unrand_index)
 {
     ASSERT_RANGE(unrand_index, UNRAND_START + 1, (UNRAND_START + NUM_UNRANDARTS));
@@ -2214,8 +2081,6 @@ bool make_item_unrandart(item_def &item, int unrand_index)
 
     if (unrand_index == UNRAND_FAERIE)
         _make_faerie_armour(item);
-    else if (unrand_index == UNRAND_OCTOPUS_KING_RING)
-        _make_octoring(item);
     else if (unrand_index == UNRAND_WOE && !you.has_mutation(MUT_NO_GRASPING)
              && !can_equip_item(item))
     {

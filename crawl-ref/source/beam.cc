@@ -521,7 +521,7 @@ void zappy(zap_type z_type, int power, bool is_monster, bolt &pbolt)
     if (zinfo->is_enchantment)
         pbolt.hit = AUTOMATIC_HIT;
     else
-        pbolt.hit = zap_to_hit(z_type, power, is_monster);
+        pbolt.hit = max(100, zap_to_hit(z_type, power, is_monster));
 
     pbolt.damage = zap_damage(z_type, power, is_monster);
 
@@ -2326,9 +2326,6 @@ static void _vampiric_draining_effect(actor& victim, actor& agent, int damage)
              attack_strength_punctuation(damage).c_str());
     }
 
-    if (agent.is_player())
-        majin_bo_vampirism(*victim.as_monster(), min(damage, victim.stat_hp()));
-
     const int drain_amount = victim.hurt(&agent, damage,
                                          BEAM_VAMPIRIC_DRAINING,
                                          KILLED_BY_BEAM, "",
@@ -3219,17 +3216,14 @@ bool bolt::fuzz_invis_tracer()
 // A first step towards to-hit sanity for beams. We're still being
 // very kind to the player, but it should be fairer to monsters than
 // 4.0.
-static int _test_beam_hit(int attack, int defence, defer_rand &r)
+static int _test_beam_hit(int hit, int ev)
 {
-    if (attack == AUTOMATIC_HIT)
+    if (hit == AUTOMATIC_HIT)
         return true;
 
-    attack = r[1].random2(attack);
-    defence = r[2].random2avg(defence, 2);
+    hit = random2(hit);
 
-    dprf(DIAG_BEAM, "Beam attack: %d, defence: %d", attack, defence);
-
-    return attack - defence;
+    return hit - min(ev, 100 - MIN_HIT_PERCENTAGE) >= 0;
 }
 
 bool bolt::is_harmless(const monster* mon) const
@@ -3457,24 +3451,6 @@ void bolt::tracer_affect_player()
     extra_range_used += range_used_on_hit();
 }
 
-int bolt::apply_lighting(int base_hit, const actor &targ) const
-{
-    if (targ.invisible() && !can_see_invis)
-        base_hit /= 2;
-
-    // We multiply these lighting effects by 2, since normally they're applied post-roll
-    // where the effect (on average) counts doubled
-
-    if (targ.backlit(false))
-        base_hit += BACKLIGHT_TO_HIT_BONUS * 2;
-
-    // Malus is already negative so must still be ADDED to the base_hit
-    if (!nightvision && targ.umbra())
-        base_hit += UMBRA_TO_HIT_MALUS * 2;
-
-    return base_hit;
-}
-
 /* Determine whether the beam hit or missed the player, and tell them if it
  * missed.
  *
@@ -3495,9 +3471,6 @@ bool bolt::misses_player()
     int dodge = you.evasion();
     int real_tohit  = hit;
 
-    if (real_tohit != AUTOMATIC_HIT)
-        real_tohit = apply_lighting(real_tohit, you);
-
     const int SH = player_shield_class();
     if ((player_omnireflects() && is_omnireflectable()
          || is_blockable())
@@ -3509,23 +3482,16 @@ bool bolt::misses_player()
         bool blocked = false;
         if (hit == AUTOMATIC_HIT)
         {
-            // 50% chance of blocking ench-type effects at 10 displayed sh
-            blocked = x_chance_in_y(SH, omnireflect_chance_denom(SH));
+            // % out of 100
+            blocked = x_chance_in_y(SH, 100);
 
             dprf(DIAG_BEAM, "%smnireflected: %d/%d chance",
-                 blocked ? "O" : "Not o", SH, omnireflect_chance_denom(SH));
+                 blocked ? "O" : "Not o", SH, 100);
         }
         else
         {
-            // We use the original to-hit here.
-            // (so that effects increasing dodge chance don't increase
-            // block...?)
-            const int testhit = random2(hit * 130 / 100);
-
-            const int block = you.shield_bonus();
-
-            dprf(DIAG_BEAM, "Beamshield: hit: %d, block %d", testhit, block);
-            blocked = testhit < block;
+            dprf(DIAG_BEAM, "Beamshield: hit: %d, block %d", 100, SH);
+            blocked = x_chance_in_y(SH, 100);
         }
 
         // Divine shield only blocks conventionally blockable things, even if
@@ -3582,7 +3548,7 @@ bool bolt::misses_player()
     dodge += repel;
 
     const int hit_margin = you.duration[DUR_AUTODODGE] ? -1000
-                            : _test_beam_hit(real_tohit, dodge, r);
+                            : _test_beam_hit(real_tohit, dodge);
     if (hit_margin < 0)
     {
         if (hit_margin > -repel)
@@ -5453,8 +5419,7 @@ bool bolt::attempt_block(monster* mon)
     if (shield_block <= 0)
         return false;
 
-    const int sh_hit = random2(hit * 130 / 100);
-    if (sh_hit >= shield_block || mon->shield_exhausted())
+    if (x_chance_in_y(shield_block, 100) || mon->shield_exhausted())
         return false;
 
     item_def *shield = mon->mslot_item(MSLOT_SHIELD);
@@ -5694,9 +5659,6 @@ void bolt::affect_monster(monster* mon)
     // Make a copy of the to-hit before we modify it.
     int beam_hit = hit;
 
-    if (beam_hit != AUTOMATIC_HIT)
-        beam_hit = apply_lighting(beam_hit, *mon);
-
     // The monster may block the beam.
     if (!engulfs && is_blockable() && attempt_block(mon))
         return;
@@ -5705,7 +5667,7 @@ void bolt::affect_monster(monster* mon)
     const int repel = mon->missile_repulsion() ? REPEL_MISSILES_EV_BONUS : 0;
     int rand_ev = random2(mon->evasion() + repel);
 
-    int hit_margin = _test_beam_hit(beam_hit, rand_ev, r);
+    int hit_margin = _test_beam_hit(beam_hit, rand_ev);
 
     if (you.duration[DUR_BLIND] && beam_hit != AUTOMATIC_HIT && agent()
         && agent()->is_player())
@@ -5778,10 +5740,6 @@ void bolt::affect_monster(monster* mon)
     }
     else if (heard && !hit_noise_msg.empty())
         mprf(MSGCH_SOUND, "%s", hit_noise_msg.c_str());
-
-    // Spell vampirism
-    if (agent() && agent()->is_player() && is_player_book_spell(origin_spell))
-        majin_bo_vampirism(*mon, min(final, mon->stat_hp()));
 
     // Apply flavoured specials.
     mons_adjust_flavoured(mon, *this, postac, true);
@@ -6005,7 +5963,7 @@ bool ench_flavour_affects_monster(actor *agent, beam_type flavour,
         break;
 
     case BEAM_PAIN:
-        rc = mon->res_negative_energy(intrinsic_only) < 3;
+        rc = mon->res_negative_energy() < 3;
         break;
 
     case BEAM_AGONY:
@@ -6032,12 +5990,12 @@ bool ench_flavour_affects_monster(actor *agent, beam_type flavour,
         break;
 
     case BEAM_MALIGN_OFFERING:
-        rc = (mon->res_negative_energy(intrinsic_only) < 3);
+        rc = (mon->res_negative_energy() < 3);
         break;
 
     case BEAM_VAMPIRIC_DRAINING:
         rc = actor_is_susceptible_to_vampirism(*mon)
-                && (mon->res_negative_energy(intrinsic_only) < 3);
+                && (mon->res_negative_energy() < 3);
         break;
 
     case BEAM_VIRULENCE:

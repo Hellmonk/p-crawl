@@ -54,7 +54,6 @@
 
 static shared_ptr<quiver::action> _fire_prompt_for_item();
 static int  _get_dart_chance(const int hd);
-static bool _thrown_object_destroyed(const item_def &item);
 
 bool is_penetrating_attack(const actor& attacker, const item_def* weapon,
                            const item_def& projectile)
@@ -539,9 +538,6 @@ static void _handle_cannon_fx(actor &act, const item_def &weapon, coord_def targ
         break;
     }
 
-    if (!is_unrandom_artefact(weapon, UNRAND_MULE))
-        return;
-
     // knock back
     if (coinflip())
         act.stumble_away_from(targ, "Mule's kick");
@@ -693,19 +689,6 @@ void throw_it(quiver::action &a)
             you.turn_is_over = false;
             return;
         }
-
-        // Warn about Mule potentially knocking the player back into a trap.
-        if (launcher && is_unrandom_artefact(*launcher, UNRAND_MULE))
-        {
-            const coord_def back = you.stumble_pos(a.target.target);
-            if (!back.origin()
-                && back != you.pos()
-                && !check_moveto(back, "potentially stumble back", false))
-            {
-                you.turn_is_over = false;
-                return;
-            }
-        }
     }
 
     // Now start real firing!
@@ -715,7 +698,7 @@ void throw_it(quiver::action &a)
     // want to use tx, ty to make the missile fly to map edge.
     pbolt.set_target(a.target);
 
-    you.time_taken = you.attack_delay(&item).roll();
+    you.time_taken = you.attack_delay().roll();
     _player_shoot(pbolt, item, launcher);
     if (ammo_slot != -1 && (pbolt.item_mulches || !_returning(item)))
         dec_inv_item_quantity(ammo_slot, 1);
@@ -798,7 +781,7 @@ static void _player_shoot(bolt &pbolt, item_def &item, item_def const *launcher)
     // when we walk over it.
     if (item.base_type == OBJ_MISSILES)
         item.flags |= ISFLAG_THROWN;
-    pbolt.item_mulches = !tossing && _thrown_object_destroyed(item);
+    pbolt.item_mulches = !tossing;
     pbolt.drop_item = !pbolt.item_mulches && !returning;
     pbolt.hit = 0;
 
@@ -872,7 +855,7 @@ bool mons_throw(monster* mons, bolt &beam, bool teleport)
     if (!teleport)
     {
         const int energy = mons->action_energy(EUT_MISSILE);
-        const int delay = mons->attack_delay(&missile).roll();
+        const int delay = mons->attack_delay().roll();
         ASSERT(energy > 0);
         ASSERT(delay > 0);
         mons->speed_increment -= div_rand_round(energy * delay, 10);
@@ -934,30 +917,4 @@ bool mons_throw(monster* mons, bolt &beam, bool teleport)
         _handle_cannon_fx(*mons, *(mons->weapon()), target);
 
     return true;
-}
-
-static bool _thrown_object_destroyed(const item_def &item)
-{
-    if (item.base_type != OBJ_MISSILES)
-        return false;
-
-    if (ammo_always_destroyed(item))
-        return true;
-
-    if (ammo_never_destroyed(item))
-        return false;
-
-    const int base_chance = ammo_type_destroy_chance(item.sub_type);
-    const int brand = get_ammo_brand(item);
-
-    // Inflate by 2 to avoid rounding errors.
-    const int mult = 2;
-    int chance = base_chance * mult;
-
-    if (brand == SPMSL_CURARE)
-        chance /= 2;
-
-    dprf("mulch chance: %d in %d", mult, chance);
-
-    return x_chance_in_y(mult, chance);
 }

@@ -237,7 +237,7 @@ int mutant_beast_tier(int xl);
 
 int mons_avg_hp(monster_type mc, int scale = 1);
 int mons_max_hp(monster_type mc);
-int exp_value(const monster& mon, bool real = true, bool legacy = false);
+int exp_value(const monster& mon);
 
 int hit_points(int avg_hp, int scale = 10);
 
@@ -266,7 +266,6 @@ mon_holy_type mons_class_holiness(monster_type mc);
 
 const char * intelligence_description(mon_intel_type intel);
 
-void discover_mimic(const coord_def& pos);
 void discover_shifter(monster& shifter);
 
 bool mons_is_statue(monster_type mc);
@@ -515,8 +514,7 @@ bool mons_is_recallable(const actor* caller, const monster& targ);
 void init_anon();
 actor *find_agent(mid_t m, kill_category kc);
 const char* mons_class_name(monster_type mc);
-mon_threat_level_type mons_threat_level(const monster &mon,
-                                        bool real = false);
+mon_threat_level_type mons_threat_level(const monster &mon);
 
 bool mons_foe_is_marked(const monster& mons);
 

@@ -24,6 +24,7 @@
 #include "hints.h"
 #include "options.h"
 #include "output.h"
+#include "player.h"
 #include "religion.h"
 #include "state.h"
 #include "stringutil.h"
@@ -188,9 +189,7 @@ void SkillMenuEntry::set_display()
 
     switch (skm.get_state(SKM_VIEW))
     {
-    case SKM_VIEW_TRAINING:  set_training();         break;
     case SKM_VIEW_COST:      set_cost();             break;
-    case SKM_VIEW_TARGETS:   set_targets();          break;
     case SKM_VIEW_PROGRESS:  set_progress();         break;
     case SKM_VIEW_NEW_LEVEL: set_new_level();        break;
     case SKM_VIEW_POINTS:    set_points();           break;
@@ -400,25 +399,6 @@ EditableTextItem *SkillMenuEntry::get_progress()
     return m_progress;
 }
 
-void SkillMenuEntry::set_targets()
-{
-    int target = you.get_training_target(m_sk);
-    if (target == 0)
-    {
-        m_progress->set_text("--");
-        m_progress->set_fg_colour(DARKGREY);
-    }
-    else
-    {
-        m_progress->set_text(_format_skill_target(target));
-        if (target_met(m_sk))
-            m_progress->set_fg_colour(DARKGREY); // mainly comes up in wizmode
-        else
-            m_progress->set_fg_colour(get_colour());
-    }
-    m_progress->set_editable(true, 4);
-}
-
 void SkillMenuEntry::set_title()
 {
     m_name->allow_highlight(false);
@@ -434,8 +414,6 @@ void SkillMenuEntry::set_title()
 
     switch (skm.get_state(SKM_VIEW))
     {
-    case SKM_VIEW_TRAINING:  m_progress->set_text("Train"); break;
-    case SKM_VIEW_TARGETS:   m_progress->set_text("Target"); break;
     case SKM_VIEW_PROGRESS:  m_progress->set_text("Progr"); break;
     case SKM_VIEW_POINTS:    m_progress->set_text("Points");break;
     case SKM_VIEW_COST:      m_progress->set_text("Cost");  break;
@@ -489,61 +467,10 @@ skill_menu_state SkillMenuSwitch::get_state()
     return m_state;
 }
 
-static bool _any_crosstrained()
-{
-    for (skill_type sk = SK_FIRST_SKILL; sk < NUM_SKILLS; ++sk)
-    {
-        // Assumes crosstraining is symmetric; otherwise we should
-        // iterate over the result of get_crosstrain_skills and
-        // check the levels of *those* skills
-        if (you.skill_points[sk]
-            && !get_crosstrain_skills(sk).empty())
-        {
-            // Didn't necessarily boost us by a noticeable amount,
-            // but close enough.
-            return true;
-        }
-    }
-    return false;
-}
-
-static bool _charlatan_bonus()
-{
-    if (you.unrand_equipped(UNRAND_CHARLATANS_ORB)
-        && you.skill(SK_EVOCATIONS, 10, true) > 0)
-    {
-        return true;
-    }
-    return false;
-}
-
-static bool _hermit_bonus()
-{
-    if (you.unrand_equipped(UNRAND_HERMITS_PENDANT)
-        && you.skill(SK_INVOCATIONS, 10,  true) < 140)
-    {
-        return true;
-    }
-    return false;
-}
-
-static bool _hermit_penalty()
-{
-    if (you.unrand_equipped(UNRAND_HERMITS_PENDANT))
-    {
-        if (you.skill(SK_EVOCATIONS, 10, true) > 0
-            || you.skill(SK_INVOCATIONS, 10, true) > 140)
-        return true;
-    }
-    return false;
-}
-
 string SkillMenuSwitch::get_help()
 {
     switch (m_state)
     {
-    case SKM_MODE_AUTO:
-        return "In automatic mode, skills are trained as you use them.";
     case SKM_MODE_MANUAL:
         return "In manual mode, experience is spread evenly across all "
                 "activated skills.";
@@ -574,12 +501,8 @@ string SkillMenuSwitch::get_help()
                 causes.push_back(apostrophise(god_name(you.religion))
                                  + " power");
             }
-            if (_any_crosstrained())
-                causes.push_back("cross-training");
-            if (_hermit_bonus())
-                causes.push_back("the Hermit's pendant");
-            if (_charlatan_bonus())
-                causes.push_back("the Charlatan's Orb");
+            if (artefacts_enhance_skill())
+                causes.push_back("your equipment");
             if (you.form == transformation::walking_scroll)
                 causes.push_back("scribal knowledge");
             result = "Skills enhanced by "
@@ -592,8 +515,6 @@ string SkillMenuSwitch::get_help()
             vector<const char *> causes;
             if (player_under_penance(GOD_ASHENZARI))
                 causes.push_back("Ashenzari's anger");
-            if (_hermit_penalty())
-                causes.push_back("the Hermit's pendant");
             if (!result.empty())
                 result += "\n";
             result += "Skills reduced by "
@@ -604,17 +525,6 @@ string SkillMenuSwitch::get_help()
         if (!result.empty())
             return result;
     }
-    case SKM_VIEW_TRAINING:
-        if (skm.is_set(SKMF_SIMPLE))
-            return hints_skill_training_info();
-        else
-            return "The percentage of incoming experience used"
-                   " to train each skill is in <brown>brown</brown>.\n";
-    case SKM_VIEW_TARGETS:
-        if (skm.is_set(SKMF_SIMPLE))
-            return hints_skill_targets_info();
-        else
-            return "The current training targets, if any.\n";
     case SKM_VIEW_PROGRESS:
         return "The percentage of the progress done before reaching next "
                "level is in <cyan>cyan</cyan>.\n";
@@ -642,7 +552,6 @@ string SkillMenuSwitch::get_name(skill_menu_state state)
 {
     switch (state)
     {
-    case SKM_MODE_AUTO:      return "auto";
     case SKM_MODE_MANUAL:    return "manual";
     case SKM_DO_PRACTISE:    return "train";
     case SKM_DO_FOCUS:       return "focus";
@@ -654,8 +563,6 @@ string SkillMenuSwitch::get_name(skill_menu_state state)
                    skm.is_set(SKMF_ENHANCED) ? "enhanced"
                                              : "reduced";
     case SKM_LEVEL_NORMAL:   return "base";
-    case SKM_VIEW_TRAINING:  return "training";
-    case SKM_VIEW_TARGETS:   return "targets";
     case SKM_VIEW_PROGRESS:  return "progress";
     case SKM_VIEW_POINTS:    return "points";
     case SKM_VIEW_NEW_LEVEL: return "new level";
@@ -1122,30 +1029,10 @@ skill_menu_state SkillMenu::get_state(skill_menu_switch sw)
         return m_switches[sw]->get_state();
 }
 
-void SkillMenu::set_target_mode()
-{
-    if (get_state(SKM_VIEW) != SKM_VIEW_TARGETS && m_switches[SKM_VIEW])
-    {
-        m_switches[SKM_VIEW]->set_state(SKM_VIEW_TARGETS);
-        m_switches[SKM_VIEW]->update();
-        refresh_display();
-    }
-    set_flag(SKMF_SET_TARGET);
-    refresh_names();
-}
-
 void SkillMenu::cancel_set_target()
 {
     clear_flag(SKMF_SET_TARGET);
     refresh_names();
-}
-
-void SkillMenu::clear_targets()
-{
-    if (get_state(SKM_VIEW) != SKM_VIEW_TARGETS)
-        return;
-    you.clear_training_targets();
-    refresh_display();
 }
 
 void SkillMenu::help()
@@ -1175,16 +1062,11 @@ void SkillMenu::select(skill_type sk, int keyn)
 {
     if (is_set(SKMF_HELP))
         show_description(sk);
-    else if (skm.get_state(SKM_VIEW) == SKM_VIEW_TARGETS
-                                            && skm.is_set(SKMF_SET_TARGET))
-    {
-        read_skill_target(sk);
-    }
     else if (get_state(SKM_DO) == SKM_DO_PRACTISE
              || get_state(SKM_DO) == SKM_DO_FOCUS)
     {
         toggle_practise(sk, keyn);
-        if (get_state(SKM_VIEW) == SKM_VIEW_TRAINING || is_set(SKMF_EXPERIENCE)
+        if (is_set(SKMF_EXPERIENCE)
             || keyn >= 'A' && keyn <= 'Z')
         {
             refresh_display();
@@ -1306,13 +1188,13 @@ void SkillMenu::init_button_row()
         // skill target in the proper mode.
         m_middle_button = new FormattedTextItem();
         m_middle_button->add_hotkey('=');
-        m_middle_button->set_id(SKM_SET_TARGET);
+        m_middle_button->set_id(SKM_HELP);
         m_middle_button->set_highlight_colour(YELLOW);
         add_item(m_middle_button, 24, m_pos);
 
         // right button is either blank or shows target clearing options.
         m_clear_targets_button = new FormattedTextItem();
-        m_clear_targets_button->set_id(SKM_CLEAR_TARGETS);
+        m_clear_targets_button->set_id(SKM_HELP);
         m_clear_targets_button->add_hotkey('-');
         m_clear_targets_button->set_highlight_colour(YELLOW);
         add_item(m_clear_targets_button, 25, m_pos);
@@ -1327,7 +1209,6 @@ void SkillMenu::init_switches()
     {
         sw = new SkillMenuSwitch("mode", '/');
         m_switches[SKM_MODE] = sw;
-        sw->add(SKM_MODE_AUTO);
         if (!is_set(SKMF_SPECIAL) && !is_set(SKMF_SIMPLE))
             sw->add(SKM_MODE_MANUAL);
         if (!you.auto_training)
@@ -1379,15 +1260,10 @@ void SkillMenu::init_switches()
     m_switches[SKM_VIEW] = sw;
     if (!is_set(SKMF_SPECIAL) || you.wizard)
     {
-        sw->add(SKM_VIEW_TRAINING);
-
         sw->add(SKM_VIEW_COST);
 
         if (!you.auto_training)
             sw->set_state(SKM_VIEW_COST);
-
-        if (!you.has_mutation(MUT_DISTRIBUTED_TRAINING))
-            sw->add(SKM_VIEW_TARGETS);
     }
 
     if (you.wizard)
@@ -1439,21 +1315,6 @@ void SkillMenu::refresh_button_row()
                  : "<w>Help</w>";
         midlegend = azstring + "skill descriptions";
     }
-    else if (!is_set(SKMF_SIMPLE) && get_state(SKM_VIEW) == SKM_VIEW_TARGETS)
-    {
-        if (is_set(SKMF_SET_TARGET))
-        {
-            midlegend = azstring + "set skill target";
-            clearlegend = "[<yellow>-</yellow>] clear selected target";
-        }
-        else
-        {
-            midlegend = "[<yellow>=</yellow>] set a skill target";
-            clearlegend = "[<yellow>-</yellow>] clear all targets";
-        }
-    }
-    else if (!you.has_mutation(MUT_DISTRIBUTED_TRAINING)) // SKM_VIEW_TARGETS unavailable for Gn
-        midlegend = "[<yellow>=</yellow>] set a skill target";
 
     m_help_button->set_text(helpstring + legend);
     m_middle_button->set_text(midlegend);
@@ -1865,10 +1726,6 @@ void skill_menu(int flag, int exp)
             int sel_id = selection.at(0)->get_id();
             if (sel_id == SKM_HELP)
                 skm.help();
-            else if (sel_id == SKM_CLEAR_TARGETS)
-                skm.clear_targets();
-            else if (sel_id == SKM_SET_TARGET)
-                skm.set_target_mode();
             else if (sel_id < 0)
             {
                 if (sel_id <= SKM_SWITCH_FIRST)

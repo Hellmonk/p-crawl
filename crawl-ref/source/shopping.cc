@@ -102,9 +102,6 @@ int artefact_value(const item_def &item)
            + 6 * prop[ARTP_EVASION]
            + 5 * prop[ARTP_SHIELDING]
            + 6 * prop[ARTP_SLAYING]
-           + 3 * prop[ARTP_STRENGTH]
-           + 3 * prop[ARTP_INTELLIGENCE]
-           + 3 * prop[ARTP_DEXTERITY]
            + 4 * prop[ARTP_HP]
            + 3 * prop[ARTP_MAGICAL_POWER];
 
@@ -124,33 +121,19 @@ int artefact_value(const item_def &item)
     else if (prop[ARTP_WILLPOWER] < 0)
         ret -= 6;
 
-    if (prop[ARTP_NEGATIVE_ENERGY] > 0)
-        ret += 3 + 3 * (prop[ARTP_NEGATIVE_ENERGY] * prop[ARTP_NEGATIVE_ENERGY]);
-
     // Discount Stlth-, charge for Stlth+
     ret += 2 * prop[ARTP_STEALTH];
     // Stlth+ costs more than Stlth- cheapens
     if (prop[ARTP_STEALTH] > 0)
         ret += 2 * prop[ARTP_STEALTH];
 
-    // only one meaningful level:
-    if (prop[ARTP_POISON])
-        ret += 6;
-
     // only one meaningful level (hard to get):
     if (prop[ARTP_ELECTRICITY])
         ret += 10;
 
     // only one meaningful level (hard to get):
-    if (prop[ARTP_RCORR])
-        ret += 8;
-
-    // only one meaningful level (hard to get):
     if (prop[ARTP_RMUT])
         ret += 8;
-
-    if (prop[ARTP_SEE_INVISIBLE])
-        ret += 6;
 
     // abilities:
     if (prop[ARTP_FLY])
@@ -189,9 +172,6 @@ int artefact_value(const item_def &item)
     if (prop[ARTP_SILENCE])
         ret -= 8;
 
-    if (prop[ARTP_FRAGILE])
-        ret -= 8;
-
     if (prop[ARTP_RMSL])
         ret += 20;
 
@@ -200,14 +180,6 @@ int artefact_value(const item_def &item)
 
     if (prop[ARTP_ARCHMAGI])
         ret += 20;
-
-    // Yuck!
-    for (int i = ARTP_ENHANCE_CONJ; i <= ARTP_ENHANCE_ALCHEMY; ++i)
-        if (prop[i])
-            ret += 8;
-
-    if (prop[ARTP_ENHANCE_FORGECRAFT])
-        ret += 8;
 
     return (ret > 0) ? ret : 0;
 }
@@ -1595,26 +1567,8 @@ string shop_type_name(shop_type type)
     }
 }
 
-static const char *_shop_type_suffix(shop_type type, const coord_def &where)
-{
-    if (type == SHOP_GENERAL
-        || type == SHOP_GENERAL_ANTIQUE
-        || type == SHOP_DISTILLERY)
-    {
-        return "";
-    }
-
-    static const char * const suffixnames[] =
-    {
-        "Shoppe", "Boutique", "Emporium", "Shop"
-    };
-    return suffixnames[(where.x + where.y) % ARRAYSZ(suffixnames)];
-}
-
 string shop_name(const shop_struct& shop)
 {
-    const shop_type type = shop.type;
-
     string sh_name = "";
 
 #if TAG_MAJOR_VERSION == 34

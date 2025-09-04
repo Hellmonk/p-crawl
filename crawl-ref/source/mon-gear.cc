@@ -1263,11 +1263,6 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
             make_item_unrandart(item, UNRAND_ARC_BLADE);
         break;
 
-    case MONS_AMAEMON:
-        if (one_chance_in(100) && !get_unique_item_status(UNRAND_SNAKEBITE))
-            make_item_unrandart(item, UNRAND_SNAKEBITE);
-        break;
-
     case MONS_XAKKRIXIS:
         force_item = true;
         item.base_type = OBJ_WEAPONS;
@@ -1277,14 +1272,6 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
                                                10, WPN_QUARTERSTAFF,
                                                 5, WPN_GLAIVE);
         set_item_ego_type(item, OBJ_WEAPONS, SPWPN_VENOM);
-        break;
-
-    case MONS_ARACHNE:
-        force_item = true;
-        item.base_type = OBJ_STAVES;
-        item.sub_type = STAFF_ALCHEMY;
-        if (one_chance_in(100) && !get_unique_item_status(UNRAND_OLGREB))
-            make_item_unrandart(item, UNRAND_OLGREB);
         break;
 
     case MONS_CEREBOV:
@@ -1341,15 +1328,6 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
         }
         break;
 
-    // As someone who's learned the hard way that many have no honour in war,
-    // Throatcutter suits Terence perfectly.
-    case MONS_TERENCE:
-        if (one_chance_in(100) && !get_unique_item_status(UNRAND_THROATCUTTER))
-        {
-            make_item_unrandart(item, UNRAND_THROATCUTTER);
-            force_item = true;
-        }
-        break;
     case MONS_GRUNN:
         if (one_chance_in(100) && !get_unique_item_status(UNRAND_CURSES))
             make_item_unrandart(item, UNRAND_CURSES);
@@ -2145,22 +2123,6 @@ int make_mons_armour(monster_type type, int level)
         item.sub_type  = random_choose(ARM_LEATHER_ARMOUR, ARM_RING_MAIL);
         break;
 
-    case MONS_GASTRONOK:
-        if (one_chance_in(10) && !get_unique_item_status(UNRAND_PONDERING))
-        {
-            force_item = true;
-            make_item_unrandart(item, UNRAND_PONDERING);
-        }
-        else
-        {
-            item.base_type = OBJ_ARMOUR;
-            item.sub_type  = ARM_HAT;
-
-            // Not as good as it sounds. Still just +0 a lot of the time.
-            level          = ISPEC_GOOD_ITEM;
-        }
-        break;
-
     case MONS_MAURICE:
     case MONS_CRAZY_YIUF:
         item.base_type = OBJ_ARMOUR;
@@ -2258,11 +2220,6 @@ int make_mons_armour(monster_type type, int level)
     case MONS_ENCHANTRESS:
         force_item = true;
         make_item_unrandart(item, UNRAND_FAERIE);
-        break;
-
-    case MONS_TIAMAT:
-        force_item = true;
-        make_item_unrandart(item, UNRAND_DRAGONSKIN);
         break;
 
     case MONS_NESSOS:

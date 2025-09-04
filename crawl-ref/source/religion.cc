@@ -3299,6 +3299,9 @@ bool player_can_join_god(god_type which_god, bool temp)
     if (you.has_mutation(MUT_FORLORN))
         return false;
 
+    if (!you_worship(GOD_NO_GOD))
+        return false;
+
     if (is_good_god(which_god) && you.undead_or_demonic(temp))
         return false;
 
@@ -3825,6 +3828,13 @@ void join_religion(god_type which_god)
     ASSERT(which_god != GOD_ECUMENICAL);
     ASSERT(!you.has_mutation(MUT_FORLORN));
 
+    // Stick to your vows.
+    if (!you_worship(GOD_NO_GOD))
+    {
+        mprf("You are already devoted to %s.", god_name(you.religion).c_str());
+        return;
+    }
+
     redraw_screen();
     update_screen();
 
@@ -3836,10 +3846,6 @@ void join_religion(god_type which_god)
         // doesn't matter if old_god isn't actually a good god; we check later
         // and then wipe it at the end of the function regardless
     }
-
-    // Leave your prior religion first.
-    if (!you_worship(GOD_NO_GOD))
-        excommunication(true, which_god);
 
     // Welcome to the fold!
     you.religion = static_cast<god_type>(which_god);
@@ -4191,126 +4197,6 @@ bool god_protects_from_harm()
     }
 
     return false;
-}
-
-void handle_god_time(int /*time_delta*/)
-{
-    if (you.attribute[ATTR_GOD_WRATH_COUNT] > 0)
-    {
-        vector<god_type> angry_gods;
-        // First count the number of gods to whom we owe penance.
-        for (god_iterator it; it; ++it)
-        {
-            if (active_penance(*it))
-                angry_gods.push_back(*it);
-        }
-        if (x_chance_in_y(angry_gods.size(), 20))
-        {
-            // This should be guaranteed; otherwise the god wouldn't have
-            // appeared in the angry_gods list.
-            const bool succ = divine_retribution(*random_iterator(angry_gods));
-            ASSERT(succ);
-        }
-        you.attribute[ATTR_GOD_WRATH_COUNT]--;
-    }
-
-    // Update the god's opinion of the player.
-    if (!you_worship(GOD_NO_GOD))
-    {
-        int delay;
-        int sacrifice_count;
-        switch (you.religion)
-        {
-        case GOD_TROG:
-        case GOD_OKAWARU:
-        case GOD_MAKHLEB:
-        case GOD_LUGONU:
-        case GOD_DITHMENOS:
-        case GOD_QAZLAL:
-        case GOD_KIKUBAAQUDGHA:
-        case GOD_VEHUMET:
-        case GOD_ZIN:
-#if TAG_MAJOR_VERSION == 34
-        case GOD_PAKELLAS:
-#endif
-        case GOD_JIYVA:
-        case GOD_WU_JIAN:
-        case GOD_SIF_MUNA:
-        case GOD_YREDELEMNUL:
-            if (one_chance_in(17))
-                lose_piety(1);
-            break;
-
-        case GOD_ELYVILON:
-        case GOD_HEPLIAKLQANA:
-        case GOD_FEDHAS:
-        case GOD_CHEIBRIADOS:
-        case GOD_SHINING_ONE:
-        case GOD_NEMELEX_XOBEH:
-            if (one_chance_in(35))
-                lose_piety(1);
-            break;
-
-        case GOD_BEOGH:
-            if (one_chance_in(17))
-                lose_piety(1);
-            maybe_generate_apostle_challenge();
-            break;
-
-        case GOD_ASHENZARI:
-            ASSERT(you.props.exists(ASHENZARI_CURSE_PROGRESS_KEY));
-            ASSERT(you.props.exists(ASHENZARI_CURSE_DELAY_KEY));
-
-            if (you.props[ASHENZARI_CURSE_PROGRESS_KEY].get_int()
-                >= you.props[ASHENZARI_CURSE_DELAY_KEY].get_int())
-            {
-                ashenzari_offer_new_curse();
-            }
-            break;
-
-        case GOD_RU:
-            ASSERT(you.props.exists(RU_SACRIFICE_PROGRESS_KEY));
-            ASSERT(you.props.exists(RU_SACRIFICE_DELAY_KEY));
-            ASSERT(you.props.exists(AVAILABLE_SAC_KEY));
-
-            delay = you.props[RU_SACRIFICE_DELAY_KEY].get_int();
-            sacrifice_count = you.props[AVAILABLE_SAC_KEY].get_vector().size();
-
-            // 6* is max piety for Ru
-            if (sacrifice_count == 0 && you.raw_piety < piety_breakpoint(5)
-                && you.props[RU_SACRIFICE_PROGRESS_KEY].get_int() >= delay)
-            {
-              ru_offer_new_sacrifices();
-            }
-
-            break;
-
-        case GOD_IGNIS:
-            // Losing piety over time would be extremely annoying for people
-            // trying to get polytheist with Ignis. Almost impossible.
-        case GOD_USKAYAW:
-            // We handle Uskayaw elsewhere because this func gets called rarely
-        case GOD_GOZAG:
-        case GOD_XOM:
-            // Gods without normal piety do nothing each tick.
-            return;
-
-        case GOD_NO_GOD:
-        case GOD_RANDOM:
-        case GOD_ECUMENICAL:
-        case GOD_NAMELESS:
-        case NUM_GODS:
-            die("Bad god, no bishop!");
-            return;
-
-        }
-
-        if (you.raw_piety < 1)
-            excommunication();
-    }
-
-    if (player_in_branch(BRANCH_CRUCIBLE))
-        makhleb_handle_crucible_of_flesh();
 }
 
 int god_colour(god_type god) // mv - added

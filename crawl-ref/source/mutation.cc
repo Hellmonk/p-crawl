@@ -3478,7 +3478,7 @@ int xl_to_remove_bane(bane_type bane)
 
         // max xp that can be added (or subtracted) in one pass of the loop
         int max_xp = abs(next_level - you_xp);
-        const int cost = calc_skill_cost(you_skill_cost_level);
+        const int cost = 1;
         // Maximum number of points to transfer in one go.
         // It's max_xp/cost rounded up.
         const int max_skp = max((max_xp + cost - 1) / cost, 1);

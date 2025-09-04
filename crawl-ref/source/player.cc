@@ -636,10 +636,6 @@ void moveto_location_effects(dungeon_feature_type old_feat,
     if (stepped)
         _moveto_maybe_repel_stairs();
 
-    // Reveal adjacent mimics.
-    for (adjacent_iterator ai(you.pos(), false); ai; ++ai)
-        discover_mimic(*ai);
-
     bool was_running = you.running;
 
     update_monsters_in_view();
@@ -1253,13 +1249,6 @@ int player_res_fire(bool allow_random, bool temp, bool items)
 
         // randart weapons:
         rf += you.scan_artefacts(ARTP_FIRE);
-
-        // dragonskin cloak: 0.5 to draconic resistances
-        if (allow_random && you.unrand_equipped(UNRAND_DRAGONSKIN)
-            && coinflip())
-        {
-            rf++;
-        }
     }
 
     // mutations:
@@ -1283,14 +1272,14 @@ int player_res_fire(bool allow_random, bool temp, bool items)
     if (have_passive(passive_t::resist_fire))
         ++rf;
 
-    if (rf > 3)
-        rf = 3;
+    if (rf > 1)
+        rf = 1;
     if (rf > 0 && you.penance[GOD_IGNIS])
         rf = 0;
     if (temp && you.duration[DUR_FIRE_VULN])
         rf--;
-    if (rf < -3)
-        rf = -3;
+    if (rf < -1)
+        rf = -1;
 
     return rf;
 }
@@ -1357,13 +1346,6 @@ int player_res_cold(bool allow_random, bool temp, bool items)
 
         // randart weapons:
         rc += you.scan_artefacts(ARTP_COLD);
-
-        // dragonskin cloak: 0.5 to draconic resistances
-        if (allow_random && you.unrand_equipped(UNRAND_DRAGONSKIN)
-            && coinflip())
-        {
-            rc++;
-        }
     }
 
     // mutations:
@@ -1373,10 +1355,10 @@ int player_res_cold(bool allow_random, bool temp, bool items)
     rc += you.get_mutation_level(MUT_ICY_BLUE_SCALES, temp) == 3 ? 1 : 0;
     rc += you.get_mutation_level(MUT_SHAGGY_FUR, temp) == 3 ? 1 : 0;
 
-    if (rc < -3)
-        rc = -3;
-    else if (rc > 3)
-        rc = 3;
+    if (rc < -1)
+        rc = -1;
+    else if (rc > 1)
+        rc = 1;
 
     return rc;
 }
@@ -1400,17 +1382,12 @@ int player_res_corrosion(bool allow_random, bool temp, bool items)
 
     if (items)
     {
-        if (you.scan_artefacts(ARTP_RCORR)
-            || you.wearing(OBJ_ARMOUR, ARM_ACID_DRAGON_ARMOUR)
+        if (you.wearing(OBJ_ARMOUR, ARM_ACID_DRAGON_ARMOUR)
             || you.wearing_jewellery(RING_RESIST_CORROSION)
             || you.wearing_ego(OBJ_ARMOUR, SPARM_PRESERVATION))
         {
             return 1;
         }
-
-        // dragonskin cloak: 0.5 to draconic resistances
-        if (allow_random && you.unrand_equipped(UNRAND_DRAGONSKIN) && coinflip())
-            return 1;
     }
 
     return 0;
@@ -1432,13 +1409,6 @@ int player_res_electricity(bool allow_random, bool temp, bool items)
 
         // randart weapons:
         re += you.scan_artefacts(ARTP_ELECTRICITY);
-
-        // dragonskin cloak: 0.5 to draconic resistances
-        if (allow_random && you.unrand_equipped(UNRAND_DRAGONSKIN)
-            && coinflip())
-        {
-            re++;
-        }
     }
 
     // mutations:
@@ -1479,7 +1449,6 @@ int player_res_poison(bool allow_random, bool temp, bool items, bool forms)
     if (you.is_nonliving(temp, forms)
         || you.is_lifeless_undead(temp)
         || form_rp == 3
-        || items && you.unrand_equipped(UNRAND_OLGREB)
         || temp && you.duration[DUR_DIVINE_STAMINA])
     {
         return 3;
@@ -1502,16 +1471,6 @@ int player_res_poison(bool allow_random, bool temp, bool items, bool forms)
         const item_def *body_armour = you.body_armour();
         if (body_armour)
             rp += armour_type_prop(body_armour->sub_type, ARMF_RES_POISON);
-
-        // rPois+ artefacts
-        rp += you.scan_artefacts(ARTP_POISON);
-
-        // dragonskin cloak: 0.5 to draconic resistances
-        if (allow_random && you.unrand_equipped(UNRAND_DRAGONSKIN)
-            && coinflip())
-        {
-            rp++;
-        }
     }
 
     // mutations:
@@ -1547,8 +1506,6 @@ int player_spec_death()
 
     sd += you.get_mutation_level(MUT_NECRO_ENHANCER);
 
-    sd += you.scan_artefacts(ARTP_ENHANCE_NECRO);
-
     return sd;
 }
 
@@ -1559,8 +1516,6 @@ int player_spec_fire()
     sf += you.wearing(OBJ_STAVES, STAFF_FIRE);
 
     sf += you.wearing_jewellery(RING_FIRE);
-
-    sf += you.scan_artefacts(ARTP_ENHANCE_FIRE);
 
     if (you.unrand_equipped(UNRAND_ELEMENTAL_STAFF))
         sf++;
@@ -1576,8 +1531,6 @@ int player_spec_cold()
 
     sc += you.wearing_jewellery(RING_ICE);
 
-    sc += you.scan_artefacts(ARTP_ENHANCE_ICE);
-
     if (you.unrand_equipped(UNRAND_ELEMENTAL_STAFF))
         sc++;
 
@@ -1590,8 +1543,6 @@ int player_spec_earth()
 
     // Staves
     se += you.wearing(OBJ_STAVES, STAFF_EARTH);
-
-    se += you.scan_artefacts(ARTP_ENHANCE_EARTH);
 
     if (you.unrand_equipped(UNRAND_ELEMENTAL_STAFF))
         se++;
@@ -1606,8 +1557,6 @@ int player_spec_air()
     // Staves
     sa += you.wearing(OBJ_STAVES, STAFF_AIR);
 
-    sa += you.scan_artefacts(ARTP_ENHANCE_AIR);
-
     if (you.unrand_equipped(UNRAND_ELEMENTAL_STAFF))
         sa++;
 
@@ -1619,7 +1568,6 @@ int player_spec_conj()
     int sc = 0;
 
     sc += you.wearing(OBJ_STAVES, STAFF_CONJURATION);
-    sc += you.scan_artefacts(ARTP_ENHANCE_CONJ);
 
     return sc;
 }
@@ -1630,38 +1578,28 @@ int player_spec_hex()
 
     // Demonspawn mutation
     sh += you.get_mutation_level(MUT_HEX_ENHANCER);
-    sh += you.scan_artefacts(ARTP_ENHANCE_HEXES);
 
     return sh;
 }
 
 int player_spec_summ()
 {
-    return you.scan_artefacts(ARTP_ENHANCE_SUMM);
+    return 0;
 }
 
 int player_spec_forgecraft()
 {
-    return you.scan_artefacts(ARTP_ENHANCE_FORGECRAFT);
+    return 0;
 }
 
 int player_spec_alchemy()
 {
-    int sp = 0;
-
-    sp += you.wearing(OBJ_STAVES, STAFF_ALCHEMY);
-
-    sp += you.scan_artefacts(ARTP_ENHANCE_ALCHEMY);
-
-    if (you.unrand_equipped(UNRAND_OLGREB))
-        sp++;
-
-    return sp;
+    return 0;
 }
 
 int player_spec_tloc()
 {
-    return you.scan_artefacts(ARTP_ENHANCE_TLOC);
+    return 0;
 }
 
 // If temp is set to false, temporary sources of resistance won't be
@@ -1692,16 +1630,6 @@ int player_prot_life(bool allow_random, bool temp, bool items)
         const item_def *body_armour = you.body_armour();
         if (body_armour)
             pl += armour_type_prop(body_armour->sub_type, ARMF_RES_NEG);
-
-        // randart wpns
-        pl += you.scan_artefacts(ARTP_NEGATIVE_ENERGY);
-
-        // dragonskin cloak: 0.5 to draconic resistances
-        if (allow_random && you.unrand_equipped(UNRAND_DRAGONSKIN)
-            && coinflip())
-        {
-            pl++;
-        }
 
         pl += you.wearing(OBJ_STAVES, STAFF_DEATH);
     }
@@ -1735,10 +1663,6 @@ int player_movement_speed(bool check_terrain, bool temp)
     {
         mv += 3;
     }
-
-    // armour
-    if (you.unrand_equipped(UNRAND_LIGHTNING_SCALES))
-        mv -= 1;
 
     mv += you.wearing_ego(OBJ_ARMOUR, SPARM_PONDEROUSNESS);
 
@@ -1851,44 +1775,12 @@ void update_acrobat_status()
     you.redraw_evasion = true;
 }
 
-// An evasion factor based on the player's body size, smaller == higher
-// evasion size factor.
-static int _player_evasion_size_factor(bool base = false)
-{
-    // XXX: you.body_size() implementations are incomplete, fix.
-    const size_type size = you.body_size(PSIZE_BODY, base);
-    return 2 * (SIZE_MEDIUM - size);
-}
-
 // Determines racial shield preferences for acquirement. (Formicids get a
 // bonus for larger shields compared to other medium-sized races).
 // TODO: rethink this
 int player_shield_racial_factor()
 {
-    return you.has_mutation(MUT_QUADRUMANOUS) ? -2 // Same as trolls, etc.
-           : _player_evasion_size_factor(true);
-}
-
-
-// The total EV penalty to the player for all their worn armour items
-// with a base EV penalty (i.e. EV penalty as a base armour property,
-// not as a randart property), EXCEPT body armour. Affects evasion only.
-static int _player_aux_evasion_penalty(const int scale)
-{
-    int piece_armour_evasion_penalty = 0;
-
-    // Some lesser armours have small penalties now (barding).
-    vector<item_def*> armour = you.equipment.get_slot_items(SLOT_ALL_AUX_ARMOUR);
-    for (item_def* item : armour)
-    {
-        // [ds] Evasion modifiers for armour are negatives, change
-        // those to positive for penalty calc.
-        const int penalty = (-property(*item, PARM_EVASION))/3;
-        if (penalty > 0)
-            piece_armour_evasion_penalty += penalty;
-    }
-
-    return piece_armour_evasion_penalty * scale / 10;
+    return 0;
 }
 
 // Long-term player flat EV bonuses/penalties (eg: evasion rings, EV mutations, forms)
@@ -1976,60 +1868,15 @@ static int _player_apply_evasion_multipliers(int prescaled_ev, const int scale)
     return prescaled_ev;
 }
 
-/**
- * What is the player's bonus to EV from dodging when not paralysed, after
- * accounting for size & body armour penalties?
- *
- * First, calculate base dodge bonus (linear with dodging * dex),
- * and armour dodge penalty (base armour evp, increased for small races &
- * decreased for large, then with a magic "3" subtracted from it to make the
- * penalties not too harsh).
- *
- * If the player's strength is greater than the armour dodge penalty, return
- *      base dodge * (1 - dodge_pen / (str*2)).
- * E.g., if str is twice dodge penalty, return 3/4 of base dodge. If
- * str = dodge_pen * 4, return 7/8...
- *
- * If str is less than dodge penalty, return
- *      base_dodge * str / (dodge_pen * 2).
- * E.g., if str = dodge_pen / 2, return 1/4 of base dodge. if
- * str = dodge_pen / 4, return 1/8...
- *
- * For either equation, if str = dodge_pen, the result is base_dodge/2.
- *
- * @param scale     A scale to multiply the result by, to avoid precision loss.
- * @return          A bonus to EV, multiplied by the scale.
- */
-static int _player_armour_adjusted_dodge_bonus(int scale)
-{
-    const int dodge_bonus =
-        (800 + you.skill(SK_DODGING, 10) * you.dex() * 8) * scale
-        / (20 - _player_evasion_size_factor()) / 10 / 10;
-
-    const int armour_dodge_penalty = you.unadjusted_body_armour_penalty() - 3;
-    if (armour_dodge_penalty <= 0)
-        return dodge_bonus;
-
-    const int str = max(1, you.strength());
-    if (armour_dodge_penalty >= str)
-        return dodge_bonus * str / (armour_dodge_penalty * 2);
-    return dodge_bonus - dodge_bonus * armour_dodge_penalty / (str * 2);
-}
-
 // Total EV for player
 static int _player_evasion(int final_scale, bool ignore_temporary)
 {
-    const int size_factor = _player_evasion_size_factor();
     const int scale = 100;
-    const int size_base_ev = (10 + size_factor) * scale;
 
     // Calculate 'base' evasion from all permanent modifiers
-    const int natural_evasion =
-        size_base_ev
-        + _player_armour_adjusted_dodge_bonus(scale)
-        - you.adjusted_body_armour_penalty(scale)
-        - you.adjusted_shield_penalty(scale)
-        - _player_aux_evasion_penalty(scale)
+    const int natural_evasion = you.skill(SK_DODGING, 8 * scale)
+        - you.adjusted_body_armour_penalty()
+        - you.adjusted_shield_penalty()
         + _player_base_evasion_modifiers() * scale;
 
     // Everything below this are transient modifiers
@@ -2041,12 +1888,9 @@ static int _player_evasion(int final_scale, bool ignore_temporary)
        _player_apply_evasion_multipliers(natural_evasion, scale)
        + (_player_temporary_evasion_modifiers() * scale);
 
-    // Cap EV at a very low level if the player cannot act or is a tree.
-    if ((you.cannot_act() || you.form == transformation::tree))
-    {
-        final_evasion = min((2 + _player_evasion_size_factor() / 2) * scale,
-                            final_evasion);
-    }
+    // no evasion while paralyzed
+    if ((you.cannot_act() || you.form == transformation::tree) || you.backlit())
+        return 0;
 
     return (final_evasion * final_scale) / scale;
 }
@@ -2055,10 +1899,9 @@ static int _player_evasion(int final_scale, bool ignore_temporary)
 // player's worn body armour and shield.
 int player_armour_shield_spell_penalty()
 {
-    const int scale = 100;
 
     int body_armour_penalty =
-        max(19 * you.adjusted_body_armour_penalty(scale), 0);
+        max(19 * you.adjusted_body_armour_penalty(), 0);
 
     // This is actually cutting the base ER of our armour by half (not 1/4th),
     // since that ER has already been squared by this point.
@@ -2066,9 +1909,9 @@ int player_armour_shield_spell_penalty()
         body_armour_penalty /= 4;
 
     const int total_penalty = body_armour_penalty
-                 + 19 * you.adjusted_shield_penalty(scale);
+                 + 19 * you.adjusted_shield_penalty();
 
-    return max(total_penalty, 0) / scale;
+    return max(total_penalty, 0);
 }
 
 /**
@@ -2095,19 +1938,11 @@ int player_channelling()
 
 static int _sh_from_shield(const item_def &item)
 {
-    const int base_shield = property(item, PARM_AC) * 2;
+    const int base_shield = property(item, PARM_AC);
 
-    // bonus applied only to base, see above for effect:
-    int shield = base_shield * 50;
-    shield += base_shield * you.skill(SK_SHIELDS, 5) / 2;
+    int shield = base_shield * (100 + you.skill(SK_SHIELDS, 25));
+    shield += item.plus * 100;
 
-    shield += item.plus * 200;
-
-    shield += you.skill(SK_SHIELDS, 38);
-
-    shield += 3 * 38;
-
-    shield += you.dex() * 38 * (base_shield + 13) / 26;
     return shield;
 }
 
@@ -2135,7 +1970,7 @@ int player_shield_class(int scale, bool random, bool ignore_temporary)
     // mutations
     // +4, +6, +8 (displayed values)
     shield += (you.get_mutation_level(MUT_LARGE_BONE_PLATES) > 0
-               ? you.get_mutation_level(MUT_LARGE_BONE_PLATES) * 400 + 400
+               ? you.get_mutation_level(MUT_LARGE_BONE_PLATES) * 200 + 200
                : 0);
 
     // Icemail and Ephemeral Shield aren't active all of the time, so consider
@@ -2173,7 +2008,7 @@ int player_shield_class(int scale, bool random, bool ignore_temporary)
  */
 int player_displayed_shield_class(int scale, bool ignore_temporary)
 {
-    return player_shield_class(scale, false, ignore_temporary) / 2;
+    return player_shield_class(scale, false, ignore_temporary);
 }
 
 /**
@@ -2258,17 +2093,6 @@ static void _recharge_xp_evokers(int exp)
     FixedVector<item_def*, NUM_MISCELLANY> evokers(nullptr);
     list_charging_evokers(evokers);
 
-    const int xp_by_xl = exp_needed(you.experience_level+1, 0)
-                       - exp_needed(you.experience_level, 0);
-    const int skill_denom = 3 + you.skill_rdiv(SK_EVOCATIONS, 1, 9);
-    const int xp_factor = max(xp_by_xl / 5, 100) / skill_denom;
-
-    if (you.wearing_ego(OBJ_GIZMOS, SPGIZMO_GADGETEER)
-        || you.unrand_equipped(UNRAND_GADGETEER))
-    {
-        exp = exp * 130 / 100;
-    }
-
     for (int i = 0; i < NUM_MISCELLANY; ++i)
     {
         item_def* evoker = evokers[i];
@@ -2279,9 +2103,8 @@ static void _recharge_xp_evokers(int exp)
         if (debt == 0)
             continue;
 
-        int plus_factor = div_rand_round(5 * xp_factor, 5 + evoker_plus(evoker->sub_type));
         const int old_charges = evoker_charges(i);
-        debt = max(0, debt - div_rand_round(exp, plus_factor));
+        debt = max(0, debt - exp);
         const int gained = evoker_charges(i) - old_charges;
         if (gained)
             print_xp_evoker_recharge(*evoker, gained, silenced(you.pos()));
@@ -2295,7 +2118,7 @@ static void _reduce_abyss_xp_timer(int exp)
         return;
 
     const int xp_factor =
-        max(min((int)exp_needed(you.experience_level+1, 0) / 7,
+        max(min((int)exp_needed(you.experience_level+1) / 7,
                 you.experience_level * 425),
             you.experience_level*2 + 15) / 5;
     // Reduce abyss exit spawns in the Deep Abyss (J:6+) to preserve challenge.
@@ -2334,7 +2157,7 @@ static void _handle_hp_drain(int exp)
         return;
 
     const int mul = you.has_mutation(MUT_PERSISTENT_DRAIN) ? 2 : 1;
-    int loss = div_rand_round(exp, 4 * mul * calc_skill_cost(you.skill_cost_level));
+    int loss = div_rand_round(exp, 4 * mul);
 
     // Make it easier to recover from very heavy levels of draining
     // (they're nasty enough as it is)
@@ -2366,7 +2189,7 @@ static void _handle_breath_recharge(int exp)
     if (!you.props.exists(DRACONIAN_BREATH_RECHARGE_KEY))
         you.props[DRACONIAN_BREATH_RECHARGE_KEY] = 50;
 
-    int loss = div_rand_round(exp, calc_skill_cost(you.skill_cost_level));
+    int loss = div_rand_round(exp, 1);
     if (you.form == transformation::dragon)
         loss *= 2;
     you.props[DRACONIAN_BREATH_RECHARGE_KEY].get_int() -= loss;
@@ -2384,7 +2207,7 @@ static void _handle_cacophony_recharge(int exp)
     if (!you.props.exists(CACOPHONY_XP_KEY))
         return;
 
-    int loss = div_rand_round(exp, calc_skill_cost(you.skill_cost_level));
+    int loss = div_rand_round(exp, 1);
     you.props[CACOPHONY_XP_KEY].get_int() -= loss;
 
     if (you.props[CACOPHONY_XP_KEY].get_int() <= 0)
@@ -2402,7 +2225,7 @@ static void _handle_batform_recharge(int exp)
         return;
     }
 
-    int loss = div_rand_round(exp, calc_skill_cost(you.skill_cost_level));
+    int loss = div_rand_round(exp, 1);
     you.props[BATFORM_XP_KEY].get_int() -= loss;
 
     if (you.props[BATFORM_XP_KEY].get_int() <= 0)
@@ -2420,7 +2243,7 @@ static void _handle_watery_grave_recharge(int exp)
         return;
     }
 
-    int loss = div_rand_round(exp, calc_skill_cost(you.skill_cost_level));
+    int loss = div_rand_round(exp, 1);
     you.props[WATERY_GRAVE_XP_KEY].get_int() -= loss;
 
     if (you.props[WATERY_GRAVE_XP_KEY].get_int() <= 0)
@@ -2432,7 +2255,7 @@ static void _handle_watery_grave_recharge(int exp)
 
 static void _handle_banes(int exp)
 {
-    int loss = div_rand_round(exp * 10, calc_skill_cost(you.skill_cost_level));
+    int loss = div_rand_round(exp * 10, 1);
 
     if (you.has_mutation(MUT_ACCURSED) || you.undead_state() != US_ALIVE)
         loss /= 2;
@@ -2465,7 +2288,7 @@ static void _handle_ostracism(int exp)
     if (you.attribute[ATTR_OSTRACISM] == 0)
         return;
 
-    int loss = div_rand_round(exp, calc_skill_cost(you.skill_cost_level) * 4 / 3);
+    int loss = div_rand_round(exp, 1);
     player_change_ostracism(-loss);
 }
 
@@ -3141,25 +2964,19 @@ int player_stealth()
     if (crawl_state.disables[DIS_MON_SIGHT])
         return 1000;
 
-    // berserking, sacrifice stealth.
-    if (you.berserk() || you.get_mutation_level(MUT_NO_STEALTH))
+    // berserking, sacrifice stealth, backlit.
+    if (you.berserk() || you.get_mutation_level(MUT_NO_STEALTH) || you.backlit())
         return 0;
 
-    int stealth = you.dex() * 3;
+    int stealth = 2;
 
-    stealth += you.skill(SK_STEALTH, 15);
-
-    if (you.confused())
-        stealth /= 3;
+    stealth += you.skill(SK_STEALTH);
 
     const item_def *arm = you.body_armour();
     if (arm)
     {
-        // [ds] New stealth penalty formula from rob: SP = 6 * (EP^2)
-        // Now 2 * EP^2 / 3 after EP rescaling.
-        const int evp = you.unadjusted_body_armour_penalty();
-        const int penalty = evp * evp * 2 / 3;
-        stealth -= penalty;
+        // subtract the body armour penalty
+        stealth -= you.adjusted_body_armour_penalty() / 10;
 
         const int pips = armour_type_prop(arm->sub_type, ARMF_STEALTH);
         stealth += pips * STEALTH_PIP;
@@ -3173,7 +2990,7 @@ int player_stealth()
         stealth += STEALTH_PIP * 2;
 
     // Mutations.
-    stealth += STEALTH_PIP * you.get_mutation_level(MUT_NIGHTSTALKER) / 3;
+    stealth += STEALTH_PIP * you.get_mutation_level(MUT_NIGHTSTALKER);
     stealth += STEALTH_PIP * you.get_mutation_level(MUT_THIN_SKELETAL_STRUCTURE);
     stealth += STEALTH_PIP * you.get_mutation_level(MUT_CAMOUFLAGE);
     if (you.has_mutation(MUT_TRANSLUCENT_SKIN))
@@ -3185,14 +3002,10 @@ int player_stealth()
         stealth += (STEALTH_PIP * 2);
     }
 
-    // Radiating silence is the negative complement of shouting all the
-    // time... a sudden change from background noise to no noise is going
-    // to clue anything in to the fact that something is very wrong...
-    // a personal silence spell would naturally be different, but this
-    // silence radiates for a distance and prevents monster spellcasting,
-    // which pretty much gives away the stealth game.
+    // There was a paragraph of text justifying this. Here's a sentence instead.
+    // it's a balancing factor.
     if (you.duration[DUR_SILENCE])
-        stealth -= STEALTH_PIP;
+        stealth -= STEALTH_PIP * 2;
 
     if (feat_is_water(env.grid(you.pos())))
     {
@@ -3202,30 +3015,17 @@ int player_stealth()
             stealth /= 2;       // splashy-splashy
     }
 
-    // If you've been tagged with Corona or are Glowing, the glow
-    // makes you extremely unstealthy.
-    if (you.backlit())
-        stealth = stealth * 2 / 5;
-
     // On the other hand, shrouding has the reverse effect, if you know
     // how to make use of it:
     if (you.umbra() && you.umbra_radius() >= 0)
-        stealth = stealth * 3 / 2;
+        stealth *= 2;
 
     // If you're surrounded by a storm, you're inherently pretty conspicuous.
     if (have_passive(passive_t::storm_shield))
-    {
-        stealth = stealth
-                  * (MAX_PIETY - min((int)you.piety(), piety_breakpoint(5)))
-                  / (MAX_PIETY - piety_breakpoint(0));
-    }
-    // The shifting glow from the Orb, while too unstable to negate invis
-    // or affect to-hit, affects stealth even more than regular glow.
-    if (player_has_orb() || you.unrand_equipped(UNRAND_CHARLATANS_ORB))
-        stealth /= 3;
+        stealth /= 2;
 
     // Cap minimum stealth during Nightfall at 100. (0, otherwise.)
-    stealth = max(you.duration[DUR_PRIMORDIAL_NIGHTFALL] ? 100 : 0, stealth);
+    stealth = max(0, stealth);
 
     return stealth;
 }
@@ -3300,66 +3100,25 @@ static void _display_movement_speed()
                             : "very slow");
 }
 
-static void _display_tohit()
-{
-#ifdef DEBUG_DIAGNOSTICS
-    melee_attack attk(&you, nullptr);
-
-    const int to_hit = attk.calc_to_hit(false);
-
-    dprf("To-hit: %d", to_hit);
-#endif
-}
-
 static int _delay(const item_def *weapon)
 {
     if (!weapon || !is_range_weapon(*weapon))
         return you.attack_delay().expected();
     item_def fake_proj;
     populate_fake_projectile(*weapon, fake_proj);
-    return you.attack_delay(&fake_proj).expected();
-}
-
-static bool _at_min_delay(const item_def *weapon)
-{
-    return weapon
-           && you.skill(item_attack_skill(*weapon))
-              >= weapon_min_delay_skill(*weapon);
+    return you.attack_delay().expected();
 }
 
 /**
  * Print a message indicating the player's attack delay with their current
  * weapon(s) (if applicable).
  */
-static void _display_attack_delay(const item_def *offhand)
+static void _display_attack_delay()
 {
     const item_def* weapon = you.weapon();
     const int delay = _delay(weapon);
-    const bool at_min_delay = _at_min_delay(weapon)
-                              && (!offhand || _at_min_delay(offhand));
 
-    // Assume that we never have a shield penalty with an offhand weapon,
-    // and we only have an armour penalty with the offhand if we do with
-    // the primary.
-    const bool shield_penalty = you.adjusted_shield_penalty(2) > 0;
-    const bool armour_penalty = is_slowed_by_armour(weapon)
-                                && you.adjusted_body_armour_penalty(2) > 0;
-    string penalty_msg = "";
-    if (shield_penalty || armour_penalty)
-    {
-        // TODO: add amount, as in item description (see _describe_armour)
-        // double parens are awkward
-        penalty_msg =
-            make_stringf( " (and is slowed by your %s)",
-                         shield_penalty && armour_penalty ? "shield and armour" :
-                         shield_penalty ? "shield" : "armour");
-    }
-
-    mprf("Your attack delay is about %.1f%s%s.",
-         (float)delay / 10,
-         at_min_delay ?
-            " (and cannot be improved with additional weapon skill)" : "",
-         penalty_msg.c_str());
+    mprf("Your attack delay is about %.1f.", delay / 10.0f);
 }
 
 /**
@@ -3415,22 +3174,10 @@ void display_char_status()
 
     const item_def* offhand = you.offhand_weapon();
     _display_movement_speed();
-    _display_tohit();
-    _display_attack_delay(offhand);
+    _display_attack_delay();
     _display_damage_rating(you.weapon());
     if (offhand)
         _display_damage_rating(offhand);
-
-    // Display base attributes, if necessary.
-    if (innate_stat(STAT_STR) != you.strength()
-        || innate_stat(STAT_INT) != you.intel()
-        || innate_stat(STAT_DEX) != you.dex())
-    {
-        mprf("Your base attributes are Str %d, Int %d, Dex %d.",
-             innate_stat(STAT_STR),
-             innate_stat(STAT_INT),
-             innate_stat(STAT_DEX));
-    }
 }
 
 bool player::clarity(bool items) const
@@ -3482,7 +3229,7 @@ bool player::cloud_immune(bool items) const
  *  @param exp_apt      The XP aptitude to use. If -99, use the current species'.
  *  @return     The total number of XP points needed to get to the given XL.
  */
-unsigned int exp_needed(int lev, int exp_apt)
+unsigned int exp_needed(int lev)
 {
     return 100 * (lev - 1);
 }
@@ -3902,15 +3649,12 @@ int get_real_hp(bool trans, bool drained)
 {
     int hitp;
 
-    hitp  = you.experience_level * 11 / 2 + 8;
+    hitp  = 100 + you.experience_level * 2;
     hitp += you.hp_max_adj_perm;
-    // Important: we shouldn't add Heroism boosts here.
-    // ^ The above is a 2011 comment from 1kb, in 2021 this isn't
-    // archaeologied for further explanation, but the below now adds Ash boosts
-    // to fighting to the HP calculation while preventing it for Heroism
-    // - eb
-    hitp += you.experience_level * you.skill(SK_FIGHTING, 5, false, false) / 70
-          + (you.skill(SK_FIGHTING, 3, false, false) + 1) / 2;
+
+    // percentile boost from fighting, 4% hp per level scaling multiplicatively
+    hitp *= 100 + you.skill(SK_FIGHTING, 4);
+    hitp /= 100;
 
     // Racial modifier.
     hitp *= 10 + species::get_hp_modifier(you.species);
@@ -3961,29 +3705,20 @@ int get_real_mp(bool include_items)
         return 0;
 
     const int scale = 100;
-    int spellcasting = you.skill(SK_SPELLCASTING, 1 * scale, false, false);
-    int scaled_xl = you.experience_level * scale;
 
-    // the first 4 experience levels give an extra .5 mp up to your spellcasting
-    // the last 4 give no mp
-    int enp = min(23 * scale, scaled_xl);
-
-    int spell_extra = spellcasting; // 100%
-    int invoc_extra = you.skill(SK_INVOCATIONS, 1 * scale, false, false) / 2; // 50%
-    int highest_skill = max(spell_extra, invoc_extra);
-    enp += highest_skill + min(8 * scale, min(highest_skill, scaled_xl)) / 2;
+    int enp = 20 * scale;
+    enp += you.skill(SK_SPELLCASTING) * scale;
 
     // Analogous to ROBUST/FRAIL
     enp *= 100 + (you.get_mutation_level(MUT_HIGH_MAGIC) * 10)
                - (you.get_mutation_level(MUT_LOW_MAGIC) * 10);
     enp /= 100 * scale;
-//    enp = stepdown_value(enp, 9, 18, 45, 100)
+
     enp += species::get_mp_modifier(you.species);
 
     // This is our "rotted" base, applied after multipliers
     enp += you.mp_max_adj;
 
-    // Now applied after scaling so that power items are more useful -- bwr
     if (include_items)
     {
         enp += 9 * you.wearing_jewellery(RING_MAGICAL_POWER);
@@ -4079,12 +3814,7 @@ void contaminate_player(int change, bool controlled, bool msg)
 
     if (change > 0)
     {
-        const int mul = you.has_mutation(MUT_CONTAMINATION_SUSCEPTIBLE)
-#if TAG_MAJOR_VERSION == 34
-                            || you.unrand_equipped(UNRAND_ETHERIC_CAGE)
-#endif
-                            ? 2 : 1;
-
+        const int mul = you.has_mutation(MUT_CONTAMINATION_SUSCEPTIBLE) ? 2 : 1;
         change *= mul;
     }
 
@@ -4960,12 +4690,6 @@ bool invis_allowed(bool quiet, string *fail_reason, bool temp)
     {
         vector<string> sources;
 
-        if (temp && you.unrand_equipped(UNRAND_EOS))
-            sources.push_back("weapon");
-
-        if (temp && you.unrand_equipped(UNRAND_VAINGLORY))
-            sources.push_back("crown");
-
         if (temp && you.wearing_ego(OBJ_ARMOUR, SPARM_LIGHT))
             sources.push_back("orb");
 
@@ -5580,26 +5304,16 @@ bool player::is_banished() const
     return banished;
 }
 
-bool player::is_sufficiently_rested(bool starting) const
+bool player::is_sufficiently_rested() const
 {
     // Only return false if resting will actually help. Anything here should
     // explicitly trigger an appropriate activity interrupt to prevent infinite
     // resting (and shouldn't just rely on a message interrupt).
     // if an interrupt is disabled, we don't count it at all for resting. (So
     // if someone disables all these interrupts, resting becomes impossible.)
-    const bool hp_interrupts = Options.activity_interrupts["rest"][
-                                static_cast<int>(activity_interrupt::full_hp)];
-    const bool mp_interrupts = Options.activity_interrupts["rest"][
-                                static_cast<int>(activity_interrupt::full_mp)];
     const bool can_freely_move = you.is_motile() && !you.duration[DUR_BARBS];
 
-    return (!player_regenerates_hp()
-                || _should_stop_resting(hp, hp_max, !starting)
-                || !hp_interrupts)
-        && (!player_regenerates_mp()
-                || _should_stop_resting(magic_points, max_magic_points, !starting)
-                || !mp_interrupts)
-        && (can_freely_move || !hp_interrupts);
+    return can_freely_move;
 }
 
 bool player::in_water() const
@@ -5836,7 +5550,7 @@ int player::shield_bonus() const
     if (shield_class <= 0)
         return -100;
 
-    return random2avg(shield_class * 2, 2) / 3 - 1;
+    return shield_class;
 }
 
 int player::shield_bypass_ability(int tohit) const
@@ -5894,13 +5608,15 @@ int player::unadjusted_body_armour_penalty() const
  * @return          A penalty to EV based quadratically on body armour
  *                  encumbrance.
  */
-int player::adjusted_body_armour_penalty(int scale) const
+int player::adjusted_body_armour_penalty() const
 {
     const int base_ev_penalty = unadjusted_body_armour_penalty();
+    const int armour_skill = you.skill(SK_ARMOUR);
 
-    // New formula for effect of str on aevp: (2/5) * evp^2 / (str+3)
-    return 2 * base_ev_penalty * base_ev_penalty * (450 - skill(SK_ARMOUR, 10))
-           * scale / (5 * (strength() + 3)) / 450;
+    if (armour_skill >= base_ev_penalty)
+        return 0;
+
+    return 10 * (base_ev_penalty - armour_skill);
 }
 
 /**
@@ -5909,16 +5625,60 @@ int player::adjusted_body_armour_penalty(int scale) const
  * @param scale     A scale to multiply the result by, to avoid precision loss.
  * @return          A penalty to EV based on shield weight.
  */
-int player::adjusted_shield_penalty(int scale) const
+int player::adjusted_shield_penalty() const
 {
     const item_def *shield_l = shield();
     if (!shield_l)
         return 0;
 
     const int base_shield_penalty = -property(*shield_l, PARM_EVASION) / 10;
-    return 2 * base_shield_penalty * base_shield_penalty
-           * (270 - skill(SK_SHIELDS, 10)) * scale
-           / (25 + 5 * strength()) / 270;
+    const int sh_skill = you.skill(SK_SHIELDS);
+
+    if (sh_skill >= base_shield_penalty)
+        return 0;
+
+    return base_shield_penalty - sh_skill;
+}
+
+static artefact_prop_type _enhancer_for_skill(skill_type sk)
+{
+    switch (sk)
+    {
+    case SK_FIRE_MAGIC:
+        return ARTP_ENHANCE_FIRE;
+    case SK_ICE_MAGIC:
+        return ARTP_ENHANCE_ICE;
+    case SK_AIR_MAGIC:
+        return ARTP_ENHANCE_AIR;
+    case SK_EARTH_MAGIC:
+        return ARTP_ENHANCE_EARTH;
+    case SK_SUMMONINGS:
+        return ARTP_ENHANCE_SUMM;
+    case SK_TRANSLOCATIONS:
+        return ARTP_ENHANCE_TLOC;
+    case SK_NECROMANCY:
+        return ARTP_ENHANCE_NECRO;
+    case SK_ENCHANTMENTS:
+        return ARTP_ENHANCE_ENCH;
+    case SK_HEXES:
+        return ARTP_ENHANCE_HEXES;
+    default:
+        return ARTP_NUM_PROPERTIES;
+    }
+}
+
+bool artefacts_enhance_skill()
+{
+    for (skill_type sk = SK_FIRST_SKILL; sk <= SK_LAST_SKILL; sk++)
+    {
+        artefact_prop_type p = _enhancer_for_skill(sk);
+        if (p == ARTP_NUM_PROPERTIES)
+            continue;
+        if (you.scan_artefacts(p))
+            return true;
+    }
+
+    return false;
 }
 
 /**
@@ -5941,8 +5701,6 @@ int player::skill(skill_type sk, int scale, bool real, bool temp) const
     // skill training, so make sure to use the correct value.
     int actual_skill = skills[sk];
     unsigned int effective_points = skill_points[sk];
-    if (!real)
-        effective_points += get_crosstrain_points(sk);
     effective_points = min(effective_points, skill_exp_needed(MAX_SKILL_LEVEL, sk));
     actual_skill = calc_skill_level_change(sk, actual_skill, effective_points);
 
@@ -5951,24 +5709,8 @@ int player::skill(skill_type sk, int scale, bool real, bool temp) const
     if (real)
         return level;
 
-    if (you.unrand_equipped(UNRAND_HERMITS_PENDANT))
-    {
-        if (sk == SK_INVOCATIONS)
-            return 14 * scale;
-        if (sk == SK_EVOCATIONS)
-            return 0;
-    }
-
-    if (penance[GOD_ASHENZARI])
-    {
-        if (temp)
-            level = max(level - 4 * scale, level / 2);
-    }
-    else if (ash_has_skill_boost(sk))
+    if (ash_has_skill_boost(sk))
             level = ash_skill_boost(sk, scale);
-
-    if (you.unrand_equipped(UNRAND_CHARLATANS_ORB) && sk != SK_EVOCATIONS)
-        level += skill(SK_EVOCATIONS, 10, true, false) * scale / 50;
 
     if (temp && duration[DUR_HEROISM] && sk <= SK_LAST_MUNDANE)
         level += 5 * scale;
@@ -5985,6 +5727,48 @@ int player::skill(skill_type sk, int scale, bool real, bool temp) const
             level = level / 2;
         else
             level = level * 3 / 4;
+    }
+
+    switch (sk)
+    {
+    case SK_ENCHANTMENTS:
+        level = min(level + scan_artefacts(ARTP_ENHANCE_ENCH) * scale, 27 * scale);
+        break;
+
+    case SK_NECROMANCY:
+        level = min(level + scan_artefacts(ARTP_ENHANCE_NECRO) * scale, 27 * scale);
+        break;
+
+    case SK_HEXES:
+        level = min(level + scan_artefacts(ARTP_ENHANCE_HEXES) * scale, 27 * scale);
+        break;
+
+    case SK_SUMMONINGS:
+        level = min(level + scan_artefacts(ARTP_ENHANCE_SUMM) * scale, 27 * scale);
+        break;
+
+    case SK_TRANSLOCATIONS:
+        level = min(level + scan_artefacts(ARTP_ENHANCE_TLOC) * scale, 27 * scale);
+        break;
+
+    case SK_FIRE_MAGIC:
+        level = min(level + scan_artefacts(ARTP_ENHANCE_FIRE) * scale, 27 * scale);
+        break;
+
+    case SK_ICE_MAGIC:
+        level = min(level + scan_artefacts(ARTP_ENHANCE_ICE) * scale, 27 * scale);
+        break;
+
+    case SK_AIR_MAGIC:
+        level = min(level + scan_artefacts(ARTP_ENHANCE_AIR) * scale, 27 * scale);
+        break;
+
+    case SK_EARTH_MAGIC:
+        level = min(level + scan_artefacts(ARTP_ENHANCE_EARTH) * scale, 27 * scale);
+        break;
+
+    default:
+        break;
     }
 
     if (level > MAX_SKILL_LEVEL * scale)
@@ -6237,15 +6021,6 @@ int player::corrosion_amount() const
     return corrosion;
 }
 
-static int _meek_bonus()
-{
-    const int scale_bottom = 27; // full bonus given at this HP and below
-    const int hp_per_ac = 4;
-    const int max_ac = 7;
-    const int scale_top = scale_bottom + hp_per_ac * max_ac;
-    return min(max(0, (scale_top - you.hp) / hp_per_ac), max_ac);
-}
-
 int player::armour_class() const
 {
     return div_rand_round(armour_class_scaled(100), 100);
@@ -6274,11 +6049,7 @@ int player::armour_class_scaled(int scale) const
         AC += 300;
 
     if (duration[DUR_SPWPN_PROTECTION])
-    {
         AC += 700;
-        if (you.unrand_equipped(UNRAND_MEEK))
-            AC += _meek_bonus() * 100;
-    }
 
     if (you.wearing_ego(OBJ_GIZMOS, SPGIZMO_PARRYREV))
     {
@@ -6306,24 +6077,6 @@ void player::refresh_rampage_hints()
         for (coord_def delta : Compass)
             if ((delta.x || delta.y) && get_rampage_target(delta))
                 you.rampage_hints.insert(you.pos() + delta);
-}
-
- /**
-  * Guaranteed damage reduction.
-  *
-  * The percentage of the damage received that is guaranteed to be reduced
-  * by the armour. As the AC roll is done before GDR is applied, GDR is only
-  * useful when the AC roll is inferior to it. Therefore a higher GDR means
-  * more damage reduced, but also more often.
-  *
-  * \f[ GDR = 16 \times (AC)^\frac{1}{4} \f]
-  *
-  * \return GDR as a percentage.
-  **/
-int player::gdr_perc(bool random) const
-{
-    int ac = random ? armour_class() : armour_class_scaled(1);
-    return (int)(16 * sqrt(sqrt(max(0, ac))));
 }
 
 /**
@@ -6373,8 +6126,7 @@ int player::evasion_scaled(int scale, bool ignore_temporary, const actor* act) c
  *                  were equipped.
  */
 void player::preview_stats_with_specific_item(int scale, const item_def& new_item,
-                                              int *ac, int *ev, int *sh,
-                                              FixedVector<int, MAX_KNOWN_SPELLS> *fail)
+                                              int *ac, int *ev, int *sh)
 {
     // Since there are a lot of things which can affect the calculation of
     // EV/SH/fail, including artifact properties on either the item we're
@@ -6448,9 +6200,6 @@ void player::preview_stats_with_specific_item(int scale, const item_def& new_ite
     *ev = evasion_scaled(scale, true);
     *sh = player_displayed_shield_class(scale, true);
 
-    for (int i = 0; i < MAX_KNOWN_SPELLS; ++i)
-        (*fail)[i] = raw_spell_fail(spells[i]);
-
     // Clear out our preview item. (Other equipment state will be unwound
     // automatically.)
     you.inv[ENDOFPACK].clear();
@@ -6458,8 +6207,7 @@ void player::preview_stats_with_specific_item(int scale, const item_def& new_ite
 
 void player::preview_stats_without_specific_item(int scale,
                                                  const item_def& item_to_remove,
-                                                 int *ac, int *ev, int *sh,
-                                                 FixedVector<int, MAX_KNOWN_SPELLS> *fail)
+                                                 int *ac, int *ev, int *sh)
 {
     // Verify that the item is currently equipped
     // (or this function will give bogus info)
@@ -6476,8 +6224,6 @@ void player::preview_stats_without_specific_item(int scale,
     *ac = base_ac(scale);
     *ev = evasion_scaled(scale, true);
     *sh = player_displayed_shield_class(scale, true);
-    for (int i = 0; i < MAX_KNOWN_SPELLS; ++i)
-        (*fail)[i] = raw_spell_fail(spells[i]);
 }
 
 /**
@@ -6492,8 +6238,7 @@ void player::preview_stats_without_specific_item(int scale,
  *                  were equipped.
  */
 void player::preview_stats_in_specific_form(int scale, const item_def& talisman,
-    int *ac, int *ev, int *sh,
-    FixedVector<int, MAX_KNOWN_SPELLS> *fail)
+    int *ac, int *ev, int *sh)
 {
     ASSERT(talisman.base_type == OBJ_TALISMANS);
 
@@ -6523,9 +6268,6 @@ void player::preview_stats_in_specific_form(int scale, const item_def& talisman,
     *ac = base_ac(scale);
     *ev = evasion_scaled(scale, true);
     *sh = player_displayed_shield_class(scale, true);
-
-    for (int i = 0; i < MAX_KNOWN_SPELLS; ++i)
-        (*fail)[i] = raw_spell_fail(spells[i]);
 
     // Player state should revert to its previous one automatically.
 }
@@ -6729,11 +6471,7 @@ bool player::res_torment() const
 
     return get_form()->res_neg() == 3
            || you.petrified()
-           || bool(you.holiness() & MH_PLANT)
-#if TAG_MAJOR_VERSION == 34
-           || you.unrand_equipped(UNRAND_ETERNAL_TORMENT)
-#endif
-           ;
+           || bool(you.holiness() & MH_PLANT);
 }
 
 bool player::res_polar_vortex() const
@@ -6782,7 +6520,7 @@ int player_willpower(bool temp)
     if (you.unrand_equipped(UNRAND_FOLLY))
         return 0;
 
-    int rm = you.experience_level * species::get_wl_modifier(you.species);
+    int rm = species::get_wl_modifier(you.species);
 
     // randarts
     rm += WL_PIP * you.scan_artefacts(ARTP_WILLPOWER);
@@ -6949,7 +6687,7 @@ bool player::permanent_flight(bool include_equip) const
  */
 bool player::spellcasting_unholy() const
 {
-    return you.unrand_equipped(UNRAND_MAJIN);
+    return false;
 }
 
 /**
@@ -7489,7 +7227,6 @@ bool player::can_see_invisible() const
     if (wearing_jewellery(RING_SEE_INVISIBLE)
         || wearing_ego(OBJ_ARMOUR, SPARM_SEE_INVISIBLE)
         // randart gear
-        || scan_artefacts(ARTP_SEE_INVISIBLE) > 0
         || you.duration[DUR_REVELATION])
     {
         return true;
@@ -8354,14 +8091,7 @@ static int _get_potion_heal_factor(bool temp=true)
     // healing factor is expressed in halves, so default is 2/2 -- 100%.
     int factor = 2;
 
-    // start with penalties
-    if (temp)
-        factor -= you.unrand_equipped(UNRAND_VINES) ? 2 : 0;
     factor -= you.mutation[MUT_NO_POTION_HEAL];
-
-    // then apply bonuses - Kryia's doubles potion healing
-    if (temp)
-        factor *= you.unrand_equipped(UNRAND_KRYIAS) ? 2 : 1;
 
     if (you.mutation[MUT_DOUBLE_POTION_HEAL])
         factor *= 2;
@@ -8376,12 +8106,7 @@ void print_potion_heal_message()
     // and reduced healing.
     if (_get_potion_heal_factor() > 2)
     {
-        if (you.unrand_equipped(UNRAND_KRYIAS))
-        {
-            mprf("%s enhances the healing.",
-                 you.body_armour()->name(DESC_THE, false, false, false).c_str());
-        }
-        else if (you.has_mutation(MUT_DOUBLE_POTION_HEAL))
+        if (you.has_mutation(MUT_DOUBLE_POTION_HEAL))
             mpr("You savour every drop.");
         else
             mpr("The healing is enhanced."); // bad message, but this should
@@ -8405,12 +8130,6 @@ int player::scale_potion_healing(int healing_amount)
 
 int player::scale_potion_mp_healing(int healing_amount)
 {
-    // Slightly ugly to partially duplicate the logic of _get_potion_heal_factor()
-    // but vine stalkers shouldn't be unable to get value out of !magic, and so
-    // this must ignore MUT_NO_POTION_HEAL
-    if (you.unrand_equipped(UNRAND_KRYIAS))
-        healing_amount *= 2;
-
     if (you.mutation[MUT_DOUBLE_POTION_HEAL])
         healing_amount *= 2;
 
@@ -8919,30 +8638,6 @@ void refresh_weapon_protection()
     you.redraw_armour_class = true;
 }
 
-void refresh_meek_bonus()
-{
-    const string MEEK_KEY = "meek_ac_key";
-    const bool meek_possible = you.duration[DUR_SPWPN_PROTECTION]
-                            && you.unrand_equipped(UNRAND_MEEK);
-    const int bonus_ac = _meek_bonus();
-    if (!meek_possible || !bonus_ac)
-    {
-        if (you.props.exists(MEEK_KEY))
-        {
-            you.props.erase(MEEK_KEY);
-            you.redraw_armour_class = true;
-        }
-        return;
-    }
-
-    const int last_bonus = you.props[MEEK_KEY].get_int();
-    if (last_bonus == bonus_ac)
-        return;
-
-    you.props[MEEK_KEY] = bonus_ac;
-    you.redraw_armour_class = true;
-}
-
 static bool _ench_triggers_trickster(enchant_type ench)
 {
     switch (ench)
@@ -9071,7 +8766,7 @@ void maybe_harvest_memory(const monster& victim)
     if (crawl_state.game_is_sprint())
         xp = sprint_modify_exp(xp);
 
-    progress += div_rand_round(xp, calc_skill_cost(you.skill_cost_level));
+    progress += div_rand_round(xp, 1);
 
     if (progress < ENKINDLE_CHARGE_COST)
         return;
@@ -9148,4 +8843,17 @@ bool player::allies_forbidden()
 {
     return get_mutation_level(MUT_NO_LOVE)
            || have_passive(passive_t::no_allies);
+}
+
+// The player's ability to cast a spell of a particular school
+// Adjusted by effects like wizardry
+int player::adjusted_casting_level(skill_type skill)
+{
+    if (skill < SK_FIRST_MAGIC_SCHOOL || skill > SK_LAST_MAGIC)
+        return 0;
+
+    int sklevel = you.skill(skill);
+    sklevel += player_wizardry();
+
+    return sklevel;
 }

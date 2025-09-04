@@ -729,7 +729,7 @@ enum weapon_property_type
 {
     PWPN_DAMAGE,
     PWPN_HIT,
-    PWPN_SPEED,
+    PWPN_SK,
     PWPN_ACQ_WEIGHT,
 };
 

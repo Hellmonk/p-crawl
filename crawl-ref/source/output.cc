@@ -1103,10 +1103,7 @@ static void _print_stats_ac(int x, int y)
         text_col = RED;
 
     string ac = make_stringf("%2d ", you.armour_class_scaled(1));
-#ifdef WIZARD
-    if (you.wizard && !_is_using_small_layout())
-        ac += make_stringf("(%d%%) ", you.gdr_perc(false));
-#endif
+
     textcolour(text_col);
     CGOTOXY(x+4, y, GOTO_STAT);
     CPRINTF("%-12s", ac.c_str());
@@ -2067,31 +2064,9 @@ static const char* _determine_colour_string(int level, int max_level,
 
 int stealth_pips()
 {
-    // round up.
-    return (player_stealth() + STEALTH_PIP - 1) / STEALTH_PIP;
+    return player_stealth();
 }
 
-static string _stealth_bar(int label_length, int sw)
-{
-    string bar;
-    //no colouring
-    bar += _determine_colour_string(0, 5);
-    bar += chop_string("Stlth", label_length);
-
-    const int unadjusted_pips = stealth_pips();
-    const int bar_len = 10;
-    const int num_high_pips = unadjusted_pips % bar_len;
-    static const vector<char> pip_tiers = { ' ', '+', '*', '#', '!' };
-    const int max_tier = pip_tiers.size() - 1;
-    const int low_tier = min(unadjusted_pips / bar_len, max_tier);
-    const int high_tier = min(low_tier + 1, max_tier);
-
-    bar.append(num_high_pips, pip_tiers[high_tier]);
-    bar.append(bar_len-num_high_pips, pip_tiers[low_tier]);
-    bar += "\n";
-    linebreak_string(bar, sw);
-    return bar;
-}
 static string _status_mut_rune_list(int sw);
 
 // helper for print_overview_screen
@@ -2585,13 +2560,13 @@ static vector<formatted_string> _get_overview_resistances(
     string out;
 
     const int rfire = player_res_fire(false);
-    out += _resist_composer("rFire", cwidth, rfire, 3, MR_RES_FIRE) + "\n";
+    out += _resist_composer("rFire", cwidth, rfire, 1, MR_RES_FIRE) + "\n";
 
     const int rcold = player_res_cold(false);
-    out += _resist_composer("rCold", cwidth, rcold, 3, MR_RES_COLD) + "\n";
+    out += _resist_composer("rCold", cwidth, rcold, 1, MR_RES_COLD) + "\n";
 
     const int rlife = player_prot_life(false);
-    out += _resist_composer("rNeg", cwidth, rlife, 3, MR_RES_NEG) + "\n";
+    out += _resist_composer("rNeg", cwidth, rlife, 1, MR_RES_NEG) + "\n";
 
     const int rpois = player_res_poison(false);
     out += _resist_composer("rPois", cwidth, rpois, 1, MR_RES_POISON) + "\n";
@@ -2608,7 +2583,7 @@ static vector<formatted_string> _get_overview_resistances(
     const int rmagi = player_willpower() / WL_PIP;
     out += _resist_composer("Will", cwidth, rmagi, MAX_WILL_PIPS) + "\n";
 
-    out += _stealth_bar(cwidth, 20) + "\n";
+    out += make_stringf("Stlth:  %d", stealth_pips()) + "\n";
 
     const int regen = player_regen(); // round up
     out += chop_string("HPRegen", cwidth);
@@ -2617,16 +2592,8 @@ static vector<formatted_string> _get_overview_resistances(
     if (!you.has_mutation(MUT_HP_CASTING))
     {
         out += chop_string("MPRegen", cwidth);
-#if TAG_MAJOR_VERSION == 34
-        const bool etheric = you.unrand_equipped(UNRAND_ETHERIC_CAGE);
-        const int mp_regen = player_mp_regen() //round up
-                            + (etheric ? 50 : 0); // on average
-        out += make_stringf("%d.%02d/turn%s\n", mp_regen / 100, mp_regen % 100,
-                            etheric ? "*" : "");
-#else
         const int mp_regen = player_mp_regen(); // round up
         out += make_stringf("%d.%02d/turn\n", mp_regen / 100, mp_regen % 100);
-#endif
     }
 
     cols.add_formatted(0, out, false);

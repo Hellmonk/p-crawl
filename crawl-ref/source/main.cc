@@ -1707,41 +1707,6 @@ static void _experience_check()
 #endif
 }
 
-static void _do_rest()
-{
-
-#ifdef WIZARD
-    if (you.props.exists(FREEZE_TIME_KEY))
-    {
-        mprf(MSGCH_WARN, "Cannot rest while time is frozen.");
-        return;
-    }
-#endif
-
-    if (should_fear_zot() && !yesno("Really rest while Zot is near?", false, 'n'))
-    {
-        canned_msg(MSG_OK);
-        return;
-    }
-
-    if (i_feel_safe() && can_rest_here())
-    {
-        if (you.is_sufficiently_rested(true) && ancestor_full_hp())
-        {
-            mpr("You start waiting.");
-            _start_running(RDIR_REST, RMODE_WAIT_DURATION);
-            return;
-        }
-        else
-            mpr("You start resting.");
-    }
-    // intentional fallthrough for else case! Messaging is handled in
-    // _start_running, update the corresponding conditional there if you
-    // change this one.
-
-    _start_running(RDIR_REST, RMODE_REST_DURATION);
-}
-
 static void _do_display_map()
 {
     if (Hints.hints_events[HINT_MAP_VIEW])
@@ -2070,8 +2035,6 @@ void process_command(command_type cmd, command_type prev_cmd)
         _handle_autofight(cmd, prev_cmd);
         break;
 
-    case CMD_REST:           _do_rest(); break;
-
     case CMD_GO_UPSTAIRS:
     case CMD_GO_DOWNSTAIRS:
         _take_stairs(cmd == CMD_GO_DOWNSTAIRS);
@@ -2136,6 +2099,7 @@ void process_command(command_type cmd, command_type prev_cmd)
             break;
         // else fall-through
     case CMD_WAIT:
+    case CMD_REST:
         update_acrobat_status();
         you.turn_is_over = true;
         break;

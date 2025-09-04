@@ -156,8 +156,6 @@ int wand_power(spell_type wand_spell)
         return -1;
     const int mp_cost = wand_mp_cost();
     int pow = (15 + you.skill(SK_EVOCATIONS, 7) / 2) * (mp_cost + 9) / 9;
-    if (you.unrand_equipped(UNRAND_GADGETEER))
-        pow = pow * 130 / 100;
     return min(pow, cap);
 }
 
@@ -227,8 +225,7 @@ void zap_wand(int slot, dist *_target)
         finalize_mp_cost();
 
     // Take off a charge (unless gadgeteer procs)
-    if ((you.wearing_ego(OBJ_GIZMOS, SPGIZMO_GADGETEER)
-        || you.unrand_equipped(UNRAND_GADGETEER))
+    if (you.wearing_ego(OBJ_GIZMOS, SPGIZMO_GADGETEER)
         && x_chance_in_y(3, 10))
     {
         mpr("You conserve a charge of your wand.");
@@ -1014,8 +1011,7 @@ static bool _evoke_talisman(item_def &talisman)
 
     count_action(CACT_FORM, (int)trans);
     start_delay<TransformDelay>(trans, &talisman);
-    if (god_despises_item(talisman, you.religion))
-        excommunication();
+
     you.turn_is_over = true;
     return true;
 }

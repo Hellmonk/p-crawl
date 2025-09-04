@@ -71,15 +71,13 @@ int attack_multiple_targets(actor &attacker, list<actor*> &targets,
 class attack;
 int to_hit_pct(const monster_info& mi, attack &atk,
                bool melee, bool penetrating, int distance);
-int to_hit_pct_aux(const monster_info& mi, attack &atk);
+int to_hit_pct_aux(const monster_info& mi);
 int mon_to_hit_base(int hd, bool skilled);
 int mon_to_hit_pct(int to_land, int scaled_ev);
 int mon_shield_bypass(int hd);
-int mon_beat_sh_pct(int bypass, int scaled_sh);
+int mon_beat_sh_pct(int scaled_sh);
 
-int weapon_min_delay_skill(const item_def &weapon);
-int weapon_min_delay(const item_def &weapon, bool check_speed = true);
-int weapon_adjust_delay(const item_def &weapon, int base_delay, bool random = true);
+int weapon_skill_requirement(const item_def &weapon);
 
 int mons_weapon_damage_rating(const item_def &launcher);
 
@@ -132,9 +130,8 @@ int archer_bonus_damage(int hd);
 
 int aux_to_hit();
 
-bool weapon_uses_strength(skill_type wpn_skill, bool using_weapon);
 int stat_modify_damage(int base_dam, skill_type wpn_skill, bool using_weapon);
-int apply_weapon_skill(int base_dam, skill_type wpn_skill, bool random);
+int apply_weapon_skill(int base_dam, skill_type wpn_skill, bool penalty);
 int apply_fighting_skill(int base_dam, bool aux, bool random);
 int throwing_base_damage_bonus(const item_def &projectile, bool random);
 int brand_adjust_weapon_damage(int base_dam, int brand, bool random);

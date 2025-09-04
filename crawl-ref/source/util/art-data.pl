@@ -33,11 +33,10 @@ my %field_type = (
     CORRODE  => "bool",
     DBRAND   => "str",
     DELETED  => "bool",
-    DEX      => "num",
     DESCRIP  => "str",
     DRAIN    => "bool",
     ELEC     => "bool",
-    ENH_CONJ => "bool",
+    ENH_ENCH => "bool",
     ENH_HEXES => "bool",
     ENH_SUMM => "bool",
     ENH_NECRO => "bool",
@@ -46,20 +45,15 @@ my %field_type = (
     ENH_ICE  => "bool",
     ENH_AIR  => "bool",
     ENH_EARTH => "bool",
-    ENH_ALCH => "bool",
-    ENH_FORGE => "bool",
     EV       => "num",
     EVIL     => "bool",
     FOG      => "bool",
     FIRE     => "num",
-    FRAGILE  => "bool",
     HARM     => "bool",
     HOLY     => "bool",
     INSCRIP  => "str",
-    INT      => "num",
     INV      => "bool",
     FLY      => "bool",
-    LIFE     => "num",
     WILL     => "num",
     HP       => "num",
     MP       => "num",
@@ -70,10 +64,8 @@ my %field_type = (
     NOSPELL  => "bool",
     NOTELEP  => "bool",
     NO_UPGRADE => "bool",
-    POISON   => "bool",
     RAMPAGE  => "bool",
     RANDAPP  => "bool",
-    RCORR    => "bool",
     REGEN    => "num",
     REGEN_MP => "num",
     RMSL     => "bool",
@@ -86,7 +78,6 @@ my %field_type = (
     SPECIAL  => "bool",
     SLOW     => "bool",
     STEALTH  => "num",
-    STR      => "num",
     WIZ      => "bool",
     TYPE     => "str",
     UNIDED   => "bool",
@@ -545,18 +536,18 @@ my @art_order = (
 # start TAG_MAJOR_VERSION == 34
     # Remove six copies of "unused", when
     # it is no longer the case that TAG_MAJOR_VERSION == 34
-    "{", "BRAND", "AC", "EV", "STR", "INT", "DEX", "\n",
-    "FIRE", "COLD", "ELEC", "POISON", "LIFE", "WILL", "\n",
-    "SEEINV", "INV", "FLY", "BLINK", "unused",  "NOISES", "\n",
+    "{", "BRAND", "AC", "EV", "unused", "unused", "unused", "\n",
+    "FIRE", "COLD", "ELEC", "unused", "unused", "WILL", "\n",
+    "unused", "INV", "FLY", "BLINK", "unused",  "NOISES", "\n",
     "NOSPELL", "unused", "NOTELEP", "ANGRY", "unused", "\n",
     "MUTATE", "unused", "SLAY", "unused", "STEALTH", "MP", "\n",
     "BASE_DELAY", "HP", "CLARITY", "BASE_ACC", "BASE_DAM", "\n",
-    "RMSL", "unused", "REGEN", "unused", "NO_UPGRADE", "RCORR", "\n",
-    "RMUT", "unused", "CORRODE", "DRAIN", "SLOW", "FRAGILE", "\n",
-    "SH", "HARM", "RAMPAGE", "ARCHMAGI", "ENH_CONJ", "ENH_HEXES", "\n",
+    "RMSL", "unused", "REGEN", "unused", "NO_UPGRADE", "unused", "\n",
+    "RMUT", "unused", "CORRODE", "DRAIN", "SLOW", "unused", "\n",
+    "SH", "HARM", "RAMPAGE", "ARCHMAGI", "ENH_ENCH", "ENH_HEXES", "\n",
     "ENH_SUMM", "ENH_NECRO", "ENH_TLOC", "unused", "ENH_FIRE", "\n",
-    "ENH_ICE", "ENH_AIR", "ENH_EARTH", "ENH_ALCH", "\n",
-    "ACROBAT", "REGEN_MP", "WIZ", "ENH_FORGE", "SILENCE", "BANE",
+    "ENH_ICE", "ENH_AIR", "ENH_EARTH", "unused", "\n",
+    "ACROBAT", "REGEN_MP", "WIZ", "unused", "SILENCE", "BANE",
     "}",
 # end TAG_MAJOR_VERSION
 # start TAG_MAJOR_VERSION == 35
@@ -568,7 +559,7 @@ my @art_order = (
 #     "BASE_DELAY", "HP", "CLARITY", "BASE_ACC", "BASE_DAM", "\n",
 #     "RMSL", "REGEN", "NO_UPGRADE", "RCORR", "\n",
 #     "RMUT", "CORRODE", "DRAIN", "SLOW", "FRAGILE", "\n",
-#     "SH", "HARM", "RAMPAGE", "ARCHMAGI", "ENH_CONJ", "ENH_HEXES", "\n",
+#     "SH", "HARM", "RAMPAGE", "ARCHMAGI", "ENH_ENCH", "ENH_HEXES", "\n",
 #     "ENH_SUMM", "ENH_NECRO", "ENH_TLOC", "ENH_FIRE", "\n",
 #     "ENH_ICE", "ENH_AIR", "ENH_EARTH", "ENH_ALCH", "\n",
 #     "ACROBAT", "REGEN_MP", "ENH_FORGE", "SILENCE", "BANE",
@@ -622,7 +613,7 @@ sub art_to_str
 
         if (!defined($field_type{$part}))
         {
-            print STDERR "No field type for part '$part'\n";
+            # print STDERR "No field type for part '$part'\n";
             next;
         }
 

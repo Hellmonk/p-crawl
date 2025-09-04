@@ -217,8 +217,6 @@ cyan CYAN
 white WHITE LAST_NORM
 #unrand
 ratskin RATSKIN_CLOAK
-dragonskin DRAGONSKIN_CLOAK
-fungal_fisticloak_back FUNGAL_FISTICLOAK_BACK
 
 ### Must be before scarves to render behind the player!
 %sdir player/transform
@@ -261,7 +259,6 @@ mesh_red MESH_RED
 mesh_black MESH_BLACK
 mesh_white MESH_WHITE
 mesh_blue MESH_BLUE LAST_NORM
-spider SPIDER
 seven_league_boots SEVEN_LEAGUE_BOOTS
 slippers SLIPPERS
 april_boots1 APRIL1
@@ -274,8 +271,6 @@ hooves HOOVES
 barding1 BARDING
 barding2 BARDING_EGO
 barding3 BARDING_RANDART
-lightning_scales LIGHTNING_SCALES
-black_knight BLACK_KNIGHT
 %end_ctg
 
 ### Body armour
@@ -484,12 +479,7 @@ robe_of_folly ROBE_OF_FOLLY
 maxwell MAXWELL
 lears_hauberk LEARS_HAUBERK
 faerie_dragon_armour FAERIE_DRAGON_ARMOUR
-moon_troll_leather_armour MOON_TROLL_LEATHER_ARMOUR
 orange_crystal ORANGE_CRYSTAL
-vines VINES
-kryias KRYIAS
-talos TALOS
-justicar JUSTICAR
 
 %sdir player/transform
 maw_form0 MAW_FORM
@@ -541,33 +531,25 @@ bloodbane BLOODBANE FIRST
 dread_knight DREAD_KNIGHT
 leech LEECH
 morg MORG
-plutonium_sword PLUTONIUM_SWORD
 zealot_sword ZEALOT_SWORD
 singing_sword SINGING_SWORD
-zonguldrok ZONGULDROK
 sword_of_power SWORD_OF_POWER
 knife_of_accuracy KNIFE_OF_ACCURACY
 vampires_tooth VAMPIRES_TOOTH
 spriggans_knife SPRIGGANS_KNIFE
-%rim 0
-capt_cutlass CAPT_CUTLASS
 %rim 1
 arc_blade ARC_BLADE
-gyre GYRE
 thermic_engine THERMIC_ENGINE
-throatcutter THROATCUTTER
 ## blunt
 wucad_mu WUCAD_MU
 mace_of_variability MACE_OF_VARIABILITY
 eveningstar_brilliance EVENINGSTAR_BRILLIANCE
 undeadhunter UNDEADHUNTER
 eos EOS
-snakebite SNAKEBITE
 shillelagh SHILLELAGH
 dark_maul DARK_MAUL
 spellbinder SPELLBINDER
 firestarter FIRESTARTER
-majin MAJIN
 ## polearms
 trident_octopus_king TRIDENT_OCTOPUS_KING
 glaive_of_prune GLAIVE_OF_PRUNE
@@ -575,20 +557,15 @@ finisher FINISHER
 scythe_of_curses SCYTHE_OF_CURSES
 glaive_of_the_guard GLAIVE_OF_THE_GUARD
 wyrmbane WYRMBANE
-force_lance FORCE_LANCE
 rift RIFT
-lochaber_axe LOCHABER_AXE
 ## staves
 elemental_staff ELEMENTAL_STAFF
 asmodeus ASMODEUS
-olgreb OLGREB
-order ORDER
 battle_staff BATTLE_STAFF
 ## axes
 axe_trog AXE_TROG
 arga ARGA
 demon_axe DEMON_AXE
-holy_axe HOLY_AXE
 axe_of_woe AXE_OF_WOE
 frostbite FROSTBITE
 ## launchers
@@ -596,15 +573,11 @@ blowgun_assassin BLOWGUN_ASSASSIN
 punk PUNK
 sniper SNIPER
 crossbow_fire FIERY_DEVIL
-condemnation CONDEMNATION
 zephyr ZEPHYR
-mule MULE
 sceptre_of_torment SCEPTRE_OF_TORMENT
 # start TAG_MAJOR_VERSION == 34
 botono BOTONO
-chilly_death CHILLY_DEATH
 crystal_spear CRYSTAL_SPEAR
-flaming_death FLAMING_DEATH
 # end TAG_MAJOR_VERSION
 skullcrusher SKULLCRUSHER
 
@@ -885,8 +858,6 @@ orb3 ORB3 ORB_LAST
 orb_of_dispater ORB_OF_DISPATER
 orb_of_wucad_mu ORB_OF_WUCAD_MU
 orb_of_battle ORB_OF_BATTLE
-charlatans_orb CHARLATANS_ORB
-skull_of_zonguldrok SKULL_OF_ZONGULDROK
 
 buckler_spriggan BUCKLER_SPRIGGAN
 buckler_warlock BUCKLER_WARLOCK
@@ -1147,9 +1118,6 @@ taiso_white
 ## Unrand caps and hats
 bear BEAR
 dyrovepreva DYROVEPREVA
-eternal_torment ETERNAL_TORMENT
-fungal_fisticloak_front FUNGAL_FISTICLOAK_FRONT
-vainglory VAINGLORY
 wizard_lightgreen WIZARD_LIGHTGREEN
 
 ## All helmets below (HELM_OFS and greater) hide hair.
@@ -1186,7 +1154,6 @@ helm_plume FHELM_PLUME
 mummy FHELM_MUMMY
 isildur FHELM_ISILDUR LAST_NORM
 art_dragonhelm ART_DRAGONHELM
-etheric_cage ETHERIC_CAGE
 
 healer FHELM_HEALER
 hood_gray HOOD_GRAY

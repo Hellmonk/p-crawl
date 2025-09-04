@@ -5952,24 +5952,6 @@ void unmarshallItem(reader &th, item_def &item)
         item.quantity = 1;
     }
 
-    if (th.getMinorVersion() < TAG_MINOR_NO_NEGATIVE_VULN
-        && is_artefact(item)
-        && item.base_type != OBJ_BOOKS
-        && artefact_property(item, ARTP_NEGATIVE_ENERGY))
-    {
-        if (artefact_property(item, ARTP_NEGATIVE_ENERGY) < 0)
-            artefact_set_property(item, ARTP_NEGATIVE_ENERGY, 0);
-    }
-
-    if (th.getMinorVersion() < TAG_MINOR_NO_RPOIS_MINUS
-        && is_artefact(item)
-        && item.base_type != OBJ_BOOKS
-        && artefact_property(item, ARTP_POISON))
-    {
-        if (artefact_property(item, ARTP_POISON) < 0)
-            artefact_set_property(item, ARTP_POISON, 0);
-    }
-
     if (th.getMinorVersion() < TAG_MINOR_TELEPORTITIS
         && is_artefact(item)
         && item.base_type != OBJ_BOOKS

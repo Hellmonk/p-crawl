@@ -130,9 +130,6 @@ int count = 0;
     // Hats versus helmets is handled elsewhere. If you can wear at least a hat,
     // this should be non-zero.
     case SLOT_HELMET:
-        if (_use_slots(UNRAND_SKULL_OF_ZONGULDROK, count_melded_unrands, count_items))
-            ++count;
-
         if (you.has_mutation(MUT_FORMLESS))
             NO_SLOT("You don't have a head.")
         else if (you.has_mutation(MUT_NO_ARMOUR))
@@ -149,9 +146,6 @@ int count = 0;
         return count;
 
     case SLOT_GLOVES:
-        if (_use_slots(UNRAND_FISTICLOAK, count_melded_unrands, count_items))
-            ++count;
-
         if (you.has_mutation(MUT_QUADRUMANOUS))
             ++count;
 
@@ -226,21 +220,12 @@ int count = 0;
         if (you.has_mutation(MUT_MISSING_HAND))
             ring_count -= 1;
 
-        if (_use_slots(UNRAND_FINGER_AMULET, count_melded_unrands, count_items))
-            ring_count += 1;
-
-        if (_use_slots(UNRAND_VAINGLORY, count_melded_unrands, count_items))
-            ring_count += 2;
-
         return ring_count;
     }
 
     case SLOT_AMULET:
         if (you.has_mutation(MUT_NO_JEWELLERY))
             NO_SLOT("You can't wear amulets.")
-
-        if (_use_slots(UNRAND_JUSTICARS_REGALIA, count_melded_unrands, count_items))
-            return 2;
 
         return 1;
 
@@ -831,10 +816,6 @@ static bool _forced_removal_goodness(player_equip_entry* entry1, player_equip_en
         return false;
     else if (item2.cursed())
         return true;
-    else if (is_artefact(item1) && artefact_property(item1, ARTP_FRAGILE))
-        return false;
-    else if (is_artefact(item2) && artefact_property(item2, ARTP_FRAGILE))
-        return true;
     else if (is_artefact(item1) && (artefact_property(item1, ARTP_CONTAM)
                                     || artefact_property(item1, ARTP_DRAIN)))
     {
@@ -856,7 +837,7 @@ static bool _forced_removal_goodness(player_equip_entry* entry1, player_equip_en
  *
  * If the player has multiple items in a given slot that they've lost, and they
  * do not need to remove all of them, this function will prefer non-cursed items
- * and then items without things like {Contam} or {Fragile}. Otherwise, it will
+ * and then items without things like {Contam}. Otherwise, it will
  * pick the first it sees.
  *
  * @param force_full_check   If true, checks all slots for items that shouldn't
@@ -1642,8 +1623,8 @@ void unequip_effect(int item_slot, bool meld, bool msg)
     else if (item.base_type == OBJ_JEWELLERY)
         _unequip_jewellery_effect(item, meld);
 
-    // Cursed items should always be destroyed on unequip.
-    if (item.cursed() && !meld)
+    // items should always be destroyed on unequip.
+    if (!meld)
         destroy_item(item);
 }
 
@@ -1675,17 +1656,6 @@ void equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
 
     if (proprt[ARTP_EVASION])
         you.redraw_evasion = true;
-
-    if (proprt[ARTP_SEE_INVISIBLE])
-        autotoggle_autopickup(false);
-
-    // Modify ability scores.
-    notify_stat_change(STAT_STR, proprt[ARTP_STRENGTH],
-                       !(msg && proprt[ARTP_STRENGTH] && !unmeld));
-    notify_stat_change(STAT_INT, proprt[ARTP_INTELLIGENCE],
-                       !(msg && proprt[ARTP_INTELLIGENCE] && !unmeld));
-    notify_stat_change(STAT_DEX, proprt[ARTP_DEXTERITY],
-                       !(msg && proprt[ARTP_DEXTERITY] && !unmeld));
 
     if (proprt[ARTP_FLY])
         _flight_equip();
@@ -1749,10 +1719,6 @@ void unequip_artefact_effect(item_def &item,  bool *show_msgs, bool meld)
         calc_mp();
     }
 
-    notify_stat_change(STAT_STR, -proprt[ARTP_STRENGTH],     true);
-    notify_stat_change(STAT_INT, -proprt[ARTP_INTELLIGENCE], true);
-    notify_stat_change(STAT_DEX, -proprt[ARTP_DEXTERITY],    true);
-
     if (proprt[ARTP_FLY] != 0 && !meld)
         land_player();
 
@@ -1774,25 +1740,12 @@ void unequip_artefact_effect(item_def &item,  bool *show_msgs, bool meld)
     if (proprt[ARTP_DRAIN] && !meld)
         drain_player(150, true, true);
 
-    if (proprt[ARTP_SEE_INVISIBLE])
-        _mark_unseen_monsters();
-
     if (is_unrandom_artefact(item))
     {
         const unrandart_entry *entry = get_unrand_entry(item.unrand_idx);
 
         if (entry->unequip_func)
             entry->unequip_func(&item, show_msgs);
-    }
-
-    if (artefact_property(item, ARTP_FRAGILE) && !meld)
-    {
-        mprf("%s crumbles to dust!", item.name(DESC_THE).c_str());
-        dec_inv_item_quantity(item.link, 1);
-
-        // Hide unwield messages for weapons that have already been destroyed.
-        if (item.base_type == OBJ_WEAPONS)
-            *show_msgs = false;
     }
 }
 
@@ -2085,39 +2038,6 @@ static void _spirit_shield_message(bool unmeld)
         mpr("You feel spirits watching over you.");
 }
 
-static void _zonguldrok_comment_on_hat(const item_def& hat)
-{
-    // Make sure this is the hat actually *on* Zonguldrok (which for now we
-    // consider to be 'your last one'. It's possible in the future, this may
-    // become untrue.)
-    vector<item_def*> hats = you.equipment.get_slot_items(SLOT_HELMET);
-    if ((int)hats.size() != you.equipment.num_slots[SLOT_HELMET]
-        || &hat != hats.back())
-    {
-        return;
-    }
-
-    string key;
-    if (is_artefact(hat))
-        key = "zonguldrok hat good";
-    else if (hat.brand)
-        key = "zonguldrok hat okay";
-    else
-        key = "zonguldrok hat bad";
-
-    if (is_unrandom_artefact(hat))
-    {
-        const unrandart_entry *entry = get_unrand_entry(hat.unrand_idx);
-        string unrand_key = "zonguldrok hat " + string(entry->name);
-
-        if (!getSpeakString(unrand_key).empty())
-            key = unrand_key;
-    }
-
-    const string msg = "A voice whispers, \"" + getSpeakString(key) + "\"";
-        mprf(MSGCH_TALK, "%s", msg.c_str());
-}
-
 static void _equip_armour_effect(item_def& arm, bool unmeld)
 {
     int ego = get_armour_ego_type(arm);
@@ -2243,12 +2163,6 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
 
     you.redraw_armour_class = true;
     you.redraw_evasion = true;
-
-    if ((arm.sub_type == ARM_HAT || arm.sub_type == ARM_HELMET)
-        && !unmeld && you.unrand_equipped(UNRAND_SKULL_OF_ZONGULDROK))
-    {
-        _zonguldrok_comment_on_hat(arm);
-    }
 }
 
 static void _unequip_armour_effect(item_def& item, bool meld)

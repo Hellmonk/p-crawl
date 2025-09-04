@@ -51,9 +51,9 @@
 struct sortable_spell
 {
     sortable_spell(spell_type s) : spell(s),
-                raw_fail(raw_spell_fail(s)),
-                fail_rate(failure_rate_to_int(raw_fail)),
-                fail_rate_colour(failure_rate_colour(s)),
+                raw_fail(0),
+                fail_rate(0),
+                fail_rate_colour(LIGHTGREY),
                 level(spell_levels_required(s)),
                 difficulty(spell_difficulty(s)),
                 name(spell_title(s)),
@@ -544,7 +544,7 @@ protected:
                         : current_action == action::hide ? "(Hide)    "
                         : current_action == action::imbue ? "(Imbue)   "
                         : "(Show)    ",
-                        you.divine_exegesis ? "         " : "Failure  "));
+                        "         "));
     }
 
 private:
@@ -761,7 +761,6 @@ private:
         clear();
         hidden_count = 0;
         const bool show_hidden = current_action == action::unhide;
-        const bool show_enkindle = you.has_mutation(MUT_MNEMOPHAGE);
         menu_letter hotkey;
         text_pattern pat(search_text, true);
         for (auto& spell : spells)
@@ -806,27 +805,7 @@ private:
                 desc << string(58 - so_far, ' ');
             desc << "</" << colour_to_str(colour) << ">";
 
-            if (you.divine_exegesis)
-                desc << string(9, ' ');
-            else if (show_enkindle && spell_can_be_enkindled(spell.spell))
-            {
-                const int enkindled_fail = failure_rate_to_int(raw_spell_fail(spell.spell, true));
-
-                const string fail_string = make_stringf("<%s>%d%%</%s><darkgrey> (%d%%)</darkgrey>",
-                                                            colour_to_str(spell.fail_rate_colour).c_str(),
-                                                            failure_rate_to_int(spell.raw_fail),
-                                                            colour_to_str(spell.fail_rate_colour).c_str(),
-                                                            enkindled_fail);
-
-                const int width = strwidth(formatted_string::parse_string(fail_string).tostring());
-                desc << fail_string << string(13 - width, ' ');
-            }
-            else
-            {
-                desc << "<" << colour_to_str(spell.fail_rate_colour) << ">";
-                desc << chop_string(failure_rate_to_string(spell.raw_fail), show_enkindle ? 13 : 9);
-                desc << "</" << colour_to_str(spell.fail_rate_colour) << ">";
-            }
+            desc << string(9, ' ');
 
             desc << spell.difficulty;
 
@@ -1084,20 +1063,6 @@ bool learn_spell(spell_type specspell, bool wizard, bool interactive)
     if (!mem_spell_warning_string.empty())
         mprf(MSGCH_WARN, "%s", mem_spell_warning_string.c_str());
 
-    if (!wizard)
-    {
-        const int severity = fail_severity(specspell);
-
-        if (raw_spell_fail(specspell) >= 100 && !vehumet_is_offering(specspell))
-            mprf(MSGCH_WARN, "This spell is impossible to cast!");
-        else if (severity > 0)
-        {
-            mprf(MSGCH_WARN, "This spell is %s to cast%s",
-                             fail_severity_adjs[severity],
-                             severity > 1 ? "!" : ".");
-        }
-    }
-
     if (interactive)
     {
         const string prompt = make_stringf(
@@ -1189,7 +1154,7 @@ static spell_list _get_player_servitor_spells()
 {
     spell_list spells;
     for (const spell_type spell : you.spells)
-        if (spell_servitorable(spell) && failure_rate_to_int(raw_spell_fail(spell)) <= 20)
+        if (spell_servitorable(spell))
             spells.push_back(spell);
 
     return spells;
