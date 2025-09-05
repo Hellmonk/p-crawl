@@ -1658,10 +1658,9 @@ static string _describe_weapon_brand(const item_def &item)
             return desc + " Your inability to study Necromancy prevents "
                      "you from drawing on the full power of this weapon.";
         }
-    case SPWPN_DISTORTION:
-        return "It warps and distorts space around it, and may blink, banish, "
-               "or inflict extra damage upon those it strikes. Unwielding it "
-               "can teleport you to foes or banish you to the Abyss.";
+    case SPWPN_BLINKING:
+        return "It may blink enemies you hit. The chance to blink an enemy is "
+               "10%, plus an additional 10% per level of Translocations skill.";
     case SPWPN_PENETRATION:
         return "Any ammunition fired by it continues flying after striking "
                "targets, potentially hitting everything in its path until it "
@@ -4919,9 +4918,6 @@ static string _brand_damage_string(const monster_info &mi, brand_type brand,
             break;
         case SPWPN_ELECTROCUTION:
             brand_dam = 20;
-            break;
-        case SPWPN_DISTORTION:
-            brand_dam = 26;
             break;
         case SPWPN_HOLY_WRATH:
             // Hopefully this isn't too confusing for non-holy-vuln players

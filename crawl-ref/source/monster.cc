@@ -705,9 +705,6 @@ void monster::equip_weapon_message(item_def &item)
     case SPWPN_DRAINING:
         mpr("You sense an unholy aura.");
         break;
-    case SPWPN_DISTORTION:
-        mpr("Its appearance distorts for a moment.");
-        break;
     case SPWPN_CHAOS:
         mpr("It is briefly surrounded by a scintillating aura of "
             "random colours.");
@@ -825,7 +822,7 @@ void monster::unequip_weapon(item_def &item, bool msg)
             mpr("It stops dripping with poison.");
             break;
 
-        case SPWPN_DISTORTION:
+        case SPWPN_BLINKING:
             mpr("Its appearance distorts for a moment.");
             break;
 
@@ -1192,14 +1189,6 @@ static bool _is_signature_weapon(const monster* mons, const item_def &weapon)
         {
             return wtype == WPN_QUARTERSTAFF
                    && get_weapon_brand(weapon) == SPWPN_CHAOS;
-        }
-
-        // Distortion/chaos is immensely flavourful, and we shouldn't
-        // allow Psyche to switch away from it.
-        if (mons->type == MONS_PSYCHE)
-        {
-            return get_weapon_brand(weapon) == SPWPN_CHAOS
-                   || get_weapon_brand(weapon) == SPWPN_DISTORTION;
         }
 
         // Don't switch Azrael away from the customary scimitar of

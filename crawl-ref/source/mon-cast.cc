@@ -6853,7 +6853,7 @@ static void _cast_bestow_arms(monster& caster)
                                        7,  SPWPN_SPEED,
                                        7,  SPWPN_VAMPIRISM,
                                        4,  SPWPN_CHAOS,
-                                       1,  SPWPN_DISTORTION);
+                                       1,  SPWPN_BLINKING);
 
     wpn.plus = random_range(4, 9);
     wpn.flags |= (ISFLAG_SUMMONED | ISFLAG_IDENTIFIED);

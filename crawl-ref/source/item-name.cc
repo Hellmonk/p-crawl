@@ -404,7 +404,7 @@ static const char *weapon_brands_terse[] =
 #if TAG_MAJOR_VERSION == 34
     "obsolete", "obsolete",
 #endif
-    "vamp", "pain", "antimagic", "distort",
+    "vamp", "pain", "antimagic", "blink",
 #if TAG_MAJOR_VERSION == 34
     "obsolete", "obsolete",
 #endif
@@ -432,7 +432,7 @@ static const char *weapon_brands_verbose[] =
 #if TAG_MAJOR_VERSION == 34
     "flame", "frost",
 #endif
-    "vampirism", "pain", "antimagic", "distortion",
+    "vampirism", "pain", "antimagic", "blinking",
 #if TAG_MAJOR_VERSION == 34
     "reaching", "returning",
 #endif
@@ -460,7 +460,7 @@ static const char *weapon_brands_adj[] =
 #if TAG_MAJOR_VERSION == 34
     "flaming", "freezing",
 #endif
-    "vampiric", "painful", "antimagic", "distorting",
+    "vampiric", "painful", "antimagic", "blinking",
 #if TAG_MAJOR_VERSION == 34
     "reaching", "returning",
 #endif

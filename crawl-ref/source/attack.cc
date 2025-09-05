@@ -342,56 +342,17 @@ void attack::alert_defender()
     }
 }
 
-bool attack::distortion_affects_defender()
+bool attack::blinking_affects_defender()
 {
-    enum disto_effect
+    actor &user = stat_source();
+
+    if (!defender->no_tele() && x_chance_in_y(10 + user.skill(SK_TRANSLOCATIONS, 10), 100))
     {
-        SMALL_DMG,
-        BIG_DMG,
-        BANISH,
-        BLINK,
-        NONE
-    };
-
-    const disto_effect choice = random_choose_weighted(35, SMALL_DMG,
-                                                       25, BIG_DMG,
-                                                       5, BANISH,
-                                                       20, BLINK,
-                                                       15,  NONE);
-
-    if (simu && !(choice == SMALL_DMG || choice == BIG_DMG))
-        return false;
-
-    switch (choice)
-    {
-    case SMALL_DMG:
-        special_damage += 1 + random2avg(7, 2);
-        special_damage_message = make_stringf("Space warps around %s%s",
-                                              defender_name(false).c_str(),
-                                              attack_strength_punctuation(special_damage).c_str());
-        break;
-    case BIG_DMG:
-        special_damage += 3 + random2avg(24, 2);
-        special_damage_message =
-            make_stringf("Space warps horribly around %s%s",
-                         defender_name(false).c_str(),
-                         attack_strength_punctuation(special_damage).c_str());
-        break;
-    case BLINK:
         if (defender_visible)
             obvious_effect = true;
-        if (!defender->no_tele())
-            blink_fineff::schedule(defender);
-        break;
-    case BANISH:
-        if (defender_visible)
-            obvious_effect = true;
-        defender->banish(attacker, attacker->name(DESC_PLAIN, true),
-                         attacker->get_experience_level());
+        blink_fineff::schedule(defender);
+
         return true;
-    case NONE:
-        // Do nothing
-        break;
     }
 
     return false;
@@ -1142,8 +1103,8 @@ bool attack::apply_damage_brand(const char *what)
         pain_affects_defender();
         break;
 
-    case SPWPN_DISTORTION:
-        ret = distortion_affects_defender();
+    case SPWPN_BLINKING:
+        ret = blinking_affects_defender();
         break;
 
     case SPWPN_CONFUSE:

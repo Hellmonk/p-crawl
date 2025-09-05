@@ -151,7 +151,7 @@ protected:
     /* Attack Effects */
     virtual bool mons_attack_effects() = 0;
     void alert_defender();
-    bool distortion_affects_defender();
+    bool blinking_affects_defender();
     void antimagic_affects_defender(int pow);
     void pain_affects_defender();
     brand_type random_chaos_brand();

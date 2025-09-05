@@ -113,7 +113,7 @@ bool is_evil_brand(int brand)
     case SPWPN_VAMPIRISM:
     case SPWPN_REAPING:
     case SPWPN_CHAOS:
-    case SPWPN_DISTORTION:
+    case SPWPN_BLINKING:
     case SPWPN_FOUL_FLAME:
         return true;
     default:
@@ -123,7 +123,7 @@ bool is_evil_brand(int brand)
 
 bool is_chaotic_brand(int brand)
 {
-    return brand == SPWPN_CHAOS || brand == SPWPN_DISTORTION;
+    return brand == SPWPN_CHAOS;
 }
 
 bool is_hasty_brand(int brand)
