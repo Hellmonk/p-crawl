@@ -3737,7 +3737,7 @@ int get_real_mp(bool include_items)
     enp /= 100;
 
     if (include_items && you.wearing_ego(OBJ_WEAPONS, SPWPN_ANTIMAGIC))
-        enp /= 3;
+        enp /= 2;
 
     enp = max(enp, 0);
 

@@ -1663,9 +1663,9 @@ static string _describe_weapon_brand(const item_def &item)
                "temporarily reanimated upon death as a friendly spectral, with "
                "an increasing chance as more damage is dealt.";
     case SPWPN_ANTIMAGIC:
-        return "It reduces the magical energy of the wielder, and disrupts "
-               "the spells and magical abilities of those it strikes. Natural "
-               "abilities and divine invocations are not affected.";
+        return "It halves the maximum mp of the wielder, and disrupts "
+               "the spells and magical abilities of those it strikes, causing "
+               "spell casts to fail 50% of the time.";
     case SPWPN_SPECTRAL:
         return "When its wielder attacks, the weapon's spirit leaps out and "
                "launches a second strike (if there is enough space to summon "
