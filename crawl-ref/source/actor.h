@@ -190,6 +190,7 @@ public:
     virtual bool sicken(int amount) = 0;
     virtual void paralyse(const actor *attacker, int strength,
                           string source = "") = 0;
+    virtual void stun(actor *attacker) = 0;
     virtual void petrify(const actor *attacker, bool force = false) = 0;
     virtual bool fully_petrify(bool quiet = false) = 0;
     virtual bool vex(const actor* who, int dur, string source = "", string special_msg = "") = 0;

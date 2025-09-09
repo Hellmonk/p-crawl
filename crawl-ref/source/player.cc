@@ -6925,6 +6925,15 @@ void player::paralyse(const actor *who, int str, string source)
     redraw_evasion = true;
 }
 
+void player::stun(actor *who)
+{
+    if (!duration[DUR_STUN])
+    {
+        mpr("You are stunned.");
+        duration[DUR_STUN] = BASELINE_DELAY;
+    }
+}
+
 void player::petrify(const actor *who, bool force)
 {
     ASSERT(!crawl_state.game_is_arena());
