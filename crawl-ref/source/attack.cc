@@ -396,7 +396,7 @@ struct chaos_attack_type
 // always be a valid option, triggering a more unpredictable chaos_effect
 // instead of a normal attack brand when selected.
 static const vector<chaos_attack_type> chaos_types = {
-    { AF_FIRE,      SPWPN_FLAMING,       10,
+    { AF_FIRE,      SPWPN_EXPLOSIVE,       10,
       [](const actor &d) { return d.is_player() || d.res_fire() < 3; } },
     { AF_COLD,      SPWPN_FREEZING,      10,
       [](const actor &d) { return d.is_player() || d.res_cold() < 3; } },
@@ -442,7 +442,7 @@ brand_type attack::random_chaos_brand()
     string brand_name = "CHAOS brand: ";
     switch (brand)
     {
-    case SPWPN_FLAMING:         brand_name += "flaming"; break;
+    case SPWPN_EXPLOSIVE:         brand_name += "flaming"; break;
     case SPWPN_FREEZING:        brand_name += "freezing"; break;
     case SPWPN_ELECTROCUTION:   brand_name += "electrocution"; break;
     case SPWPN_VENOM:           brand_name += "venom"; break;
@@ -942,7 +942,7 @@ bool attack::apply_damage_brand(const char *what)
     obvious_effect = false;
     brand = damage_brand == SPWPN_CHAOS ? random_chaos_brand() : damage_brand;
 
-    if (brand != SPWPN_FLAMING && brand != SPWPN_FREEZING
+    if (brand != SPWPN_EXPLOSIVE && brand != SPWPN_FREEZING
         && brand != SPWPN_ELECTROCUTION && brand != SPWPN_VAMPIRISM
         && brand != SPWPN_PROTECTION && !defender->alive())
     {
@@ -952,7 +952,7 @@ bool attack::apply_damage_brand(const char *what)
     }
 
     if (!damage_done
-        && (brand == SPWPN_FLAMING || brand == SPWPN_FREEZING
+        && (brand == SPWPN_EXPLOSIVE || brand == SPWPN_FREEZING
             || brand == SPWPN_HOLY_WRATH || brand == SPWPN_FOUL_FLAME
             || brand == SPWPN_ANTIMAGIC || brand == SPWPN_VAMPIRISM))
     {
@@ -967,13 +967,9 @@ bool attack::apply_damage_brand(const char *what)
             refresh_weapon_protection();
         break;
 
-    case SPWPN_FLAMING:
-        calc_elemental_brand_damage(BEAM_FIRE,
-                                    defender->is_icy() ? "melt" : "burn",
-                                    what);
-        defender->expose_to_element(BEAM_FIRE, 2);
-        if (defender->is_player())
-            maybe_melt_player_enchantments(BEAM_FIRE, special_damage);
+    case SPWPN_EXPLOSIVE:
+        noisy(15, defender->pos());
+        explosive_brand(attacker, defender->pos(), damage_done);
         break;
 
     case SPWPN_FREEZING:
@@ -1025,9 +1021,9 @@ bool attack::apply_damage_brand(const char *what)
     case SPWPN_ELECTROCUTION:
         if (defender->res_elec() > 0)
             break;
-        else if (one_chance_in(4))
+        else if (coinflip())
         {
-            special_damage = 8 + random2(13);
+            special_damage = 1 + random2(12);
             const string punctuation =
                     attack_strength_punctuation(special_damage);
             special_damage_message =

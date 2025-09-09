@@ -1597,17 +1597,11 @@ static string _describe_weapon_brand(const item_def &item)
 
     switch (brand)
     {
-    case SPWPN_FLAMING:
-    {
-        const int damtype = get_vorpal_type(item);
-        const string desc = "It burns victims, dealing an additional "
-                            "one-quarter of any damage that pierces defenders'"
-                            " armour.";
-        if (ranged || damtype != DVORP_SLICING && damtype != DVORP_CHOPPING)
-            return desc;
-        return desc +
-            " Big, fiery blades are also staple armaments of hydra-hunters.";
-    }
+    case SPWPN_EXPLOSIVE:
+        return "Dealing damage with it causes a loud explosion, which damages "
+               "the victim and all adjacent creatures (except the wielder) for "
+               "25% of the damage dealt. Additional brand damage is not "
+               "reduced by AC.";
     case SPWPN_FREEZING:
         return "It freezes victims, dealing an additional one-quarter of any "
                "damage that pierces defenders' armour. It may also slow down "
@@ -4911,7 +4905,7 @@ static string _brand_damage_string(const monster_info &mi, brand_type brand,
     // Heavy is included in base damage calculations instead
     switch (brand)
     {
-        case SPWPN_FLAMING:
+        case SPWPN_EXPLOSIVE:
         case SPWPN_FREEZING:
         case SPWPN_DRAINING:
             brand_dam = dam / 2;

@@ -1796,7 +1796,7 @@ static string _item_ego_name(object_class_type base_type, int brand)
     {
         // 'remembers... draining' reads better than 'drain', but 'flame'
         // reads better than 'flaming'
-        const bool terse = brand == SPWPN_FLAMING
+        const bool terse = brand == SPWPN_EXPLOSIVE
                            || brand == SPWPN_ANTIMAGIC;
         return brand_type_name((brand_type) brand, terse);
     }
@@ -1959,7 +1959,7 @@ static brand_type _hepliaklqana_weapon_brand(monster_type mc, int HD)
                                SPWPN_ANTIMAGIC;
         case MONS_ANCESTOR_KNIGHT:
             return HD < 10 ?   SPWPN_NORMAL :
-                   HD < 16 ?   SPWPN_FLAMING :
+                   HD < 16 ?   SPWPN_EXPLOSIVE :
                                SPWPN_SPEED;
         case MONS_ANCESTOR_BATTLEMAGE:
             return HD < 13 ?   SPWPN_NORMAL :

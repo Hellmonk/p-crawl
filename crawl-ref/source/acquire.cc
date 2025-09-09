@@ -1017,7 +1017,7 @@ static int _weapon_brand_reroll_denom(int brand)
     switch (brand)
     {
     // These brands generate frequently on a variety of weapon types.
-    case SPWPN_FLAMING:
+    case SPWPN_EXPLOSIVE:
     case SPWPN_FREEZING:
     case SPWPN_DRAINING:
     case SPWPN_HEAVY:
@@ -1082,7 +1082,7 @@ static void _adjust_brand(item_def &item, int agent)
     {
         // 75% chance of a brand
         item.brand = random_choose(SPWPN_NORMAL, SPWPN_HEAVY,
-                                   SPWPN_FLAMING, SPWPN_ANTIMAGIC);
+                                   SPWPN_EXPLOSIVE, SPWPN_ANTIMAGIC);
         return;
     }
 

@@ -396,7 +396,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
     static const mon_weapon_spec EFREET_WSPEC =
     { { { WPN_SCIMITAR,         1 } },
       { 1, 0, 4 },
-      { { SPWPN_FLAMING, 1 } } };
+      { { SPWPN_EXPLOSIVE, 1 } } };
     static const mon_weapon_spec DAEVA_WSPEC =
     { { { WPN_EUDEMON_BLADE,    1 },
         { WPN_SCIMITAR,         2 },
@@ -404,7 +404,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
       { 1, 2, 5 },
       { { SPWPN_HOLY_WRATH,     1 } } };
     static const vector<pair<brand_type, int>> HELL_KNIGHT_BRANDS = // sum 45
-    {   { SPWPN_FLAMING,        13 },
+    {   { SPWPN_EXPLOSIVE,        13 },
         { SPWPN_DRAINING,       4 },
         { SPWPN_HEAVY,          4 },
         { SPWPN_BLINKING,     2 },
@@ -509,7 +509,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
                 { WPN_TRIDENT,          1 },
         }, {}, {}, 3 } },
         { MONS_PIKEL, { { { WPN_WHIP, 1 } }, { 1, 0, 2 }, {
-            { SPWPN_FLAMING, 2 },
+            { SPWPN_EXPLOSIVE, 2 },
             { SPWPN_FREEZING, 2 },
             { SPWPN_ELECTROCUTION, 1 },
         } } },
@@ -577,7 +577,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
         } } },
         { MONS_NEKOMATA, {
             { { WPN_DEMON_BLADE, 1 } },
-              { 4, 2, 4 }, { { SPWPN_FLAMING, 3 }, { SPWPN_DRAINING, 2 }, }, } },
+              { 4, 2, 4 }, { { SPWPN_EXPLOSIVE, 3 }, { SPWPN_DRAINING, 2 }, }, } },
         { MONS_DEEP_ELF_KNIGHT,         { DE_KNIGHT_WEAPONS } },
         { MONS_DEEP_ELF_HIGH_PRIEST,    { DE_KNIGHT_WEAPONS } },
         { MONS_DEEP_ELF_BLADEMASTER,
@@ -707,7 +707,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
             { { WPN_GLAIVE,             3 },
               { WPN_BARDICHE,           1 }, },
             { 1, 1, 3 },
-            { { SPWPN_FLAMING, 1 } }
+            { { SPWPN_EXPLOSIVE, 1 } }
         } },
         { MONS_ILSUIW, {
             { { WPN_TRIDENT,            1 } },
@@ -756,7 +756,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
         { MONS_NESSOS, {
             { { WPN_LONGBOW,            1 } },
             { 1, 1, 3 },
-            { { SPWPN_FLAMING, 1 } }
+            { { SPWPN_EXPLOSIVE, 1 } }
         } },
         { MONS_YAKTAUR,         { { { WPN_ARBALEST, 1 } } } },
         { MONS_YAKTAUR_CAPTAIN, { {
@@ -778,7 +778,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
                 { WPN_SCIMITAR,         1 },
                 { WPN_FALCHION,         1 }, },
             { 1, 0, 4 },
-            { { SPWPN_FLAMING, 1 } },
+            { { SPWPN_EXPLOSIVE, 1 } },
         } },
         { MONS_FRAVASHI,
           // it'd be kinda weird to use trishulas considering they're from
@@ -793,7 +793,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
         { MONS_SERAPH, {
             { { WPN_GREAT_SWORD,        1 } },
             { 1, 3, 8 }, // highly enchanted, we're top rank
-            { { SPWPN_FLAMING, 1 } },
+            { { SPWPN_EXPLOSIVE, 1 } },
         } },
         { MONS_DAEVA,                   DAEVA_WSPEC },
         { MONS_PROFANE_SERVITOR,
@@ -882,7 +882,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
         } } },
         { MONS_FIRE_GIANT, {
             { { WPN_GREAT_SWORD,        1 } }, {},
-            { { SPWPN_FLAMING, 1 } },
+            { { SPWPN_EXPLOSIVE, 1 } },
         } },
         { MONS_FROST_GIANT, {
             { { WPN_BATTLEAXE,          1 } }, {},
@@ -962,7 +962,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
             { { SPWPN_DRAINING,      13 }, // total 45
               { SPWPN_HEAVY,         7 },
               { SPWPN_FREEZING,      4 },
-              { SPWPN_FLAMING,       4 },
+              { SPWPN_EXPLOSIVE,       4 },
               { SPWPN_PAIN,          2 },
               { NUM_SPECIAL_WEAPONS, 15 } }, // 2/3 chance of brand
         } },
@@ -1027,7 +1027,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
             { { WPN_CLUB,             10 }, },
             { 1, 8, 12 },
             { { SPWPN_NORMAL,         20 },
-              { SPWPN_FLAMING,        20 },
+              { SPWPN_EXPLOSIVE,        20 },
               { SPWPN_FREEZING,       10 },
               { SPWPN_HEAVY,          10 },
               { SPWPN_ELECTROCUTION,  10 },
@@ -1102,7 +1102,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
                 { WPN_ARBALEST,                 9 },
                 { WPN_HAND_CANNON,              1 }, },
               { 4, 2, 4 },
-              { { SPWPN_FLAMING,                3 },
+              { { SPWPN_EXPLOSIVE,                3 },
                 { SPWPN_DRAINING,               2 }, },
         } },
         { MONS_DEMONSPAWN_WARMONGER, {
@@ -1296,7 +1296,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
     case MONS_SALAMANDER:
         if (is_range_weapon(item))
         {
-            set_item_ego_type(item, OBJ_WEAPONS, SPWPN_FLAMING);
+            set_item_ego_type(item, OBJ_WEAPONS, SPWPN_EXPLOSIVE);
             force_item = true;
         }
         break;
