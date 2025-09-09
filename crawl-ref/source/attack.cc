@@ -402,20 +402,12 @@ static const vector<chaos_attack_type> chaos_types = {
       [](const actor &d) { return d.is_player() || d.res_cold() < 3; } },
     { AF_ELEC,      SPWPN_ELECTROCUTION, 10,
       [](const actor &d) { return d.is_player() || d.res_elec() <= 0; } },
-    { AF_POISON,    SPWPN_SPELLVAMP,         10,
-      [](const actor &d) {
-          return !(d.holiness() & (MH_UNDEAD | MH_NONLIVING)); } },
-    { AF_CHAOTIC,   SPWPN_CHAOS,         13,
-      nullptr },
-    { AF_VAMPIRIC,  SPWPN_VAMPIRISM,     5,
-      [](const actor &d) {
-          return actor_is_susceptible_to_vampirism(d); } },
-    { AF_HOLY,      SPWPN_SILVER,    5,
+    { AF_ACID,      SPWPN_ACID,            10, nullptr },
+    { AF_CHAOTIC,   SPWPN_CHAOS,         40,  nullptr },
+    { AF_HOLY,      SPWPN_SILVER,    10,
       [](const actor &d) { return d.holy_wrath_susceptible(); } },
-    { AF_ANTIMAGIC, SPWPN_ANTIMAGIC,     5,
+    { AF_ANTIMAGIC, SPWPN_ANTIMAGIC,     10,
       [](const actor &d) { return d.antimagic_susceptible(); } },
-    { AF_FOUL_FLAME, SPWPN_FOUL_FLAME,   2,
-      [](const actor &d) { return d.res_foul_flame() < 3; } },
 };
 
 brand_type attack::random_chaos_brand()
@@ -440,15 +432,12 @@ brand_type attack::random_chaos_brand()
     string brand_name = "CHAOS brand: ";
     switch (brand)
     {
-    case SPWPN_EXPLOSIVE:         brand_name += "flaming"; break;
+    case SPWPN_EXPLOSIVE:         brand_name += "explosive"; break;
     case SPWPN_FREEZING:        brand_name += "freezing"; break;
     case SPWPN_ELECTROCUTION:   brand_name += "electrocution"; break;
-    case SPWPN_SPELLVAMP:           brand_name += "magic vamp"; break;
     case SPWPN_CHAOS:           brand_name += "chaos"; break;
-    case SPWPN_VAMPIRISM:       brand_name += "vampirism"; break;
     case SPWPN_SILVER:      brand_name += "silver"; break;
     case SPWPN_ANTIMAGIC:       brand_name += "antimagic"; break;
-    case SPWPN_FOUL_FLAME:      brand_name += "foul flame"; break;
     default:                    brand_name += "BUGGY"; break;
     }
 

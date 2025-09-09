@@ -1631,7 +1631,10 @@ static string _describe_weapon_brand(const item_def &item)
         return "It deals 250% of normal damage, but attacking with it will "
                "stun you for one turn.";
     case SPWPN_CHAOS:
-        return "Each hit has a different, random effect.";
+        return "Each hit has a different, random effect. It may haste, slow, "
+               "confuse, or weaken the target, or duplicate the effects of the "
+               "explosive, freezing, electrocution, antimagic, silver, or acid "
+               "brands, each with equal chance.";
     case SPWPN_VAMPIRISM:
         return "It heals its wielder when it slays a living foe. The amount of "
                "healing depends on the monster's difficulty.";

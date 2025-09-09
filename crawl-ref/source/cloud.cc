@@ -2008,122 +2008,15 @@ struct chaos_effect
 // TODO: Unite this with _chaos_beam_flavour in beam.cc.
 // For now, update that when you update this.
 static const vector<chaos_effect> chaos_effects = {
-    {
-        "clone", 1, [](const actor &d) {
-            return d.is_monster() && mons_clonable(d.as_monster(), true);
-        },
-        BEAM_NONE, [](actor* victim, actor* /*source*/) {
-            ASSERT(victim->is_monster());
-            monster *clone = clone_mons(victim->as_monster());
-            if (!clone)
-                return false;
-
-            const bool obvious_effect = you.can_see(*victim) && you.can_see(*clone);
-
-            if (one_chance_in(3))
-                clone->attitude = coinflip() ? ATT_FRIENDLY : ATT_NEUTRAL;
-
-            // The player shouldn't get new permanent followers from cloning.
-            if (clone->attitude == ATT_FRIENDLY && !clone->is_summoned())
-                clone->mark_summoned(MON_SUMM_CLONE, summ_dur(6));
-            else
-                clone->flags |= (MF_NO_REWARD | MF_HARD_RESET);
-
-            // Monsters being cloned is interesting.
-            xom_is_stimulated(clone->friendly() ? 12 : 25);
-            return obvious_effect;
-        },
-    },
-    {
-        "polymorph", 2, _is_chaos_polyable, BEAM_POLYMORPH,
-    },
-    {
-        "rage", 5, [](const actor &victim) {
-            return victim.can_go_berserk() && !victim.clarity();
-        }, BEAM_NONE, [](actor* victim, actor* source) {
-            if (victim->is_monster())
-            {
-                monster* mon = victim->as_monster();
-                ASSERT(mon);
-                if (mon->can_go_frenzy()) {
-                    mon->go_frenzy(source);
-                }
-            }
-            else
-                victim->go_berserk(false);
-
-            return you.can_see(*victim);
-        },
-    },
-    { "hasting", 12, _is_chaos_slowable, BEAM_HASTE },
-    { "mighting", 12, [](const actor &victim) {
-        return !victim.is_monster()
-               || (mons_has_attacks(*(victim.as_monster()))
-                   && !victim.as_monster()->has_ench(ENCH_MIGHT));
-    }, BEAM_MIGHT },
-    { "resistance", 10, [](const actor &victim) {
-        return victim.res_fire() < 3 && victim.res_cold() < 3 &&
-               victim.res_elec() < 3 && victim.res_poison() < 3 &&
-               victim.res_corr() < 3; }, BEAM_RESISTANCE, },
+    { "hasting", 10, _is_chaos_slowable, BEAM_HASTE },
     { "slowing", 10, _is_chaos_slowable, BEAM_SLOW },
-    { "confusing", 12, [](const actor &victim) {
+    { "confusing", 10, [](const actor &victim) {
         return !victim.clarity() && !victim.is_peripheral(); },
                BEAM_CONFUSION },
     { "weakening", 10, [](const actor & victim) {
         return !victim.is_monster()
                || mons_has_attacks(*(victim.as_monster()));
     }, BEAM_WEAKNESS, },
-    { "will-halving", 10, [](const actor &victim) {
-       return !victim.is_monster()
-              || mons_invuln_will(*(victim.as_monster()));
-    }, BEAM_VULNERABILITY, },
-    { "blinking", 3, nullptr, BEAM_BLINK },
-    { "corroding", 5, [](const actor &victim) {
-        return victim.res_corr() < 3; },
-        BEAM_NONE, [](actor* victim, actor* source) {
-           victim->corrode(source);
-           return you.can_see(*victim);
-       },
-    },
-    { "vitrifying", 5, nullptr, BEAM_VITRIFY, },
-    { "ensnaring", 3, [](const actor &victim) {
-        return !victim.is_web_immune(); },
-        BEAM_NONE, [](actor* victim, actor* /*source*/) {
-           ensnare(victim);
-           return you.can_see(*victim);
-       },
-    },
-    {
-        "minipara", 3, _is_chaos_slowable, BEAM_NONE,
-        [](actor* victim, actor* source) {
-            victim->paralyse(source, 1);
-            return you.can_see(*victim);
-        },
-    },
-    {
-        "sleep", 3, [](const actor &victim) {
-            return victim.can_sleep();
-        }, BEAM_SLEEP,
-    },
-    {
-        "petrify", 3, [](const actor &victim) {
-            return _is_chaos_slowable(victim) && !victim.res_petrify();
-        }, BEAM_PETRIFY,
-    },
-    {
-        "blinding", 5, [](const actor &victim) {
-            return !victim.res_blind();
-        }, BEAM_NONE, [](actor* victim, actor* source) {
-            if (victim->is_player())
-                blind_player(random_range(7, 12), ETC_RANDOM);
-            else
-            {
-                victim->as_monster()->add_ench(mon_enchant(ENCH_BLIND, 1, source,
-                                               random_range(7, 12) * BASELINE_DELAY));
-            }
-            return you.can_see(*victim);
-        },
-    },
 };
 
 // Applies a debuff-style random chaos effect to an actor. This may have a source,
