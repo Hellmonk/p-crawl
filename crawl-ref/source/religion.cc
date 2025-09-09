@@ -1895,7 +1895,7 @@ void upgrade_hepliaklqana_ancestor(bool quiet_force)
                  ancestor->name(DESC_YOUR, true).c_str(),
                  ancestor->pronoun(PRONOUN_POSSESSIVE, true).c_str(),
                  apostrophise(item_base_name(OBJ_WEAPONS, wpn)).c_str(),
-                 brand_type_name(brand, brand != SPWPN_DRAINING));
+                 brand_type_name(brand, brand != SPWPN_VAMPIRISM));
         }
     }
     // but shields can't be lost, and *can* be gained (knight at hd 5)

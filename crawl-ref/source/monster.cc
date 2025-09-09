@@ -699,9 +699,6 @@ void monster::equip_weapon_message(item_def &item)
     case SPWPN_ELECTROCUTION:
         mprf(MSGCH_SOUND, "You hear the crackle of electricity.");
         break;
-    case SPWPN_DRAINING:
-        mpr("You sense an unholy aura.");
-        break;
     case SPWPN_CHAOS:
         mpr("It is briefly surrounded by a scintillating aura of "
             "random colours.");
