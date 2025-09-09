@@ -1755,7 +1755,7 @@ bool check_transform_into(transformation which_trans, bool involuntary,
 static void _print_death_brand_changes(item_def *weapon, bool entering_death)
 {
     if (!weapon
-        || get_weapon_brand(*weapon) != SPWPN_HOLY_WRATH
+        || get_weapon_brand(*weapon) != SPWPN_SILVER
         || you.undead_or_demonic(false))
     {
         return;

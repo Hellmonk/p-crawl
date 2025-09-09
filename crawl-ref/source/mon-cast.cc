@@ -5596,10 +5596,10 @@ static void _cast_mortal_champion(monster* mons)
         else if (type == MONS_DEEP_ELF_BLADEMASTER)
         {
             destroy_item(mortal->inv[MSLOT_ALT_WEAPON]);
-            give_specific_item(mortal, items(false, OBJ_WEAPONS, wpn, 0, SPWPN_HOLY_WRATH));
+            give_specific_item(mortal, items(false, OBJ_WEAPONS, wpn, 0, SPWPN_SILVER));
         }
 
-        give_specific_item(mortal, items(false, OBJ_WEAPONS, wpn, 0, SPWPN_HOLY_WRATH));
+        give_specific_item(mortal, items(false, OBJ_WEAPONS, wpn, 0, SPWPN_SILVER));
         give_specific_item(mortal, items(false, OBJ_ARMOUR, arm, 0, SPARM_FORBID_EGO));
 
         // Re-mark the items we just gave as summoned

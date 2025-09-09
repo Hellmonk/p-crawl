@@ -481,7 +481,7 @@ void ghost_demon::init_player_ghost()
                 brand = static_cast<brand_type>(get_weapon_brand(weapon));
 
                 // No holy weapons for ghosts.
-                if (brand == SPWPN_HOLY_WRATH)
+                if (brand == SPWPN_SILVER)
                     brand = SPWPN_NORMAL;
 
                 // Don't copy ranged- or artefact-only brands (reaping etc.).
@@ -1256,7 +1256,7 @@ bool debug_check_ghost(const ghost_demon &ghost)
     if (ghost.religion < GOD_NO_GOD || ghost.religion >= NUM_GODS)
         return false;
 
-    if (ghost.brand == SPWPN_HOLY_WRATH)
+    if (ghost.brand == SPWPN_SILVER)
         return false;
 
     // Ghosts don't get non-plain attack types and flavours.

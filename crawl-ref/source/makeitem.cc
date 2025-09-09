@@ -298,7 +298,7 @@ bool is_weapon_brand_ok(int type, int brand, bool /*strict*/)
     item.base_type = OBJ_WEAPONS;
     item.sub_type = type;
 
-    if (is_blessed_weapon_type(type) && brand != SPWPN_HOLY_WRATH)
+    if (is_blessed_weapon_type(type) && brand != SPWPN_SILVER)
         return false;
 
     if (brand <= SPWPN_NORMAL)
@@ -307,7 +307,7 @@ bool is_weapon_brand_ok(int type, int brand, bool /*strict*/)
     if (type == WPN_QUICK_BLADE && brand == SPWPN_SPEED)
         return false;
 
-    if (is_demonic_weapon_type(type) && brand == SPWPN_HOLY_WRATH)
+    if (is_demonic_weapon_type(type) && brand == SPWPN_SILVER)
         return false;
 
     switch ((brand_type)brand)
@@ -319,7 +319,7 @@ bool is_weapon_brand_ok(int type, int brand, bool /*strict*/)
     case SPWPN_SPEED:
     case SPWPN_HEAVY:
     case SPWPN_CHAOS:
-    case SPWPN_HOLY_WRATH:
+    case SPWPN_SILVER:
     case SPWPN_ELECTROCUTION:
     case SPWPN_EXPLOSIVE:
     case SPWPN_FREEZING:

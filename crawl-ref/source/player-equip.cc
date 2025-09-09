@@ -1789,7 +1789,7 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
                     "glows with a cold blue light!");
             break;
 
-        case SPWPN_HOLY_WRATH:
+        case SPWPN_SILVER:
             if (you.undead_or_demonic())
             {
                 mprf("%s sits dull and lifeless in your grasp.",
@@ -1945,7 +1945,7 @@ static void _unequip_weapon_effect(item_def& item, bool showMsgs, bool meld)
                     mprf("%s stops flaming.", msg.c_str());
                 break;
 
-            case SPWPN_HOLY_WRATH:
+            case SPWPN_SILVER:
                 if (showMsgs && !you.undead_or_demonic())
                     mprf("%s stops glowing.", msg.c_str());
                 break;

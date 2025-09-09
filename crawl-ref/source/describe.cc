@@ -1606,10 +1606,9 @@ static string _describe_weapon_brand(const item_def &item)
         return "It freezes victims, dealing an additional one-quarter of any "
                "damage that pierces defenders' armour. It may also slow down "
                "cold-blooded creatures.";
-    case SPWPN_HOLY_WRATH:
-        return "It has been blessed by the Shining One, dealing an additional "
-               "three-quarters of any damage that pierces undead and demons' "
-               "armour. Undead and demons cannot use this.";
+    case SPWPN_SILVER:
+        return "It deals +100% additional damage to undad and demons. "
+               "Additional brand damage is not reduced by AC.";
     case SPWPN_FOUL_FLAME:
         return "It has been infused with foul flame, dealing an additional "
                "three-quarters damage to holy beings, an additional "
@@ -1617,7 +1616,9 @@ static string _describe_weapon_brand(const item_def &item)
                "half damage to all others, so long as it pierces armour. "
                "Holy beings and good god worshippers cannot use this.";
     case SPWPN_ELECTROCUTION:
-        return "It sometimes electrocutes victims (50% chance, 1d12 damage).";
+        return "It sometimes electrocutes victims (50% chance, 1d12 damage). "
+               "rElec prevents this damage. Additional brand damage is not "
+               "reduced by AC.";
     case SPWPN_VENOM:
         return "It poisons victims.";
     case SPWPN_PROTECTION:
@@ -1976,11 +1977,9 @@ static string _describe_ammo(const item_def &item)
             break;
 
         case SPMSL_SILVER:
-            description += "It deals increased damage compared to normal ammo "
-                           "and substantially increased damage to chaotic "
-                           "and magically transformed beings. It also inflicts "
-                           "extra damage against mutated beings, according to "
-                           "how mutated they are.";
+            description += "It deals +100% additional damage to undad and "
+                           "demons. Additional brand damage is not reduced "
+                           "by AC.";
             break;
         }
     }
@@ -4912,10 +4911,6 @@ static string _brand_damage_string(const monster_info &mi, brand_type brand,
             break;
         case SPWPN_ELECTROCUTION:
             brand_dam = 20;
-            break;
-        case SPWPN_HOLY_WRATH:
-            // Hopefully this isn't too confusing for non-holy-vuln players
-            brand_dam = dam * 15 / 10;
             break;
         case SPWPN_FOUL_FLAME:
             brand_dam = dam * 0.75;

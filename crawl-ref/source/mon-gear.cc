@@ -56,7 +56,7 @@ void give_specific_item(monster* mon, int thing)
     if (mon->undead_or_demonic() || mon->god == GOD_YREDELEMNUL)
     {
         convert2bad(mthing);
-        if (get_weapon_brand(mthing) == SPWPN_HOLY_WRATH)
+        if (get_weapon_brand(mthing) == SPWPN_SILVER)
             _strip_item_ego(mthing);
     }
 
@@ -402,7 +402,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
         { WPN_SCIMITAR,         2 },
         { WPN_LONG_SWORD,       1 } },
       { 1, 2, 5 },
-      { { SPWPN_HOLY_WRATH,     1 } } };
+      { { SPWPN_SILVER,     1 } } };
     static const vector<pair<brand_type, int>> HELL_KNIGHT_BRANDS = // sum 45
     {   { SPWPN_EXPLOSIVE,        13 },
         { SPWPN_DRAINING,       4 },
@@ -770,7 +770,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
             { { WPN_WHIP,               3 },
               { WPN_SACRED_SCOURGE,     1 }, },
             { 1, 1, 3 },
-            { { SPWPN_HOLY_WRATH, 1 } },
+            { { SPWPN_SILVER, 1 } },
         } },
         { MONS_CHERUB,
             { { { WPN_FLAIL,            1 },
@@ -788,7 +788,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
                 { WPN_PARTISAN,      5 },
                 { WPN_BARDICHE,      1 }, },
             { 1, 1, 3 },
-            { { SPWPN_HOLY_WRATH, 1 } },
+            { { SPWPN_SILVER, 1 } },
         } },
         { MONS_SERAPH, {
             { { WPN_GREAT_SWORD,        1 } },
@@ -806,7 +806,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
               { WPN_SACRED_SCOURGE, 1},
               { WPN_EUDEMON_BLADE,  1}, },
             { 1, 0, 5},
-            { { SPWPN_HOLY_WRATH, 1}}
+            { { SPWPN_SILVER, 1}}
         } },
         { MONS_WIGLAF,
             { { { WPN_BROAD_AXE,        14 },
@@ -1036,7 +1036,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
               { SPWPN_ANTIMAGIC,       5 },
               { SPWPN_SPECTRAL,        5 },
               { SPWPN_PAIN,            4 },
-              { SPWPN_HOLY_WRATH,      3 },
+              { SPWPN_SILVER,      3 },
               { SPWPN_BLINKING,      2 },
               { SPWPN_CHAOS,           1 }, },
         } },

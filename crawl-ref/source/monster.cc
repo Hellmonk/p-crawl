@@ -690,7 +690,7 @@ void monster::equip_weapon_message(item_def &item)
         mpr(is_range_weapon(item) ? "It is covered in frost."
                                   : "It glows with a cold blue light!");
         break;
-    case SPWPN_HOLY_WRATH:
+    case SPWPN_SILVER:
         mpr("It softly glows with a divine radiance!");
         break;
     case SPWPN_FOUL_FLAME:
@@ -809,7 +809,7 @@ void monster::unequip_weapon(item_def &item, bool msg)
             mpr("It stops flaming.");
             break;
 
-        case SPWPN_HOLY_WRATH:
+        case SPWPN_SILVER:
         case SPWPN_FOUL_FLAME:
             mpr("It stops glowing.");
             break;
@@ -1218,7 +1218,7 @@ static bool _is_signature_weapon(const monster* mons, const item_def &weapon)
             return wtype == WPN_EXECUTIONERS_AXE;
 
         if (mons->type == MONS_MENNAS)
-            return get_weapon_brand(weapon) == SPWPN_HOLY_WRATH;
+            return get_weapon_brand(weapon) == SPWPN_SILVER;
 
         if (mons->type == MONS_FANNAR)
             return weapon.is_type(OBJ_STAVES, STAFF_COLD);
@@ -1241,7 +1241,7 @@ static bool _is_signature_weapon(const monster* mons, const item_def &weapon)
     }
 
     if (mons->is_holy())
-        return is_blessed(weapon) || get_weapon_brand(weapon) == SPWPN_HOLY_WRATH;
+        return is_blessed(weapon) || get_weapon_brand(weapon) == SPWPN_SILVER;
 
     if (is_unrandom_artefact(weapon))
     {

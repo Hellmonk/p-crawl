@@ -457,8 +457,8 @@ COLOUR:   ETC_HOLY
 TILE:     unrand_zealot_sword
 TILE_EQ:  zealot_sword
 # fallback places a randart eudemon blade!
-BRAND:    SPWPN_HOLY_WRATH
-FB_BRAND: SPWPN_HOLY_WRATH
+BRAND:    SPWPN_SILVER
+FB_BRAND: SPWPN_SILVER
 EV:       3
 ANGRY:    20
 DESCRIP:  Zealotry:  Whenever the wielder enters a berserk rage, their allies
@@ -624,7 +624,7 @@ DESCRIP:  Stab:      It is more effective when stabbing unaware enemies,
 NAME:     great mace "Undeadhunter"
 INSCRIP:  deathbane,
 OBJ:      OBJ_WEAPONS/WPN_GREAT_MACE
-FB_BRAND: SPWPN_HOLY_WRATH
+FB_BRAND: SPWPN_SILVER
 PLUS:     +7
 COLOUR:   LIGHTGREY
 TILE:     urand_undeadhunter
