@@ -1905,9 +1905,7 @@ void explosive_brand(actor *wielder, coord_def where, int pow)
     }
 
     if (you.can_see(*wielder))
-    {
         mpr("There is an explosion!");
-    }
 
     beam_visual.explosion_draw_cell(where);
 

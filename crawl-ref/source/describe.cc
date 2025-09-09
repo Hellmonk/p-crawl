@@ -1617,7 +1617,7 @@ static string _describe_weapon_brand(const item_def &item)
                "half damage to all others, so long as it pierces armour. "
                "Holy beings and good god worshippers cannot use this.";
     case SPWPN_ELECTROCUTION:
-        return "It sometimes electrocutes victims (1/4 chance, 8-20 damage).";
+        return "It sometimes electrocutes victims (50% chance, 1d12 damage).";
     case SPWPN_VENOM:
         return "It poisons victims.";
     case SPWPN_PROTECTION:

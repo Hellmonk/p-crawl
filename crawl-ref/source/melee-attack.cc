@@ -2759,124 +2759,6 @@ bool melee_attack::player_monattk_hit_effects()
     if (!defender->alive())
         return false;
 
-    // These effects apply only to monsters that are still alive:
-
-    // Returns true if the hydra was killed by the decapitation, in which case
-    // nothing more should be done to the hydra.
-    if (consider_decapitation(damage_done))
-        return false;
-
-    return true;
-}
-
-/**
- * If appropriate, chop a head off the defender. (Usually a hydra.)
- *
- * @param dam           The damage done in the attack that may or may not chop
-  *                     off a head.
- * @return              Whether the defender was killed by the decapitation.
- */
-bool melee_attack::consider_decapitation(int dam)
-{
-    if (!attack_chops_heads(dam))
-        return false;
-
-    decapitate();
-
-    if (!defender->alive())
-        return true;
-
-    // Only living hydras get to regenerate heads.
-    if (!(defender->holiness() & MH_NATURAL))
-        return false;
-
-    // What's the largest number of heads the defender can have?
-    const int limit = defender->type == MONS_LERNAEAN_HYDRA ? 27 : 20;
-
-    if (damage_brand == SPWPN_EXPLOSIVE)
-    {
-        if (defender_visible)
-            mpr("The flame cauterises the wound!");
-        return false;
-    }
-
-    int heads = defender->heads();
-    if (heads >= limit - 1)
-        return false; // don't overshoot the head limit!
-
-    simple_monster_message(*defender->as_monster(), " grows two more!");
-    defender->as_monster()->num_heads += 2;
-    defender->heal(8 + random2(8));
-
-    return false;
-}
-
-/**
- * Can the given actor lose its heads? (Is it hydra or hydra-like?)
- *
- * @param defender  The actor in question.
- * @return          Whether the given actor is susceptible to head-choppage.
- */
-static bool actor_can_lose_heads(const actor* defender)
-{
-    if (defender->is_monster()
-        && defender->as_monster()->has_hydra_multi_attack()
-        && defender->as_monster()->mons_species() != MONS_SPECTRAL_THING)
-    {
-        return true;
-    }
-
-    return false;
-}
-
-/**
- * Does this attack chop off one of the defender's heads? (Generally only
- * relevant for hydra defenders)
- *
- * @param dam           The damage done in the attack in question.
- * @param wpn_brand     The brand_type of the attack.
- * @return              Whether the attack will chop off a head.
- */
-bool melee_attack::attack_chops_heads(int dam)
-{
-    // hydras and hydra-like things only.
-    if (!actor_can_lose_heads(defender))
-        return false;
-
-    // no decapitate on riposte (Problematic)
-    if (is_riposte)
-        return false;
-
-    // Monster attackers+defenders have only a 25% chance of making the
-    // chop-check to prevent runaway head inflation.
-    // XXX: Tentatively making an exception for spectral weapons
-    const bool player_spec_weap = attacker->is_monster()
-                                    && attacker->type == MONS_SPECTRAL_WEAPON
-                                    && attacker->as_monster()->summoner
-                                        == MID_PLAYER;
-    if (attacker->is_monster() && defender->is_monster()
-        && !player_spec_weap && !one_chance_in(4))
-    {
-        return false;
-    }
-
-    // Only cutting implements.
-    if (damage_type != DVORP_SLICING
-        && damage_type != DVORP_CHOPPING
-        && damage_type != DVORP_CLAWING)
-    {
-        return false;
-    }
-
-    // Small claws are not big enough.
-    if (damage_type == DVORP_CLAWING && attacker->has_claws() < 3)
-        return false;
-
-    // You need to have done at least some damage.
-    if (dam <= 0 || dam < 4 && coinflip())
-        return false;
-
-    // ok, good enough!
     return true;
 }
 
@@ -3349,12 +3231,6 @@ bool melee_attack::mons_attack_effects()
 
     // A tentacle may have banished its own parent/sibling and thus itself.
     if (!attacker->alive())
-        return false;
-
-    // consider_decapitation() returns true if the defender was killed
-    // by the decapitation, in which case we should stop the rest of the
-    // attack, too.
-    if (consider_decapitation(damage_done))
         return false;
 
     // Vhi's Electrolunge damage
