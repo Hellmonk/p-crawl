@@ -1022,7 +1022,7 @@ static int _weapon_brand_reroll_denom(int brand)
     case SPWPN_DRAINING:
     case SPWPN_HEAVY:
     case SPWPN_VENOM:
-    case SPWPN_PROTECTION:
+    case SPWPN_SHIELDING:
     case SPWPN_ELECTROCUTION:
         return 3;
     case SPWPN_NORMAL:

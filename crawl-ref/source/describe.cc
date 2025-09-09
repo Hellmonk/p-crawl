@@ -1621,9 +1621,9 @@ static string _describe_weapon_brand(const item_def &item)
                "reduced by AC.";
     case SPWPN_VENOM:
         return "It poisons victims.";
-    case SPWPN_PROTECTION:
+    case SPWPN_SHIELDING:
         return "It grants its wielder temporary protection after it strikes "
-               "(+7 AC).";
+               "(+25% SH, lasts 3 turns).";
     case SPWPN_DRAINING:
         return "It sometimes drains living victims (1/2 chance). This deals "
                "an additional one-quarter of any damage that pierces "

@@ -1992,6 +1992,9 @@ int player_shield_class(int scale, bool random, bool ignore_temporary)
         shield += you.get_mutation_level(MUT_EPHEMERAL_SHIELD) * 1400;
     }
 
+    if (you.duration[DUR_SPWPN_SHIELDING])
+        shield += 2500;
+
     shield += qazlal_sh_boost() * 100;
     shield += you.wearing_jewellery(AMU_REFLECTION) * AMU_REFLECT_SH * 100;
     shield += you.scan_artefacts(ARTP_SHIELDING) * 200;
@@ -5543,6 +5546,7 @@ bool player::shielded() const
 {
     return shield()
            || duration[DUR_DIVINE_SHIELD]
+           || duration[DUR_SPWPN_SHIELDING]
            || duration[DUR_EPHEMERAL_SHIELD]
            || get_mutation_level(MUT_LARGE_BONE_PLATES) > 0
            || qazlal_sh_boost() > 0
@@ -6055,9 +6059,6 @@ int player::armour_class_scaled(int scale) const
 
     if (duration[DUR_QAZLAL_AC])
         AC += 300;
-
-    if (duration[DUR_SPWPN_PROTECTION])
-        AC += 700;
 
     if (you.wearing_ego(OBJ_GIZMOS, SPGIZMO_PARRYREV))
     {
@@ -8643,10 +8644,10 @@ void activate_sanguine_armour()
  */
 void refresh_weapon_protection()
 {
-    if (!you.duration[DUR_SPWPN_PROTECTION])
+    if (!you.duration[DUR_SPWPN_SHIELDING])
         mpr("Your weapon exudes an aura of protection.");
 
-    you.increase_duration(DUR_SPWPN_PROTECTION, 3 + random2(2), 5);
+    you.increase_duration(DUR_SPWPN_SHIELDING, 4, 4);
     you.redraw_armour_class = true;
 }
 

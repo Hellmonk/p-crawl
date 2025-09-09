@@ -2088,7 +2088,7 @@ static void _rebrand_weapon(item_def& wpn)
                                                2, SPWPN_FREEZING,
                                                2, SPWPN_HEAVY,
                                                2, SPWPN_VENOM,
-                                               2, SPWPN_PROTECTION,
+                                               2, SPWPN_SHIELDING,
                                                1, SPWPN_DRAINING,
                                                1, SPWPN_ELECTROCUTION,
                                                1, SPWPN_SPECTRAL,
@@ -2124,7 +2124,7 @@ static void _brand_weapon(item_def &wpn)
         mprf("%s becomes incredibly heavy!",itname.c_str());
         break;
 
-    case SPWPN_PROTECTION:
+    case SPWPN_SHIELDING:
         flash_colour = YELLOW;
         mprf("%s projects an invisible shield of force!",itname.c_str());
         break;

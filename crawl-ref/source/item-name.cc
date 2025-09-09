@@ -400,7 +400,7 @@ static const char *weapon_brands_terse[] =
 #if TAG_MAJOR_VERSION == 34
     "obsolete", "obsolete",
 #endif
-    "venom", "protect", "drain", "speed", "heavy",
+    "venom", "shielding", "drain", "speed", "heavy",
 #if TAG_MAJOR_VERSION == 34
     "obsolete", "obsolete",
 #endif
@@ -428,7 +428,7 @@ static const char *weapon_brands_verbose[] =
 #if TAG_MAJOR_VERSION == 34
     "orc slaying", "dragon slaying",
 #endif
-    "venom", "protection", "draining", "speed", "heavy",
+    "venom", "shielding", "draining", "speed", "heavy",
 #if TAG_MAJOR_VERSION == 34
     "flame", "frost",
 #endif
@@ -456,7 +456,7 @@ static const char *weapon_brands_adj[] =
 #if TAG_MAJOR_VERSION == 34
     "orc-killing", "dragon-slaying",
 #endif
-    "venomous", "protective", "draining", "fast", "heavy",
+    "venomous", "shielding", "draining", "fast", "heavy",
 #if TAG_MAJOR_VERSION == 34
     "flaming", "freezing",
 #endif
