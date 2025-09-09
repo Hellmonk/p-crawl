@@ -698,11 +698,6 @@ int attack::player_apply_slaying_bonuses(int damage, bool aux)
 
 int attack::player_apply_final_multipliers(int damage, bool /*aux*/)
 {
-    // Spectral weapons deal "only" 70% of the damage that their
-    // owner would, matching cleaving.
-    if (attacker->type == MONS_SPECTRAL_WEAPON)
-        damage = div_rand_round(damage * 7, 10);
-
     return damage;
 }
 
