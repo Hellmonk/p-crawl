@@ -526,7 +526,7 @@ PLUS:     +8 # Messed with sometimes
 COLOUR:   ETC_WATER
 TILE:     urand_octopus_king
 TILE_EQ:  trident_octopus_king
-BRAND:    SPWPN_VENOM
+BRAND:    SPWPN_SPELLVAMP
 BOOL:     elec, no_upgrade
 
 NAME:    mithril axe "Arga"

@@ -1829,7 +1829,7 @@ public:
         if (you.get_mutation_level(MUT_WEAKNESS_STINGER) == 3)
             return SPWPN_WEAKNESS;
 
-        return you.get_mutation_level(MUT_STINGER) ? SPWPN_VENOM : SPWPN_NORMAL;
+        return you.get_mutation_level(MUT_STINGER) ? SPWPN_SPELLVAMP : SPWPN_NORMAL;
     }
 
     bool is_usable() const override
@@ -2284,10 +2284,6 @@ bool melee_attack::player_aux_apply(unarmed_attack_type atk)
 
         if (atk == UNAT_MEDUSA_STINGER)
             poison_monster(defender->as_monster(), &you, random_range(1, 2));
-
-        // Allow to trigger regardless of damage, just like venom weapons.
-        if (damage_brand == SPWPN_VENOM && !one_chance_in(3))
-            poison_monster(defender->as_monster(), &you);
 
         if (damage_done > 0)
         {

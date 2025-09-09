@@ -564,7 +564,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
         } },
         { MONS_AMAEMON, {
             { { WPN_DEMON_WHIP,       1 } },
-              { 1, -2, 1 }, { { SPWPN_VENOM, 1 } } } },
+              { 1, -2, 1 }, { { SPWPN_SPELLVAMP, 1 } } } },
         { MONS_MARA,
             { { { WPN_DEMON_WHIP,       1 },
                 { WPN_DEMON_TRIDENT,    1 },
@@ -737,7 +737,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
               { WPN_RAPIER,            1 },
               { WPN_SCIMITAR,          2 },
               { WPN_DEMON_BLADE,       1 }, },
-              { 1, 1, 3 }, { { SPWPN_VENOM, 12 },
+              { 1, 1, 3 }, { { SPWPN_SPELLVAMP, 12 },
                              { SPWPN_DRAINING, 8 },
                              { SPWPN_PAIN, 3 },
                              { SPWPN_CHAOS, 1 },
@@ -910,7 +910,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
             { { WPN_DAGGER,             1 },
               { WPN_SHORT_SWORD,        1 }, }, {},
             { { SPWPN_BLINKING,       3 },
-              { SPWPN_VENOM,            2 },
+              { SPWPN_SPELLVAMP,            2 },
               { SPWPN_DRAINING,         1 } },
         } },
         { MONS_MAURICE,
@@ -1031,7 +1031,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
               { SPWPN_FREEZING,       10 },
               { SPWPN_HEAVY,          10 },
               { SPWPN_ELECTROCUTION,  10 },
-              { SPWPN_VENOM,          10 },
+              { SPWPN_SPELLVAMP,          10 },
               { SPWPN_VAMPIRISM,       5 },
               { SPWPN_ANTIMAGIC,       5 },
               { SPWPN_SPECTRAL,        5 },
@@ -1271,7 +1271,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
                                                10, WPN_LAJATANG,
                                                10, WPN_QUARTERSTAFF,
                                                 5, WPN_GLAIVE);
-        set_item_ego_type(item, OBJ_WEAPONS, SPWPN_VENOM);
+        set_item_ego_type(item, OBJ_WEAPONS, SPWPN_SPELLVAMP);
         break;
 
     case MONS_CEREBOV:

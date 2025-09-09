@@ -246,7 +246,7 @@ unsigned int item_value(item_def item, bool ident)
                 break;
 
             case SPWPN_SHIELDING:
-            case SPWPN_VENOM:
+            case SPWPN_SPELLVAMP:
                 valued *= 12;
                 break;
             }

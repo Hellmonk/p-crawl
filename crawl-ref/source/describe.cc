@@ -1619,8 +1619,9 @@ static string _describe_weapon_brand(const item_def &item)
         return "It sometimes electrocutes victims (50% chance, 1d12 damage). "
                "rElec prevents this damage. Additional brand damage is not "
                "reduced by AC.";
-    case SPWPN_VENOM:
-        return "It poisons victims.";
+    case SPWPN_SPELLVAMP:
+        return "It restores its wielder's magic when it slays a foe. The "
+               "amount of magic restored depends on the monster's difficulty.";
     case SPWPN_SHIELDING:
         return "It grants its wielder temporary protection after it strikes "
                "(+25% SH, lasts 3 turns).";
@@ -4913,7 +4914,7 @@ static string _brand_damage_string(const monster_info &mi, brand_type brand,
         case SPWPN_FOUL_FLAME:
             brand_dam = dam * 0.75;
             break;
-        case SPWPN_VENOM:
+        case SPWPN_SPELLVAMP:
         case SPWPN_ANTIMAGIC:
         case SPWPN_CHAOS:
             return make_stringf(" + %s", name);

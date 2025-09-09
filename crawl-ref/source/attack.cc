@@ -402,7 +402,7 @@ static const vector<chaos_attack_type> chaos_types = {
       [](const actor &d) { return d.is_player() || d.res_cold() < 3; } },
     { AF_ELEC,      SPWPN_ELECTROCUTION, 10,
       [](const actor &d) { return d.is_player() || d.res_elec() <= 0; } },
-    { AF_POISON,    SPWPN_VENOM,         10,
+    { AF_POISON,    SPWPN_SPELLVAMP,         10,
       [](const actor &d) {
           return !(d.holiness() & (MH_UNDEAD | MH_NONLIVING)); } },
     { AF_CHAOTIC,   SPWPN_CHAOS,         13,
@@ -445,7 +445,7 @@ brand_type attack::random_chaos_brand()
     case SPWPN_EXPLOSIVE:         brand_name += "flaming"; break;
     case SPWPN_FREEZING:        brand_name += "freezing"; break;
     case SPWPN_ELECTROCUTION:   brand_name += "electrocution"; break;
-    case SPWPN_VENOM:           brand_name += "venom"; break;
+    case SPWPN_SPELLVAMP:           brand_name += "magic vamp"; break;
     case SPWPN_CHAOS:           brand_name += "chaos"; break;
     case SPWPN_DRAINING:        brand_name += "draining"; break;
     case SPWPN_VAMPIRISM:       brand_name += "vampirism"; break;
@@ -1032,9 +1032,24 @@ bool attack::apply_damage_brand(const char *what)
 
         break;
 
-    case SPWPN_VENOM:
-        obvious_effect = apply_poison_damage_brand();
+    case SPWPN_SPELLVAMP:
+    {
+        if (!weapon
+            || damage_done < 1
+            || defender->alive()
+            || !attacker->is_player()
+            || you.magic_points == you.max_magic_points)
+        {
+            break;
+        }
+
+        int mp_boost = 1 + random2(defender->get_hit_dice());
+        obvious_effect = true;
+
+        canned_msg(MSG_GAIN_MAGIC);
+        inc_mp(mp_boost);
         break;
+    }
 
     case SPWPN_DRAINING:
         drain_defender();

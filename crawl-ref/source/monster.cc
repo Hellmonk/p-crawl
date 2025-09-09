@@ -699,9 +699,6 @@ void monster::equip_weapon_message(item_def &item)
     case SPWPN_ELECTROCUTION:
         mprf(MSGCH_SOUND, "You hear the crackle of electricity.");
         break;
-    case SPWPN_VENOM:
-        mpr("It begins to drip with poison!");
-        break;
     case SPWPN_DRAINING:
         mpr("You sense an unholy aura.");
         break;
@@ -816,10 +813,6 @@ void monster::unequip_weapon(item_def &item, bool msg)
 
         case SPWPN_ELECTROCUTION:
             mpr("It stops crackling.");
-            break;
-
-        case SPWPN_VENOM:
-            mpr("It stops dripping with poison.");
             break;
 
         case SPWPN_BLINKING:

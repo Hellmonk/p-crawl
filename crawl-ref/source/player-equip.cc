@@ -1825,8 +1825,8 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
                 mpr("You see sparks fly.");
             break;
 
-        case SPWPN_VENOM:
-            mprf("%s begins to drip with poison!", item_name.c_str());
+        case SPWPN_SPELLVAMP:
+            mprf("%s thirsts for magic!", item_name.c_str());
             break;
 
         case SPWPN_SHIELDING:
@@ -1965,9 +1965,9 @@ static void _unequip_weapon_effect(item_def& item, bool showMsgs, bool meld)
                     mprf("%s stops crackling.", msg.c_str());
                 break;
 
-            case SPWPN_VENOM:
+            case SPWPN_SPELLVAMP:
                 if (showMsgs)
-                    mprf("%s stops dripping with poison.", msg.c_str());
+                    mprf("%s stops thirsting for magic.", msg.c_str());
                 break;
 
             case SPWPN_SHIELDING:

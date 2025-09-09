@@ -234,7 +234,6 @@ void ghost_demon::set_pan_lord_special_attack()
 {
     const attack_form form = random_choose_weighted(
         // Low chance
-        10, _brand_attack(SPWPN_VENOM),
         10, _brand_attack(SPWPN_DRAINING),
         2, _brand_attack(SPWPN_FOUL_FLAME),
         10, _flavour_attack(AF_DROWN),
@@ -259,8 +258,6 @@ void ghost_demon::set_pan_lord_special_attack()
     if (form.flavour != AF_PLAIN)
         att_flav = form.flavour;
 
-    if (brand == SPWPN_VENOM && coinflip())
-        att_type = AT_STING; // such flavour!
     switch (att_flav)
     {
         case AF_TRAMPLE:
@@ -495,7 +492,6 @@ void ghost_demon::init_player_ghost()
                 // very bad approximations
                 case STAFF_FIRE: brand = SPWPN_EXPLOSIVE; break;
                 case STAFF_COLD: brand = SPWPN_FREEZING; break;
-                case STAFF_ALCHEMY: brand = SPWPN_VENOM; break;
                 case STAFF_DEATH: brand = SPWPN_PAIN; break;
                 case STAFF_AIR: brand = SPWPN_ELECTROCUTION; break;
                 case STAFF_EARTH: brand = SPWPN_HEAVY; break;
