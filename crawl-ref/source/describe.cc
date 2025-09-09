@@ -1603,9 +1603,10 @@ static string _describe_weapon_brand(const item_def &item)
                "25% of the damage dealt. Additional brand damage is not "
                "reduced by AC.";
     case SPWPN_FREEZING:
-        return "It freezes victims, dealing an additional one-quarter of any "
-               "damage that pierces defenders' armour. It may also slow down "
-               "cold-blooded creatures.";
+        return "It freezes victims, dealing an additional 25% of the damage "
+               "dealt. It may also slow nonresistant creatures (% chance equal "
+               "to twice the damage dealt). Additional brand damage is not "
+               "reduced by AC.";
     case SPWPN_SILVER:
         return "It deals +100% additional damage to undad and demons. "
                "Additional brand damage is not reduced by AC.";

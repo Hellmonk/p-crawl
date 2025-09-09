@@ -955,6 +955,8 @@ bool attack::apply_damage_brand(const char *what)
     case SPWPN_FREEZING:
         calc_elemental_brand_damage(BEAM_COLD, "freeze", what);
         defender->expose_to_element(BEAM_COLD, 2, attacker);
+        if (defender->res_cold() < 1 && x_chance_in_y(damage_done, 50))
+            defender->slow_down(attacker, 3);
         break;
 
     case SPWPN_SILVER:
