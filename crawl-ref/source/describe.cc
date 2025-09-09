@@ -1644,8 +1644,8 @@ static string _describe_weapon_brand(const item_def &item)
                "of the damage dealt when it wounds a living foe.";
     case SPWPN_PAIN:
         {
-            string desc = "In the hands of one skilled in necromantic "
-                 "magic, it inflicts extra damage on living creatures.";
+            string desc =  "It inflicts extra damage on living creatures "
+                 "depending on the wielder's necromancy skill (1d(skill * 2)).";
             if (you_worship(GOD_TROG))
                 return desc + " Trog prevents you from unleashing this effect.";
             if (!is_useless_skill(SK_NECROMANCY))
@@ -4914,9 +4914,6 @@ static string _brand_damage_string(const monster_info &mi, brand_type brand,
             break;
         case SPWPN_FOUL_FLAME:
             brand_dam = dam * 0.75;
-            break;
-        case SPWPN_PAIN:
-            brand_dam = mi.has_necromancy_spell() ? mi.hd * 2 : mi.hd / 2;
             break;
         case SPWPN_VENOM:
         case SPWPN_ANTIMAGIC:
