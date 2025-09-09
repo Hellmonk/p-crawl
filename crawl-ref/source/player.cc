@@ -6016,9 +6016,9 @@ int player::corrosion_amount() const
         corrosion += slime_wall_corrosion(&you);
 
     if (player_in_branch(BRANCH_DIS))
-        corrosion += 8;
+        corrosion += 1;
 
-    return corrosion;
+    return min(corrosion, 1);
 }
 
 int player::armour_class() const
@@ -6063,7 +6063,7 @@ int player::armour_class_scaled(int scale) const
     if (you.duration[DUR_PHALANX_BARRIER])
         AC += you.props[PHALANX_BARRIER_POWER_KEY].get_int();
 
-    AC -= 100 * corrosion_amount();
+    AC -= 1000 * corrosion_amount();
 
     AC += sanguine_armour_bonus();
 
@@ -6811,18 +6811,13 @@ bool player::corrode(const actor* /*source*/, const char* corrosion_msg, int amo
                       make_stringf("%s corrodes you!",
                                    corrosion_msg).c_str());
 
-    // Reduce corrosion amount by 50% if you have resistance.
-    if (res_corr())
-        amount /= 2;
-
     // The more corrosion you already have, the lower the odds of stacking more
     // (though Dis's passive corrosion is not included).
     int& corr = props[CORROSION_KEY].get_int();
-    if (!x_chance_in_y(corr, corr + 28))
+    if (!corr)
     {
-        corr += amount;
+        corr++;
         redraw_armour_class = true;
-        wield_change = true;
         return true;
     }
 

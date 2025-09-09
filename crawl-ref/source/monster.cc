@@ -3194,7 +3194,7 @@ int monster::armour_class() const
 
     // corrosion hurts.
     if (has_ench(ENCH_CORROSION))
-        ac -= 8;
+        ac -= 10;
 
     if (has_ench(ENCH_PHALANX_BARRIER))
         ac += 10;
@@ -4066,14 +4066,8 @@ bool monster::drain(const actor *agent, bool quiet, int /*pow*/)
 
 bool monster::corrode(const actor* source, const char* corrosion_msg, int amount)
 {
-    const int res = res_corr();
-
     // Don't corrode spectral weapons, temporary items, or immune enemies.
-    if (mons_is_avatar(type) || type == MONS_PLAYER_SHADOW || res >= 3)
-        return false;
-
-    // rCorr protects against 50% of corrosion attempts.
-    if (res > 0 && coinflip())
+    if (mons_is_avatar(type) || type == MONS_PLAYER_SHADOW)
         return false;
 
     if (you.see_cell(pos()))
@@ -4084,11 +4078,7 @@ bool monster::corrode(const actor* source, const char* corrosion_msg, int amount
             mprf("%s seems to be corroded for longer.", name(DESC_THE).c_str());
     }
 
-    // XXX: Make rust cloud corrosion wear off more quickly
-    if (amount == 1)
-        add_ench(mon_enchant(ENCH_CORROSION, 0, source, random_range(15, 25)));
-    else
-        add_ench(mon_enchant(ENCH_CORROSION, 0, source));
+    add_ench(mon_enchant(ENCH_CORROSION, 0, source));
     return true;
 }
 
@@ -4101,20 +4091,8 @@ void monster::splash_with_acid(actor* evildoer)
     if (res_corr() == 3)
         return;
 
-    const int dam = roll_dice(2, 4);
-    const int post_res_dam = resist_adjust_damage(this, BEAM_ACID, dam);
-
-    if (this->observable())
-    {
-        mprf("%s is splashed with acid%s", this->name(DESC_THE).c_str(),
-             attack_strength_punctuation(post_res_dam).c_str());
-    }
-
-    if (!one_chance_in(3))
+    if (coinflip())
         corrode(evildoer);
-
-    if (post_res_dam > 0)
-        hurt(evildoer, post_res_dam, BEAM_ACID, KILLED_BY_ACID);
 }
 
 int monster::hurt(const actor *agent, int amount, beam_type flavour,

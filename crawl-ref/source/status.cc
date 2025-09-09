@@ -306,7 +306,7 @@ bool fill_status_info(int status, status_info& inf)
         // Intentional fallthrough
     case DUR_CORROSION:
         inf.light_text = make_stringf("Corr (%d)",
-                          (-1 * you.corrosion_amount()));
+                          (-10 * you.corrosion_amount()));
         break;
 
     case DUR_FLAYED:

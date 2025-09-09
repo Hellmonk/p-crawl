@@ -1144,9 +1144,6 @@ static void _print_stats_ev(int x, int y)
  */
 static int _wpn_name_colour(const item_def &wpn)
 {
-    if (you.corrosion_amount())
-        return RED;
-
     const string prefix = item_prefix(wpn);
     const int prefcol = menu_colour(wpn.name(DESC_INVENTORY),
                                     prefix, "stats", false);
@@ -1161,7 +1158,6 @@ static string _wpn_name_corroded(const item_def &weapon)
         return weapon.name(DESC_PLAIN, true);
 
     item_def wpn_copy = weapon;
-    wpn_copy.plus -= you.corrosion_amount();
     return wpn_copy.name(DESC_PLAIN, true);
 }
 
