@@ -1658,9 +1658,9 @@ static string _describe_weapon_brand(const item_def &item)
                "targets, potentially hitting everything in its path until it "
                "leaves sight.";
     case SPWPN_REAPING:
-        return "Any living, holy, or demonic foe damaged by it may be "
-               "temporarily reanimated upon death as a friendly spectral, with "
-               "an increasing chance as more damage is dealt.";
+        return "Any living foe damaged by it may be temporarily reanimated "
+               "on death as a friendly zombie, with an increasing chance as "
+               "more damage is dealt.";
     case SPWPN_ANTIMAGIC:
         return "It halves the maximum mp of the wielder, and disrupts "
                "the spells and magical abilities of those it strikes, causing "
