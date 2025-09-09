@@ -1625,11 +1625,6 @@ static string _describe_weapon_brand(const item_def &item)
     case SPWPN_SHIELDING:
         return "It grants its wielder temporary protection after it strikes "
                "(+25% SH, lasts 3 turns).";
-    case SPWPN_DRAINING:
-        return "It sometimes drains living victims (1/2 chance). This deals "
-               "an additional one-quarter of any damage that pierces "
-               "defenders' armour as well as a flat 2-4 damage, and also "
-               "weakens them slightly.";
     case SPWPN_SPEED:
         return "Attacks with this weapon are significantly faster.";
     case SPWPN_HEAVY:
@@ -4905,7 +4900,6 @@ static string _brand_damage_string(const monster_info &mi, brand_type brand,
     {
         case SPWPN_EXPLOSIVE:
         case SPWPN_FREEZING:
-        case SPWPN_DRAINING:
             brand_dam = dam / 2;
             break;
         case SPWPN_ELECTROCUTION:

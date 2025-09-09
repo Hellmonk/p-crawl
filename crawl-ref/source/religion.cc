@@ -1955,7 +1955,7 @@ static brand_type _hepliaklqana_weapon_brand(monster_type mc, int HD)
     switch (mc)
     {
         case MONS_ANCESTOR_HEXER:
-            return HD < 16 ?   SPWPN_DRAINING :
+            return HD < 16 ?   SPWPN_VAMPIRISM :
                                SPWPN_ANTIMAGIC;
         case MONS_ANCESTOR_KNIGHT:
             return HD < 10 ?   SPWPN_NORMAL :

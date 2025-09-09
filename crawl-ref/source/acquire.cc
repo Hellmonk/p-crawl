@@ -1019,7 +1019,6 @@ static int _weapon_brand_reroll_denom(int brand)
     // These brands generate frequently on a variety of weapon types.
     case SPWPN_EXPLOSIVE:
     case SPWPN_FREEZING:
-    case SPWPN_DRAINING:
     case SPWPN_HEAVY:
     case SPWPN_SPELLVAMP:
     case SPWPN_SHIELDING:

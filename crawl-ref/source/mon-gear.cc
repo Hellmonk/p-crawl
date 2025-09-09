@@ -405,7 +405,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
       { { SPWPN_SILVER,     1 } } };
     static const vector<pair<brand_type, int>> HELL_KNIGHT_BRANDS = // sum 45
     {   { SPWPN_EXPLOSIVE,        13 },
-        { SPWPN_DRAINING,       4 },
+        { SPWPN_VAMPIRISM,       4 },
         { SPWPN_HEAVY,          4 },
         { SPWPN_BLINKING,     2 },
         { SPWPN_PAIN,           2 },
@@ -495,7 +495,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
                 { WPN_GLAIVE,           10 },
                 { WPN_BROAD_AXE,        10 },
                 { WPN_BATTLEAXE,        16 },
-        }, {2, 1, 4}, { { SPWPN_DRAINING, 1 }, { NUM_SPECIAL_WEAPONS, 1 }, } } },
+        }, {2, 1, 4}, { { SPWPN_VAMPIRISM, 1 }, { NUM_SPECIAL_WEAPONS, 1 }, } } },
         { MONS_GNOLL,                   { GNOLL_WEAPONS } },
         { MONS_OGRE_MAGE,               { GNOLL_WEAPONS } },
         { MONS_NAGA_MAGE,               { GNOLL_WEAPONS } },
@@ -521,11 +521,11 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
         { MONS_GRUNN,
             { { { WPN_GLAIVE,            2 },
                 { WPN_BARDICHE,          1 },
-        }, { 1, 4, 9 }, { { SPWPN_DRAINING, 1 } } } },
+        }, { 1, 4, 9 }, { { SPWPN_VAMPIRISM, 1 } } } },
         { MONS_JEREMIAH,
             { { { WPN_TRIDENT,            1 },
         }, { 1, 2, 4 }, {
-            { SPWPN_DRAINING,  9 },
+            { SPWPN_VAMPIRISM,  9 },
             { SPWPN_VAMPIRISM, 1 },
         } } },
         { MONS_CRAZY_YIUF,
@@ -577,7 +577,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
         } } },
         { MONS_NEKOMATA, {
             { { WPN_DEMON_BLADE, 1 } },
-              { 4, 2, 4 }, { { SPWPN_EXPLOSIVE, 3 }, { SPWPN_DRAINING, 2 }, }, } },
+              { 4, 2, 4 }, { { SPWPN_EXPLOSIVE, 3 }, { SPWPN_VAMPIRISM, 2 }, }, } },
         { MONS_DEEP_ELF_KNIGHT,         { DE_KNIGHT_WEAPONS } },
         { MONS_DEEP_ELF_HIGH_PRIEST,    { DE_KNIGHT_WEAPONS } },
         { MONS_DEEP_ELF_BLADEMASTER,
@@ -738,7 +738,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
               { WPN_SCIMITAR,          2 },
               { WPN_DEMON_BLADE,       1 }, },
               { 1, 1, 3 }, { { SPWPN_SPELLVAMP, 12 },
-                             { SPWPN_DRAINING, 8 },
+                             { SPWPN_VAMPIRISM, 8 },
                              { SPWPN_PAIN, 3 },
                              { SPWPN_CHAOS, 1 },
                              { NUM_SPECIAL_WEAPONS, 8 }  }, } },
@@ -911,7 +911,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
               { WPN_SHORT_SWORD,        1 }, }, {},
             { { SPWPN_BLINKING,       3 },
               { SPWPN_SPELLVAMP,            2 },
-              { SPWPN_DRAINING,         1 } },
+              { SPWPN_VAMPIRISM,         1 } },
         } },
         { MONS_MAURICE,
             { { { WPN_DAGGER,           1 },
@@ -959,7 +959,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
               { WPN_BATTLEAXE,          1 },
               { WPN_GREAT_SWORD,        1 }, },
             { 1, 0, 3 },
-            { { SPWPN_DRAINING,      13 }, // total 45
+            { { SPWPN_VAMPIRISM,      13 }, // total 45
               { SPWPN_HEAVY,         7 },
               { SPWPN_FREEZING,      4 },
               { SPWPN_EXPLOSIVE,       4 },
@@ -1103,7 +1103,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
                 { WPN_HAND_CANNON,              1 }, },
               { 4, 2, 4 },
               { { SPWPN_EXPLOSIVE,                3 },
-                { SPWPN_DRAINING,               2 }, },
+                { SPWPN_VAMPIRISM,               2 }, },
         } },
         { MONS_DEMONSPAWN_WARMONGER, {
             { { WPN_LONGBOW,                    10 }, // total 60
