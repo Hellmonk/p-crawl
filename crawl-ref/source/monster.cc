@@ -2868,6 +2868,11 @@ bool monster::paralysed() const
     return has_ench(ENCH_PARALYSIS) || has_ench(ENCH_DUMB);
 }
 
+bool monster::stunned() const
+{
+    return has_ench(ENCH_STUN);
+}
+
 bool monster::cannot_act() const
 {
     return paralysed() || petrified();

@@ -1290,6 +1290,7 @@ static void _get_status_lights(vector<status_light>& out)
         STATUS_ZOT,
         STATUS_STAT_ZERO,
         DUR_PARALYSIS,
+        DUR_STUN,
         DUR_CONF,
         DUR_PETRIFYING,
         DUR_PETRIFIED,

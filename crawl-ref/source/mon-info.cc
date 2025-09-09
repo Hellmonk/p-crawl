@@ -1790,7 +1790,7 @@ bool monster_info::net_immune() const
 
 bool monster_info::cannot_move() const
 {
-    return is(MB_PARALYSED) || is(MB_PETRIFIED);
+    return is(MB_PARALYSED) || is(MB_PETRIFIED) || is(MB_STUNNED);
 }
 
 bool monster_info::asleep() const

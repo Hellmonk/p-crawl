@@ -1889,8 +1889,11 @@ static int _player_evasion(int final_scale, bool ignore_temporary)
        + (_player_temporary_evasion_modifiers() * scale);
 
     // no evasion while paralyzed
-    if ((you.cannot_act() || you.form == transformation::tree) || you.backlit())
+    if (you.duration[DUR_PARALYSIS] || you.form == transformation::tree
+         || you.duration[DUR_PETRIFIED] || you.backlit())
+    {
         return 0;
+    }
 
     return (final_evasion * final_scale) / scale;
 }
@@ -5492,6 +5495,11 @@ int player::get_noise_perception(bool adjusted) const
 bool player::paralysed() const
 {
     return duration[DUR_PARALYSIS];
+}
+
+bool player::stunned() const
+{
+    return duration[DUR_STUN];
 }
 
 bool player::cannot_act() const
