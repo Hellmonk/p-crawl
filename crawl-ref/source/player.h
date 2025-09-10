@@ -741,6 +741,7 @@ public:
     bool poison(actor *agent, int amount = 1, bool force = false) override;
     bool sicken(int amount) override;
     void paralyse(const actor *, int str, string source = "") override;
+    void stun(actor *evildoer) override;
     void petrify(const actor *, bool force = false) override;
     bool fully_petrify(bool quiet = false) override;
     bool vex(const actor* who, int dur, string source = "", string special_msg = "") override;
@@ -818,6 +819,7 @@ public:
     bool is_dragonkind() const override;
 
     bool paralysed() const override;
+    bool stunned() const override;
     bool cannot_act() const override;
     bool confused() const override;
     bool caught() const override;
@@ -893,7 +895,7 @@ public:
     bool can_do_shaft_ability(bool quiet = false) const;
     bool do_shaft_ability();
 
-    bool can_potion_heal(bool temp=true);
+    bool can_potion_heal();
     int scale_potion_healing(int healing_amount);
     int scale_potion_mp_healing(int healing_amount);
 
@@ -1036,8 +1038,7 @@ int stone_body_armour_bonus();
 int player_wizardry();
 int player_channelling();
 
-int player_prot_life(bool allow_random = true, bool temp = true,
-                     bool items = true);
+int player_prot_life(bool temp = true, bool items = true);
 
 bool regeneration_is_inhibited(const monster *m=nullptr);
 int player_regen();
@@ -1047,19 +1048,13 @@ bool player_kiku_res_torment();
 
 bool player_likes_water(bool permanently = false);
 
-int player_res_cold(bool allow_random = true, bool temp = true,
-                    bool items = true);
-int player_res_electricity(bool allow_random = true, bool temp = true,
-                           bool items = true);
-int player_res_fire(bool allow_random = true, bool temp = true,
-                    bool items = true);
+int player_res_cold(bool temp = true, bool items = true);
+int player_res_electricity(bool temp = true, bool items = true);
+int player_res_fire(bool temp = true, bool items = true);
 int player_res_sticky_flame();
-int player_res_steam(bool allow_random = true, bool temp = true,
-                     bool items = true);
-int player_res_poison(bool allow_random = true, bool temp = true,
-                      bool items = true, bool forms = true);
-int player_res_corrosion(bool allow_random = true, bool temp = true,
-                         bool items = true);
+int player_res_steam(bool temp = true, bool items = true);
+int player_res_poison(bool temp = true, bool items = true, bool forms = true);
+int player_res_corrosion(bool temp = true, bool items = true);
 int player_willpower(bool temp = true);
 
 int player_shield_class(int scale = 1, bool random = true,

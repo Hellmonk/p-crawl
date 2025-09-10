@@ -634,6 +634,7 @@ static bool _boosted_ev()
 static bool _boosted_sh()
 {
     return qazlal_sh_boost() > 0
+           || you.duration[DUR_SPWPN_SHIELDING]
            || (you.get_mutation_level(MUT_EPHEMERAL_SHIELD)
                 && you.duration[DUR_EPHEMERAL_SHIELD])
            || (you.get_mutation_level(MUT_CONDENSATION_SHIELD)
@@ -1144,9 +1145,6 @@ static void _print_stats_ev(int x, int y)
  */
 static int _wpn_name_colour(const item_def &wpn)
 {
-    if (you.corrosion_amount())
-        return RED;
-
     const string prefix = item_prefix(wpn);
     const int prefcol = menu_colour(wpn.name(DESC_INVENTORY),
                                     prefix, "stats", false);
@@ -1161,7 +1159,6 @@ static string _wpn_name_corroded(const item_def &weapon)
         return weapon.name(DESC_PLAIN, true);
 
     item_def wpn_copy = weapon;
-    wpn_copy.plus -= you.corrosion_amount();
     return wpn_copy.name(DESC_PLAIN, true);
 }
 
@@ -1294,6 +1291,7 @@ static void _get_status_lights(vector<status_light>& out)
         STATUS_ZOT,
         STATUS_STAT_ZERO,
         DUR_PARALYSIS,
+        DUR_STUN,
         DUR_CONF,
         DUR_PETRIFYING,
         DUR_PETRIFIED,
@@ -2559,22 +2557,22 @@ static vector<formatted_string> _get_overview_resistances(
     int cwidth = 8;
     string out;
 
-    const int rfire = player_res_fire(false);
+    const int rfire = player_res_fire();
     out += _resist_composer("rFire", cwidth, rfire, 1, MR_RES_FIRE) + "\n";
 
-    const int rcold = player_res_cold(false);
+    const int rcold = player_res_cold();
     out += _resist_composer("rCold", cwidth, rcold, 1, MR_RES_COLD) + "\n";
 
-    const int rlife = player_prot_life(false);
+    const int rlife = player_prot_life();
     out += _resist_composer("rNeg", cwidth, rlife, 1, MR_RES_NEG) + "\n";
 
-    const int rpois = player_res_poison(false);
+    const int rpois = player_res_poison();
     out += _resist_composer("rPois", cwidth, rpois, 1, MR_RES_POISON) + "\n";
 
-    const int relec = player_res_electricity(false);
+    const int relec = player_res_electricity();
     out += _resist_composer("rElec", cwidth, relec, 1, MR_RES_ELEC) + "\n";
 
-    const int rcorr = player_res_corrosion(false);
+    const int rcorr = player_res_corrosion();
     out += _resist_composer("rCorr", cwidth, rcorr, 1, MR_RES_CORR) + "\n";
 
     const int sinv = you.can_see_invisible();

@@ -603,7 +603,7 @@ static const duration_def duration_data[] =
       "sanguine armoured", "sanguine armour",
       "Your shed blood clings to and protects you.", D_NO_FLAGS,
         {{ "Your blood armour dries and flakes away.", _redraw_armour }}},
-    { DUR_SPWPN_PROTECTION, 0, "",
+    { DUR_SPWPN_SHIELDING, 0, "",
       "under a protective aura", "protection aura",
       "Your weapon is exuding a protective aura.", D_NO_FLAGS,
       {{ "", _redraw_armour }}},
@@ -748,6 +748,10 @@ static const duration_def duration_data[] =
       "Your melee attacks are strengthened by primal bloodlust.", D_EXPIRES,
       {{ "Your bloodlust subsides." },
        { "You feel your bloodlust ebbing." }}, 6},
+     { DUR_STUN,
+      RED, "Stun",
+      "stunned", "stunning",
+      "You are stunned.", D_DISPELLABLE},
 
     // The following are visible in wizmode only, or are handled
     // specially in the status lights and/or the % or @ screens.

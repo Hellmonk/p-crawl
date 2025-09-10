@@ -157,6 +157,7 @@ static enchant_type _player_duration_to_mons_enchantment(duration_type dur)
     case DUR_PARALYSIS:        return ENCH_PARALYSIS;
     case DUR_PETRIFYING:       return ENCH_PETRIFYING;
     case DUR_PETRIFIED:        return ENCH_PETRIFIED;
+    case DUR_STUN:             return ENCH_STUN;
     case DUR_POISONING:        return ENCH_POISON;
     case DUR_POISON_VULN:      return ENCH_POISON_VULN;
     case DUR_RESISTANCE:       return ENCH_RESISTANCE;

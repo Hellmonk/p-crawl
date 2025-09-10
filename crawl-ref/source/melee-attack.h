@@ -104,8 +104,6 @@ private:
 
     void sear_defender();
 
-    bool consider_decapitation(int damage_done);
-    bool attack_chops_heads(int damage_done);
     void decapitate();
 
     bool run_attack_set();

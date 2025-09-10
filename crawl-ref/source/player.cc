@@ -159,7 +159,7 @@ bool check_moveto_cloud(const coord_def& p, const string &move_verb,
         if (ctype == CLOUD_STEAM)
         {
             int threshold = 20;
-            if (player_res_steam(false) < 0)
+            if (player_res_steam() < 0)
                 threshold = threshold * 3 / 2;
             threshold = threshold * you.time_taken / BASELINE_DELAY;
             // Do prompt if we'd lose icemail, though.
@@ -1222,7 +1222,7 @@ int player::piety() const
 }
 
 // If temp is set to false, temporary sources or resistance won't be counted.
-int player_res_fire(bool allow_random, bool temp, bool items)
+int player_res_fire(bool temp, bool items)
 {
     int rf = 0;
 
@@ -1284,10 +1284,10 @@ int player_res_fire(bool allow_random, bool temp, bool items)
     return rf;
 }
 
-int player_res_steam(bool allow_random, bool temp, bool items)
+int player_res_steam(bool temp, bool items)
 {
     int res = 0;
-    const int rf = player_res_fire(allow_random, temp, items);
+    const int rf = player_res_fire(temp, items);
 
     res += you.get_mutation_level(MUT_STEAM_RESISTANCE) * 2;
 
@@ -1308,7 +1308,7 @@ int player_res_steam(bool allow_random, bool temp, bool items)
     return res;
 }
 
-int player_res_cold(bool allow_random, bool temp, bool items)
+int player_res_cold(bool temp, bool items)
 {
     int rc = 0;
 
@@ -1363,7 +1363,7 @@ int player_res_cold(bool allow_random, bool temp, bool items)
     return rc;
 }
 
-int player_res_corrosion(bool allow_random, bool temp, bool items)
+int player_res_corrosion(bool temp, bool items)
 {
     if (temp && you.duration[DUR_RESISTANCE])
         return 1;
@@ -1393,7 +1393,7 @@ int player_res_corrosion(bool allow_random, bool temp, bool items)
     return 0;
 }
 
-int player_res_electricity(bool allow_random, bool temp, bool items)
+int player_res_electricity(bool temp, bool items)
 {
     int re = 0;
 
@@ -1443,7 +1443,7 @@ bool player_kiku_res_torment()
 }
 
 // If temp is set to false, temporary sources or resistance won't be counted.
-int player_res_poison(bool allow_random, bool temp, bool items, bool forms)
+int player_res_poison(bool temp, bool items, bool forms)
 {
     const int form_rp = forms ? cur_form(temp)->res_pois() : 0;
     if (you.is_nonliving(temp, forms)
@@ -1604,7 +1604,7 @@ int player_spec_tloc()
 
 // If temp is set to false, temporary sources of resistance won't be
 // counted.
-int player_prot_life(bool allow_random, bool temp, bool items)
+int player_prot_life(bool temp, bool items)
 {
     int pl = 0;
 
@@ -1889,8 +1889,11 @@ static int _player_evasion(int final_scale, bool ignore_temporary)
        + (_player_temporary_evasion_modifiers() * scale);
 
     // no evasion while paralyzed
-    if ((you.cannot_act() || you.form == transformation::tree) || you.backlit())
+    if (you.duration[DUR_PARALYSIS] || you.form == transformation::tree
+         || you.duration[DUR_PETRIFIED] || you.backlit())
+    {
         return 0;
+    }
 
     return (final_evasion * final_scale) / scale;
 }
@@ -1988,6 +1991,9 @@ int player_shield_class(int scale, bool random, bool ignore_temporary)
     {
         shield += you.get_mutation_level(MUT_EPHEMERAL_SHIELD) * 1400;
     }
+
+    if (you.duration[DUR_SPWPN_SHIELDING])
+        shield += 2500;
 
     shield += qazlal_sh_boost() * 100;
     shield += you.wearing_jewellery(AMU_REFLECTION) * AMU_REFLECT_SH * 100;
@@ -3731,7 +3737,7 @@ int get_real_mp(bool include_items)
     enp /= 100;
 
     if (include_items && you.wearing_ego(OBJ_WEAPONS, SPWPN_ANTIMAGIC))
-        enp /= 3;
+        enp /= 2;
 
     enp = max(enp, 0);
 
@@ -5494,6 +5500,11 @@ bool player::paralysed() const
     return duration[DUR_PARALYSIS];
 }
 
+bool player::stunned() const
+{
+    return duration[DUR_STUN];
+}
+
 bool player::cannot_act() const
 {
     return asleep() || paralysed() || petrified();
@@ -5535,6 +5546,7 @@ bool player::shielded() const
 {
     return shield()
            || duration[DUR_DIVINE_SHIELD]
+           || duration[DUR_SPWPN_SHIELDING]
            || duration[DUR_EPHEMERAL_SHIELD]
            || get_mutation_level(MUT_LARGE_BONE_PLATES) > 0
            || qazlal_sh_boost() > 0
@@ -6016,9 +6028,9 @@ int player::corrosion_amount() const
         corrosion += slime_wall_corrosion(&you);
 
     if (player_in_branch(BRANCH_DIS))
-        corrosion += 8;
+        corrosion += 1;
 
-    return corrosion;
+    return min(corrosion, 1);
 }
 
 int player::armour_class() const
@@ -6048,9 +6060,6 @@ int player::armour_class_scaled(int scale) const
     if (duration[DUR_QAZLAL_AC])
         AC += 300;
 
-    if (duration[DUR_SPWPN_PROTECTION])
-        AC += 700;
-
     if (you.wearing_ego(OBJ_GIZMOS, SPGIZMO_PARRYREV))
     {
         const static int rev_bonus[] = {0, 200, 400, 500};
@@ -6063,7 +6072,7 @@ int player::armour_class_scaled(int scale) const
     if (you.duration[DUR_PHALANX_BARRIER])
         AC += you.props[PHALANX_BARRIER_POWER_KEY].get_int();
 
-    AC -= 100 * corrosion_amount();
+    AC -= 1000 * corrosion_amount();
 
     AC += sanguine_armour_bonus();
 
@@ -6413,7 +6422,7 @@ bool player::res_water_drowning() const
 
 int player::res_poison(bool temp) const
 {
-    return player_res_poison(true, temp);
+    return player_res_poison(temp);
 }
 
 bool player::res_miasma(bool temp) const
@@ -6461,7 +6470,7 @@ int player::res_foul_flame() const
 
 int player::res_negative_energy(bool intrinsic_only) const
 {
-    return player_prot_life(true, true, !intrinsic_only);
+    return player_prot_life(true, !intrinsic_only);
 }
 
 bool player::res_torment() const
@@ -6811,18 +6820,13 @@ bool player::corrode(const actor* /*source*/, const char* corrosion_msg, int amo
                       make_stringf("%s corrodes you!",
                                    corrosion_msg).c_str());
 
-    // Reduce corrosion amount by 50% if you have resistance.
-    if (res_corr())
-        amount /= 2;
-
     // The more corrosion you already have, the lower the odds of stacking more
     // (though Dis's passive corrosion is not included).
     int& corr = props[CORROSION_KEY].get_int();
-    if (!x_chance_in_y(corr, corr + 28))
+    if (!corr)
     {
-        corr += amount;
+        corr++;
         redraw_armour_class = true;
-        wield_change = true;
         return true;
     }
 
@@ -6920,6 +6924,15 @@ void player::paralyse(const actor *who, int str, string source)
     stop_channelling_spells();
     redraw_armour_class = true;
     redraw_evasion = true;
+}
+
+void player::stun(actor *who)
+{
+    if (!duration[DUR_STUN])
+    {
+        mpr("You are stunned.");
+        duration[DUR_STUN] = BASELINE_DELAY;
+    }
 }
 
 void player::petrify(const actor *who, bool force)
@@ -8086,7 +8099,7 @@ bool player::can_wear_barding(bool temp) const
     return species::wears_barding(species);
 }
 
-static int _get_potion_heal_factor(bool temp=true)
+static int _get_potion_heal_factor()
 {
     // healing factor is expressed in halves, so default is 2/2 -- 100%.
     int factor = 2;
@@ -8118,9 +8131,9 @@ void print_potion_heal_message()
         mpr("Your system partially rejects the healing.");
 }
 
-bool player::can_potion_heal(bool temp)
+bool player::can_potion_heal()
 {
-    return _get_potion_heal_factor(temp) > 0;
+    return _get_potion_heal_factor() > 0;
 }
 
 int player::scale_potion_healing(int healing_amount)
@@ -8631,10 +8644,10 @@ void activate_sanguine_armour()
  */
 void refresh_weapon_protection()
 {
-    if (!you.duration[DUR_SPWPN_PROTECTION])
+    if (!you.duration[DUR_SPWPN_SHIELDING])
         mpr("Your weapon exudes an aura of protection.");
 
-    you.increase_duration(DUR_SPWPN_PROTECTION, 3 + random2(2), 5);
+    you.increase_duration(DUR_SPWPN_SHIELDING, 4, 4);
     you.redraw_armour_class = true;
 }
 

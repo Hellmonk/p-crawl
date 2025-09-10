@@ -683,14 +683,14 @@ void monster::equip_weapon_message(item_def &item)
 
     switch (brand)
     {
-    case SPWPN_FLAMING:
+    case SPWPN_EXPLOSIVE:
         mpr("It bursts into flame!");
         break;
     case SPWPN_FREEZING:
         mpr(is_range_weapon(item) ? "It is covered in frost."
                                   : "It glows with a cold blue light!");
         break;
-    case SPWPN_HOLY_WRATH:
+    case SPWPN_SILVER:
         mpr("It softly glows with a divine radiance!");
         break;
     case SPWPN_FOUL_FLAME:
@@ -698,15 +698,6 @@ void monster::equip_weapon_message(item_def &item)
         break;
     case SPWPN_ELECTROCUTION:
         mprf(MSGCH_SOUND, "You hear the crackle of electricity.");
-        break;
-    case SPWPN_VENOM:
-        mpr("It begins to drip with poison!");
-        break;
-    case SPWPN_DRAINING:
-        mpr("You sense an unholy aura.");
-        break;
-    case SPWPN_DISTORTION:
-        mpr("Its appearance distorts for a moment.");
         break;
     case SPWPN_CHAOS:
         mpr("It is briefly surrounded by a scintillating aura of "
@@ -808,11 +799,11 @@ void monster::unequip_weapon(item_def &item, bool msg)
     {
         switch (brand)
         {
-        case SPWPN_FLAMING:
+        case SPWPN_EXPLOSIVE:
             mpr("It stops flaming.");
             break;
 
-        case SPWPN_HOLY_WRATH:
+        case SPWPN_SILVER:
         case SPWPN_FOUL_FLAME:
             mpr("It stops glowing.");
             break;
@@ -821,11 +812,7 @@ void monster::unequip_weapon(item_def &item, bool msg)
             mpr("It stops crackling.");
             break;
 
-        case SPWPN_VENOM:
-            mpr("It stops dripping with poison.");
-            break;
-
-        case SPWPN_DISTORTION:
+        case SPWPN_BLINKING:
             mpr("Its appearance distorts for a moment.");
             break;
 
@@ -1194,20 +1181,12 @@ static bool _is_signature_weapon(const monster* mons, const item_def &weapon)
                    && get_weapon_brand(weapon) == SPWPN_CHAOS;
         }
 
-        // Distortion/chaos is immensely flavourful, and we shouldn't
-        // allow Psyche to switch away from it.
-        if (mons->type == MONS_PSYCHE)
-        {
-            return get_weapon_brand(weapon) == SPWPN_CHAOS
-                   || get_weapon_brand(weapon) == SPWPN_DISTORTION;
-        }
-
         // Don't switch Azrael away from the customary scimitar of
         // flaming.
         if (mons->type == MONS_AZRAEL)
         {
             return wtype == WPN_SCIMITAR
-                   && get_weapon_brand(weapon) == SPWPN_FLAMING;
+                   && get_weapon_brand(weapon) == SPWPN_EXPLOSIVE;
         }
 
         if (mons->type == MONS_AGNES)
@@ -1229,7 +1208,7 @@ static bool _is_signature_weapon(const monster* mons, const item_def &weapon)
             return wtype == WPN_EXECUTIONERS_AXE;
 
         if (mons->type == MONS_MENNAS)
-            return get_weapon_brand(weapon) == SPWPN_HOLY_WRATH;
+            return get_weapon_brand(weapon) == SPWPN_SILVER;
 
         if (mons->type == MONS_FANNAR)
             return weapon.is_type(OBJ_STAVES, STAFF_COLD);
@@ -1252,7 +1231,7 @@ static bool _is_signature_weapon(const monster* mons, const item_def &weapon)
     }
 
     if (mons->is_holy())
-        return is_blessed(weapon) || get_weapon_brand(weapon) == SPWPN_HOLY_WRATH;
+        return is_blessed(weapon) || get_weapon_brand(weapon) == SPWPN_SILVER;
 
     if (is_unrandom_artefact(weapon))
     {
@@ -1274,7 +1253,7 @@ static int _ego_damage_bonus(item_def &item)
     switch (get_weapon_brand(item))
     {
     case SPWPN_NORMAL:      return 0;
-    case SPWPN_PROTECTION:  return 1;
+    case SPWPN_SHIELDING:  return 1;
     default:                return 2;
     }
 }
@@ -1548,7 +1527,7 @@ static int _get_monster_armour_value(const monster *mon,
 
     // See invisible also is only useful if not already intrinsic.
     if (!mons_class_flag(mon->type, M_SEE_INVIS))
-        value += get_armour_see_invisible(item, true);
+        value += get_armour_see_invisible(item);
 
     // Give a sizable bonus for shields of reflection.
     if (get_armour_ego_type(item) == SPARM_REFLECTION)
@@ -1716,7 +1695,7 @@ static int _get_monster_jewellery_value(const monster *mon,
 
     // See invisible also is only useful if not already intrinsic.
     if (!mons_class_flag(mon->type, M_SEE_INVIS))
-        value += get_jewellery_see_invisible(item, true);
+        value += get_jewellery_see_invisible(item);
 
     // If we're not naturally corrosion-resistant.
     if (item.sub_type == RING_RESIST_CORROSION && get_mons_resist(*mon, MR_RES_CORR) <= 0)
@@ -2879,6 +2858,11 @@ bool monster::paralysed() const
     return has_ench(ENCH_PARALYSIS) || has_ench(ENCH_DUMB);
 }
 
+bool monster::stunned() const
+{
+    return has_ench(ENCH_STUN);
+}
+
 bool monster::cannot_act() const
 {
     return paralysed() || petrified();
@@ -3046,35 +3030,6 @@ bool monster::missile_repulsion() const
 }
 
 /**
- * How many weapons of the given brand does this monster currently wield?
- *
- * @param mon           The monster in question.
- * @param brand         The brand in question.
- * @return              The number of the aforementioned weapons currently
- *                      wielded.
- */
-static int _weapons_with_prop(const monster *mon, brand_type brand)
-{
-    int wielded = 0;
-
-    const mon_inv_type last_weap_slot = mons_wields_two_weapons(*mon) ?
-                                        MSLOT_ALT_WEAPON :
-                                        MSLOT_WEAPON;
-    for (int i = MSLOT_WEAPON; i <= last_weap_slot; i++)
-    {
-        const item_def *weap = mon->mslot_item(static_cast<mon_inv_type>(i));
-        if (!weap)
-            continue;
-
-        const int weap_brand = get_weapon_brand(*weap);
-        if (brand == weap_brand)
-            wielded++;
-    }
-
-    return wielded;
-}
-
-/**
  * What AC bonus or penalty does a given zombie type apply to the base
  * monster type's?
  *
@@ -3175,9 +3130,6 @@ int monster::armour_class() const
 {
     int ac = base_armour_class();
 
-    // check for protection-brand weapons
-    ac += 5 * _weapons_with_prop(this, SPWPN_PROTECTION);
-
     // armour from ac
     const item_def *armour = mslot_item(MSLOT_ARMOUR);
     if (armour)
@@ -3205,7 +3157,7 @@ int monster::armour_class() const
 
     // corrosion hurts.
     if (has_ench(ENCH_CORROSION))
-        ac -= 8;
+        ac -= 10;
 
     if (has_ench(ENCH_PHALANX_BARRIER))
         ac += 10;
@@ -4077,14 +4029,8 @@ bool monster::drain(const actor *agent, bool quiet, int /*pow*/)
 
 bool monster::corrode(const actor* source, const char* corrosion_msg, int amount)
 {
-    const int res = res_corr();
-
     // Don't corrode spectral weapons, temporary items, or immune enemies.
-    if (mons_is_avatar(type) || type == MONS_PLAYER_SHADOW || res >= 3)
-        return false;
-
-    // rCorr protects against 50% of corrosion attempts.
-    if (res > 0 && coinflip())
+    if (mons_is_avatar(type) || type == MONS_PLAYER_SHADOW)
         return false;
 
     if (you.see_cell(pos()))
@@ -4095,11 +4041,7 @@ bool monster::corrode(const actor* source, const char* corrosion_msg, int amount
             mprf("%s seems to be corroded for longer.", name(DESC_THE).c_str());
     }
 
-    // XXX: Make rust cloud corrosion wear off more quickly
-    if (amount == 1)
-        add_ench(mon_enchant(ENCH_CORROSION, 0, source, random_range(15, 25)));
-    else
-        add_ench(mon_enchant(ENCH_CORROSION, 0, source));
+    add_ench(mon_enchant(ENCH_CORROSION, 0, source));
     return true;
 }
 
@@ -4112,20 +4054,8 @@ void monster::splash_with_acid(actor* evildoer)
     if (res_corr() == 3)
         return;
 
-    const int dam = roll_dice(2, 4);
-    const int post_res_dam = resist_adjust_damage(this, BEAM_ACID, dam);
-
-    if (this->observable())
-    {
-        mprf("%s is splashed with acid%s", this->name(DESC_THE).c_str(),
-             attack_strength_punctuation(post_res_dam).c_str());
-    }
-
-    if (!one_chance_in(3))
+    if (coinflip())
         corrode(evildoer);
-
-    if (post_res_dam > 0)
-        hurt(evildoer, post_res_dam, BEAM_ACID, KILLED_BY_ACID);
 }
 
 int monster::hurt(const actor *agent, int amount, beam_type flavour,
@@ -4331,6 +4261,12 @@ void monster::confuse(actor *atk, int strength)
 void monster::paralyse(const actor *atk, int strength, string /*cause*/)
 {
     enchant_actor_with_flavour(this, atk, BEAM_PARALYSIS, strength);
+}
+
+void monster::stun(actor *atk)
+{
+    if (!stunned())
+        add_ench(mon_enchant(ENCH_STUN, 0));
 }
 
 void monster::petrify(const actor *atk, bool /*force*/)
@@ -5702,7 +5638,7 @@ void monster::react_to_damage(const actor *oppressor, int damage,
         actor *owner = actor_by_mid(summoner);
         if (owner && owner != oppressor && oppressor->mid != summoner)
         {
-            int shared_damage = div_rand_round(damage*7,10);
+            int shared_damage = damage;
             if (shared_damage > 0)
             {
                 if (owner->is_player())

@@ -47,11 +47,6 @@
 
 static void _mark_unseen_monsters();
 
-static bool _use_slots(unrand_type item, bool count_melded, bool count_items)
-{
-    return count_items && you.unrand_equipped(item, count_melded);
-}
-
 /**
  * Returns how many slots of a given type the player character currently has
  * (potentially accounting for additional slots granted by forms, mutations, and
@@ -1571,7 +1566,7 @@ bool unequip_item(item_def& item, bool msg, bool skip_effects)
 }
 
 static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld);
-static void _unequip_weapon_effect(item_def& item, bool showMsgs, bool meld);
+static void _unequip_weapon_effect(item_def& item, bool showMsgs);
 static void _equip_armour_effect(item_def& arm, bool unmeld);
 static void _unequip_armour_effect(item_def& item, bool meld);
 static void _equip_jewellery_effect(item_def &item, bool unmeld);
@@ -1617,7 +1612,7 @@ void unequip_effect(int item_slot, bool meld, bool msg)
         unequip_artefact_effect(item, &msg, meld);
 
     if (is_weapon(item))
-        _unequip_weapon_effect(item, msg, meld);
+        _unequip_weapon_effect(item, msg);
     else if (item.base_type == OBJ_ARMOUR)
         _unequip_armour_effect(item, meld);
     else if (item.base_type == OBJ_JEWELLERY)
@@ -1778,7 +1773,7 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
         const string item_name = item.name(DESC_YOUR);
         switch (special)
         {
-        case SPWPN_FLAMING:
+        case SPWPN_EXPLOSIVE:
             mprf("%s bursts into flame!", item_name.c_str());
             break;
 
@@ -1789,7 +1784,7 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
                     "glows with a cold blue light!");
             break;
 
-        case SPWPN_HOLY_WRATH:
+        case SPWPN_SILVER:
             if (you.undead_or_demonic())
             {
                 mprf("%s sits dull and lifeless in your grasp.",
@@ -1825,16 +1820,12 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
                 mpr("You see sparks fly.");
             break;
 
-        case SPWPN_VENOM:
-            mprf("%s begins to drip with poison!", item_name.c_str());
+        case SPWPN_SPELLVAMP:
+            mprf("%s thirsts for magic!", item_name.c_str());
             break;
 
-        case SPWPN_PROTECTION:
+        case SPWPN_SHIELDING:
             mprf("%s hums with potential!", item_name.c_str());
-            break;
-
-        case SPWPN_DRAINING:
-            mpr("You sense an unholy aura.");
             break;
 
         case SPWPN_SPEED:
@@ -1901,7 +1892,7 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
             }
             break;
 
-        case SPWPN_DISTORTION:
+        case SPWPN_BLINKING:
             mpr("Space warps around you for a moment!");
             break;
 
@@ -1925,7 +1916,7 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
         mprf_nocap("%s", item.name(DESC_INVENTORY_EQUIP).c_str());
 }
 
-static void _unequip_weapon_effect(item_def& item, bool showMsgs, bool meld)
+static void _unequip_weapon_effect(item_def& item, bool showMsgs)
 {
     you.wield_change = true;
     quiver::on_weapon_changed();
@@ -1940,12 +1931,12 @@ static void _unequip_weapon_effect(item_def& item, bool showMsgs, bool meld)
 
             switch (brand)
             {
-            case SPWPN_FLAMING:
+            case SPWPN_EXPLOSIVE:
                 if (showMsgs)
                     mprf("%s stops flaming.", msg.c_str());
                 break;
 
-            case SPWPN_HOLY_WRATH:
+            case SPWPN_SILVER:
                 if (showMsgs && !you.undead_or_demonic())
                     mprf("%s stops glowing.", msg.c_str());
                 break;
@@ -1965,17 +1956,17 @@ static void _unequip_weapon_effect(item_def& item, bool showMsgs, bool meld)
                     mprf("%s stops crackling.", msg.c_str());
                 break;
 
-            case SPWPN_VENOM:
+            case SPWPN_SPELLVAMP:
                 if (showMsgs)
-                    mprf("%s stops dripping with poison.", msg.c_str());
+                    mprf("%s stops thirsting for magic.", msg.c_str());
                 break;
 
-            case SPWPN_PROTECTION:
+            case SPWPN_SHIELDING:
                 if (showMsgs)
                     mprf("%s goes still.", msg.c_str());
-                if (you.duration[DUR_SPWPN_PROTECTION])
+                if (you.duration[DUR_SPWPN_SHIELDING])
                 {
-                    you.duration[DUR_SPWPN_PROTECTION] = 0;
+                    you.duration[DUR_SPWPN_SHIELDING] = 0;
                     you.redraw_armour_class = true;
                 }
                 break;
@@ -1985,10 +1976,7 @@ static void _unequip_weapon_effect(item_def& item, bool showMsgs, bool meld)
                     mpr("You feel the dreadful sensation subside.");
                 break;
 
-            case SPWPN_DISTORTION:
-                if (!meld)
-                    unwield_distortion();
-
+            case SPWPN_BLINKING:
                 break;
 
             case SPWPN_ANTIMAGIC:
@@ -2054,7 +2042,7 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
             break;
 
         case SPARM_POISON_RESISTANCE:
-            if (player_res_poison(false, false, false) < 3)
+            if (player_res_poison(false, false) < 3)
                 mpr("You feel resistant to poison.");
             break;
 
@@ -2567,38 +2555,5 @@ static void _mark_unseen_monsters()
             (*mi)->unseen_pos = (*mi)->pos();
         }
 
-    }
-}
-
-// This brand is supposed to be dangerous because it does large
-// bonus damage, as well as banishment and other side effects,
-// and you can rely on the occasional spatial bonus to mow down
-// some opponents. It's far too powerful without a real risk.
-// -- bwr [ed: ebering]
-void unwield_distortion(bool brand)
-{
-    if (have_passive(passive_t::safe_distortion))
-    {
-        simple_god_message(make_stringf(" absorbs the residual spatial "
-                           "distortion as you %s your "
-                           "weapon.", brand ? "rebrand" : "unwield").c_str());
-        return;
-    }
-    // Makes no sense to discourage unwielding a temporarily
-    // branded weapon since you can wait it out. This also
-    // fixes problems with unwield prompts (mantis #793).
-    if (coinflip())
-        you_teleport_now(false, true, "Space warps around you!");
-    else if (coinflip())
-    {
-        you.banish(nullptr,
-                   make_stringf("%sing a weapon of distortion",
-                                brand ? "rebrand" : "unwield").c_str(),
-                   you.get_experience_level(), true);
-    }
-    else
-    {
-        mpr("Space warps into you!");
-        contaminate_player(random2avg(3000, 3), true);
     }
 }

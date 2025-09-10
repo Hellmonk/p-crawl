@@ -227,8 +227,7 @@ spellcasting success rate.
 %%%%
 Corr status
 
-You are corroded, reducing your damage in physical combat and your armour by an
-amount depending on the severity of the corrosion.
+You are corroded, reducing your AC by 10.
 %%%%
 Flay status
 

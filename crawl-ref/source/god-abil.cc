@@ -168,7 +168,7 @@ bool bless_weapon(god_type god, brand_type brand, colour_t colour)
 
     item_def& wpn(you.inv[item_slot]);
     // TSO and KIKU allow blessing ranged weapons, but LUGONU does not.
-    if (!is_brandable_weapon(wpn, brand == SPWPN_HOLY_WRATH
+    if (!is_brandable_weapon(wpn, brand == SPWPN_SILVER
                                                                   || brand == SPWPN_PAIN, true))
     {
         return false;
@@ -178,7 +178,7 @@ bool bless_weapon(god_type god, brand_type brand, colour_t colour)
                        + " ";
     if (brand == SPWPN_PAIN)
         prompt += "bloodied with pain";
-    else if (brand == SPWPN_DISTORTION)
+    else if (brand == SPWPN_BLINKING)
         prompt += "corrupted with distortion";
     else
         prompt += "blessed with holy wrath";
@@ -1718,9 +1718,9 @@ void yred_make_bound_soul(monster* mon, bool force_hostile)
     for (int slot = MSLOT_WEAPON; slot <= MSLOT_ALT_WEAPON; slot++)
     {
         item_def *wpn = mon->mslot_item(static_cast<mon_inv_type>(slot));
-        if (wpn && get_weapon_brand(*wpn) == SPWPN_HOLY_WRATH)
+        if (wpn && get_weapon_brand(*wpn) == SPWPN_SILVER)
         {
-            set_item_ego_type(*wpn, OBJ_WEAPONS, SPWPN_DRAINING);
+            set_item_ego_type(*wpn, OBJ_WEAPONS, SPWPN_VAMPIRISM);
             convert2bad(*wpn);
         }
     }

@@ -1688,7 +1688,7 @@ void name_zombie(monster& mon, const monster& orig)
 // Derived undead deal 80% of the damage of the base form.
 static int _downscale_zombie_damage(int damage)
 {
-    return max(1, 4 * damage / 5);
+    return max(1, damage / 2);
 }
 
 // Do not include AF_PLAIN, we want that to be overwritten for spectrals

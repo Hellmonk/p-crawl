@@ -306,7 +306,7 @@ static const map<spell_type, mons_spell_logic> spell_to_logic = {
                    _los_spell_worthwhile(caster, SPELL_DRAIN_LIFE)
                    && (!caster.friendly()
                        || !you.visible_to(&caster)
-                       || player_prot_life(false) >= 3));
+                       || player_prot_life() >= 3));
         },
         [](monster &caster, mon_spell_slot slot, bolt&) {
             const int splpow = mons_spellpower(caster, slot.spell);
@@ -5171,9 +5171,7 @@ bool handle_mon_spell(monster* mons)
 
     // Check for antimagic if casting a spell spell.
     if (mons->has_ench(ENCH_ANTIMAGIC) && flags & MON_SPELL_ANTIMAGIC_MASK
-        && !x_chance_in_y(4 * BASELINE_DELAY,
-                          4 * BASELINE_DELAY
-                          + mons->get_ench(ENCH_ANTIMAGIC).duration))
+        && coinflip())
     {
         // This may be a bad idea -- if we decide monsters shouldn't
         // lose a turn like players do not, please make this just return.
@@ -5596,10 +5594,10 @@ static void _cast_mortal_champion(monster* mons)
         else if (type == MONS_DEEP_ELF_BLADEMASTER)
         {
             destroy_item(mortal->inv[MSLOT_ALT_WEAPON]);
-            give_specific_item(mortal, items(false, OBJ_WEAPONS, wpn, 0, SPWPN_HOLY_WRATH));
+            give_specific_item(mortal, items(false, OBJ_WEAPONS, wpn, 0, SPWPN_SILVER));
         }
 
-        give_specific_item(mortal, items(false, OBJ_WEAPONS, wpn, 0, SPWPN_HOLY_WRATH));
+        give_specific_item(mortal, items(false, OBJ_WEAPONS, wpn, 0, SPWPN_SILVER));
         give_specific_item(mortal, items(false, OBJ_ARMOUR, arm, 0, SPARM_FORBID_EGO));
 
         // Re-mark the items we just gave as summoned
@@ -6848,12 +6846,12 @@ static void _cast_bestow_arms(monster& caster)
                         ranged_eligable && two_hand_eligable ? 10 : 0, WPN_TRIPLE_CROSSBOW,
                         ranged_eligable ? 8 : 0, WPN_HAND_CANNON);
 
-    wpn.brand = random_choose_weighted(11, SPWPN_FLAMING,
+    wpn.brand = random_choose_weighted(11, SPWPN_EXPLOSIVE,
                                        11, SPWPN_FREEZING,
                                        7,  SPWPN_SPEED,
                                        7,  SPWPN_VAMPIRISM,
                                        4,  SPWPN_CHAOS,
-                                       1,  SPWPN_DISTORTION);
+                                       1,  SPWPN_BLINKING);
 
     wpn.plus = random_range(4, 9);
     wpn.flags |= (ISFLAG_SUMMONED | ISFLAG_IDENTIFIED);

@@ -277,7 +277,7 @@ INSCRIP: curses,
 COLOUR:  ETC_DEATH
 TILE:    spwpn_scythe_of_curses
 TILE_EQ: scythe_of_curses
-BRAND:   SPWPN_DRAINING
+BRAND:   SPWPN_VAMPIRISM
 VALUE:   800
 BOOL:    drain
 DBRAND:  Curses:    It inflicts powerful necromantic curses on any living foe it
@@ -306,7 +306,7 @@ PLUS:    +6
 COLOUR:  ETC_FIRE
 TILE:    spwpn_sword_of_cerebov
 TILE_EQ: sword_twist
-BRAND:   SPWPN_FLAMING
+BRAND:   SPWPN_EXPLOSIVE
 BOOL:    evil, nogen
 DBRAND:  Hellfire:  It temporarily reduces the fire resistance of those it
  strikes.
@@ -351,7 +351,7 @@ PLUS:    +8
 COLOUR:  ETC_DARK
 TILE:    urand_bloodbane
 TILE_EQ: bloodbane
-BRAND:   SPWPN_DRAINING
+BRAND:   SPWPN_VAMPIRISM
 ANGRY:   5
 BOOL:    deleted
 STEALTH: -1
@@ -457,8 +457,8 @@ COLOUR:   ETC_HOLY
 TILE:     unrand_zealot_sword
 TILE_EQ:  zealot_sword
 # fallback places a randart eudemon blade!
-BRAND:    SPWPN_HOLY_WRATH
-FB_BRAND: SPWPN_HOLY_WRATH
+BRAND:    SPWPN_SILVER
+FB_BRAND: SPWPN_SILVER
 EV:       3
 ANGRY:    20
 DESCRIP:  Zealotry:  Whenever the wielder enters a berserk rage, their allies
@@ -467,7 +467,7 @@ DESCRIP:  Zealotry:  Whenever the wielder enters a berserk rage, their allies
 NAME:    arbalest "Damnation"
 INSCRIP: damnation
 OBJ:     OBJ_WEAPONS/WPN_ARBALEST
-FB_BRAND: SPWPN_FLAMING
+FB_BRAND: SPWPN_EXPLOSIVE
 PLUS:    +6
 COLOUR:  ETC_FIRE
 TILE:    urand_damnation
@@ -526,7 +526,7 @@ PLUS:     +8 # Messed with sometimes
 COLOUR:   ETC_WATER
 TILE:     urand_octopus_king
 TILE_EQ:  trident_octopus_king
-BRAND:    SPWPN_VENOM
+BRAND:    SPWPN_SPELLVAMP
 BOOL:     elec, no_upgrade
 
 NAME:    mithril axe "Arga"
@@ -596,7 +596,7 @@ BOOL:    inv, tilerim, deleted
 NAME:    lance "Wyrmbane"
 OBJ:     OBJ_WEAPONS/WPN_SPEAR
 FALLBACK: OBJ_WEAPONS/WPN_DEMON_TRIDENT
-FB_BRAND: SPWPN_FLAMING
+FB_BRAND: SPWPN_EXPLOSIVE
 INSCRIP: slay drac,
 TYPE:    lance
 BASE_DAM: +2
@@ -624,7 +624,7 @@ DESCRIP:  Stab:      It is more effective when stabbing unaware enemies,
 NAME:     great mace "Undeadhunter"
 INSCRIP:  deathbane,
 OBJ:      OBJ_WEAPONS/WPN_GREAT_MACE
-FB_BRAND: SPWPN_HOLY_WRATH
+FB_BRAND: SPWPN_SILVER
 PLUS:     +7
 COLOUR:   LIGHTGREY
 TILE:     urand_undeadhunter
@@ -1008,7 +1008,7 @@ PLUS:     +16
 COLOUR:   ETC_UNHOLY
 TILE:     spwpn_demon_axe
 TILE_EQ:  demon_axe
-BRAND:    SPWPN_DRAINING
+BRAND:    SPWPN_VAMPIRISM
 FB_BRAND: SPWPN_PAIN
 BOOL:     fly, drain
 INSCRIP:  demonic, Mesm
@@ -1108,7 +1108,7 @@ COLOUR:   RED
 TILE:     urand_firestarter
 TILE_EQ:  firestarter
 PLUS:     +7
-BRAND:    SPWPN_FLAMING
+BRAND:    SPWPN_EXPLOSIVE
 DBRAND:   Immolate:  It fills those it strikes with an explosive inner flame.
 DESCRIP:  rFlCloud:  It grants immunity to clouds of flame.
 
@@ -1170,7 +1170,7 @@ PLUS:     +2
 COLOUR:   ETC_VEHUMET
 TILE:     urand_thermic_engine
 TILE_EQ:  thermic_engine
-BRAND:    SPWPN_FLAMING
+BRAND:    SPWPN_EXPLOSIVE
 
 ENUM:     RIFT
 NAME:     demon trident "Rift"
@@ -1180,7 +1180,7 @@ PLUS:     +8
 COLOUR:   ETC_WARP
 TILE:     urand_rift
 TILE_EQ:  rift
-BRAND:    SPWPN_DISTORTION
+BRAND:    SPWPN_BLINKING
 DBRAND:   Reach+:    It can reach especially far, and its reaching attacks
  ignore other creatures in the way.
 

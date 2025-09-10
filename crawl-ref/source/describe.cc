@@ -1593,29 +1593,22 @@ static string _describe_weapon_brand(const item_def &item)
         return "";
 
     const brand_type brand = get_weapon_brand(item);
-    const bool ranged = is_range_weapon(item);
 
     switch (brand)
     {
-    case SPWPN_FLAMING:
-    {
-        const int damtype = get_vorpal_type(item);
-        const string desc = "It burns victims, dealing an additional "
-                            "one-quarter of any damage that pierces defenders'"
-                            " armour.";
-        if (ranged || damtype != DVORP_SLICING && damtype != DVORP_CHOPPING)
-            return desc;
-        return desc +
-            " Big, fiery blades are also staple armaments of hydra-hunters.";
-    }
+    case SPWPN_EXPLOSIVE:
+        return "Dealing damage with it causes a loud explosion, which damages "
+               "the victim and all adjacent creatures (except the wielder) for "
+               "25% of the damage dealt. Additional brand damage is not "
+               "reduced by AC.";
     case SPWPN_FREEZING:
-        return "It freezes victims, dealing an additional one-quarter of any "
-               "damage that pierces defenders' armour. It may also slow down "
-               "cold-blooded creatures.";
-    case SPWPN_HOLY_WRATH:
-        return "It has been blessed by the Shining One, dealing an additional "
-               "three-quarters of any damage that pierces undead and demons' "
-               "armour. Undead and demons cannot use this.";
+        return "It freezes victims, dealing an additional 25% of the damage "
+               "dealt. It may also slow nonresistant creatures (% chance equal "
+               "to twice the damage dealt). Additional brand damage is not "
+               "reduced by AC.";
+    case SPWPN_SILVER:
+        return "It deals +100% additional damage to undad and demons. "
+               "Additional brand damage is not reduced by AC.";
     case SPWPN_FOUL_FLAME:
         return "It has been infused with foul flame, dealing an additional "
                "three-quarters damage to holy beings, an additional "
@@ -1623,34 +1616,32 @@ static string _describe_weapon_brand(const item_def &item)
                "half damage to all others, so long as it pierces armour. "
                "Holy beings and good god worshippers cannot use this.";
     case SPWPN_ELECTROCUTION:
-        return "It sometimes electrocutes victims (1/4 chance, 8-20 damage).";
-    case SPWPN_VENOM:
-        return "It poisons victims.";
-    case SPWPN_PROTECTION:
+        return "It sometimes electrocutes victims (50% chance, 1d12 damage). "
+               "rElec prevents this damage. Additional brand damage is not "
+               "reduced by AC.";
+    case SPWPN_SPELLVAMP:
+        return "It restores its wielder's magic when it slays a foe. The "
+               "amount of magic restored depends on the monster's difficulty.";
+    case SPWPN_SHIELDING:
         return "It grants its wielder temporary protection after it strikes "
-               "(+7 AC).";
-    case SPWPN_DRAINING:
-        return "It sometimes drains living victims (1/2 chance). This deals "
-               "an additional one-quarter of any damage that pierces "
-               "defenders' armour as well as a flat 2-4 damage, and also "
-               "weakens them slightly.";
+               "(+25% SH, lasts 3 turns).";
     case SPWPN_SPEED:
         return "Attacks with this weapon are significantly faster.";
     case SPWPN_HEAVY:
-    {
-        string desc = ranged ? "Any ammunition fired from it" : "It";
-        return desc + " deals dramatically more damage, but attacks with "
-                      "it are much slower.";
-    }
+        return "It deals 250% of normal damage, but attacking with it will "
+               "stun you for one turn.";
     case SPWPN_CHAOS:
-        return "Each hit has a different, random effect.";
+        return "Each hit has a different, random effect. It may haste, slow, "
+               "confuse, or weaken the target, or duplicate the effects of the "
+               "explosive, freezing, electrocution, antimagic, silver, or acid "
+               "brands, each with equal chance.";
     case SPWPN_VAMPIRISM:
-        return "It occasionally heals its wielder for a portion "
-               "of the damage dealt when it wounds a living foe.";
+        return "It heals its wielder when it slays a living foe. The amount of "
+               "healing depends on the monster's difficulty.";
     case SPWPN_PAIN:
         {
-            string desc = "In the hands of one skilled in necromantic "
-                 "magic, it inflicts extra damage on living creatures.";
+            string desc =  "It inflicts extra damage on living creatures "
+                 "depending on the wielder's necromancy skill (1d(skill * 2)).";
             if (you_worship(GOD_TROG))
                 return desc + " Trog prevents you from unleashing this effect.";
             if (!is_useless_skill(SK_NECROMANCY))
@@ -1658,28 +1649,28 @@ static string _describe_weapon_brand(const item_def &item)
             return desc + " Your inability to study Necromancy prevents "
                      "you from drawing on the full power of this weapon.";
         }
-    case SPWPN_DISTORTION:
-        return "It warps and distorts space around it, and may blink, banish, "
-               "or inflict extra damage upon those it strikes. Unwielding it "
-               "can teleport you to foes or banish you to the Abyss.";
+    case SPWPN_BLINKING:
+        return "It may blink enemies you hit. The chance to blink an enemy is "
+               "10%, plus an additional 10% per level of Translocations skill.";
     case SPWPN_PENETRATION:
         return "Any ammunition fired by it continues flying after striking "
                "targets, potentially hitting everything in its path until it "
                "leaves sight.";
     case SPWPN_REAPING:
-        return "Any living, holy, or demonic foe damaged by it may be "
-               "temporarily reanimated upon death as a friendly spectral, with "
-               "an increasing chance as more damage is dealt.";
+        return "Any living foe damaged by it may be temporarily reanimated "
+               "on death as a friendly zombie, with an increasing chance as "
+               "more damage is dealt.";
     case SPWPN_ANTIMAGIC:
-        return "It reduces the magical energy of the wielder, and disrupts "
-               "the spells and magical abilities of those it strikes. Natural "
-               "abilities and divine invocations are not affected.";
+        return "It halves the maximum mp of the wielder, and disrupts "
+               "the spells and magical abilities of those it strikes, causing "
+               "spell casts to fail 50% of the time.";
     case SPWPN_SPECTRAL:
         return "When its wielder attacks, the weapon's spirit leaps out and "
-               "launches a second, slightly weaker strike. The spirit shares "
-               "part of any damage it takes with its wielder.";
+               "launches a second strike (if there is enough space to summon "
+               "it. The spirit shares all damage it takes with its wielder.";
     case SPWPN_ACID:
-        return "It splashes victims with acid (2d4 damage, Corrosion).";
+        return "It inflicts corrosion (50% chance), reducing the victim's "
+               "armour by 10.";
     default:
         return "";
     }
@@ -1983,11 +1974,9 @@ static string _describe_ammo(const item_def &item)
             break;
 
         case SPMSL_SILVER:
-            description += "It deals increased damage compared to normal ammo "
-                           "and substantially increased damage to chaotic "
-                           "and magically transformed beings. It also inflicts "
-                           "extra damage against mutated beings, according to "
-                           "how mutated they are.";
+            description += "It deals +100% additional damage to undad and "
+                           "demons. Additional brand damage is not reduced "
+                           "by AC.";
             break;
         }
     }
@@ -4903,8 +4892,7 @@ static mon_attack_info _atk_info(const monster_info& mi, int i)
 }
 
 // Return a string describing the maximum damage from a monster's weapon brand
-static string _brand_damage_string(const monster_info &mi, brand_type brand,
-                                   int dam)
+static string _brand_damage_string(brand_type brand, int dam)
 {
     const char * name = brand_type_name(brand, true);
     int brand_dam;
@@ -4912,28 +4900,17 @@ static string _brand_damage_string(const monster_info &mi, brand_type brand,
     // Heavy is included in base damage calculations instead
     switch (brand)
     {
-        case SPWPN_FLAMING:
+        case SPWPN_EXPLOSIVE:
         case SPWPN_FREEZING:
-        case SPWPN_DRAINING:
             brand_dam = dam / 2;
             break;
         case SPWPN_ELECTROCUTION:
             brand_dam = 20;
             break;
-        case SPWPN_DISTORTION:
-            brand_dam = 26;
-            break;
-        case SPWPN_HOLY_WRATH:
-            // Hopefully this isn't too confusing for non-holy-vuln players
-            brand_dam = dam * 15 / 10;
-            break;
         case SPWPN_FOUL_FLAME:
             brand_dam = dam * 0.75;
             break;
-        case SPWPN_PAIN:
-            brand_dam = mi.has_necromancy_spell() ? mi.hd * 2 : mi.hd / 2;
-            break;
-        case SPWPN_VENOM:
+        case SPWPN_SPELLVAMP:
         case SPWPN_ANTIMAGIC:
         case SPWPN_CHAOS:
             return make_stringf(" + %s", name);
@@ -5164,19 +5141,14 @@ static void _attacks_table_row(const monster_info &mi, mon_attack_desc_info &di,
     string brand_str;
     if (wpn)
     {
-        if (wpn->base_type == OBJ_WEAPONS)
-        {
-            brand_str = _brand_damage_string(mi, get_weapon_brand(*wpn),
-                                             real_dam);
-        }
-        else if (wpn->base_type == OBJ_STAVES)
+        if (wpn->base_type == OBJ_STAVES)
         {
             brand_str = _monster_staff_damage_string(mi,
                             static_cast<stave_type>(wpn->sub_type));
         }
     }
     else if (di.special_flavour != SPWPN_NORMAL)
-        brand_str = _brand_damage_string(mi, di.special_flavour, real_dam);
+        brand_str = _brand_damage_string(di.special_flavour, real_dam);
 
     string final_dam_str = make_stringf("%s%s%s", dam_str.c_str(),
                                         brand_str.c_str(),

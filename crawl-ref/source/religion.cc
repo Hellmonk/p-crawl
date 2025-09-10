@@ -1796,7 +1796,7 @@ static string _item_ego_name(object_class_type base_type, int brand)
     {
         // 'remembers... draining' reads better than 'drain', but 'flame'
         // reads better than 'flaming'
-        const bool terse = brand == SPWPN_FLAMING
+        const bool terse = brand == SPWPN_EXPLOSIVE
                            || brand == SPWPN_ANTIMAGIC;
         return brand_type_name((brand_type) brand, terse);
     }
@@ -1895,7 +1895,7 @@ void upgrade_hepliaklqana_ancestor(bool quiet_force)
                  ancestor->name(DESC_YOUR, true).c_str(),
                  ancestor->pronoun(PRONOUN_POSSESSIVE, true).c_str(),
                  apostrophise(item_base_name(OBJ_WEAPONS, wpn)).c_str(),
-                 brand_type_name(brand, brand != SPWPN_DRAINING));
+                 brand_type_name(brand, brand != SPWPN_VAMPIRISM));
         }
     }
     // but shields can't be lost, and *can* be gained (knight at hd 5)
@@ -1955,11 +1955,11 @@ static brand_type _hepliaklqana_weapon_brand(monster_type mc, int HD)
     switch (mc)
     {
         case MONS_ANCESTOR_HEXER:
-            return HD < 16 ?   SPWPN_DRAINING :
+            return HD < 16 ?   SPWPN_VAMPIRISM :
                                SPWPN_ANTIMAGIC;
         case MONS_ANCESTOR_KNIGHT:
             return HD < 10 ?   SPWPN_NORMAL :
-                   HD < 16 ?   SPWPN_FLAMING :
+                   HD < 16 ?   SPWPN_EXPLOSIVE :
                                SPWPN_SPEED;
         case MONS_ANCESTOR_BATTLEMAGE:
             return HD < 13 ?   SPWPN_NORMAL :

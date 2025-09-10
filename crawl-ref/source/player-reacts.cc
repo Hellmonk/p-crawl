@@ -245,6 +245,19 @@ static void _decrement_paralysis(int delay)
     you.redraw_evasion = true;
 }
 
+static void _decrement_stun(int delay)
+{
+    if (!you.duration[DUR_STUN])
+        return;
+
+    _decrement_a_duration(DUR_STUN, delay);
+
+    if (you.duration[DUR_STUN])
+        return;
+
+    mprf(MSGCH_DURATION, "You are no longer stunned.");
+}
+
 /**
  * Check whether the player's ice (Ozocubu's) armour was melted this turn.
  * If so, print the appropriate message and clear the flag.
@@ -509,6 +522,7 @@ void player_reacts_to_monsters()
     _decrement_a_duration(DUR_STUN_IMMUNITY, you.time_taken);
     _decrement_attraction(you.time_taken);
     _decrement_paralysis(you.time_taken);
+    _decrement_stun(you.time_taken);
     _decrement_petrification(you.time_taken);
     _decrement_sleep_and_daze(you.time_taken);
 

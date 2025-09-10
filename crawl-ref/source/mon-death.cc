@@ -1685,12 +1685,8 @@ static bool _mons_reaped(actor &killer, monster& victim)
         beh = SAME_ATTITUDE(mon);
     }
 
-    string msg = victim.name(DESC_ITS) + " spirit is torn from " +
-                     victim.pronoun(PRONOUN_POSSESSIVE) + " body!";
-    string fail_msg = victim.name(DESC_ITS) + " spirit is momentarily torn from " +
-                          victim.pronoun(PRONOUN_POSSESSIVE) + " body, then fades!";
-    _make_derived_undead(&victim, !you.can_see(victim), MONS_SPECTRAL_THING, beh,
-                         MON_SUMM_WPN_REAP, GOD_NO_GOD, msg, fail_msg);
+    _make_derived_undead(&victim, !you.can_see(victim), MONS_ZOMBIE, beh,
+                         MON_SUMM_WPN_REAP, GOD_NO_GOD);
 
     return true;
 }
@@ -3294,7 +3290,6 @@ item_def* monster_die(monster& mons, killer_type killer,
         if (corpse->base_type == OBJ_CORPSES // not gold
             && !mons.props.exists(KIKU_WRETCH_KEY))
         {
-            const monster_type orig = static_cast<monster_type>(corpse->orig_monnum);
             // Avoid a possible crash with level excursions
             // (See previous code block comment ^)
             unwind_var<int> fakehp(mons.hit_points, 1);

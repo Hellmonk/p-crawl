@@ -1237,11 +1237,6 @@ void TilesFramework::_send_player(bool force_full)
     {
         json_open_object(to_string(i));
         item_def item = you.inv[i];
-        if (you.corrosion_amount() && is_weapon(item)
-            && you.equipment.find_equipped_slot(item) != SLOT_UNUSED)
-        {
-            item.plus -= 1 * you.corrosion_amount();
-        }
         _send_item(c.inv[i], item, c.inv_uselessness[i], force_full);
         json_close_object(true);
     }

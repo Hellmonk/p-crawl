@@ -424,6 +424,7 @@ public:
     bool is_skeletal() const override;
     bool is_spiny() const;
     bool paralysed() const override;
+    bool stunned() const override;
     bool cannot_act() const override;
     bool confused() const override;
     bool confused_by_you() const;
@@ -476,6 +477,7 @@ public:
     bool poison(actor *agent, int amount = 1, bool force = false) override;
     bool sicken(int strength) override;
     void paralyse(const actor *, int str, string source = "") override;
+    void stun(actor *evildoer) override;
     void petrify(const actor *, bool force = false) override;
     bool fully_petrify(bool quiet = false) override;
     bool vex(const actor* who, int dur, string source = "", string special_msg = "") override;

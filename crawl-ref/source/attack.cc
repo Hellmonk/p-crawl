@@ -342,56 +342,17 @@ void attack::alert_defender()
     }
 }
 
-bool attack::distortion_affects_defender()
+bool attack::blinking_affects_defender()
 {
-    enum disto_effect
+    actor &user = stat_source();
+
+    if (!defender->no_tele() && x_chance_in_y(10 + user.skill(SK_TRANSLOCATIONS, 10), 100))
     {
-        SMALL_DMG,
-        BIG_DMG,
-        BANISH,
-        BLINK,
-        NONE
-    };
-
-    const disto_effect choice = random_choose_weighted(35, SMALL_DMG,
-                                                       25, BIG_DMG,
-                                                       5, BANISH,
-                                                       20, BLINK,
-                                                       15,  NONE);
-
-    if (simu && !(choice == SMALL_DMG || choice == BIG_DMG))
-        return false;
-
-    switch (choice)
-    {
-    case SMALL_DMG:
-        special_damage += 1 + random2avg(7, 2);
-        special_damage_message = make_stringf("Space warps around %s%s",
-                                              defender_name(false).c_str(),
-                                              attack_strength_punctuation(special_damage).c_str());
-        break;
-    case BIG_DMG:
-        special_damage += 3 + random2avg(24, 2);
-        special_damage_message =
-            make_stringf("Space warps horribly around %s%s",
-                         defender_name(false).c_str(),
-                         attack_strength_punctuation(special_damage).c_str());
-        break;
-    case BLINK:
         if (defender_visible)
             obvious_effect = true;
-        if (!defender->no_tele())
-            blink_fineff::schedule(defender);
-        break;
-    case BANISH:
-        if (defender_visible)
-            obvious_effect = true;
-        defender->banish(attacker, attacker->name(DESC_PLAIN, true),
-                         attacker->get_experience_level());
+        blink_fineff::schedule(defender);
+
         return true;
-    case NONE:
-        // Do nothing
-        break;
     }
 
     return false;
@@ -406,10 +367,10 @@ void attack::antimagic_affects_defender(int pow)
 void attack::pain_affects_defender()
 {
     actor &user = stat_source();
-    if (!one_chance_in(user.skill_rdiv(SK_NECROMANCY) + 1))
+    int sk = user.skill_rdiv(SK_NECROMANCY);
+    if (sk > 0 && (defender->holiness() & MH_NATURAL))
     {
-        special_damage += resist_adjust_damage(defender, BEAM_NEG,
-                              random2(1 + user.skill_rdiv(SK_NECROMANCY)));
+        special_damage += 1 + random2(sk * 2);
 
         if (special_damage && defender_visible)
         {
@@ -435,28 +396,18 @@ struct chaos_attack_type
 // always be a valid option, triggering a more unpredictable chaos_effect
 // instead of a normal attack brand when selected.
 static const vector<chaos_attack_type> chaos_types = {
-    { AF_FIRE,      SPWPN_FLAMING,       10,
+    { AF_FIRE,      SPWPN_EXPLOSIVE,       10,
       [](const actor &d) { return d.is_player() || d.res_fire() < 3; } },
     { AF_COLD,      SPWPN_FREEZING,      10,
       [](const actor &d) { return d.is_player() || d.res_cold() < 3; } },
     { AF_ELEC,      SPWPN_ELECTROCUTION, 10,
       [](const actor &d) { return d.is_player() || d.res_elec() <= 0; } },
-    { AF_POISON,    SPWPN_VENOM,         10,
-      [](const actor &d) {
-          return !(d.holiness() & (MH_UNDEAD | MH_NONLIVING)); } },
-    { AF_CHAOTIC,   SPWPN_CHAOS,         13,
-      nullptr },
-    { AF_DRAIN,  SPWPN_DRAINING,         5,
-      [](const actor &d) { return d.res_negative_energy() < 3; } },
-    { AF_VAMPIRIC,  SPWPN_VAMPIRISM,     5,
-      [](const actor &d) {
-          return actor_is_susceptible_to_vampirism(d); } },
-    { AF_HOLY,      SPWPN_HOLY_WRATH,    5,
+    { AF_ACID,      SPWPN_ACID,            10, nullptr },
+    { AF_CHAOTIC,   SPWPN_CHAOS,         40,  nullptr },
+    { AF_HOLY,      SPWPN_SILVER,    10,
       [](const actor &d) { return d.holy_wrath_susceptible(); } },
-    { AF_ANTIMAGIC, SPWPN_ANTIMAGIC,     5,
+    { AF_ANTIMAGIC, SPWPN_ANTIMAGIC,     10,
       [](const actor &d) { return d.antimagic_susceptible(); } },
-    { AF_FOUL_FLAME, SPWPN_FOUL_FLAME,   2,
-      [](const actor &d) { return d.res_foul_flame() < 3; } },
 };
 
 brand_type attack::random_chaos_brand()
@@ -481,16 +432,12 @@ brand_type attack::random_chaos_brand()
     string brand_name = "CHAOS brand: ";
     switch (brand)
     {
-    case SPWPN_FLAMING:         brand_name += "flaming"; break;
+    case SPWPN_EXPLOSIVE:         brand_name += "explosive"; break;
     case SPWPN_FREEZING:        brand_name += "freezing"; break;
     case SPWPN_ELECTROCUTION:   brand_name += "electrocution"; break;
-    case SPWPN_VENOM:           brand_name += "venom"; break;
     case SPWPN_CHAOS:           brand_name += "chaos"; break;
-    case SPWPN_DRAINING:        brand_name += "draining"; break;
-    case SPWPN_VAMPIRISM:       brand_name += "vampirism"; break;
-    case SPWPN_HOLY_WRATH:      brand_name += "holy wrath"; break;
+    case SPWPN_SILVER:      brand_name += "silver"; break;
     case SPWPN_ANTIMAGIC:       brand_name += "antimagic"; break;
-    case SPWPN_FOUL_FLAME:      brand_name += "foul flame"; break;
     default:                    brand_name += "BUGGY"; break;
     }
 
@@ -566,8 +513,7 @@ int attack::inflict_damage(int dam, beam_type flavour, bool clean)
     if (flavour == NUM_BEAMS)
         flavour = special_damage_flavour;
     // Auxes temporarily clear damage_brand so we don't need to check
-    if (damage_brand == SPWPN_REAPING
-        || damage_brand == SPWPN_CHAOS && one_chance_in(100))
+    if (damage_brand == SPWPN_REAPING)
     {
         defender->props[REAPING_DAMAGE_KEY].get_int() += dam;
         // With two reapers of different friendliness, the most recent one
@@ -727,7 +673,6 @@ int attack::player_apply_slaying_bonuses(int damage, bool aux)
                         || (weapon && is_range_weapon(*weapon)
                                    && using_weapon());
     damage_plus += slaying_bonus(throwing);
-    damage_plus -= you.corrosion_amount();
 
     // XXX: should this also trigger on auxes?
     if (!aux && !ranged)
@@ -738,11 +683,6 @@ int attack::player_apply_slaying_bonuses(int damage, bool aux)
 
 int attack::player_apply_final_multipliers(int damage, bool /*aux*/)
 {
-    // Spectral weapons deal "only" 70% of the damage that their
-    // owner would, matching cleaving.
-    if (attacker->type == MONS_SPECTRAL_WEAPON)
-        damage = div_rand_round(damage * 7, 10);
-
     return damage;
 }
 
@@ -981,9 +921,9 @@ bool attack::apply_damage_brand(const char *what)
     obvious_effect = false;
     brand = damage_brand == SPWPN_CHAOS ? random_chaos_brand() : damage_brand;
 
-    if (brand != SPWPN_FLAMING && brand != SPWPN_FREEZING
+    if (brand != SPWPN_EXPLOSIVE && brand != SPWPN_FREEZING
         && brand != SPWPN_ELECTROCUTION && brand != SPWPN_VAMPIRISM
-        && brand != SPWPN_PROTECTION && !defender->alive())
+        && brand != SPWPN_SHIELDING && !defender->alive())
     {
         // Most brands have no extra effects on just killed enemies, and the
         // effect would be often inappropriate.
@@ -991,8 +931,8 @@ bool attack::apply_damage_brand(const char *what)
     }
 
     if (!damage_done
-        && (brand == SPWPN_FLAMING || brand == SPWPN_FREEZING
-            || brand == SPWPN_HOLY_WRATH || brand == SPWPN_FOUL_FLAME
+        && (brand == SPWPN_EXPLOSIVE || brand == SPWPN_FREEZING
+            || brand == SPWPN_SILVER || brand == SPWPN_FOUL_FLAME
             || brand == SPWPN_ANTIMAGIC || brand == SPWPN_VAMPIRISM))
     {
         // These brands require some regular damage to function.
@@ -1001,31 +941,29 @@ bool attack::apply_damage_brand(const char *what)
 
     switch (brand)
     {
-    case SPWPN_PROTECTION:
+    case SPWPN_SHIELDING:
         if (attacker->is_player() && !defender->is_firewood())
             refresh_weapon_protection();
         break;
 
-    case SPWPN_FLAMING:
-        calc_elemental_brand_damage(BEAM_FIRE,
-                                    defender->is_icy() ? "melt" : "burn",
-                                    what);
-        defender->expose_to_element(BEAM_FIRE, 2);
-        if (defender->is_player())
-            maybe_melt_player_enchantments(BEAM_FIRE, special_damage);
+    case SPWPN_EXPLOSIVE:
+        noisy(15, defender->pos());
+        explosive_brand(attacker, defender->pos(), damage_done);
         break;
 
     case SPWPN_FREEZING:
         calc_elemental_brand_damage(BEAM_COLD, "freeze", what);
         defender->expose_to_element(BEAM_COLD, 2, attacker);
+        if (defender->res_cold() < 1 && x_chance_in_y(damage_done, 50))
+            defender->slow_down(attacker, 3);
         break;
 
-    case SPWPN_HOLY_WRATH:
+    case SPWPN_SILVER:
         if (attacker->undead_or_demonic())
             break; // No holy wrath for thee!
 
         if (defender->holy_wrath_susceptible())
-            special_damage = 1 + (random2(damage_done * 15) / 10);
+            special_damage = damage_done;
 
         if (special_damage && defender_visible)
         {
@@ -1064,9 +1002,9 @@ bool attack::apply_damage_brand(const char *what)
     case SPWPN_ELECTROCUTION:
         if (defender->res_elec() > 0)
             break;
-        else if (one_chance_in(4))
+        else if (coinflip())
         {
-            special_damage = 8 + random2(13);
+            special_damage = 1 + random2(12);
             const string punctuation =
                     attack_strength_punctuation(special_damage);
             special_damage_message =
@@ -1081,30 +1019,38 @@ bool attack::apply_damage_brand(const char *what)
 
         break;
 
-    case SPWPN_VENOM:
-        obvious_effect = apply_poison_damage_brand();
-        break;
+    case SPWPN_SPELLVAMP:
+    {
+        if (!weapon
+            || damage_done < 1
+            || defender->alive()
+            || !attacker->is_player()
+            || you.magic_points == you.max_magic_points)
+        {
+            break;
+        }
 
-    case SPWPN_DRAINING:
-        drain_defender();
+        int mp_boost = 1 + random2(defender->get_hit_dice());
+        obvious_effect = true;
+
+        canned_msg(MSG_GAIN_MAGIC);
+        inc_mp(mp_boost);
         break;
+    }
 
     case SPWPN_VAMPIRISM:
     {
         if (!weapon
             || damage_done < 1
+            || defender->alive()
             || !actor_is_susceptible_to_vampirism(*defender)
             || attacker->stat_hp() == attacker->stat_maxhp()
-            || attacker->is_player() && you.duration[DUR_DEATHS_DOOR]
-            || x_chance_in_y(2, 5)
-               && !is_unrandom_artefact(*weapon, UNRAND_LEECH))
+            || attacker->is_player() && you.duration[DUR_DEATHS_DOOR])
         {
             break;
         }
 
-        int hp_boost = is_unrandom_artefact(*weapon, UNRAND_VAMPIRES_TOOTH)
-                       ? damage_done : 1 + random2(damage_done);
-        hp_boost = resist_adjust_damage(defender, BEAM_NEG, hp_boost);
+        int hp_boost = 1 + random2(defender->get_hit_dice());
 
         if (hp_boost)
         {
@@ -1142,8 +1088,8 @@ bool attack::apply_damage_brand(const char *what)
         pain_affects_defender();
         break;
 
-    case SPWPN_DISTORTION:
-        ret = distortion_affects_defender();
+    case SPWPN_BLINKING:
+        ret = blinking_affects_defender();
         break;
 
     case SPWPN_CONFUSE:
@@ -1218,6 +1164,10 @@ bool attack::apply_damage_brand(const char *what)
         defender->splash_with_acid(attacker);
         break;
 
+     case SPWPN_HEAVY:
+        attacker->stun(attacker);
+        break;
+
     default:
         if (using_weapon() && is_unrandom_artefact(*weapon, UNRAND_DAMNATION))
             attacker->god_conduct(DID_EVIL, 2 + random2(3));
@@ -1262,7 +1212,7 @@ void attack::calc_elemental_brand_damage(beam_type flavour,
                                          const char *what)
 {
     special_damage = resist_adjust_damage(defender, flavour,
-                                          random2(damage_done) / 2 + 1);
+                                          div_rand_round((damage_done), 4));
 
     if (needs_message && special_damage > 0 && verb)
     {

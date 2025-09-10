@@ -2140,24 +2140,9 @@ bool curare_actor(actor* source, actor* target, string name,
 int silver_damages_victim(actor* victim, int damage, string &dmg_msg)
 {
     int ret = 0;
-    if (victim->how_chaotic()
-        || victim->is_player() && you.form != transformation::none)
-    {
-        ret = damage * 3 / 4;
-    }
-    else if (victim->is_player())
-    {
-        // For mutation damage, we want to count innate mutations for
-        // demonspawn but not other species.
-        int multiplier = 5 * you.how_mutated(you.species == SP_DEMONSPAWN, true);
-        if (multiplier == 0)
-            return 0;
+    if (victim->holy_wrath_susceptible())
+        ret = damage;
 
-        if (multiplier > 75)
-            multiplier = 75;
-
-        ret = damage * multiplier / 100;
-    }
     else
         return 0;
 
@@ -3328,14 +3313,14 @@ bool bolt::harmless_to_player() const
         return you.res_miasma();
 
     case BEAM_NEG:
-        return player_prot_life(false) >= 3;
+        return player_prot_life() >= 3;
 
     case BEAM_POISON:
-        return player_res_poison(false) >= 3
-               || is_big_cloud() && player_res_poison(false) > 0;
+        return player_res_poison() >= 3
+               || is_big_cloud() && player_res_poison() > 0;
 
     case BEAM_MEPHITIC:
-        return player_res_poison(false) > 0 || you.clarity();
+        return player_res_poison() > 0 || you.clarity();
 
     case BEAM_PETRIFY:
         return you.res_petrify() || you.petrified();
@@ -3344,7 +3329,7 @@ bool bolt::harmless_to_player() const
         return is_big_cloud() && actor_cloud_immune(you, CLOUD_COLD);
 
     case BEAM_VIRULENCE:
-        return player_res_poison(false) >= 3;
+        return player_res_poison() >= 3;
 
     case BEAM_ROOTS:
         return mons_att_wont_attack(attitude) || !agent()->can_constrict(you, CONSTRICT_ROOTS);

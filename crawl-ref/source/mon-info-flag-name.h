@@ -163,4 +163,5 @@ static const vector<monster_info_flag_name> monster_info_flag_names = {
     { MB_PARADOX, "paradox", "touched by paradox", "paradox"},
     { MB_WARDING, "warded", "damage-immune at range", "warded"},
     { MB_DIMINISHED_SPELLS, "dim", "diminished spells", "dim"},
+    { MB_STUNNED, "stunned", "stunned", "stunned"},
 };

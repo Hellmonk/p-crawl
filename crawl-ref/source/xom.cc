@@ -776,8 +776,8 @@ static bool _choose_chaos_upgrade(const monster& mon)
             // If the launcher alters its ammo, then branding the
             // monster's ammo won't be an upgrade.
             int brand = get_weapon_brand(item);
-            if (brand == SPWPN_FLAMING || brand == SPWPN_FREEZING
-                || brand == SPWPN_VENOM)
+            if (brand == SPWPN_EXPLOSIVE || brand == SPWPN_FREEZING
+                || brand == SPWPN_SPELLVAMP)
             {
                 special_launcher = true;
             }
@@ -1611,7 +1611,7 @@ static monster* _find_monster_with_animateable_weapon()
             && weapon.quantity == 1
             && !is_range_weapon(weapon)
             && !is_special_unrandom_artefact(weapon)
-            && get_weapon_brand(weapon) != SPWPN_DISTORTION)
+            && get_weapon_brand(weapon) != SPWPN_BLINKING)
         {
             mons_wpn.push_back(*mi);
         }

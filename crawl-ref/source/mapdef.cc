@@ -4999,15 +4999,17 @@ int str_to_ego(object_class_type item_type, string ego_str)
     {
         "flaming",
         "freezing",
-        "holy_wrath",
+        "silver",
         "electrocution",
 #if TAG_MAJOR_VERSION == 34
         "orc_slaying",
         "dragon_slaying",
 #endif
-        "venom",
-        "protection",
+        "magic_vamp",
+        "shielding",
+#if TAG_MAJOR_VERSION == 34
         "draining",
+#endif
         "speed",
         "heavy",
 #if TAG_MAJOR_VERSION == 34
