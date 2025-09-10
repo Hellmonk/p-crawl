@@ -2974,7 +2974,7 @@ bool is_dangerous_item(const item_def &item, bool temp)
         case SCR_TORMENT:
             return !you.res_torment();
         case SCR_POISON:
-            return player_res_poison(false, temp, true) <= 0
+            return player_res_poison(temp, true) <= 0
                    && !you.cloud_immune();
         default:
             return false;
@@ -3396,7 +3396,7 @@ bool is_useless_item(const item_def &item, bool temp, bool ident)
         switch (item.sub_type)
         {
         case RING_RESIST_CORROSION:
-            return player_res_corrosion(false, false, false);
+            return player_res_corrosion(false, false);
 
         case AMU_ACROBAT:
             return you.has_mutation(MUT_ACROBATIC);
@@ -3410,7 +3410,7 @@ bool is_useless_item(const item_def &item, bool temp, bool ident)
             return you.spirit_shield(false) || you.has_mutation(MUT_HP_CASTING);
 
         case RING_POSITIVE_ENERGY:
-            return player_prot_life(false, temp, false) == 3;
+            return player_prot_life(temp, false) == 3;
 
         case AMU_REGENERATION:
             return
@@ -3429,7 +3429,7 @@ bool is_useless_item(const item_def &item, bool temp, bool ident)
             return you.innate_sinv();
 
         case RING_POISON_RESISTANCE:
-            return player_res_poison(false, temp, false) > 0;
+            return player_res_poison(temp, false) > 0;
 
         case RING_WIZARDRY:
             return you_worship(GOD_TROG);

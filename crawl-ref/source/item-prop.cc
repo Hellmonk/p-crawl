@@ -2548,7 +2548,7 @@ int get_armour_willpower(const item_def &arm, bool check_artp)
     return res;
 }
 
-bool get_armour_see_invisible(const item_def &arm, bool check_artp)
+bool get_armour_see_invisible(const item_def &arm)
 {
     ASSERT(arm.base_type == OBJ_ARMOUR);
 
@@ -2689,7 +2689,7 @@ int get_jewellery_willpower(const item_def &ring, bool check_artp)
     return res;
 }
 
-bool get_jewellery_see_invisible(const item_def &ring, bool check_artp)
+bool get_jewellery_see_invisible(const item_def &ring)
 {
     ASSERT(ring.base_type == OBJ_JEWELLERY);
 

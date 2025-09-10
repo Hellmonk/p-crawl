@@ -194,15 +194,17 @@ triple_crossbow2
 # in item-prop-enum.h.
 i-flaming BRAND_FLAMING BRAND_WEP_FIRST
 i-freezing BRAND_FREEZING
-i-holy_wrath BRAND_HOLY_WRATH
+i-holy_wrath BRAND_SILVER
 i-electrocution BRAND_ELECTROCUTION
 # start TAG_MAJOR_VERSION == 34
 i-confusion BRAND_ORC_SLAYING
 i-confusion BRAND_DRAGON_SLAYING
 # end TAG_MAJOR_VERSION
-i-venom BRAND_VENOM
-i-protection BRAND_PROTECTION
+i-venom BRAND_SPELLVAMP
+i-protection BRAND_SHIELDING
+# start TAG_MAJOR_VERSION == 34
 i-draining BRAND_DRAINING
+# end TAG_MAJOR_VERSION
 i-speed BRAND_SPEED
 i-heavy BRAND_HEAVY
 # start TAG_MAJOR_VERSION == 34
@@ -214,7 +216,7 @@ i-pain BRAND_PAIN
 %rim 1
 i-antimagic BRAND_ANTIMAGIC
 %rim 0
-i-distortion BRAND_DISTORTION
+i-distortion BRAND_BLINKING
 # start TAG_MAJOR_VERSION == 34
 i-confusion BRAND_REACHING
 i-returning BRAND_RETURNING

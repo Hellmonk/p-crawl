@@ -159,7 +159,7 @@ bool check_moveto_cloud(const coord_def& p, const string &move_verb,
         if (ctype == CLOUD_STEAM)
         {
             int threshold = 20;
-            if (player_res_steam(false) < 0)
+            if (player_res_steam() < 0)
                 threshold = threshold * 3 / 2;
             threshold = threshold * you.time_taken / BASELINE_DELAY;
             // Do prompt if we'd lose icemail, though.
@@ -1222,7 +1222,7 @@ int player::piety() const
 }
 
 // If temp is set to false, temporary sources or resistance won't be counted.
-int player_res_fire(bool allow_random, bool temp, bool items)
+int player_res_fire(bool temp, bool items)
 {
     int rf = 0;
 
@@ -1284,10 +1284,10 @@ int player_res_fire(bool allow_random, bool temp, bool items)
     return rf;
 }
 
-int player_res_steam(bool allow_random, bool temp, bool items)
+int player_res_steam(bool temp, bool items)
 {
     int res = 0;
-    const int rf = player_res_fire(allow_random, temp, items);
+    const int rf = player_res_fire(temp, items);
 
     res += you.get_mutation_level(MUT_STEAM_RESISTANCE) * 2;
 
@@ -1308,7 +1308,7 @@ int player_res_steam(bool allow_random, bool temp, bool items)
     return res;
 }
 
-int player_res_cold(bool allow_random, bool temp, bool items)
+int player_res_cold(bool temp, bool items)
 {
     int rc = 0;
 
@@ -1363,7 +1363,7 @@ int player_res_cold(bool allow_random, bool temp, bool items)
     return rc;
 }
 
-int player_res_corrosion(bool allow_random, bool temp, bool items)
+int player_res_corrosion(bool temp, bool items)
 {
     if (temp && you.duration[DUR_RESISTANCE])
         return 1;
@@ -1393,7 +1393,7 @@ int player_res_corrosion(bool allow_random, bool temp, bool items)
     return 0;
 }
 
-int player_res_electricity(bool allow_random, bool temp, bool items)
+int player_res_electricity(bool temp, bool items)
 {
     int re = 0;
 
@@ -1443,7 +1443,7 @@ bool player_kiku_res_torment()
 }
 
 // If temp is set to false, temporary sources or resistance won't be counted.
-int player_res_poison(bool allow_random, bool temp, bool items, bool forms)
+int player_res_poison(bool temp, bool items, bool forms)
 {
     const int form_rp = forms ? cur_form(temp)->res_pois() : 0;
     if (you.is_nonliving(temp, forms)
@@ -1604,7 +1604,7 @@ int player_spec_tloc()
 
 // If temp is set to false, temporary sources of resistance won't be
 // counted.
-int player_prot_life(bool allow_random, bool temp, bool items)
+int player_prot_life(bool temp, bool items)
 {
     int pl = 0;
 
@@ -6422,7 +6422,7 @@ bool player::res_water_drowning() const
 
 int player::res_poison(bool temp) const
 {
-    return player_res_poison(true, temp);
+    return player_res_poison(temp);
 }
 
 bool player::res_miasma(bool temp) const
@@ -6470,7 +6470,7 @@ int player::res_foul_flame() const
 
 int player::res_negative_energy(bool intrinsic_only) const
 {
-    return player_prot_life(true, true, !intrinsic_only);
+    return player_prot_life(true, !intrinsic_only);
 }
 
 bool player::res_torment() const
@@ -8099,7 +8099,7 @@ bool player::can_wear_barding(bool temp) const
     return species::wears_barding(species);
 }
 
-static int _get_potion_heal_factor(bool temp=true)
+static int _get_potion_heal_factor()
 {
     // healing factor is expressed in halves, so default is 2/2 -- 100%.
     int factor = 2;
@@ -8131,9 +8131,9 @@ void print_potion_heal_message()
         mpr("Your system partially rejects the healing.");
 }
 
-bool player::can_potion_heal(bool temp)
+bool player::can_potion_heal()
 {
-    return _get_potion_heal_factor(temp) > 0;
+    return _get_potion_heal_factor() > 0;
 }
 
 int player::scale_potion_healing(int healing_amount)

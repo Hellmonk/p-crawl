@@ -302,31 +302,31 @@ static int you_unarmed_ego(lua_State *ls)
  * @treturn int resistance level
  * @function res_poison
  */
-LUARET1(you_res_poison, number, player_res_poison(false))
+LUARET1(you_res_poison, number, player_res_poison())
 
 /*** Fire resistance (rF).
  * @treturn int resistance level
  * @function res_fire
  */
-LUARET1(you_res_fire, number, player_res_fire(false))
+LUARET1(you_res_fire, number, player_res_fire())
 
 /*** Cold resistance (rC).
  * @treturn int resistance level
  * @function res_cold
  */
-LUARET1(you_res_cold, number, player_res_cold(false))
+LUARET1(you_res_cold, number, player_res_cold())
 
 /*** Negative energy resistance (rN).
  * @treturn int resistance level
  * @function res_draining
  */
-LUARET1(you_res_draining, number, player_prot_life(false))
+LUARET1(you_res_draining, number, player_prot_life())
 
 /*** Electric resistance (rElec).
  * @treturn int resistance level
  * @function res_shock
  */
-LUARET1(you_res_shock, number, player_res_electricity(false))
+LUARET1(you_res_shock, number, player_res_electricity())
 
 /*** Stealth pips.
  * @treturn int number of stealth pips
@@ -375,7 +375,7 @@ LUARET1(you_spirit_shield, number, you.spirit_shield() ? 1 : 0)
  * @treturn int resistance level
  * @function res_corr
  */
-LUARET1(you_res_corr, boolean, player_res_corrosion(false))
+LUARET1(you_res_corr, boolean, player_res_corrosion())
 
 /*** Are you flying?
  * @treturn boolean

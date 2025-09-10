@@ -306,7 +306,7 @@ static const map<spell_type, mons_spell_logic> spell_to_logic = {
                    _los_spell_worthwhile(caster, SPELL_DRAIN_LIFE)
                    && (!caster.friendly()
                        || !you.visible_to(&caster)
-                       || player_prot_life(false) >= 3));
+                       || player_prot_life() >= 3));
         },
         [](monster &caster, mon_spell_slot slot, bolt&) {
             const int splpow = mons_spellpower(caster, slot.spell);

@@ -1593,7 +1593,6 @@ static string _describe_weapon_brand(const item_def &item)
         return "";
 
     const brand_type brand = get_weapon_brand(item);
-    const bool ranged = is_range_weapon(item);
 
     switch (brand)
     {
@@ -4893,8 +4892,7 @@ static mon_attack_info _atk_info(const monster_info& mi, int i)
 }
 
 // Return a string describing the maximum damage from a monster's weapon brand
-static string _brand_damage_string(const monster_info &mi, brand_type brand,
-                                   int dam)
+static string _brand_damage_string(brand_type brand, int dam)
 {
     const char * name = brand_type_name(brand, true);
     int brand_dam;
@@ -5143,19 +5141,14 @@ static void _attacks_table_row(const monster_info &mi, mon_attack_desc_info &di,
     string brand_str;
     if (wpn)
     {
-        if (wpn->base_type == OBJ_WEAPONS)
-        {
-            brand_str = _brand_damage_string(mi, get_weapon_brand(*wpn),
-                                             real_dam);
-        }
-        else if (wpn->base_type == OBJ_STAVES)
+        if (wpn->base_type == OBJ_STAVES)
         {
             brand_str = _monster_staff_damage_string(mi,
                             static_cast<stave_type>(wpn->sub_type));
         }
     }
     else if (di.special_flavour != SPWPN_NORMAL)
-        brand_str = _brand_damage_string(mi, di.special_flavour, real_dam);
+        brand_str = _brand_damage_string(di.special_flavour, real_dam);
 
     string final_dam_str = make_stringf("%s%s%s", dam_str.c_str(),
                                         brand_str.c_str(),

@@ -47,11 +47,6 @@
 
 static void _mark_unseen_monsters();
 
-static bool _use_slots(unrand_type item, bool count_melded, bool count_items)
-{
-    return count_items && you.unrand_equipped(item, count_melded);
-}
-
 /**
  * Returns how many slots of a given type the player character currently has
  * (potentially accounting for additional slots granted by forms, mutations, and
@@ -1571,7 +1566,7 @@ bool unequip_item(item_def& item, bool msg, bool skip_effects)
 }
 
 static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld);
-static void _unequip_weapon_effect(item_def& item, bool showMsgs, bool meld);
+static void _unequip_weapon_effect(item_def& item, bool showMsgs);
 static void _equip_armour_effect(item_def& arm, bool unmeld);
 static void _unequip_armour_effect(item_def& item, bool meld);
 static void _equip_jewellery_effect(item_def &item, bool unmeld);
@@ -1617,7 +1612,7 @@ void unequip_effect(int item_slot, bool meld, bool msg)
         unequip_artefact_effect(item, &msg, meld);
 
     if (is_weapon(item))
-        _unequip_weapon_effect(item, msg, meld);
+        _unequip_weapon_effect(item, msg);
     else if (item.base_type == OBJ_ARMOUR)
         _unequip_armour_effect(item, meld);
     else if (item.base_type == OBJ_JEWELLERY)
@@ -1921,7 +1916,7 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
         mprf_nocap("%s", item.name(DESC_INVENTORY_EQUIP).c_str());
 }
 
-static void _unequip_weapon_effect(item_def& item, bool showMsgs, bool meld)
+static void _unequip_weapon_effect(item_def& item, bool showMsgs)
 {
     you.wield_change = true;
     quiver::on_weapon_changed();
@@ -2047,7 +2042,7 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
             break;
 
         case SPARM_POISON_RESISTANCE:
-            if (player_res_poison(false, false, false) < 3)
+            if (player_res_poison(false, false) < 3)
                 mpr("You feel resistant to poison.");
             break;
 

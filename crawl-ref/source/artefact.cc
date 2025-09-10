@@ -1567,7 +1567,7 @@ const unrandart_entry* get_unrand_entry(int unrand_index)
         return &unranddata[unrand_index];
 }
 
-int find_okay_unrandart(uint8_t aclass, uint8_t atype, int item_level, bool in_abyss)
+int find_okay_unrandart(uint8_t aclass, uint8_t atype, bool in_abyss)
 {
     int chosen_unrand_idx = -1;
 

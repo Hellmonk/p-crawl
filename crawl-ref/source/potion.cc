@@ -105,7 +105,7 @@ public:
                 *reason = "You cannot heal while in death's door.";
             return false;
         }
-        if (!you.can_potion_heal(true) || temp && you.hp == you.hp_max)
+        if (!you.can_potion_heal() || temp && you.hp == you.hp_max)
         {
             // It's not useless to drink at full health if you could hit things.
             if (you.has_mutation(MUT_DRUNKEN_BRAWLING) && has_drunken_brawl_targets())
@@ -168,11 +168,11 @@ public:
     {
         // note: equip, i.e. vines, leads to temp uselessness. Should this act
         // as permauselessness?
-        if (!you.can_potion_heal(temp))
+        if (!you.can_potion_heal())
         {
             if (reason)
             {
-                if (!temp || !you.can_potion_heal(false))
+                if (!temp || !you.can_potion_heal())
                     *reason = "You cannot be healed by potions.";
                 else
                     *reason = "You cannot currently be healed by potions.";

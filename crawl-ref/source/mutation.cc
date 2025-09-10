@@ -855,7 +855,7 @@ static vector<pair<string, string>> _get_fakemuts()
     if (!armour_mut.first.empty() && !you.has_mutation(MUT_NO_ARMOUR))
         result.push_back(armour_mut);
 
-    if (player_res_poison(false, false, false, false) == 3)
+    if (player_res_poison(false, false, false) == 3)
         result.push_back({"", _innatemut("You are immune to poison.")});
 
     return result;
@@ -2674,7 +2674,7 @@ string mutation_desc(mutation_type mut, int level, bool colour,
             const bool demonspawn = (you.species == SP_DEMONSPAWN);
             const bool extra = you.get_base_mutation_level(mut, false, true, true) > 0;
 
-            if (!active || (mut == MUT_COLD_BLOODED && player_res_cold(false) > 0))
+            if (!active || (mut == MUT_COLD_BLOODED && player_res_cold() > 0))
                 colourname = "darkgrey";
             else if (is_sacrifice)
                 colourname = "lightred";

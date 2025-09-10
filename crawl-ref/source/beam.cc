@@ -3313,14 +3313,14 @@ bool bolt::harmless_to_player() const
         return you.res_miasma();
 
     case BEAM_NEG:
-        return player_prot_life(false) >= 3;
+        return player_prot_life() >= 3;
 
     case BEAM_POISON:
-        return player_res_poison(false) >= 3
-               || is_big_cloud() && player_res_poison(false) > 0;
+        return player_res_poison() >= 3
+               || is_big_cloud() && player_res_poison() > 0;
 
     case BEAM_MEPHITIC:
-        return player_res_poison(false) > 0 || you.clarity();
+        return player_res_poison() > 0 || you.clarity();
 
     case BEAM_PETRIFY:
         return you.res_petrify() || you.petrified();
@@ -3329,7 +3329,7 @@ bool bolt::harmless_to_player() const
         return is_big_cloud() && actor_cloud_immune(you, CLOUD_COLD);
 
     case BEAM_VIRULENCE:
-        return player_res_poison(false) >= 3;
+        return player_res_poison() >= 3;
 
     case BEAM_ROOTS:
         return mons_att_wont_attack(attitude) || !agent()->can_constrict(you, CONSTRICT_ROOTS);

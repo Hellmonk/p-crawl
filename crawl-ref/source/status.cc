@@ -819,7 +819,7 @@ bool fill_status_info(int status, status_info& inf)
 
     case STATUS_RF_ZERO:
         if (!you.penance[GOD_IGNIS]
-            || player_res_fire(false, true, true) < 0)
+            || player_res_fire(true, true) < 0)
         {
             // XXX: would it be better to only show this
             // if you would otherwise have rF+ & to warn
@@ -1149,7 +1149,7 @@ static void _describe_poison(status_info& inf)
 {
     int pois_perc = (you.hp <= 0) ? 100
                                   : ((you.hp - max(0, poison_survival())) * 100 / you.hp);
-    inf.light_colour = (player_res_poison(false) >= 3
+    inf.light_colour = (player_res_poison() >= 3
                         ? DARKGREY : _bad_ench_colour(pois_perc, 35, 100));
     inf.light_text   = "Pois";
     const string adj =

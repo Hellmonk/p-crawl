@@ -1979,18 +1979,6 @@ bool cloud_is_removed(cloud_type cloud)
     }
 }
 
-static bool _is_chaos_polyable(const actor &defender)
-{
-    if (!defender.can_safely_mutate())
-        return false;  // no polymorphing undead
-
-    const monster* mon = defender.as_monster();
-    if (!mon)
-        return true;
-
-    return !mon->is_firewood() && !mons_invuln_will(*mon);
-}
-
 static bool _is_chaos_slowable(const actor &defender)
 {
     return !defender.is_firewood() && !defender.stasis();

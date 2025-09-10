@@ -895,7 +895,7 @@ public:
     bool can_do_shaft_ability(bool quiet = false) const;
     bool do_shaft_ability();
 
-    bool can_potion_heal(bool temp=true);
+    bool can_potion_heal();
     int scale_potion_healing(int healing_amount);
     int scale_potion_mp_healing(int healing_amount);
 
@@ -1038,8 +1038,7 @@ int stone_body_armour_bonus();
 int player_wizardry();
 int player_channelling();
 
-int player_prot_life(bool allow_random = true, bool temp = true,
-                     bool items = true);
+int player_prot_life(bool temp = true, bool items = true);
 
 bool regeneration_is_inhibited(const monster *m=nullptr);
 int player_regen();
@@ -1049,19 +1048,13 @@ bool player_kiku_res_torment();
 
 bool player_likes_water(bool permanently = false);
 
-int player_res_cold(bool allow_random = true, bool temp = true,
-                    bool items = true);
-int player_res_electricity(bool allow_random = true, bool temp = true,
-                           bool items = true);
-int player_res_fire(bool allow_random = true, bool temp = true,
-                    bool items = true);
+int player_res_cold(bool temp = true, bool items = true);
+int player_res_electricity(bool temp = true, bool items = true);
+int player_res_fire(bool temp = true, bool items = true);
 int player_res_sticky_flame();
-int player_res_steam(bool allow_random = true, bool temp = true,
-                     bool items = true);
-int player_res_poison(bool allow_random = true, bool temp = true,
-                      bool items = true, bool forms = true);
-int player_res_corrosion(bool allow_random = true, bool temp = true,
-                         bool items = true);
+int player_res_steam(bool temp = true, bool items = true);
+int player_res_poison(bool temp = true, bool items = true, bool forms = true);
+int player_res_corrosion(bool temp = true, bool items = true);
 int player_willpower(bool temp = true);
 
 int player_shield_class(int scale = 1, bool random = true,

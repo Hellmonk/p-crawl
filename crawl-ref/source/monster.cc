@@ -1527,7 +1527,7 @@ static int _get_monster_armour_value(const monster *mon,
 
     // See invisible also is only useful if not already intrinsic.
     if (!mons_class_flag(mon->type, M_SEE_INVIS))
-        value += get_armour_see_invisible(item, true);
+        value += get_armour_see_invisible(item);
 
     // Give a sizable bonus for shields of reflection.
     if (get_armour_ego_type(item) == SPARM_REFLECTION)
@@ -1695,7 +1695,7 @@ static int _get_monster_jewellery_value(const monster *mon,
 
     // See invisible also is only useful if not already intrinsic.
     if (!mons_class_flag(mon->type, M_SEE_INVIS))
-        value += get_jewellery_see_invisible(item, true);
+        value += get_jewellery_see_invisible(item);
 
     // If we're not naturally corrosion-resistant.
     if (item.sub_type == RING_RESIST_CORROSION && get_mons_resist(*mon, MR_RES_CORR) <= 0)
@@ -3027,35 +3027,6 @@ int monster::shield_bypass_ability(int) const
 bool monster::missile_repulsion() const
 {
     return has_ench(ENCH_REPEL_MISSILES) || scan_artefacts(ARTP_RMSL);
-}
-
-/**
- * How many weapons of the given brand does this monster currently wield?
- *
- * @param mon           The monster in question.
- * @param brand         The brand in question.
- * @return              The number of the aforementioned weapons currently
- *                      wielded.
- */
-static int _weapons_with_prop(const monster *mon, brand_type brand)
-{
-    int wielded = 0;
-
-    const mon_inv_type last_weap_slot = mons_wields_two_weapons(*mon) ?
-                                        MSLOT_ALT_WEAPON :
-                                        MSLOT_WEAPON;
-    for (int i = MSLOT_WEAPON; i <= last_weap_slot; i++)
-    {
-        const item_def *weap = mon->mslot_item(static_cast<mon_inv_type>(i));
-        if (!weap)
-            continue;
-
-        const int weap_brand = get_weapon_brand(*weap);
-        if (brand == weap_brand)
-            wielded++;
-    }
-
-    return wielded;
 }
 
 /**
