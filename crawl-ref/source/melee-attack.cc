@@ -463,6 +463,32 @@ void melee_attack::maybe_riposte()
     }
 }
 
+void melee_attack::shield_spikes()
+{
+    if (!defender->is_player() || !attacker->alive())
+        return;
+
+    if (!adjacent(defender->pos(), attack_position))
+        return;
+
+    item_def *shield = defender->shield();
+
+    if (shield && is_shield(*shield)
+            && get_armour_ego_type(*shield) == SPARM_SPIKES)
+    {
+        int dmg = 1 + random2(10);
+        dmg = attacker->apply_ac(dmg);
+
+        if (dmg <= 0)
+            return;
+        
+        simple_monster_message(*attacker->as_monster(),
+                                   " is struck by your spiked shield.");
+
+        attacker->hurt(&you, dmg);
+    }
+}
+
 void melee_attack::apply_black_mark_effects()
 {
     enum black_mark_effect
@@ -1564,6 +1590,7 @@ bool melee_attack::attack()
     if (shield_blocked)
     {
         handle_phase_blocked();
+        shield_spikes();
         maybe_riposte();
         if (!attacker->alive())
         {
