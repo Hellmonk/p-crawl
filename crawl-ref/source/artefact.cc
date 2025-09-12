@@ -369,7 +369,7 @@ static map<jewellery_type, vector<artp_value>> jewellery_artps = {
     { AMU_REGENERATION, { { ARTP_REGENERATION, 1 } } },
     { AMU_MANA_REGENERATION, { { ARTP_MANA_REGENERATION, 1} } },
     { AMU_REFLECTION, { { ARTP_SHIELDING, AMU_REFLECT_SH / 2} } },
-    { AMU_ACROBAT, { { ARTP_ACROBAT, 1 } } },
+    { RING_ACROBAT, { { ARTP_ACROBAT, 1 } } },
 
     { RING_MAGICAL_POWER, { { ARTP_MAGICAL_POWER, 9 } } },
     { RING_WIZARDRY, { { ARTP_WIZARDRY, 1} } },

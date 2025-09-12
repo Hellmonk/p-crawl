@@ -787,13 +787,14 @@ const char* jewellery_effect_name(int jeweltype, bool terse)
         case RING_MAGICAL_POWER:         return "magical power";
         case RING_FLIGHT:                return "flight";
         case RING_POSITIVE_ENERGY:       return "positive energy";
-        case RING_WILLPOWER: return "willpower";
+        case RING_WILLPOWER:             return "willpower";
         case RING_FIRE:                  return "fire";
         case RING_ICE:                   return "ice";
+        case RING_DARKNESS:              return "darkness";
 #if TAG_MAJOR_VERSION == 34
         case RING_TELEPORTATION:         return "teleportation";
-        case RING_TELEPORT_CONTROL:      return "teleport control";
 #endif
+        case RING_ACROBAT:          return "acrobatics";
         case AMU_MANA_REGENERATION: return "magic regeneration";
         case AMU_ACROBAT:           return "the acrobat";
 #if TAG_MAJOR_VERSION == 34
@@ -841,12 +842,13 @@ const char* jewellery_effect_name(int jeweltype, bool terse)
         case RING_WIZARDRY:              return "Wiz";
         case RING_FIRE:                  return "Fire";
         case RING_ICE:                   return "Ice";
+        case RING_DARKNESS:              return "Dark";
         case AMU_REGENERATION:           return "Regen";
         case AMU_MANA_REGENERATION:      return "RegenMP";
 #if TAG_MAJOR_VERSION == 34
         case AMU_RAGE:                   return "+Rage";
 #endif
-        case AMU_ACROBAT:                return "Acrobat";
+        case AMU_ACROBAT:                return "removedness";
         case AMU_NOTHING:                return "";
         default: return "buggy";
         }
@@ -3400,7 +3402,7 @@ bool is_useless_item(const item_def &item, bool temp, bool ident)
         case RING_RESIST_CORROSION:
             return player_res_corrosion(false, false);
 
-        case AMU_ACROBAT:
+        case RING_ACROBAT:
             return you.has_mutation(MUT_ACROBATIC);
 
         case AMU_FAITH:

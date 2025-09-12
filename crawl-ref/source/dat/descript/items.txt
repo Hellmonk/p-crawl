@@ -1210,6 +1210,18 @@ ring mail
 A light leather suit reinforced with a covering of metal rings. It is
 protective in combat, but slightly uncomfortable due to the added weight.
 %%%%
+ring of the acrobat
+
+A ring that allows the user to tumble and roll to evade the blows of their
+enemies, doubling their evasion if their last action was moving or waiting.
+While taking other actions the ring conveys no benefits.
+%%%%
+ring of darkness
+
+A ring that reduces the wearer's range of vision by two tiles. Naturally, if you
+can't see your enemies, they can't see you either. Minimum vision range is two
+tiles, unless you have divine assistance.
+%%%%
 ring of dexterity
 
 A ring that increases the dexterity of its wearer.
@@ -1256,7 +1268,7 @@ A ring that protects its wearer from the effects of negative energy.
 %%%%
 ring of protection
 
-A ring that protects its wearer from most sources of damage.
+A ring that increases the wearer's AC. It's like finger armour.
 %%%%
 ring of protection from cold
 

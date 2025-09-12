@@ -801,9 +801,21 @@ void update_vision_range()
     if (you.wearing_ego(OBJ_ARMOUR, SPARM_SHADOWS))
         you.current_vision -= 1;
 
+    // rings and artefacts.
+    vector<item_def*> eq = you.equipment.get_slot_items(SLOT_ALL_EQUIPMENT, false, true);
+    for (item_def* item : eq)
+    {
+        if (item->is_type(OBJ_JEWELLERY, RING_DARKNESS))
+            you.current_vision -= 2;
+    }
+
     // robe of Night.
     if (you.unrand_equipped(UNRAND_NIGHT))
         you.current_vision = you.current_vision * 3 / 4;
+
+    // Clamp "normal" vision at 2 or higher
+    int vis = you.current_vision;
+    you.current_vision = max(2, vis);
 
     if (you.duration[DUR_PRIMORDIAL_NIGHTFALL])
     {
@@ -1757,7 +1769,7 @@ bool player_effectively_in_light_armour()
 
 bool player_acrobatic()
 {
-    return you.wearing_jewellery(AMU_ACROBAT)
+    return you.wearing_jewellery(RING_ACROBAT)
         || you.has_mutation(MUT_ACROBATIC)
         || you.scan_artefacts(ARTP_ACROBAT);
 }
@@ -1829,11 +1841,6 @@ static int _player_temporary_evasion_modifiers()
     if (you.duration[DUR_AGILITY])
         evbonus += AGILITY_BONUS;
 
-    // If you have an active amulet of the acrobat and just moved or waited,
-    // get a massive EV bonus.
-    if (acrobat_boost_active())
-        evbonus += 15;
-
     // Bane of stumbling triggers on the same conditions as acrobat (thus
     // sharing its timer).
     if (you.has_bane(BANE_STUMBLING) && you.duration[DUR_ACROBAT])
@@ -1851,6 +1858,9 @@ static int _player_temporary_evasion_modifiers()
 // Player EV multipliers for transient effects
 static int _player_apply_evasion_multipliers(int prescaled_ev, const int scale)
 {
+    if (acrobat_boost_active())
+        prescaled_ev *= 2;
+
     if (you.form == transformation::statue)
         prescaled_ev = prescaled_ev * 4 / 5;
 

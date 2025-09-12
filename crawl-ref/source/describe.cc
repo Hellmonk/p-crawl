@@ -253,12 +253,15 @@ const char* jewellery_base_ability_string(int subtype)
 #if TAG_MAJOR_VERSION == 34
     case RING_SUSTAIN_ATTRIBUTES: return "SustAt";
     case RING_TELEPORTATION:      return "*Tele";
-    case RING_TELEPORT_CONTROL:   return "+cTele";
+#endif
+    case RING_ACROBAT:            return "Acrobat";
+#if TAG_MAJOR_VERSION == 34
     case AMU_HARM:                return "Harm";
     case AMU_THE_GOURMAND:        return "Gourm";
     case AMU_CONSERVATION:        return "Cons";
     case AMU_CONTROLLED_FLIGHT:   return "cFly";
 #endif
+    case RING_DARKNESS:           return "Dark";
     case AMU_GUARDIAN_SPIRIT:     return "Spirit";
     case AMU_FAITH:               return "Faith";
     case AMU_REFLECTION:          return "Reflect";
@@ -626,8 +629,10 @@ static const char* _jewellery_base_ability_description(int subtype)
         return "It sustains your strength, intelligence and dexterity.";
     case RING_TELEPORTATION:
         return "It may teleport you next to monsters.";
-    case RING_TELEPORT_CONTROL:
-        return "It can be evoked for teleport control.";
+#endif
+    case RING_ACROBAT:
+        return "";
+#if TAG_MAJOR_VERSION == 34
     case AMU_HARM:
         return "It increases damage dealt and taken.";
     case AMU_THE_GOURMAND:
@@ -635,6 +640,8 @@ static const char* _jewellery_base_ability_description(int subtype)
     case AMU_CONSERVATION:
         return "It protects your inventory from destruction.";
 #endif
+    case RING_DARKNESS:
+        return "It reduces your range of vision by 2.";
     case AMU_GUARDIAN_SPIRIT:
         return "It causes incoming damage to be divided between your reserves "
                "of health and magic.";

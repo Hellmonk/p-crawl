@@ -581,6 +581,7 @@ unsigned int item_value(item_def item, bool ident)
                 case AMU_GUARDIAN_SPIRIT:
                 case AMU_MANA_REGENERATION:
                 case AMU_ACROBAT:
+                case RING_ACROBAT:
                 case AMU_REFLECTION:
                     valued += 300;
                     break;

@@ -2394,6 +2394,9 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         you.redraw_armour_class = true;
         break;
 
+    case RING_DARKNESS:
+        update_vision_range();
+
     case RING_EVASION:
         you.redraw_evasion = true;
         break;
@@ -2445,7 +2448,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
 
         break;
 
-    case AMU_ACROBAT:
+    case RING_ACROBAT:
         if (you.has_mutation(MUT_TENGU_FLIGHT))
             mpr("You feel no more acrobatic than usual.");
         else
@@ -2498,6 +2501,10 @@ static void _unequip_jewellery_effect(item_def &item, bool meld)
 
     case RING_EVASION:
         you.redraw_evasion = true;
+        break;
+
+    case RING_DARKNESS:
+        update_vision_range();
         break;
 
     case RING_STRENGTH:

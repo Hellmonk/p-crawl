@@ -232,9 +232,8 @@ enum jewellery_type
     RING_WILLPOWER,
     RING_FIRE,
     RING_ICE,
-#if TAG_MAJOR_VERSION == 34
-    RING_TELEPORT_CONTROL,
-#endif
+    RING_ACROBAT,
+    RING_DARKNESS,
     NUM_RINGS,                         //   keep as last ring; should not overlap
                                        //   with amulets!
     // RINGS after num_rings are for unique types for artefacts

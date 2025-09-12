@@ -80,7 +80,7 @@ static uint8_t _jewellery_type_from_artefact_prop(const string &s
     if (s == "Reflect")
         return AMU_REFLECTION;
     if (s == "Acrobat")
-        return AMU_ACROBAT;
+        return RING_ACROBAT;
 
     if (s == "rCorr")
         return RING_RESIST_CORROSION;

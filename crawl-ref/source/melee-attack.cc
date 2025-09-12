@@ -481,7 +481,7 @@ void melee_attack::shield_spikes()
 
         if (dmg <= 0)
             return;
-        
+
         simple_monster_message(*attacker->as_monster(),
                                    " is struck by your spiked shield.");
 
