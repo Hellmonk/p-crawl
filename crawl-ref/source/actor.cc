@@ -334,7 +334,7 @@ int actor::spirit_shield(bool items) const
     if (items)
     {
         ss += wearing_ego(OBJ_ARMOUR, SPARM_SPIRIT_SHIELD);
-        ss += wearing_jewellery(AMU_GUARDIAN_SPIRIT);
+        ss += wearing_jewellery(RING_GUARDIAN_SPIRIT);
     }
 
     if (is_player())

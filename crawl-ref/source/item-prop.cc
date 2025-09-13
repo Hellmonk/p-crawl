@@ -2362,7 +2362,6 @@ bool ring_has_stackable_effect(const item_def &item)
     case RING_POSITIVE_ENERGY:
     case RING_STEALTH:
     case RING_WIZARDRY:
-    case RING_FIRE:
     case RING_ICE:
     case RING_WILLPOWER:
     case RING_MAGICAL_POWER:
@@ -2595,7 +2594,6 @@ int get_jewellery_res_fire(const item_def &ring, bool check_artp)
     switch (ring.sub_type)
     {
     case RING_PROTECTION_FROM_FIRE:
-    case RING_FIRE:
         res += 1;
         break;
     case RING_ICE:
@@ -2623,9 +2621,6 @@ int get_jewellery_res_cold(const item_def &ring, bool check_artp)
     case RING_PROTECTION_FROM_COLD:
     case RING_ICE:
         res += 1;
-        break;
-    case RING_FIRE:
-        res -= 1;
         break;
     default:
         break;
@@ -2829,7 +2824,6 @@ bool gives_resistance(const item_def &item)
                 || item.sub_type == RING_RESIST_CORROSION
                 || item.sub_type == RING_POSITIVE_ENERGY
                 || item.sub_type == RING_WILLPOWER
-                || item.sub_type == RING_FIRE
                 || item.sub_type == RING_ICE
                 || item.sub_type == RING_FLIGHT)
             {

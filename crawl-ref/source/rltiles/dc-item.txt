@@ -849,7 +849,7 @@ i-magical-power RING_MAGICAL_POWER
 i-flight RING_FLIGHT
 i-positive-energy RING_POSITIVE_ENERGY
 i-willpower RING_WILLPOWER
-i-fire RING_FIRE
+i-spirit RING_GUARDIAN_SPIRIT
 i-ice RING_ICE
 i-acrobat RING_ACROBAT
 i-darkness RING_DARKNESS RING_ID_LAST

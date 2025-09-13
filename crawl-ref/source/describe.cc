@@ -262,7 +262,7 @@ const char* jewellery_base_ability_string(int subtype)
     case AMU_CONTROLLED_FLIGHT:   return "cFly";
 #endif
     case RING_DARKNESS:           return "Dark";
-    case AMU_GUARDIAN_SPIRIT:     return "Spirit";
+    case RING_GUARDIAN_SPIRIT:    return "Spirit";
     case AMU_FAITH:               return "Faith";
     case AMU_REFLECTION:          return "Reflect";
 #if TAG_MAJOR_VERSION == 34

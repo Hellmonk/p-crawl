@@ -2374,10 +2374,6 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
 {
     switch (item.sub_type)
     {
-    case RING_FIRE:
-        mpr("You feel more attuned to fire.");
-        break;
-
     case RING_ICE:
         mpr("You feel more attuned to ice.");
         break;
@@ -2459,7 +2455,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         _equip_amulet_of_reflection();
         break;
 
-    case AMU_GUARDIAN_SPIRIT:
+    case RING_GUARDIAN_SPIRIT:
         _spirit_shield_message(unmeld);
         break;
 
@@ -2475,7 +2471,6 @@ static void _unequip_jewellery_effect(item_def &item, bool meld)
     // The ring/amulet must already be removed from you.equipment at this point.
     switch (item.sub_type)
     {
-    case RING_FIRE:
     case RING_ICE:
     case RING_POSITIVE_ENERGY:
     case RING_INSULATION:
@@ -2485,6 +2480,7 @@ static void _unequip_jewellery_effect(item_def &item, bool meld)
     case RING_SLAYING:
     case RING_STEALTH:
     case RING_WIZARDRY:
+    case RING_GUARDIAN_SPIRIT:
         break;
 
     case RING_SEE_INVISIBLE:
@@ -2537,13 +2533,6 @@ static void _unequip_jewellery_effect(item_def &item, bool meld)
         if (!meld)
             _remove_amulet_of_faith(item);
         break;
-
-#if TAG_MAJOR_VERSION == 34
-    case AMU_GUARDIAN_SPIRIT:
-        if (you.species == SP_DEEP_DWARF && player_regenerates_mp())
-            mpr("Your magic begins regenerating once more.");
-        break;
-#endif
 
     }
 

@@ -1240,6 +1240,11 @@ ring of flight
 
 A ring that grants its wearer flight.
 %%%%
+ring of guardian spirit
+
+A ring that causes any damage taken to be divided between the wearer's health
+and magic, in the same ratio as their current health and magic reserves.
+%%%%
 ring of ice
 
 A ring that brings its wearer more in contact with the powers of ice. It grants
