@@ -2478,7 +2478,7 @@ static void _unequip_jewellery_effect(item_def &item, bool meld)
     case RING_FIRE:
     case RING_ICE:
     case RING_POSITIVE_ENERGY:
-    case RING_POISON_RESISTANCE:
+    case RING_INSULATION:
     case RING_PROTECTION_FROM_COLD:
     case RING_PROTECTION_FROM_FIRE:
     case RING_WILLPOWER:

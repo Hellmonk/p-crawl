@@ -1421,6 +1421,9 @@ int player_res_electricity(bool temp, bool items)
 
         // randart weapons:
         re += you.scan_artefacts(ARTP_ELECTRICITY);
+
+        // ring
+        re += you.wearing_jewellery(RING_INSULATION);
     }
 
     // mutations:
@@ -1470,9 +1473,6 @@ int player_res_poison(bool temp, bool items, bool forms)
 
     if (items)
     {
-        // rings of poison resistance
-        rp += you.wearing_jewellery(RING_POISON_RESISTANCE);
-
         // Staves
         rp += you.wearing(OBJ_STAVES, STAFF_ALCHEMY);
 

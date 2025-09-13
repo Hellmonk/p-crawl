@@ -2501,7 +2501,6 @@ void give_apostle_equipment(monster* apostle)
                 // Many ring types do nothing for monsters, so let's pick through
                 // ones that do.
                 jewellery_type rtype = random_choose(RING_PROTECTION_FROM_FIRE,
-                                                     RING_POISON_RESISTANCE,
                                                      RING_PROTECTION_FROM_COLD,
                                                      RING_EVASION,
                                                      RING_POSITIVE_ENERGY,

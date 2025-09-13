@@ -2643,9 +2643,6 @@ int get_jewellery_res_poison(const item_def &ring)
 
     int res = 0;
 
-    if (ring.sub_type == RING_POISON_RESISTANCE)
-        res += 1;
-
     return res;
 }
 
@@ -2654,6 +2651,9 @@ int get_jewellery_res_elec(const item_def &ring, bool check_artp)
     ASSERT(ring.base_type == OBJ_JEWELLERY);
 
     int res = 0;
+
+    if (ring.sub_type == RING_INSULATION)
+        res += 1;
 
     if (check_artp && is_artefact(ring))
         res += artefact_property(ring, ARTP_ELECTRICITY);
@@ -2824,7 +2824,7 @@ bool gives_resistance(const item_def &item)
         if (!jewellery_is_amulet(item))
         {
             if (item.sub_type == RING_PROTECTION_FROM_FIRE
-                || item.sub_type == RING_POISON_RESISTANCE
+                || item.sub_type == RING_INSULATION
                 || item.sub_type == RING_PROTECTION_FROM_COLD
                 || item.sub_type == RING_RESIST_CORROSION
                 || item.sub_type == RING_POSITIVE_ENERGY
