@@ -263,7 +263,7 @@ const char* jewellery_base_ability_string(int subtype)
 #endif
     case RING_DARKNESS:           return "Dark";
     case RING_GUARDIAN_SPIRIT:    return "Spirit";
-    case AMU_FAITH:               return "Faith";
+    case RING_FAITH:              return "Faith";
     case AMU_REFLECTION:          return "Reflect";
 #if TAG_MAJOR_VERSION == 34
     case AMU_INACCURACY:          return "Inacc";
@@ -645,8 +645,8 @@ static const char* _jewellery_base_ability_description(int subtype)
     case AMU_GUARDIAN_SPIRIT:
         return "It causes incoming damage to be divided between your reserves "
                "of health and magic.";
-    case AMU_FAITH:
-        return "It allows you to gain divine favour quickly.";
+    case RING_FAITH:
+        return "It increases piety gain by 50%. Removing it halves your piety.";
     case AMU_REFLECTION:
         return "It reflects blocked missile attacks.";
 #if TAG_MAJOR_VERSION == 34

@@ -789,7 +789,6 @@ const char* jewellery_effect_name(int jeweltype, bool terse)
         case RING_POSITIVE_ENERGY:       return "positive energy";
         case RING_WILLPOWER:             return "willpower";
         case RING_GUARDIAN_SPIRIT:       return "guardian spirit";
-        case RING_ICE:                   return "ice";
         case RING_DARKNESS:              return "darkness";
 #if TAG_MAJOR_VERSION == 34
         case RING_TELEPORTATION:         return "teleportation";
@@ -806,7 +805,7 @@ const char* jewellery_effect_name(int jeweltype, bool terse)
         case AMU_INACCURACY:        return "inaccuracy";
 #endif
         case AMU_NOTHING:           return "nothing";
-        case AMU_FAITH:             return "faith";
+        case RING_FAITH:            return "faith";
         case AMU_REFLECTION:        return "reflection";
         case AMU_REGENERATION:      return "regeneration";
         default: return "buggy jewellery";
@@ -840,7 +839,6 @@ const char* jewellery_effect_name(int jeweltype, bool terse)
         case RING_WILLPOWER:             return "Will+";
         case RING_WIZARDRY:              return "Wiz";
         case RING_GUARDIAN_SPIRIT:       return "Spirit";
-        case RING_ICE:                   return "Ice";
         case RING_DARKNESS:              return "Dark";
         case AMU_REGENERATION:           return "Regen";
         case AMU_MANA_REGENERATION:      return "RegenMP";
@@ -3404,7 +3402,7 @@ bool is_useless_item(const item_def &item, bool temp, bool ident)
         case RING_ACROBAT:
             return you.has_mutation(MUT_ACROBATIC);
 
-        case AMU_FAITH:
+        case RING_FAITH:
             return (you.has_mutation(MUT_FORLORN) && !you.religion) // ??
                     || you.has_mutation(MUT_FAITH)
                     || !ignore_faith_reason().empty();

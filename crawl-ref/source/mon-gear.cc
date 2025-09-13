@@ -1457,9 +1457,6 @@ static void _give_weapon(monster *mon, int level, bool second_weapon = false)
     if (mon->type == MONS_ERICA && i.is_type(OBJ_WEAPONS, WPN_SCIMITAR))
         make_item_for_monster(mon, OBJ_JEWELLERY, NUM_RINGS, 0, 1);
 
-    if (mon->type == MONS_FANNAR && i.is_type(OBJ_WEAPONS, WPN_QUARTERSTAFF))
-        make_item_for_monster(mon, OBJ_JEWELLERY, RING_ICE, 0, 1);
-
     if (mon->type == MONS_WIGLAF)
     {
         // Always good, and sometimes especially good
@@ -1470,9 +1467,6 @@ static void _give_weapon(monster *mon, int level, bool second_weapon = false)
         hat->props[WORN_TILE_NAME_KEY] = "hat_wiglaf";
         bind_item_tile(*hat);
     }
-
-    if (mon->type == MONS_JOSEPHINA)
-        make_item_for_monster(mon, OBJ_JEWELLERY, RING_ICE, ISPEC_RANDART, true);
 }
 
 // Hands out ammunition fitting the monster's launcher (if any), or else any

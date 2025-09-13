@@ -572,7 +572,7 @@ unsigned int item_value(item_def item, bool ident)
             {
                 switch (item.sub_type)
                 {
-                case AMU_FAITH:
+                case RING_FAITH:
                     valued += 400;
                     break;
 
@@ -586,7 +586,6 @@ unsigned int item_value(item_def item, bool ident)
                     valued += 300;
                     break;
 
-                case RING_ICE:
                 case RING_PROTECTION_FROM_COLD:
                 case RING_PROTECTION_FROM_FIRE:
                 case RING_WILLPOWER:

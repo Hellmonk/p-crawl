@@ -850,7 +850,7 @@ i-flight RING_FLIGHT
 i-positive-energy RING_POSITIVE_ENERGY
 i-willpower RING_WILLPOWER
 i-spirit RING_GUARDIAN_SPIRIT
-i-ice RING_ICE
+i-faith RING_FAITH
 i-acrobat RING_ACROBAT
 i-darkness RING_DARKNESS RING_ID_LAST
 

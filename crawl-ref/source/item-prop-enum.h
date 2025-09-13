@@ -231,7 +231,7 @@ enum jewellery_type
     RING_POSITIVE_ENERGY,
     RING_WILLPOWER,
     RING_GUARDIAN_SPIRIT,
-    RING_ICE,
+    RING_FAITH,
     RING_ACROBAT,
     RING_DARKNESS,
     NUM_RINGS,                         //   keep as last ring; should not overlap

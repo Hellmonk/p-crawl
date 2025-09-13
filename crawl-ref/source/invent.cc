@@ -1594,7 +1594,7 @@ bool needs_handle_warning(const item_def &item, operation_types oper,
 
     if ((oper == OPER_EQUIP || oper == OPER_UNEQUIP))
     {
-        if (item.is_type(OBJ_JEWELLERY, AMU_FAITH)
+        if (item.is_type(OBJ_JEWELLERY, RING_FAITH)
             && faith_has_penalty())
         {
             return true;

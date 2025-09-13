@@ -76,7 +76,7 @@ static uint8_t _jewellery_type_from_artefact_prop(const string &s
     if (s == "Spirit")
         return RING_GUARDIAN_SPIRIT;
     if (s == "Faith")
-        return AMU_FAITH;
+        return RING_FAITH;
     if (s == "Reflect")
         return AMU_REFLECTION;
     if (s == "Acrobat")
@@ -84,8 +84,6 @@ static uint8_t _jewellery_type_from_artefact_prop(const string &s
 
     if (s == "rCorr")
         return RING_RESIST_CORROSION;
-    if (s == "Ice")
-        return RING_ICE;
 #if TAG_MAJOR_VERSION == 34
     if (s == "+/*Tele")
         return RING_TELEPORTATION;

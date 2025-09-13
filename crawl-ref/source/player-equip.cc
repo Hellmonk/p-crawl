@@ -2275,7 +2275,7 @@ static void _unequip_armour_effect(item_def& item, bool meld)
     }
 }
 
-static void _remove_amulet_of_faith(item_def &item)
+static void _remove_ring_of_faith(item_def &item)
 {
 #ifndef DEBUG_DIAGNOSTICS
     UNUSED(item);
@@ -2297,7 +2297,7 @@ static void _remove_amulet_of_faith(item_def &item)
 
     simple_god_message(" seems less interested in you.");
 
-    const int piety_loss = div_rand_round(you.raw_piety, 3);
+    const int piety_loss = div_rand_round(you.raw_piety, 2);
     // Piety penalty for removing the Amulet of Faith.
     mprf(MSGCH_GOD, "You feel less pious.");
     dprf("%s: piety drain: %d", item.name(DESC_PLAIN).c_str(), piety_loss);
@@ -2374,10 +2374,6 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
 {
     switch (item.sub_type)
     {
-    case RING_ICE:
-        mpr("You feel more attuned to ice.");
-        break;
-
     case RING_SEE_INVISIBLE:
         autotoggle_autopickup(false);
         break;
@@ -2419,7 +2415,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         calc_mp();
         break;
 
-    case AMU_FAITH:
+    case RING_FAITH:
     {
         if (you.has_mutation(MUT_FORLORN))
         {
@@ -2471,7 +2467,6 @@ static void _unequip_jewellery_effect(item_def &item, bool meld)
     // The ring/amulet must already be removed from you.equipment at this point.
     switch (item.sub_type)
     {
-    case RING_ICE:
     case RING_POSITIVE_ENERGY:
     case RING_INSULATION:
     case RING_PROTECTION_FROM_COLD:
@@ -2529,9 +2524,9 @@ static void _unequip_jewellery_effect(item_def &item, bool meld)
         }
         break;
 
-    case AMU_FAITH:
+    case RING_FAITH:
         if (!meld)
-            _remove_amulet_of_faith(item);
+            _remove_ring_of_faith(item);
         break;
 
     }

@@ -1230,6 +1230,12 @@ ring of evasion
 
 A ring that makes its wearer more capable of avoiding attacks.
 %%%%
+ring of faith
+
+A ring that invites divine attention, increasing piety gain by 50%. If the ring
+is removed, the gods will lose interest and the wearer will lose half their 
+accumulated piety.
+%%%%
 ring of fire
 
 A ring that brings its wearer more in contact with the powers of fire. It

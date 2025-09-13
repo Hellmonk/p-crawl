@@ -276,7 +276,7 @@ bool actor::clarity(bool items) const
 
 bool actor::faith(bool items) const
 {
-    return items && wearing_jewellery(AMU_FAITH);
+    return items && wearing_jewellery(RING_FAITH);
 }
 
 int actor::archmagi(bool items) const
