@@ -1326,6 +1326,11 @@ ring of strength
 
 A ring that increases the strength of its wearer.
 %%%%
+ring of teleportation
+
+A ring that can be activated once per floor to instantly teleport the wearer to
+a different location.
+%%%%
 ring of vampirism
 
 A ring that thirsts for death. Each living foe (not counting summons) that dies

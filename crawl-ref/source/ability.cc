@@ -430,6 +430,8 @@ static vector<ability_def> &_get_ability_list()
             4, 100, 0, 6, {}, abflag::none },
         { ABIL_EVOKE_OLGREB, "Evoke the Staff of Olgreb",
             4, 0, 0, -1, {}, abflag::none },
+        { ABIL_TELEPORT, "Teleport",
+            0, 0, 0, -1, {}, abflag::none },
 
         // INVOCATIONS:
         // Zin
@@ -1173,6 +1175,7 @@ ability_type fixup_ability(ability_type ability)
 
     case ABIL_SPIDER_JUMP:
     case ABIL_EVOKE_BLINK:
+    case ABIL_TELEPORT:
         if (you.stasis())
             return ABIL_NON_ABILITY;
         else
@@ -2277,6 +2280,7 @@ static bool _check_ability_possible(const ability_def& abil, bool quiet = false)
         }
         // fallthrough
     case ABIL_BLINKBOLT:
+    case ABIL_TELEPORT:
     {
         const string no_tele_reason = you.no_tele_reason(true);
         if (no_tele_reason.empty())
@@ -2700,6 +2704,7 @@ unique_ptr<targeter> find_ability_targeter(ability_type ability)
 
     // Self-targeted:
     case ABIL_SHAFT_SELF:
+    case ABIL_TELEPORT:
 #if TAG_MAJOR_VERSION == 34
     case ABIL_HEAL_WOUNDS:
 #endif
@@ -3312,6 +3317,11 @@ static spret _do_ability(const ability_def& abil, bool fail, dist *target,
 
     case ABIL_EVOKE_BLINK:      // randarts
         return cast_blink(min(50, 1 + you.skill(SK_EVOCATIONS, 3)), fail);
+
+    case ABIL_TELEPORT:
+        you_teleport();
+        you.props[TELEPORTED_KEY].get_bool() = true;
+        break;
 
     case ABIL_EVOKE_DISPATER:
         if (!_evoke_orb_of_dispater(target))
@@ -4336,6 +4346,10 @@ bool player_has_ability(ability_type abil, bool include_unusable)
     case ABIL_EVOKE_DISPATER:
         return you.unrand_equipped(UNRAND_DISPATER)
                && !you.has_mutation(MUT_NO_ARTIFICE);
+    case ABIL_TELEPORT:
+        return you.wearing_jewellery(RING_TELE)
+               && !you.get_mutation_level(MUT_NO_ARTIFICE)
+               && !you.props.exists(TELEPORTED_KEY);
     default:
         // removed abilities handled here
         return false;
@@ -4401,6 +4415,7 @@ vector<talent> your_talents(bool check_confused, bool include_unusable, bool ign
             ABIL_EVOKE_TURN_INVISIBLE,
             ABIL_EVOKE_DISPATER,
             ABIL_EVOKE_OLGREB,
+            ABIL_TELEPORT,
 #ifdef WIZARD
             ABIL_WIZ_BUILD_TERRAIN,
             ABIL_WIZ_SET_TERRAIN,

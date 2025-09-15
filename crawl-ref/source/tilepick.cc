@@ -3988,6 +3988,8 @@ tileidx_t tileidx_ability(const ability_type ability)
         return TILEG_ABILITY_EVOKE_DISPATER;
     case ABIL_EVOKE_OLGREB:
         return TILEG_ABILITY_EVOKE_OLGREB;
+    case ABIL_TELEPORT:
+        return TILEG_ABILITY_TELEPORT;
     case ABIL_EVOKE_TURN_INVISIBLE:
         return TILEG_ABILITY_EVOKE_INVISIBILITY;
 

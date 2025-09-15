@@ -831,7 +831,7 @@ i-insulation RING_INSULATION
 i-r-cold RING_PROTECTION_FROM_COLD
 i-plenty RING_PLENTY
 i-slaying RING_SLAYING
-i-see-invis RING_SEE_INVISIBLE
+i-tele RING_TELE
 i-r-corrosion RING_RESIST_CORROSION
 # start TAG_MAJOR_VERSION == 34
 i-attention RING_ATTENTION

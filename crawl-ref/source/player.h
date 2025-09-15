@@ -58,6 +58,7 @@
 #define BATFORM_XP_KEY "batform_xp"
 #define WATERY_GRAVE_XP_KEY "watery_grave_xp"
 #define WEREFURY_KEY "werefury_bonus"
+#define TELEPORTED_KEY "teleported"
 
 constexpr int ENKINDLE_CHARGE_COST = 40;
 #define ENKINDLE_CHARGES_KEY "enkindle_charges"
@@ -1096,6 +1097,8 @@ void forget_map(bool rot = false);
 int get_exp_progress();
 unsigned int gain_exp(unsigned int exp_gained);
 void apply_exp();
+
+void reset_per_floor_props();
 
 int xp_to_level_diff(int xp, int scale=1);
 

@@ -604,7 +604,7 @@ unsigned int item_value(item_def item, bool ident)
                     valued += 175;
                     break;
 
-                case RING_SEE_INVISIBLE:
+                case RING_TELE:
                     valued += 150;
                     break;
 

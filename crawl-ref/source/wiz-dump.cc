@@ -84,14 +84,11 @@ static uint8_t _jewellery_type_from_artefact_prop(const string &s
 
     if (s == "rCorr")
         return RING_RESIST_CORROSION;
-#if TAG_MAJOR_VERSION == 34
-    if (s == "+/*Tele")
-        return RING_TELEPORTATION;
-#endif
+
     if (s == "Wiz")
         return RING_WIZARDRY;
-    if (s == "SInv")
-        return RING_SEE_INVISIBLE;
+    if (s == "Tele")
+        return RING_TELE;
 #if TAG_MAJOR_VERSION == 34
     if (s == "Noisy" || s == "Stlth-")
         return RING_ATTENTION;

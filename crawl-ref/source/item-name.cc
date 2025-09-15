@@ -774,7 +774,7 @@ const char* jewellery_effect_name(int jeweltype, bool terse)
         case RING_PROTECTION_FROM_COLD:  return "protection from cold";
         case RING_PLENTY:                return "plenty";
         case RING_SLAYING:               return "slaying";
-        case RING_SEE_INVISIBLE:         return "see invisible";
+        case RING_TELE:                  return "teleportation";
         case RING_RESIST_CORROSION:      return "resist corrosion";
         case RING_EVASION:               return "evasion";
 #if TAG_MAJOR_VERSION == 34
@@ -791,7 +791,7 @@ const char* jewellery_effect_name(int jeweltype, bool terse)
         case RING_GUARDIAN_SPIRIT:       return "guardian spirit";
         case RING_DARKNESS:              return "darkness";
 #if TAG_MAJOR_VERSION == 34
-        case RING_TELEPORTATION:         return "teleportation";
+        case RING_TELEPORTATION:         return "removed";
 #endif
         case RING_ACROBAT:          return "acrobatics";
         case AMU_MANA_REGENERATION: return "magic regeneration";
@@ -826,7 +826,7 @@ const char* jewellery_effect_name(int jeweltype, bool terse)
         case RING_PROTECTION_FROM_COLD:  return "rC+";
         case RING_PLENTY:                return "Plenty";
         case RING_SLAYING:               return "Slay";
-        case RING_SEE_INVISIBLE:         return "sInv";
+        case RING_TELE:                  return "Tele";
         case RING_RESIST_CORROSION:      return "rCorr";
         case RING_EVASION:               return "EV";
         case RING_STEALTH:               return "Stlth+";
@@ -3422,8 +3422,8 @@ bool is_useless_item(const item_def &item, bool temp, bool ident)
         case RING_MAGICAL_POWER:
             return you.has_mutation(MUT_HP_CASTING);
 
-        case RING_SEE_INVISIBLE:
-            return you.innate_sinv();
+        case RING_TELE:
+            return you.stasis();
 
         case RING_INSULATION:
             return player_res_electricity() > 0;

@@ -2677,9 +2677,6 @@ bool get_jewellery_see_invisible(const item_def &ring)
 {
     ASSERT(ring.base_type == OBJ_JEWELLERY);
 
-    if (ring.sub_type == RING_SEE_INVISIBLE)
-        return true;
-
     return false;
 }
 

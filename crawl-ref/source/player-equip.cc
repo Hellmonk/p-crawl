@@ -2374,10 +2374,6 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
 {
     switch (item.sub_type)
     {
-    case RING_SEE_INVISIBLE:
-        autotoggle_autopickup(false);
-        break;
-
     case RING_PROTECTION:
         you.redraw_armour_class = true;
         break;
@@ -2469,10 +2465,7 @@ static void _unequip_jewellery_effect(item_def &item, bool meld)
     case RING_GUARDIAN_SPIRIT:
     case RING_VAMPIRISM:
     case RING_PLENTY:
-        break;
-
-    case RING_SEE_INVISIBLE:
-        _mark_unseen_monsters();
+    case RING_TELE:
         break;
 
     case RING_PROTECTION:

@@ -2112,6 +2112,12 @@ static void _recharge_xp_evokers(int exp)
     }
 }
 
+void reset_per_floor_props()
+{
+    if (you.props.exists(TELEPORTED_KEY))
+        you.props.erase(TELEPORTED_KEY);
+}
+
 /// Make progress toward the abyss spawning an exit/stairs.
 static void _reduce_abyss_xp_timer(int exp)
 {
@@ -7232,8 +7238,7 @@ bool player::can_see_invisible() const
     if (crawl_state.game_is_arena())
         return true;
 
-    if (wearing_jewellery(RING_SEE_INVISIBLE)
-        || wearing_ego(OBJ_ARMOUR, SPARM_SEE_INVISIBLE)
+    if (wearing_ego(OBJ_ARMOUR, SPARM_SEE_INVISIBLE)
         // randart gear
         || you.duration[DUR_REVELATION])
     {
