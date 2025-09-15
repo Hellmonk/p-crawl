@@ -781,8 +781,10 @@ const char* jewellery_effect_name(int jeweltype, bool terse)
         case RING_SUSTAIN_ATTRIBUTES:    return "sustain attributes";
 #endif
         case RING_STEALTH:               return "stealth";
+#if TAG_MAJOR_VERSION == 34
         case RING_DEXTERITY:             return "dexterity";
         case RING_INTELLIGENCE:          return "intelligence";
+#endif
         case RING_WIZARDRY:              return "wizardry";
         case RING_MAGICAL_POWER:         return "magical power";
         case RING_VAMPIRISM:             return "vampirism";
@@ -830,8 +832,10 @@ const char* jewellery_effect_name(int jeweltype, bool terse)
         case RING_DETECTION:             return "Detect";
         case RING_WILDSHAPE:             return "Wildshape";
         case RING_STEALTH:               return "Stlth+";
+#if TAG_MAJOR_VERSION == 34
         case RING_DEXTERITY:             return "Dex";
         case RING_INTELLIGENCE:          return "Int";
+#endif
         case RING_MAGICAL_POWER:         return "MP+5";
         case RING_VAMPIRISM:             return "Vamp";
         case RING_REFLECTION:            return "Reflect";

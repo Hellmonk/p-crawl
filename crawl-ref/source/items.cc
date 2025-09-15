@@ -4480,9 +4480,13 @@ bool get_item_by_name(item_def *item, const char* specs,
         {
         case RING_SLAYING:
         case RING_PROTECTION:
+#if TAG_MAJOR_VERSION == 34
         case RING_DEXTERITY:
         case RING_INTELLIGENCE:
-            item->plus = 5;
+#endif
+            item->plus = 4;
+        case RING_REFLECTION:
+            item->plus = 10;
         default:
             break;
         }

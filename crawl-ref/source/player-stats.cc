@@ -243,9 +243,6 @@ static int _int_modifier(bool innate_only)
 
         // ego items of intelligence
         result += 3 * you.wearing_ego(OBJ_ARMOUR, SPARM_INTELLIGENCE);
-
-        // rings of intelligence
-        result += you.wearing_jewellery(RING_INTELLIGENCE);
     }
 
     // mutations
@@ -267,9 +264,6 @@ static int _dex_modifier(bool innate_only)
 
         // ego items of dexterity
         result += 3 * you.wearing_ego(OBJ_ARMOUR, SPARM_DEXTERITY);
-
-        // rings of dexterity
-        result += you.wearing_jewellery(RING_DEXTERITY);
 
         // form
         result += get_form()->dex_mod;

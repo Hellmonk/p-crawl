@@ -1998,7 +1998,7 @@ int player_shield_class(int scale, bool random, bool ignore_temporary)
         shield += 2500;
 
     shield += qazlal_sh_boost() * 100;
-    shield += you.wearing_jewellery(RING_REFLECTION) * AMU_REFLECT_SH * 100;
+    shield += you.wearing_jewellery(RING_REFLECTION) * 100;
     shield += you.scan_artefacts(ARTP_SHIELDING) * 200;
 
     return random ? div_rand_round(shield * scale, 100) : ((shield * scale) / 100);

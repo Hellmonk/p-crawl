@@ -2292,7 +2292,7 @@ static string _describe_jewellery(const item_def &item, bool verbose)
                 description += make_stringf("\n\nIt affects your AC (%+d).",
                                             item.plus);
                 break;
-
+#if TAG_MAJOR_VERSION == 34
             case RING_INTELLIGENCE:
                 description += make_stringf("\n\nIt affects your intelligence (%+d).",
                                             item.plus);
@@ -2302,9 +2302,9 @@ static string _describe_jewellery(const item_def &item, bool verbose)
                 description += make_stringf("\n\nIt affects your dexterity (%+d).",
                                             item.plus);
                 break;
-
+#endif
             case RING_SLAYING:
-                description += make_stringf("\n\nIt affects your accuracy and"
+                description += make_stringf("\n\nIt affects your "
                       " damage with ranged weapons and melee (%+d).",
                       item.plus);
                 break;

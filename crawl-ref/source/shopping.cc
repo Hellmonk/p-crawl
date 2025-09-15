@@ -551,10 +551,6 @@ unsigned int item_value(item_def item, bool ident)
                 case RING_PROTECTION:
                     base = 2 * item.plus;
                     break;
-                case RING_DEXTERITY:
-                case RING_INTELLIGENCE:
-                    base = item.plus * 4 / 3;
-                    break;
                 default:
                     break;
                 }
@@ -580,6 +576,10 @@ unsigned int item_value(item_def item, bool ident)
                 case RING_ACROBAT:
                 case AMU_REFLECTION:
                 case RING_WILDSHAPE:
+#if TAG_MAJOR_VERSION == 34
+                case RING_DEXTERITY:
+                case RING_INTELLIGENCE:
+#endif
                     valued += 300;
                     break;
 

@@ -1572,11 +1572,10 @@ static short _good_jewellery_plus(int subtype)
 {
     switch (subtype)
     {
-        case RING_DEXTERITY:
-        case RING_INTELLIGENCE:
-            return GOOD_STAT_RING_PLUS;
+        case RING_REFLECTION:
+            return 10;
         default:
-            return GOOD_RING_PLUS;
+            return 4;
     }
 }
 
