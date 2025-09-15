@@ -785,7 +785,7 @@ const char* jewellery_effect_name(int jeweltype, bool terse)
         case RING_INTELLIGENCE:          return "intelligence";
         case RING_WIZARDRY:              return "wizardry";
         case RING_MAGICAL_POWER:         return "magical power";
-        case RING_FLIGHT:                return "flight";
+        case RING_VAMPIRISM:             return "vampirism";
         case RING_REFLECTION:            return "reflection";
         case RING_WILLPOWER:             return "willpower";
         case RING_GUARDIAN_SPIRIT:       return "guardian spirit";
@@ -833,7 +833,7 @@ const char* jewellery_effect_name(int jeweltype, bool terse)
         case RING_DEXTERITY:             return "Dex";
         case RING_INTELLIGENCE:          return "Int";
         case RING_MAGICAL_POWER:         return "MP+9";
-        case RING_FLIGHT:                return "Fly";
+        case RING_VAMPIRISM:             return "Vamp";
         case RING_REFLECTION:            return "Reflect";
         case RING_WILLPOWER:             return "Will+";
         case RING_WIZARDRY:              return "Wiz";
@@ -3431,8 +3431,8 @@ bool is_useless_item(const item_def &item, bool temp, bool ident)
         case RING_WIZARDRY:
             return you_worship(GOD_TROG);
 
-        case RING_FLIGHT:
-            return you.permanent_flight(false);
+        case RING_VAMPIRISM:
+            return is_good_god(you.religion);
 
         case RING_STEALTH:
             return you.get_mutation_level(MUT_NO_STEALTH);

@@ -1318,6 +1318,11 @@ ring of strength
 
 A ring that increases the strength of its wearer.
 %%%%
+ring of vampirism
+
+A ring that thirsts for death. Each living foe (not counting summons) that dies
+while it is worn will heal the wearer for 1-3 HP.
+%%%%
 ring of wizardry
 
 A ring that increases the success rate of its wearer's magical spells.

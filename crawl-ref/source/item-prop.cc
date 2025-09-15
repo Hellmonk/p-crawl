@@ -2812,8 +2812,7 @@ bool gives_resistance(const item_def &item)
                 || item.sub_type == RING_INSULATION
                 || item.sub_type == RING_PROTECTION_FROM_COLD
                 || item.sub_type == RING_RESIST_CORROSION
-                || item.sub_type == RING_WILLPOWER
-                || item.sub_type == RING_FLIGHT)
+                || item.sub_type == RING_WILLPOWER)
             {
                 return true;
             }
@@ -3642,7 +3641,6 @@ bool item_gives_equip_slots(const item_def& item)
 
 bool item_grants_flight(const item_def& item)
 {
-    return item.base_type == OBJ_JEWELLERY && item.sub_type == RING_FLIGHT
-           || item.base_type == OBJ_ARMOUR && item.brand == SPARM_FLYING
+    return item.base_type == OBJ_ARMOUR && item.brand == SPARM_FLYING
            || is_artefact(item) && artefact_property(item, ARTP_FLY);
 }

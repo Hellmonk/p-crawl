@@ -2378,10 +2378,6 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         autotoggle_autopickup(false);
         break;
 
-    case RING_FLIGHT:
-        _flight_equip();
-        break;
-
     case RING_PROTECTION:
         you.redraw_armour_class = true;
         break;
@@ -2475,6 +2471,7 @@ static void _unequip_jewellery_effect(item_def &item, bool meld)
     case RING_STEALTH:
     case RING_WIZARDRY:
     case RING_GUARDIAN_SPIRIT:
+    case RING_VAMPIRISM:
         break;
 
     case RING_SEE_INVISIBLE:
@@ -2508,12 +2505,6 @@ static void _unequip_jewellery_effect(item_def &item, bool meld)
 
     case RING_INTELLIGENCE:
         notify_stat_change(STAT_INT, -item.plus, false);
-        break;
-
-    case RING_FLIGHT:
-        // XXX: Landing must be deferred until after form is actually changed.
-        if (!meld)
-            land_player();
         break;
 
     case RING_MAGICAL_POWER:

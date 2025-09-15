@@ -846,7 +846,7 @@ i-dex RING_DEXTERITY
 i-int RING_INTELLIGENCE
 i-wizardry RING_WIZARDRY
 i-magical-power RING_MAGICAL_POWER
-i-flight RING_FLIGHT
+i-vampirism RING_VAMPIRISM
 i-reflection RING_REFLECTION
 i-willpower RING_WILLPOWER
 i-spirit RING_GUARDIAN_SPIRIT

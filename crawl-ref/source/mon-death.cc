@@ -2157,6 +2157,17 @@ static void _player_on_kill_effects(monster& mons, killer_type killer,
     // Apply unrand effects.
     unrand_death_effects(&mons, killer);
 
+    // Apply vamp ring, which does not care why the monster died
+    if (gives_player_xp && you.wearing_jewellery(RING_VAMPIRISM)
+        && actor_is_susceptible_to_vampirism(mons))
+    {
+        const int hp = you.hp;
+        int vamp = you.wearing_jewellery(RING_VAMPIRISM);
+        you.heal(random_range(1 * vamp, 3 * vamp));
+        if (you.hp > hp)
+            mpr("You feel a bit better.");
+    }
+
     // Player Powered by Death
     if (gives_player_xp && you.get_mutation_level(MUT_POWERED_BY_DEATH)
         && (YOU_KILL(killer) || pet_kill))

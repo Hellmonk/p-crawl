@@ -600,7 +600,7 @@ unsigned int item_value(item_def item, bool ident)
                     break;
 
                 case RING_STEALTH:
-                case RING_FLIGHT:
+                case RING_VAMPIRISM:
                     valued += 175;
                     break;
 

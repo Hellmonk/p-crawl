@@ -322,8 +322,7 @@ bool actor::evokable_invis() const
 int actor::equip_flight() const
 {
     // For the player, this is cached on ATTR_PERM_FLIGHT
-    return wearing_jewellery(RING_FLIGHT)
-           + wearing_ego(OBJ_ARMOUR, SPARM_FLYING)
+    return wearing_ego(OBJ_ARMOUR, SPARM_FLYING)
            + scan_artefacts(ARTP_FLY);
 }
 
