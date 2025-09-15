@@ -1259,7 +1259,7 @@ int acquirement_create_item(object_class_type class_wanted,
             case RING_SLAYING:
                 acq_item.plus = GOOD_RING_PLUS;
                 break;
-                
+
             case RING_REFLECTION:
                 acq_item.plus = 10;
 
