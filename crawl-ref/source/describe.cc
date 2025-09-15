@@ -2072,7 +2072,9 @@ static const char* _item_ego_desc(special_armour_type ego)
         return "it improves its wearer's accuracy and damage with "
                "thrown weapons, such as rocks and javelins (Slay +4).";
     case SPARM_REPULSION:
-        return "it helps its wearer evade missiles.";
+        return "it helps its wearer evade projectiles - both physical and "
+               "magical (+30% evasion against dodgeable ranged abilities and "
+               "spells).";
 #if TAG_MAJOR_VERSION == 34
     case SPARM_CLOUD_IMMUNE:
         return "it does nothing special.";

@@ -128,7 +128,7 @@ static const armour_def Armour_prop[] =
             { SPARM_COLD_RESISTANCE, 2 },
             { SPARM_FIRE_RESISTANCE, 2 },
             { SPARM_POSITIVE_ENERGY, 2 },
-            { SPARM_NORMAL,          3 },
+            { SPARM_STEALTH,         3 },
             { SPARM_WILLPOWER,       4 },
     }},
     { ARM_LEATHER_ARMOUR,       "leather armour",         3,  -10,   20,
@@ -162,7 +162,6 @@ static const armour_def Armour_prop[] =
     { ARM_SCARF,                "scarf",                  0,   0,   50,
         SLOT_CLOAK,       SIZE_LITTLE, SIZE_LARGE, true, 0, {
             { SPARM_RESISTANCE,   1 },
-            { SPARM_REPULSION,    1 },
             { SPARM_INVISIBILITY, 1 },
             { SPARM_HARM,         1 },
             { SPARM_SHADOWS,      1 },
@@ -181,6 +180,8 @@ static const armour_def Armour_prop[] =
         SLOT_HELMET,      SIZE_SMALL,  SIZE_MEDIUM, true, 0, {
             { SPARM_SEE_INVISIBLE, 1 },
             { SPARM_INTELLIGENCE,  1 },
+            { SPARM_REPULSION,     1 },
+            { SPARM_STEALTH,       1 },
     }},
 
 #if TAG_MAJOR_VERSION == 34
@@ -195,6 +196,7 @@ static const armour_def Armour_prop[] =
             { SPARM_WILLPOWER,     3 },
             { SPARM_INTELLIGENCE,  2 },
             { SPARM_SEE_INVISIBLE, 2 },
+            { SPARM_REPULSION,     1 },
     }},
 
     // Note that barding size is compared against torso so it currently

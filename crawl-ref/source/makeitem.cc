@@ -798,7 +798,7 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
         return slot == SLOT_BOOTS || slot == SLOT_BARDING;
     case SPARM_STEALTH:
         return slot == SLOT_BOOTS || slot == SLOT_BARDING || slot == SLOT_CLOAK
-            || slot == SLOT_HELMET || slot == SLOT_GLOVES;
+            || slot == SLOT_HELMET || slot == SLOT_GLOVES || type == ARM_ROBE;
 
     case SPARM_ARCHMAGI:
         return !strict || type == ARM_ROBE;
@@ -834,6 +834,7 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
 
     case SPARM_SEE_INVISIBLE:
     case SPARM_INTELLIGENCE:
+    case SPARM_REPULSION:
         return slot == SLOT_HELMET;
 
     case SPARM_FIRE_RESISTANCE:
@@ -867,7 +868,6 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
 #endif
                slot == SLOT_OFFHAND || !strict;
 
-    case SPARM_REPULSION:
     case SPARM_HARM:
 #if TAG_MAJOR_VERSION > 34
     case SPARM_INVISIBILITY:
