@@ -2447,7 +2447,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
             mpr("You feel ready to tumble and roll out of harm's way.");
         break;
 
-    case AMU_REFLECTION:
+    case RING_REFLECTION:
         _equip_amulet_of_reflection();
         break;
 
@@ -2467,7 +2467,6 @@ static void _unequip_jewellery_effect(item_def &item, bool meld)
     // The ring/amulet must already be removed from you.equipment at this point.
     switch (item.sub_type)
     {
-    case RING_POSITIVE_ENERGY:
     case RING_INSULATION:
     case RING_PROTECTION_FROM_COLD:
     case RING_PROTECTION_FROM_FIRE:
@@ -2483,6 +2482,7 @@ static void _unequip_jewellery_effect(item_def &item, bool meld)
         break;
 
     case RING_PROTECTION:
+    case RING_REFLECTION:
         you.redraw_armour_class = true;
         break;
 

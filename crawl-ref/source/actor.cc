@@ -293,7 +293,7 @@ bool actor::no_cast(bool items) const
 bool actor::reflection(bool items) const
 {
     return items &&
-           (wearing_jewellery(AMU_REFLECTION)
+           (wearing_jewellery(RING_REFLECTION)
             || wearing_ego(OBJ_ARMOUR, SPARM_REFLECTION));
 }
 

@@ -847,7 +847,7 @@ i-int RING_INTELLIGENCE
 i-wizardry RING_WIZARDRY
 i-magical-power RING_MAGICAL_POWER
 i-flight RING_FLIGHT
-i-positive-energy RING_POSITIVE_ENERGY
+i-reflection RING_REFLECTION
 i-willpower RING_WILLPOWER
 i-spirit RING_GUARDIAN_SPIRIT
 i-faith RING_FAITH

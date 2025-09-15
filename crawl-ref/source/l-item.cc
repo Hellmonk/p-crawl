@@ -752,7 +752,7 @@ IDEF(plus)
                    || item->sub_type == RING_EVASION
                    || item->sub_type == RING_DEXTERITY
                    || item->sub_type == RING_INTELLIGENCE
-                   || item->sub_type == AMU_REFLECTION)))
+                   || item->sub_type == RING_REFLECTION)))
     {
         lua_pushnumber(ls, item->plus);
     }

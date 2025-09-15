@@ -2359,7 +2359,6 @@ bool ring_has_stackable_effect(const item_def &item)
     {
     case RING_PROTECTION_FROM_FIRE:
     case RING_PROTECTION_FROM_COLD:
-    case RING_POSITIVE_ENERGY:
     case RING_STEALTH:
     case RING_WIZARDRY:
     case RING_WILLPOWER:
@@ -2657,10 +2656,6 @@ int get_jewellery_life_protection(const item_def &ring)
 
     int res = 0;
 
-    // check for ego resistance
-    if (ring.sub_type == RING_POSITIVE_ENERGY)
-        res += 1;
-
     return res;
 }
 
@@ -2817,7 +2812,6 @@ bool gives_resistance(const item_def &item)
                 || item.sub_type == RING_INSULATION
                 || item.sub_type == RING_PROTECTION_FROM_COLD
                 || item.sub_type == RING_RESIST_CORROSION
-                || item.sub_type == RING_POSITIVE_ENERGY
                 || item.sub_type == RING_WILLPOWER
                 || item.sub_type == RING_FLIGHT)
             {

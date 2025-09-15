@@ -2988,7 +2988,7 @@ bool monster::can_feel_fear(bool /*include_unknown*/) const
  */
 bool monster::shielded() const
 {
-    return shield() || wearing_jewellery(AMU_REFLECTION);
+    return shield();
 }
 
 /// I honestly don't know what this means, really. It's vaguely similar

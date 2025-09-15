@@ -1620,9 +1620,6 @@ int player_prot_life(bool temp, bool items)
 
     if (items)
     {
-        // rings
-        pl += you.wearing_jewellery(RING_POSITIVE_ENERGY);
-
         // armour (checks body armour only)
         pl += you.wearing_ego(OBJ_ARMOUR, SPARM_POSITIVE_ENERGY);
 
@@ -1994,7 +1991,7 @@ int player_shield_class(int scale, bool random, bool ignore_temporary)
         shield += 2500;
 
     shield += qazlal_sh_boost() * 100;
-    shield += you.wearing_jewellery(AMU_REFLECTION) * AMU_REFLECT_SH * 100;
+    shield += you.wearing_jewellery(RING_REFLECTION) * AMU_REFLECT_SH * 100;
     shield += you.scan_artefacts(ARTP_SHIELDING) * 200;
 
     return random ? div_rand_round(shield * scale, 100) : ((shield * scale) / 100);
@@ -5548,7 +5545,7 @@ bool player::shielded() const
            || duration[DUR_EPHEMERAL_SHIELD]
            || get_mutation_level(MUT_LARGE_BONE_PLATES) > 0
            || qazlal_sh_boost() > 0
-           || you.wearing_jewellery(AMU_REFLECTION)
+           || you.wearing_jewellery(RING_REFLECTION)
            || you.scan_artefacts(ARTP_SHIELDING)
            || (get_mutation_level(MUT_CONDENSATION_SHIELD)
                 && !you.duration[DUR_ICEMAIL_DEPLETED]);

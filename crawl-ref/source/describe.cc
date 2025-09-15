@@ -264,7 +264,7 @@ const char* jewellery_base_ability_string(int subtype)
     case RING_DARKNESS:           return "Dark";
     case RING_GUARDIAN_SPIRIT:    return "Spirit";
     case RING_FAITH:              return "Faith";
-    case AMU_REFLECTION:          return "Reflect";
+    case RING_REFLECTION:         return "Reflect";
 #if TAG_MAJOR_VERSION == 34
     case AMU_INACCURACY:          return "Inacc";
 #endif
@@ -647,7 +647,7 @@ static const char* _jewellery_base_ability_description(int subtype)
                "of health and magic.";
     case RING_FAITH:
         return "It increases piety gain by 50%. Removing it halves your piety.";
-    case AMU_REFLECTION:
+    case RING_REFLECTION:
         return "It reflects blocked missile attacks.";
 #if TAG_MAJOR_VERSION == 34
     case AMU_INACCURACY:
@@ -2277,10 +2277,10 @@ static string _describe_jewellery(const item_def &item, bool verbose)
     if (verbose && !is_artefact(item) && item.is_identified())
     {
         // Explicit description of ring or amulet power.
-        if (item.sub_type == AMU_REFLECTION)
+        if (item.sub_type == RING_REFLECTION)
         {
             description += make_stringf("\n\nIt affects your shielding (%+d).",
-                                        AMU_REFLECT_SH / 2);
+                                        AMU_REFLECT_SH);
         }
         else if (item.plus != 0)
         {
@@ -2335,7 +2335,7 @@ static string _describe_jewellery(const item_def &item, bool verbose)
         && (is_artefact(item)
             || item.sub_type != RING_PROTECTION
                && item.sub_type != RING_EVASION
-               && item.sub_type != AMU_REFLECTION))
+               && item.sub_type != RING_REFLECTION))
     {
         description += _equipment_property_change(item);
     }

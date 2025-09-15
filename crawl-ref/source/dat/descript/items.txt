@@ -1233,7 +1233,7 @@ A ring that makes its wearer more capable of avoiding attacks.
 ring of faith
 
 A ring that invites divine attention, increasing piety gain by 50%. If the ring
-is removed, the gods will lose interest and the wearer will lose half their 
+is removed, the gods will lose interest and the wearer will lose half their
 accumulated piety.
 %%%%
 ring of fire
@@ -1264,6 +1264,12 @@ lightning strikes with severe but nonlethal injuries.
 ring of intelligence
 
 A ring that increases the intelligence of its wearer.
+%%%%
+ring of reflection
+
+A ring that shields its wearer (though weakly) and reflects any ranged attacks
+the wearer blocks back toward the attacker. The reflection effect applies to any
+blocked attack, whether from the ring itself or another shield.
 %%%%
 ring of resist corrosion
 

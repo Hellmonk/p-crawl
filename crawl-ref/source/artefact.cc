@@ -368,7 +368,7 @@ struct artp_value
 static map<jewellery_type, vector<artp_value>> jewellery_artps = {
     { AMU_REGENERATION, { { ARTP_REGENERATION, 1 } } },
     { AMU_MANA_REGENERATION, { { ARTP_MANA_REGENERATION, 1} } },
-    { AMU_REFLECTION, { { ARTP_SHIELDING, AMU_REFLECT_SH / 2} } },
+    { RING_REFLECTION, { { ARTP_SHIELDING, AMU_REFLECT_SH } } },
     { RING_ACROBAT, { { ARTP_ACROBAT, 1 } } },
 
     { RING_MAGICAL_POWER, { { ARTP_MAGICAL_POWER, 9 } } },
@@ -379,7 +379,7 @@ static map<jewellery_type, vector<artp_value>> jewellery_artps = {
     { RING_PROTECTION_FROM_FIRE, { { ARTP_FIRE, 1 } } },
     { RING_PROTECTION_FROM_COLD, { { ARTP_COLD, 1 } } },
     { RING_WILLPOWER, { { ARTP_WILLPOWER, 1 } } },
-    
+
     { RING_PROTECTION, { { ARTP_AC, 0 } } },
     { RING_EVASION, { { ARTP_EVASION, 0 } } },
     { RING_SLAYING, { { ARTP_SLAYING, 0 } } },
