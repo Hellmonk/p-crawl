@@ -2389,10 +2389,6 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         you.redraw_evasion = true;
         break;
 
-    case RING_STRENGTH:
-        notify_stat_change(STAT_STR, item.plus, false);
-        break;
-
     case RING_DEXTERITY:
         notify_stat_change(STAT_DEX, item.plus, false);
         break;
@@ -2472,6 +2468,7 @@ static void _unequip_jewellery_effect(item_def &item, bool meld)
     case RING_WIZARDRY:
     case RING_GUARDIAN_SPIRIT:
     case RING_VAMPIRISM:
+    case RING_PLENTY:
         break;
 
     case RING_SEE_INVISIBLE:
@@ -2493,10 +2490,6 @@ static void _unequip_jewellery_effect(item_def &item, bool meld)
 
     case RING_DARKNESS:
         update_vision_range();
-        break;
-
-    case RING_STRENGTH:
-        notify_stat_change(STAT_STR, -item.plus, false);
         break;
 
     case RING_DEXTERITY:

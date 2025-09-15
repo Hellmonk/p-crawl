@@ -220,9 +220,6 @@ static int _strength_modifier(bool innate_only)
         // ego items of strength
         result += 3 * you.wearing_ego(OBJ_ARMOUR, SPARM_STRENGTH);
 
-        // rings of strength
-        result += you.wearing_jewellery(RING_STRENGTH);
-
         // form
         result += get_form()->str_mod;
     }

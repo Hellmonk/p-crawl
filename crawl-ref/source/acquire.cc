@@ -1249,7 +1249,6 @@ int acquirement_create_item(object_class_type class_wanted,
         {
             switch (acq_item.sub_type)
             {
-            case RING_STRENGTH:
             case RING_INTELLIGENCE:
             case RING_DEXTERITY:
                 acq_item.plus = GOOD_STAT_RING_PLUS;

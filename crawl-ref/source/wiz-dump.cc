@@ -100,6 +100,8 @@ static uint8_t _jewellery_type_from_artefact_prop(const string &s
         return RING_VAMPIRISM;
     if (s == "rElec")
         return RING_INSULATION;
+    if (s == "Plenty")
+        return RING_PLENTY;
 
     if (s.substr(0, 2) == "AC")
         return RING_PROTECTION;
@@ -107,8 +109,6 @@ static uint8_t _jewellery_type_from_artefact_prop(const string &s
         return RING_MAGICAL_POWER;
     if (s.substr(0, 4) == "Slay")
         return RING_SLAYING;
-    if (s.substr(0, 3) == "Str")
-        return RING_STRENGTH;
     if (s.substr(0, 3) == "Dex")
         return RING_DEXTERITY;
     if (s.substr(0, 3) == "Int")

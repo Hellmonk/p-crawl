@@ -1280,6 +1280,14 @@ ring of magical power
 A ring that increases its wearer's reserves of magical power for so long as it
 is worn.
 %%%%
+ring of plenty
+
+A ring that blesses the wearer with the dungeon's bounty. Stacks of consumable
+items (such as thrown weapons) in shrines will generate with twice the normal
+quantity of items if the ring is worn when the wearer enters a new floor.
+
+This item is not yet functional.
+%%%%
 ring of poison resistance
 
 A ring that protects its wearer from poison.

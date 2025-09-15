@@ -747,7 +747,6 @@ IDEF(plus)
             || item->base_type == OBJ_WANDS
             || item->base_type == OBJ_JEWELLERY
                && (item->sub_type == RING_PROTECTION
-                   || item->sub_type == RING_STRENGTH
                    || item->sub_type == RING_SLAYING
                    || item->sub_type == RING_EVASION
                    || item->sub_type == RING_DEXTERITY

@@ -2296,11 +2296,6 @@ static string _describe_jewellery(const item_def &item, bool verbose)
                                             item.plus);
                 break;
 
-            case RING_STRENGTH:
-                description += make_stringf("\n\nIt affects your strength (%+d).",
-                                            item.plus);
-                break;
-
             case RING_INTELLIGENCE:
                 description += make_stringf("\n\nIt affects your intelligence (%+d).",
                                             item.plus);

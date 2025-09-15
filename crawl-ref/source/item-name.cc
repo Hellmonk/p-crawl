@@ -772,7 +772,7 @@ const char* jewellery_effect_name(int jeweltype, bool terse)
         case RING_PROTECTION_FROM_FIRE:  return "protection from fire";
         case RING_INSULATION:            return "insulation";
         case RING_PROTECTION_FROM_COLD:  return "protection from cold";
-        case RING_STRENGTH:              return "strength";
+        case RING_PLENTY:                return "plenty";
         case RING_SLAYING:               return "slaying";
         case RING_SEE_INVISIBLE:         return "see invisible";
         case RING_RESIST_CORROSION:      return "resist corrosion";
@@ -824,7 +824,7 @@ const char* jewellery_effect_name(int jeweltype, bool terse)
         case RING_PROTECTION_FROM_FIRE:  return "rF+";
         case RING_INSULATION:            return "rElec";
         case RING_PROTECTION_FROM_COLD:  return "rC+";
-        case RING_STRENGTH:              return "Str";
+        case RING_PLENTY:                return "Plenty";
         case RING_SLAYING:               return "Slay";
         case RING_SEE_INVISIBLE:         return "sInv";
         case RING_RESIST_CORROSION:      return "rCorr";

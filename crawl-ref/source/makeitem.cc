@@ -1572,7 +1572,6 @@ static short _good_jewellery_plus(int subtype)
 {
     switch (subtype)
     {
-        case RING_STRENGTH:
         case RING_DEXTERITY:
         case RING_INTELLIGENCE:
             return GOOD_STAT_RING_PLUS;
