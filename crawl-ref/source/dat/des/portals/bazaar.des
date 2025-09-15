@@ -755,46 +755,6 @@ xxxxxxxxxxxxxwwwwwxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxx
 ENDMAP
 
-# 2 scroll shops, 2 potion shops
-NAME:    dpeg_bazaar_wands
-TAGS:    no_rotate no_pool_fixup
-WEIGHT:  5
-ORIENT:  encompass
-KFEAT:   A = scroll shop
-KFEAT:   B = distillery shop
-ITEM:    ring of flight
-SHUFFLE: lAB/wBA
-: bazaar_setup(_G)
-: local colour = dgn.get_floor_colour()
-: if colour == "red" then
-SUBST: l = w
-: elseif colour == "blue" then
-SUBST: w = l
-: end
-MAP
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxx......>......xxxxxxxxxx
-xxxx.........................xxxx
-xx.....l.................l.....xx
-xx......l...............l.......x
-xl....A.ll.............ll.A....lx
-xl......l...............l......lx
-xll...........................llx
-xllll.......................llllx
-xlllllll.................lllllllx
-xllllllllllll.......llllllllllllx
-xlllllllllllllllllllllllllllllllx
-x...lllllllllllllllllllllllll...x
-x........lllllllllllllll........x
-x............lllllll............x
-x..............lll..............x
-xxxxx.......................xxxxx
-x...x.......................x...x
-x.B.+.......................+.B.x
-x...x..........<d>..........x...x
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-ENDMAP
-
 # 5 shops, total weight of jpeg's rare circle vaults is 5
 NAME:    bazaar_jpeg_circle_rare_1
 WEIGHT:  1
