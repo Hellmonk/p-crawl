@@ -775,7 +775,7 @@ const char* jewellery_effect_name(int jeweltype, bool terse)
         case RING_PLENTY:                return "plenty";
         case RING_SLAYING:               return "slaying";
         case RING_TELE:                  return "teleportation";
-        case RING_RESIST_CORROSION:      return "resist corrosion";
+        case RING_DETECTION:             return "detection";
         case RING_EVASION:               return "evasion";
 #if TAG_MAJOR_VERSION == 34
         case RING_SUSTAIN_ATTRIBUTES:    return "sustain attributes";
@@ -827,7 +827,7 @@ const char* jewellery_effect_name(int jeweltype, bool terse)
         case RING_PLENTY:                return "Plenty";
         case RING_SLAYING:               return "Slay";
         case RING_TELE:                  return "Tele";
-        case RING_RESIST_CORROSION:      return "rCorr";
+        case RING_DETECTION:             return "Detect";
         case RING_EVASION:               return "EV";
         case RING_STEALTH:               return "Stlth+";
         case RING_DEXTERITY:             return "Dex";
@@ -3395,9 +3395,6 @@ bool is_useless_item(const item_def &item, bool temp, bool ident)
 
         switch (item.sub_type)
         {
-        case RING_RESIST_CORROSION:
-            return player_res_corrosion(false, false);
-
         case RING_ACROBAT:
             return you.has_mutation(MUT_ACROBATIC);
 

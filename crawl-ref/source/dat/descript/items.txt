@@ -1222,6 +1222,12 @@ A ring that reduces the wearer's range of vision by two tiles. Naturally, if you
 can't see your enemies, they can't see you either. Minimum vision range is two
 tiles, unless you have divine assistance.
 %%%%
+ring of detection
+
+A ring that helps its wearer locate dungeon features. One level of detection
+will reveal all shrines on each floor as you enter it. Two levels will also
+reveal the location of all stairs and pressure plates.
+%%%%
 ring of dexterity
 
 A ring that increases the dexterity of its wearer.

@@ -1469,9 +1469,6 @@ void viewwindow(bool show_updates, bool tiles_only, animation *a, view_renderer 
 
         if (show_updates || _layers != LAYERS_ALL)
         {
-            if (!is_map_persistent())
-                ash_detect_portals(false);
-
             // TODO: why on earth is this called from here? It seems like it
             // should be called directly on changing location, or something
             // like that...

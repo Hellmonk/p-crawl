@@ -1387,7 +1387,6 @@ int player_res_corrosion(bool temp, bool items)
     if (items)
     {
         if (you.wearing(OBJ_ARMOUR, ARM_ACID_DRAGON_ARMOUR)
-            || you.wearing_jewellery(RING_RESIST_CORROSION)
             || you.wearing_ego(OBJ_ARMOUR, SPARM_PRESERVATION))
         {
             return 1;
@@ -1740,6 +1739,16 @@ int player_speed()
     return ps;
 }
 
+int player_detection_level()
+{
+    int det = 0;
+
+    det += you.wearing_jewellery(RING_DETECTION);
+
+    // capped at two levels
+    return min(2, det);
+}
+
 bool is_effectively_light_armour(const item_def *item)
 {
     return !item
@@ -2071,7 +2080,6 @@ void forget_map(bool rot)
 #endif
     }
 
-    ash_detect_portals(is_map_persistent());
 #ifdef USE_TILE
     tiles.update_minimap_bounds();
 #endif

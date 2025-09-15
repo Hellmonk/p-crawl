@@ -3339,9 +3339,6 @@ static void _god_welcome_handle_gear()
     if (have_passive(passive_t::identify_items))
         ash_id_inventory();
 
-    if (have_passive(passive_t::detect_portals))
-        ash_detect_portals(true);
-
     // Give a reminder to remove any disallowed equipment.
     vector<item_def*> all_eq = you.equipment.get_slot_items(SLOT_ALL_EQUIPMENT, true);
     for (item_def* item : all_eq)

@@ -2807,7 +2807,6 @@ bool gives_resistance(const item_def &item)
             if (item.sub_type == RING_PROTECTION_FROM_FIRE
                 || item.sub_type == RING_INSULATION
                 || item.sub_type == RING_PROTECTION_FROM_COLD
-                || item.sub_type == RING_RESIST_CORROSION
                 || item.sub_type == RING_WILLPOWER)
             {
                 return true;

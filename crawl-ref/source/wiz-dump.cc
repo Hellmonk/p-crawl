@@ -82,8 +82,8 @@ static uint8_t _jewellery_type_from_artefact_prop(const string &s
     if (s == "Acrobat")
         return RING_ACROBAT;
 
-    if (s == "rCorr")
-        return RING_RESIST_CORROSION;
+    if (s == "Detect")
+        return RING_DETECTION;
 
     if (s == "Wiz")
         return RING_WIZARDRY;

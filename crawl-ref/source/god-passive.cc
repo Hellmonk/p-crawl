@@ -502,12 +502,22 @@ void ash_id_item(item_def& item, bool silent)
     seen_item(item);
 }
 
-static bool is_ash_portal(dungeon_feature_type feat)
+static bool is_feature_detectable(dungeon_feature_type feat)
 {
-    if (feat_is_portal_entrance(feat))
-        return true;
+    const int level = player_detection_level();
+
+    if (level < 1)
+        return false;
+
+    if (feat_is_portal_entrance(feat) || feat_is_staircase(feat)
+        || feat_is_trap(feat))
+    {
+        return level >= 2;
+    }
     switch (feat)
     {
+    case DNGN_ENTER_SHOP:
+        return level >= 1;
     case DNGN_ENTER_HELL:
     case DNGN_EXIT_DIS:
     case DNGN_EXIT_GEHENNA:
@@ -519,17 +529,17 @@ static bool is_ash_portal(dungeon_feature_type feat)
     case DNGN_ENTER_PANDEMONIUM:
     case DNGN_EXIT_PANDEMONIUM:
     // DNGN_TRANSIT_PANDEMONIUM is too mundane
-        return true;
+        return level >= 2;
     default:
         return false;
     }
 }
 
 // Yay for rectangle_iterator and radius_iterator not sharing a base type
-static bool _check_portal(coord_def where)
+static bool _check_feature(coord_def where)
 {
     const dungeon_feature_type feat = env.grid(where);
-    if (feat != env.map_knowledge(where).feat() && is_ash_portal(feat))
+    if (feat != env.map_knowledge(where).feat() && is_feature_detectable(feat))
     {
         env.map_knowledge(where).set_feature(feat);
         set_terrain_mapped(where);
@@ -544,33 +554,33 @@ static bool _check_portal(coord_def where)
     return false;
 }
 
-int ash_detect_portals(bool all)
+int detect_features(bool all)
 {
     if (!have_passive(passive_t::detect_portals))
         return 0;
 
-    int portals_found = 0;
+    int features_found = 0;
     const int map_radius = LOS_DEFAULT_RANGE + 1;
 
     if (all)
     {
         for (rectangle_iterator ri(0); ri; ++ri)
         {
-            if (_check_portal(*ri))
-                portals_found++;
+            if (_check_feature(*ri))
+                features_found++;
         }
     }
     else
     {
         for (radius_iterator ri(you.pos(), map_radius, C_SQUARE); ri; ++ri)
         {
-            if (_check_portal(*ri))
-                portals_found++;
+            if (_check_feature(*ri))
+                features_found++;
         }
     }
 
-    you.seen_portals += portals_found;
-    return portals_found;
+    you.seen_portals += features_found;
+    return features_found;
 }
 
 monster_type ash_monster_tier(const monster *mon)

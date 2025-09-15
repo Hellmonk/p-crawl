@@ -1697,10 +1697,6 @@ static int _get_monster_jewellery_value(const monster *mon,
     if (!mons_class_flag(mon->type, M_SEE_INVIS))
         value += get_jewellery_see_invisible(item);
 
-    // If we're not naturally corrosion-resistant.
-    if (item.sub_type == RING_RESIST_CORROSION && get_mons_resist(*mon, MR_RES_CORR) <= 0)
-        value++;
-
     return value;
 }
 
@@ -3769,7 +3765,6 @@ int monster::res_corr() const
     if (mons_itemuse(*this) >= MONUSE_STARTING_EQUIPMENT)
     {
         u += wearing(OBJ_ARMOUR, ARM_ACID_DRAGON_ARMOUR);
-        u += wearing_jewellery(RING_RESIST_CORROSION);
         u += wearing_ego(OBJ_ARMOUR, SPARM_PRESERVATION);
     }
 

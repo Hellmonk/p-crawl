@@ -832,7 +832,7 @@ i-r-cold RING_PROTECTION_FROM_COLD
 i-plenty RING_PLENTY
 i-slaying RING_SLAYING
 i-tele RING_TELE
-i-r-corrosion RING_RESIST_CORROSION
+i-detection RING_DETECTION
 # start TAG_MAJOR_VERSION == 34
 i-attention RING_ATTENTION
 i-teleport RING_TELEPORTATION

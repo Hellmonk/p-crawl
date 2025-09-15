@@ -273,7 +273,7 @@ void jiyva_eat_offlevel_items();
 void ash_check_bondage();
 void ash_id_inventory();
 void ash_id_item(item_def& item, bool silent = true);
-int ash_detect_portals(bool all);
+int detect_features(bool all);
 monster_type ash_monster_tier(const monster *mon);
 unsigned int ash_skill_point_boost(skill_type sk, int scaled_skill);
 int ash_skill_boost(skill_type sk, int scale);

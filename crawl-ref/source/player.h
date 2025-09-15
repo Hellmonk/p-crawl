@@ -1077,6 +1077,8 @@ int player_spec_tloc();
 
 int player_speed();
 
+int player_detection_level();
+
 int player_spell_levels(bool floored = true);
 int player_total_spell_levels();
 
