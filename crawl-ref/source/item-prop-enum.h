@@ -218,7 +218,7 @@ enum jewellery_type
     RING_ATTENTION,
     RING_TELEPORTATION,
 #endif
-    RING_EVASION,
+    RING_WILDSHAPE,
 #if TAG_MAJOR_VERSION == 34
     RING_SUSTAIN_ATTRIBUTES,
 #endif

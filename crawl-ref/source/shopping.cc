@@ -551,9 +551,6 @@ unsigned int item_value(item_def item, bool ident)
                 case RING_PROTECTION:
                     base = 2 * item.plus;
                     break;
-                case RING_EVASION:
-                    base = 8 * item.plus / 5;
-                    break;
                 case RING_DEXTERITY:
                 case RING_INTELLIGENCE:
                     base = item.plus * 4 / 3;
@@ -582,6 +579,7 @@ unsigned int item_value(item_def item, bool ident)
                 case AMU_ACROBAT:
                 case RING_ACROBAT:
                 case AMU_REFLECTION:
+                case RING_WILDSHAPE:
                     valued += 300;
                     break;
 

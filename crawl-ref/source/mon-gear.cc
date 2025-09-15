@@ -2496,7 +2496,6 @@ void give_apostle_equipment(monster* apostle)
                 // ones that do.
                 jewellery_type rtype = random_choose(RING_PROTECTION_FROM_FIRE,
                                                      RING_PROTECTION_FROM_COLD,
-                                                     RING_EVASION,
                                                      RING_PROTECTION);
 
                 make_item_for_monster(apostle, OBJ_JEWELLERY, rtype, 0,

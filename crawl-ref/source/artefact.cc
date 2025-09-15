@@ -380,7 +380,6 @@ static map<jewellery_type, vector<artp_value>> jewellery_artps = {
     { RING_WILLPOWER, { { ARTP_WILLPOWER, 1 } } },
 
     { RING_PROTECTION, { { ARTP_AC, 0 } } },
-    { RING_EVASION, { { ARTP_EVASION, 0 } } },
     { RING_SLAYING, { { ARTP_SLAYING, 0 } } },
 };
 

@@ -1314,6 +1314,10 @@ ring of protection from fire
 
 A ring that protects its wearer from fire.
 %%%%
+ring of wildshape
+
+A ring that improves its wearer's skill with Shapeshifting by three levels.
+%%%%
 ring of willpower
 
 A ring that increases its wearer's willpower, protecting against certain

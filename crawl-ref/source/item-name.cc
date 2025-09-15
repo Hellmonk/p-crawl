@@ -776,7 +776,7 @@ const char* jewellery_effect_name(int jeweltype, bool terse)
         case RING_SLAYING:               return "slaying";
         case RING_TELE:                  return "teleportation";
         case RING_DETECTION:             return "detection";
-        case RING_EVASION:               return "evasion";
+        case RING_WILDSHAPE:             return "wildshape";
 #if TAG_MAJOR_VERSION == 34
         case RING_SUSTAIN_ATTRIBUTES:    return "sustain attributes";
 #endif
@@ -828,7 +828,7 @@ const char* jewellery_effect_name(int jeweltype, bool terse)
         case RING_SLAYING:               return "Slay";
         case RING_TELE:                  return "Tele";
         case RING_DETECTION:             return "Detect";
-        case RING_EVASION:               return "EV";
+        case RING_WILDSHAPE:             return "Wildshape";
         case RING_STEALTH:               return "Stlth+";
         case RING_DEXTERITY:             return "Dex";
         case RING_INTELLIGENCE:          return "Int";

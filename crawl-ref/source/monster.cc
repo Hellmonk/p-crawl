@@ -1670,7 +1670,6 @@ static int _get_monster_jewellery_value(const monster *mon,
     int value = 0;
 
     if (item.sub_type == RING_PROTECTION
-        || item.sub_type == RING_EVASION
         || item.sub_type == RING_SLAYING)
     {
         value += item.plus;

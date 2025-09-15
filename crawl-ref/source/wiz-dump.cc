@@ -84,6 +84,8 @@ static uint8_t _jewellery_type_from_artefact_prop(const string &s
 
     if (s == "Detect")
         return RING_DETECTION;
+    if (s == "Wildshape")
+        return RING_WILDSHAPE;
 
     if (s == "Wiz")
         return RING_WIZARDRY;
@@ -110,8 +112,6 @@ static uint8_t _jewellery_type_from_artefact_prop(const string &s
         return RING_DEXTERITY;
     if (s.substr(0, 3) == "Int")
         return RING_INTELLIGENCE;
-    if (s.substr(0, 2) == "EV")
-        return RING_EVASION;
 #if TAG_MAJOR_VERSION == 34
     if (s.substr(0, 5) == "Stlth")
         return RING_STEALTH;

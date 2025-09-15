@@ -631,7 +631,7 @@ static const char* _jewellery_base_ability_description(int subtype)
         return "It may teleport you next to monsters.";
 #endif
     case RING_ACROBAT:
-        return "";
+        return "It doubles your evasion if your last action was moving or waiting.";
 #if TAG_MAJOR_VERSION == 34
     case AMU_HARM:
         return "It increases damage dealt and taken.";
@@ -642,6 +642,8 @@ static const char* _jewellery_base_ability_description(int subtype)
 #endif
     case RING_DARKNESS:
         return "It reduces your range of vision by 2.";
+    case RING_WILDSHAPE:
+        return "It improves your skill with shapeshifting by 3.";
     case AMU_GUARDIAN_SPIRIT:
         return "It causes incoming damage to be divided between your reserves "
                "of health and magic.";
@@ -2291,11 +2293,6 @@ static string _describe_jewellery(const item_def &item, bool verbose)
                                             item.plus);
                 break;
 
-            case RING_EVASION:
-                description += make_stringf("\n\nIt affects your evasion (%+d).",
-                                            item.plus);
-                break;
-
             case RING_INTELLIGENCE:
                 description += make_stringf("\n\nIt affects your intelligence (%+d).",
                                             item.plus);
@@ -2329,7 +2326,6 @@ static string _describe_jewellery(const item_def &item, bool verbose)
         && !you.has_mutation(MUT_NO_JEWELLERY)
         && (is_artefact(item)
             || item.sub_type != RING_PROTECTION
-               && item.sub_type != RING_EVASION
                && item.sub_type != RING_REFLECTION))
     {
         description += _equipment_property_change(item);

@@ -394,6 +394,17 @@ void SkillMenuEntry::set_progress()
     m_progress->set_editable(false);
 }
 
+static bool _wildshape_bonus()
+{
+    if (you.skill(SK_SHAPESHIFTING, 10, true) > 0
+        && you.wearing_jewellery(RING_WILDSHAPE))
+    {
+        return true;
+    }
+
+    return false;
+}
+
 EditableTextItem *SkillMenuEntry::get_progress()
 {
     return m_progress;
@@ -503,6 +514,8 @@ string SkillMenuSwitch::get_help()
             }
             if (artefacts_enhance_skill())
                 causes.push_back("your equipment");
+            if (_wildshape_bonus())
+                causes.push_back("wildshape");
             if (you.form == transformation::walking_scroll)
                 causes.push_back("scribal knowledge");
             result = "Skills enhanced by "

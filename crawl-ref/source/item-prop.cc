@@ -2329,7 +2329,6 @@ bool jewellery_type_has_plusses(int jewel_type)
     {
     case RING_SLAYING:
     case RING_PROTECTION:
-    case RING_EVASION:
     case RING_INTELLIGENCE:
     case RING_DEXTERITY:
         return true;
@@ -3615,7 +3614,6 @@ bool ring_plusses_matter(int ring_subtype)
     {
         case RING_PROTECTION:
         case RING_SLAYING:
-        case RING_EVASION:
         case RING_DEXTERITY:
         case RING_INTELLIGENCE:
         case RING_REFLECTION:

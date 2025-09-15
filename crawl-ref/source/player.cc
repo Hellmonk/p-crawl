@@ -1794,8 +1794,6 @@ static int _player_base_evasion_modifiers()
 {
     int evbonus = 0;
 
-    evbonus += you.wearing_jewellery(RING_EVASION);
-
     evbonus += you.scan_artefacts(ARTP_EVASION);
 
     // mutations
@@ -5787,6 +5785,9 @@ int player::skill(skill_type sk, int scale, bool real, bool temp) const
     case SK_EARTH_MAGIC:
         level = min(level + scan_artefacts(ARTP_ENHANCE_EARTH) * scale, 27 * scale);
         break;
+
+    case SK_SHAPESHIFTING:
+        level += you.wearing_jewellery(RING_WILDSHAPE) * 3 * scale;
 
     default:
         break;
