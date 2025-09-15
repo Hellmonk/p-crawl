@@ -3734,7 +3734,7 @@ int get_real_mp(bool include_items)
 
     if (include_items)
     {
-        enp += 9 * you.wearing_jewellery(RING_MAGICAL_POWER);
+        enp += 5 * you.wearing_jewellery(RING_MAGICAL_POWER);
         enp +=     you.scan_artefacts(ARTP_MAGICAL_POWER);
     }
 

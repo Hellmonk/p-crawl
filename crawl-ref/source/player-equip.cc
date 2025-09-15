@@ -2503,7 +2503,7 @@ static void _unequip_jewellery_effect(item_def &item, bool meld)
         if (!you.has_mutation(MUT_HP_CASTING))
         {
             canned_msg(MSG_MANA_DECREASE);
-            pay_mp(9);
+            pay_mp(5);
         }
         break;
 

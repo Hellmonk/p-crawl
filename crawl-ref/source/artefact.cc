@@ -360,7 +360,7 @@ struct artp_value
 {
     /// The artp matching the item (e.g. ARTP_AC for RING_PROTECTION)
     artefact_prop_type  type;
-    /// The value of the artp. (E.g. '9' for RING_MAGICAL_POWER.) If set to 0,
+    /// The value of the artp. (E.g. '5' for RING_MAGICAL_POWER.) If set to 0,
     /// uses item.plus instead.
     int                 value;
 };
@@ -371,7 +371,7 @@ static map<jewellery_type, vector<artp_value>> jewellery_artps = {
     { RING_REFLECTION, { { ARTP_SHIELDING, AMU_REFLECT_SH } } },
     { RING_ACROBAT, { { ARTP_ACROBAT, 1 } } },
 
-    { RING_MAGICAL_POWER, { { ARTP_MAGICAL_POWER, 9 } } },
+    { RING_MAGICAL_POWER, { { ARTP_MAGICAL_POWER, 5 } } },
     { RING_WIZARDRY, { { ARTP_WIZARDRY, 1} } },
     { RING_STEALTH, { { ARTP_STEALTH, 1 } } },
 
