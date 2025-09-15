@@ -89,6 +89,7 @@ static const vector<ego_weight_tuple> HEAVY_BODY_EGOS = {
     { SPARM_WILLPOWER,          15 },
     { SPARM_POSITIVE_ENERGY,    7 },
     { SPARM_PONDEROUSNESS,      7 },
+    { SPARM_HEALTH,             7 },
 };
 
 static const vector<ego_weight_tuple> SHIELD_EGOS = {

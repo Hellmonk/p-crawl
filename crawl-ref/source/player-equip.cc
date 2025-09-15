@@ -2097,6 +2097,10 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
             mpr("You feel more protected from negative energy.");
             break;
 
+        case SPARM_HEALTH:
+            mpr("You feel healthy.");
+            break;
+
         case SPARM_ARCHMAGI:
             if (!you.skill(SK_SPELLCASTING))
                 mpr("You feel strangely lacking in power.");
@@ -2226,6 +2230,10 @@ static void _unequip_armour_effect(item_def& item, bool meld)
 
     case SPARM_POSITIVE_ENERGY:
         mpr("You feel less protected from negative energy.");
+        break;
+
+    case SPARM_HEALTH:
+        mpr("You feel less healthy.");
         break;
 
     case SPARM_ARCHMAGI:
