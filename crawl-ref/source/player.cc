@@ -1405,6 +1405,9 @@ int player_res_electricity(bool temp, bool items)
         // staff
         re += you.wearing(OBJ_STAVES, STAFF_AIR);
 
+        // armour ego
+        re += you.wearing_ego(OBJ_ARMOUR, SPARM_INSULATION);
+
         // body armour:
         const item_def *body_armour = you.body_armour();
         if (body_armour)
@@ -1466,9 +1469,6 @@ int player_res_poison(bool temp, bool items, bool forms)
     {
         // Staves
         rp += you.wearing(OBJ_STAVES, STAFF_ALCHEMY);
-
-        // ego armour:
-        rp += you.wearing_ego(OBJ_ARMOUR, SPARM_POISON_RESISTANCE);
 
         // body armour:
         const item_def *body_armour = you.body_armour();
