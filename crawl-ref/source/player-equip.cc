@@ -2063,8 +2063,8 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
             notify_stat_change(STAT_DEX, 3, false);
             break;
 
-        case SPARM_INTELLIGENCE:
-            notify_stat_change(STAT_INT, 3, false);
+        case SPARM_WIZARDRY:
+            mpr("You feel like a wizard.");
             break;
 
         case SPARM_PONDEROUSNESS:
@@ -2190,8 +2190,8 @@ static void _unequip_armour_effect(item_def& item, bool meld)
         notify_stat_change(STAT_DEX, -3, false);
         break;
 
-    case SPARM_INTELLIGENCE:
-        notify_stat_change(STAT_INT, -3, false);
+     case SPARM_WIZARDRY:
+        mpr("You feel less like a wizard.");
         break;
 
     case SPARM_PONDEROUSNESS:

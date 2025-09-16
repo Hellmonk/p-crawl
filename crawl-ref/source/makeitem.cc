@@ -783,6 +783,7 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
     {
     case SPARM_FORBID_EGO:
     case SPARM_NORMAL:
+    case SPARM_WIZARDRY:
         return true;
 
     case SPARM_FLYING:
@@ -831,7 +832,6 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
         // deliberate fall-through
     case SPARM_SNIPING:
     case SPARM_SEE_INVISIBLE:
-    case SPARM_INTELLIGENCE:
     case SPARM_REPULSION:
         return slot == SLOT_HELMET;
 

@@ -240,9 +240,6 @@ static int _int_modifier(bool innate_only)
             result += you.attribute[ATTR_DIVINE_STAMINA];
 
         result += chei_stat_boost();
-
-        // ego items of intelligence
-        result += 3 * you.wearing_ego(OBJ_ARMOUR, SPARM_INTELLIGENCE);
     }
 
     // mutations
