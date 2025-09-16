@@ -312,7 +312,7 @@ bool actor::rmut_from_item() const
     return scan_artefacts(ARTP_RMUT);
 }
 
-bool actor::evokable_invis() const
+int actor::evokable_invis() const
 {
     return wearing_ego(OBJ_ARMOUR, SPARM_INVISIBILITY)
            || scan_artefacts(ARTP_INVISIBLE);

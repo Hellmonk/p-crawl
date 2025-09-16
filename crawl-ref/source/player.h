@@ -59,6 +59,7 @@
 #define WATERY_GRAVE_XP_KEY "watery_grave_xp"
 #define WEREFURY_KEY "werefury_bonus"
 #define TELEPORTED_KEY "teleported"
+#define WENT_INVIS_KEY "went_invis"
 
 constexpr int ENKINDLE_CHARGE_COST = 40;
 #define ENKINDLE_CHARGES_KEY "enkindle_charges"

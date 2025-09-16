@@ -496,8 +496,8 @@ public:
                  : "You fade further into invisibility.");
         }
 
-        const int dur = _scale_pot_duration(15 + random2(pow), is_potion);
-        you.increase_duration(DUR_INVIS, dur, 100);
+        const int dur = 2 + div_rand_round(pow, 2) + random2(pow);
+        you.set_duration(DUR_INVIS, dur, 100);
         return true;
     }
 
