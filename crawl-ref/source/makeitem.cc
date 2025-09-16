@@ -799,6 +799,7 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
     case SPARM_RAMPAGING:
     case SPARM_INSULATION:
     case SPARM_EVASION:
+    case SPARM_STABILITY:
         return slot == SLOT_BOOTS || slot == SLOT_BARDING;
     case SPARM_STEALTH:
         return slot == SLOT_BOOTS || slot == SLOT_BARDING || slot == SLOT_CLOAK
@@ -827,7 +828,6 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
     case SPARM_SPIKES:
         return slot == SLOT_OFFHAND;
 
-    case SPARM_STRENGTH:
     case SPARM_INFUSION:
         if (!strict)
             return true;

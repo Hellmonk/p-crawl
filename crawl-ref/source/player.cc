@@ -6822,7 +6822,7 @@ int player::hurt(const actor *agent, int amount, beam_type flavour,
  */
 bool player::resists_dislodge(string event) const
 {
-    if (!you.unrand_equipped(UNRAND_MOUNTAIN_BOOTS))
+    if (!you.wearing_ego(OBJ_ARMOUR, SPARM_STABILITY))
         return false;
     if (!event.empty())
         mprf("Your boots keep you from %s.", event.c_str());
