@@ -78,6 +78,7 @@ static const vector<ego_weight_tuple> BASIC_BODY_EGOS = {
     { SPARM_COLD_RESISTANCE,   7 },
     { SPARM_WILLPOWER,         4 },
     { SPARM_WIZARDRY,          7 },
+    { SPARM_ARCHMAGI,          7 },
 };
 
 // Total weight 100.
