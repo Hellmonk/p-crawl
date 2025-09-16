@@ -1619,9 +1619,6 @@ int player_prot_life(bool temp, bool items)
 
     if (items)
     {
-        // armour (checks body armour only)
-        pl += you.wearing_ego(OBJ_ARMOUR, SPARM_POSITIVE_ENERGY);
-
         // pearl dragon counts
         const item_def *body_armour = you.body_armour();
         if (body_armour)
@@ -1797,6 +1794,8 @@ static int _player_base_evasion_modifiers()
     int evbonus = 0;
 
     evbonus += you.scan_artefacts(ARTP_EVASION);
+
+    evbonus += you.wearing_ego(OBJ_ARMOUR, SPARM_EVASION);
 
     // mutations
     evbonus += you.get_mutation_level(MUT_GELATINOUS_BODY);

@@ -798,6 +798,7 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
 #endif
     case SPARM_RAMPAGING:
     case SPARM_INSULATION:
+    case SPARM_EVASION:
         return slot == SLOT_BOOTS || slot == SLOT_BARDING;
     case SPARM_STEALTH:
         return slot == SLOT_BOOTS || slot == SLOT_BARDING || slot == SLOT_CLOAK
@@ -846,10 +847,6 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
             return false; // contradictory or redundant
         }
         return true; // in portal vaults, these can happen on every slot
-
-    case SPARM_POSITIVE_ENERGY:
-        if (type == ARM_PEARL_DRAGON_ARMOUR && brand == SPARM_POSITIVE_ENERGY)
-            return false; // contradictory or redundant
 
         return slot == SLOT_BODY_ARMOUR || slot == SLOT_OFFHAND || slot == SLOT_CLOAK
                        || !strict;

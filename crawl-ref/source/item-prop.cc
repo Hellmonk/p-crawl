@@ -77,7 +77,6 @@ static const vector<ego_weight_tuple> BASIC_BODY_EGOS = {
     { SPARM_FIRE_RESISTANCE,   7 },
     { SPARM_COLD_RESISTANCE,   7 },
     { SPARM_WILLPOWER,         4 },
-    { SPARM_POSITIVE_ENERGY,   2 },
     { SPARM_WIZARDRY,          7 },
 };
 
@@ -86,7 +85,6 @@ static const vector<ego_weight_tuple> HEAVY_BODY_EGOS = {
     { SPARM_FIRE_RESISTANCE,    26 },
     { SPARM_COLD_RESISTANCE,    26 },
     { SPARM_WILLPOWER,          15 },
-    { SPARM_POSITIVE_ENERGY,    7 },
     { SPARM_PONDEROUSNESS,      7 },
     { SPARM_HEALTH,             7 },
     { SPARM_WIZARDRY,           7 },
@@ -96,7 +94,6 @@ static const vector<ego_weight_tuple> SHIELD_EGOS = {
     { SPARM_RESISTANCE,        1 },
     { SPARM_FIRE_RESISTANCE,   3 },
     { SPARM_COLD_RESISTANCE,   3 },
-    { SPARM_POSITIVE_ENERGY,   3 },
     { SPARM_REFLECTION,        6 },
     { SPARM_SPIKES,            6 },
     { SPARM_PROTECTION,       12 },
@@ -129,7 +126,6 @@ static const armour_def Armour_prop[] =
             { SPARM_RESISTANCE,      1 },
             { SPARM_COLD_RESISTANCE, 2 },
             { SPARM_FIRE_RESISTANCE, 2 },
-            { SPARM_POSITIVE_ENERGY, 2 },
             { SPARM_STEALTH,         3 },
             { SPARM_WILLPOWER,       4 },
             { SPARM_MAGICAL_POWER,   2 },
@@ -211,6 +207,7 @@ static const armour_def Armour_prop[] =
             { SPARM_RAMPAGING,      1 },
             { SPARM_MAGICAL_POWER,  1 },
             { SPARM_INSULATION,     1 },
+            { SPARM_EVASION,        1 },
     }},
     // Changed max. barding size to large to allow for the appropriate
     // monster types (monsters don't differentiate between torso and general).
@@ -2521,10 +2518,6 @@ int get_armour_life_protection(const item_def &arm)
     // intrinsic armour abilities
     res += armour_type_prop(arm.sub_type, ARMF_RES_NEG);
 
-    // check for ego resistance
-    if (get_armour_ego_type(arm) == SPARM_POSITIVE_ENERGY)
-        res += 1;
-
     return res;
 }
 
@@ -2824,8 +2817,7 @@ bool gives_resistance(const item_def &item)
             || ego == SPARM_INSULATION
             || ego == SPARM_WILLPOWER
             || ego == SPARM_RESISTANCE
-            || ego == SPARM_PRESERVATION
-            || ego == SPARM_POSITIVE_ENERGY)
+            || ego == SPARM_PRESERVATION)
         {
             return true;
         }
