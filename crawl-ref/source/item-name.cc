@@ -553,7 +553,7 @@ const char* special_armour_type_name(special_armour_type ego, bool terse)
         case SPARM_SEE_INVISIBLE:     return "see invisible";
         case SPARM_INVISIBILITY:      return "invisibility";
         case SPARM_STRENGTH:          return "strength";
-        case SPARM_DEXTERITY:         return "dexterity";
+        case SPARM_MAGICAL_POWER:     return "magical power";
         case SPARM_WIZARDRY:          return "wizardry";
         case SPARM_PONDEROUSNESS:     return "ponderousness";
         case SPARM_FLYING:            return "flying";
@@ -603,7 +603,7 @@ const char* special_armour_type_name(special_armour_type ego, bool terse)
         case SPARM_SEE_INVISIBLE:     return "SInv";
         case SPARM_INVISIBILITY:      return "+Inv";
         case SPARM_STRENGTH:          return "Str+3";
-        case SPARM_DEXTERITY:         return "Dex+3";
+        case SPARM_MAGICAL_POWER:     return "MP+5";
         case SPARM_WIZARDRY:          return "Wiz";
         case SPARM_PONDEROUSNESS:     return "ponderous";
         case SPARM_FLYING:            return "Fly";

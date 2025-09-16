@@ -259,9 +259,6 @@ static int _dex_modifier(bool innate_only)
 
         result += chei_stat_boost();
 
-        // ego items of dexterity
-        result += 3 * you.wearing_ego(OBJ_ARMOUR, SPARM_DEXTERITY);
-
         // form
         result += get_form()->dex_mod;
     }

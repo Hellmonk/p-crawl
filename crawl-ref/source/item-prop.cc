@@ -171,7 +171,6 @@ static const armour_def Armour_prop[] =
 
     { ARM_GLOVES,               "gloves",                 1,   0,   45,
         SLOT_GLOVES,      SIZE_SMALL,  SIZE_MEDIUM, true, 0, {
-            { SPARM_DEXTERITY, 1 },
             { SPARM_STRENGTH,  1 },
             { SPARM_STEALTH,   1 },
             { SPARM_INFUSION,  1 },
@@ -183,6 +182,7 @@ static const armour_def Armour_prop[] =
             { SPARM_REPULSION,     1 },
             { SPARM_STEALTH,       1 },
             { SPARM_SNIPING,       1 },
+            { SPARM_MAGICAL_POWER, 1 },
     }},
 
 #if TAG_MAJOR_VERSION == 34
@@ -198,6 +198,7 @@ static const armour_def Armour_prop[] =
             { SPARM_SEE_INVISIBLE, 2 },
             { SPARM_REPULSION,     1 },
             { SPARM_WIZARDRY,      1 },
+            { SPARM_MAGICAL_POWER, 1 },
     }},
 
     // Note that barding size is compared against torso so it currently
@@ -205,9 +206,11 @@ static const armour_def Armour_prop[] =
     // and shapeshift status.
     { ARM_BOOTS,                "boots",                  1,   0,   45,
         SLOT_BOOTS,       SIZE_SMALL,  SIZE_MEDIUM, true, 0, {
-            { SPARM_FLYING,    1 },
-            { SPARM_STEALTH,   1 },
-            { SPARM_RAMPAGING, 1 },
+            { SPARM_FLYING,         1 },
+            { SPARM_STEALTH,        1 },
+            { SPARM_RAMPAGING,      1 },
+            { SPARM_MAGICAL_POWER,  1 },
+            { SPARM_INSULATION,     1 },
     }},
     // Changed max. barding size to large to allow for the appropriate
     // monster types (monsters don't differentiate between torso and general).
