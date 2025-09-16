@@ -171,7 +171,6 @@ static const armour_def Armour_prop[] =
         SLOT_GLOVES,      SIZE_SMALL,  SIZE_MEDIUM, true, 0, {
             { SPARM_DEXTERITY, 1 },
             { SPARM_STRENGTH,  1 },
-            { SPARM_HURLING,   1 },
             { SPARM_STEALTH,   1 },
             { SPARM_INFUSION,  1 },
     }},
@@ -182,6 +181,7 @@ static const armour_def Armour_prop[] =
             { SPARM_INTELLIGENCE,  1 },
             { SPARM_REPULSION,     1 },
             { SPARM_STEALTH,       1 },
+            { SPARM_SNIPING,       1 },
     }},
 
 #if TAG_MAJOR_VERSION == 34

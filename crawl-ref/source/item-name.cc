@@ -570,7 +570,7 @@ const char* special_armour_type_name(special_armour_type ego, bool terse)
         case SPARM_PRESERVATION:      return "preservation";
         case SPARM_REFLECTION:        return "reflection";
         case SPARM_SPIRIT_SHIELD:     return "spirit shield";
-        case SPARM_HURLING:           return "hurling";
+        case SPARM_SNIPING:           return "sniping";
         case SPARM_REPULSION:         return "repulsion";
 #if TAG_MAJOR_VERSION == 34
         case SPARM_CLOUD_IMMUNE:      return "cloud immunity";
@@ -619,7 +619,7 @@ const char* special_armour_type_name(special_armour_type ego, bool terse)
         case SPARM_PRESERVATION:      return "rCorr";
         case SPARM_REFLECTION:        return "reflect";
         case SPARM_SPIRIT_SHIELD:     return "Spirit";
-        case SPARM_HURLING:           return "hurl";
+        case SPARM_SNIPING:           return "Snipe";
         case SPARM_REPULSION:         return "repulsion";
 #if TAG_MAJOR_VERSION == 34
         case SPARM_CLOUD_IMMUNE:      return "obsolete";

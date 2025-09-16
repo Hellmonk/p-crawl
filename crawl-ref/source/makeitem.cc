@@ -829,9 +829,7 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
         if (!strict)
             return true;
         // deliberate fall-through
-    case SPARM_HURLING:
-        return slot == SLOT_GLOVES;
-
+    case SPARM_SNIPING:
     case SPARM_SEE_INVISIBLE:
     case SPARM_INTELLIGENCE:
     case SPARM_REPULSION:

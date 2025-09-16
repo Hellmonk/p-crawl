@@ -409,6 +409,12 @@ int ranged_attack::player_apply_final_multipliers(int damage, bool /*aux*/)
 {
     if (!throwing())
         damage = apply_rev_penalty(damage);
+    if (you.wearing_ego(OBJ_ARMOUR, SPARM_SNIPING))
+    {
+        stab_type st = find_player_stab_type(*defender->as_monster());
+        if (st != STAB_NO_STAB && st != STAB_ALLY && st != STAB_FLEEING)
+            damage = damage * 3 / 2;
+    }
     return damage;
 }
 
