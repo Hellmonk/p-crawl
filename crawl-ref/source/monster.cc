@@ -3764,7 +3764,6 @@ int monster::res_corr() const
     if (mons_itemuse(*this) >= MONUSE_STARTING_EQUIPMENT)
     {
         u += wearing(OBJ_ARMOUR, ARM_ACID_DRAGON_ARMOUR);
-        u += wearing_ego(OBJ_ARMOUR, SPARM_PRESERVATION);
     }
 
     if (has_ench(ENCH_RESISTANCE))

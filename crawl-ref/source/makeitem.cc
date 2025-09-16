@@ -811,14 +811,8 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
     case SPARM_PONDEROUSNESS:
     case SPARM_HEALTH:
         return true;
-    case SPARM_PRESERVATION:
-#if TAG_MAJOR_VERSION > 34
-        return slot == SLOT_CLOAK;
-#endif
+
 #if TAG_MAJOR_VERSION == 34
-        if (type == ARM_PLATE_ARMOUR && !strict)
-            return true;
-        return slot == SLOT_CLOAK;
     case SPARM_INVISIBILITY:
         return (slot == SLOT_CLOAK && !strict) || type == ARM_SCARF;
 #endif
@@ -875,6 +869,7 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
     case SPARM_MAYHEM:
     case SPARM_GUILE:
     case SPARM_ENERGY:
+    case SPARM_FOG:
         return type == ARM_ORB;
 
     case NUM_SPECIAL_ARMOURS:

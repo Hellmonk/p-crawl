@@ -858,6 +858,11 @@ static void _maybe_fog(int dam)
         big_cloud(CLOUD_XOM_TRAIL, &you, you.pos(), 50, 4 + random2(5), -1);
         take_note(Note(NOTE_XOM_EFFECT, you.raw_piety, -1, "smoke on damage"), true);
     }
+    else if (you.wearing_ego(OBJ_ARMOUR, SPARM_FOG) && coinflip())
+    {
+        mpr("Your orb releases a cloud of fog.");
+        big_cloud(random_smoke_type(), &you, you.pos(), 50, 4 + random2(5));
+    }
 }
 
 static void _maybe_splash_water(int dam)

@@ -157,7 +157,6 @@ static const armour_def Armour_prop[] =
         SLOT_CLOAK,       SIZE_LITTLE, SIZE_LARGE, true, 0, {
             { SPARM_WILLPOWER,         1 },
             { SPARM_STEALTH,           1 },
-            { SPARM_PRESERVATION,      1 },
     }},
     { ARM_SCARF,                "scarf",                  0,   0,   50,
         SLOT_CLOAK,       SIZE_LITTLE, SIZE_LARGE, true, 0, {
@@ -237,6 +236,7 @@ static const armour_def Armour_prop[] =
             { SPARM_GUILE,          1 },
             { SPARM_ENERGY,         1 },
             { SPARM_DARKNESS,       1 },
+            { SPARM_FOG,            1 },
     }},
     { ARM_BUCKLER,             "buckler",                 3,  -50,  45,
         SLOT_OFFHAND,      SIZE_LITTLE, SIZE_MEDIUM, true, 0, SHIELD_EGOS },
@@ -2555,9 +2555,7 @@ int get_armour_res_corr(const item_def &arm)
 {
     ASSERT(arm.base_type == OBJ_ARMOUR);
 
-    // intrinsic armour abilities
-    return get_armour_ego_type(arm) == SPARM_PRESERVATION
-           || armour_type_prop(arm.sub_type, ARMF_RES_CORR);
+    return false;
 }
 
 bool get_armour_rampaging(const item_def &arm, bool check_artp)
@@ -2820,8 +2818,7 @@ bool gives_resistance(const item_def &item)
             || ego == SPARM_COLD_RESISTANCE
             || ego == SPARM_INSULATION
             || ego == SPARM_WILLPOWER
-            || ego == SPARM_RESISTANCE
-            || ego == SPARM_PRESERVATION)
+            || ego == SPARM_RESISTANCE)
         {
             return true;
         }
