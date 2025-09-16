@@ -1745,6 +1745,8 @@ int player_detection_level()
 
     det += you.wearing_jewellery(RING_DETECTION);
 
+    det += you.wearing_ego(OBJ_ARMOUR, SPARM_DETECTION);
+
     // capped at two levels
     return min(2, det);
 }
@@ -7249,13 +7251,6 @@ bool player::can_see_invisible() const
 {
     if (crawl_state.game_is_arena())
         return true;
-
-    if (wearing_ego(OBJ_ARMOUR, SPARM_SEE_INVISIBLE)
-        // randart gear
-        || you.duration[DUR_REVELATION])
-    {
-        return true;
-    }
 
     return innate_sinv();
 }

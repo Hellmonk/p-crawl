@@ -2045,9 +2045,8 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
             mpr("You feel insulated.");
             break;
 
-        case SPARM_SEE_INVISIBLE:
+        case SPARM_DETECTION:
             mpr("You feel perceptive.");
-            autotoggle_autopickup(false);
             break;
 
         case SPARM_INVISIBILITY:
@@ -2174,12 +2173,9 @@ static void _unequip_armour_effect(item_def& item, bool meld)
         mpr("You feel less insulated.");
         break;
 
-    case SPARM_SEE_INVISIBLE:
-        if (!you.can_see_invisible())
-        {
+    case SPARM_DETECTION:
+        if (player_detection_level() < 2)
             mpr("You feel less perceptive.");
-            _mark_unseen_monsters();
-        }
         break;
 
     case SPARM_STRENGTH:

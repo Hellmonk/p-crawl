@@ -132,6 +132,7 @@ static const armour_def Armour_prop[] =
             { SPARM_POSITIVE_ENERGY, 2 },
             { SPARM_STEALTH,         3 },
             { SPARM_WILLPOWER,       4 },
+            { SPARM_MAGICAL_POWER,   2 },
     }},
     { ARM_LEATHER_ARMOUR,       "leather armour",         3,  -10,   20,
         SLOT_BODY_ARMOUR, SIZE_SMALL, SIZE_MEDIUM, true, 10, BASIC_BODY_EGOS },
@@ -178,7 +179,6 @@ static const armour_def Armour_prop[] =
 
     { ARM_HELMET,               "helmet",                 1,   0,   45,
         SLOT_HELMET,      SIZE_SMALL,  SIZE_MEDIUM, true, 0, {
-            { SPARM_SEE_INVISIBLE, 1 },
             { SPARM_REPULSION,     1 },
             { SPARM_STEALTH,       1 },
             { SPARM_SNIPING,       1 },
@@ -195,7 +195,7 @@ static const armour_def Armour_prop[] =
             { SPARM_NORMAL,        10 },
             { SPARM_STEALTH,       3 },
             { SPARM_WILLPOWER,     3 },
-            { SPARM_SEE_INVISIBLE, 2 },
+            { SPARM_DETECTION,     2 },
             { SPARM_REPULSION,     1 },
             { SPARM_WIZARDRY,      1 },
             { SPARM_MAGICAL_POWER, 1 },
@@ -2552,10 +2552,6 @@ int get_armour_willpower(const item_def &arm, bool check_artp)
 bool get_armour_see_invisible(const item_def &arm)
 {
     ASSERT(arm.base_type == OBJ_ARMOUR);
-
-    // check for ego resistance
-    if (get_armour_ego_type(arm) == SPARM_SEE_INVISIBLE)
-        return true;
 
     return false;
 }
