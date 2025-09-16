@@ -870,9 +870,9 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
 #if TAG_MAJOR_VERSION == 34
     case SPARM_CLOUD_IMMUNE:
 #endif
-    case SPARM_SHADOWS:
         return type == ARM_SCARF;
 
+    case SPARM_DARKNESS:
     case SPARM_LIGHT:
     case SPARM_RAGE:
     case SPARM_MAYHEM:

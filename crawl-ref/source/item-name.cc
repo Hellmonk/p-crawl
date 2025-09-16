@@ -576,7 +576,7 @@ const char* special_armour_type_name(special_armour_type ego, bool terse)
         case SPARM_CLOUD_IMMUNE:      return "cloud immunity";
 #endif
         case SPARM_HARM:              return "harm";
-        case SPARM_SHADOWS:           return "shadows";
+        case SPARM_DARKNESS:          return "darkness";
         case SPARM_RAMPAGING:         return "rampaging";
         case SPARM_INFUSION:          return "infusion";
         case SPARM_LIGHT:             return "light";
@@ -625,7 +625,7 @@ const char* special_armour_type_name(special_armour_type ego, bool terse)
         case SPARM_CLOUD_IMMUNE:      return "obsolete";
 #endif
         case SPARM_HARM:              return "harm";
-        case SPARM_SHADOWS:           return "shadows";
+        case SPARM_DARKNESS:          return "Dark";
         case SPARM_RAMPAGING:         return "rampage";
         case SPARM_INFUSION:          return "infuse";
         case SPARM_LIGHT:             return "light";

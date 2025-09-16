@@ -797,9 +797,9 @@ void update_vision_range()
         you.current_vision -= max(0, (bezotting_level() - 1) * 2); // spooky fx
 #endif
 
-    // scarf of shadows gives -1.
-    if (you.wearing_ego(OBJ_ARMOUR, SPARM_SHADOWS))
-        you.current_vision -= 1;
+    // orb of darkness gives -2.
+    if (you.wearing_ego(OBJ_ARMOUR, SPARM_DARKNESS))
+        you.current_vision -= 2;
 
     // rings and artefacts.
     vector<item_def*> eq = you.equipment.get_slot_items(SLOT_ALL_EQUIPMENT, false, true);
@@ -6557,8 +6557,6 @@ int player_willpower(bool temp)
     // ego armours
     rm += WL_PIP * you.wearing_ego(OBJ_ARMOUR, SPARM_WILLPOWER);
 
-    rm -= 2 * WL_PIP * you.wearing_ego(OBJ_ARMOUR, SPARM_GUILE);
-
     // rings of willpower
     rm += WL_PIP * you.wearing_jewellery(RING_WILLPOWER);
 
@@ -6588,6 +6586,10 @@ int player_willpower(bool temp)
     {
         rm /= 2;
     }
+
+    if (you.wearing_ego(OBJ_ARMOUR, SPARM_GUILE))
+        rm /= 2;
+
 
     if (rm < 0)
         rm = 0;

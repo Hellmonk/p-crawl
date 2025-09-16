@@ -167,7 +167,6 @@ static const armour_def Armour_prop[] =
             { SPARM_RESISTANCE,   1 },
             { SPARM_INVISIBILITY, 1 },
             { SPARM_HARM,         1 },
-            { SPARM_SHADOWS,      1 },
     }},
 
     { ARM_GLOVES,               "gloves",                 1,   0,   45,
@@ -231,11 +230,12 @@ static const armour_def Armour_prop[] =
     // to calculate adjusted shield penalty.
     { ARM_ORB,                 "orb",                     0,   0,   50,
         SLOT_OFFHAND,      SIZE_LITTLE, SIZE_GIANT, true, 0, {
-            { SPARM_LIGHT,  1 },
-            { SPARM_RAGE,   1 },
-            { SPARM_MAYHEM, 1 },
-            { SPARM_GUILE,  1 },
-            { SPARM_ENERGY, 1 },
+            { SPARM_LIGHT,          1 },
+            { SPARM_RAGE,           1 },
+            { SPARM_MAYHEM,         1 },
+            { SPARM_GUILE,          1 },
+            { SPARM_ENERGY,         1 },
+            { SPARM_DARKNESS,       1 },
     }},
     { ARM_BUCKLER,             "buckler",                 3,  -50,  45,
         SLOT_OFFHAND,      SIZE_LITTLE, SIZE_MEDIUM, true, 0, SHIELD_EGOS },
@@ -2540,9 +2540,6 @@ int get_armour_willpower(const item_def &arm, bool check_artp)
     // check for ego resistance
     if (get_armour_ego_type(arm) == SPARM_WILLPOWER)
         res += WL_PIP;
-
-    if (get_armour_ego_type(arm) == SPARM_GUILE)
-        res -= 2 * WL_PIP;
 
     if (check_artp && is_artefact(arm))
         res += WL_PIP * artefact_property(arm, ARTP_WILLPOWER);

@@ -4983,7 +4983,7 @@ int str_to_ego(object_class_type item_type, string ego_str)
         "cloud_immunity",
 #endif
         "harm",
-        "shadows",
+        "darkness",
         "rampaging",
         "infusion",
         "light",
