@@ -2089,8 +2089,7 @@ static const char* _item_ego_desc(special_armour_type ego)
     case SPARM_RAMPAGING:
         return "its wearer takes one free step when moving towards enemies.";
     case SPARM_INFUSION:
-        return "it empowers each of its wearer's melee hits with a small part "
-               "of their magic.";
+        return "it expends 1 MP per melee attack to add 10 slaying.";
     case SPARM_LIGHT:
         return "it surrounds the wearer with a glowing halo, revealing "
                "invisible creatures, increasing accuracy against all within "

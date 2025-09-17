@@ -90,6 +90,7 @@ static const vector<ego_weight_tuple> HEAVY_BODY_EGOS = {
     { SPARM_HEALTH,             7 },
     { SPARM_WIZARDRY,           7 },
     { SPARM_ENERGY,             1 },
+    { SPARM_INFUSION,           1 },
 };
 
 static const vector<ego_weight_tuple> SHIELD_EGOS = {
@@ -167,7 +168,6 @@ static const armour_def Armour_prop[] =
     { ARM_GLOVES,               "gloves",                 1,   0,   45,
         SLOT_GLOVES,      SIZE_SMALL,  SIZE_MEDIUM, true, 0, {
             { SPARM_STEALTH,   1 },
-            { SPARM_INFUSION,  1 },
     }},
 
     { ARM_HELMET,               "helmet",                 1,   0,   45,
@@ -238,6 +238,7 @@ static const armour_def Armour_prop[] =
             { SPARM_FOG,            1 },
             { SPARM_INVISIBILITY,   1 },
             { SPARM_SCRYING,        1 },
+            { SPARM_INFUSION,       1 },
     }},
     { ARM_BUCKLER,             "buckler",                 3,  -50,  45,
         SLOT_OFFHAND,      SIZE_LITTLE, SIZE_MEDIUM, true, 0, SHIELD_EGOS },
