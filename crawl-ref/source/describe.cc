@@ -2093,8 +2093,9 @@ static const char* _item_ego_desc(special_armour_type ego)
         return "it surrounds the wearer with a glowing halo, revealing "
                "invisible creatures, increasing accuracy against all within "
                "it other than the wearer, and reducing the wearer's stealth.";
-    case SPARM_RAGE:
-        return "it berserks the wearer when making melee attacks (20% chance).";
+    case SPARM_ELEMENTS:
+        return "it decreases the skill requirement of earth, air, fire, and ice"
+               " spells by one and increases their power by two.";
     case SPARM_MAYHEM:
         return "when the wearer kills a monster, it will cause a random nearby "
                "monster to go into a frenzy, attacking indiscriminately with "
