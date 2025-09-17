@@ -4982,12 +4982,12 @@ int str_to_ego(object_class_type item_type, string ego_str)
 #if TAG_MAJOR_VERSION == 34
         "cloud_immunity",
 #endif
-        "harm",
+        "scrying",
         "darkness",
         "rampaging",
         "infusion",
         "light",
-        "wrath",
+        "elements",
         "mayhem",
         "guile",
         "energy",

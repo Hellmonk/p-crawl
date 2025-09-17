@@ -513,7 +513,7 @@ enum special_armour_type
 #if TAG_MAJOR_VERSION == 34
     SPARM_CLOUD_IMMUNE,
 #endif
-    SPARM_HARM,
+    SPARM_SCRYING,
     SPARM_DARKNESS,
     SPARM_RAMPAGING,
     SPARM_INFUSION,

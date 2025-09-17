@@ -575,7 +575,7 @@ const char* special_armour_type_name(special_armour_type ego, bool terse)
 #if TAG_MAJOR_VERSION == 34
         case SPARM_CLOUD_IMMUNE:      return "cloud immunity";
 #endif
-        case SPARM_HARM:              return "harm";
+        case SPARM_SCRYING:           return "scrying";
         case SPARM_DARKNESS:          return "darkness";
         case SPARM_RAMPAGING:         return "rampaging";
         case SPARM_INFUSION:          return "infusion";
@@ -624,7 +624,7 @@ const char* special_armour_type_name(special_armour_type ego, bool terse)
 #if TAG_MAJOR_VERSION == 34
         case SPARM_CLOUD_IMMUNE:      return "obsolete";
 #endif
-        case SPARM_HARM:              return "harm";
+        case SPARM_SCRYING:           return "scry";
         case SPARM_DARKNESS:          return "Dark";
         case SPARM_RAMPAGING:         return "rampage";
         case SPARM_INFUSION:          return "infuse";

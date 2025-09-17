@@ -432,6 +432,8 @@ static vector<ability_def> &_get_ability_list()
             4, 0, 0, -1, {}, abflag::none },
         { ABIL_TELEPORT, "Teleport",
             0, 0, 0, -1, {}, abflag::none },
+        { ABIL_SCRY, "Scry",
+            0, 0, 0, -1, {}, abflag::none },
 
         // INVOCATIONS:
         // Zin
@@ -2692,6 +2694,7 @@ unique_ptr<targeter> find_ability_targeter(ability_type ability)
     // Self-targeted:
     case ABIL_SHAFT_SELF:
     case ABIL_TELEPORT:
+    case ABIL_SCRY:
 #if TAG_MAJOR_VERSION == 34
     case ABIL_HEAL_WOUNDS:
 #endif
@@ -3309,6 +3312,10 @@ static spret _do_ability(const ability_def& abil, bool fail, dist *target,
         you_teleport();
         you.props[TELEPORTED_KEY].get_bool() = true;
         break;
+
+    case ABIL_SCRY:
+        you.duration[DUR_REVELATION] = you.time_taken + 1;
+        you.props[SCRIED_KEY].get_bool() = true;
 
     case ABIL_EVOKE_DISPATER:
         if (!_evoke_orb_of_dispater(target))
@@ -4343,6 +4350,10 @@ bool player_has_ability(ability_type abil, bool include_unusable)
         return you.wearing_jewellery(RING_TELE)
                && !you.get_mutation_level(MUT_NO_ARTIFICE)
                && !you.props.exists(TELEPORTED_KEY);
+    case ABIL_SCRY:
+        return you.wearing_ego(OBJ_ARMOUR, SPARM_SCRYING)
+               && !you.get_mutation_level(MUT_NO_ARTIFICE)
+               && !you.props.exists(SCRIED_KEY);
     default:
         // removed abilities handled here
         return false;
@@ -4409,6 +4420,7 @@ vector<talent> your_talents(bool check_confused, bool include_unusable, bool ign
             ABIL_EVOKE_DISPATER,
             ABIL_EVOKE_OLGREB,
             ABIL_TELEPORT,
+            ABIL_SCRY,
 #ifdef WIZARD
             ABIL_WIZ_BUILD_TERRAIN,
             ABIL_WIZ_SET_TERRAIN,

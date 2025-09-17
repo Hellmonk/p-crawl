@@ -2080,8 +2080,10 @@ static const char* _item_ego_desc(special_armour_type ego)
     case SPARM_CLOUD_IMMUNE:
         return "it does nothing special.";
 #endif
-    case SPARM_HARM:
-        return "it increases damage dealt and taken.";
+    case SPARM_SCRYING:
+        return "it reveals monster locations within 5 tiles and can be "
+               "activated once per floor to see through walls within the "
+               "normal range of your vision.";
     case SPARM_DARKNESS:
         return "it reduces wearer's vision range by 2.";
     case SPARM_RAMPAGING:

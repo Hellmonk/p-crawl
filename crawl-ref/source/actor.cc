@@ -301,7 +301,7 @@ int actor::extra_harm(bool items) const
     if (!items)
         return 0;
 
-    int harm = wearing_ego(OBJ_ARMOUR, SPARM_HARM) + scan_artefacts(ARTP_HARM);
+    int harm = scan_artefacts(ARTP_HARM);
 
     return harm > 2 ? 2 : harm;
 }

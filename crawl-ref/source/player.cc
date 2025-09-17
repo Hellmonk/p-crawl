@@ -2134,6 +2134,9 @@ void reset_per_floor_props()
 
     if (you.props.exists(WENT_INVIS_KEY))
         you.props.erase(WENT_INVIS_KEY);
+
+    if (you.props.exists(SCRIED_KEY))
+        you.props.erase(SCRIED_KEY);
 }
 
 /// Make progress toward the abyss spawning an exit/stairs.
@@ -8072,6 +8075,8 @@ static string _constriction_description()
 int player_monster_detect_radius()
 {
     int radius = you.get_mutation_level(MUT_ANTENNAE) * 2;
+
+    radius += you.wearing_ego(OBJ_ARMOUR, SPARM_SCRYING) * 5;
 
     if (you.unrand_equipped(UNRAND_HOOD_ASSASSIN))
         radius = max(radius, 4);

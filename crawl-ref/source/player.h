@@ -60,6 +60,7 @@
 #define WEREFURY_KEY "werefury_bonus"
 #define TELEPORTED_KEY "teleported"
 #define WENT_INVIS_KEY "went_invis"
+#define SCRIED_KEY "scried"
 
 constexpr int ENKINDLE_CHARGE_COST = 40;
 #define ENKINDLE_CHARGES_KEY "enkindle_charges"

@@ -849,8 +849,6 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
 #endif
                slot == SLOT_OFFHAND || !strict;
 
-    case SPARM_HARM:
-
 #if TAG_MAJOR_VERSION == 34
     case SPARM_CLOUD_IMMUNE:
 #endif
@@ -863,6 +861,7 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
     case SPARM_GUILE:
     case SPARM_FOG:
     case SPARM_INVISIBILITY:
+    case SPARM_SCRYING:
         return type == ARM_ORB;
 
     case SPARM_ENERGY:
