@@ -632,7 +632,7 @@ const char* special_armour_type_name(special_armour_type ego, bool terse)
         case SPARM_RAGE:              return "*Rage";
         case SPARM_MAYHEM:            return "mayhem";
         case SPARM_GUILE:             return "guile";
-        case SPARM_ENERGY:            return "*channel";
+        case SPARM_ENERGY:            return "energy";
         case SPARM_SPIKES:            return "spiky";
         case SPARM_HEALTH:            return "HP+12";
         default:                      return "buggy";

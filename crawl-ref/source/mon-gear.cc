@@ -1682,26 +1682,6 @@ static void _give_shield(monster* mon, int level)
             make_item_unrandart(*shield, UNRAND_DISPATER);
         break;
 
-    case MONS_JEREMIAH:
-        shield = make_item_for_monster(mon, OBJ_ARMOUR, ARM_ORB, level);
-        if (shield)
-        {
-            // Light is good-coded and Wrath is too vicious.
-            const auto ego = random_choose(SPARM_MAYHEM, SPARM_ENERGY, SPARM_GUILE);
-            set_item_ego_type(*shield, OBJ_ARMOUR, ego);
-        }
-        break;
-
-    case MONS_FREDERICK:
-    {
-        // Divinity or conjurer support.
-        const auto ego = random_choose(SPARM_LIGHT, SPARM_ENERGY);
-
-        give_specific_item(mon, items(false, OBJ_ARMOUR,
-                           ARM_ORB, ISPEC_RANDART, ego));
-    }
-    break;
-
     case MONS_DAEVA:
     case MONS_MENNAS:
         make_item_for_monster(mon, OBJ_ARMOUR, ARM_TOWER_SHIELD,
@@ -2484,13 +2464,7 @@ void give_apostle_equipment(monster* apostle)
                                                           : ISPEC_GIFT,
                                   true);
 
-            // Slim chance at higher levels of a random ring or orb of energy
-            if (x_chance_in_y(max(0, pow - 40), 280))
-            {
-                give_specific_item(apostle, items(false, OBJ_ARMOUR,
-                                    ARM_ORB, ISPEC_RANDART, SPARM_ENERGY));
-            }
-            else if (x_chance_in_y(pow, 150))
+            if (x_chance_in_y(pow, 150))
             {
                 // Many ring types do nothing for monsters, so let's pick through
                 // ones that do.
