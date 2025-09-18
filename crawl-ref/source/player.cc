@@ -3263,7 +3263,7 @@ unsigned int exp_needed(int lev)
 }
 
 // returns bonuses from rings of slaying, etc.
-int slaying_bonus(bool throwing, bool random)
+int slaying_bonus(bool ranged, bool random)
 {
     int ret = 0;
 
@@ -3272,6 +3272,9 @@ int slaying_bonus(bool throwing, bool random)
 
     ret += 3 * augmentation_amount();
     ret += you.get_mutation_level(MUT_SHARP_SCALES);
+
+    if (you.wearing_ego(OBJ_ARMOUR, SPARM_ARCHERY) && ranged)
+        ret += 5;
 
     if (you.get_mutation_level(MUT_PROTEAN_GRACE))
         ret += protean_grace_amount();

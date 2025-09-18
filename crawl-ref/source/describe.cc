@@ -2116,6 +2116,9 @@ static const char* _item_ego_desc(special_armour_type ego)
     case SPARM_COMMAND:
         return "it causes your summoned allies to enter mighted. The might "
                "duration increases with your armour skill.";
+    case SPARM_ARCHERY:
+        return "it increases your damage with ranged weapons and thrown "
+               "projectiles (Slay + 5).";
     default:
         return "it makes the wearer crave the taste of eggplant.";
     }

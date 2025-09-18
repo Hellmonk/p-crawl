@@ -672,7 +672,7 @@ int attack::player_apply_slaying_bonuses(int damage, bool aux)
     const bool ranged = throwing
                         || (weapon && is_range_weapon(*weapon)
                                    && using_weapon());
-    damage_plus += slaying_bonus(throwing);
+    damage_plus += slaying_bonus(ranged);
 
     // XXX: should this also trigger on auxes?
     if (!aux && !ranged)
