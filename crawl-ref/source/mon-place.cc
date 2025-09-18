@@ -1476,6 +1476,13 @@ static monster* _place_monster_aux(const mgen_data &mg, const monster *leader,
         gozag_set_bribe(mon);
     }
 
+    if (mg.summoner && mg.summoner->is_player()
+        && you.wearing_ego(OBJ_ARMOUR, SPARM_COMMAND))
+    {
+        int dur = 40 + you.skill(SK_ARMOUR, 10) + 10 * random2(you.skill(SK_ARMOUR));
+        mon->add_ench(mon_enchant(ENCH_MIGHT, 0, &you, dur));
+    }
+
     return mon;
 }
 

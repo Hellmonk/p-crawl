@@ -587,6 +587,7 @@ const char* special_armour_type_name(special_armour_type ego, bool terse)
         case SPARM_SPIKES:            return "spikes";
         case SPARM_HEALTH:            return "health";
         case SPARM_WEAKENING:         return "weakening";
+        case SPARM_COMMAND:           return "command";
         default:                      return "bugginess";
         }
     }
@@ -637,6 +638,7 @@ const char* special_armour_type_name(special_armour_type ego, bool terse)
         case SPARM_SPIKES:            return "spiky";
         case SPARM_HEALTH:            return "HP+12";
         case SPARM_WEAKENING:         return "weaken";
+        case SPARM_COMMAND:           return "command";
         default:                      return "buggy";
         }
     }

@@ -2113,6 +2113,9 @@ static const char* _item_ego_desc(special_armour_type ego)
         return "it increases the wearer's maximum hitpoints by 12.";
     case SPARM_WEAKENING:
         return "it weakens foes that strike the wearer in melee (50% chance)";
+    case SPARM_COMMAND:
+        return "it causes your summoned allies to enter mighted. The might "
+               "duration increases with your armour skill.";
     default:
         return "it makes the wearer crave the taste of eggplant.";
     }

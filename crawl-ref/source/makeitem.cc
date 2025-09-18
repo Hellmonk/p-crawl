@@ -786,6 +786,8 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
     case SPARM_WIZARDRY:
     case SPARM_MAGICAL_POWER:
     case SPARM_WILLPOWER:
+    case SPARM_WEAKENING:
+    case SPARM_COMMAND:
         return true;
 
     case SPARM_FLYING:
