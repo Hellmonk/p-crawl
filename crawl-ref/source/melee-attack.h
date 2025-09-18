@@ -140,6 +140,9 @@ private:
     /* Brand / Attack Effects */
     bool do_knockback(bool slippery);
 
+    /* Brand / Defense Effects */
+    void apply_weakness_ego();
+
     /* Output methods */
     void set_attack_verb(int damage) override;
     void announce_hit() override;

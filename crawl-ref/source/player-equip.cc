@@ -2111,6 +2111,7 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
             break;
 
         case SPARM_SNIPING:
+        case SPARM_WEAKENING:
             break;
 
         case SPARM_REPULSION:

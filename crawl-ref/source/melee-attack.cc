@@ -958,6 +958,7 @@ bool melee_attack::handle_phase_hit()
         do_fiery_armour_burn();
         do_foul_flame();
         emit_foul_stench();
+        apply_weakness_ego();
     }
 
     return true;
@@ -4063,6 +4064,15 @@ void melee_attack::do_passive_freeze()
             mon->expose_to_element(BEAM_COLD, orig_hurted, &you);
             print_wounds(*mon);
         }
+    }
+}
+
+void melee_attack::apply_weakness_ego()
+{
+    if (you.wearing_ego(OBJ_ARMOUR, SPARM_WEAKENING)
+        && attacker->alive() && coinflip())
+    {
+        attacker->weaken(&you, 3);
     }
 }
 

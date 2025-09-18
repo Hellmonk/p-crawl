@@ -2111,6 +2111,8 @@ static const char* _item_ego_desc(special_armour_type ego)
                "attack.";
     case SPARM_HEALTH:
         return "it increases the wearer's maximum hitpoints by 12.";
+    case SPARM_WEAKENING:
+        return "it weakens foes that strike the wearer in melee (50% chance)";
     default:
         return "it makes the wearer crave the taste of eggplant.";
     }
