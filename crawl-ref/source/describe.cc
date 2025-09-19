@@ -2027,55 +2027,55 @@ static const char* _item_ego_desc(special_armour_type ego)
     switch (ego)
     {
     case SPARM_FIRE_RESISTANCE:
-        return "it protects its wearer from fire.";
+        return "it protects you from fire.";
     case SPARM_COLD_RESISTANCE:
-        return "it protects its wearer from cold.";
+        return "it protects you from cold.";
     case SPARM_INSULATION:
-        return "it protects its wearer from electricity.";
+        return "it protects you from electricity.";
     case SPARM_DETECTION:
-        return "it helps its wearer locate dungeon features.";
+        return "it helps you locate dungeon features.";
     case SPARM_INVISIBILITY:
-        return "when activated, it grants its wearer temporary invisibility; "
+        return "when activated, it grants you temporary invisibility; "
                "the duration increases with its user's skill in Hexes.";
     case SPARM_STABILITY:
         return "it prevents hostile movement effects, such as trampling.";
     case SPARM_MAGICAL_POWER:
-        return "it increases the wearer's maximum magic (MP +5).";
+        return "it increases your maximum magic (MP +5).";
     case SPARM_WIZARDRY:
-        return "it reduces the skill requirement of all spells by one.";
+        return "it reduces the skill requirement of all your spells by one.";
     case SPARM_PONDEROUSNESS:
         return "it is very cumbersome. Moving with a monster in view will stun "
                "you.";
     case SPARM_FLYING:
-        return "it grants its wearer flight, negating the effects of terrain.";
+        return "it grants you flight, negating the effects of terrain.";
     case SPARM_WILLPOWER:
-        return "it increases its wearer's willpower, protecting "
+        return "it increases your willpower, protecting "
                "against certain magical effects.";
     case SPARM_PROTECTION:
-        return "it protects its wearer from most sources of damage (AC +3).";
+        return "it protects you from most sources of damage (AC +3).";
     case SPARM_STEALTH:
-        return "it enhances the stealth of its wearer.";
+        return "it increases your stealth by 1.";
     case SPARM_RESISTANCE:
-        return "it protects its wearer from the effects of both fire and cold.";
+        return "it protects you from both fire and cold.";
     case SPARM_EVASION:
-        return "it increases its wearer's evasion (EV + 15).";
+        return "it increases your evasion (EV + 15).";
     case SPARM_ARCHMAGI:
-        return "it increases the power of its wearer's magical spells.";
+        return "it increases the power of your magical spells by 3.";
     case SPARM_FOG:
-        return "it sometimes releases a cloud of fog when its wearer is "
+        return "it sometimes releases a cloud of fog when you are "
                "damaged (50% chance).";
     case SPARM_REFLECTION:
         return "it reflects blocked missile attacks back in the "
                "direction they came from.";
     case SPARM_SPIRIT_SHIELD:
         return "it causes incoming damage to be divided between "
-               "the wearer's reserves of health and magic.";
+               "your reserves of health and magic.";
     case SPARM_SNIPING:
         return "it makes your ranged weapons and thrown items deal 50% more "
                "damage against stabbable targets.";
     case SPARM_REPULSION:
-        return "it helps its wearer evade projectiles - both physical and "
-               "magical (+30% evasion against dodgeable ranged abilities and "
+        return "it helps you evade projectiles - both physical and "
+               "magical (+30 EV against dodgeable ranged abilities and "
                "spells).";
 #if TAG_MAJOR_VERSION == 34
     case SPARM_CLOUD_IMMUNE:
@@ -2086,34 +2086,36 @@ static const char* _item_ego_desc(special_armour_type ego)
                "activated once per floor to see through walls within the "
                "normal range of your vision.";
     case SPARM_DARKNESS:
-        return "it reduces wearer's vision range by 2.";
+        return "it reduces your vision range by 2.";
     case SPARM_RAMPAGING:
-        return "its wearer takes one free step when moving towards enemies.";
+        return "it makes you take one extra step when moving directly towards "
+               "enemies.";
     case SPARM_INFUSION:
         return "it expends 1 MP per melee attack to add 10 slaying.";
     case SPARM_LIGHT:
-        return "it surrounds the wearer with a glowing halo, reducing their "
+        return "it surrounds you with a glowing halo, reducing your "
                "stealth to 0 but preventing other creatures in the radius from "
                "dodging.";
     case SPARM_ELEMENTS:
         return "it decreases the skill requirement of earth, air, fire, and ice"
-               " spells by one and increases their power by two.";
+               " spells by 1 and increases their power by 2.";
     case SPARM_MAYHEM:
-        return "when the wearer kills a monster, it will cause a random nearby "
+        return "when you kill a monster, it will cause a random nearby "
                "monster to go into a frenzy, attacking indiscriminately with "
                "great strength and speed.";
     case SPARM_GUILE:
-        return "it halves (rounded down) the willpower of the wielder and "
-               "everyone they hex.";
+        return "it halves (rounded down) your willpower and the willpower of "
+               "everyone you hex.";
     case SPARM_ENERGY:
         return "it may return the magic spent to cast spells (25% chance).";
     case SPARM_SPIKES:
         return "it deals 1d10 damage to the attacker after blocking a melee "
                "attack.";
     case SPARM_HEALTH:
-        return "it increases the wearer's maximum hitpoints by 12.";
+        return "it increases your maximum hitpoints by 12.";
     case SPARM_WEAKENING:
-        return "it weakens foes that strike the wearer in melee (50% chance)";
+        return "it weakens foes that strike you in melee for a brief duration "
+               "(50% chance).";
     case SPARM_COMMAND:
         return "it causes your summoned allies to enter mighted. The might "
                "duration increases with your armour skill.";
