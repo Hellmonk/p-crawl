@@ -72,38 +72,41 @@ struct armour_def
     armflags_t          flags;
 };
 
-// Total weight 25 (multiply by 4 for %s).
+// Total weight 12.
 static const vector<ego_weight_tuple> BASIC_BODY_EGOS = {
-    { SPARM_FIRE_RESISTANCE,   7 },
-    { SPARM_COLD_RESISTANCE,   7 },
-    { SPARM_WILLPOWER,         4 },
-    { SPARM_WIZARDRY,          7 },
-    { SPARM_ARCHMAGI,          7 },
+    { SPARM_FIRE_RESISTANCE,   2 },
+    { SPARM_COLD_RESISTANCE,   2 },
+    { SPARM_WILLPOWER,         2 },
+    { SPARM_MAGICAL_POWER,     2 },
+    { SPARM_ARCHERY,           2 },
+    { SPARM_WIZARDRY,          1 },
+    { SPARM_ARCHMAGI,          1 },
+    { SPARM_COMMAND,           1 },
 };
 
-// Total weight 100.
+// Total weight 16.
 static const vector<ego_weight_tuple> HEAVY_BODY_EGOS = {
-    { SPARM_FIRE_RESISTANCE,    26 },
-    { SPARM_COLD_RESISTANCE,    26 },
-    { SPARM_WILLPOWER,          15 },
-    { SPARM_PONDEROUSNESS,      7 },
-    { SPARM_HEALTH,             7 },
-    { SPARM_WIZARDRY,           7 },
+    { SPARM_FIRE_RESISTANCE,    2 },
+    { SPARM_COLD_RESISTANCE,    2 },
+    { SPARM_WILLPOWER,          2 },
+    { SPARM_PONDEROUSNESS,      2 },
+    { SPARM_HEALTH,             2 },
+    { SPARM_COMMAND,            2 },
+    { SPARM_WIZARDRY,           1 },
     { SPARM_ENERGY,             1 },
     { SPARM_INFUSION,           1 },
     { SPARM_WEAKENING,          1 },
-    { SPARM_COMMAND,            1 },
     { SPARM_ARCHERY,            1 },
 };
 
 static const vector<ego_weight_tuple> SHIELD_EGOS = {
+    { SPARM_PROTECTION,        2 },
+    { SPARM_FIRE_RESISTANCE,   2 },
+    { SPARM_COLD_RESISTANCE,   2 },
+    { SPARM_REFLECTION,        2 },
+    { SPARM_SPIKES,            2 },
+    { SPARM_LIGHT,             2 },
     { SPARM_RESISTANCE,        1 },
-    { SPARM_FIRE_RESISTANCE,   3 },
-    { SPARM_COLD_RESISTANCE,   3 },
-    { SPARM_REFLECTION,        6 },
-    { SPARM_SPIKES,            6 },
-    { SPARM_PROTECTION,       12 },
-    { SPARM_LIGHT,             1 },
 };
 
 // would be nice to lookup the name from monster_for_armour, but that
@@ -130,12 +133,15 @@ static const armour_def Armour_prop[] =
         SLOT_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT, true, 1 },
     { ARM_ROBE,                 "robe",                   2,   0,     9,
         SLOT_BODY_ARMOUR, SIZE_LITTLE, SIZE_LARGE, true, 100, {
-            { SPARM_RESISTANCE,      1 },
             { SPARM_COLD_RESISTANCE, 2 },
             { SPARM_FIRE_RESISTANCE, 2 },
-            { SPARM_STEALTH,         3 },
-            { SPARM_WILLPOWER,       4 },
+            { SPARM_STEALTH,         2 },
+            { SPARM_WILLPOWER,       2 },
             { SPARM_MAGICAL_POWER,   2 },
+            { SPARM_ARCHMAGI,        2 },
+            { SPARM_WIZARDRY,        2 },
+            { SPARM_RESISTANCE,      1 },
+            { SPARM_ARCHERY,         1 },
     }},
     { ARM_LEATHER_ARMOUR,       "leather armour",         3,  -10,   20,
         SLOT_BODY_ARMOUR, SIZE_SMALL, SIZE_MEDIUM, true, 10, BASIC_BODY_EGOS },
@@ -176,13 +182,14 @@ static const armour_def Armour_prop[] =
 
     { ARM_HELMET,               "helmet",                 1,   0,   45,
         SLOT_HELMET,      SIZE_SMALL,  SIZE_MEDIUM, true, 0, {
+            { SPARM_COLD_RESISTANCE,     1 },
             { SPARM_REPULSION,           1 },
             { SPARM_STEALTH,             1 },
             { SPARM_SNIPING,             1 },
             { SPARM_MAGICAL_POWER,       1 },
             { SPARM_WILLPOWER,           1 },
-            { SPARM_COLD_RESISTANCE,     1 },
             { SPARM_LIGHT,               1 },
+            { SPARM_DETECTION,           1 },
     }},
 
 #if TAG_MAJOR_VERSION == 34
@@ -192,14 +199,14 @@ static const armour_def Armour_prop[] =
 
     { ARM_HAT,                  "hat",                    0,   0,   40,
         SLOT_HELMET,      SIZE_TINY, SIZE_LARGE, true, 0, {
-            { SPARM_NORMAL,             10 },
-            { SPARM_STEALTH,             3 },
-            { SPARM_WILLPOWER,           3 },
-            { SPARM_DETECTION,           2 },
+            { SPARM_STEALTH,             1 },
+            { SPARM_WILLPOWER,           1 },
+            { SPARM_DETECTION,           1 },
             { SPARM_REPULSION,           1 },
             { SPARM_WIZARDRY,            1 },
             { SPARM_MAGICAL_POWER,       1 },
             { SPARM_COLD_RESISTANCE,     1 },
+            { SPARM_SNIPING,             1 },
     }},
 
     // Note that barding size is compared against torso so it currently
