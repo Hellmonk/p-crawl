@@ -2091,9 +2091,9 @@ static const char* _item_ego_desc(special_armour_type ego)
     case SPARM_INFUSION:
         return "it expends 1 MP per melee attack to add 10 slaying.";
     case SPARM_LIGHT:
-        return "it surrounds the wearer with a glowing halo, revealing "
-               "invisible creatures, increasing accuracy against all within "
-               "it other than the wearer, and reducing the wearer's stealth.";
+        return "it surrounds the wearer with a glowing halo, reducing their "
+               "stealth to 0 but preventing other creatures in the radius from "
+               "dodging.";
     case SPARM_ELEMENTS:
         return "it decreases the skill requirement of earth, air, fire, and ice"
                " spells by one and increases their power by two.";

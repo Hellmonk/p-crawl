@@ -103,6 +103,7 @@ static const vector<ego_weight_tuple> SHIELD_EGOS = {
     { SPARM_REFLECTION,        6 },
     { SPARM_SPIKES,            6 },
     { SPARM_PROTECTION,       12 },
+    { SPARM_LIGHT,             1 },
 };
 
 // would be nice to lookup the name from monster_for_armour, but that
@@ -181,6 +182,7 @@ static const armour_def Armour_prop[] =
             { SPARM_MAGICAL_POWER,       1 },
             { SPARM_WILLPOWER,           1 },
             { SPARM_COLD_RESISTANCE,     1 },
+            { SPARM_LIGHT,               1 },
     }},
 
 #if TAG_MAJOR_VERSION == 34
@@ -232,7 +234,6 @@ static const armour_def Armour_prop[] =
     // to calculate adjusted shield penalty.
     { ARM_ORB,                 "orb",                     0,   0,   50,
         SLOT_OFFHAND,      SIZE_LITTLE, SIZE_GIANT, true, 0, {
-            { SPARM_LIGHT,          1 },
             { SPARM_ELEMENTS,       1 },
             { SPARM_MAYHEM,         1 },
             { SPARM_GUILE,          1 },

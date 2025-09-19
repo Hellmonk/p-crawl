@@ -1900,7 +1900,7 @@ static int _player_evasion(int final_scale, bool ignore_temporary)
 
     // no evasion while paralyzed
     if (you.duration[DUR_PARALYSIS] || you.form == transformation::tree
-         || you.duration[DUR_PETRIFIED] || you.backlit())
+         || you.duration[DUR_PETRIFIED] || you.backlit(false))
     {
         return 0;
     }
