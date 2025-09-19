@@ -1664,8 +1664,6 @@ int player_movement_speed(bool check_terrain, bool temp)
         mv += 3;
     }
 
-    mv += you.wearing_ego(OBJ_ARMOUR, SPARM_PONDEROUSNESS);
-
     // Cheibriados
     if (have_passive(passive_t::slowed))
         mv += 2 + min(div_rand_round(you.piety(), 20), 8);

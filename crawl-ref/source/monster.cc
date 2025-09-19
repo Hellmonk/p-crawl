@@ -5549,9 +5549,6 @@ int monster::action_energy(energy_use_type et) const
     if (has_ench(ENCH_ROLLING))
         move_cost -= 5;
 
-    if (wearing_ego(OBJ_ARMOUR, SPARM_PONDEROUSNESS))
-        move_cost += 1;
-
     // Shadowghasts move more quickly when blended with the darkness.
     // Change _monster_stat_description in describe.cc if you change this.
     if (type == MONS_SHADOWGHAST && invisible())

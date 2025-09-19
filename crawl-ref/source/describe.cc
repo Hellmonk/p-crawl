@@ -2044,7 +2044,8 @@ static const char* _item_ego_desc(special_armour_type ego)
     case SPARM_WIZARDRY:
         return "it reduces the skill requirement of all spells by one.";
     case SPARM_PONDEROUSNESS:
-        return "it is very cumbersome, slowing its wearer's movement.";
+        return "it is very cumbersome. Moving with a monster in view will stun "
+               "you.";
     case SPARM_FLYING:
         return "it grants its wearer flight, negating the effects of terrain.";
     case SPARM_WILLPOWER:
