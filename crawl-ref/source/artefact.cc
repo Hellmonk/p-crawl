@@ -1172,7 +1172,7 @@ static void _get_randart_properties(const item_def &item,
     {
         special_armour_type ego = choose_armour_ego(static_cast<armour_type>(item.sub_type));
         artefact_prop_type prop = ego_to_artprop(ego);
-        
+
         // Egos that have no corresponding artprop can stay intact (to allow
         // ego-only properties to still generate on randarts), while other
         // properties are removed. (We will let normal artprop weighting handle those.)

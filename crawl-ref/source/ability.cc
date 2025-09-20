@@ -1014,9 +1014,7 @@ const string make_cost_description(ability_type ability)
         ret += ", Instant"; // not really a cost, more of a bonus - bwr
 
     if (abil.flags & abflag::max_hp_drain)
-    {
         ret += ", Drain";
-    }
 
     if (abil.flags & abflag::curse)
         ret += ", Cursed item";

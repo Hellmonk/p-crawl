@@ -1387,9 +1387,7 @@ int player_res_corrosion(bool temp, bool items)
     if (items)
     {
         if (you.wearing(OBJ_ARMOUR, ARM_ACID_DRAGON_ARMOUR))
-        {
             return 1;
-        }
     }
 
     return 0;

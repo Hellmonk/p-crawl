@@ -785,7 +785,7 @@ static bool _try_make_armour_artefact(item_def& item, int force_type,
                 }
             }
         }
-    }  
+    }
     return true;
 }
 
@@ -1045,7 +1045,6 @@ static void _generate_armour_item(item_def& item, bool allow_uniques,
     // Forced randart.
     if (item_level == ISPEC_RANDART)
     {
-        int ego = item.brand;
         for (int i = 0; i < 100; ++i)
             if (_try_make_armour_artefact(item, force_type, item_level, agent))
             {
