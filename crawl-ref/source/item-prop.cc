@@ -232,9 +232,13 @@ static const armour_def Armour_prop[] =
     { ARM_BARDING,         "barding",           4,  -60,  230,
         SLOT_BARDING,     SIZE_MEDIUM, SIZE_LARGE, true, 0, {
             { SPARM_FLYING,          1 },
-            { SPARM_COLD_RESISTANCE, 1 },
+            { SPARM_INSULATION,      1 },
             { SPARM_FIRE_RESISTANCE, 1 },
             { SPARM_STEALTH,         1 },
+            { SPARM_RAMPAGING,       1 },
+            { SPARM_MAGICAL_POWER,   1 },
+            { SPARM_EVASION,         1 },
+            { SPARM_STABILITY,       1 },
     }},
 
     // Note: shields use ac-value as sh-value, EV pen is used as the basis
