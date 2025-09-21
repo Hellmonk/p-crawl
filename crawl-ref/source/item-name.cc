@@ -819,6 +819,7 @@ const char* jewellery_effect_name(int jeweltype, bool terse)
         case AMU_REGENERATION:      return "regeneration";
         case AMU_FAITH:             return "removed";
         case AMU_REFLECTION:        return "removeded";
+        case AMU_GUARDIAN_SPIRIT:   return "removedest";
         default: return "buggy jewellery";
         }
     }
@@ -3640,8 +3641,7 @@ void init_item_name_cache()
                 lowercase(name);
                 cglyph_t g = get_item_glyph(item);
 
-                if (base_type == OBJ_JEWELLERY && sub_type >= NUM_RINGS
-                    && sub_type < AMU_FIRST_AMULET)
+                if (base_type == OBJ_JEWELLERY)
                 {
                     continue;
                 }
