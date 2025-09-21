@@ -360,7 +360,7 @@ struct artp_value
 {
     /// The artp matching the item (e.g. ARTP_AC for RING_PROTECTION)
     artefact_prop_type  type;
-    /// The value of the artp. (E.g. '9' for RING_MAGICAL_POWER.) If set to 0,
+    /// The value of the artp. (E.g. '5' for RING_MAGICAL_POWER.) If set to 0,
     /// uses item.plus instead.
     int                 value;
 };
@@ -368,25 +368,18 @@ struct artp_value
 static map<jewellery_type, vector<artp_value>> jewellery_artps = {
     { AMU_REGENERATION, { { ARTP_REGENERATION, 1 } } },
     { AMU_MANA_REGENERATION, { { ARTP_MANA_REGENERATION, 1} } },
-    { AMU_REFLECTION, { { ARTP_SHIELDING, AMU_REFLECT_SH / 2} } },
-    { AMU_ACROBAT, { { ARTP_ACROBAT, 1 } } },
+    { RING_REFLECTION, { { ARTP_SHIELDING, AMU_REFLECT_SH } } },
+    { RING_ACROBAT, { { ARTP_ACROBAT, 1 } } },
 
-    { RING_MAGICAL_POWER, { { ARTP_MAGICAL_POWER, 9 } } },
+    { RING_MAGICAL_POWER, { { ARTP_MAGICAL_POWER, 5 } } },
     { RING_WIZARDRY, { { ARTP_WIZARDRY, 1} } },
-    { RING_FLIGHT, { { ARTP_FLY, 1 } } },
     { RING_STEALTH, { { ARTP_STEALTH, 1 } } },
 
     { RING_PROTECTION_FROM_FIRE, { { ARTP_FIRE, 1 } } },
     { RING_PROTECTION_FROM_COLD, { { ARTP_COLD, 1 } } },
     { RING_WILLPOWER, { { ARTP_WILLPOWER, 1 } } },
 
-    { RING_FIRE, { { ARTP_FIRE, 1 }, { ARTP_COLD, -1 },
-                   { ARTP_ENHANCE_FIRE, 1} } },
-    { RING_ICE, { { ARTP_COLD, 1 }, { ARTP_FIRE, -1 },
-                  { ARTP_ENHANCE_ICE, 1} } },
-
     { RING_PROTECTION, { { ARTP_AC, 0 } } },
-    { RING_EVASION, { { ARTP_EVASION, 0 } } },
     { RING_SLAYING, { { ARTP_SLAYING, 0 } } },
 };
 
@@ -772,7 +765,7 @@ static const artefact_prop_data artp_data[] =
     { "SInv", ARTP_VAL_BOOL, 0,    // ARTP_SEE_INVISIBLE,
         []() { return 1; }, nullptr, 0, 0 },
 #endif
-    { "+Inv", ARTP_VAL_BOOL, 15,    // ARTP_INVISIBLE,
+    { "+Inv", ARTP_VAL_BOOL, 10,    // ARTP_INVISIBLE,
         []() { return 1; }, nullptr, 0, 0 },
     { "Fly", ARTP_VAL_BOOL, 15,    // ARTP_FLY,
         []() { return 1; }, nullptr, 0, 0 },
@@ -1001,6 +994,48 @@ artefact_prop_type artp_type_from_name(const string &name)
 }
 
 /**
+
+
+ * Returns the artefact property type that corresponds to a given armour ego
+
+
+ *
+
+
+ * @param ego       The ego in question.
+
+
+ * @return          The corresponding artefact property type
+
+
+ *                  (or ARTP_NUM_PROPERTIES, if no artprop has the same function.)
+
+
+ */
+
+
+artefact_prop_type ego_to_artprop(special_armour_type ego)
+{
+    switch (ego)
+    {
+        case SPARM_FIRE_RESISTANCE:         return ARTP_FIRE;
+        case SPARM_COLD_RESISTANCE:         return ARTP_COLD;
+        case SPARM_INSULATION:              return ARTP_ELECTRICITY;
+        case SPARM_INVISIBILITY:            return ARTP_INVISIBLE;
+        case SPARM_FLYING:                  return ARTP_FLY;
+        case SPARM_WILLPOWER:               return ARTP_WILLPOWER;
+        case SPARM_PROTECTION:              return ARTP_AC;
+        case SPARM_STEALTH:                 return ARTP_STEALTH;
+        case SPARM_ARCHMAGI:                return ARTP_ARCHMAGI;
+        case SPARM_RAMPAGING:               return ARTP_RAMPAGING;
+        case SPARM_WIZARDRY:                return ARTP_WIZARDRY;
+        case SPARM_MAGICAL_POWER:           return ARTP_MAGICAL_POWER;
+        case SPARM_EVASION:                 return ARTP_EVASION;
+        default:                            return ARTP_NUM_PROPERTIES;
+    }
+}
+
+/**
  * Try to add a 'good' version of a given prop to the given set of item props.
  * The property may already exist in the set; if so, increase its value.
  *
@@ -1132,11 +1167,17 @@ static void _get_randart_properties(const item_def &item,
     if (item_class == OBJ_WEAPONS)
         _add_randart_weapon_brand(item, item_props);
     else if (item_class == OBJ_ARMOUR
-             && item_always_has_ego(item)
+             && item.brand == SPARM_NORMAL
              && item_props[ARTP_BRAND] == SPARM_NORMAL)
     {
-        item_props[ARTP_BRAND] =
-            choose_armour_ego(static_cast<armour_type>(item.sub_type));
+        special_armour_type ego = choose_armour_ego(static_cast<armour_type>(item.sub_type));
+        artefact_prop_type prop = ego_to_artprop(ego);
+
+        // Egos that have no corresponding artprop can stay intact (to allow
+        // ego-only properties to still generate on randarts), while other
+        // properties are removed. (We will let normal artprop weighting handle those.)
+        if (prop == ARTP_NUM_PROPERTIES)
+            item_props[ARTP_BRAND] = ego;
     }
 
     // Randomly pick properties from the list, choose an appropriate value,
@@ -1682,12 +1723,8 @@ static bool _armour_ego_conflicts(artefact_properties_t &proprt)
     // Duplicate effect.
     case SPARM_RAMPAGING:
         return proprt[ARTP_RAMPAGING];
-    case SPARM_HARM:
-        return proprt[ARTP_HARM];
     case SPARM_RESISTANCE:
         return proprt[ARTP_FIRE] || proprt[ARTP_COLD];
-    case SPARM_RAGE:
-        return proprt[ARTP_ANGRY];
     case SPARM_INVISIBILITY:
         return proprt[ARTP_INVISIBLE];
 

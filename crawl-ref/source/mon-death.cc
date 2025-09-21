@@ -1487,11 +1487,8 @@ static void _orb_of_mayhem(actor& maniac, const monster& victim)
         if (*mi != &victim && mi->can_see(maniac) && mi->can_go_frenzy())
             witnesses.push_back(*mi);
 
-    if (coinflip() && !witnesses.empty())
-    {
+    if (!witnesses.empty())
         (*random_iterator(witnesses))->go_frenzy(&maniac);
-        did_god_conduct(DID_HASTY, 8, true);
-    }
 }
 
 static void _protean_explosion(monster* mons)
@@ -2156,6 +2153,17 @@ static void _player_on_kill_effects(monster& mons, killer_type killer,
 
     // Apply unrand effects.
     unrand_death_effects(&mons, killer);
+
+    // Apply vamp ring, which does not care why the monster died
+    if (gives_player_xp && you.wearing_jewellery(RING_VAMPIRISM)
+        && actor_is_susceptible_to_vampirism(mons))
+    {
+        const int hp = you.hp;
+        int vamp = you.wearing_jewellery(RING_VAMPIRISM);
+        you.heal(random_range(1 * vamp, 3 * vamp));
+        if (you.hp > hp)
+            mpr("You feel a bit better.");
+    }
 
     // Player Powered by Death
     if (gives_player_xp && you.get_mutation_level(MUT_POWERED_BY_DEATH)

@@ -2311,7 +2311,7 @@ void dock_piety(int piety_loss, int penance, bool no_lecture)
 // Scales a piety number, applying modifiers (faith).
 int piety_scale(int piety)
 {
-    return piety + (you.faith() * div_rand_round(piety, 4));
+    return piety + (you.faith() * div_rand_round(piety, 2));
 }
 
 /** Gain or lose piety to reach a certain value.
@@ -3330,7 +3330,7 @@ static void _god_welcome_handle_gear()
 {
     // Check for amulets of faith.
     if (!you.has_mutation(MUT_FAITH) && ignore_faith_reason().empty()
-        && you.wearing_jewellery(AMU_FAITH))
+        && you.wearing_jewellery(RING_FAITH))
     {
         mprf(MSGCH_GOD, "Your amulet flashes!");
         flash_view_delay(UA_PLAYER, god_colour(you.religion), 300);
@@ -3338,9 +3338,6 @@ static void _god_welcome_handle_gear()
 
     if (have_passive(passive_t::identify_items))
         ash_id_inventory();
-
-    if (have_passive(passive_t::detect_portals))
-        ash_detect_portals(true);
 
     // Give a reminder to remove any disallowed equipment.
     vector<item_def*> all_eq = you.equipment.get_slot_items(SLOT_ALL_EQUIPMENT, true);

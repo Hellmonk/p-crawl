@@ -7958,7 +7958,7 @@ void bolt::set_is_tracer(bool value) noexcept
 int apply_willpower_bypass(const actor& source, int willpower)
 {
     if (source.wearing_ego(OBJ_ARMOUR, SPARM_GUILE))
-        willpower = max(0, willpower - 2 * WL_PIP);
+        willpower = max(0, willpower / 2);
 
     if (source.is_player() && you.form == transformation::sphinx)
         willpower = max(0, willpower - WL_PIP);
@@ -7971,7 +7971,7 @@ int apply_willpower_bypass(const monster_info& source, int willpower)
     if (source.inv[MSLOT_SHIELD]
         && get_armour_ego_type(*source.inv[MSLOT_SHIELD]) == SPARM_GUILE)
     {
-        willpower = max(0, willpower - 2 * WL_PIP);
+        willpower = max(0, willpower / 2);
     }
 
     return willpower;

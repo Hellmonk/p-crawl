@@ -18,7 +18,7 @@ const int TRANSLUCENT_SKIN_TO_HIT_MALUS = -2;
 
 const int BULLSEYE_TO_HIT_DIV = 6;
 
-const int REPEL_MISSILES_EV_BONUS = 15;
+const int REPEL_MISSILES_EV_BONUS = 30;
 
 class attack
 {

@@ -74,36 +74,33 @@ static uint8_t _jewellery_type_from_artefact_prop(const string &s
         return AMU_INACCURACY;
 #endif
     if (s == "Spirit")
-        return AMU_GUARDIAN_SPIRIT;
+        return RING_GUARDIAN_SPIRIT;
     if (s == "Faith")
-        return AMU_FAITH;
+        return RING_FAITH;
     if (s == "Reflect")
-        return AMU_REFLECTION;
+        return RING_REFLECTION;
     if (s == "Acrobat")
-        return AMU_ACROBAT;
+        return RING_ACROBAT;
 
-    if (s == "rCorr")
-        return RING_RESIST_CORROSION;
-    if (s == "Fire")
-        return RING_FIRE;
-    if (s == "Ice")
-        return RING_ICE;
-#if TAG_MAJOR_VERSION == 34
-    if (s == "+/*Tele")
-        return RING_TELEPORTATION;
-#endif
+    if (s == "Detect")
+        return RING_DETECTION;
+    if (s == "Wildshape")
+        return RING_WILDSHAPE;
+
     if (s == "Wiz")
         return RING_WIZARDRY;
-    if (s == "SInv")
-        return RING_SEE_INVISIBLE;
+    if (s == "Tele")
+        return RING_TELE;
 #if TAG_MAJOR_VERSION == 34
     if (s == "Noisy" || s == "Stlth-")
         return RING_ATTENTION;
 #endif
-    if (s == "Fly")
-        return RING_FLIGHT;
-    if (s == "rPois")
-        return RING_POISON_RESISTANCE;
+    if (s == "Vamp")
+        return RING_VAMPIRISM;
+    if (s == "rElec")
+        return RING_INSULATION;
+    if (s == "Plenty")
+        return RING_PLENTY;
 
     if (s.substr(0, 2) == "AC")
         return RING_PROTECTION;
@@ -111,14 +108,6 @@ static uint8_t _jewellery_type_from_artefact_prop(const string &s
         return RING_MAGICAL_POWER;
     if (s.substr(0, 4) == "Slay")
         return RING_SLAYING;
-    if (s.substr(0, 3) == "Str")
-        return RING_STRENGTH;
-    if (s.substr(0, 3) == "Dex")
-        return RING_DEXTERITY;
-    if (s.substr(0, 3) == "Int")
-        return RING_INTELLIGENCE;
-    if (s.substr(0, 2) == "EV")
-        return RING_EVASION;
 #if TAG_MAJOR_VERSION == 34
     if (s.substr(0, 5) == "Stlth")
         return RING_STEALTH;
@@ -130,8 +119,6 @@ static uint8_t _jewellery_type_from_artefact_prop(const string &s
         return RING_PROTECTION_FROM_FIRE;
     if (s.substr(0, 2) == "rC")
         return RING_PROTECTION_FROM_COLD;
-    if (s.substr(0, 2) == "rN")
-        return RING_POSITIVE_ENERGY;
 
     return NUM_JEWELLERY;
 }

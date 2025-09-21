@@ -1457,9 +1457,6 @@ static void _give_weapon(monster *mon, int level, bool second_weapon = false)
     if (mon->type == MONS_ERICA && i.is_type(OBJ_WEAPONS, WPN_SCIMITAR))
         make_item_for_monster(mon, OBJ_JEWELLERY, NUM_RINGS, 0, 1);
 
-    if (mon->type == MONS_FANNAR && i.is_type(OBJ_WEAPONS, WPN_QUARTERSTAFF))
-        make_item_for_monster(mon, OBJ_JEWELLERY, RING_ICE, 0, 1);
-
     if (mon->type == MONS_WIGLAF)
     {
         // Always good, and sometimes especially good
@@ -1470,9 +1467,6 @@ static void _give_weapon(monster *mon, int level, bool second_weapon = false)
         hat->props[WORN_TILE_NAME_KEY] = "hat_wiglaf";
         bind_item_tile(*hat);
     }
-
-    if (mon->type == MONS_JOSEPHINA)
-        make_item_for_monster(mon, OBJ_JEWELLERY, RING_ICE, ISPEC_RANDART, true);
 }
 
 // Hands out ammunition fitting the monster's launcher (if any), or else any
@@ -1687,26 +1681,6 @@ static void _give_shield(monster* mon, int level)
         if (shield)
             make_item_unrandart(*shield, UNRAND_DISPATER);
         break;
-
-    case MONS_JEREMIAH:
-        shield = make_item_for_monster(mon, OBJ_ARMOUR, ARM_ORB, level);
-        if (shield)
-        {
-            // Light is good-coded and Wrath is too vicious.
-            const auto ego = random_choose(SPARM_MAYHEM, SPARM_ENERGY, SPARM_GUILE);
-            set_item_ego_type(*shield, OBJ_ARMOUR, ego);
-        }
-        break;
-
-    case MONS_FREDERICK:
-    {
-        // Divinity or conjurer support.
-        const auto ego = random_choose(SPARM_LIGHT, SPARM_ENERGY);
-
-        give_specific_item(mon, items(false, OBJ_ARMOUR,
-                           ARM_ORB, ISPEC_RANDART, ego));
-    }
-    break;
 
     case MONS_DAEVA:
     case MONS_MENNAS:
@@ -2490,21 +2464,12 @@ void give_apostle_equipment(monster* apostle)
                                                           : ISPEC_GIFT,
                                   true);
 
-            // Slim chance at higher levels of a random ring or orb of energy
-            if (x_chance_in_y(max(0, pow - 40), 280))
-            {
-                give_specific_item(apostle, items(false, OBJ_ARMOUR,
-                                    ARM_ORB, ISPEC_RANDART, SPARM_ENERGY));
-            }
-            else if (x_chance_in_y(pow, 150))
+            if (x_chance_in_y(pow, 150))
             {
                 // Many ring types do nothing for monsters, so let's pick through
                 // ones that do.
                 jewellery_type rtype = random_choose(RING_PROTECTION_FROM_FIRE,
-                                                     RING_POISON_RESISTANCE,
                                                      RING_PROTECTION_FROM_COLD,
-                                                     RING_EVASION,
-                                                     RING_POSITIVE_ENERGY,
                                                      RING_PROTECTION);
 
                 make_item_for_monster(apostle, OBJ_JEWELLERY, rtype, 0,

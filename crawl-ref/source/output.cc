@@ -2776,7 +2776,7 @@ static string _extra_passive_effects()
     if (channel)
     {
         passives.emplace_back(
-            make_stringf("channel magic (%d%%)", 20 * channel).c_str());
+            make_stringf("channel magic (%d%%)", 25 * channel).c_str());
     }
 
     if (you.infusion_amount())

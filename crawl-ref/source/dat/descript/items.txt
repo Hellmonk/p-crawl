@@ -1210,6 +1210,24 @@ ring mail
 A light leather suit reinforced with a covering of metal rings. It is
 protective in combat, but slightly uncomfortable due to the added weight.
 %%%%
+ring of the acrobat
+
+A ring that allows the user to tumble and roll to evade the blows of their
+enemies, doubling their evasion if their last action was moving or waiting.
+While taking other actions the ring conveys no benefits.
+%%%%
+ring of darkness
+
+A ring that reduces the wearer's range of vision by two tiles. Naturally, if you
+can't see your enemies, they can't see you either. Minimum vision range is two
+tiles, unless you have divine assistance.
+%%%%
+ring of detection
+
+A ring that helps its wearer locate dungeon features. One level of detection
+will reveal all shrines on each floor as you enter it. Two levels will also
+reveal the location of all stairs and pressure plates.
+%%%%
 ring of dexterity
 
 A ring that increases the dexterity of its wearer.
@@ -1217,6 +1235,12 @@ A ring that increases the dexterity of its wearer.
 ring of evasion
 
 A ring that makes its wearer more capable of avoiding attacks.
+%%%%
+ring of faith
+
+A ring that invites divine attention, increasing piety gain by 50%. If the ring
+is removed, the gods will lose interest and the wearer will lose half their
+accumulated piety.
 %%%%
 ring of fire
 
@@ -1228,14 +1252,30 @@ ring of flight
 
 A ring that grants its wearer flight.
 %%%%
+ring of guardian spirit
+
+A ring that causes any damage taken to be divided between the wearer's health
+and magic, in the same ratio as their current health and magic reserves.
+%%%%
 ring of ice
 
 A ring that brings its wearer more in contact with the powers of ice. It grants
 resistance to cold and enhances ice magic, but causes vulnerability to heat.
 %%%%
+ring of insulation
+
+A ring that makes its wearer resistant to electricity. Useful for surviving
+lightning strikes with severe but nonlethal injuries.
+%%%%
 ring of intelligence
 
 A ring that increases the intelligence of its wearer.
+%%%%
+ring of reflection
+
+A ring that shields its wearer (though weakly) and reflects any ranged attacks
+the wearer blocks back toward the attacker. The reflection effect applies to any
+blocked attack, whether from the ring itself or another shield.
 %%%%
 ring of resist corrosion
 
@@ -1245,6 +1285,14 @@ ring of magical power
 
 A ring that increases its wearer's reserves of magical power for so long as it
 is worn.
+%%%%
+ring of plenty
+
+A ring that blesses the wearer with the dungeon's bounty. Stacks of consumable
+items (such as thrown weapons) in shrines will generate with twice the normal
+quantity of items if the ring is worn when the wearer enters a new floor.
+
+This item is not yet functional.
 %%%%
 ring of poison resistance
 
@@ -1256,7 +1304,7 @@ A ring that protects its wearer from the effects of negative energy.
 %%%%
 ring of protection
 
-A ring that protects its wearer from most sources of damage.
+A ring that increases the wearer's AC. It's like finger armour.
 %%%%
 ring of protection from cold
 
@@ -1265,6 +1313,10 @@ A ring that protects its wearer from cold.
 ring of protection from fire
 
 A ring that protects its wearer from fire.
+%%%%
+ring of wildshape
+
+A ring that improves its wearer's skill with Shapeshifting by three levels.
 %%%%
 ring of willpower
 
@@ -1283,6 +1335,16 @@ melee attacks.
 ring of strength
 
 A ring that increases the strength of its wearer.
+%%%%
+ring of teleportation
+
+A ring that can be activated once per floor to instantly teleport the wearer to
+a different location.
+%%%%
+ring of vampirism
+
+A ring that thirsts for death. Each living foe (not counting summons) that dies
+while it is worn will heal the wearer for 1-3 HP.
 %%%%
 ring of wizardry
 

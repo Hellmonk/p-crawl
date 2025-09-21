@@ -463,6 +463,32 @@ void melee_attack::maybe_riposte()
     }
 }
 
+void melee_attack::shield_spikes()
+{
+    if (!defender->is_player() || !attacker->alive())
+        return;
+
+    if (!adjacent(defender->pos(), attack_position))
+        return;
+
+    item_def *shield = defender->shield();
+
+    if (shield && is_shield(*shield)
+            && get_armour_ego_type(*shield) == SPARM_SPIKES)
+    {
+        int dmg = 1 + random2(10);
+        dmg = attacker->apply_ac(dmg);
+
+        if (dmg <= 0)
+            return;
+
+        simple_monster_message(*attacker->as_monster(),
+                                   " is struck by your spiked shield.");
+
+        attacker->hurt(&you, dmg);
+    }
+}
+
 void melee_attack::apply_black_mark_effects()
 {
     enum black_mark_effect
@@ -932,6 +958,7 @@ bool melee_attack::handle_phase_hit()
         do_fiery_armour_burn();
         do_foul_flame();
         emit_foul_stench();
+        apply_weakness_ego();
     }
 
     return true;
@@ -1564,6 +1591,7 @@ bool melee_attack::attack()
     if (shield_blocked)
     {
         handle_phase_blocked();
+        shield_spikes();
         maybe_riposte();
         if (!attacker->alive())
         {
@@ -4036,6 +4064,15 @@ void melee_attack::do_passive_freeze()
             mon->expose_to_element(BEAM_COLD, orig_hurted, &you);
             print_wounds(*mon);
         }
+    }
+}
+
+void melee_attack::apply_weakness_ego()
+{
+    if (you.wearing_ego(OBJ_ARMOUR, SPARM_WEAKENING)
+        && attacker->alive() && coinflip())
+    {
+        attacker->weaken(&you, 3);
     }
 }
 

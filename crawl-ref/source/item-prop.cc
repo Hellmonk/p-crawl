@@ -72,33 +72,41 @@ struct armour_def
     armflags_t          flags;
 };
 
-// Total weight 25 (multiply by 4 for %s).
+// Total weight 12.
 static const vector<ego_weight_tuple> BASIC_BODY_EGOS = {
-    { SPARM_FIRE_RESISTANCE,   7 },
-    { SPARM_COLD_RESISTANCE,   7 },
-    { SPARM_POISON_RESISTANCE, 5 },
-    { SPARM_WILLPOWER,         4 },
-    { SPARM_POSITIVE_ENERGY,   2 },
+    { SPARM_FIRE_RESISTANCE,   2 },
+    { SPARM_COLD_RESISTANCE,   2 },
+    { SPARM_WILLPOWER,         2 },
+    { SPARM_MAGICAL_POWER,     2 },
+    { SPARM_ARCHERY,           2 },
+    { SPARM_WIZARDRY,          1 },
+    { SPARM_ARCHMAGI,          1 },
+    { SPARM_COMMAND,           1 },
 };
 
-// Total weight 100.
+// Total weight 16.
 static const vector<ego_weight_tuple> HEAVY_BODY_EGOS = {
-    { SPARM_FIRE_RESISTANCE,    26 },
-    { SPARM_COLD_RESISTANCE,    26 },
-    { SPARM_POISON_RESISTANCE,  19 },
-    { SPARM_WILLPOWER,          15 },
-    { SPARM_POSITIVE_ENERGY,    7 },
-    { SPARM_PONDEROUSNESS,      7 },
+    { SPARM_FIRE_RESISTANCE,    2 },
+    { SPARM_COLD_RESISTANCE,    2 },
+    { SPARM_WILLPOWER,          2 },
+    { SPARM_PONDEROUSNESS,      2 },
+    { SPARM_HEALTH,             2 },
+    { SPARM_COMMAND,            2 },
+    { SPARM_WIZARDRY,           1 },
+    { SPARM_ENERGY,             1 },
+    { SPARM_INFUSION,           1 },
+    { SPARM_WEAKENING,          1 },
+    { SPARM_ARCHERY,            1 },
 };
 
 static const vector<ego_weight_tuple> SHIELD_EGOS = {
+    { SPARM_PROTECTION,        2 },
+    { SPARM_FIRE_RESISTANCE,   2 },
+    { SPARM_COLD_RESISTANCE,   2 },
+    { SPARM_REFLECTION,        2 },
+    { SPARM_SPIKES,            2 },
+    { SPARM_LIGHT,             2 },
     { SPARM_RESISTANCE,        1 },
-    { SPARM_FIRE_RESISTANCE,   3 },
-    { SPARM_COLD_RESISTANCE,   3 },
-    { SPARM_POISON_RESISTANCE, 3 },
-    { SPARM_POSITIVE_ENERGY,   3 },
-    { SPARM_REFLECTION,        6 },
-    { SPARM_PROTECTION,       12 },
 };
 
 // would be nice to lookup the name from monster_for_armour, but that
@@ -125,12 +133,15 @@ static const armour_def Armour_prop[] =
         SLOT_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT, true, 1 },
     { ARM_ROBE,                 "robe",                   2,   0,     9,
         SLOT_BODY_ARMOUR, SIZE_LITTLE, SIZE_LARGE, true, 100, {
-            { SPARM_RESISTANCE,      1 },
             { SPARM_COLD_RESISTANCE, 2 },
             { SPARM_FIRE_RESISTANCE, 2 },
-            { SPARM_POSITIVE_ENERGY, 2 },
-            { SPARM_NORMAL,          3 },
-            { SPARM_WILLPOWER,       4 },
+            { SPARM_STEALTH,         2 },
+            { SPARM_WILLPOWER,       2 },
+            { SPARM_MAGICAL_POWER,   2 },
+            { SPARM_ARCHMAGI,        2 },
+            { SPARM_WIZARDRY,        2 },
+            { SPARM_RESISTANCE,      1 },
+            { SPARM_ARCHERY,         1 },
     }},
     { ARM_LEATHER_ARMOUR,       "leather armour",         3,  -10,   20,
         SLOT_BODY_ARMOUR, SIZE_SMALL, SIZE_MEDIUM, true, 10, BASIC_BODY_EGOS },
@@ -156,33 +167,29 @@ static const armour_def Armour_prop[] =
 
     { ARM_CLOAK,                "cloak",                  1,   0,   45,
         SLOT_CLOAK,       SIZE_LITTLE, SIZE_LARGE, true, 0, {
-            { SPARM_POISON_RESISTANCE, 1 },
             { SPARM_WILLPOWER,         1 },
             { SPARM_STEALTH,           1 },
-            { SPARM_PRESERVATION,      1 },
     }},
     { ARM_SCARF,                "scarf",                  0,   0,   50,
         SLOT_CLOAK,       SIZE_LITTLE, SIZE_LARGE, true, 0, {
             { SPARM_RESISTANCE,   1 },
-            { SPARM_REPULSION,    1 },
-            { SPARM_INVISIBILITY, 1 },
-            { SPARM_HARM,         1 },
-            { SPARM_SHADOWS,      1 },
     }},
 
     { ARM_GLOVES,               "gloves",                 1,   0,   45,
         SLOT_GLOVES,      SIZE_SMALL,  SIZE_MEDIUM, true, 0, {
-            { SPARM_DEXTERITY, 1 },
-            { SPARM_STRENGTH,  1 },
-            { SPARM_HURLING,   1 },
             { SPARM_STEALTH,   1 },
-            { SPARM_INFUSION,  1 },
     }},
 
     { ARM_HELMET,               "helmet",                 1,   0,   45,
         SLOT_HELMET,      SIZE_SMALL,  SIZE_MEDIUM, true, 0, {
-            { SPARM_SEE_INVISIBLE, 1 },
-            { SPARM_INTELLIGENCE,  1 },
+            { SPARM_COLD_RESISTANCE,     1 },
+            { SPARM_REPULSION,           1 },
+            { SPARM_STEALTH,             1 },
+            { SPARM_SNIPING,             1 },
+            { SPARM_MAGICAL_POWER,       1 },
+            { SPARM_WILLPOWER,           1 },
+            { SPARM_LIGHT,               1 },
+            { SPARM_DETECTION,           1 },
     }},
 
 #if TAG_MAJOR_VERSION == 34
@@ -192,11 +199,14 @@ static const armour_def Armour_prop[] =
 
     { ARM_HAT,                  "hat",                    0,   0,   40,
         SLOT_HELMET,      SIZE_TINY, SIZE_LARGE, true, 0, {
-            { SPARM_NORMAL,        10 },
-            { SPARM_STEALTH,       3 },
-            { SPARM_WILLPOWER,     3 },
-            { SPARM_INTELLIGENCE,  2 },
-            { SPARM_SEE_INVISIBLE, 2 },
+            { SPARM_STEALTH,             1 },
+            { SPARM_WILLPOWER,           1 },
+            { SPARM_DETECTION,           1 },
+            { SPARM_REPULSION,           1 },
+            { SPARM_WIZARDRY,            1 },
+            { SPARM_MAGICAL_POWER,       1 },
+            { SPARM_COLD_RESISTANCE,     1 },
+            { SPARM_SNIPING,             1 },
     }},
 
     // Note that barding size is compared against torso so it currently
@@ -204,9 +214,14 @@ static const armour_def Armour_prop[] =
     // and shapeshift status.
     { ARM_BOOTS,                "boots",                  1,   0,   45,
         SLOT_BOOTS,       SIZE_SMALL,  SIZE_MEDIUM, true, 0, {
-            { SPARM_FLYING,    1 },
-            { SPARM_STEALTH,   1 },
-            { SPARM_RAMPAGING, 1 },
+            { SPARM_FLYING,                 1 },
+            { SPARM_STEALTH,                1 },
+            { SPARM_RAMPAGING,              1 },
+            { SPARM_MAGICAL_POWER,          1 },
+            { SPARM_INSULATION,             1 },
+            { SPARM_EVASION,                1 },
+            { SPARM_STABILITY,              1 },
+            { SPARM_FIRE_RESISTANCE,        1 },
     }},
     // Changed max. barding size to large to allow for the appropriate
     // monster types (monsters don't differentiate between torso and general).
@@ -217,20 +232,28 @@ static const armour_def Armour_prop[] =
     { ARM_BARDING,         "barding",           4,  -60,  230,
         SLOT_BARDING,     SIZE_MEDIUM, SIZE_LARGE, true, 0, {
             { SPARM_FLYING,          1 },
-            { SPARM_COLD_RESISTANCE, 1 },
+            { SPARM_INSULATION,      1 },
             { SPARM_FIRE_RESISTANCE, 1 },
             { SPARM_STEALTH,         1 },
+            { SPARM_RAMPAGING,       1 },
+            { SPARM_MAGICAL_POWER,   1 },
+            { SPARM_EVASION,         1 },
+            { SPARM_STABILITY,       1 },
     }},
 
     // Note: shields use ac-value as sh-value, EV pen is used as the basis
     // to calculate adjusted shield penalty.
     { ARM_ORB,                 "orb",                     0,   0,   50,
         SLOT_OFFHAND,      SIZE_LITTLE, SIZE_GIANT, true, 0, {
-            { SPARM_LIGHT,  1 },
-            { SPARM_RAGE,   1 },
-            { SPARM_MAYHEM, 1 },
-            { SPARM_GUILE,  1 },
-            { SPARM_ENERGY, 1 },
+            { SPARM_ELEMENTS,       1 },
+            { SPARM_MAYHEM,         1 },
+            { SPARM_GUILE,          1 },
+            { SPARM_ENERGY,         1 },
+            { SPARM_DARKNESS,       1 },
+            { SPARM_FOG,            1 },
+            { SPARM_INVISIBILITY,   1 },
+            { SPARM_SCRYING,        1 },
+            { SPARM_INFUSION,       1 },
     }},
     { ARM_BUCKLER,             "buckler",                 3,  -50,  45,
         SLOT_OFFHAND,      SIZE_LITTLE, SIZE_MEDIUM, true, 0, SHIELD_EGOS },
@@ -963,7 +986,6 @@ const set<pair<object_class_type, int> > removed_items =
     { OBJ_JEWELLERY, AMU_INACCURACY },
     { OBJ_JEWELLERY, RING_REGENERATION },
     { OBJ_JEWELLERY, RING_SUSTAIN_ATTRIBUTES },
-    { OBJ_JEWELLERY, RING_TELEPORT_CONTROL },
     { OBJ_JEWELLERY, RING_TELEPORTATION },
     { OBJ_JEWELLERY, RING_ATTENTION },
     { OBJ_JEWELLERY, RING_STEALTH },
@@ -2329,10 +2351,11 @@ bool jewellery_type_has_plusses(int jewel_type)
     {
     case RING_SLAYING:
     case RING_PROTECTION:
-    case RING_EVASION:
-    case RING_STRENGTH:
+    case RING_REFLECTION:
+#if TAG_MAJOR_VERSION == 34
     case RING_INTELLIGENCE:
     case RING_DEXTERITY:
+#endif
         return true;
 
     default:
@@ -2359,11 +2382,8 @@ bool ring_has_stackable_effect(const item_def &item)
     {
     case RING_PROTECTION_FROM_FIRE:
     case RING_PROTECTION_FROM_COLD:
-    case RING_POSITIVE_ENERGY:
     case RING_STEALTH:
     case RING_WIZARDRY:
-    case RING_FIRE:
-    case RING_ICE:
     case RING_WILLPOWER:
     case RING_MAGICAL_POWER:
         return true;
@@ -2488,10 +2508,6 @@ int get_armour_res_poison(const item_def &arm)
     // intrinsic armour abilities
     res += armour_type_prop(arm.sub_type, ARMF_RES_POISON);
 
-    // check ego resistance
-    if (get_armour_ego_type(arm) == SPARM_POISON_RESISTANCE)
-        res += 1;
-
     return res;
 }
 
@@ -2503,6 +2519,10 @@ int get_armour_res_elec(const item_def &arm, bool check_artp)
 
     // intrinsic armour abilities
     res += armour_type_prop(arm.sub_type, ARMF_RES_ELEC);
+
+     // check ego resistance
+    if (get_armour_ego_type(arm) == SPARM_INSULATION)
+        res += 1;
 
     if (check_artp && is_artefact(arm))
         res += artefact_property(arm, ARTP_ELECTRICITY);
@@ -2518,10 +2538,6 @@ int get_armour_life_protection(const item_def &arm)
 
     // intrinsic armour abilities
     res += armour_type_prop(arm.sub_type, ARMF_RES_NEG);
-
-    // check for ego resistance
-    if (get_armour_ego_type(arm) == SPARM_POSITIVE_ENERGY)
-        res += 1;
 
     return res;
 }
@@ -2539,9 +2555,6 @@ int get_armour_willpower(const item_def &arm, bool check_artp)
     if (get_armour_ego_type(arm) == SPARM_WILLPOWER)
         res += WL_PIP;
 
-    if (get_armour_ego_type(arm) == SPARM_GUILE)
-        res -= 2 * WL_PIP;
-
     if (check_artp && is_artefact(arm))
         res += WL_PIP * artefact_property(arm, ARTP_WILLPOWER);
 
@@ -2552,10 +2565,6 @@ bool get_armour_see_invisible(const item_def &arm)
 {
     ASSERT(arm.base_type == OBJ_ARMOUR);
 
-    // check for ego resistance
-    if (get_armour_ego_type(arm) == SPARM_SEE_INVISIBLE)
-        return true;
-
     return false;
 }
 
@@ -2563,9 +2572,7 @@ int get_armour_res_corr(const item_def &arm)
 {
     ASSERT(arm.base_type == OBJ_ARMOUR);
 
-    // intrinsic armour abilities
-    return get_armour_ego_type(arm) == SPARM_PRESERVATION
-           || armour_type_prop(arm.sub_type, ARMF_RES_CORR);
+    return false;
 }
 
 bool get_armour_rampaging(const item_def &arm, bool check_artp)
@@ -2595,11 +2602,7 @@ int get_jewellery_res_fire(const item_def &ring, bool check_artp)
     switch (ring.sub_type)
     {
     case RING_PROTECTION_FROM_FIRE:
-    case RING_FIRE:
         res += 1;
-        break;
-    case RING_ICE:
-        res -= 1;
         break;
     default:
         break;
@@ -2621,11 +2624,7 @@ int get_jewellery_res_cold(const item_def &ring, bool check_artp)
     switch (ring.sub_type)
     {
     case RING_PROTECTION_FROM_COLD:
-    case RING_ICE:
         res += 1;
-        break;
-    case RING_FIRE:
-        res -= 1;
         break;
     default:
         break;
@@ -2643,9 +2642,6 @@ int get_jewellery_res_poison(const item_def &ring)
 
     int res = 0;
 
-    if (ring.sub_type == RING_POISON_RESISTANCE)
-        res += 1;
-
     return res;
 }
 
@@ -2654,6 +2650,9 @@ int get_jewellery_res_elec(const item_def &ring, bool check_artp)
     ASSERT(ring.base_type == OBJ_JEWELLERY);
 
     int res = 0;
+
+    if (ring.sub_type == RING_INSULATION)
+        res += 1;
 
     if (check_artp && is_artefact(ring))
         res += artefact_property(ring, ARTP_ELECTRICITY);
@@ -2666,10 +2665,6 @@ int get_jewellery_life_protection(const item_def &ring)
     ASSERT(ring.base_type == OBJ_JEWELLERY);
 
     int res = 0;
-
-    // check for ego resistance
-    if (ring.sub_type == RING_POSITIVE_ENERGY)
-        res += 1;
 
     return res;
 }
@@ -2692,9 +2687,6 @@ int get_jewellery_willpower(const item_def &ring, bool check_artp)
 bool get_jewellery_see_invisible(const item_def &ring)
 {
     ASSERT(ring.base_type == OBJ_JEWELLERY);
-
-    if (ring.sub_type == RING_SEE_INVISIBLE)
-        return true;
 
     return false;
 }
@@ -2824,14 +2816,9 @@ bool gives_resistance(const item_def &item)
         if (!jewellery_is_amulet(item))
         {
             if (item.sub_type == RING_PROTECTION_FROM_FIRE
-                || item.sub_type == RING_POISON_RESISTANCE
+                || item.sub_type == RING_INSULATION
                 || item.sub_type == RING_PROTECTION_FROM_COLD
-                || item.sub_type == RING_RESIST_CORROSION
-                || item.sub_type == RING_POSITIVE_ENERGY
-                || item.sub_type == RING_WILLPOWER
-                || item.sub_type == RING_FIRE
-                || item.sub_type == RING_ICE
-                || item.sub_type == RING_FLIGHT)
+                || item.sub_type == RING_WILLPOWER)
             {
                 return true;
             }
@@ -2846,11 +2833,9 @@ bool gives_resistance(const item_def &item)
         const int ego = get_armour_ego_type(item);
         if (ego == SPARM_FIRE_RESISTANCE
             || ego == SPARM_COLD_RESISTANCE
-            || ego == SPARM_POISON_RESISTANCE
+            || ego == SPARM_INSULATION
             || ego == SPARM_WILLPOWER
-            || ego == SPARM_RESISTANCE
-            || ego == SPARM_PRESERVATION
-            || ego == SPARM_POSITIVE_ENERGY)
+            || ego == SPARM_RESISTANCE)
         {
             return true;
         }
@@ -3638,11 +3623,12 @@ bool ring_plusses_matter(int ring_subtype)
     switch (ring_subtype)
     {
         case RING_PROTECTION:
-        case RING_STRENGTH:
         case RING_SLAYING:
-        case RING_EVASION:
+#if TAG_MAJOR_VERSION == 34
         case RING_DEXTERITY:
         case RING_INTELLIGENCE:
+#endif
+        case RING_REFLECTION:
             return true;
 
         default:
@@ -3660,7 +3646,6 @@ bool item_gives_equip_slots(const item_def& item)
 
 bool item_grants_flight(const item_def& item)
 {
-    return item.base_type == OBJ_JEWELLERY && item.sub_type == RING_FLIGHT
-           || item.base_type == OBJ_ARMOUR && item.brand == SPARM_FLYING
+    return item.base_type == OBJ_ARMOUR && item.brand == SPARM_FLYING
            || is_artefact(item) && artefact_property(item, ARTP_FLY);
 }

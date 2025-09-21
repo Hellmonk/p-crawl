@@ -58,6 +58,9 @@
 #define BATFORM_XP_KEY "batform_xp"
 #define WATERY_GRAVE_XP_KEY "watery_grave_xp"
 #define WEREFURY_KEY "werefury_bonus"
+#define TELEPORTED_KEY "teleported"
+#define WENT_INVIS_KEY "went_invis"
+#define SCRIED_KEY "scried"
 
 constexpr int ENKINDLE_CHARGE_COST = 40;
 #define ENKINDLE_CHARGES_KEY "enkindle_charges"
@@ -1076,6 +1079,8 @@ int player_spec_tloc();
 
 int player_speed();
 
+int player_detection_level();
+
 int player_spell_levels(bool floored = true);
 int player_total_spell_levels();
 
@@ -1083,7 +1088,7 @@ int get_teleportitis_level();
 
 int player_monster_detect_radius();
 
-int slaying_bonus(bool throwing = false, bool random = true);
+int slaying_bonus(bool ranged = false, bool random = true);
 
 unsigned int exp_needed(int lev);
 bool will_gain_life(int lev);
@@ -1096,6 +1101,8 @@ void forget_map(bool rot = false);
 int get_exp_progress();
 unsigned int gain_exp(unsigned int exp_gained);
 void apply_exp();
+
+void reset_per_floor_props();
 
 int xp_to_level_diff(int xp, int scale=1);
 

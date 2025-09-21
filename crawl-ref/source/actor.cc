@@ -265,8 +265,7 @@ int actor::angry(bool items) const
     if (!items)
         return anger;
 
-    return anger + 20 * wearing_ego(OBJ_ARMOUR, SPARM_RAGE)
-                 + scan_artefacts(ARTP_ANGRY);
+    return anger + scan_artefacts(ARTP_ANGRY);
 }
 
 bool actor::clarity(bool items) const
@@ -276,7 +275,7 @@ bool actor::clarity(bool items) const
 
 bool actor::faith(bool items) const
 {
-    return items && wearing_jewellery(AMU_FAITH);
+    return items && wearing_jewellery(RING_FAITH);
 }
 
 int actor::archmagi(bool items) const
@@ -293,7 +292,7 @@ bool actor::no_cast(bool items) const
 bool actor::reflection(bool items) const
 {
     return items &&
-           (wearing_jewellery(AMU_REFLECTION)
+           (wearing_jewellery(RING_REFLECTION)
             || wearing_ego(OBJ_ARMOUR, SPARM_REFLECTION));
 }
 
@@ -302,7 +301,7 @@ int actor::extra_harm(bool items) const
     if (!items)
         return 0;
 
-    int harm = wearing_ego(OBJ_ARMOUR, SPARM_HARM) + scan_artefacts(ARTP_HARM);
+    int harm = scan_artefacts(ARTP_HARM);
 
     return harm > 2 ? 2 : harm;
 }
@@ -312,7 +311,7 @@ bool actor::rmut_from_item() const
     return scan_artefacts(ARTP_RMUT);
 }
 
-bool actor::evokable_invis() const
+int actor::evokable_invis() const
 {
     return wearing_ego(OBJ_ARMOUR, SPARM_INVISIBILITY)
            || scan_artefacts(ARTP_INVISIBLE);
@@ -322,8 +321,7 @@ bool actor::evokable_invis() const
 int actor::equip_flight() const
 {
     // For the player, this is cached on ATTR_PERM_FLIGHT
-    return wearing_jewellery(RING_FLIGHT)
-           + wearing_ego(OBJ_ARMOUR, SPARM_FLYING)
+    return wearing_ego(OBJ_ARMOUR, SPARM_FLYING)
            + scan_artefacts(ARTP_FLY);
 }
 
@@ -334,7 +332,7 @@ int actor::spirit_shield(bool items) const
     if (items)
     {
         ss += wearing_ego(OBJ_ARMOUR, SPARM_SPIRIT_SHIELD);
-        ss += wearing_jewellery(AMU_GUARDIAN_SPIRIT);
+        ss += wearing_jewellery(RING_GUARDIAN_SPIRIT);
     }
 
     if (is_player())

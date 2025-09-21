@@ -289,6 +289,10 @@ bool check_awaken(monster* mons, int stealth)
         }
     }
 
+    // invis
+    if (you.invisible())
+        mons_perc = 1;
+
     if (mons_perc < 1)
         mons_perc = 1;
 

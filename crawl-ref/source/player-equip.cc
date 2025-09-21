@@ -2041,14 +2041,12 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
             mpr("You feel resistant to cold.");
             break;
 
-        case SPARM_POISON_RESISTANCE:
-            if (player_res_poison(false, false) < 3)
-                mpr("You feel resistant to poison.");
+        case SPARM_INSULATION:
+            mpr("You feel insulated.");
             break;
 
-        case SPARM_SEE_INVISIBLE:
+        case SPARM_DETECTION:
             mpr("You feel perceptive.");
-            autotoggle_autopickup(false);
             break;
 
         case SPARM_INVISIBILITY:
@@ -2056,16 +2054,16 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
                 mpr("You become transparent for a moment.");
             break;
 
-        case SPARM_STRENGTH:
-            notify_stat_change(STAT_STR, 3, false);
+        case SPARM_STABILITY:
+            mpr("You feel unmovable.");
             break;
 
-        case SPARM_DEXTERITY:
-            notify_stat_change(STAT_DEX, 3, false);
+        case SPARM_WIZARDRY:
+            mpr("You feel like a wizard.");
             break;
 
-        case SPARM_INTELLIGENCE:
-            notify_stat_change(STAT_INT, 3, false);
+        case SPARM_MAGICAL_POWER:
+            calc_mp();
             break;
 
         case SPARM_PONDEROUSNESS:
@@ -2093,8 +2091,12 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
             mpr("You feel resistant to extremes of temperature.");
             break;
 
-        case SPARM_POSITIVE_ENERGY:
-            mpr("You feel more protected from negative energy.");
+        case SPARM_EVASION:
+            mpr("You feel dodgy.");
+            break;
+
+        case SPARM_HEALTH:
+            mpr("You feel healthy.");
             break;
 
         case SPARM_ARCHMAGI:
@@ -2108,15 +2110,15 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
             _spirit_shield_message(unmeld);
             break;
 
-        case SPARM_HURLING:
-            mpr("You feel that your aim is more steady.");
+        case SPARM_SNIPING:
+        case SPARM_WEAKENING:
             break;
 
         case SPARM_REPULSION:
             mpr("You are surrounded by a repulsion field.");
             break;
 
-        case SPARM_SHADOWS:
+        case SPARM_DARKNESS:
             mpr("It gets dark.");
             update_vision_range();
             break;
@@ -2168,29 +2170,25 @@ static void _unequip_armour_effect(item_def& item, bool meld)
         mpr("You feel less resistant to cold.");
         break;
 
-    case SPARM_POISON_RESISTANCE:
-        if (player_res_poison() <= 0)
-            mpr("You no longer feel resistant to poison.");
+    case SPARM_INSULATION:
+        mpr("You feel less insulated.");
         break;
 
-    case SPARM_SEE_INVISIBLE:
-        if (!you.can_see_invisible())
-        {
+    case SPARM_DETECTION:
+        if (player_detection_level() < 2)
             mpr("You feel less perceptive.");
-            _mark_unseen_monsters();
-        }
         break;
 
-    case SPARM_STRENGTH:
-        notify_stat_change(STAT_STR, -3, false);
+    case SPARM_STABILITY:
+        mpr("You feel moved.");
         break;
 
-    case SPARM_DEXTERITY:
-        notify_stat_change(STAT_DEX, -3, false);
+     case SPARM_WIZARDRY:
+        mpr("You feel less like a wizard.");
         break;
 
-    case SPARM_INTELLIGENCE:
-        notify_stat_change(STAT_INT, -3, false);
+    case SPARM_MAGICAL_POWER:
+        calc_mp();
         break;
 
     case SPARM_PONDEROUSNESS:
@@ -2224,8 +2222,12 @@ static void _unequip_armour_effect(item_def& item, bool meld)
         mpr("You feel hot and cold all over.");
         break;
 
-    case SPARM_POSITIVE_ENERGY:
-        mpr("You feel less protected from negative energy.");
+    case SPARM_EVASION:
+        mpr("You feel less evasive.");
+        break;
+
+    case SPARM_HEALTH:
+        mpr("You feel less healthy.");
         break;
 
     case SPARM_ARCHMAGI:
@@ -2243,15 +2245,14 @@ static void _unequip_armour_effect(item_def& item, bool meld)
         }
         break;
 
-    case SPARM_HURLING:
-        mpr("Your aim is not that steady anymore.");
+    case SPARM_SNIPING:
         break;
 
     case SPARM_REPULSION:
         mpr("The haze of the repulsion field disappears.");
         break;
 
-    case SPARM_SHADOWS:
+    case SPARM_DARKNESS:
         mpr("The dungeon's light returns to normal.");
         update_vision_range();
         break;
@@ -2275,7 +2276,7 @@ static void _unequip_armour_effect(item_def& item, bool meld)
     }
 }
 
-static void _remove_amulet_of_faith(item_def &item)
+static void _remove_ring_of_faith(item_def &item)
 {
 #ifndef DEBUG_DIAGNOSTICS
     UNUSED(item);
@@ -2297,11 +2298,20 @@ static void _remove_amulet_of_faith(item_def &item)
 
     simple_god_message(" seems less interested in you.");
 
-    const int piety_loss = div_rand_round(you.raw_piety, 3);
+    const int piety_loss = div_rand_round(you.raw_piety, 2);
     // Piety penalty for removing the Amulet of Faith.
     mprf(MSGCH_GOD, "You feel less pious.");
     dprf("%s: piety drain: %d", item.name(DESC_PLAIN).c_str(), piety_loss);
     lose_piety(piety_loss);
+}
+
+
+static void _change_wildshape_status()
+{
+    calc_hp();
+    calc_mp();
+    redraw_screen();
+    update_screen();
 }
 
 static void _handle_regen_item_equip(const item_def& item)
@@ -2374,41 +2384,12 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
 {
     switch (item.sub_type)
     {
-    case RING_FIRE:
-        mpr("You feel more attuned to fire.");
-        break;
-
-    case RING_ICE:
-        mpr("You feel more attuned to ice.");
-        break;
-
-    case RING_SEE_INVISIBLE:
-        autotoggle_autopickup(false);
-        break;
-
-    case RING_FLIGHT:
-        _flight_equip();
-        break;
-
     case RING_PROTECTION:
         you.redraw_armour_class = true;
         break;
 
-    case RING_EVASION:
-        you.redraw_evasion = true;
-        break;
-
-    case RING_STRENGTH:
-        notify_stat_change(STAT_STR, item.plus, false);
-        break;
-
-    case RING_DEXTERITY:
-        notify_stat_change(STAT_DEX, item.plus, false);
-        break;
-
-    case RING_INTELLIGENCE:
-        notify_stat_change(STAT_INT, item.plus, false);
-        break;
+    case RING_DARKNESS:
+        update_vision_range();
 
     case RING_MAGICAL_POWER:
         if (you.has_mutation(MUT_HP_CASTING))
@@ -2420,7 +2401,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         calc_mp();
         break;
 
-    case AMU_FAITH:
+    case RING_FAITH:
     {
         if (you.has_mutation(MUT_FORLORN))
         {
@@ -2445,18 +2426,23 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
 
         break;
 
-    case AMU_ACROBAT:
+    case RING_ACROBAT:
         if (you.has_mutation(MUT_TENGU_FLIGHT))
             mpr("You feel no more acrobatic than usual.");
         else
             mpr("You feel ready to tumble and roll out of harm's way.");
         break;
 
-    case AMU_REFLECTION:
+    case RING_REFLECTION:
         _equip_amulet_of_reflection();
         break;
 
-    case AMU_GUARDIAN_SPIRIT:
+       case RING_WILDSHAPE:
+        mpr("You feel a wild power.");
+        _change_wildshape_status();
+        break;
+
+    case RING_GUARDIAN_SPIRIT:
         _spirit_shield_message(unmeld);
         break;
 
@@ -2472,23 +2458,25 @@ static void _unequip_jewellery_effect(item_def &item, bool meld)
     // The ring/amulet must already be removed from you.equipment at this point.
     switch (item.sub_type)
     {
-    case RING_FIRE:
-    case RING_ICE:
-    case RING_POSITIVE_ENERGY:
-    case RING_POISON_RESISTANCE:
+    case RING_INSULATION:
     case RING_PROTECTION_FROM_COLD:
     case RING_PROTECTION_FROM_FIRE:
     case RING_WILLPOWER:
     case RING_SLAYING:
     case RING_STEALTH:
     case RING_WIZARDRY:
-        break;
-
-    case RING_SEE_INVISIBLE:
-        _mark_unseen_monsters();
+    case RING_GUARDIAN_SPIRIT:
+    case RING_VAMPIRISM:
+    case RING_PLENTY:
+    case RING_TELE:
+#if TAG_MAJOR_VERSION == 34
+    case RING_DEXTERITY:
+    case RING_INTELLIGENCE:
+#endif
         break;
 
     case RING_PROTECTION:
+    case RING_REFLECTION:
         you.redraw_armour_class = true;
         break;
 
@@ -2496,47 +2484,26 @@ static void _unequip_jewellery_effect(item_def &item, bool meld)
         you.redraw_armour_class = true;
         break;
 
-    case RING_EVASION:
-        you.redraw_evasion = true;
-        break;
-
-    case RING_STRENGTH:
-        notify_stat_change(STAT_STR, -item.plus, false);
-        break;
-
-    case RING_DEXTERITY:
-        notify_stat_change(STAT_DEX, -item.plus, false);
-        break;
-
-    case RING_INTELLIGENCE:
-        notify_stat_change(STAT_INT, -item.plus, false);
-        break;
-
-    case RING_FLIGHT:
-        // XXX: Landing must be deferred until after form is actually changed.
-        if (!meld)
-            land_player();
+    case RING_DARKNESS:
+        update_vision_range();
         break;
 
     case RING_MAGICAL_POWER:
         if (!you.has_mutation(MUT_HP_CASTING))
         {
             canned_msg(MSG_MANA_DECREASE);
-            pay_mp(9);
+            pay_mp(5);
         }
         break;
 
-    case AMU_FAITH:
+    case RING_FAITH:
         if (!meld)
-            _remove_amulet_of_faith(item);
+            _remove_ring_of_faith(item);
         break;
 
-#if TAG_MAJOR_VERSION == 34
-    case AMU_GUARDIAN_SPIRIT:
-        if (you.species == SP_DEEP_DWARF && player_regenerates_mp())
-            mpr("Your magic begins regenerating once more.");
+    case RING_WILDSHAPE:
+        _change_wildshape_status();
         break;
-#endif
 
     }
 

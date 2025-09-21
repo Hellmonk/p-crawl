@@ -748,9 +748,44 @@ static bool _try_make_armour_artefact(item_def& item, int force_type,
     if (is_artefact(item) && artefact_property(item, ARTP_BANE))
         item.plus = max((int)item.plus, armour_max_enchant(item) / 2 + random_range(1, 2));
 
+    // Having an ego before this function means that it was specifically requested
+    // by itemspec, so we should try to honour that.
     if (old_ego > 0)
-        set_artefact_brand(item, old_ego);
+    {
+        artefact_prop_type prop = ego_to_artprop(static_cast<special_armour_type>(old_ego));
 
+        // Egos that have no corresponding artprop can stay intact
+        if (prop == ARTP_NUM_PROPERTIES)
+            set_artefact_brand(item, old_ego);
+        else
+        {
+            // Other egos are directly translated into the corresponding artprop,
+            // to make inscriptions a bit less confusing for players. (eg: no {rF+, rF+})
+            switch (prop)
+            {
+                case ARTP_AC:
+                    item.props[ARTEFACT_PROPS_KEY].get_vector()[prop].get_short() += 3;
+                    break;
+                case ARTP_MAGICAL_POWER:
+                    item.props[ARTEFACT_PROPS_KEY].get_vector()[prop].get_short() += 5;
+                    break;
+                case ARTP_EVASION:
+                    item.props[ARTEFACT_PROPS_KEY].get_vector()[prop].get_short() += 15;
+                    break;
+
+                default:
+                {
+                    short& val = item.props[ARTEFACT_PROPS_KEY].get_vector()[prop].get_short();
+
+                    // Make sure not to 'hide' a second level of a boolean artprop
+                    if (artp_value_type(prop) == ARTP_VAL_BOOL)
+                        val = 1;
+                    else
+                        val += 1;
+                }
+            }
+        }
+    }
     return true;
 }
 
@@ -783,6 +818,12 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
     {
     case SPARM_FORBID_EGO:
     case SPARM_NORMAL:
+    case SPARM_WIZARDRY:
+    case SPARM_MAGICAL_POWER:
+    case SPARM_WILLPOWER:
+    case SPARM_WEAKENING:
+    case SPARM_COMMAND:
+    case SPARM_ARCHERY:
         return true;
 
     case SPARM_FLYING:
@@ -794,43 +835,29 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
     case SPARM_JUMPING:
 #endif
     case SPARM_RAMPAGING:
+    case SPARM_INSULATION:
+    case SPARM_EVASION:
+    case SPARM_STABILITY:
         return slot == SLOT_BOOTS || slot == SLOT_BARDING;
     case SPARM_STEALTH:
         return slot == SLOT_BOOTS || slot == SLOT_BARDING || slot == SLOT_CLOAK
-            || slot == SLOT_HELMET || slot == SLOT_GLOVES;
+            || slot == SLOT_HELMET || slot == SLOT_GLOVES || type == ARM_ROBE;
 
     case SPARM_ARCHMAGI:
-        return !strict || type == ARM_ROBE;
+        return !strict || slot == SLOT_BODY_ARMOUR;
 
     case SPARM_PONDEROUSNESS:
+    case SPARM_HEALTH:
         return true;
-    case SPARM_PRESERVATION:
-#if TAG_MAJOR_VERSION > 34
-        return slot == SLOT_CLOAK;
-#endif
-#if TAG_MAJOR_VERSION == 34
-        if (type == ARM_PLATE_ARMOUR && !strict)
-            return true;
-        return slot == SLOT_CLOAK;
-    case SPARM_INVISIBILITY:
-        return (slot == SLOT_CLOAK && !strict) || type == ARM_SCARF;
-#endif
 
     case SPARM_REFLECTION:
     case SPARM_PROTECTION:
+    case SPARM_SPIKES:
         return slot == SLOT_OFFHAND;
 
-    case SPARM_STRENGTH:
-    case SPARM_DEXTERITY:
-    case SPARM_INFUSION:
-        if (!strict)
-            return true;
-        // deliberate fall-through
-    case SPARM_HURLING:
-        return slot == SLOT_GLOVES;
-
-    case SPARM_SEE_INVISIBLE:
-    case SPARM_INTELLIGENCE:
+    case SPARM_SNIPING:
+    case SPARM_DETECTION:
+    case SPARM_REPULSION:
         return slot == SLOT_HELMET;
 
     case SPARM_FIRE_RESISTANCE:
@@ -844,15 +871,6 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
         }
         return true; // in portal vaults, these can happen on every slot
 
-    case SPARM_WILLPOWER:
-        if (type == ARM_HAT)
-            return true;
-        // deliberate fall-through
-    case SPARM_POISON_RESISTANCE:
-    case SPARM_POSITIVE_ENERGY:
-        if (type == ARM_PEARL_DRAGON_ARMOUR && brand == SPARM_POSITIVE_ENERGY)
-            return false; // contradictory or redundant
-
         return slot == SLOT_BODY_ARMOUR || slot == SLOT_OFFHAND || slot == SLOT_CLOAK
                        || !strict;
 
@@ -865,23 +883,26 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
 #endif
                slot == SLOT_OFFHAND || !strict;
 
-    case SPARM_REPULSION:
-    case SPARM_HARM:
-#if TAG_MAJOR_VERSION > 34
-    case SPARM_INVISIBILITY:
-#endif
 #if TAG_MAJOR_VERSION == 34
     case SPARM_CLOUD_IMMUNE:
 #endif
-    case SPARM_SHADOWS:
         return type == ARM_SCARF;
 
-    case SPARM_LIGHT:
-    case SPARM_RAGE:
+    case SPARM_DARKNESS:
+    case SPARM_ELEMENTS:
     case SPARM_MAYHEM:
     case SPARM_GUILE:
-    case SPARM_ENERGY:
+    case SPARM_FOG:
+    case SPARM_INVISIBILITY:
+    case SPARM_SCRYING:
         return type == ARM_ORB;
+
+    case SPARM_ENERGY:
+    case SPARM_INFUSION:
+        return slot == SLOT_BODY_ARMOUR || type == ARM_ORB;
+
+    case SPARM_LIGHT:
+        return slot == SLOT_OFFHAND || slot == SLOT_HELMET;
 
     case NUM_SPECIAL_ARMOURS:
     case NUM_REAL_SPECIAL_ARMOURS:
@@ -1024,25 +1045,17 @@ static void _generate_armour_item(item_def& item, bool allow_uniques,
     // Forced randart.
     if (item_level == ISPEC_RANDART)
     {
-        int ego = item.brand;
         for (int i = 0; i < 100; ++i)
             if (_try_make_armour_artefact(item, force_type, item_level, agent))
             {
-                // borrowed from similar code for weapons -- is this really the
-                // best way to force an ego??
-                if (ego > SPARM_NORMAL)
+                if (randart_is_bad(item)) // recheck, the brand changed
                 {
-                    set_artefact_brand(item, ego);
-
-                    if (randart_is_bad(item)) // recheck, the brand changed
-                    {
-                        force_type = item.sub_type;
-                        item.clear();
-                        item.quantity = 1;
-                        item.base_type = OBJ_ARMOUR;
-                        item.sub_type = force_type;
-                        continue;
-                    }
+                    force_type = item.sub_type;
+                    item.clear();
+                    item.quantity = 1;
+                    item.base_type = OBJ_ARMOUR;
+                    item.sub_type = force_type;
+                    continue;
                 }
                 return;
             }
@@ -1571,14 +1584,10 @@ static short _good_jewellery_plus(int subtype)
 {
     switch (subtype)
     {
-        case RING_STRENGTH:
-        case RING_DEXTERITY:
-        case RING_INTELLIGENCE:
-            return GOOD_STAT_RING_PLUS;
-        case RING_EVASION:
-            return 5;
+        case RING_REFLECTION:
+            return 10;
         default:
-            return GOOD_RING_PLUS;
+            return 4;
     }
 }
 

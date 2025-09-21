@@ -424,12 +424,16 @@ static vector<ability_def> &_get_ability_list()
         { ABIL_EVOKE_BLINK, "Evoke Blink",
             0, 0, 0, -1, {fail_basis::evo, 40, 2}, abflag::none },
         { ABIL_EVOKE_TURN_INVISIBLE, "Evoke Invisibility",
-            0, 0, 0, -1, {fail_basis::evo, 40, 2}, abflag::max_hp_drain },
+            0, 0, 0, -1, {}, abflag::none },
         // TODO: any way to automatically derive these from the artefact name?
         { ABIL_EVOKE_DISPATER, "Evoke Damnation",
             4, 100, 0, 6, {}, abflag::none },
         { ABIL_EVOKE_OLGREB, "Evoke the Staff of Olgreb",
             4, 0, 0, -1, {}, abflag::none },
+        { ABIL_TELEPORT, "Teleport",
+            0, 0, 0, -1, {}, abflag::none },
+        { ABIL_SCRY, "Scry",
+            0, 0, 0, -1, {}, abflag::none },
 
         // INVOCATIONS:
         // Zin
@@ -875,12 +879,6 @@ bool string_matches_ability_name(const string& key)
     return ability_by_name(key) != ABIL_NON_ABILITY;
 }
 
-static bool _invis_causes_drain()
-{
-    return !you.unrand_equipped(UNRAND_AMULET_INVISIBILITY)
-               && !you.unrand_equipped(UNRAND_SCARF_INVISIBILITY);
-}
-
 /**
  * Find an ability whose name matches the given key.
  *
@@ -1015,11 +1013,8 @@ const string make_cost_description(ability_type ability)
     if (abil.flags & abflag::instant)
         ret += ", Instant"; // not really a cost, more of a bonus - bwr
 
-    if (abil.flags & abflag::max_hp_drain
-        && (ability != ABIL_EVOKE_TURN_INVISIBLE || _invis_causes_drain()))
-    {
+    if (abil.flags & abflag::max_hp_drain)
         ret += ", Drain";
-    }
 
     if (abil.flags & abflag::curse)
         ret += ", Cursed item";
@@ -1137,14 +1132,8 @@ static const string _detailed_cost_description(ability_type ability)
     if (abil.flags & abflag::conf_ok)
         ret << "\nYou can use this ability even if confused.";
 
-    if (abil.flags & abflag::max_hp_drain
-        && (ability != ABIL_EVOKE_TURN_INVISIBLE || _invis_causes_drain()))
-    {
-        ret << "\nThis ability will temporarily drain your maximum health when used";
-        if (ability == ABIL_EVOKE_TURN_INVISIBLE)
-            ret << ", even unsuccessfully";
-        ret << ".";
-    }
+    if (abil.flags & abflag::max_hp_drain)
+        ret << "\nThis ability will temporarily drain your maximum health when used.";
 
     if (abil.flags & abflag::drac_charges)
         ret << "\nGaining experience will replenish charges of this ability.";
@@ -1173,6 +1162,7 @@ ability_type fixup_ability(ability_type ability)
 
     case ABIL_SPIDER_JUMP:
     case ABIL_EVOKE_BLINK:
+    case ABIL_TELEPORT:
         if (you.stasis())
             return ABIL_NON_ABILITY;
         else
@@ -2277,6 +2267,7 @@ static bool _check_ability_possible(const ability_def& abil, bool quiet = false)
         }
         // fallthrough
     case ABIL_BLINKBOLT:
+    case ABIL_TELEPORT:
     {
         const string no_tele_reason = you.no_tele_reason(true);
         if (no_tele_reason.empty())
@@ -2700,6 +2691,8 @@ unique_ptr<targeter> find_ability_targeter(ability_type ability)
 
     // Self-targeted:
     case ABIL_SHAFT_SELF:
+    case ABIL_TELEPORT:
+    case ABIL_SCRY:
 #if TAG_MAJOR_VERSION == 34
     case ABIL_HEAL_WOUNDS:
 #endif
@@ -3313,6 +3306,15 @@ static spret _do_ability(const ability_def& abil, bool fail, dist *target,
     case ABIL_EVOKE_BLINK:      // randarts
         return cast_blink(min(50, 1 + you.skill(SK_EVOCATIONS, 3)), fail);
 
+    case ABIL_TELEPORT:
+        you_teleport();
+        you.props[TELEPORTED_KEY].get_bool() = true;
+        break;
+
+    case ABIL_SCRY:
+        you.duration[DUR_REVELATION] = you.time_taken + 1;
+        you.props[SCRIED_KEY].get_bool() = true;
+
     case ABIL_EVOKE_DISPATER:
         if (!_evoke_orb_of_dispater(target))
             return spret::abort;
@@ -3334,10 +3336,11 @@ static spret _do_ability(const ability_def& abil, bool fail, dist *target,
     case ABIL_EVOKE_TURN_INVISIBLE:     // cloaks, randarts
         if (!invis_allowed())
             return spret::abort;
-        if (_invis_causes_drain())
-            drain_player(40, false, true); // yes, before the fail check!
-        fail_check();
-        potionlike_effect(POT_INVISIBILITY, you.skill(SK_EVOCATIONS, 2) + 5);
+        potionlike_effect(POT_INVISIBILITY, you.skill(SK_HEXES, 3) + 5);
+        if (you.props.exists(WENT_INVIS_KEY))
+            you.props[WENT_INVIS_KEY].get_int() += 1;
+        else
+            you.props[WENT_INVIS_KEY] = 1;
         break;
 
     case ABIL_END_TRANSFORMATION:
@@ -4331,11 +4334,24 @@ bool player_has_ability(ability_type abil, bool include_unusable)
         return you.scan_artefacts(ARTP_BLINK)
                && !you.get_mutation_level(MUT_NO_ARTIFICE);
     case ABIL_EVOKE_TURN_INVISIBLE:
-        return you.evokable_invis()
-               && !you.get_mutation_level(MUT_NO_ARTIFICE);
+    {
+        int times_gone_invis = 0;
+        if (you.props.exists(WENT_INVIS_KEY))
+            times_gone_invis = you.props[WENT_INVIS_KEY].get_int();
+
+        return you.evokable_invis() > times_gone_invis;
+    }
     case ABIL_EVOKE_DISPATER:
         return you.unrand_equipped(UNRAND_DISPATER)
                && !you.has_mutation(MUT_NO_ARTIFICE);
+    case ABIL_TELEPORT:
+        return you.wearing_jewellery(RING_TELE)
+               && !you.get_mutation_level(MUT_NO_ARTIFICE)
+               && !you.props.exists(TELEPORTED_KEY);
+    case ABIL_SCRY:
+        return you.wearing_ego(OBJ_ARMOUR, SPARM_SCRYING)
+               && !you.get_mutation_level(MUT_NO_ARTIFICE)
+               && !you.props.exists(SCRIED_KEY);
     default:
         // removed abilities handled here
         return false;
@@ -4401,6 +4417,8 @@ vector<talent> your_talents(bool check_confused, bool include_unusable, bool ign
             ABIL_EVOKE_TURN_INVISIBLE,
             ABIL_EVOKE_DISPATER,
             ABIL_EVOKE_OLGREB,
+            ABIL_TELEPORT,
+            ABIL_SCRY,
 #ifdef WIZARD
             ABIL_WIZ_BUILD_TERRAIN,
             ABIL_WIZ_SET_TERRAIN,

@@ -1249,18 +1249,19 @@ int acquirement_create_item(object_class_type class_wanted,
         {
             switch (acq_item.sub_type)
             {
-            case RING_STRENGTH:
+#if TAG_MAJOR_VERSION == 34
             case RING_INTELLIGENCE:
             case RING_DEXTERITY:
                 acq_item.plus = GOOD_STAT_RING_PLUS;
                 break;
-            case RING_EVASION:
-                acq_item.plus = 5;
-                break;
+#endif
             case RING_PROTECTION:
             case RING_SLAYING:
                 acq_item.plus = GOOD_RING_PLUS;
                 break;
+
+            case RING_REFLECTION:
+                acq_item.plus = 10;
 
             default:
                 break;

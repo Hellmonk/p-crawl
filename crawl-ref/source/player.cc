@@ -797,13 +797,25 @@ void update_vision_range()
         you.current_vision -= max(0, (bezotting_level() - 1) * 2); // spooky fx
 #endif
 
-    // scarf of shadows gives -1.
-    if (you.wearing_ego(OBJ_ARMOUR, SPARM_SHADOWS))
-        you.current_vision -= 1;
+    // orb of darkness gives -2.
+    if (you.wearing_ego(OBJ_ARMOUR, SPARM_DARKNESS))
+        you.current_vision -= 2;
+
+    // rings and artefacts.
+    vector<item_def*> eq = you.equipment.get_slot_items(SLOT_ALL_EQUIPMENT, false, true);
+    for (item_def* item : eq)
+    {
+        if (item->is_type(OBJ_JEWELLERY, RING_DARKNESS))
+            you.current_vision -= 2;
+    }
 
     // robe of Night.
     if (you.unrand_equipped(UNRAND_NIGHT))
         you.current_vision = you.current_vision * 3 / 4;
+
+    // Clamp "normal" vision at 2 or higher
+    int vis = you.current_vision;
+    you.current_vision = max(2, vis);
 
     if (you.duration[DUR_PRIMORDIAL_NIGHTFALL])
     {
@@ -1230,10 +1242,6 @@ int player_res_fire(bool temp, bool items)
     {
         // rings of fire resistance/fire
         rf += you.wearing_jewellery(RING_PROTECTION_FROM_FIRE);
-        rf += you.wearing_jewellery(RING_FIRE);
-
-        // rings of ice
-        rf -= you.wearing_jewellery(RING_ICE);
 
         // Staves
         rf += you.wearing(OBJ_STAVES, STAFF_FIRE);
@@ -1327,10 +1335,6 @@ int player_res_cold(bool temp, bool items)
     {
         // rings of cold resistance/ice
         rc += you.wearing_jewellery(RING_PROTECTION_FROM_COLD);
-        rc += you.wearing_jewellery(RING_ICE);
-
-        // rings of fire
-        rc -= you.wearing_jewellery(RING_FIRE);
 
         // Staves
         rc += you.wearing(OBJ_STAVES, STAFF_COLD);
@@ -1382,12 +1386,8 @@ int player_res_corrosion(bool temp, bool items)
 
     if (items)
     {
-        if (you.wearing(OBJ_ARMOUR, ARM_ACID_DRAGON_ARMOUR)
-            || you.wearing_jewellery(RING_RESIST_CORROSION)
-            || you.wearing_ego(OBJ_ARMOUR, SPARM_PRESERVATION))
-        {
+        if (you.wearing(OBJ_ARMOUR, ARM_ACID_DRAGON_ARMOUR))
             return 1;
-        }
     }
 
     return 0;
@@ -1402,6 +1402,9 @@ int player_res_electricity(bool temp, bool items)
         // staff
         re += you.wearing(OBJ_STAVES, STAFF_AIR);
 
+        // armour ego
+        re += you.wearing_ego(OBJ_ARMOUR, SPARM_INSULATION);
+
         // body armour:
         const item_def *body_armour = you.body_armour();
         if (body_armour)
@@ -1409,6 +1412,9 @@ int player_res_electricity(bool temp, bool items)
 
         // randart weapons:
         re += you.scan_artefacts(ARTP_ELECTRICITY);
+
+        // ring
+        re += you.wearing_jewellery(RING_INSULATION);
     }
 
     // mutations:
@@ -1458,14 +1464,8 @@ int player_res_poison(bool temp, bool items, bool forms)
 
     if (items)
     {
-        // rings of poison resistance
-        rp += you.wearing_jewellery(RING_POISON_RESISTANCE);
-
         // Staves
         rp += you.wearing(OBJ_STAVES, STAFF_ALCHEMY);
-
-        // ego armour:
-        rp += you.wearing_ego(OBJ_ARMOUR, SPARM_POISON_RESISTANCE);
 
         // body armour:
         const item_def *body_armour = you.body_armour();
@@ -1515,7 +1515,7 @@ int player_spec_fire()
 
     sf += you.wearing(OBJ_STAVES, STAFF_FIRE);
 
-    sf += you.wearing_jewellery(RING_FIRE);
+    sf += 2 * you.wearing_ego(OBJ_ARMOUR, SPARM_ELEMENTS);
 
     if (you.unrand_equipped(UNRAND_ELEMENTAL_STAFF))
         sf++;
@@ -1529,7 +1529,7 @@ int player_spec_cold()
 
     sc += you.wearing(OBJ_STAVES, STAFF_COLD);
 
-    sc += you.wearing_jewellery(RING_ICE);
+    sc += 2 * you.wearing_ego(OBJ_ARMOUR, SPARM_ELEMENTS);
 
     if (you.unrand_equipped(UNRAND_ELEMENTAL_STAFF))
         sc++;
@@ -1544,6 +1544,8 @@ int player_spec_earth()
     // Staves
     se += you.wearing(OBJ_STAVES, STAFF_EARTH);
 
+    se += 2 * you.wearing_ego(OBJ_ARMOUR, SPARM_ELEMENTS);
+
     if (you.unrand_equipped(UNRAND_ELEMENTAL_STAFF))
         se++;
 
@@ -1556,6 +1558,8 @@ int player_spec_air()
 
     // Staves
     sa += you.wearing(OBJ_STAVES, STAFF_AIR);
+
+    sa += 2 * you.wearing_ego(OBJ_ARMOUR, SPARM_ELEMENTS);
 
     if (you.unrand_equipped(UNRAND_ELEMENTAL_STAFF))
         sa++;
@@ -1620,12 +1624,6 @@ int player_prot_life(bool temp, bool items)
 
     if (items)
     {
-        // rings
-        pl += you.wearing_jewellery(RING_POSITIVE_ENERGY);
-
-        // armour (checks body armour only)
-        pl += you.wearing_ego(OBJ_ARMOUR, SPARM_POSITIVE_ENERGY);
-
         // pearl dragon counts
         const item_def *body_armour = you.body_armour();
         if (body_armour)
@@ -1663,8 +1661,6 @@ int player_movement_speed(bool check_terrain, bool temp)
     {
         mv += 3;
     }
-
-    mv += you.wearing_ego(OBJ_ARMOUR, SPARM_PONDEROUSNESS);
 
     // Cheibriados
     if (have_passive(passive_t::slowed))
@@ -1743,6 +1739,18 @@ int player_speed()
     return ps;
 }
 
+int player_detection_level()
+{
+    int det = 0;
+
+    det += you.wearing_jewellery(RING_DETECTION);
+
+    det += you.wearing_ego(OBJ_ARMOUR, SPARM_DETECTION);
+
+    // capped at two levels
+    return min(2, det);
+}
+
 bool is_effectively_light_armour(const item_def *item)
 {
     return !item
@@ -1757,7 +1765,7 @@ bool player_effectively_in_light_armour()
 
 bool player_acrobatic()
 {
-    return you.wearing_jewellery(AMU_ACROBAT)
+    return you.wearing_jewellery(RING_ACROBAT)
         || you.has_mutation(MUT_ACROBATIC)
         || you.scan_artefacts(ARTP_ACROBAT);
 }
@@ -1788,9 +1796,9 @@ static int _player_base_evasion_modifiers()
 {
     int evbonus = 0;
 
-    evbonus += you.wearing_jewellery(RING_EVASION);
-
     evbonus += you.scan_artefacts(ARTP_EVASION);
+
+    evbonus += you.wearing_ego(OBJ_ARMOUR, SPARM_EVASION);
 
     // mutations
     evbonus += you.get_mutation_level(MUT_GELATINOUS_BODY);
@@ -1829,11 +1837,6 @@ static int _player_temporary_evasion_modifiers()
     if (you.duration[DUR_AGILITY])
         evbonus += AGILITY_BONUS;
 
-    // If you have an active amulet of the acrobat and just moved or waited,
-    // get a massive EV bonus.
-    if (acrobat_boost_active())
-        evbonus += 15;
-
     // Bane of stumbling triggers on the same conditions as acrobat (thus
     // sharing its timer).
     if (you.has_bane(BANE_STUMBLING) && you.duration[DUR_ACROBAT])
@@ -1851,6 +1854,9 @@ static int _player_temporary_evasion_modifiers()
 // Player EV multipliers for transient effects
 static int _player_apply_evasion_multipliers(int prescaled_ev, const int scale)
 {
+    if (acrobat_boost_active())
+        prescaled_ev *= 2;
+
     if (you.form == transformation::statue)
         prescaled_ev = prescaled_ev * 4 / 5;
 
@@ -1890,7 +1896,7 @@ static int _player_evasion(int final_scale, bool ignore_temporary)
 
     // no evasion while paralyzed
     if (you.duration[DUR_PARALYSIS] || you.form == transformation::tree
-         || you.duration[DUR_PETRIFIED] || you.backlit())
+         || you.duration[DUR_PETRIFIED] || you.backlit(false))
     {
         return 0;
     }
@@ -1926,7 +1932,8 @@ int player_wizardry()
 {
     return you.wearing_jewellery(RING_WIZARDRY)
            + (you.get_mutation_level(MUT_BIG_BRAIN) == 3 ? 1 : 0)
-           + you.scan_artefacts(ARTP_WIZARDRY);
+           + you.scan_artefacts(ARTP_WIZARDRY)
+           + you.wearing_ego(OBJ_ARMOUR, SPARM_WIZARDRY);
 }
 
 int player_channelling()
@@ -1996,7 +2003,7 @@ int player_shield_class(int scale, bool random, bool ignore_temporary)
         shield += 2500;
 
     shield += qazlal_sh_boost() * 100;
-    shield += you.wearing_jewellery(AMU_REFLECTION) * AMU_REFLECT_SH * 100;
+    shield += you.wearing_jewellery(RING_REFLECTION) * 100;
     shield += you.scan_artefacts(ARTP_SHIELDING) * 200;
 
     return random ? div_rand_round(shield * scale, 100) : ((shield * scale) / 100);
@@ -2076,7 +2083,6 @@ void forget_map(bool rot)
 #endif
     }
 
-    ash_detect_portals(is_map_persistent());
 #ifdef USE_TILE
     tiles.update_minimap_bounds();
 #endif
@@ -2115,6 +2121,18 @@ static void _recharge_xp_evokers(int exp)
         if (gained)
             print_xp_evoker_recharge(*evoker, gained, silenced(you.pos()));
     }
+}
+
+void reset_per_floor_props()
+{
+    if (you.props.exists(TELEPORTED_KEY))
+        you.props.erase(TELEPORTED_KEY);
+
+    if (you.props.exists(WENT_INVIS_KEY))
+        you.props.erase(WENT_INVIS_KEY);
+
+    if (you.props.exists(SCRIED_KEY))
+        you.props.erase(SCRIED_KEY);
 }
 
 /// Make progress toward the abyss spawning an exit/stairs.
@@ -3241,17 +3259,18 @@ unsigned int exp_needed(int lev)
 }
 
 // returns bonuses from rings of slaying, etc.
-int slaying_bonus(bool throwing, bool random)
+int slaying_bonus(bool ranged, bool random)
 {
     int ret = 0;
 
     ret += you.wearing_jewellery(RING_SLAYING);
     ret += you.scan_artefacts(ARTP_SLAYING);
-    if (throwing)
-        ret += 4 * you.wearing_ego(OBJ_ARMOUR, SPARM_HURLING);
 
     ret += 3 * augmentation_amount();
     ret += you.get_mutation_level(MUT_SHARP_SCALES);
+
+    if (you.wearing_ego(OBJ_ARMOUR, SPARM_ARCHERY) && ranged)
+        ret += 5;
 
     if (you.get_mutation_level(MUT_PROTEAN_GRACE))
         ret += protean_grace_amount();
@@ -3684,7 +3703,10 @@ int get_real_hp(bool trans, bool drained)
         hitp += you.hp_max_adj_temp;
 
     if (trans)
+    {
         hitp += you.scan_artefacts(ARTP_HP);
+        hitp += you.wearing_ego(OBJ_ARMOUR, SPARM_HEALTH) * 12;
+    }
 
     // Being berserk makes you resistant to damage. I don't know why.
     if (trans && you.berserk())
@@ -3727,8 +3749,9 @@ int get_real_mp(bool include_items)
 
     if (include_items)
     {
-        enp += 9 * you.wearing_jewellery(RING_MAGICAL_POWER);
+        enp += 5 * you.wearing_jewellery(RING_MAGICAL_POWER);
         enp +=     you.scan_artefacts(ARTP_MAGICAL_POWER);
+        enp += 5 * you.wearing_ego(OBJ_ARMOUR, SPARM_MAGICAL_POWER);
     }
 
     enp += get_form()->max_mp_bonus();
@@ -5550,7 +5573,7 @@ bool player::shielded() const
            || duration[DUR_EPHEMERAL_SHIELD]
            || get_mutation_level(MUT_LARGE_BONE_PLATES) > 0
            || qazlal_sh_boost() > 0
-           || you.wearing_jewellery(AMU_REFLECTION)
+           || you.wearing_jewellery(RING_REFLECTION)
            || you.scan_artefacts(ARTP_SHIELDING)
            || (get_mutation_level(MUT_CONDENSATION_SHIELD)
                 && !you.duration[DUR_ICEMAIL_DEPLETED]);
@@ -5778,6 +5801,9 @@ int player::skill(skill_type sk, int scale, bool real, bool temp) const
     case SK_EARTH_MAGIC:
         level = min(level + scan_artefacts(ARTP_ENHANCE_EARTH) * scale, 27 * scale);
         break;
+
+    case SK_SHAPESHIFTING:
+        level += you.wearing_jewellery(RING_WILDSHAPE) * 3 * scale;
 
     default:
         break;
@@ -6542,8 +6568,6 @@ int player_willpower(bool temp)
     // ego armours
     rm += WL_PIP * you.wearing_ego(OBJ_ARMOUR, SPARM_WILLPOWER);
 
-    rm -= 2 * WL_PIP * you.wearing_ego(OBJ_ARMOUR, SPARM_GUILE);
-
     // rings of willpower
     rm += WL_PIP * you.wearing_jewellery(RING_WILLPOWER);
 
@@ -6573,6 +6597,10 @@ int player_willpower(bool temp)
     {
         rm /= 2;
     }
+
+    if (you.wearing_ego(OBJ_ARMOUR, SPARM_GUILE))
+        rm /= 2;
+
 
     if (rm < 0)
         rm = 0;
@@ -6806,7 +6834,7 @@ int player::hurt(const actor *agent, int amount, beam_type flavour,
  */
 bool player::resists_dislodge(string event) const
 {
-    if (!you.unrand_equipped(UNRAND_MOUNTAIN_BOOTS))
+    if (!you.wearing_ego(OBJ_ARMOUR, SPARM_STABILITY))
         return false;
     if (!event.empty())
         mprf("Your boots keep you from %s.", event.c_str());
@@ -7236,14 +7264,6 @@ bool player::can_see_invisible() const
 {
     if (crawl_state.game_is_arena())
         return true;
-
-    if (wearing_jewellery(RING_SEE_INVISIBLE)
-        || wearing_ego(OBJ_ARMOUR, SPARM_SEE_INVISIBLE)
-        // randart gear
-        || you.duration[DUR_REVELATION])
-    {
-        return true;
-    }
 
     return innate_sinv();
 }
@@ -8054,6 +8074,8 @@ static string _constriction_description()
 int player_monster_detect_radius()
 {
     int radius = you.get_mutation_level(MUT_ANTENNAE) * 2;
+
+    radius += you.wearing_ego(OBJ_ARMOUR, SPARM_SCRYING) * 5;
 
     if (you.unrand_equipped(UNRAND_HOOD_ASSASSIN))
         radius = max(radius, 4);
@@ -8866,6 +8888,13 @@ int player::adjusted_casting_level(skill_type skill)
         return 0;
 
     int sklevel = you.skill(skill);
+
+    if (skill == SK_EARTH_MAGIC || skill == SK_AIR_MAGIC
+        || skill == SK_FIRE_MAGIC || skill == SK_ICE_MAGIC)
+    {
+        sklevel += you.wearing_ego(OBJ_ARMOUR, SPARM_ELEMENTS);
+    }
+
     sklevel += player_wizardry();
 
     return sklevel;

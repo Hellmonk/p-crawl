@@ -1141,6 +1141,10 @@ void move_player_action(coord_def move)
 
         _apply_move_time_taken();
 
+        // stun the player after moving if there was a monster onscreen before moving
+        if (you.is_nervous() && you.wearing_ego(OBJ_ARMOUR, SPARM_PONDEROUSNESS))
+            you.stun(&you);
+
         coord_def old_pos = you.pos();
         // Don't trigger things that require movement
         // when confusion causes no move.

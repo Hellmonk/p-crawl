@@ -217,12 +217,6 @@ static int _strength_modifier(bool innate_only)
 
         result += chei_stat_boost();
 
-        // ego items of strength
-        result += 3 * you.wearing_ego(OBJ_ARMOUR, SPARM_STRENGTH);
-
-        // rings of strength
-        result += you.wearing_jewellery(RING_STRENGTH);
-
         // form
         result += get_form()->str_mod;
     }
@@ -243,12 +237,6 @@ static int _int_modifier(bool innate_only)
             result += you.attribute[ATTR_DIVINE_STAMINA];
 
         result += chei_stat_boost();
-
-        // ego items of intelligence
-        result += 3 * you.wearing_ego(OBJ_ARMOUR, SPARM_INTELLIGENCE);
-
-        // rings of intelligence
-        result += you.wearing_jewellery(RING_INTELLIGENCE);
     }
 
     // mutations
@@ -267,12 +255,6 @@ static int _dex_modifier(bool innate_only)
             result += you.attribute[ATTR_DIVINE_STAMINA];
 
         result += chei_stat_boost();
-
-        // ego items of dexterity
-        result += 3 * you.wearing_ego(OBJ_ARMOUR, SPARM_DEXTERITY);
-
-        // rings of dexterity
-        result += you.wearing_jewellery(RING_DEXTERITY);
 
         // form
         result += get_form()->dex_mod;

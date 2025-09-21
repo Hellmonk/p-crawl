@@ -1670,7 +1670,6 @@ static int _get_monster_jewellery_value(const monster *mon,
     int value = 0;
 
     if (item.sub_type == RING_PROTECTION
-        || item.sub_type == RING_EVASION
         || item.sub_type == RING_SLAYING)
     {
         value += item.plus;
@@ -1696,10 +1695,6 @@ static int _get_monster_jewellery_value(const monster *mon,
     // See invisible also is only useful if not already intrinsic.
     if (!mons_class_flag(mon->type, M_SEE_INVIS))
         value += get_jewellery_see_invisible(item);
-
-    // If we're not naturally corrosion-resistant.
-    if (item.sub_type == RING_RESIST_CORROSION && get_mons_resist(*mon, MR_RES_CORR) <= 0)
-        value++;
 
     return value;
 }
@@ -2988,7 +2983,7 @@ bool monster::can_feel_fear(bool /*include_unknown*/) const
  */
 bool monster::shielded() const
 {
-    return shield() || wearing_jewellery(AMU_REFLECTION);
+    return shield();
 }
 
 /// I honestly don't know what this means, really. It's vaguely similar
@@ -3767,11 +3762,7 @@ int monster::res_corr() const
     int u = get_mons_resist(*this, MR_RES_CORR);
 
     if (mons_itemuse(*this) >= MONUSE_STARTING_EQUIPMENT)
-    {
         u += wearing(OBJ_ARMOUR, ARM_ACID_DRAGON_ARMOUR);
-        u += wearing_jewellery(RING_RESIST_CORROSION);
-        u += wearing_ego(OBJ_ARMOUR, SPARM_PRESERVATION);
-    }
 
     if (has_ench(ENCH_RESISTANCE))
         u++;
@@ -3889,8 +3880,6 @@ bool monster::airborne() const
            || mslot_item(MSLOT_ARMOUR)
               && mslot_item(MSLOT_ARMOUR)->base_type == OBJ_ARMOUR
               && mslot_item(MSLOT_ARMOUR)->brand == SPARM_FLYING
-           || mslot_item(MSLOT_JEWELLERY)
-              && mslot_item(MSLOT_JEWELLERY)->is_type(OBJ_JEWELLERY, RING_FLIGHT)
            || has_ench(ENCH_FLIGHT);
 }
 
@@ -5557,9 +5546,6 @@ int monster::action_energy(energy_use_type et) const
 
     if (has_ench(ENCH_ROLLING))
         move_cost -= 5;
-
-    if (wearing_ego(OBJ_ARMOUR, SPARM_PONDEROUSNESS))
-        move_cost += 1;
 
     // Shadowghasts move more quickly when blended with the darkness.
     // Change _monster_stat_description in describe.cc if you change this.

@@ -704,7 +704,7 @@ BOOL:    deleted
 
 NAME:    crown of Dyrovepreva
 OBJ:     OBJ_ARMOUR/ARM_HAT
-FB_BRAND: SPARM_SEE_INVISIBLE
+FB_BRAND: SPARM_DETECTION
 PLUS:    +3
 COLOUR:  ETC_JEWEL
 TILE:    urand_dyrovepreva
@@ -750,7 +750,7 @@ BOOL:     fly, deleted
 ENUM:     HOOD_ASSASSIN
 NAME:     hood of the Assassin
 OBJ:      OBJ_ARMOUR/ARM_HAT
-FB_BRAND: SPARM_SEE_INVISIBLE
+FB_BRAND: SPARM_DETECTION
 INSCRIP:  Detect Stab+
 PLUS:     +2
 COLOUR:   BROWN
@@ -966,7 +966,7 @@ INSCRIP: Fury
 DESCRIP: Fury:      It extends the wearer's berserk rage when killing foes.
 
 NAME:    ring of the Hare
-OBJ:     OBJ_JEWELLERY/RING_EVASION
+OBJ:     OBJ_JEWELLERY/RING_PROTECTION
 PLUS:    +10
 COLOUR:  ETC_POISON
 TILE:    urand_hare

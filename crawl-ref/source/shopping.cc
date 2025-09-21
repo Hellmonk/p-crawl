@@ -333,20 +333,20 @@ unsigned int item_value(item_def item, bool ident)
                 break;
 
             case SPARM_COLD_RESISTANCE:
-            case SPARM_DEXTERITY:
+            case SPARM_MAGICAL_POWER:
             case SPARM_FIRE_RESISTANCE:
-            case SPARM_SEE_INVISIBLE:
-            case SPARM_INTELLIGENCE:
+            case SPARM_DETECTION:
+            case SPARM_WIZARDRY:
             case SPARM_FLYING:
             case SPARM_STEALTH:
-            case SPARM_STRENGTH:
+            case SPARM_STABILITY:
             case SPARM_INVISIBILITY:
             case SPARM_WILLPOWER:
             case SPARM_PROTECTION:
-            case SPARM_HURLING:
+            case SPARM_SNIPING:
             case SPARM_REPULSION:
-            case SPARM_PRESERVATION:
-            case SPARM_SHADOWS:
+            case SPARM_FOG:
+            case SPARM_DARKNESS:
             case SPARM_RAMPAGING:
             case SPARM_INFUSION:
             case SPARM_LIGHT:
@@ -354,12 +354,12 @@ unsigned int item_value(item_def item, bool ident)
                 valued += 50;
                 break;
 
-            case SPARM_POSITIVE_ENERGY:
-            case SPARM_POISON_RESISTANCE:
+            case SPARM_EVASION:
             case SPARM_REFLECTION:
+            case SPARM_SPIKES:
             case SPARM_SPIRIT_SHIELD:
-            case SPARM_HARM:
-            case SPARM_RAGE:
+            case SPARM_SCRYING:
+            case SPARM_ELEMENTS:
             case SPARM_MAYHEM:
             case SPARM_GUILE:
                 valued += 20;
@@ -550,14 +550,6 @@ unsigned int item_value(item_def item, bool ident)
                 case RING_PROTECTION:
                     base = 2 * item.plus;
                     break;
-                case RING_EVASION:
-                    base = 8 * item.plus / 5;
-                    break;
-                case RING_STRENGTH:
-                case RING_DEXTERITY:
-                case RING_INTELLIGENCE:
-                    base = item.plus * 4 / 3;
-                    break;
                 default:
                     break;
                 }
@@ -571,21 +563,25 @@ unsigned int item_value(item_def item, bool ident)
             {
                 switch (item.sub_type)
                 {
-                case AMU_FAITH:
+                case RING_FAITH:
                     valued += 400;
                     break;
 
                 case RING_WIZARDRY:
                 case AMU_REGENERATION:
-                case AMU_GUARDIAN_SPIRIT:
+                case RING_GUARDIAN_SPIRIT:
                 case AMU_MANA_REGENERATION:
                 case AMU_ACROBAT:
+                case RING_ACROBAT:
                 case AMU_REFLECTION:
+                case RING_WILDSHAPE:
+#if TAG_MAJOR_VERSION == 34
+                case RING_DEXTERITY:
+                case RING_INTELLIGENCE:
+#endif
                     valued += 300;
                     break;
 
-                case RING_FIRE:
-                case RING_ICE:
                 case RING_PROTECTION_FROM_COLD:
                 case RING_PROTECTION_FROM_FIRE:
                 case RING_WILLPOWER:
@@ -593,18 +589,19 @@ unsigned int item_value(item_def item, bool ident)
                     break;
 
                 case RING_MAGICAL_POWER:
-                case RING_POSITIVE_ENERGY:
-                case RING_POISON_RESISTANCE:
-                case RING_RESIST_CORROSION:
+                case RING_REFLECTION:
+                case RING_INSULATION:
+                case RING_DETECTION:
                     valued += 200;
                     break;
 
                 case RING_STEALTH:
-                case RING_FLIGHT:
+                case RING_VAMPIRISM:
+                case RING_PLENTY:
                     valued += 175;
                     break;
 
-                case RING_SEE_INVISIBLE:
+                case RING_TELE:
                     valued += 150;
                     break;
 

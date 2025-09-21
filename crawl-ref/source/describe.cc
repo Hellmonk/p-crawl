@@ -253,15 +253,18 @@ const char* jewellery_base_ability_string(int subtype)
 #if TAG_MAJOR_VERSION == 34
     case RING_SUSTAIN_ATTRIBUTES: return "SustAt";
     case RING_TELEPORTATION:      return "*Tele";
-    case RING_TELEPORT_CONTROL:   return "+cTele";
+#endif
+    case RING_ACROBAT:            return "Acrobat";
+#if TAG_MAJOR_VERSION == 34
     case AMU_HARM:                return "Harm";
     case AMU_THE_GOURMAND:        return "Gourm";
     case AMU_CONSERVATION:        return "Cons";
     case AMU_CONTROLLED_FLIGHT:   return "cFly";
 #endif
-    case AMU_GUARDIAN_SPIRIT:     return "Spirit";
-    case AMU_FAITH:               return "Faith";
-    case AMU_REFLECTION:          return "Reflect";
+    case RING_DARKNESS:           return "Dark";
+    case RING_GUARDIAN_SPIRIT:    return "Spirit";
+    case RING_FAITH:              return "Faith";
+    case RING_REFLECTION:         return "Reflect";
 #if TAG_MAJOR_VERSION == 34
     case AMU_INACCURACY:          return "Inacc";
 #endif
@@ -626,8 +629,10 @@ static const char* _jewellery_base_ability_description(int subtype)
         return "It sustains your strength, intelligence and dexterity.";
     case RING_TELEPORTATION:
         return "It may teleport you next to monsters.";
-    case RING_TELEPORT_CONTROL:
-        return "It can be evoked for teleport control.";
+#endif
+    case RING_ACROBAT:
+        return "It doubles your evasion if your last action was moving or waiting.";
+#if TAG_MAJOR_VERSION == 34
     case AMU_HARM:
         return "It increases damage dealt and taken.";
     case AMU_THE_GOURMAND:
@@ -635,12 +640,16 @@ static const char* _jewellery_base_ability_description(int subtype)
     case AMU_CONSERVATION:
         return "It protects your inventory from destruction.";
 #endif
+    case RING_DARKNESS:
+        return "It reduces your range of vision by 2.";
+    case RING_WILDSHAPE:
+        return "It improves your skill with shapeshifting by 3.";
     case AMU_GUARDIAN_SPIRIT:
         return "It causes incoming damage to be divided between your reserves "
                "of health and magic.";
-    case AMU_FAITH:
-        return "It allows you to gain divine favour quickly.";
-    case AMU_REFLECTION:
+    case RING_FAITH:
+        return "It increases piety gain by 50%. Removing it halves your piety.";
+    case RING_REFLECTION:
         return "It reflects blocked missile attacks.";
 #if TAG_MAJOR_VERSION == 34
     case AMU_INACCURACY:
@@ -2018,80 +2027,101 @@ static const char* _item_ego_desc(special_armour_type ego)
     switch (ego)
     {
     case SPARM_FIRE_RESISTANCE:
-        return "it protects its wearer from fire.";
+        return "it protects you from fire.";
     case SPARM_COLD_RESISTANCE:
-        return "it protects its wearer from cold.";
-    case SPARM_POISON_RESISTANCE:
-        return "it protects its wearer from poison.";
-    case SPARM_SEE_INVISIBLE:
-        return "it allows its wearer to see invisible things.";
+        return "it protects you from cold.";
+    case SPARM_INSULATION:
+        return "it protects you from electricity.";
+    case SPARM_DETECTION:
+        return "it helps you locate dungeon features.";
     case SPARM_INVISIBILITY:
-        return "when activated, it grants its wearer temporary "
-               "invisibility, but also drains their maximum health.";
-    case SPARM_STRENGTH:
-        return "it increases the strength of its wearer (Str +3).";
-    case SPARM_DEXTERITY:
-        return "it increases the dexterity of its wearer (Dex +3).";
-    case SPARM_INTELLIGENCE:
-        return "it increases the intelligence of its wearer (Int +3).";
+        return "when activated, it grants you temporary invisibility; "
+               "the duration increases with its user's skill in Hexes.";
+    case SPARM_STABILITY:
+        return "it prevents hostile movement effects, such as trampling.";
+    case SPARM_MAGICAL_POWER:
+        return "it increases your maximum magic (MP +5).";
+    case SPARM_WIZARDRY:
+        return "it reduces the skill requirement of all your spells by one.";
     case SPARM_PONDEROUSNESS:
-        return "it is very cumbersome, slowing its wearer's movement.";
+        return "it is very cumbersome. Moving with a monster in view will stun "
+               "you.";
     case SPARM_FLYING:
-        return "it grants its wearer flight.";
+        return "it grants you flight, negating the effects of terrain.";
     case SPARM_WILLPOWER:
-        return "it increases its wearer's willpower, protecting "
+        return "it increases your willpower, protecting "
                "against certain magical effects.";
     case SPARM_PROTECTION:
-        return "it protects its wearer from most sources of damage (AC +3).";
+        return "it protects you from most sources of damage (AC +3).";
     case SPARM_STEALTH:
-        return "it enhances the stealth of its wearer.";
+        return "it increases your stealth by 1.";
     case SPARM_RESISTANCE:
-        return "it protects its wearer from the effects of both fire and cold.";
-    case SPARM_POSITIVE_ENERGY:
-        return "it protects its wearer from the effects of negative energy.";
+        return "it protects you from both fire and cold.";
+    case SPARM_EVASION:
+        return "it increases your evasion (EV + 15).";
     case SPARM_ARCHMAGI:
-        return "it increases the power of its wearer's magical spells.";
-    case SPARM_PRESERVATION:
-        return "it protects its wearer from the effects of acid and corrosion.";
+        return "it increases the power of your magical spells by 3.";
+    case SPARM_FOG:
+        return "it sometimes releases a cloud of fog when you are "
+               "damaged (50% chance).";
     case SPARM_REFLECTION:
         return "it reflects blocked missile attacks back in the "
                "direction they came from.";
     case SPARM_SPIRIT_SHIELD:
         return "it causes incoming damage to be divided between "
-               "the wearer's reserves of health and magic.";
-    case SPARM_HURLING:
-        return "it improves its wearer's accuracy and damage with "
-               "thrown weapons, such as rocks and javelins (Slay +4).";
+               "your reserves of health and magic.";
+    case SPARM_SNIPING:
+        return "it makes your ranged weapons and thrown items deal 50% more "
+               "damage against stabbable targets.";
     case SPARM_REPULSION:
-        return "it helps its wearer evade missiles.";
+        return "it helps you evade projectiles - both physical and "
+               "magical (+30 EV against dodgeable ranged abilities and "
+               "spells).";
 #if TAG_MAJOR_VERSION == 34
     case SPARM_CLOUD_IMMUNE:
         return "it does nothing special.";
 #endif
-    case SPARM_HARM:
-        return "it increases damage dealt and taken.";
-    case SPARM_SHADOWS:
-        return "it reduces the distance the wearer can be seen at "
-               "and can see.";
+    case SPARM_SCRYING:
+        return "it reveals monster locations within 5 tiles and can be "
+               "activated once per floor to see through walls within the "
+               "normal range of your vision.";
+    case SPARM_DARKNESS:
+        return "it reduces your vision range by 2.";
     case SPARM_RAMPAGING:
-        return "its wearer takes one free step when moving towards enemies.";
+        return "it makes you take one extra step when moving directly towards "
+               "enemies.";
     case SPARM_INFUSION:
-        return "it empowers each of its wearer's melee hits with a small part "
-               "of their magic.";
+        return "it expends 1 MP per melee attack to add 10 slaying.";
     case SPARM_LIGHT:
-        return "it surrounds the wearer with a glowing halo, revealing "
-               "invisible creatures, increasing accuracy against all within "
-               "it other than the wearer, and reducing the wearer's stealth.";
-    case SPARM_RAGE:
-        return "it berserks the wearer when making melee attacks (20% chance).";
+        return "it surrounds you with a glowing halo, reducing your "
+               "stealth to 0 but preventing other creatures in the radius from "
+               "dodging.";
+    case SPARM_ELEMENTS:
+        return "it decreases the skill requirement of earth, air, fire, and ice"
+               " spells by 1 and increases their power by 2.";
     case SPARM_MAYHEM:
-        return "it causes witnesses of the wearer's kills to go into a frenzy,"
-               " attacking everything nearby with great strength and speed.";
+        return "when you kill a monster, it will cause a random nearby "
+               "monster to go into a frenzy, attacking indiscriminately with "
+               "great strength and speed.";
     case SPARM_GUILE:
-        return "it weakens the willpower of the wielder and everyone they hex.";
+        return "it halves (rounded down) your willpower and the willpower of "
+               "everyone you hex.";
     case SPARM_ENERGY:
-        return "it may return the magic spent to cast spells, but lowers their "
-               "success rate. It always returns the magic spent on miscasts.";
+        return "it may return the magic spent to cast spells (25% chance).";
+    case SPARM_SPIKES:
+        return "it deals 1d10 damage to the attacker after blocking a melee "
+               "attack.";
+    case SPARM_HEALTH:
+        return "it increases your maximum hitpoints by 12.";
+    case SPARM_WEAKENING:
+        return "it weakens foes that strike you in melee for a brief duration "
+               "(50% chance).";
+    case SPARM_COMMAND:
+        return "it causes your summoned allies to enter mighted. The might "
+               "duration increases with your armour skill.";
+    case SPARM_ARCHERY:
+        return "it increases your damage with ranged weapons and thrown "
+               "projectiles (Slay + 5).";
     default:
         return "it makes the wearer crave the taste of eggplant.";
     }
@@ -2267,10 +2297,10 @@ static string _describe_jewellery(const item_def &item, bool verbose)
     if (verbose && !is_artefact(item) && item.is_identified())
     {
         // Explicit description of ring or amulet power.
-        if (item.sub_type == AMU_REFLECTION)
+        if (item.sub_type == RING_REFLECTION)
         {
             description += make_stringf("\n\nIt affects your shielding (%+d).",
-                                        AMU_REFLECT_SH / 2);
+                                        AMU_REFLECT_SH);
         }
         else if (item.plus != 0)
         {
@@ -2280,17 +2310,7 @@ static string _describe_jewellery(const item_def &item, bool verbose)
                 description += make_stringf("\n\nIt affects your AC (%+d).",
                                             item.plus);
                 break;
-
-            case RING_EVASION:
-                description += make_stringf("\n\nIt affects your evasion (%+d).",
-                                            item.plus);
-                break;
-
-            case RING_STRENGTH:
-                description += make_stringf("\n\nIt affects your strength (%+d).",
-                                            item.plus);
-                break;
-
+#if TAG_MAJOR_VERSION == 34
             case RING_INTELLIGENCE:
                 description += make_stringf("\n\nIt affects your intelligence (%+d).",
                                             item.plus);
@@ -2300,9 +2320,9 @@ static string _describe_jewellery(const item_def &item, bool verbose)
                 description += make_stringf("\n\nIt affects your dexterity (%+d).",
                                             item.plus);
                 break;
-
+#endif
             case RING_SLAYING:
-                description += make_stringf("\n\nIt affects your accuracy and"
+                description += make_stringf("\n\nIt affects your "
                       " damage with ranged weapons and melee (%+d).",
                       item.plus);
                 break;
@@ -2324,8 +2344,7 @@ static string _describe_jewellery(const item_def &item, bool verbose)
         && !you.has_mutation(MUT_NO_JEWELLERY)
         && (is_artefact(item)
             || item.sub_type != RING_PROTECTION
-               && item.sub_type != RING_EVASION
-               && item.sub_type != AMU_REFLECTION))
+               && item.sub_type != RING_REFLECTION))
     {
         description += _equipment_property_change(item);
     }
