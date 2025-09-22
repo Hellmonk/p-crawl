@@ -1782,6 +1782,7 @@ misc_item_type get_misc_item_type(int force_type, bool exclude)
             MISC_ACID_CAULDRON,
             MISC_AMULET_OF_RESISTANCE,
             MISC_STAFF_OF_LIGHT,
+            MISC_BEGINNER_GUIDE,
         };
     }
     if (choices.size())

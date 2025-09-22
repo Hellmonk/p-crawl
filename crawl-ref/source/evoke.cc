@@ -699,6 +699,27 @@ static bool _amulet_of_resistance()
     return true;
 }
 
+static bool _beginner_guide()
+{
+    vector<skill_type> possibles;
+    for (int i = SK_FIRST_SKILL; i < NUM_SKILLS; ++i)
+    {
+        const skill_type sk = static_cast<skill_type>(i);
+        if (is_useless_skill(sk) || you.skills[sk] >= 1)
+            continue;
+
+        possibles.push_back(sk);
+    }
+    if (possibles.empty())
+    {
+        mpr("There are no more skills for the guide to teach you.");
+        return false;
+    }
+    shuffle_array(possibles);
+    you.skills[possibles[0]] += 1;
+    return true;
+}
+
 static int _gale_push_dist(const actor* agent, const actor* victim, int pow)
 {
     int dist = 1 + random2(pow / 20);
@@ -1662,6 +1683,17 @@ bool evoke_item(item_def& item, dist *preselect)
                 expend_xp_evoker(item.sub_type);
                 if (!evoker_charges(item.sub_type))
                     mpr("The amulet of resistance dulls.");
+            }
+            else
+                return false;
+            break;
+
+         case MISC_BEGINNER_GUIDE:
+            if (_beginner_guide())
+            {
+                expend_xp_evoker(item.sub_type);
+                if (!evoker_charges(item.sub_type))
+                    mpr("The guide goes down for maintenance.");
             }
             else
                 return false;

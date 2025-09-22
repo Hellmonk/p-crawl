@@ -339,6 +339,7 @@ enum misc_item_type
     MISC_ACID_CAULDRON,
     MISC_AMULET_OF_RESISTANCE,
     MISC_STAFF_OF_LIGHT,
+    MISC_BEGINNER_GUIDE,
 
     NUM_MISCELLANY,
     MISC_DECK_UNKNOWN = NUM_MISCELLANY,
@@ -385,6 +386,7 @@ const vector<misc_item_type> misc_types =
     MISC_ACID_CAULDRON,
     MISC_AMULET_OF_RESISTANCE,
     MISC_STAFF_OF_LIGHT,
+    MISC_BEGINNER_GUIDE,
 };
 
 enum missile_type

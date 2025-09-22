@@ -96,6 +96,14 @@ battleaxe
 
 A large war axe with a formidable double-sided head.
 %%%%
+beginner guide
+
+A guidebook for learning the basics. Evoking it will increase a random untrained
+skill from level 0 to level 1.
+
+Evocations skill has no effect on your ability to learn from this item, but will
+reduce the experience required to recharge it as usual.
+%%%%
 blade talisman
 
 A jagged cluster of blades, almost impossible to grasp without injury.
