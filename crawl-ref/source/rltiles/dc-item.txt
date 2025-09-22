@@ -1279,6 +1279,7 @@ misc_mages_chalice MISC_MAGES_CHALICE
 misc_butterfly_jar MISC_BUTTERFLY_JAR
 misc_purple_statuette MISC_PURPLE_STATUETTE
 misc_magnet MISC_MAGNET
+misc_skeleton_key MISC_SKELETON_KEY
 %sdir item/misc/runes
 generic MISC_RUNE_OF_ZOT
 rune_tartarus RUNE_TARTARUS

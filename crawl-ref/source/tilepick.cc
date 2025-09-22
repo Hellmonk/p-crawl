@@ -3104,6 +3104,9 @@ static tileidx_t _tileidx_misc(const item_def &item)
     case MISC_LANTERN_OF_SHADOWS:
         return TILE_MISC_LANTERN_OF_SHADOWS;
 
+     case MISC_SKELETON_KEY:
+        return TILE_MISC_SKELETON_KEY;
+
     case MISC_HORN_OF_GERYON:
         return TILE_MISC_HORN_OF_GERYON;
 

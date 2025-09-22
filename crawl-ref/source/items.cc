@@ -3985,6 +3985,7 @@ colour_t item_def::miscellany_colour() const
         case MISC_HARP_OF_HEALING:
         case MISC_BUTTERFLY_JAR:
         case MISC_MAGNET:
+        case MISC_SKELETON_KEY:
             return WHITE;
         case MISC_MAGES_CHALICE:
             return LIGHTCYAN;

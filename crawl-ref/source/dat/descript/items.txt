@@ -1646,6 +1646,14 @@ Swirls of dark smoke seem to lurk in the depths of this gem. Countless dark
 deeds were done in the Dungeon even before Zot seized and remade it, and their
 dreadful residue now taints every hint of beauty trapped within its confines.
 %%%%
+skeleton key
+
+A bone key with remote-unlock functionality. Evoking it will unlock the stairs
+on your current level.
+
+Evocations skill has no effect on the key's function, but will reduce
+the experience required to recharge the item as usual.
+%%%%
 spear
 
 A hunting weapon consisting of a wooden shaft with a pointed metal head
