@@ -889,6 +889,13 @@ lajatang
 A very rare and extremely effective weapon, featuring a pole with half-moon
 blades at both ends.
 %%%%
+lantern of shadows
+
+A strange lantern that absorbs light, rather than producing it. Evoking the
+lantern will reduce your vision radius to 1 for a short duration.
+
+Evocations skill increases the duration of the effect.
+%%%%
 large rock
 
 A very large and very heavy stone. {{

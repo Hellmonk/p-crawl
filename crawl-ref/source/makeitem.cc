@@ -1775,6 +1775,7 @@ misc_item_type get_misc_item_type(int force_type, bool exclude)
             MISC_BUTTERFLY_JAR,
             MISC_PURPLE_STATUETTE,
             MISC_MAGNET,
+            MISC_LANTERN_OF_SHADOWS,
         };
     }
     if (choices.size())

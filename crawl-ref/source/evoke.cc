@@ -532,6 +532,16 @@ static bool _magnet()
     return true;
 }
 
+static bool _lantern_of_shadows()
+{
+    int pow = you.skill(SK_EVOCATIONS);
+    you.set_duration(DUR_LANTERN, 4 + random_range(div_rand_round(pow,2),
+                                                   div_rand_round(pow * 3,2)));
+    update_vision_range();
+    mpr("Your surroundings grow dim.");
+    return true;
+}
+
 static int _gale_push_dist(const actor* agent, const actor* victim, int pow)
 {
     int dist = 1 + random2(pow / 20);
@@ -1398,6 +1408,15 @@ bool evoke_item(item_def& item, dist *preselect)
                 expend_xp_evoker(item.sub_type);
                 if (!evoker_charges(item.sub_type))
                     mpr("The magnet loses polarity!");
+            }
+            break;
+
+        case MISC_LANTERN_OF_SHADOWS:
+            if (_lantern_of_shadows())
+            {
+                expend_xp_evoker(item.sub_type);
+                if (!evoker_charges(item.sub_type))
+                    mpr("The lantern brightens.");
             }
             break;
 

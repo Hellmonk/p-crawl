@@ -892,6 +892,9 @@ static void _decrement_durations()
 
     _decrement_a_duration(DUR_HARP, delay, "Your harp's song finishes.");
 
+    if (_decrement_a_duration(DUR_LANTERN, delay, "The shadows dissipate."))
+        update_vision_range();
+
     if (you.duration[DUR_FLAYED])
     {
         bool near_ghost = false;

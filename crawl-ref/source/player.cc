@@ -817,6 +817,10 @@ void update_vision_range()
     int vis = you.current_vision;
     you.current_vision = max(2, vis);
 
+    // lantern of shadows
+    if (you.duration[DUR_LANTERN])
+        you.current_vision = 1;
+
     if (you.duration[DUR_PRIMORDIAL_NIGHTFALL])
     {
         // Determine the percentage of Nightfall's max duration that has passed,

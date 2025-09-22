@@ -295,5 +295,6 @@ enum duration_type
     DUR_DAZED,
     DUR_STUN,
     DUR_HARP,
+    DUR_LANTERN,
     NUM_DURATIONS
 };

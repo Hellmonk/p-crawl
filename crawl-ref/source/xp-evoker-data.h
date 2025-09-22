@@ -49,4 +49,5 @@ static const unordered_map<misc_item_type, evoker_data, std::hash<int>> xp_evoke
     { MISC_BUTTERFLY_JAR, { "jar_debt", "jar_plus", 140, 1 } },
     { MISC_PURPLE_STATUETTE, { "purple_debt", "purple_plus", 120, 1 } },
     { MISC_MAGNET, { "magnet_debt", "magnet_plus", 160, 3 } },
+    { MISC_LANTERN_OF_SHADOWS, { "lantern_debt", "lantern_plus", 110, 1 } },
 };
