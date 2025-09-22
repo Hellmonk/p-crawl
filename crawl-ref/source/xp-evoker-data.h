@@ -44,4 +44,5 @@ static const unordered_map<misc_item_type, evoker_data, std::hash<int>> xp_evoke
           "%s shakes itself petulantly as it silently regains its power." },
     }},
     { MISC_DUNGEON_ATLAS, { "atlas_debt", "atlas_plus", 250, 2 } },
+    { MISC_HARP_OF_HEALING, { "harp_debt", "harp_plus", 140, 1 } },
 };

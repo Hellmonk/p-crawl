@@ -294,5 +294,6 @@ enum duration_type
     DUR_DIMINISHED_SPELLS,
     DUR_DAZED,
     DUR_STUN,
+    DUR_HARP,
     NUM_DURATIONS
 };

@@ -796,6 +796,14 @@ handbook of applied construction
 A practical introduction to Forgecraft, covering basic principles and their
 common applications.
 %%%%
+harp of healing
+
+A mystical instrument infused with restorative power. Evoking it allows the
+wielder to start playing the harp, healing them over time so long as they focus
+on playing and don't take any action besides waiting.
+
+Evocations skill increases the maximum duration of the effect.
+%%%%
 hat
 
 A cloth hat.
