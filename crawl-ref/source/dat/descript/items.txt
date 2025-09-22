@@ -896,6 +896,16 @@ lajatang
 A very rare and extremely effective weapon, featuring a pole with half-moon
 blades at both ends.
 %%%%
+lamp of immolation
+
+An everburning lamp. Evoking it will cause every creature you can see to be
+filled with inner flame; affected creatures will explode violently when killed,
+dealing 2d20 fire damage and placing flame clouds in a 1 tile radius around
+them. Try to avoid standing in the blast zone.
+
+Evocations skill does not affect the explosions or the duration of the effect,
+but will reduce the experience required for the item to recharge as usual.
+%%%%
 lantern of shadows
 
 A strange lantern that absorbs light, rather than producing it. Evoking the

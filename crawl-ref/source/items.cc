@@ -3951,6 +3951,7 @@ colour_t item_def::miscellany_colour() const
 #endif
         case MISC_PHANTOM_MIRROR:
         case MISC_PANDEMONIUM_PIZZA:
+        case MISC_LAMP_OF_IMMOLATION:
             return RED;
 #if TAG_MAJOR_VERSION == 34
         case MISC_STONE_OF_TREMORS:
@@ -3987,6 +3988,7 @@ colour_t item_def::miscellany_colour() const
         case MISC_BUTTERFLY_JAR:
         case MISC_MAGNET:
         case MISC_SKELETON_KEY:
+        case MISC_JUMPER_CABLE:
             return WHITE;
         case MISC_MAGES_CHALICE:
             return LIGHTCYAN;

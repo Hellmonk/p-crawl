@@ -636,6 +636,25 @@ static bool _jumper_cable()
     return true;
 }
 
+static bool _lamp_of_immolation()
+{
+    bool had_effect = false;
+    for (monster_near_iterator mi(you.pos(), LOS_NO_TRANS); mi; ++mi)
+    {
+        if (mi->add_ench(mon_enchant(ENCH_INNER_FLAME, 0, &you)))
+            had_effect = true;
+    }
+
+    if (had_effect)
+    {
+        mpr("The creatures around you are filled with an inner flame!");
+        return true;
+    }
+
+    mpr("There is nothing nearby to immolate.");
+    return false;
+}
+
 static int _gale_push_dist(const actor* agent, const actor* victim, int pow)
 {
     int dist = 1 + random2(pow / 20);
@@ -1555,6 +1574,17 @@ bool evoke_item(item_def& item, dist *preselect)
                 expend_xp_evoker(item.sub_type);
                 if (!evoker_charges(item.sub_type))
                     mpr("The jumper cable gets twisted.");
+            }
+            else
+                return false;
+            break;
+
+        case MISC_LAMP_OF_IMMOLATION:
+            if (_lamp_of_immolation())
+            {
+                expend_xp_evoker(item.sub_type);
+                if (!evoker_charges(item.sub_type))
+                    mpr("The lamp grows dim.");
             }
             else
                 return false;
