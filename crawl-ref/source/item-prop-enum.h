@@ -328,6 +328,7 @@ enum misc_item_type
     MISC_SHOP_VOUCHER,
     MISC_DUNGEON_ATLAS,
     MISC_HARP_OF_HEALING,
+    MISC_MAGES_CHALICE,
 
     NUM_MISCELLANY,
     MISC_DECK_UNKNOWN = NUM_MISCELLANY,
@@ -363,6 +364,7 @@ const vector<misc_item_type> misc_types =
     MISC_SHOP_VOUCHER,
     MISC_DUNGEON_ATLAS,
     MISC_HARP_OF_HEALING,
+    MISC_MAGES_CHALICE,
 };
 
 enum missile_type

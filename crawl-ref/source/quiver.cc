@@ -1802,6 +1802,7 @@ namespace quiver
             case MISC_GRAVITAMBOURINE:
             case MISC_DUNGEON_ATLAS:
             case MISC_HARP_OF_HEALING:
+            case MISC_MAGES_CHALICE:
                 return false;
             default:
                 return true;

@@ -3984,6 +3984,8 @@ colour_t item_def::miscellany_colour() const
         case MISC_DUNGEON_ATLAS:
         case MISC_HARP_OF_HEALING:
             return WHITE;
+        case MISC_MAGES_CHALICE:
+            return LIGHTCYAN;
 #if TAG_MAJOR_VERSION == 34
         case MISC_XOMS_CHESSBOARD:
             return ETC_RANDOM;

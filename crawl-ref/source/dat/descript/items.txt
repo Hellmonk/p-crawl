@@ -932,6 +932,14 @@ manual
 
 A valuable book which allows one to learn a certain skill faster.
 %%%%
+mage's chalice
+
+A goblet overflowing with the liquid thoughts of a great wizard. Evoking it
+will make you brilliant for a short time, halving the MP cost of all spells and
+improving their power by 3.
+
+Evocations skill will increase the duration of the effect.
+%%%%
 maxwell's memoranda
 
 A loosely bound collection of the infamous Maxwell's schemes, diagrams and plans.

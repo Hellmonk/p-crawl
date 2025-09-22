@@ -49,6 +49,7 @@
 #include "place.h"
 #include "player.h"
 #include "player-stats.h"
+#include "potion.h"
 #include "prompt.h"
 #include "religion.h"
 #include "shout.h"
@@ -472,85 +473,38 @@ static bool _harp_of_healing()
     return true;
 }
 
-
-
-
-
 void handle_playing_harp()
-
-
 {
-
-
     // Various special cases if user can no longer play harp
-
-
     if (you.confused() || you.berserk() || you.duration[DUR_MESMERISED]
-
-
         || silenced(you.pos()) || you.duration[DUR_DEATHS_DOOR])
-
-
     {
-
-
         end_playing_harp(false);
-
-
         return;
-
-
     }
 
-
-
-
-
     // Heal for 5 hp per turn
-
-
     inc_hp(5);
 
-
-
-
-
     // Make noise
-
-
     noisy(12, you.pos());
-
-
 }
 
-
-
-
-
 void end_playing_harp(bool voluntary)
-
-
 {
-
-
     if (voluntary)
-
-
         mpr("You stop playing the harp.");
-
-
     else
-
-
         mpr("Your playing has been interrupted!");
 
-
-
-
-
     you.set_duration(DUR_HARP, 0);
+}
 
-
+static bool _mages_chalice()
+{
+    int pow = you.skill(SK_EVOCATIONS);
+    potionlike_effect(POT_BRILLIANCE, pow);
+    return true;
 }
 
 static int _gale_push_dist(const actor* agent, const actor* victim, int pow)
@@ -1387,6 +1341,14 @@ bool evoke_item(item_def& item, dist *preselect)
             {
                 practise_evoking(1);
                 expend_xp_evoker(item.sub_type);
+            }
+            break;
+
+        case MISC_MAGES_CHALICE:
+            if (_mages_chalice())
+            {
+                expend_xp_evoker(item.sub_type);
+                mpr("The chalice dries up!");
             }
             break;
 

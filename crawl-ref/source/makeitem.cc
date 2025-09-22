@@ -1771,6 +1771,7 @@ misc_item_type get_misc_item_type(int force_type, bool exclude)
             MISC_DUNGEON_ATLAS,
             MISC_TIN_OF_TREMORSTONES,
             MISC_HARP_OF_HEALING,
+            MISC_MAGES_CHALICE,
         };
     }
     if (choices.size())
