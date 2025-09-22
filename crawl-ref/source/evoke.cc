@@ -508,6 +508,13 @@ static bool _mages_chalice()
     return true;
 }
 
+static bool _haste_rune()
+{
+    int pow = you.skill(SK_EVOCATIONS);
+    potionlike_effect(POT_HASTE, pow);
+    return true;
+}
+
 static bool _butterfly_jar()
 {
     int pow = you.skill(SK_EVOCATIONS);
@@ -1688,12 +1695,23 @@ bool evoke_item(item_def& item, dist *preselect)
                 return false;
             break;
 
-         case MISC_BEGINNER_GUIDE:
+        case MISC_BEGINNER_GUIDE:
             if (_beginner_guide())
             {
                 expend_xp_evoker(item.sub_type);
                 if (!evoker_charges(item.sub_type))
                     mpr("The guide goes down for maintenance.");
+            }
+            else
+                return false;
+            break;
+
+        case MISC_HASTE_RUNESTONE:
+            if (_haste_rune())
+            {
+                expend_xp_evoker(item.sub_type);
+                if (!evoker_charges(item.sub_type))
+                    mpr("The runestone dulls.");
             }
             else
                 return false;

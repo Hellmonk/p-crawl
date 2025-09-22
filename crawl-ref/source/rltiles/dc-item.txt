@@ -1287,6 +1287,7 @@ misc_acid_cauldron MISC_ACID_CAULDRON
 misc_amulet_of_resistance MISC_AMULET_OF_RESISTANCE
 misc_staff_of_light MISC_STAFF_OF_LIGHT
 misc_beginner_guide MISC_BEGINNER_GUIDE
+misc_haste_runestone MISC_HASTE_RUNESTONE
 %sdir item/misc/runes
 generic MISC_RUNE_OF_ZOT
 rune_tartarus RUNE_TARTARUS

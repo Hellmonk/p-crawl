@@ -1465,6 +1465,13 @@ rune of zot
 
 A charm which allows entry into the Realm of Zot.
 %%%%
+runestone of haste
+
+A powerful magical charm. Evoking it will haste you for a brief time, granting
+extra actions.
+
+Evocations skill increases the duration of the effect.
+%%%%
 sack of spiders
 
 A woven silk bag. Opening it will cover the area with webs, spiders, and other

@@ -535,6 +535,7 @@ static const vector<pair<misc_item_type, int> > _misc_base_weights()
         {MISC_AMULET_OF_RESISTANCE, 20},
         {MISC_STAFF_OF_LIGHT,       20},
         {MISC_BEGINNER_GUIDE,       20},
+        {MISC_HASTE_RUNESTONE,      20},
     };
     // The player never needs more than one of any of these.
     for (auto &p : choices)

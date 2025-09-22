@@ -1039,6 +1039,7 @@ static string misc_type_name(int type)
     case MISC_AMULET_OF_RESISTANCE:      return "amulet of resistance";
     case MISC_STAFF_OF_LIGHT:            return "staff of light";
     case MISC_BEGINNER_GUIDE:            return "beginner guide";
+    case MISC_HASTE_RUNESTONE:           return "runestone of haste";
 
     default:
         return "buggy miscellaneous item";

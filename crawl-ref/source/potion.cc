@@ -251,9 +251,9 @@ public:
         return true;
     }
 
-    bool effect(bool=true, int=0, bool is_potion = true) const override
+    bool effect(bool=true, int pow = 0, bool is_potion = true) const override
     {
-        const int dur = _scale_pot_duration(random_range(26, 40), is_potion);
+        const int dur = 8 + pow + random2(1 + pow * 2);
         return haste_player(dur);
     }
 
@@ -326,7 +326,7 @@ public:
 
         mprf(MSGCH_DURATION, "You feel %sclever all of a sudden.",
              were_brilliant ? "more " : "");
-        const int dur = 5 + pow + random2(1 + 2 * pow);
+        const int dur = 8 + pow + random2(1 + 2 * pow);
         you.increase_duration(DUR_BRILLIANCE, dur);
         return true;
     }

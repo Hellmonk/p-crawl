@@ -58,4 +58,5 @@ static const unordered_map<misc_item_type, evoker_data, std::hash<int>> xp_evoke
     { MISC_AMULET_OF_RESISTANCE, { "amulet_debt", "amulet_plus", 180, 1 } },
     { MISC_STAFF_OF_LIGHT, { "staff_debt", "staff_plus", 160, 2 } },
     { MISC_BEGINNER_GUIDE, { "guide_debt", "guide_plus", 300, 1 } },
+    { MISC_HASTE_RUNESTONE, { "haste_debt", "haste_plus", 250, 1 } },
 };

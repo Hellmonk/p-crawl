@@ -3994,6 +3994,7 @@ colour_t item_def::miscellany_colour() const
         case MISC_STAFF_OF_LIGHT:
             return WHITE;
         case MISC_MAGES_CHALICE:
+        case MISC_HASTE_RUNESTONE:
             return LIGHTCYAN;
         case MISC_AMULET_OF_RESISTANCE:
             return YELLOW;
