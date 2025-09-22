@@ -1784,6 +1784,7 @@ misc_item_type get_misc_item_type(int force_type, bool exclude)
             MISC_STAFF_OF_LIGHT,
             MISC_BEGINNER_GUIDE,
             MISC_HASTE_RUNESTONE,
+            MISC_MEAT_BONE,
         };
     }
     if (choices.size())

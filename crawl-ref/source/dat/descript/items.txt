@@ -1015,6 +1015,13 @@ foes. The mouth may devour slain creatures, healing the user to an extent increa
 by the user's Shapeshifting skill and the power of the creature eaten. Skill also
 increases the damage done by the maw.
 %%%%
+meat bone
+
+A hunk of magical, undecaying meat. Evoking the meat will make you mighty for a
+brief duration, doubling your melee damage.
+
+Evocations skill increases the duration of the effect.
+%%%%
 medusa talisman
 
 A fossilised jellyfish polyp, inscribed with sigils. Causes a mane of long

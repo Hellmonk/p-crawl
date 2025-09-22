@@ -40,7 +40,7 @@ as halving their magic cost (rounding up).
 %%%%
 Might status
 
-You are unnaturally mighty, doing significantly more damage in physical combat.
+You are unnaturally mighty, doing double damage in physical combat.
 %%%%
 Regen status
 

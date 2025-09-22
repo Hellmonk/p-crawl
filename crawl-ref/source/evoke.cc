@@ -515,6 +515,18 @@ static bool _haste_rune()
     return true;
 }
 
+static bool _meat_bone()
+{
+    int pow = you.skill(SK_EVOCATIONS);
+    if (you.can_drink(true))
+        mpr("You eat a tiny piece of monster meat.");
+    else
+        mpr("You rub the monster meat, wishing you could have a taste.");
+
+    potionlike_effect(POT_MIGHT, pow);
+    return true;
+}
+
 static bool _butterfly_jar()
 {
     int pow = you.skill(SK_EVOCATIONS);
@@ -1712,6 +1724,17 @@ bool evoke_item(item_def& item, dist *preselect)
                 expend_xp_evoker(item.sub_type);
                 if (!evoker_charges(item.sub_type))
                     mpr("The runestone dulls.");
+            }
+            else
+                return false;
+            break;
+
+        case MISC_MEAT_BONE:
+            if (_meat_bone())
+            {
+                expend_xp_evoker(item.sub_type);
+                if (!evoker_charges(item.sub_type))
+                    mpr("The meat smells a little off.");
             }
             else
                 return false;

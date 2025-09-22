@@ -3134,6 +3134,9 @@ static tileidx_t _tileidx_misc(const item_def &item)
     case MISC_HASTE_RUNESTONE:
         return TILE_MISC_HASTE_RUNESTONE;
 
+    case MISC_MEAT_BONE:
+        return TILE_MISC_MEAT_BONE;
+
     case MISC_BOX_OF_BEASTS:
         return evoker_charges(item.sub_type) ? TILE_MISC_BOX_OF_BEASTS
                                              : TILE_MISC_BOX_OF_BEASTS_INERT;

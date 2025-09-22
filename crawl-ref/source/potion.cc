@@ -284,7 +284,7 @@ public:
 
         mprf(MSGCH_DURATION, "You feel %s all of a sudden.",
              were_mighty ? "mightier" : "very mighty");
-        const int dur = _scale_pot_duration(35 + random2(pow), is_potion);
+        const int dur = 8 + pow + random2(1 + pow * 2);
         you.increase_duration(DUR_MIGHT, dur);
         return true;
     }

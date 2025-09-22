@@ -3952,6 +3952,7 @@ colour_t item_def::miscellany_colour() const
         case MISC_PHANTOM_MIRROR:
         case MISC_PANDEMONIUM_PIZZA:
         case MISC_LAMP_OF_IMMOLATION:
+        case MISC_MEAT_BONE:
             return RED;
 #if TAG_MAJOR_VERSION == 34
         case MISC_STONE_OF_TREMORS:
