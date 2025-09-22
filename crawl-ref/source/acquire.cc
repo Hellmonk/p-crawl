@@ -537,10 +537,10 @@ static const vector<pair<misc_item_type, int> > _misc_base_weights()
         {MISC_BEGINNER_GUIDE,       20},
         {MISC_HASTE_RUNESTONE,      20},
     };
-    // The player never needs more than one of any of these.
+    // The player never needs more than one of any of these, but they do stack.
     for (auto &p : choices)
         if (you.seen_misc[p.first])
-            p.second = 0;
+            p.second /= 2;
     return choices;
 }
 
