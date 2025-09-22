@@ -614,6 +614,28 @@ static bool _pandemonium_pizza()
     return true;
 }
 
+static bool _jumper_cable()
+{
+    // fixed damage.
+    int damage = 40 - you.skill(SK_EVOCATIONS) * 3;
+    damage = resist_adjust_damage(&you, BEAM_ELECTRICITY, damage);
+
+    if (damage > you.hp)
+    {
+        mpr("You're too injured to use the jumper cable safely!");
+        return false;
+    }
+    if (!recharge_random_evoker())
+    {
+        mpr("You don't have anything to recharge!");
+        return false;
+    }
+
+    // notably should not be able to actually kill you.
+    ouch(damage, KILLED_BY_SELF_AIMED);
+    return true;
+}
+
 static int _gale_push_dist(const actor* agent, const actor* victim, int pow)
 {
     int dist = 1 + random2(pow / 20);
@@ -1522,6 +1544,17 @@ bool evoke_item(item_def& item, dist *preselect)
                 expend_xp_evoker(item.sub_type);
                 if (!evoker_charges(item.sub_type))
                     mpr("You're a bit out-pizza'd.");
+            }
+            else
+                return false;
+            break;
+
+        case MISC_JUMPER_CABLE:
+            if (_jumper_cable())
+            {
+                expend_xp_evoker(item.sub_type);
+                if (!evoker_charges(item.sub_type))
+                    mpr("The jumper cable gets twisted.");
             }
             else
                 return false;

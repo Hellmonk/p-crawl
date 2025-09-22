@@ -880,6 +880,13 @@ range.
     end
 }}
 %%%%
+jumper cable
+
+Don't ask where the clamps go. Evoking this item will randomly charge one of
+your other evocable items and deal heavy electricity damage to you.
+
+Evocations skill will decrease the damage you take from activating this item.
+%%%%
 kite shield
 
 A piece of wood and metal, to be strapped on one arm for defence.

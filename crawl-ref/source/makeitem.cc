@@ -1777,6 +1777,7 @@ misc_item_type get_misc_item_type(int force_type, bool exclude)
             MISC_MAGNET,
             MISC_LANTERN_OF_SHADOWS,
             MISC_PANDEMONIUM_PIZZA,
+            MISC_JUMPER_CABLE,
         };
     }
     if (choices.size())

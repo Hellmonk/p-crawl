@@ -515,7 +515,7 @@ static const vector<pair<misc_item_type, int> > _misc_base_weights()
         {MISC_PHANTOM_MIRROR,      (no_allies ? 0 : 20)},
         {MISC_BUTTERFLY_JAR,       (no_allies ? 0 : 20)},
         // Tremorstones are better for heavily armoured characters.
-        {MISC_TIN_OF_TREMORSTONES, 5 + _skill_rdiv(SK_ARMOUR) / 3},
+        {MISC_TIN_OF_TREMORSTONES, 5 + you.skill(SK_ARMOUR,3)},
         // everything else is evenly weighted
         {MISC_LIGHTNING_ROD,       20},
         {MISC_PHIAL_OF_FLOODS,     20},
@@ -529,6 +529,7 @@ static const vector<pair<misc_item_type, int> > _misc_base_weights()
         {MISC_LANTERN_OF_SHADOWS,  20},
         {MISC_SKELETON_KEY,        20},
         {MISC_PANDEMONIUM_PIZZA,   20},
+        {MISC_JUMPER_CABLE,        20},
     };
     // The player never needs more than one of any of these.
     for (auto &p : choices)
