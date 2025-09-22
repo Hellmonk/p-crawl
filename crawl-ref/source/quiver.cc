@@ -1810,6 +1810,7 @@ namespace quiver
             case MISC_PANDEMONIUM_PIZZA:
             case MISC_JUMPER_CABLE:
             case MISC_LAMP_OF_IMMOLATION:
+            case MISC_AMULET_OF_RESISTANCE:
                 return false;
             default:
                 return true;

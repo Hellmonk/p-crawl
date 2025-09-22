@@ -706,7 +706,7 @@ public:
     bool effect(bool=true, int pow = 40, bool is_potion = true) const override
     {
         mprf(MSGCH_DURATION, "You feel protected.");
-        const int add = _scale_pot_duration(35 + random2(pow), is_potion);;
+        const int add = 15 + pow + random2(pow * 7);
         you.increase_duration(DUR_RESISTANCE, add);
         return true;
     }

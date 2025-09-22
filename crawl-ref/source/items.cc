@@ -3993,6 +3993,8 @@ colour_t item_def::miscellany_colour() const
             return WHITE;
         case MISC_MAGES_CHALICE:
             return LIGHTCYAN;
+        case MISC_AMULET_OF_RESISTANCE:
+            return YELLOW;
         case MISC_PURPLE_STATUETTE:
             return MAGENTA;
 #if TAG_MAJOR_VERSION == 34

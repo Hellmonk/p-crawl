@@ -284,7 +284,7 @@ reduced, and you will soon be completely petrified (gaining the Stone status).
 %%%%
 Resist status
 
-You are more resistant to fire, cold, electricity, poison and acid.
+You are more resistant to fire, cold, and electricity.
 %%%%
 Slime status
 

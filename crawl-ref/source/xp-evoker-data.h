@@ -55,4 +55,5 @@ static const unordered_map<misc_item_type, evoker_data, std::hash<int>> xp_evoke
     { MISC_JUMPER_CABLE, { "cable_debt", "cable_plus", 100, 1 } },
     { MISC_LAMP_OF_IMMOLATION, { "lamp_debt", "lamp_plus", 150, 2 } },
     { MISC_ACID_CAULDRON, { "cauldron_debt", "cauldron_plus", 180, 2 } },
+    { MISC_AMULET_OF_RESISTANCE, { "amulet_debt", "amulet_plus", 180, 1 } },
 };

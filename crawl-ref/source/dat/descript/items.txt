@@ -48,6 +48,13 @@ amulet of regeneration
 An amulet that increases the wearer's rate of health regeneration. In order to
 function, it must first attune itself to the wearer's body at full health.
 %%%%
+amulet of resistance
+
+A golden amulet that can be evoked to provide temporary resistance to fire,
+cold, and electricity.
+
+Evocations skill increases the duration of the effect.
+%%%%
 amulet of the acrobat
 
 An amulet that allows the user to tumble and roll to evade the blows of their

@@ -1779,6 +1779,8 @@ misc_item_type get_misc_item_type(int force_type, bool exclude)
             MISC_PANDEMONIUM_PIZZA,
             MISC_JUMPER_CABLE,
             MISC_LAMP_OF_IMMOLATION,
+            MISC_ACID_CAULDRON,
+            MISC_AMULET_OF_RESISTANCE,
         };
     }
     if (choices.size())

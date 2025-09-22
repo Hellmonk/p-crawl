@@ -1373,9 +1373,6 @@ int player_res_cold(bool temp, bool items)
 
 int player_res_corrosion(bool temp, bool items)
 {
-    if (temp && you.duration[DUR_RESISTANCE])
-        return 1;
-
     if (cur_form(temp)->res_corr())
         return 1;
 
@@ -1480,9 +1477,6 @@ int player_res_poison(bool temp, bool items, bool forms)
     // mutations:
     rp += you.get_mutation_level(MUT_POISON_RESISTANCE, temp);
     rp += you.get_mutation_level(MUT_SLIMY_GREEN_SCALES, temp) == 3 ? 1 : 0;
-
-    if (temp && you.duration[DUR_RESISTANCE])
-        rp++;
 
     // Cap rPois at + before Virulence is applied
     // (so carrying multiple rPois effects never directly counters it)
