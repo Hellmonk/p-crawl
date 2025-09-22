@@ -1776,7 +1776,7 @@ _mon_hex_zap(ZAP_VITRIFY, BEAM_VITRIFY),
 {
     ZAP_TREMORSTONE,
     "burst of rock shards",
-    new dicedef_calculator<6, 6, 0, 1>,
+    new dicedef_calculator<3, 10, 0, 1>,
     new tohit_calculator<40>,
     nullptr,
     nullptr,

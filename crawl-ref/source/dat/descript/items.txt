@@ -1060,10 +1060,11 @@ negative energies.
 %%%%
 phantom mirror
 
-A hand mirror which can create a reflection of a nearby creature, clouding
-in the process. The reflection's duration increases with Evocations skill and
-decreases with the willpower of the target. It is, invariably, slightly weaker
-than the creature it mirrors.
+A hand mirror which can create a reflection of any nearby creature. The
+reflection will appear beside the targeted creature and fight for you as a
+temporarily summoned ally until it disappears or is killed.
+
+The reflection's duration increases with Evocations skill.
 %%%%
 phial of floods
 
@@ -1769,14 +1770,11 @@ A large piece of wood and metal, to be strapped on one arm for defence.
 %%%%
 tin of tremorstones
 
-A set of dormant, magnetic earth elementals in the form of tiny, very heavy
-pebbles. When released, the elementals are drawn magnetically to the center of
-nearby monsters, where they literally explode with rage at their rest being
-disturbed. Tremorstones usually land slightly off-target, and the user is
-always at risk of being hit. However, armour is extremely effective at
-repelling the lightweight fragments of rock from a tremorstone's explosion, so
-a well-armoured wielder has little to fear. Evocations skill increases the
-number of explosions.
+A set of tiny explosive rocks. Tremorstones usually land slightly off-target,
+and the user is always at risk of being hit. However, AC is applied thrice to
+reduce the explosions' damage, so a well-armoured wielder has little to fear.
+
+Evocations skill increases the number of explosions.
 %%%%
 treatise on traps
 

@@ -781,11 +781,10 @@ static spret _phantom_mirror(dist *target)
         canned_msg(MSG_NOTHING_HAPPENS);
         return spret::fail;
     }
-    const int power = 5 + you.skill(SK_EVOCATIONS, 3);
-    int dur = min(6, max(1, (you.skill(SK_EVOCATIONS, 1) / 4 + 1)
-                         * (100 - victim->check_willpower(&you, power)) / 100));
+    const int power = you.skill(SK_EVOCATIONS);
+    int dur = min(500, 50 + 10 * random2(6) + 10 * random2(1 + power * 5));
 
-    mon->mark_summoned(SPELL_PHANTOM_MIRROR, summ_dur(dur), true, true);
+    mon->mark_summoned(SPELL_PHANTOM_MIRROR, dur, true, true);
 
     mon->summoner = MID_PLAYER;
     mons_add_blame(mon, "mirrored by the player character");
@@ -906,7 +905,7 @@ static coord_def _fuzz_tremorstone_target(coord_def center)
 
 static int _tremorstone_power()
 {
-    return 15 + you.skill(SK_EVOCATIONS);
+    return you.skill(SK_EVOCATIONS);
 }
 
 /**
@@ -919,7 +918,7 @@ static int _tremorstone_power()
  */
 int tremorstone_count(int pow)
 {
-    return 1 + stepdown((pow - 15) / 3, 2, ROUND_CLOSE);
+    return 1 + div_rand_round(pow + 1, 2);
 }
 
 /**
