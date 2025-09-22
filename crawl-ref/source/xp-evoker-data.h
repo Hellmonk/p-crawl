@@ -47,4 +47,5 @@ static const unordered_map<misc_item_type, evoker_data, std::hash<int>> xp_evoke
     { MISC_HARP_OF_HEALING, { "harp_debt", "harp_plus", 140, 1 } },
     { MISC_MAGES_CHALICE, { "chalice_debt", "chalice_plus", 150, 1 } },
     { MISC_BUTTERFLY_JAR, { "jar_debt", "jar_plus", 140, 1 } },
+    { MISC_PURPLE_STATUETTE, { "purple_debt", "purple_plus", 120, 1 } },
 };

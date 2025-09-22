@@ -1177,6 +1177,16 @@ shapeshifter can stabilise it into a useable - if unpredictable - form.
 (If your Shapeshifting skill is at least 6, you can evoke this to transform it
 into a random one of: Rimehorn, Scarab, Medusa, or Maw talismans.)
 %%%%
+purple statuette
+
+A small sculpture of a misshapen humanoid figure. Evoking it will mutate you.
+
+
+Evocations skill will increase the chance that the resulting mutation
+is beneficial.
+
+
+%%%%
 quad damage
 
 A mysterious item resembling a rune of some kind. Once evoked, it will make the

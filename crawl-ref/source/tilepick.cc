@@ -3156,6 +3156,9 @@ static tileidx_t _tileidx_misc(const item_def &item)
 
     case MISC_BUTTERFLY_JAR:
         return TILE_MISC_BUTTERFLY_JAR;
+
+    case MISC_PURPLE_STATUETTE:
+        return TILE_MISC_PURPLE_STATUETTE;
     }
 
     return TILE_ERROR;

@@ -3987,6 +3987,8 @@ colour_t item_def::miscellany_colour() const
             return WHITE;
         case MISC_MAGES_CHALICE:
             return LIGHTCYAN;
+        case MISC_PURPLE_STATUETTE:
+            return MAGENTA;
 #if TAG_MAJOR_VERSION == 34
         case MISC_XOMS_CHESSBOARD:
             return ETC_RANDOM;

@@ -1773,6 +1773,7 @@ misc_item_type get_misc_item_type(int force_type, bool exclude)
             MISC_HARP_OF_HEALING,
             MISC_MAGES_CHALICE,
             MISC_BUTTERFLY_JAR,
+            MISC_PURPLE_STATUETTE,
         };
     }
     if (choices.size())
