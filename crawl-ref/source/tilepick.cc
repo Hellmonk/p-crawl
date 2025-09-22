@@ -3110,6 +3110,9 @@ static tileidx_t _tileidx_misc(const item_def &item)
     case MISC_HORN_OF_GERYON:
         return TILE_MISC_HORN_OF_GERYON;
 
+    case MISC_PANDEMONIUM_PIZZA:
+        return TILE_MISC_PANDEMONIUM_PIZZA;
+
     case MISC_BOX_OF_BEASTS:
         return evoker_charges(item.sub_type) ? TILE_MISC_BOX_OF_BEASTS
                                              : TILE_MISC_BOX_OF_BEASTS_INERT;

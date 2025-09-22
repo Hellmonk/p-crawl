@@ -1060,6 +1060,15 @@ partisan
 
 A long polearm with sharp protrusions on either side of the spearhead.
 %%%%
+pandemonium pizza
+
+A legendary  pizza fresh from the infinite demonic realm of pandemonium.
+Eatvoking it will heal you for a random amount of your missing hp and randomly
+buff or debuff you for a short time.
+
+Evocations skill does not improve the taste of the pizza, but will reduce
+the experience required to recharge the item as usual.
+%%%%
 pearl dragon scales
 
 The nacreous scales of a pearl dragon. It grants its wearer resistance to

@@ -3950,6 +3950,7 @@ colour_t item_def::miscellany_colour() const
             return RED;
 #endif
         case MISC_PHANTOM_MIRROR:
+        case MISC_PANDEMONIUM_PIZZA:
             return RED;
 #if TAG_MAJOR_VERSION == 34
         case MISC_STONE_OF_TREMORS:

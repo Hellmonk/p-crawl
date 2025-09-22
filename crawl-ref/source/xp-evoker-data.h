@@ -51,4 +51,5 @@ static const unordered_map<misc_item_type, evoker_data, std::hash<int>> xp_evoke
     { MISC_MAGNET, { "magnet_debt", "magnet_plus", 160, 3 } },
     { MISC_LANTERN_OF_SHADOWS, { "lantern_debt", "lantern_plus", 110, 1 } },
     { MISC_SKELETON_KEY, { "skeleton_debt", "skeleton_plus", 400, 3 } },
+    { MISC_PANDEMONIUM_PIZZA, { "pizza_debt", "pizza_plus", 400, 4 } },
 };
