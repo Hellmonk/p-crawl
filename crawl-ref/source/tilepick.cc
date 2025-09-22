@@ -3122,6 +3122,9 @@ static tileidx_t _tileidx_misc(const item_def &item)
     case MISC_ACID_CAULDRON:
         return TILE_MISC_ACID_CAULDRON;
 
+    case MISC_STAFF_OF_LIGHT:
+        return TILE_MISC_STAFF_OF_LIGHT;
+
     case MISC_AMULET_OF_RESISTANCE:
         return TILE_MISC_AMULET_OF_RESISTANCE;
 

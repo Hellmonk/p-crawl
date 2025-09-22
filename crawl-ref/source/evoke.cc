@@ -671,6 +671,22 @@ static bool _acid_vat(dist *target)
     return true;
 }
 
+static bool _light_staff(dist *target)
+{
+    dist target_local;
+    if (!target)
+        target = &target_local;
+
+    int power = you.skill(SK_EVOCATIONS);
+
+    spret ret = your_spells(SPELL_BOLT_OF_LIGHT, power, false, nullptr, target);
+
+    if (ret == spret::abort)
+        return false;
+
+    return true;
+}
+
 static bool _amulet_of_resistance()
 {
     if (you.res_elec() > 0 && you.res_fire() > 0 && you.res_cold() > 0)
@@ -1618,12 +1634,23 @@ bool evoke_item(item_def& item, dist *preselect)
                 return false;
             break;
 
-         case MISC_ACID_CAULDRON:
+        case MISC_ACID_CAULDRON:
             if (_acid_vat(preselect))
             {
                 expend_xp_evoker(item.sub_type);
                 if (!evoker_charges(item.sub_type))
                     mpr("The cauldron is emptied.");
+            }
+            else
+                return false;
+            break;
+
+        case MISC_STAFF_OF_LIGHT:
+            if (_light_staff(preselect))
+            {
+                expend_xp_evoker(item.sub_type);
+                if (!evoker_charges(item.sub_type))
+                    mpr("The staff loses its glow.");
             }
             else
                 return false;

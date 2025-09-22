@@ -1781,6 +1781,7 @@ misc_item_type get_misc_item_type(int force_type, bool exclude)
             MISC_LAMP_OF_IMMOLATION,
             MISC_ACID_CAULDRON,
             MISC_AMULET_OF_RESISTANCE,
+            MISC_STAFF_OF_LIGHT,
         };
     }
     if (choices.size())

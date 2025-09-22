@@ -1285,6 +1285,7 @@ misc_jumper_cable MISC_JUMPER_CABLE
 misc_lamp_of_immolation MISC_LAMP_OF_IMMOLATION
 misc_acid_cauldron MISC_ACID_CAULDRON
 misc_amulet_of_resistance MISC_AMULET_OF_RESISTANCE
+misc_staff_of_light MISC_STAFF_OF_LIGHT
 %sdir item/misc/runes
 generic MISC_RUNE_OF_ZOT
 rune_tartarus RUNE_TARTARUS

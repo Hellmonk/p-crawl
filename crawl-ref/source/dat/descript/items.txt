@@ -1752,6 +1752,15 @@ A staff that increases the power of fire spells cast by its wielder, and
 protects them from the effects of fire. If the wielder is skilled in Evocations
 and Fire Magic, they can burn those struck by it.
 %%%%
+staff of light
+
+A mystical staff. Evoking it releases a powerful beam of light that deals
+damage, blinds, and backlights everything it hits, preventing afflicted foes
+from dodging subsequent attacks (though the beam itself can be dodged) and
+reducing their ability to perceive you.
+
+Evocations skill increases the damage dealt by the beam.
+%%%%
 starry gem
 
 [[gem]]

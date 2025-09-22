@@ -3990,6 +3990,7 @@ colour_t item_def::miscellany_colour() const
         case MISC_MAGNET:
         case MISC_SKELETON_KEY:
         case MISC_JUMPER_CABLE:
+        case MISC_STAFF_OF_LIGHT:
             return WHITE;
         case MISC_MAGES_CHALICE:
             return LIGHTCYAN;

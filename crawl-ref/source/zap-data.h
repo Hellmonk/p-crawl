@@ -1474,7 +1474,7 @@ _mon_hex_zap(ZAP_SLEEP, BEAM_SLEEP),
 {
     ZAP_BOLT_OF_LIGHT,
     "bolt of light",
-    new calcdice_calculator<4, 13, 3, 5>,
+    new dicedef_calculator<3, 7, 1, 1>,
     new tohit_calculator<10, 1, 25>,
     new dicedef_calculator<3, 7, 1, 12>,
     new tohit_calculator<17, 1, 25>,
