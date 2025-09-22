@@ -488,6 +488,13 @@ buckler
 
 A small piece of wood and metal, to be strapped on one arm for defence.
 %%%%
+butterfly jar
+
+A jar full of butterflies. Evoking it will knock back nearby creatures and
+summon the butterflies.
+
+Evocations skill will increase the number of butterflies summoned.
+%%%%
 chain mail
 
 A suit of armour made entirely out of tiny metal rings.

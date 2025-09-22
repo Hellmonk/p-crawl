@@ -1127,7 +1127,7 @@ static bool _butterfly_knockback(coord_def p)
     return true;
 }
 
-spret summon_butterflies()
+spret summon_butterflies(int pow)
 {
     // Just fizzle instead of creating hostile butterflies.
     if (you.allies_forbidden())
@@ -1154,9 +1154,8 @@ spret summon_butterflies()
         if (_butterfly_knockback(*ai))
             success = true;
 
-    // place some in a tight cluster, distance 2. Max 24 squares, so this is
-    // always at least 2/3 density.
-    const int how_many_inner = random_range(16, 22);
+    // place some in a tight cluster, distance 2.
+    const int how_many_inner = random_range(8 + pow, 15 + pow);
     for (int i = 0; i < how_many_inner; ++i)
     {
         mgen_data butterfly(MONS_BUTTERFLY, BEH_FRIENDLY, you.pos(), MHITYOU,
@@ -1168,7 +1167,7 @@ spret summon_butterflies()
     }
     // place another set more sparsely. These will try to find a placement
     // within range 5 of the player. This can backfill the inner zone.
-    const int how_many_outer = random_range(12, 28);
+    const int how_many_outer = random_range(4 + pow, 24 + pow / 2);
     for (int i = 0; i < how_many_outer; ++i)
     {
         mgen_data butterfly(MONS_BUTTERFLY, BEH_FRIENDLY, you.pos(), MHITYOU,

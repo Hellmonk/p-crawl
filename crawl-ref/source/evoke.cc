@@ -507,6 +507,15 @@ static bool _mages_chalice()
     return true;
 }
 
+static bool _butterfly_jar()
+{
+    int pow = you.skill(SK_EVOCATIONS);
+    if (summon_butterflies(pow) == spret::success)
+        return true;
+
+    return false;
+}
+
 static int _gale_push_dist(const actor* agent, const actor* victim, int pow)
 {
     int dist = 1 + random2(pow / 20);
@@ -1349,6 +1358,14 @@ bool evoke_item(item_def& item, dist *preselect)
             {
                 expend_xp_evoker(item.sub_type);
                 mpr("The chalice dries up!");
+            }
+            break;
+
+        case MISC_BUTTERFLY_JAR:
+            if (_butterfly_jar())
+            {
+                expend_xp_evoker(item.sub_type);
+                mpr("The butterfly jar is emptied!");
             }
             break;
 
