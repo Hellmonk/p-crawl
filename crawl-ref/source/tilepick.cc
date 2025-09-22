@@ -3119,6 +3119,9 @@ static tileidx_t _tileidx_misc(const item_def &item)
     case MISC_LAMP_OF_IMMOLATION:
         return TILE_MISC_LAMP_OF_IMMOLATION;
 
+    case MISC_ACID_CAULDRON:
+        return TILE_MISC_ACID_CAULDRON;
+
     case MISC_BOX_OF_BEASTS:
         return evoker_charges(item.sub_type) ? TILE_MISC_BOX_OF_BEASTS
                                              : TILE_MISC_BOX_OF_BEASTS_INERT;

@@ -1528,7 +1528,7 @@ int mons_adjust_flavoured(monster* mons, bolt &pbolt, int hurted,
             if (original > 0 && doFlavouredEffects)
                 simple_monster_message(*mons, " completely resists.");
         }
-        else if (doFlavouredEffects && !one_chance_in(3))
+        else if (doFlavouredEffects)
             mons->corrode(pbolt.agent());
         break;
     }
@@ -4424,9 +4424,9 @@ void bolt::affect_player()
     internal_ouch(final_dam);
 
     // Acid. (Apply this afterward, to avoid bad message ordering.)
-    if (origin_spell == SPELL_CORROSIVE_BOLT && !one_chance_in(4))
+    if (origin_spell == SPELL_CORROSIVE_BOLT)
         you.corrode(agent(), "the acid", 6);
-    else if (flavour == BEAM_ACID && coinflip())
+    else if (flavour == BEAM_ACID)
         you.corrode(agent());
 
     if (flavour == BEAM_CRYSTALLISING && !one_chance_in(4))

@@ -1,4 +1,12 @@
 %%%%
+acid cauldron
+
+A vat of bubbling acid. Evoking the vat will shoot a ball of acid, dealing
+severe damage and inflicting corrosion to your target and anything adjacent to
+them.
+
+Evocations skill increases the damage dealt by the acid.
+%%%%
 acid dragon scales
 
 The scales of an acid dragon. Although it does not provide its wearer with as

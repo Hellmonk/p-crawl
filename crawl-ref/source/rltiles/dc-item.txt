@@ -1283,6 +1283,7 @@ misc_skeleton_key MISC_SKELETON_KEY
 misc_pandemonium_pizza MISC_PANDEMONIUM_PIZZA
 misc_jumper_cable MISC_JUMPER_CABLE
 misc_lamp_of_immolation MISC_LAMP_OF_IMMOLATION
+misc_acid_cauldron MISC_ACID_CAULDRON
 %sdir item/misc/runes
 generic MISC_RUNE_OF_ZOT
 rune_tartarus RUNE_TARTARUS
