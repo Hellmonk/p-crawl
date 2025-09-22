@@ -3159,6 +3159,9 @@ static tileidx_t _tileidx_misc(const item_def &item)
 
     case MISC_PURPLE_STATUETTE:
         return TILE_MISC_PURPLE_STATUETTE;
+
+    case MISC_MAGNET:
+        return TILE_MISC_MAGNET;
     }
 
     return TILE_ERROR;

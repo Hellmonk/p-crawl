@@ -331,6 +331,7 @@ enum misc_item_type
     MISC_MAGES_CHALICE,
     MISC_BUTTERFLY_JAR,
     MISC_PURPLE_STATUETTE,
+    MISC_MAGNET,
 
     NUM_MISCELLANY,
     MISC_DECK_UNKNOWN = NUM_MISCELLANY,
@@ -369,6 +370,7 @@ const vector<misc_item_type> misc_types =
     MISC_MAGES_CHALICE,
     MISC_BUTTERFLY_JAR,
     MISC_PURPLE_STATUETTE,
+    MISC_MAGNET,
 };
 
 enum missile_type

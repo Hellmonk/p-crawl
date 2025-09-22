@@ -1804,6 +1804,7 @@ namespace quiver
             case MISC_HARP_OF_HEALING:
             case MISC_MAGES_CHALICE:
             case MISC_PURPLE_STATUETTE:
+            case MISC_MAGNET:
                 return false;
             default:
                 return true;

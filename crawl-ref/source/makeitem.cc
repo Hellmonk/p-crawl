@@ -1774,6 +1774,7 @@ misc_item_type get_misc_item_type(int force_type, bool exclude)
             MISC_MAGES_CHALICE,
             MISC_BUTTERFLY_JAR,
             MISC_PURPLE_STATUETTE,
+            MISC_MAGNET,
         };
     }
     if (choices.size())

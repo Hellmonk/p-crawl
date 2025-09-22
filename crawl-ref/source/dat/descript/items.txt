@@ -947,6 +947,13 @@ improving their power by 3.
 
 Evocations skill will increase the duration of the effect.
 %%%%
+magnet
+
+A big magical magnet. When evoked, creatures you can see will be
+forcibly translocated closer to you for a brief duration.
+
+Evocations skill increases the duration of the effect.
+%%%%
 maxwell's memoranda
 
 A loosely bound collection of the infamous Maxwell's schemes, diagrams and plans.
