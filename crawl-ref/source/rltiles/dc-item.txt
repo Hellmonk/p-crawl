@@ -1274,6 +1274,7 @@ misc_quad MISC_QUAD_DAMAGE
 misc_tambourine MISC_TAMBOURINE
 misc_tambourine_inert MISC_TAMBOURINE_INERT
 misc_voucher MISC_SHOP_VOUCHER
+misc_dungeon_atlas MISC_DUNGEON_ATLAS
 %sdir item/misc/runes
 generic MISC_RUNE_OF_ZOT
 rune_tartarus RUNE_TARTARUS

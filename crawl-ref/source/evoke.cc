@@ -410,6 +410,10 @@ static bool _sack_of_spiders()
     return true;
 }
 
+static bool _dungeon_atlas()
+{
+    return magic_mapping(GDM, 100, false, false, false, false, false);
+}
 
 static bool _make_zig(item_def &zig)
 {
@@ -1250,6 +1254,17 @@ bool evoke_item(item_def& item, dist *preselect)
                 expend_xp_evoker(item.sub_type);
                 if (!evoker_charges(item.sub_type))
                     mpr("The lightning rod overheats!");
+            }
+            else
+                return false;
+            break;
+
+        case MISC_DUNGEON_ATLAS:
+            if (_dungeon_atlas())
+            {
+                expend_xp_evoker(item.sub_type);
+                if (!evoker_charges(item.sub_type))
+                    mpr("The pages of the atlas turn blank!");
             }
             else
                 return false;

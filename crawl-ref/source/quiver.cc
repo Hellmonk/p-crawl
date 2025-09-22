@@ -1800,6 +1800,7 @@ namespace quiver
             case MISC_QUAD_DAMAGE:
             case MISC_PHANTOM_MIRROR:
             case MISC_GRAVITAMBOURINE:
+            case MISC_DUNGEON_ATLAS:
                 return false;
             default:
                 return true;

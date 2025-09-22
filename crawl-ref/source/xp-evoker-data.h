@@ -43,4 +43,5 @@ static const unordered_map<misc_item_type, evoker_data, std::hash<int>> xp_evoke
         { "%s jingles faintly as it regains its power.",
           "%s shakes itself petulantly as it silently regains its power." },
     }},
+    { MISC_DUNGEON_ATLAS, { "atlas_debt", "atlas_plus", 250, 2 } },
 };

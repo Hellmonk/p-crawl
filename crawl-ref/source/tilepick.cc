@@ -3143,6 +3143,9 @@ static tileidx_t _tileidx_misc(const item_def &item)
 
     case MISC_SHOP_VOUCHER:
         return TILE_MISC_SHOP_VOUCHER;
+
+    case MISC_DUNGEON_ATLAS:
+        return TILE_MISC_DUNGEON_ATLAS;
     }
 
     return TILE_ERROR;

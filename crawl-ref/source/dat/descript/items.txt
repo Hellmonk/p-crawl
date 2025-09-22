@@ -610,6 +610,14 @@ earthy gem
 Deep within this gem, flowing leaves and swaying branches seem to lurk. And
 here, a bone picked clean - there, a predator's eyes, staring hungrily out..?
 %%%%
+dungeon atlas
+
+A magical book with seemingly infinite pages, containing maps of all the world's
+dungeons. Evoking it will fully map the current level.
+
+Evocations skill has no effect on the quality of the mapping, but will reduce
+the experience required to recharge the item as usual.
+%%%%
 eggplant
 
 A rotten eggplant which you can throw at the Crawl developers. It's a bug if

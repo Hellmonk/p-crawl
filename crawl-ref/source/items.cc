@@ -3981,6 +3981,7 @@ colour_t item_def::miscellany_colour() const
         case MISC_TIN_OF_TREMORSTONES:
             return BROWN;
         case MISC_CONDENSER_VANE:
+        case MISC_DUNGEON_ATLAS:
             return WHITE;
 #if TAG_MAJOR_VERSION == 34
         case MISC_XOMS_CHESSBOARD:
