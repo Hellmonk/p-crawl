@@ -2565,6 +2565,13 @@ static const mon_spellbook mspell_list[] =
       }
     },
 
+    // Archers.
+    {  MST_ARCHER,
+      {
+       { SPELL_SHOOT_ARROW, 150, MON_SPELL_NATURAL },
+      }
+    },
+
     // A monster that doesn't show up anywhere, for Arena testing.
     {  MST_TEST_SPAWNER,
       {

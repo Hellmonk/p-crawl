@@ -10,6 +10,7 @@ hd: 4
 hp_10x: 220
 ac: 3
 ev: 7
+spells: archer
 has_corpse: true
 shout: shout
 intelligence: human

@@ -2714,4 +2714,19 @@ _mon_hex_zap(ZAP_ILL_OMEN, BEAM_ILL_OMEN),
     true,
 },
 
+{
+    ZAP_SHOOT_ARROW,
+   "arrow",
+    nullptr,
+    nullptr,
+    new dicedef_calculator<1, 3, 3, 1>,
+    new tohit_calculator<18, 3, 24>,
+    BROWN,
+    false,
+    BEAM_MMISSILE,
+    DCHAR_FIRED_MISSILE,
+    true,
+    false,
+},
+
 };
