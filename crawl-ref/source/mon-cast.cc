@@ -1282,7 +1282,7 @@ static function<void(bolt&, const monster&, int)> _zap_setup(spell_type spell)
 
 static void _setup_healing_beam(bolt &beam, const monster &caster)
 {
-    beam.damage   = dice_def(2, caster.spell_hd(SPELL_MINOR_HEALING) / 2);
+    beam.damage   = dice_def(1, 2 + caster.spell_hd(SPELL_MINOR_HEALING) * 2);
     beam.flavour  = BEAM_HEALING;
 }
 
@@ -1338,7 +1338,7 @@ static void _cast_smiting(monster &caster, mon_spell_slot slot, bolt&)
     else
         simple_monster_message(*foe->as_monster(), " is smitten.");
 
-    foe->hurt(&caster, 7 + random2avg(11, 2), BEAM_MISSILE, KILLED_BY_BEAM,
+    foe->hurt(&caster, 5 + random2(6), BEAM_MISSILE, KILLED_BY_BEAM,
               "", "by divine providence");
     _whack(caster, *foe);
 }
