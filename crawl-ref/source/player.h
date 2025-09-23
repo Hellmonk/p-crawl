@@ -61,6 +61,7 @@
 #define TELEPORTED_KEY "teleported"
 #define WENT_INVIS_KEY "went_invis"
 #define SCRIED_KEY "scried"
+#define HARP_STARTED_KEY "harp_started"
 
 constexpr int ENKINDLE_CHARGE_COST = 40;
 #define ENKINDLE_CHARGES_KEY "enkindle_charges"
@@ -1099,6 +1100,7 @@ void display_char_status();
 void forget_map(bool rot = false);
 
 int get_exp_progress();
+bool recharge_random_evoker();
 unsigned int gain_exp(unsigned int exp_gained);
 void apply_exp();
 

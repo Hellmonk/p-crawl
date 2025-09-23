@@ -819,6 +819,7 @@ const char* jewellery_effect_name(int jeweltype, bool terse)
         case AMU_REGENERATION:      return "regeneration";
         case AMU_FAITH:             return "removed";
         case AMU_REFLECTION:        return "removeded";
+        case AMU_GUARDIAN_SPIRIT:   return "removedest";
         default: return "buggy jewellery";
         }
     }
@@ -1003,7 +1004,6 @@ static string misc_type_name(int type)
     case MISC_BUGGY_EBONY_CASKET:        return "removed ebony casket";
     case MISC_FAN_OF_GALES:              return "removed fan of gales";
     case MISC_LAMP_OF_FIRE:              return "removed lamp of fire";
-    case MISC_BUGGY_LANTERN_OF_SHADOWS:  return "removed lantern of shadows";
 #endif
     case MISC_HORN_OF_GERYON:            return "horn of Geryon";
     case MISC_LIGHTNING_ROD:             return "lightning rod";
@@ -1024,6 +1024,23 @@ static string misc_type_name(int type)
     case MISC_CONDENSER_VANE:            return "condenser vane";
     case MISC_GRAVITAMBOURINE:           return "Gell's gravitambourine";
     case MISC_SHOP_VOUCHER:              return "shop voucher";
+    case MISC_DUNGEON_ATLAS:             return "dungeon atlas";
+    case MISC_HARP_OF_HEALING:           return "harp of healing";
+    case MISC_MAGES_CHALICE:             return "mage's chalice";
+    case MISC_BUTTERFLY_JAR:             return "butterfly jar";
+    case MISC_PURPLE_STATUETTE:          return "purple statuette";
+    case MISC_MAGNET:                    return "magnet";
+    case MISC_LANTERN_OF_SHADOWS:        return "lantern of shadows";
+    case MISC_SKELETON_KEY:              return "skeleton key";
+    case MISC_PANDEMONIUM_PIZZA:         return "pandemonium pizza";
+    case MISC_JUMPER_CABLE:              return "jumper cable";
+    case MISC_LAMP_OF_IMMOLATION:        return "lamp of immolation";
+    case MISC_ACID_CAULDRON:             return "acid cauldron";
+    case MISC_AMULET_OF_RESISTANCE:      return "amulet of resistance";
+    case MISC_STAFF_OF_LIGHT:            return "staff of light";
+    case MISC_BEGINNER_GUIDE:            return "beginner guide";
+    case MISC_HASTE_RUNESTONE:           return "runestone of haste";
+    case MISC_MEAT_BONE:                 return "meat bone";
 
     default:
         return "buggy miscellaneous item";
@@ -3640,11 +3657,8 @@ void init_item_name_cache()
                 lowercase(name);
                 cglyph_t g = get_item_glyph(item);
 
-                if (base_type == OBJ_JEWELLERY && sub_type >= NUM_RINGS
-                    && sub_type < AMU_FIRST_AMULET)
-                {
+                if (base_type == OBJ_JEWELLERY)
                     continue;
-                }
                 else if (name.find("buggy") != string::npos)
                 {
                     mprf(MSGCH_ERROR, "Bad name for item name cache: %s",

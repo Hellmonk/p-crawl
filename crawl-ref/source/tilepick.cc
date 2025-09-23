@@ -3101,13 +3101,41 @@ static tileidx_t _tileidx_misc(const item_def &item)
             return evoker_charges(item.sub_type) ? TILE_MISC_CONDENSER_VANE
                                                  : TILE_MISC_CONDENSER_VANE_INERT;
 
-#if TAG_MAJOR_VERSION == 34
-    case MISC_BUGGY_LANTERN_OF_SHADOWS:
+    case MISC_LANTERN_OF_SHADOWS:
         return TILE_MISC_LANTERN_OF_SHADOWS;
-#endif
+
+     case MISC_SKELETON_KEY:
+        return TILE_MISC_SKELETON_KEY;
 
     case MISC_HORN_OF_GERYON:
         return TILE_MISC_HORN_OF_GERYON;
+
+    case MISC_PANDEMONIUM_PIZZA:
+        return TILE_MISC_PANDEMONIUM_PIZZA;
+
+    case MISC_JUMPER_CABLE:
+        return TILE_MISC_JUMPER_CABLE;
+
+    case MISC_LAMP_OF_IMMOLATION:
+        return TILE_MISC_LAMP_OF_IMMOLATION;
+
+    case MISC_ACID_CAULDRON:
+        return TILE_MISC_ACID_CAULDRON;
+
+    case MISC_STAFF_OF_LIGHT:
+        return TILE_MISC_STAFF_OF_LIGHT;
+
+    case MISC_AMULET_OF_RESISTANCE:
+        return TILE_MISC_AMULET_OF_RESISTANCE;
+
+    case MISC_BEGINNER_GUIDE:
+        return TILE_MISC_BEGINNER_GUIDE;
+
+    case MISC_HASTE_RUNESTONE:
+        return TILE_MISC_HASTE_RUNESTONE;
+
+    case MISC_MEAT_BONE:
+        return TILE_MISC_MEAT_BONE;
 
     case MISC_BOX_OF_BEASTS:
         return evoker_charges(item.sub_type) ? TILE_MISC_BOX_OF_BEASTS
@@ -3143,6 +3171,25 @@ static tileidx_t _tileidx_misc(const item_def &item)
 
     case MISC_SHOP_VOUCHER:
         return TILE_MISC_SHOP_VOUCHER;
+
+    case MISC_DUNGEON_ATLAS:
+        return TILE_MISC_DUNGEON_ATLAS;
+
+    case MISC_HARP_OF_HEALING:
+            return evoker_charges(item.sub_type) ? TILE_MISC_HARP_OF_HEALING
+                                                 : TILE_MISC_HARP_OF_HEALING_INERT;
+
+    case MISC_MAGES_CHALICE:
+        return TILE_MISC_MAGES_CHALICE;
+
+    case MISC_BUTTERFLY_JAR:
+        return TILE_MISC_BUTTERFLY_JAR;
+
+    case MISC_PURPLE_STATUETTE:
+        return TILE_MISC_PURPLE_STATUETTE;
+
+    case MISC_MAGNET:
+        return TILE_MISC_MAGNET;
     }
 
     return TILE_ERROR;

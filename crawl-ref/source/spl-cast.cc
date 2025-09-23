@@ -459,12 +459,6 @@ static int _spell_enhancement(spell_type spell)
     enhanced += you.duration[DUR_BRILLIANCE] > 0
                 || you.unrand_equipped(UNRAND_FOLLY);
 
-    // These are used in an exponential way, so we'll limit them a bit. -- bwr
-    if (enhanced > 3)
-        enhanced = 3;
-    else if (enhanced < -3)
-        enhanced = -3;
-
     return enhanced;
 }
 

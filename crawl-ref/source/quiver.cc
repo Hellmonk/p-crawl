@@ -1800,6 +1800,17 @@ namespace quiver
             case MISC_QUAD_DAMAGE:
             case MISC_PHANTOM_MIRROR:
             case MISC_GRAVITAMBOURINE:
+            case MISC_DUNGEON_ATLAS:
+            case MISC_HARP_OF_HEALING:
+            case MISC_MAGES_CHALICE:
+            case MISC_PURPLE_STATUETTE:
+            case MISC_MAGNET:
+            case MISC_LANTERN_OF_SHADOWS:
+            case MISC_SKELETON_KEY:
+            case MISC_PANDEMONIUM_PIZZA:
+            case MISC_JUMPER_CABLE:
+            case MISC_LAMP_OF_IMMOLATION:
+            case MISC_AMULET_OF_RESISTANCE:
                 return false;
             default:
                 return true;

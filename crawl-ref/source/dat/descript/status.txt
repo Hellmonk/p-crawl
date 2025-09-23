@@ -40,7 +40,7 @@ as halving their magic cost (rounding up).
 %%%%
 Might status
 
-You are unnaturally mighty, doing significantly more damage in physical combat.
+You are unnaturally mighty, doing double damage in physical combat.
 %%%%
 Regen status
 
@@ -284,7 +284,7 @@ reduced, and you will soon be completely petrified (gaining the Stone status).
 %%%%
 Resist status
 
-You are more resistant to fire, cold, electricity, poison and acid.
+You are more resistant to fire, cold, and electricity.
 %%%%
 Slime status
 

@@ -251,9 +251,9 @@ public:
         return true;
     }
 
-    bool effect(bool=true, int=0, bool is_potion = true) const override
+    bool effect(bool=true, int pow = 0, bool is_potion = true) const override
     {
-        const int dur = _scale_pot_duration(random_range(26, 40), is_potion);
+        const int dur = 8 + pow + random2(1 + pow * 2);
         return haste_player(dur);
     }
 
@@ -284,7 +284,7 @@ public:
 
         mprf(MSGCH_DURATION, "You feel %s all of a sudden.",
              were_mighty ? "mightier" : "very mighty");
-        const int dur = _scale_pot_duration(35 + random2(pow), is_potion);
+        const int dur = 8 + pow + random2(1 + pow * 2);
         you.increase_duration(DUR_MIGHT, dur);
         return true;
     }
@@ -326,7 +326,7 @@ public:
 
         mprf(MSGCH_DURATION, "You feel %sclever all of a sudden.",
              were_brilliant ? "more " : "");
-        const int dur = _scale_pot_duration(35 + random2(pow), is_potion);
+        const int dur = 8 + pow + random2(1 + 2 * pow);
         you.increase_duration(DUR_BRILLIANCE, dur);
         return true;
     }
@@ -354,7 +354,7 @@ public:
         mprf(MSGCH_DURATION, "You feel %sattractive to monsters.",
              was_attractive ? "more " : "");
 
-        const int dur = _scale_pot_duration((20 + random2(pow)/2), is_potion);
+        const int dur = 10 + random2(pow * 5);
         you.increase_duration(DUR_ATTRACTIVE, dur);
         return true;
     }
@@ -706,7 +706,7 @@ public:
     bool effect(bool=true, int pow = 40, bool is_potion = true) const override
     {
         mprf(MSGCH_DURATION, "You feel protected.");
-        const int add = _scale_pot_duration(35 + random2(pow), is_potion);;
+        const int add = 15 + pow + random2(pow * 7);
         you.increase_duration(DUR_RESISTANCE, add);
         return true;
     }

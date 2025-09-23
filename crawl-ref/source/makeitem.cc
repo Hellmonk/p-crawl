@@ -1768,7 +1768,23 @@ misc_item_type get_misc_item_type(int force_type, bool exclude)
             MISC_SACK_OF_SPIDERS,
             MISC_PHANTOM_MIRROR,
             MISC_CONDENSER_VANE,
+            MISC_DUNGEON_ATLAS,
             MISC_TIN_OF_TREMORSTONES,
+            MISC_HARP_OF_HEALING,
+            MISC_MAGES_CHALICE,
+            MISC_BUTTERFLY_JAR,
+            MISC_PURPLE_STATUETTE,
+            MISC_MAGNET,
+            MISC_LANTERN_OF_SHADOWS,
+            MISC_PANDEMONIUM_PIZZA,
+            MISC_JUMPER_CABLE,
+            MISC_LAMP_OF_IMMOLATION,
+            MISC_ACID_CAULDRON,
+            MISC_AMULET_OF_RESISTANCE,
+            MISC_STAFF_OF_LIGHT,
+            MISC_BEGINNER_GUIDE,
+            MISC_HASTE_RUNESTONE,
+            MISC_MEAT_BONE,
         };
     }
     if (choices.size())

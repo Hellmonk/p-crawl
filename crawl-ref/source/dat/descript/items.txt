@@ -1,4 +1,12 @@
 %%%%
+acid cauldron
+
+A vat of bubbling acid. Evoking the vat will shoot a ball of acid, dealing
+severe damage and inflicting corrosion to your target and anything adjacent to
+them.
+
+Evocations skill increases the damage dealt by the acid.
+%%%%
 acid dragon scales
 
 The scales of an acid dragon. Although it does not provide its wearer with as
@@ -40,6 +48,13 @@ amulet of regeneration
 An amulet that increases the wearer's rate of health regeneration. In order to
 function, it must first attune itself to the wearer's body at full health.
 %%%%
+amulet of resistance
+
+A golden amulet that can be evoked to provide temporary resistance to fire,
+cold, and electricity.
+
+Evocations skill increases the duration of the effect.
+%%%%
 amulet of the acrobat
 
 An amulet that allows the user to tumble and roll to evade the blows of their
@@ -80,6 +95,14 @@ Armour for the scaly midsections of nagas and armataurs.
 battleaxe
 
 A large war axe with a formidable double-sided head.
+%%%%
+beginner guide
+
+A guidebook for learning the basics. Evoking it will increase a random untrained
+skill from level 0 to level 1.
+
+Evocations skill has no effect on your ability to learn from this item, but will
+reduce the experience required to recharge it as usual.
 %%%%
 blade talisman
 
@@ -488,6 +511,13 @@ buckler
 
 A small piece of wood and metal, to be strapped on one arm for defence.
 %%%%
+butterfly jar
+
+A jar full of butterflies. Evoking it will knock back nearby creatures and
+summon the butterflies.
+
+Evocations skill will increase the number of butterflies summoned.
+%%%%
 chain mail
 
 A suit of armour made entirely out of tiny metal rings.
@@ -609,6 +639,14 @@ earthy gem
 
 Deep within this gem, flowing leaves and swaying branches seem to lurk. And
 here, a bone picked clean - there, a predator's eyes, staring hungrily out..?
+%%%%
+dungeon atlas
+
+A magical book with seemingly infinite pages, containing maps of all the world's
+dungeons. Evoking it will fully map the current level.
+
+Evocations skill has no effect on the quality of the mapping, but will reduce
+the experience required to recharge the item as usual.
 %%%%
 eggplant
 
@@ -788,6 +826,14 @@ handbook of applied construction
 A practical introduction to Forgecraft, covering basic principles and their
 common applications.
 %%%%
+harp of healing
+
+A mystical instrument infused with restorative power. Evoking it allows the
+wielder to start playing the harp, healing them over time so long as they focus
+on playing and don't take any action besides waiting.
+
+Evocations skill increases the maximum duration of the effect.
+%%%%
 hat
 
 A cloth hat.
@@ -857,6 +903,13 @@ range.
     end
 }}
 %%%%
+jumper cable
+
+Don't ask where the clamps go. Evoking this item will randomly charge one of
+your other evocable items and deal heavy electricity damage to you.
+
+Evocations skill will decrease the damage you take from activating this item.
+%%%%
 kite shield
 
 A piece of wood and metal, to be strapped on one arm for defence.
@@ -865,6 +918,23 @@ lajatang
 
 A very rare and extremely effective weapon, featuring a pole with half-moon
 blades at both ends.
+%%%%
+lamp of immolation
+
+An everburning lamp. Evoking it will cause every creature you can see to be
+filled with inner flame; affected creatures will explode violently when killed,
+dealing 2d20 fire damage and placing flame clouds in a 1 tile radius around
+them. Try to avoid standing in the blast zone.
+
+Evocations skill does not affect the explosions or the duration of the effect,
+but will reduce the experience required for the item to recharge as usual.
+%%%%
+lantern of shadows
+
+A strange lantern that absorbs light, rather than producing it. Evoking the
+lantern will reduce your vision radius to 1 for a short duration.
+
+Evocations skill increases the duration of the effect.
 %%%%
 large rock
 
@@ -916,6 +986,21 @@ manual
 
 A valuable book which allows one to learn a certain skill faster.
 %%%%
+mage's chalice
+
+A goblet overflowing with the liquid thoughts of a great wizard. Evoking it
+will make you brilliant for a short time, halving the MP cost of all spells and
+improving their power by 3.
+
+Evocations skill will increase the duration of the effect.
+%%%%
+magnet
+
+A big magical magnet. When evoked, creatures you can see will be
+forcibly translocated closer to you for a brief duration.
+
+Evocations skill increases the duration of the effect.
+%%%%
 maxwell's memoranda
 
 A loosely bound collection of the infamous Maxwell's schemes, diagrams and plans.
@@ -929,6 +1014,13 @@ Transforms the user's midsection into a giant mouth, gnashing and ready to devou
 foes. The mouth may devour slain creatures, healing the user to an extent increased
 by the user's Shapeshifting skill and the power of the creature eaten. Skill also
 increases the damage done by the maw.
+%%%%
+meat bone
+
+A hunk of magical, undecaying meat. Evoking the meat will make you mighty for a
+brief duration, doubling your melee damage.
+
+Evocations skill increases the duration of the effect.
 %%%%
 medusa talisman
 
@@ -1015,6 +1107,15 @@ partisan
 
 A long polearm with sharp protrusions on either side of the spearhead.
 %%%%
+pandemonium pizza
+
+A legendary  pizza fresh from the infinite demonic realm of pandemonium.
+Eatvoking it will heal you for a random amount of your missing hp and randomly
+buff or debuff you for a short time.
+
+Evocations skill does not improve the taste of the pizza, but will reduce
+the experience required to recharge the item as usual.
+%%%%
 pearl dragon scales
 
 The nacreous scales of a pearl dragon. It grants its wearer resistance to
@@ -1022,10 +1123,11 @@ negative energies.
 %%%%
 phantom mirror
 
-A hand mirror which can create a reflection of a nearby creature, clouding
-in the process. The reflection's duration increases with Evocations skill and
-decreases with the willpower of the target. It is, invariably, slightly weaker
-than the creature it mirrors.
+A hand mirror which can create a reflection of any nearby creature. The
+reflection will appear beside the targeted creature and fight for you as a
+temporarily summoned ally until it disappears or is killed.
+
+The reflection's duration increases with Evocations skill.
 %%%%
 phial of floods
 
@@ -1145,6 +1247,16 @@ shapeshifter can stabilise it into a useable - if unpredictable - form.
 
 (If your Shapeshifting skill is at least 6, you can evoke this to transform it
 into a random one of: Rimehorn, Scarab, Medusa, or Maw talismans.)
+%%%%
+purple statuette
+
+A small sculpture of a misshapen humanoid figure. Evoking it will mutate you.
+
+
+Evocations skill will increase the chance that the resulting mutation
+is beneficial.
+
+
 %%%%
 quad damage
 
@@ -1359,6 +1471,13 @@ spellcasting.
 rune of zot
 
 A charm which allows entry into the Realm of Zot.
+%%%%
+runestone of haste
+
+A powerful magical charm. Evoking it will haste you for a brief time, granting
+extra actions.
+
+Evocations skill increases the duration of the effect.
 %%%%
 sack of spiders
 
@@ -1590,6 +1709,14 @@ Swirls of dark smoke seem to lurk in the depths of this gem. Countless dark
 deeds were done in the Dungeon even before Zot seized and remade it, and their
 dreadful residue now taints every hint of beauty trapped within its confines.
 %%%%
+skeleton key
+
+A bone key with remote-unlock functionality. Evoking it will unlock the stairs
+on your current level.
+
+Evocations skill has no effect on the key's function, but will reduce
+the experience required to recharge the item as usual.
+%%%%
 spear
 
 A hunting weapon consisting of a wooden shaft with a pointed metal head
@@ -1646,6 +1773,15 @@ staff of fire
 A staff that increases the power of fire spells cast by its wielder, and
 protects them from the effects of fire. If the wielder is skilled in Evocations
 and Fire Magic, they can burn those struck by it.
+%%%%
+staff of light
+
+A mystical staff. Evoking it releases a powerful beam of light that deals
+damage, blinds, and backlights everything it hits, preventing afflicted foes
+from dodging subsequent attacks (though the beam itself can be dodged) and
+reducing their ability to perceive you.
+
+Evocations skill increases the damage dealt by the beam.
 %%%%
 starry gem
 
@@ -1721,14 +1857,11 @@ A large piece of wood and metal, to be strapped on one arm for defence.
 %%%%
 tin of tremorstones
 
-A set of dormant, magnetic earth elementals in the form of tiny, very heavy
-pebbles. When released, the elementals are drawn magnetically to the center of
-nearby monsters, where they literally explode with rage at their rest being
-disturbed. Tremorstones usually land slightly off-target, and the user is
-always at risk of being hit. However, armour is extremely effective at
-repelling the lightweight fragments of rock from a tremorstone's explosion, so
-a well-armoured wielder has little to fear. Evocations skill increases the
-number of explosions.
+A set of tiny explosive rocks. Tremorstones usually land slightly off-target,
+and the user is always at risk of being hit. However, AC is applied thrice to
+reduce the explosions' damage, so a well-armoured wielder has little to fear.
+
+Evocations skill increases the number of explosions.
 %%%%
 treatise on traps
 

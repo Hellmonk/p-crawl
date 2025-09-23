@@ -1528,7 +1528,7 @@ int mons_adjust_flavoured(monster* mons, bolt &pbolt, int hurted,
             if (original > 0 && doFlavouredEffects)
                 simple_monster_message(*mons, " completely resists.");
         }
-        else if (doFlavouredEffects && !one_chance_in(3))
+        else if (doFlavouredEffects)
             mons->corrode(pbolt.agent());
         break;
     }
@@ -4322,8 +4322,12 @@ void bolt::affect_player()
 
     }
 
-    if (flavour == BEAM_LIGHT && you.res_blind() <= 1)
-        blind_player(random_range(7, 12), WHITE);
+    if (flavour == BEAM_LIGHT)
+    {
+        if (you.res_blind() <= 1)
+            blind_player(random_range(7, 12), WHITE);
+        you.backlight();
+    }
 
     if (flavour == BEAM_MIASMA && final_dam > 0)
         was_affected = miasma_player(agent(), name);
@@ -4424,9 +4428,9 @@ void bolt::affect_player()
     internal_ouch(final_dam);
 
     // Acid. (Apply this afterward, to avoid bad message ordering.)
-    if (origin_spell == SPELL_CORROSIVE_BOLT && !one_chance_in(4))
+    if (origin_spell == SPELL_CORROSIVE_BOLT)
         you.corrode(agent(), "the acid", 6);
-    else if (flavour == BEAM_ACID && coinflip())
+    else if (flavour == BEAM_ACID)
         you.corrode(agent());
 
     if (flavour == BEAM_CRYSTALLISING && !one_chance_in(4))
@@ -5251,15 +5255,16 @@ void bolt::monster_post_hit(monster* mon, int dmg)
         mon->add_ench(mon_enchant(ENCH_PARALYSIS, 1, agent(), BASELINE_DELAY));
     }
 
-    if (flavour == BEAM_LIGHT
-        && mon->res_blind() <= 1
-        && !mon->has_ench(ENCH_BLIND))
+    if (flavour == BEAM_LIGHT)
     {
-        const int dur = max(1, div_rand_round(54, mon->get_hit_dice())) * BASELINE_DELAY;
-        auto ench = mon_enchant(ENCH_BLIND, 1, agent(),
-                                random_range(dur, dur * 2));
-        if (mon->add_ench(ench))
-            simple_monster_message(*mon, " is blinded.");
+        if (mon->res_blind() <= 1 && !mon->has_ench(ENCH_BLIND))
+        {
+            auto ench = mon_enchant(ENCH_BLIND, 1, agent(),
+                                10 * random_range(7, 12));
+            if (mon->add_ench(ench))
+                simple_monster_message(*mon, " is blinded.");
+        }
+        backlight_monster(mon, agent());
     }
 
     if (origin_spell == SPELL_PRIMAL_WAVE && agent() && agent()->is_player())
@@ -6517,13 +6522,8 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
         if (!mon->has_ench(ENCH_INNER_FLAME)
             && mon->add_ench(mon_enchant(ENCH_INNER_FLAME, 0, agent())))
         {
-            if (simple_monster_message(*mon,
-                                       (mon->body_size(PSIZE_BODY) > SIZE_LARGE)
-                                        ? " is filled with an intense inner flame!"
-                                        : " is filled with an inner flame."))
-            {
+            if (simple_monster_message(*mon, " is filled with an inner flame."))
                 obvious_effect = true;
-            }
         }
         return MON_AFFECTED;
 

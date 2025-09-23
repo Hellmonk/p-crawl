@@ -2405,7 +2405,7 @@ void melee_attack::player_warn_miss()
 // armed attacks.
 int melee_attack::player_apply_misc_modifiers(int damage)
 {
-    if (you.duration[DUR_MIGHT] || you.duration[DUR_BERSERK])
+    if (you.duration[DUR_BERSERK])
         damage += 1 + random2(10);
 
     damage += flat_dmg_bonus;
@@ -2432,7 +2432,10 @@ int melee_attack::player_apply_final_multipliers(int damage, bool aux)
         damage += div_rand_round(damage * charge_pow, 150);
 
     if (you.duration[DUR_WEAK])
-        damage = div_rand_round(damage * 3, 4);
+        damage = div_rand_round(damage, 2);
+
+    if (you.duration[DUR_MIGHT])
+        damage = damage * 2;
 
     apply_rev_penalty(damage);
 
@@ -4600,7 +4603,7 @@ int melee_attack::apply_damage_modifiers(int damage)
 
     // Berserk/mighted monsters get bonus damage.
     if (as_mon->has_ench(ENCH_MIGHT) || as_mon->berserk_or_frenzied())
-        damage = damage * 3 / 2;
+        damage = damage * 2;
 
     if (as_mon->has_ench(ENCH_TEMPERED))
         damage = damage * 5 / 4;
@@ -4609,7 +4612,7 @@ int melee_attack::apply_damage_modifiers(int damage)
         damage *= 2; // !
 
     if (as_mon->has_ench(ENCH_WEAK))
-        damage = damage * 2 / 3;
+        damage = div_rand_round(damage, 2);
 
     if (as_mon->has_ench(ENCH_TOUCH_OF_BEOGH))
         damage = damage * 4 / 3;

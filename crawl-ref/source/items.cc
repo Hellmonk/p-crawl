@@ -3950,16 +3950,22 @@ colour_t item_def::miscellany_colour() const
             return RED;
 #endif
         case MISC_PHANTOM_MIRROR:
+        case MISC_PANDEMONIUM_PIZZA:
+        case MISC_LAMP_OF_IMMOLATION:
+        case MISC_MEAT_BONE:
             return RED;
 #if TAG_MAJOR_VERSION == 34
         case MISC_STONE_OF_TREMORS:
             return BROWN;
 #endif
         case MISC_LIGHTNING_ROD:
+        case MISC_LANTERN_OF_SHADOWS:
+        case MISC_BEGINNER_GUIDE:
             return LIGHTGREY;
         case MISC_PHIAL_OF_FLOODS:
             return LIGHTBLUE;
         case MISC_BOX_OF_BEASTS:
+        case MISC_ACID_CAULDRON:
             return LIGHTGREEN; // ugh, but we're out of other options
 #if TAG_MAJOR_VERSION == 34
         case MISC_CRYSTAL_BALL_OF_ENERGY:
@@ -3974,14 +3980,27 @@ colour_t item_def::miscellany_colour() const
 #if TAG_MAJOR_VERSION == 34
         case MISC_LAMP_OF_FIRE:
             return YELLOW;
-        case MISC_BUGGY_LANTERN_OF_SHADOWS:
         case MISC_BUGGY_EBONY_CASKET:
             return DARKGREY;
 #endif
         case MISC_TIN_OF_TREMORSTONES:
             return BROWN;
         case MISC_CONDENSER_VANE:
+        case MISC_DUNGEON_ATLAS:
+        case MISC_HARP_OF_HEALING:
+        case MISC_BUTTERFLY_JAR:
+        case MISC_MAGNET:
+        case MISC_SKELETON_KEY:
+        case MISC_JUMPER_CABLE:
+        case MISC_STAFF_OF_LIGHT:
             return WHITE;
+        case MISC_MAGES_CHALICE:
+        case MISC_HASTE_RUNESTONE:
+            return LIGHTCYAN;
+        case MISC_AMULET_OF_RESISTANCE:
+            return YELLOW;
+        case MISC_PURPLE_STATUETTE:
+            return MAGENTA;
 #if TAG_MAJOR_VERSION == 34
         case MISC_XOMS_CHESSBOARD:
             return ETC_RANDOM;
