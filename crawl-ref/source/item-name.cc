@@ -3658,9 +3658,7 @@ void init_item_name_cache()
                 cglyph_t g = get_item_glyph(item);
 
                 if (base_type == OBJ_JEWELLERY)
-                {
                     continue;
-                }
                 else if (name.find("buggy") != string::npos)
                 {
                     mprf(MSGCH_ERROR, "Bad name for item name cache: %s",
