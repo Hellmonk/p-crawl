@@ -1903,56 +1903,7 @@ static int _mons_power_hd_factor(spell_type spell)
     if (logic && logic->power_hd_factor)
         return logic->power_hd_factor;
 
-    switch (spell)
-    {
-        case SPELL_CAUSE_FEAR:
-            return 18;
-
-        case SPELL_OBLIVION_HOWL:
-        case SPELL_MESMERISE:
-            return 10;
-
-        case SPELL_SIREN_SONG:
-        case SPELL_AVATAR_SONG:
-            return 9;
-
-        case SPELL_MASS_CONFUSION:
-        case SPELL_CONFUSION_GAZE:
-            return 8;
-
-        case SPELL_CALL_DOWN_LIGHTNING:
-            return 16;
-
-        case SPELL_IOOD:
-        case SPELL_FREEZE:
-        case SPELL_FULMINANT_PRISM:
-        case SPELL_IGNITE_POISON:
-        case SPELL_ARCJOLT:
-        case SPELL_STICKY_FLAME:
-            return 8;
-
-        case SPELL_MONSTROUS_MENAGERIE:
-        case SPELL_BATTLESPHERE:
-        case SPELL_IRRADIATE:
-        case SPELL_FOXFIRE:
-        case SPELL_MANIFOLD_ASSAULT:
-        case SPELL_SHADOW_PRISM:
-            return 6;
-
-        case SPELL_SUMMON_DRAGON:
-        case SPELL_SUMMON_HYDRA:
-        case SPELL_MARTYRS_KNELL:
-        case SPELL_HELLFIRE_MORTAR:
-            return 5;
-
-        case SPELL_CHAIN_OF_CHAOS:
-        case SPELL_STICKS_TO_SNAKES:
-        case SPELL_PHALANX_BEETLE:
-            return 4;
-
-        default:
-            return 12;
-    }
+    return 1;
 }
 
 /**
@@ -1992,8 +1943,6 @@ bool mons_spell_is_spell(spell_type spell)
 int mons_power_for_hd(spell_type spell, int hd)
 {
     const int power = hd * _mons_power_hd_factor(spell);
-    if (spell == SPELL_PAIN)
-        return max(50, power);
     return power;
 }
 
