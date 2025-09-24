@@ -429,6 +429,7 @@ bool sticky_flame_monster(monster* mons, const actor* who, int dur,
                     bool verbose = true);
 bool curare_actor(actor* source, actor* target, string name,
                   string source_name, int bonus_poison = 0);
+bool toxic_dart_actor(actor* target, string source_name);
 int silver_damages_victim(actor* victim, int damage, string &dmg_msg);
 void fire_tracer(const monster* mons, targeting_tracer& tracer,
                  bolt &pbolt, bool explode_only = false,

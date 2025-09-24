@@ -647,5 +647,6 @@ enum spell_type : int
     SPELL_PLANAR_OVERLAY,   // Dummy spell for description purposes
     SPELL_ACID_BALL,
     SPELL_SHOOT_ARROW,
+    SPELL_TOXIC_DART,
     NUM_SPELLS
 };

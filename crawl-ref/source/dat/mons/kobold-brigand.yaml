@@ -10,6 +10,7 @@ hd: 5
 hp_10x: 275
 ac: 3
 ev: 12
+spells: assassin
 has_corpse: true
 shout: shout
 intelligence: human

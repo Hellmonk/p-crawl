@@ -194,5 +194,6 @@ enum zap_type
     ZAP_CONTAM_EXPLOSION,
     ZAP_ACID_BALL,
     ZAP_SHOOT_ARROW,
+    ZAP_TOXIC_DART,
     NUM_ZAPS
 };

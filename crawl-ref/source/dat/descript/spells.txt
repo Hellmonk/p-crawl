@@ -2238,6 +2238,11 @@ Thunderbolt spell
 
 Creates an arc of electricity.
 %%%%
+Toxic Dart spell
+
+Fires a projectile tipped with toxins, which will either slow, confuse, or
+paralyse any living or demonic being it hits.
+%%%%
 Trog's Hand spell
 
 <Trog's Hand ability>
