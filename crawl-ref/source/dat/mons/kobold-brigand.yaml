@@ -6,10 +6,10 @@ species: kobold
 will: 20
 attacks:
  - {type: hit, damage: 7}
-hd: 5
-hp_10x: 275
+hd: 3
+hp_10x: 170
 ac: 3
-ev: 12
+ev: 20
 spells: assassin
 has_corpse: true
 shout: shout

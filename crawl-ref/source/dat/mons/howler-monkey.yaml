@@ -6,14 +6,13 @@ will: 10
 attacks:
  - {type: hit, damage: 8}
 hd: 3
-hp_10x: 185
-ac: 1
-ev: 11
+hp_10x: 110
+ac: 2
+ev: 10
 spells: howler_monkey
 has_corpse: true
 shout: howl
 intelligence: animal
-speed: 12
 uses: open_doors
 size: small
 shape: humanoid_tailed

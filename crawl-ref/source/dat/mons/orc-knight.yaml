@@ -5,11 +5,11 @@ exp: 617
 species: orc
 will: 40
 attacks:
- - {type: hit, damage: 20}
-hd: 9
-hp_10x: 675
-ac: 2
-ev: 13
+ - {type: hit, damage: 15}
+hd: 5
+hp_10x: 270
+ac: 5
+ev: 10
 spells: orc_knight
 has_corpse: true
 shout: shout

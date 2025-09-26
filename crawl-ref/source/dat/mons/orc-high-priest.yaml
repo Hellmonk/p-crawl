@@ -5,11 +5,11 @@ exp: 795
 species: orc
 will: 60
 attacks:
- - {type: hit, damage: 7}
-hd: 11
-hp_10x: 550
+ - {type: hit, damage: 5}
+hd: 4
+hp_10x: 180
 ac: 1
-ev: 12
+ev: 10
 spells: orc_high_priest
 has_corpse: true
 shout: shout

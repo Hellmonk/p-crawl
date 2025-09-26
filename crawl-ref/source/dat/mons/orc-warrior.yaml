@@ -5,11 +5,11 @@ exp: 133
 species: orc
 will: 20
 attacks:
- - {type: hit, damage: 12}
+ - {type: hit, damage: 10}
 hd: 4
-hp_10x: 280
-ac: 0
-ev: 13
+hp_10x: 180
+ac: 3
+ev: 10
 has_corpse: true
 shout: shout
 intelligence: human

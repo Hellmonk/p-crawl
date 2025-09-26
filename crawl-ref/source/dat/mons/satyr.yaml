@@ -5,11 +5,11 @@ exp: 821
 genus: faun
 will: 40
 attacks:
- - {type: hit, damage: 25}
-hd: 12
-hp_10x: 660
+ - {type: hit, damage: 14}
+hd: 6
+hp_10x: 600
 ac: 2
-ev: 12
+ev: 20
 spells: satyr
 has_corpse: true
 shout: shout

@@ -5,10 +5,10 @@ exp: 1144
 species: orc
 will: 60
 attacks:
- - {type: hit, damage: 27}
-hd: 15
-hp_10x: 1125
-ac: 3
+ - {type: hit, damage: 25}
+hd: 6
+hp_10x: 560
+ac: 7
 ev: 10
 spells: battlecry
 has_corpse: true

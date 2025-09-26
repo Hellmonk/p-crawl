@@ -4,7 +4,7 @@ flags: [speaks, warm_blood]
 exp: 3
 will: 0
 attacks:
- - {type: hit, damage: 2}
+ - {type: hit, damage: 5}
 hd: 1
 hp_10x: 70
 ac: 0
