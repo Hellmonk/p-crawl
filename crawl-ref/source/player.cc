@@ -4958,7 +4958,7 @@ void handle_player_drowning(int delay)
     {
         you.duration[DUR_WATER_HOLD] += delay;
         int dam =
-            div_rand_round((28 + stepdown((float)you.duration[DUR_WATER_HOLD], 28.0))
+            div_rand_round((10 + you.duration[DUR_WATER_HOLD]) * delay
                             * delay,
                             BASELINE_DELAY * 10);
         ouch(dam, KILLED_BY_WATER, you.props[WATER_HOLDER_KEY].get_int());
@@ -6914,23 +6914,8 @@ bool player::corrode(const actor* /*source*/, const char* corrosion_msg, int amo
  */
 void player::splash_with_acid(actor* evildoer)
 {
-    const int dam = roll_dice(4, 3);
-    const int post_res_dam = resist_adjust_damage(&you, BEAM_ACID, dam);
-
-    mprf("You are splashed with acid%s%s",
-         post_res_dam > 0 ? "" : " but take no damage",
-         attack_strength_punctuation(post_res_dam).c_str());
-    if (post_res_dam > 0)
-    {
-        if (post_res_dam < dam)
-            canned_msg(MSG_YOU_RESIST);
-
-        ouch(post_res_dam, KILLED_BY_ACID,
-             evildoer ? evildoer->mid : MID_NOBODY);
-    }
-
-    if (x_chance_in_y(35, 100))
         corrode(evildoer);
+        mpr("You are splashed with acid.");
 }
 
 bool player::drain(const actor */*who*/, bool quiet, int pow)

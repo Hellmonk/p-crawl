@@ -1249,6 +1249,10 @@ Causes all allied monsters nearby to rapidly regenerate over a short period of
 time. This regeneration is proportional to each of those creature's maximum
 health.
 %%%%
+Mass Repulsion spell
+
+Causes all of the caster's nearby allies to begin repelling missiles.
+%%%%
 Maxwell's Capacitive Coupling spell
 
 Gradually builds up electric charge in the caster, so long as they maintain

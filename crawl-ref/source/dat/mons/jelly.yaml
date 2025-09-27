@@ -4,7 +4,7 @@ flags: [eat_doors, unblindable, amorphous, no_skeleton]
 exp: 42
 will: 10
 attacks:
- - {type: hit, flavour: acid, damage: 2}
+ - {type: hit, flavour: corrode, damage: 2}
 hd: 3
 hp_10x: 100
 ac: 0

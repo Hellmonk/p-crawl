@@ -1,17 +1,17 @@
 name: "fire crab"
 glyph: {char: "t", colour: lightred}
 flags: [no_skeleton]
-resists: {poison: -1, fire: 3}
+resists: {fire: 3}
 exp: 764
 genus: crab
 will: 40
 attacks:
  - {type: bite, flavour: fire, damage: 15}
  - {type: claw, flavour: fire, damage: 15}
-hd: 8
+hd: 4
 hp_10x: 520
 ac: 9
-ev: 6
+ev: 0
 spells: fire_crab
 has_corpse: true
 intelligence: animal

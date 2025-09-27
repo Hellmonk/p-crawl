@@ -7,11 +7,11 @@ species: vampire
 holiness: [undead]
 will: 80
 attacks:
- - {type: hit, damage: 15}
- - {type: bite, flavour: vampiric, damage: 15}
-hd: 10
-hp_10x: 550
-ac: 10
+ - {type: hit, damage: 4}
+ - {type: bite, flavour: vampiric, damage: 4}
+hd: 4
+hp_10x: 260
+ac: 5
 ev: 10
 spells: vampire_mage
 intelligence: human

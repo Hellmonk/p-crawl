@@ -220,7 +220,7 @@ static void _setup_haemoclasm_explosion(bolt& beam, const monster& origin)
 
 static dice_def _bloated_husk_damage(int hd)
 {
-    return dice_def(8, hd);
+    return dice_def(3, hd);
 }
 
 static void _setup_bloated_husk_explosion(bolt & beam, const monster& origin)

@@ -6,15 +6,14 @@ exp: 530
 genus: naga
 will: 40
 attacks:
- - {type: hit, flavour: fire, damage: 13}
-hd: 8
-hp_10x: 640
+ - {type: hit, flavour: fire, damage: 10}
+hd: 3
+hp_10x: 300
 ac: 5
-ev: 7
+ev: 0
 has_corpse: true
 intelligence: human
 habitat: amphibious_lava
-energy: {swim: 7}
 uses: open_doors
 size: medium
 shape: naga

@@ -6,9 +6,9 @@ species: human
 will: 40
 attacks:
  - {type: hit, damage: 20}
-hd: 9
-hp_10x: 495
-ac: 0
+hd: 7
+hp_10x: 500
+ac: 4
 ev: 10
 spells: ironbound_convoker
 has_corpse: true

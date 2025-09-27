@@ -1060,18 +1060,20 @@ int main(int argc, char* argv[])
                     monsterattacks += colour(
                         LIGHTRED, damage_flavour("fire", hd, hd * 2 - 1));
                     break;
+                case AF_BIG_FIRE:
+                    monsterattacks += colour(
+                        LIGHTRED, damage_flavour("fire", hd, hd * 2 - 1));
+                    break;
                 case AF_PURE_FIRE:
                     monsterattacks +=
                         colour(LIGHTRED, damage_flavour("pure fire", hd * 3 / 2,
                                                         hd * 5 / 2 - 1));
                     break;
                 case AF_MINIPARA:
-                    monsterattacks += colour(LIGHTRED,
-                                             damage_flavour("(minipara)", hd, hd * 2));
+                    monsterattacks += colour(LIGHTRED, "(stun)");
                     break;
                 case AF_POISON_PARALYSE:
-                    monsterattacks += colour(LIGHTRED,
-                                             damage_flavour("(paralyse)", hd * 3/2, hd * 5/2));
+                    monsterattacks += colour(LIGHTRED, "(paralyse or slow)");
                     break;
                 case AF_POISON:
                     monsterattacks += colour(
@@ -1120,8 +1122,8 @@ int main(int argc, char* argv[])
                 case AF_DROWN:
                     monsterattacks += colour(LIGHTBLUE,
                                              damage_flavour("(drown)",
-                                                            hd * 3 / 4,
-                                                            hd * 3 / 2));
+                                                            hd,
+                                                            hd * 2));
                     break;
                 case AF_ENGULF:
                     monsterattacks += colour(LIGHTBLUE, "(engulf)");

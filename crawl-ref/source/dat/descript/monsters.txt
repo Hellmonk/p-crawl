@@ -653,7 +653,7 @@ unearthly vile magic quite close to a touch of death.
 %%%%
 alligator
 
-An aggressive crocodilian with great crunching jaws full of sharp teeth.
+See you later.
 %%%%
 alligator snapping turtle
 
@@ -705,9 +705,7 @@ mandibles. Rumours claim that this species is waiting for the end of time.
 %%%%
 arcanist
 
-A wizard fond of spectacle and destruction. They scorn the cowardice of other
-magicians, who hide from their foes rather than simply blasting them out of
-existence.
+A wizard who has memorized the only spell that matters.
 %%%%
 armataur
 
@@ -1029,7 +1027,7 @@ grin, and its horns protrude obscenely from its scaly pate.
 %%%%
 crocodile
 
-A crocodilian with powerful jaws.
+Everyone knows what a crocodile is.
 %%%%
 crystal echidna
 
@@ -1363,8 +1361,8 @@ emerging from trees near their foes to strike.
 %%%%
 elemental wellspring
 
-A swirling conflux of elemental water streaming from the elemental plane into
-this one, with powerful spirits and mighty floods flowing from it.
+A swirling conflux of elements streaming from the elemental plane into
+this one, with powerful spirits flowing from it.
 %%%%
 elephant
 
@@ -1439,7 +1437,8 @@ from its toothy maw.
 fire elemental
 
 A spirit drawn from the elemental plane of fire, which exists in this world as
-a brilliant column of raging flames.
+a brilliant column of raging flames. It attacks a wide area around itself with
+intense heat.
 %%%%
 fire giant
 
@@ -1752,13 +1751,9 @@ fragile, elves think of them as clumsy, and monsters think of them as tasty.
 %%%%
 hydra
 
-A great and nightmarish lacertilian beast. It has many heads, and the potential
-to grow many more!
-
-Hitting it with any bladed weapon bigger than a short blade risks lopping a
-head off and causing two more to grow in its place. Very large claws, such as
-trolls', are long enough to do the same. Only a weapon branded with flame will
-cauterize the wound and prevent more heads from growing.
+A great and nightmarish lacertilian beast. It has many heads, each posessing a
+nasty bite. Rumours about the detachability of those heads are greatly
+exaggerated, however.
 %%%%
 ice beast
 
@@ -2315,7 +2310,7 @@ prayers by striking down its enemies.
 orc sorcerer
 
 An exceptionally competent orcish wizard, in league with hellish and chthonic
-forces and motivated by the purest imaginable strain of malevolence.
+forces.
 %%%%
 orc warlord
 
@@ -2328,8 +2323,7 @@ mob of its fellows.
 %%%%
 orc wizard
 
-An orc who has gained proficiency in the occult arts, using them for martial
-purposes.
+An orc who has learned magic, as orcs often do.
 %%%%
 pale draconian
 
@@ -2767,9 +2761,8 @@ foes.
 %%%%
 silent spectre
 
-A terrible spirit which brings an unearthly silence to the area around it,
-making it impossible to recite the magical incantations involved with casting
-spells or reading scrolls.
+A spirit which brings an unearthly silence to the area around it,
+making it impossible to cast spells.
 %%%%
 simulacrum
 
@@ -3168,13 +3161,12 @@ eternity.
 %%%%
 vampire
 
-A human cursed with vampirism, drifting in a state between life and undeath,
-perpetually hungry for the blood of the living.
+A hemomancer, perpetually hungry for the blood of the living.
 %%%%
 vampire bat
 
 A large black bat with vicious fangs that feeds on blood. It is the preferred
-form for vampires in disguise.
+form for vampires in disguise, but this one is just a bat.
 %%%%
 vampire bloodprince
 
@@ -3188,8 +3180,7 @@ A powerful vampire noble who complements its combat prowess with dark magic.
 vampire mage
 
 A sorcerer who, by accident or design, has been afflicted with the curse of the
-vampire. Regardless, through undeath, it has finally mastered the art of dark
-magic.
+vampire.
 %%%%
 vampire mosquito
 

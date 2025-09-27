@@ -264,10 +264,8 @@ static const map<spell_type, mons_spell_logic> spell_to_logic = {
         {
             const actor* foe = caster.get_foe();
             ASSERT(foe);
-            // always cast at < 1/3rd hp, never at > 2/3rd hp
-            const bool low_hp = x_chance_in_y(caster.max_hit_points * 2 / 3
-                                                - caster.hit_points,
-                                              caster.max_hit_points / 3);
+            // only cast below half hp
+            const bool low_hp = caster.max_hit_points - caster.hit_points * 2 > 0;
             if (!adjacent(caster.pos(), foe->pos()))
                 return ai_action::impossible();
 
@@ -1769,6 +1767,7 @@ static bool _monster_will_buff(const monster &caster, const monster &targ)
 
     if (caster.type == MONS_IRONBOUND_CONVOKER
         || caster.type == MONS_AMAEMON
+        || caster.type == MONS_DEEP_TROLL_SHAMAN
         || caster.type == MONS_BOUND_SOUL)
     {
         return true; // will buff any ally
@@ -2343,7 +2342,7 @@ bolt mons_spell_beam(const monster* mons, spell_type spell_cast, int power,
     // Hack so beam.cc allows us to correctly use that function
     case SPELL_UPHEAVAL:
         beam.flavour     = BEAM_RANDOM;
-        beam.damage      = dice_def(3, 24);
+        beam.damage      = dice_def(1, 24);
         beam.hit         = AUTOMATIC_HIT;
         beam.glyph       = dchar_glyph(DCHAR_EXPLOSION);
         beam.ex_size     = 1;
@@ -2552,6 +2551,7 @@ bool setup_mons_cast(const monster* mons, bolt &pbolt, spell_type spell_cast,
     case SPELL_FULMINANT_PRISM:
     case SPELL_HELLFIRE_MORTAR:
     case SPELL_GLOOM:
+    case SPELL_MASS_REPULSION:
         pbolt.range = 0;
         pbolt.glyph = 0;
         return true;
@@ -2856,6 +2856,43 @@ static bool _battle_cry(const monster& chief, spell_type spell_cast,
 
     if (!seen_affected.empty())
         _print_battlecry_announcement(chief, seen_affected, spell_cast);
+
+    return true;
+}
+
+static bool _mass_repulsion(const monster& mage, bool check_only = false)
+{
+    const actor *foe = mage.get_foe();
+    // Check for valid hostile target
+    if (!foe
+        || foe->is_player() && mage.friendly()
+        || !mage.see_cell_no_trans(foe->pos()))
+    {
+        return false;
+    }
+
+    int affected = 0;
+    for (monster_near_iterator mi(mage.pos(), LOS_NO_TRANS); mi; ++mi)
+    {
+        const monster *mons = *mi;
+
+        // only buff allies
+        if (!mons_aligned(&mage, mons))
+            continue;
+
+        // already buffed
+        if (mons->has_ench(ENCH_REPEL_MISSILES))
+            continue;
+
+        if (check_only)
+            return true; // just need to check
+
+        affected++;
+        mi->add_ench(mon_enchant(ENCH_REPEL_MISSILES));
+    }
+
+    if (affected == 0)
+        return false;
 
     return true;
 }
@@ -5335,12 +5372,10 @@ static monster_type _pick_undead_summon()
 
 static monster_type _pick_vermin()
 {
-    return random_choose_weighted(6, MONS_HELL_RAT,
-                                  3, MONS_SWAMP_WORM,
-                                  2, MONS_GOLIATH_FROG,
-                                  2, MONS_TARANTELLA,
-                                  2, MONS_JUMPING_SPIDER,
-                                  3, MONS_DEMONIC_CRAWLER);
+    return random_choose_weighted(3, MONS_RAT,
+                                  3, MONS_BAT,
+                                  1, MONS_GIANT_COCKROACH,
+                                  1, MONS_VAMPIRE_BAT);
 }
 
 static monster_type _pick_drake()
@@ -5390,7 +5425,7 @@ static void _mons_summon_elemental(monster &mons, mon_spell_slot slot, bolt&)
     ASSERT(mtyp);
 
     const int spell_hd = mons.spell_hd(slot.spell);
-    const int count = 1 + (spell_hd > 15) + random2(spell_hd / 7 + 1);
+    const int count = 1 + random2(spell_hd);
 
     for (int i = 0; i < count; i++)
         _summon(mons, *mtyp, summ_dur(3), slot);
@@ -6398,7 +6433,7 @@ static bool _spell_charged(monster *mons)
 /// How much damage does the given monster do when casting Waterstrike?
 dice_def waterstrike_damage(int spell_hd)
 {
-    return dice_def(3, 7 + spell_hd);
+    return dice_def(2, 7 + spell_hd);
 }
 
 /**
@@ -6410,18 +6445,16 @@ dice_def resonance_strike_base_damage(int spell_hd)
     return dice_def(3, spell_hd);
 }
 
-static const int MIN_DREAM_SUCCESS_POWER = 25;
-
 static void _sheep_message(int num_sheep, int sleep_pow, bool seen, actor& foe)
 {
     string message;
 
     // Determine messaging based on sleep strength.
-    if (sleep_pow >= 125)
+    if (sleep_pow >= 14)
         message = "You are overwhelmed by glittering dream dust!";
-    else if (sleep_pow >= 75)
+    else if (sleep_pow >= 8)
         message = "The dream sheep are wreathed in dream dust.";
-    else if (sleep_pow >= MIN_DREAM_SUCCESS_POWER)
+    else if (sleep_pow > 0)
     {
         message = make_stringf("The dream sheep shake%s wool and sparkle%s.",
                                num_sheep == 1 ? "s its" : " their",
@@ -6470,7 +6503,7 @@ static void _sheep_message(int num_sheep, int sleep_pow, bool seen, actor& foe)
     }
 
     const char* pluralize = num_sheep == 1 ? "s": "";
-    if (sleep_pow)
+    if (sleep_pow > 0)
     {
         mprf(chan,
              "As the sheep sparkle%s and sway%s, %s falls asleep.",
@@ -6502,24 +6535,15 @@ static void _dream_sheep_sleep(monster& mons, actor& foe)
         }
     }
 
-    // The correlation between amount of sheep and duration of
-    // sleep is randomised, but bounds are 5 to 20 turns of sleep.
-    // More dream sheep are both more likely to succeed and to have a
-    // stronger effect. Too-weak attempts get blanked.
-    // Special note: a single sheep has a 1 in 25 chance to succeed.
-    int sleep_pow = min(150, random2(num_sheep * 25) + 1);
-    if (sleep_pow < MIN_DREAM_SUCCESS_POWER)
-        sleep_pow = 0;
+    int sleep_pow = 2 * num_sheep;
+    sleep_pow = sleep_pow - foe.check_willpower(&mons, sleep_pow);
 
     // Communicate with the player.
     _sheep_message(num_sheep, sleep_pow, seen, foe);
 
     // Put the player to sleep.
-    if (sleep_pow)
-    {
-        const int dur = (sleep_pow / 20 + random_range(1, 3) + 3) * BASELINE_DELAY;
-        foe.put_to_sleep(&mons, dur, false);
-    }
+    if (sleep_pow > 0)
+        foe.put_to_sleep(&mons, 20 + 10 * sleep_pow, false);
 }
 
 // Draconian stormcaller upheaval. Simplified compared to the player version.
@@ -6533,7 +6557,7 @@ static void _mons_upheaval(monster& mons, actor& /*foe*/, bool randomize)
     beam.source_name = mons.name(DESC_THE).c_str();
     beam.thrower     = KILL_MON_MISSILE;
     beam.range       = LOS_RADIUS;
-    beam.damage      = dice_def(3, 24);
+    beam.damage      = dice_def(1, 24);
     beam.foe_ratio   = random_range(20, 30);
     beam.hit         = AUTOMATIC_HIT;
     beam.glyph       = dchar_glyph(DCHAR_EXPLOSION);
@@ -7270,8 +7294,7 @@ void mons_cast(monster* mons, bolt pbolt, spell_type spell_cast,
             if (!monster_at(*ai) && !cell_is_solid(*ai))
                 empty_space++;
 
-        int damage_taken = empty_space * 2
-                         + random2avg(2 + div_rand_round(splpow, 7), 2);
+        int damage_taken = empty_space + random2 (1 + splpow);
         damage_taken = foe->beam_resists(pbolt, damage_taken, false);
 
         damage_taken = foe->apply_ac(damage_taken);
@@ -8130,6 +8153,11 @@ void mons_cast(monster* mons, bolt pbolt, spell_type spell_cast,
 
     case SPELL_PRAYER_OF_BRILLIANCE:
         _prayer_of_brilliance(mons);
+        return;
+
+    case SPELL_MASS_REPULSION:
+        simple_monster_message(*mons, " repels missiles from its allies!");
+        _mass_repulsion(*mons);
         return;
 
     case SPELL_BIND_SOULS:
@@ -9431,6 +9459,9 @@ ai_action::goodness monster_spell_goodness(monster* mon, spell_type spell)
 
     case SPELL_REPEL_MISSILES:
         return ai_action::good_or_impossible(!mon->has_ench(ENCH_REPEL_MISSILES));
+
+    case SPELL_MASS_REPULSION:
+        return ai_action::good_or_bad(_mass_repulsion(*mon, true));
 
     case SPELL_CONFUSION_GAZE:
         // why is this handled here unlike other gazes?

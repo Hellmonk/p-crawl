@@ -5,12 +5,12 @@ exp: 839
 genus: giant_cockroach
 will: 60
 attacks:
- - {type: bite, damage: 28}
- - {type: claw, damage: 16}
-hd: 12
-hp_10x: 800
-ac: 13
-ev: 5
+ - {type: bite, damage: 14}
+ - {type: claw, damage: 14}
+hd: 3
+hp_10x: 500
+ac: 23
+ev: 0
 spells: radroach
 has_corpse: true
 intelligence: animal

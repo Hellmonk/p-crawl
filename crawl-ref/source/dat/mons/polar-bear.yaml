@@ -6,13 +6,13 @@ exp: 295
 genus: bear
 will: 20
 attacks:
- - {type: bite, damage: 20}
+ - {type: bite, damage: 15}
  - {type: claw, damage: 5}
  - {type: claw, damage: 5}
-hd: 7
-hp_10x: 455
+hd: 3
+hp_10x: 450
 ac: 7
-ev: 8
+ev: 10
 spells: bear
 has_corpse: true
 shout: growl

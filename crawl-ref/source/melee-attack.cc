@@ -3372,6 +3372,7 @@ void melee_attack::mons_apply_attack_flavour()
         break;
 
     case AF_FIRE:
+    case AF_BIG_FIRE:
         special_damage =
             resist_adjust_damage(defender,
                                  BEAM_FIRE,
@@ -3531,48 +3532,24 @@ void melee_attack::mons_apply_attack_flavour()
 
     case AF_MINIPARA:
     {
-        // Doesn't affect the poison-immune.
-        if (defender->is_player() && you.duration[DUR_DIVINE_STAMINA] > 0)
-        {
-            mpr("Your divine stamina protects you from poison!");
-            break;
-        }
+        // standin for "is not a living creature"
         if (defender->res_poison() >= 3)
             break;
-        if (defender->res_poison() > 0 && !one_chance_in(3))
+        if (!one_chance_in(3))
             break;
-        defender->paralyse(attacker, 1);
-        mons_do_poison();
+        defender->stun(attacker);
         break;
     }
 
     case AF_POISON_PARALYSE:
     {
-        // Doesn't affect the poison-immune.
-        if (defender->is_player() && you.duration[DUR_DIVINE_STAMINA] > 0)
-        {
-            mpr("Your divine stamina protects you from poison!");
-            break;
-        }
-        else if (defender->res_poison() >= 3)
+        // standin for "is not a living creature"
+        if (defender->res_poison() >= 3)
             break;
 
-        // Same frequency as AF_POISON and AF_POISON_STRONG.
         if (one_chance_in(3))
-        {
-            int dmg = random_range(attacker->get_hit_dice() * 3 / 2,
-                                   attacker->get_hit_dice() * 5 / 2);
-            defender->poison(attacker, dmg);
-        }
-
-        // Try to apply either paralysis or slowing, with the normal 2/3
-        // chance to resist with rPois.
-        if (one_chance_in(6))
-        {
-            if (defender->res_poison() <= 0 || one_chance_in(3))
                 defender->paralyse(attacker, roll_dice(1, 3));
-        }
-        else if (defender->res_poison() <= 0 || one_chance_in(3))
+        else
             defender->slow_down(attacker, roll_dice(1, 3));
 
         break;
@@ -3653,41 +3630,7 @@ void melee_attack::mons_apply_attack_flavour()
     }
 
     case AF_ANTIMAGIC:
-
-        // Apply extra stacks of the effect to monsters that have none.
-        if (defender->is_monster()
-            && !defender->as_monster()->has_ench(ENCH_ANTIMAGIC))
-        {
-            antimagic_affects_defender(attacker->get_hit_dice() * 18);
-        }
-        else
-            antimagic_affects_defender(attacker->get_hit_dice() * 12);
-
-        if (mons_genus(attacker->type) == MONS_VINE_STALKER
-            && attacker->is_monster())
-        {
-            const bool spell_user = defender->antimagic_susceptible();
-
-            if (you.can_see(*attacker) || you.can_see(*defender))
-            {
-                mprf("%s drains %s %s.",
-                     attacker->name(DESC_THE).c_str(),
-                     defender->pronoun(PRONOUN_POSSESSIVE).c_str(),
-                     spell_user ? "magic" : "power");
-            }
-
-            monster* vine = attacker->as_monster();
-            if (vine->has_ench(ENCH_ANTIMAGIC)
-                && !defender->is_summoned() && !defender->is_firewood())
-            {
-                mon_enchant me = vine->get_ench(ENCH_ANTIMAGIC);
-                vine->lose_ench_duration(me, random2(damage_done) + 1);
-                simple_monster_message(*attacker->as_monster(),
-                                       spell_user
-                                       ? " looks very invigorated."
-                                       : " looks invigorated.");
-            }
-        }
+        antimagic_affects_defender(attacker->get_hit_dice());
         break;
 
     case AF_PAIN:

@@ -5,13 +5,13 @@ exp: 808
 species: tengu
 will: 40
 attacks:
- - {type: hit, flavour: flank, damage: 16}
- - {type: peck, damage: 8}
- - {type: claw, damage: 8}
-hd: 10
-hp_10x: 600
-ac: 2
-ev: 17
+ - {type: hit, flavour: flank, damage: 14}
+ - {type: peck, damage: 6}
+ - {type: claw, damage: 6}
+hd: 4
+hp_10x: 380
+ac: 3
+ev: 30
 has_corpse: true
 shout: shout
 intelligence: human

@@ -866,7 +866,7 @@ static attack_flavour _ugly_thing_colour_to_flavour(colour_t u_colour)
         break;
 
     case BROWN:
-        u_att_flav = AF_ACID;
+        u_att_flav = AF_CORRODE;
         break;
 
     case GREEN:
@@ -973,20 +973,13 @@ static resists_t _ugly_thing_resists(bool very_ugly, attack_flavour u_att_flav)
     switch (u_att_flav)
     {
     case AF_FIRE:
-        return MR_RES_FIRE * (very_ugly ? 2 : 1);
-
-    case AF_ACID:
-        return MR_RES_CORR;
-
-    case AF_POISON:
-    case AF_POISON_STRONG:
-        return MR_RES_POISON * (very_ugly ? 2 : 1);
+        return MR_RES_FIRE * (very_ugly ? 1 : 1);
 
     case AF_ELEC:
-        return MR_RES_ELEC * (very_ugly ? 2 : 1);
+        return MR_RES_ELEC * (very_ugly ? 1 : 1);
 
     case AF_COLD:
-        return MR_RES_COLD * (very_ugly ? 2 : 1);
+        return MR_RES_COLD * (very_ugly ? 1 : 1);
 
     default:
         return 0;

@@ -1,18 +1,17 @@
 name: "elemental wellspring"
 glyph: {char: "E", colour: lightcyan}
 flags: [amorphous]
-resists: {elec: 1}
 exp: 1039
 genus: elemental
 holiness: [nonliving]
 will: invuln
 attacks:
-hd: 18
-hp_10x: 620
+hd: 7
+hp_10x: 610
 ac: 8
-ev: 8
+ev: 10
 spells: elemental_wellspring
 intelligence: animal
-habitat: water
+habitat: amphibious
 size: large
 shape: misc

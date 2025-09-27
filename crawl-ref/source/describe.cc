@@ -4814,12 +4814,12 @@ static string _flavour_base_desc(attack_flavour flavour)
         { AF_ELEC,              "electric damage" },
         { AF_FIRE,              "fire damage" },
         { AF_SEAR,              "remove fire resistance" },
-        { AF_MINIPARA,          "poison and momentary paralysis" },
-        { AF_POISON_PARALYSE,   "poison and paralysis/slowing" },
+        { AF_MINIPARA,          "stun (1/3 chance)" },
+        { AF_POISON_PARALYSE,   "paralysis (1/3 chance) or slow" },
         { AF_POISON,            "poison" },
         { AF_REACH_STING,       "poison" },
         { AF_POISON_STRONG,     "strong poison" },
-        { AF_DISTORT,           "distortion" },
+        { AF_DISTORT,           "blink the defender" },
         { AF_RIFT,              "distortion" },
         { AF_RAGE,              "drive defenders berserk" },
         { AF_CHAOTIC,           "chaos" },
@@ -4853,6 +4853,7 @@ static string _flavour_base_desc(attack_flavour flavour)
         { AF_TRICKSTER,         "drain, daze, or confuse" },
         { AF_REACH_CLEAVE_UGLY, "random ugly thing damage" },
         { AF_DOOM,              "inflict doom" },
+        { AF_BIG_FIRE,          "deal up to %d extra fire damage" },
         { AF_PLAIN,             "" },
     };
 
@@ -5209,7 +5210,8 @@ static void _attacks_table_row(const monster_info &mi, mon_attack_desc_info &di,
         if (flavour_has_reach(attack.flavour))
         {
             bonus_desc += (bonus_desc.empty() ? "Reaches"
-                           : (attack.flavour == AF_REACH_CLEAVE_UGLY) ? "; cleaves"
+                           : (attack.flavour == AF_REACH_CLEAVE_UGLY
+                              || attack.flavour == AF_BIG_FIRE) ? "; cleaves"
                            : "; reaches");
             bonus_desc += (attack.flavour == AF_RIFT ? " very far"
                                                      : " from afar");
@@ -6506,20 +6508,10 @@ void get_monster_db_desc(const monster_info& mi, describe_info &inf,
             inf.body << "Killing " << it_o << " yields ";
         inf.body << "no experience or items";
 
-        if (!did_stair_use)
-            inf.body << "; " << it << " " << is << " incapable of using stairs";
-
         inf.body << ".\n";
     }
     else if (mi.is(MB_NO_REWARD))
         inf.body << "\nKilling this monster yields no experience or items.";
-    else if (mons_class_leaves_hide(mi.type))
-    {
-        inf.body << "\nIf " << it << " " << is <<
-                    " slain, it may be possible to recover "
-                 << mi.pronoun(PRONOUN_POSSESSIVE)
-                 << " hide, which can be used as armour.\n";
-    }
 
     if (!inf.quote.empty())
         inf.quote += "\n";

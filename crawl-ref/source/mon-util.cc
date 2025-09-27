@@ -1456,28 +1456,6 @@ int mons_class_regen_amount(monster_type mc)
     }
 }
 
-/**
- * Do monsters of the given type ever leave a hide?
- *
- * @param mc      The class of monster in question.
- * @return        Whether the monster has a chance of dropping a hide when
- *                butchered.
- */
-bool mons_class_leaves_hide(monster_type mc)
-{
-    return hide_for_monster(mc) != NUM_ARMOURS;
-}
-
-bool mons_class_leaves_wand(monster_type mc)
-{
-    return mc == MONS_ELEIONOMA || mc == MONS_FENSTRIDER_WITCH;
-}
-
-bool mons_class_leaves_organ(monster_type mc)
-{
-    return mons_class_leaves_hide(mc) || mons_class_leaves_wand(mc);
-}
-
 int mons_zombie_size(monster_type mc)
 {
     mc = mons_species(mc);
@@ -2133,6 +2111,7 @@ int flavour_damage(attack_flavour flavour, int HD, bool random)
     switch (flavour)
     {
         case AF_FIRE:
+        case AF_BIG_FIRE:
             if (random)
                 return HD + random2(HD);
             return HD * 2;
@@ -2141,16 +2120,14 @@ int flavour_damage(attack_flavour flavour, int HD, bool random)
                 return HD + random2(HD*2);
             return HD * 3;
         case AF_ELEC:
-            if (random)
-                return HD + random2(HD/2);
-            return HD * 3 / 2;
+            return 7 + HD;
         case AF_PURE_FIRE:
             if (random)
                 return HD * 3 / 2 + random2(HD);
             return HD * 5 / 2;
         case AF_DROWN:
             if (random)
-                return HD * 3 / 4 + random2(HD * 3 / 4);
+                return HD + random2(HD);
             return HD * 3 / 2;
         // Note: This value is only used for displaying monster damage with xv
         //       and is a lie against non-player targets.
@@ -2810,7 +2787,7 @@ static const colour_t ugly_colour_values[] =
 
 colour_t ugly_thing_random_colour()
 {
-    return RANDOM_ELEMENT(ugly_colour_values);
+    return random_choose(RED, BROWN, CYAN, MAGENTA, LIGHTGREY);
 }
 
 int str_to_ugly_thing_colour(const string &s)

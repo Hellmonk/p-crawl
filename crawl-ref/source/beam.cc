@@ -3978,7 +3978,7 @@ void bolt::affect_player_enchantment(bool resistible)
 
     case BEAM_DRAIN_MAGIC:
     {
-        int amount = min(you.magic_points, random2avg(ench_power / 8, 3));
+        int amount = min(you.magic_points, ench_power);
         if (!amount)
             break;
         mprf(MSGCH_WARN, "You feel your power leaking away.");
@@ -5359,7 +5359,7 @@ static int _knockback_dist(spell_type origin, int pow)
     switch (origin)
     {
         case SPELL_ISKENDERUNS_MYSTIC_BLAST:
-            return 2 + div_rand_round(pow, 50);
+            return 2 + div_rand_round(pow, 3);
         case SPELL_FORCE_LANCE:
             return 4;
         default:

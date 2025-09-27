@@ -5,11 +5,11 @@ exp: 896
 species: elf
 will: 80
 attacks:
- - {type: hit, damage: 14}
-hd: 11
-hp_10x: 495
+ - {type: hit, damage: 10}
+hd: 5
+hp_10x: 490
 ac: 3
-ev: 13
+ev: 20
 spells: deep_elf_high_priest
 has_corpse: true
 shout: shout
