@@ -217,6 +217,7 @@ public:
     bool lose_ench_duration(const mon_enchant &e, int levels);
     bool lose_ench_levels(const mon_enchant &e, int lev, bool infinite = false);
     bool maybe_free_action(energy_use_type et);
+    bool takes_two_turns(energy_use_type et);
     void lose_energy(energy_use_type et, int div = 1, int mult = 1);
     int energy_cost(energy_use_type et, int div = 1, int mult = 1) const;
 

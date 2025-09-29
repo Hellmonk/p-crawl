@@ -5386,16 +5386,31 @@ bool monster::maybe_free_action(energy_use_type et)
     default:
         return false;
     }
+}
 
+bool monster::takes_two_turns(energy_use_type et)
+{
+    if (mons_class_flag(this->type, M_SLOW_ACTING))
+        return true;
+    if (mons_class_flag(this->type, M_SLOW_ATTACKS))
+        return et == EUT_ATTACK;
+    if (mons_class_flag(this->type, M_SLOW_MOVEMENT))
+        return et == EUT_MOVE || et == EUT_SWIM;
+
+    return false;
 }
 
 void monster::lose_energy(energy_use_type et, int div, int mult)
 {
+    // free actions
     if (maybe_free_action(et))
     {
         add_ench(ENCH_USED_FREE_ACTION);
         return;
     }
+    if (takes_two_turns(et)) // double cost actions for 'slow acting' monsters
+        speed_increment -= energy_cost(et, div, mult);
+
     speed_increment -= energy_cost(et, div, mult);
 }
 
