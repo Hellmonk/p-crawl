@@ -1,6 +1,6 @@
 name: "demonspawn soul scholar"
 glyph: {char: "6", colour: lightmagenta}
-flags: [see_invis, speaks, warm_blood]
+flags: [speaks, warm_blood]
 resists: {cold: 3}
 exp: 1031
 species: demonspawn

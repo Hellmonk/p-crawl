@@ -1328,6 +1328,9 @@ static void _input()
 
     if (you.turn_is_over)
     {
+        if (you.free_action_available() == FACT_ANY || player_swim_faction())
+            expend_free_action();
+
         if (you.apply_berserk_penalty)
             _do_berserk_no_combat_penalty();
 
@@ -2572,6 +2575,9 @@ void world_reacts()
         // down by sanity is good, but this is not the case here.
         ouch(INSTANT_DEATH, KILLED_BY_QUITTING);
     }
+
+    if (you.time_taken > 0 && you.props.exists(FREE_ACTION_USED_KEY))
+        you.props.erase(FREE_ACTION_USED_KEY);
 
     handle_time();
     manage_clouds();

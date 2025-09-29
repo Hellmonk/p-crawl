@@ -1,6 +1,6 @@
 name: "Ice Fiend"
 glyph: {char: "1", colour: white}
-flags: [flies, see_invis]
+flags: [flies]
 resists: {poison: 1, fire: -1, cold: 3}
 exp: 1816
 holiness: [demonic]

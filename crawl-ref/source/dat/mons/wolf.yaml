@@ -1,6 +1,6 @@
 name: "wolf"
 glyph: {char: "h", colour: lightgray}
-flags: [see_invis, unblindable, warm_blood]
+flags: [unblindable, warm_blood]
 exp: 117
 genus: hound
 will: 20

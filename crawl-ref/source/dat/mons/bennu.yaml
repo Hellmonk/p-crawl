@@ -1,6 +1,6 @@
 name: "bennu"
 glyph: {char: "b", colour: yellow}
-flags: [flies, see_invis, speaks, warm_blood, no_poly_to]
+flags: [flies, speaks, warm_blood, no_poly_to]
 resists: {poison: 1, fire: 3, neg: 3, miasma: 1}
 exp: 1011
 will: 140

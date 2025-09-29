@@ -1,6 +1,6 @@
 name: "unseen horror"
 glyph: {char: "x", colour: magenta}
-flags: [invis, see_invis, batty]
+flags: [batty]
 exp: 384
 will: 20
 attacks:

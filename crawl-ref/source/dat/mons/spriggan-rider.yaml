@@ -1,6 +1,6 @@
 name: "spriggan rider"
 glyph: {char: "i", colour: lightblue}
-flags: [flies, fighter, see_invis, speaks, warm_blood]
+flags: [flies, fighter, speaks, warm_blood]
 exp: 734
 resists: {poison: -1}
 species: spriggan

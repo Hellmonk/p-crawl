@@ -1,5 +1,6 @@
 name: "iron golem"
 glyph: {char: "9", colour: cyan}
+flags: [slow_acting]
 resists: {elec: 3, fire: 3, cold: 3}
 exp: 940
 genus: golem

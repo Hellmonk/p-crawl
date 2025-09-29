@@ -1,6 +1,6 @@
 name: "titan"
 glyph: {char: "C", colour: lightcyan}
-flags: [fighter, see_invis, speaks, warm_blood]
+flags: [fighter, speaks, warm_blood]
 resists: {elec: 3}
 exp: 1664
 genus: giant

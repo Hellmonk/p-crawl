@@ -1,6 +1,6 @@
 name: "Nikola"
 glyph: {char: "@", colour: lightcyan}
-flags: [see_invis, speaks, warm_blood, unique, male]
+flags: [speaks, warm_blood, unique, male]
 exp: 2438
 species: human
 will: 120

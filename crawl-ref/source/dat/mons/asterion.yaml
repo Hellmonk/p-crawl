@@ -1,6 +1,6 @@
 name: "Asterion"
 glyph: {char: "H", colour: lightblue}
-flags: [see_invis, speaks, warm_blood, unique, male]
+flags: [speaks, warm_blood, unique, male]
 exp: 1701
 species: minotaur
 will: 100

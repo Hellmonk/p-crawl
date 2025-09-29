@@ -1,6 +1,6 @@
 name: "quicksilver dragon"
 glyph: {char: "D", colour: lightcyan}
-flags: [flies, see_invis, warm_blood]
+flags: [flies, warm_blood]
 exp: 1641
 genus: dragon
 will: 140

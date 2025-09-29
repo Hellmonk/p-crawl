@@ -1,6 +1,6 @@
 name: "crystal guardian"
 glyph: {char: "9", colour: green}
-flags: [see_invis, speaks]
+flags: [speaks]
 exp: 918
 genus: golem
 holiness: [nonliving]

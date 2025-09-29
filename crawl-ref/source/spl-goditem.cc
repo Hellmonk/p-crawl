@@ -576,10 +576,6 @@ static void _dispellable_monster_buffs(const monster &mon,
         if (mon.has_ench(ench))
             buffs.push_back(ench);
     }
-
-    // special-case invis, to avoid hitting naturally invis monsters.
-    if (mon.has_ench(ENCH_INVIS) && !mons_class_flag(mon.type, M_INVIS))
-        buffs.push_back(ENCH_INVIS);
 }
 
 /**

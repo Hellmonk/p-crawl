@@ -1,6 +1,6 @@
 name: "drowned soul"
 glyph: {char: "W", colour: lightcyan}
-flags: [flies, see_invis, speaks, insubstantial]
+flags: [flies, speaks, insubstantial]
 resists: {cold: 3}
 exp: 8
 genus: phantom

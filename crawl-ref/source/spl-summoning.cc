@@ -2301,11 +2301,6 @@ static item_def* _find_spectral_weapon_item(const monster& mons)
             return primary_weapon;
 
         item_def* secondary_weapon = owning_mons->mslot_item(MSLOT_ALT_WEAPON);
-        if (mons_wields_two_weapons(*owning_mons)
-            && _is_item_for_spectral_weapon(secondary_weapon, mons.mid))
-        {
-            return secondary_weapon;
-        }
     }
     return nullptr;
 }
@@ -2353,14 +2348,6 @@ void check_spectral_weapon(actor &agent)
         if (primary_weapon)
         {
             monster* sw = find_spectral_weapon(*primary_weapon);
-            if (sw)
-                end_spectral_weapon(sw, false, false);
-        }
-
-        item_def* secondary_weapon = owning_mons->mslot_item(MSLOT_ALT_WEAPON);
-        if (secondary_weapon && mons_wields_two_weapons(*owning_mons))
-        {
-            monster* sw = find_spectral_weapon(*secondary_weapon);
             if (sw)
                 end_spectral_weapon(sw, false, false);
         }

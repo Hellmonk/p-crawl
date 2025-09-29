@@ -36,6 +36,47 @@ actor::~actor()
         delete constricting;
 }
 
+free_action_type actor::free_action_available() const
+{
+    if (is_monster())
+    {
+        const monster* mon = as_monster();
+        if (mon->has_ench(ENCH_USED_FREE_ACTION))
+            return FACT_NONE;
+
+        if (mon->has_ench(ENCH_SLOW))
+        {
+            if (!mon->has_ench(ENCH_HASTE))
+                return FACT_NONE;
+        }
+        else if (mon->has_ench(ENCH_HASTE))
+            return FACT_ANY;
+
+        if (mons_class_flag(mon->type, M_QUICK))
+            return FACT_ANY;
+        if (mons_class_flag(mon->type, M_FAST_SWIMMER))
+            return FACT_SWIM;
+        if (mons_class_flag(mon->type, M_FAST_MOVING))
+            return FACT_MOVE;
+        if (mons_class_flag(mon->type, M_VARIABLE_SPEED))
+            return FACT_VARIABLE;
+
+        return FACT_NONE;
+    }
+    else if (you.props.exists(FREE_ACTION_USED_KEY))
+        return FACT_NONE;
+
+    if (you.duration[DUR_SLOW])
+    {
+        if (!you.duration[DUR_HASTE])
+            return FACT_NONE;
+    }
+    else if (you.duration[DUR_HASTE])
+        return FACT_ANY;
+
+    return FACT_NONE;
+}
+
 bool actor::will_trigger_shaft() const
 {
     return is_valid_shaft_level()

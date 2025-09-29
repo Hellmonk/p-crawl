@@ -1,6 +1,5 @@
 name: "zykzyl"
 glyph: {char: "2", colour: lightcyan}
-flags: [see_invis]
 resists: {elec: 1, poison: 1}
 exp: 1200
 holiness: [demonic]

@@ -247,19 +247,9 @@ mcache_monster::mcache_monster(const monster_info& mon)
 
     const item_def* mon_weapon = mon.inv[MSLOT_WEAPON].get();
     m_equ_tile = (mon_weapon != nullptr) ? tilep_equ_weapon(*mon_weapon) : 0;
-    if (!mons_class_wields_two_weapons(mon.type))
-    {
-        const item_def* mon_shield = mon.inv[MSLOT_SHIELD].get();
-        m_shd_tile = (mon_shield != nullptr) ? tilep_equ_shield(*mon_shield) : 0;
-        return;
-    }
-    const item_def* mon_weapon2 = mon.inv[MSLOT_ALT_WEAPON].get();
-    if (!mon_weapon2)
-    {
-        m_shd_tile = 0;
-        return;
-    }
-    m_shd_tile = mirror_weapon(*mon_weapon2);
+    const item_def* mon_shield = mon.inv[MSLOT_SHIELD].get();
+    m_shd_tile = (mon_shield != nullptr) ? tilep_equ_shield(*mon_shield) : 0;
+    return;
 }
 
 // Returns the amount of pixels necessary to shift a wielded weapon
@@ -1470,9 +1460,7 @@ bool mcache_monster::valid(const monster_info& mon)
     // shield offset and an off-hand weapon (a valid edge case)
     return have_weapon_offs && mon.inv[MSLOT_WEAPON]
            || have_shield_offs
-              && (mon.inv[MSLOT_SHIELD]
-                  || mon.inv[MSLOT_ALT_WEAPON]
-                     && mons_class_wields_two_weapons(mon.type));
+              && mon.inv[MSLOT_SHIELD];
 }
 
 /////////////////////////////////////////////////////////////////////////////

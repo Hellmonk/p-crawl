@@ -1,6 +1,6 @@
 name: "Vashnia"
 glyph: {char: "N", colour: lightcyan}
-flags: [see_invis, speaks, warm_blood, unique, archer, female, prefer_ranged]
+flags: [speaks, warm_blood, unique, archer, female, prefer_ranged]
 resists: {poison: 1}
 exp: 3195
 species: naga

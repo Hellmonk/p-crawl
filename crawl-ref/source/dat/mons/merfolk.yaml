@@ -1,6 +1,6 @@
 name: "merfolk"
 glyph: {char: "m", colour: lightred}
-flags: [speaks, warm_blood]
+flags: [speaks, fast_swimmer, warm_blood]
 exp: 301
 will: 40
 attacks:

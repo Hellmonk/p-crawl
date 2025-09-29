@@ -764,6 +764,14 @@ static spret _rampage_forward(coord_def move)
 
 static void _apply_move_time_taken()
 {
+    free_action_type faction = you.free_action_available();
+
+    if (faction == FACT_MOVE)
+    {
+        expend_free_action();
+        return;
+    }
+
     you.time_taken *= player_movement_speed();
     you.time_taken = div_rand_round(you.time_taken, 10);
     if (you.duration[DUR_NO_HOP])

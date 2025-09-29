@@ -1,6 +1,5 @@
 name: "thorn hunter"
 glyph: {char: "f", colour: white}
-flags: [see_invis]
 resists: {poison: 1, fire: -1}
 exp: 1431
 genus: plant

@@ -1,6 +1,5 @@
 name: "rakshasa"
 glyph: {char: "R", colour: yellow}
-flags: [see_invis]
 resists: {poison: 1}
 exp: 870
 holiness: [demonic]

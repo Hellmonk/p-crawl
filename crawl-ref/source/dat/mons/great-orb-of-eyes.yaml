@@ -1,6 +1,6 @@
 name: "great orb of eyes"
 glyph: {char: "G", colour: lightgreen}
-flags: [flies, see_invis, no_skeleton]
+flags: [flies, no_skeleton]
 exp: 878
 genus: floating_eye
 will: 120

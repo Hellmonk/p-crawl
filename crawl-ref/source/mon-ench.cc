@@ -1533,8 +1533,7 @@ void monster::apply_enchantment(const mon_enchant &me)
         break;
 
     case ENCH_INVIS:
-        if (!mons_class_flag(type, M_INVIS))
-            decay_enchantment(en);
+        decay_enchantment(en);
         break;
 
     case ENCH_POISON:
@@ -2256,7 +2255,7 @@ static const char *enchant_names[] =
     "deep sleep", "drowsy",
     "vampire thrall", "pyrrhic recollection", "clockwork bee cast",
     "phalanx barrier", "figment", "paradox-touched", "warding",
-    "diminished_spells", "stunned",
+    "diminished_spells", "stunned", "free action used",
     "buggy", // NUM_ENCHANTMENTS
 };
 

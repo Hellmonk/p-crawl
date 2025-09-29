@@ -401,7 +401,13 @@ bool fight_melee(actor *attacker, actor *defender, bool *did_hit, bool simu)
         if (attk.cancel_attack)
             you.turn_is_over = false;
         else
-            you.time_taken = you.attack_delay().roll();
+        {
+            free_action_type faction = you.free_action_available();
+            if (faction == FACT_MELEE)
+                expend_free_action();
+            else
+                you.time_taken = you.attack_delay().roll();
+        }
 
         if (!success)
             return !attk.cancel_attack;

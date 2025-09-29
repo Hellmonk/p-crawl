@@ -1,7 +1,7 @@
 name: "Nobody"
 enum: NAMELESS_REVENANT
 glyph: {char: "z", colour: white}
-flags: [see_invis, speaks, unique, gender_neutral]
+flags: [speaks, unique, gender_neutral]
 resists: {cold: 2}
 exp: 2725
 holiness: [undead]

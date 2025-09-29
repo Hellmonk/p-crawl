@@ -1,6 +1,6 @@
 name: "deep troll"
 glyph: {char: "T", colour: yellow}
-flags: [see_invis, unblindable, speaks, warm_blood, fast_regen]
+flags: [unblindable, speaks, warm_blood, fast_regen]
 exp: 733
 genus: troll
 will: 40

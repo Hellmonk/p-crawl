@@ -1,6 +1,6 @@
 name: "Agnes"
 glyph: {char: "i", colour: lightcyan}
-flags: [fighter, see_invis, speaks, warm_blood, unique, female]
+flags: [fighter, speaks, warm_blood, unique, female]
 exp: 1441
 species: spriggan
 will: 100

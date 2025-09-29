@@ -1,6 +1,6 @@
 name: "ironbound frostheart"
 glyph: {char: "p", colour: blue}
-flags: [see_invis, speaks, warm_blood]
+flags: [speaks, warm_blood]
 resists: {cold: 1}
 exp: 808
 species: human

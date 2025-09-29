@@ -1,6 +1,6 @@
 name: "apocalypse crab"
 glyph: {char: "t", colour: white}
-flags: [see_invis, no_skeleton]
+flags: [no_skeleton]
 resists: {poison: -1, fire: 2, cold: 2}
 exp: 454
 genus: crab

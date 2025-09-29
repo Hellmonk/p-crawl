@@ -1,6 +1,5 @@
 name: "shadow demon"
 glyph: {char: "2", colour: magenta}
-flags: [see_invis]
 resists: {poison: 1, cold: 2}
 exp: 713
 holiness: [demonic]

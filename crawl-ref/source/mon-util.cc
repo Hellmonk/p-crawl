@@ -394,20 +394,6 @@ int monster::wearing(object_class_type obj_type, int sub_type,
     {
     case OBJ_WEAPONS:
     case OBJ_STAVES:
-        {
-            const mon_inv_type end = mons_wields_two_weapons(*this)
-                                     ? MSLOT_ALT_WEAPON : MSLOT_WEAPON;
-
-            for (int i = MSLOT_WEAPON; i <= end; i = i + 1)
-            {
-                item = mslot_item((mon_inv_type) i);
-                if (item && item->base_type == obj_type
-                    && item->sub_type == sub_type)
-                {
-                    ret++;
-                }
-            }
-        }
         break;
 
     case OBJ_ARMOUR:
@@ -448,20 +434,6 @@ int monster::wearing_ego(object_class_type obj_type, int special) const
     switch (obj_type)
     {
     case OBJ_WEAPONS:
-        {
-            const mon_inv_type end = mons_wields_two_weapons(*this)
-                                     ? MSLOT_ALT_WEAPON : MSLOT_WEAPON;
-
-            for (int i = MSLOT_WEAPON; i <= end; i++)
-            {
-                item = mslot_item((mon_inv_type) i);
-                if (item && item->base_type == OBJ_WEAPONS
-                    && get_weapon_brand(*item) == special)
-                {
-                    ret++;
-                }
-            }
-        }
         break;
 
     case OBJ_ARMOUR:
@@ -513,12 +485,6 @@ int monster::scan_artefacts(artefact_prop_type ra_prop,
             && is_artefact(env.item[weap]))
         {
             ret += artefact_property(env.item[weap], ra_prop);
-        }
-
-        if (second != NON_ITEM && env.item[second].base_type == OBJ_WEAPONS
-            && is_artefact(env.item[second]) && mons_wields_two_weapons(*this))
-        {
-            ret += artefact_property(env.item[second], ra_prop);
         }
 
         if (armour != NON_ITEM && env.item[armour].base_type == OBJ_ARMOUR
@@ -2255,14 +2221,8 @@ int mons_class_willpower(monster_type type, monster_type base)
  */
 bool mons_class_sees_invis(monster_type type, monster_type base)
 {
-    if (mons_class_flag(type, M_SEE_INVIS))
-        return true;
-
-    if (base != MONS_NO_MONSTER && mons_is_draconian(type)
-        && mons_class_flag(draconian_subspecies(type, base), M_SEE_INVIS))
-    {
-        return true;
-    }
+    if (base != MONS_NO_MONSTER && mons_is_draconian(type))
+        return false;
 
     return false;
 }
@@ -3110,19 +3070,6 @@ bool mons_atts_aligned(mon_attitude_type fr1, mon_attitude_type fr2)
         return true;
 
     return fr1 == fr2;
-}
-
-bool mons_class_wields_two_weapons(monster_type mc)
-{
-    return mons_class_flag(mc, M_TWO_WEAPONS);
-}
-
-bool mons_wields_two_weapons(const monster& mon)
-{
-    if (testbits(mon.flags, MF_TWO_WEAPONS))
-        return true;
-
-    return mons_class_wields_two_weapons(mons_base_type(mon));
 }
 
 // When this monster reaches its target, does it do impact damage
@@ -5421,10 +5368,6 @@ void throw_monster_bits(const monster& mon)
         mprf("%s is hit by a flying piece of %s!",
                 target->name(DESC_THE, false).c_str(),
                 mon.name(DESC_THE, false).c_str());
-
-        // Because someone will get a kick out of this some day.
-        if (mons_class_flag(mons_base_type(mon), M_ACID_SPLASH))
-            target->corrode(&you, "a flying bit");
 
         behaviour_event(target, ME_ANNOY, &you, you.pos());
         target->hurt(&you, damage);

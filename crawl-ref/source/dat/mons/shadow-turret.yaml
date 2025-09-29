@@ -1,6 +1,6 @@
 name: "shadow turret"
 glyph: {char: "I", colour: magenta}
-flags: [insubstantial, no_exp_gain, no_poly_to, see_invis, stationary]
+flags: [insubstantial, no_exp_gain, no_poly_to, stationary]
 holiness: [nonliving]
 will: invuln
 attacks:

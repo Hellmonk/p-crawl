@@ -1,6 +1,6 @@
 name: "freezing wraith"
 glyph: {char: "W", colour: lightblue}
-flags: [flies, see_invis, insubstantial]
+flags: [flies, insubstantial]
 resists: {fire: -1, cold: 3}
 exp: 354
 genus: wraith

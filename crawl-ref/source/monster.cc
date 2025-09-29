@@ -438,13 +438,6 @@ item_def *monster::launcher() const
     return weap && is_range_weapon(*weap) ? weap : nullptr;
 }
 
-// Does not check whether the monster can dual-wield - that is the
-// caller's responsibility.
-static int _mons_offhand_weapon_index(const monster* m)
-{
-    return m->inv[MSLOT_ALT_WEAPON];
-}
-
 item_def *monster::weapon(int which_attack) const
 {
     const mon_attack_def attk = mons_attack_spec(*this, which_attack);
@@ -464,16 +457,6 @@ item_def *monster::weapon(int which_attack) const
     // two weapons. Not ideal, but better than nothing. fight.cc does it right,
     // for various values of right.
     int weap = inv[MSLOT_WEAPON];
-
-    if (which_attack && mons_wields_two_weapons(*this))
-    {
-        const int offhand = _mons_offhand_weapon_index(this);
-        if (offhand != NON_ITEM
-            && (weap == NON_ITEM || which_attack == 1 || coinflip()))
-        {
-            weap = offhand;
-        }
-    }
 
     return weap == NON_ITEM ? nullptr : &env.item[weap];
 }
@@ -622,8 +605,6 @@ void monster::bind_melee_flags()
     // is, the flags (other than dual-wielder) will be removed later.
     if (mons_class_flag(type, M_FIGHTER))
         flags |= MF_FIGHTER;
-    if (mons_class_flag(type, M_TWO_WEAPONS))
-        flags |= MF_TWO_WEAPONS;
     if (mons_class_flag(type, M_ARCHER))
         flags |= MF_ARCHER;
     if (mons_class_flag(type, M_CAUTIOUS))
@@ -1002,8 +983,6 @@ bool monster::pickup(item_def &item, mon_inv_type slot, bool msg)
             return false;
         if (alt && hands_reqd(*alt) == HANDS_TWO)
             return false;
-        if (mons_wields_two_weapons(*this) && wpn && alt)
-            return false;
     }
 
     if (inv[slot] != NON_ITEM)
@@ -1080,8 +1059,7 @@ bool monster::drop_item(mon_inv_type eslot, bool msg)
     bool was_unequipped = false;
     if (eslot == MSLOT_WEAPON
         || eslot == MSLOT_ARMOUR
-        || eslot == MSLOT_JEWELLERY
-        || eslot == MSLOT_ALT_WEAPON && mons_wields_two_weapons(*this))
+        || eslot == MSLOT_JEWELLERY)
     {
         if (!do_unequip_effects(pitem, msg))
             return false;
@@ -1160,104 +1138,6 @@ bool monster::pickup_launcher(item_def &launch, bool msg, bool force)
     return false;
 }
 
-static bool _is_signature_weapon(const monster* mons, const item_def &weapon)
-{
-    // Some other uniques have a signature weapon, usually because they
-    // always spawn with it, or because it is referenced in their speech
-    // and/or descriptions.
-    // Upgrading to a similar type is pretty much always allowed, unless
-    // we are more interested in the brand, and the brand is *rare*.
-    if (mons_is_unique(mons->type))
-    {
-        weapon_type wtype = (weapon.base_type == OBJ_WEAPONS) ?
-            (weapon_type)weapon.sub_type : NUM_WEAPONS;
-
-        // Crazy Yiuf's got MONUSE_STARTING_EQUIPMENT right now, but
-        // in case that ever changes we don't want him to switch away
-        // from his quarterstaff of chaos.
-        if (mons->type == MONS_CRAZY_YIUF)
-        {
-            return wtype == WPN_QUARTERSTAFF
-                   && get_weapon_brand(weapon) == SPWPN_CHAOS;
-        }
-
-        // Don't switch Azrael away from the customary scimitar of
-        // flaming.
-        if (mons->type == MONS_AZRAEL)
-        {
-            return wtype == WPN_SCIMITAR
-                   && get_weapon_brand(weapon) == SPWPN_EXPLOSIVE;
-        }
-
-        if (mons->type == MONS_AGNES)
-            return wtype == WPN_LAJATANG;
-
-        if (mons->type == MONS_EDMUND)
-            return wtype == WPN_FLAIL || wtype == WPN_DIRE_FLAIL;
-
-        // Pikel's got MONUSE_STARTING_EQUIPMENT right now, but,
-        // in case that ever changes, we don't want him to switch away
-        // from a whip.
-        if (mons->type == MONS_PIKEL)
-            return get_vorpal_type(weapon) == DVORP_SLASHING;
-
-        if (mons->type == MONS_NIKOLA)
-            return get_weapon_brand(weapon) == SPWPN_ELECTROCUTION;
-
-        if (mons->type == MONS_IGNACIO)
-            return wtype == WPN_EXECUTIONERS_AXE;
-
-        if (mons->type == MONS_MENNAS)
-            return get_weapon_brand(weapon) == SPWPN_SILVER;
-
-        if (mons->type == MONS_FANNAR)
-            return weapon.is_type(OBJ_STAVES, STAFF_COLD);
-
-        // Asterion's demon weapon was a gift from Makhleb.
-        if (mons->type == MONS_ASTERION)
-        {
-            return wtype == WPN_DEMON_BLADE || wtype == WPN_DEMON_WHIP
-                || wtype == WPN_DEMON_TRIDENT;
-        }
-
-        // Amaemon's venom whip is part of his whole schtick!
-        if (mons->type == MONS_AMAEMON)
-            return wtype == WPN_DEMON_WHIP;
-
-        // Donald kept dropping his shield. I hate that.
-        // Jerry: I gotta have my orb!
-        if (mons->type == MONS_DONALD || mons->type == MONS_JEREMIAH)
-            return mons->hands_reqd(weapon) == HANDS_ONE;
-    }
-
-    if (mons->is_holy())
-        return is_blessed(weapon) || get_weapon_brand(weapon) == SPWPN_SILVER;
-
-    if (is_unrandom_artefact(weapon))
-    {
-        switch (weapon.unrand_idx)
-        {
-        case UNRAND_ASMODEUS:
-            return mons->type == MONS_ASMODEUS;
-
-        case UNRAND_CEREBOV:
-            return mons->type == MONS_CEREBOV;
-        }
-    }
-
-    return false;
-}
-
-static int _ego_damage_bonus(item_def &item)
-{
-    switch (get_weapon_brand(item))
-    {
-    case SPWPN_NORMAL:      return 0;
-    case SPWPN_SHIELDING:  return 1;
-    default:                return 2;
-    }
-}
-
 bool monster::pickup_melee_weapon(item_def &item, bool msg)
 {
     // Draconian monks are masters of unarmed combat.
@@ -1265,19 +1145,6 @@ bool monster::pickup_melee_weapon(item_def &item, bool msg)
     if (type == MONS_DRACONIAN_MONK || type == MONS_DISPATER)
         return false;
 
-    const bool dual_wielding = mons_wields_two_weapons(*this);
-    if (dual_wielding)
-    {
-        // If we have either weapon slot free, pick up the weapon.
-        if (inv[MSLOT_WEAPON] == NON_ITEM)
-            return pickup(item, MSLOT_WEAPON, msg);
-
-        if (inv[MSLOT_ALT_WEAPON] == NON_ITEM)
-            return pickup(item, MSLOT_ALT_WEAPON, msg);
-    }
-
-    const int new_wpn_dam = mons_weapon_damage_rating(item)
-                            + _ego_damage_bonus(item);
     mon_inv_type eslot = NUM_MONSTER_SLOTS;
     item_def *weap;
 
@@ -1304,56 +1171,6 @@ bool monster::pickup_melee_weapon(item_def &item, bool msg)
 
             if (type == MONS_SIGMUND)
                 continue; // The scythe is a classic. Stick with it.
-
-            // Don't swap from a signature weapon to a non-signature one.
-            if (!_is_signature_weapon(this, item)
-                && _is_signature_weapon(this, *weap))
-            {
-                if (dual_wielding)
-                    continue;
-                else
-                    return false;
-            }
-
-            // If we get here, the weapon is a melee weapon.
-            // If the new weapon is better than the current one and not cursed,
-            // replace it. Otherwise, give up.
-            const int old_wpn_dam = mons_weapon_damage_rating(*weap)
-                                    + _ego_damage_bonus(*weap);
-
-            bool new_wpn_better = new_wpn_dam > old_wpn_dam;
-            if (new_wpn_dam == old_wpn_dam)
-            {
-                // Use shopping value as a crude estimate of resistances etc.
-                // XXX: This is not really logical as many properties don't
-                //      apply to monsters (e.g. flight, blink, berserk).
-                // For simplicity, don't apply this check to secondary weapons
-                // for dual wielding monsters.
-                int oldval = item_value(*weap, true);
-                int newval = item_value(item, true);
-
-                if (newval > oldval)
-                    new_wpn_better = true;
-            }
-
-            if (new_wpn_better && !weap->cursed())
-            {
-                if (!dual_wielding
-                    || slot == MSLOT_WEAPON
-                    || old_wpn_dam
-                       < mons_weapon_damage_rating(*mslot_item(MSLOT_WEAPON))
-                         + _ego_damage_bonus(*mslot_item(MSLOT_WEAPON)))
-                {
-                    eslot = slot;
-                    if (!dual_wielding)
-                        break;
-                }
-            }
-            else if (!dual_wielding)
-            {
-                // Only dual wielders want two melee weapons.
-                return false;
-            }
         }
     }
 
@@ -1381,14 +1198,6 @@ bool monster::wants_weapon(const item_def &weap) const
     // don't want another, thank you.
     if (type == MONS_DEEP_ELF_BLADEMASTER
         || type == MONS_DEEP_ELF_MASTER_ARCHER)
-    {
-        return false;
-    }
-
-    // Monsters capable of dual-wielding will always prefer two weapons
-    // to a single two-handed one, however strong.
-    if (mons_wields_two_weapons(*this)
-        && hands_reqd(weap) == HANDS_TWO)
     {
         return false;
     }
@@ -1448,17 +1257,6 @@ bool monster::wants_weapon(const item_def &weap) const
 
 bool monster::wants_armour(const item_def &item) const
 {
-    // Monsters that are capable of dual wielding won't pick up shields or orbs.
-    // Neither will monsters that are already wielding a two-hander.
-    if (is_offhand(item)
-        && (mons_wields_two_weapons(*this)
-            || mslot_item(MSLOT_WEAPON)
-               && hands_reqd(*mslot_item(MSLOT_WEAPON))
-                      == HANDS_TWO))
-    {
-        return false;
-    }
-
     // Spellcasters won't pick up restricting armour, although they can
     // start with one. Applies to arcane spells only, of course.
     if (!pos().origin() && is_actual_spellcaster()
@@ -1524,10 +1322,6 @@ static int _get_monster_armour_value(const monster *mon,
     // Same for life protection.
     if (mon->holiness() & MH_NATURAL)
         value += get_armour_life_protection(item);
-
-    // See invisible also is only useful if not already intrinsic.
-    if (!mons_class_flag(mon->type, M_SEE_INVIS))
-        value += get_armour_see_invisible(item);
 
     // Give a sizable bonus for shields of reflection.
     if (get_armour_ego_type(item) == SPARM_REFLECTION)
@@ -1691,10 +1485,6 @@ static int _get_monster_jewellery_value(const monster *mon,
     // Same for life protection.
     if (mon->holiness() & MH_NATURAL)
         value += get_jewellery_life_protection(item);
-
-    // See invisible also is only useful if not already intrinsic.
-    if (!mons_class_flag(mon->type, M_SEE_INVIS))
-        value += get_jewellery_see_invisible(item);
 
     return value;
 }
@@ -4835,13 +4625,6 @@ bool monster::needs_berserk(bool check_spells, bool ignore_distance) const
  */
 bool monster::can_see_invisible() const
 {
-    if (mons_is_ghost_demon(type))
-        return ghost->see_invis;
-    else if (mons_class_sees_invis(type, base_monster))
-        return true;
-    else if (has_facet(BF_WEIRD))
-        return true;
-
     return false;
 }
 
@@ -5582,8 +5365,37 @@ int monster::energy_cost(energy_use_type et, int div, int mult) const
     return energy_loss;
 }
 
+bool monster::maybe_free_action(energy_use_type et)
+{
+    free_action_type faction = this->free_action_available();
+
+    switch (faction)
+    {
+    case FACT_ANY:
+        return true;
+    case FACT_VARIABLE:
+        return coinflip();
+    case FACT_SWIM:
+        return swimming();
+    case FACT_MELEE:
+        return et == EUT_ATTACK;
+    case FACT_MOVE:
+        return et == EUT_MOVE || et == EUT_SWIM;
+    case FACT_SPELL:
+        return et == EUT_SPELL;
+    default:
+        return false;
+    }
+
+}
+
 void monster::lose_energy(energy_use_type et, int div, int mult)
 {
+    if (maybe_free_action(et))
+    {
+        add_ench(ENCH_USED_FREE_ACTION);
+        return;
+    }
     speed_increment -= energy_cost(et, div, mult);
 }
 
@@ -6073,9 +5885,6 @@ item_def* monster::take_item(int steal_what, mon_inv_type mslot,
     unlink_item(index);
     inv[mslot] = index;
     new_item.set_holding_monster(*this);
-
-    if (mslot != MSLOT_ALT_WEAPON || mons_wields_two_weapons(*this))
-        equip_message(new_item);
 
     // Item is gone from player's inventory.
     dec_inv_item_quantity(steal_what, new_item.quantity);

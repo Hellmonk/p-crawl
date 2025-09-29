@@ -7,6 +7,7 @@
 #include "conduct-type.h"
 #include "constrict-type.h"
 #include "energy-use-type.h"
+#include "free-action-type.h"
 #include "god-type.h"
 #include "item-prop-enum.h"
 #include "kill-method-type.h"
@@ -362,6 +363,7 @@ public:
 
     virtual bool has_spell(spell_type spell) const = 0;
 
+    virtual free_action_type free_action_available() const;
     virtual bool     will_trigger_shaft() const;
     virtual level_id shaft_dest() const;
     virtual bool     do_shaft() = 0;

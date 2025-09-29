@@ -577,6 +577,18 @@ static void _enter_water(dungeon_feature_type old_feat,
         mpr("Don't expect to remain undetected while in the water.");
 }
 
+bool player_swim_faction()
+{
+    if (you.free_action_available() == FACT_SWIM
+        && feat_is_water(env.grid(you.pos()))
+        && you.ground_level())
+    {
+        return true;
+    }
+
+    return false;
+}
+
 void moveto_location_effects(dungeon_feature_type old_feat,
                              bool stepped, const coord_def& old_pos)
 {
@@ -8689,6 +8701,12 @@ void activate_sanguine_armour()
         mpr("Your blood congeals into armour.");
         you.redraw_armour_class = true;
     }
+}
+
+void expend_free_action()
+{
+    you.time_taken = 0;
+    you.props[FREE_ACTION_USED_KEY] = 1;
 }
 
 /**

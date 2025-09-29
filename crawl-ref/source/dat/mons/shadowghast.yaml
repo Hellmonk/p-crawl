@@ -1,6 +1,6 @@
 name: "shadowghast"
 glyph: {char: "W", colour: magenta}
-flags: [flies, see_invis, insubstantial]
+flags: [flies, insubstantial]
 resists: {cold: 3}
 exp: 218
 genus: wraith

@@ -1,6 +1,6 @@
 name: "bat"
 glyph: {char: "b", colour: lightgray}
-flags: [flies, see_invis, unblindable, batty, warm_blood]
+flags: [flies, unblindable, batty, warm_blood]
 exp: 1
 will: 0
 attacks:

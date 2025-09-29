@@ -1,6 +1,6 @@
 name: "eidolon"
 glyph: {char: "W", colour: brown}
-flags: [flies, see_invis, insubstantial]
+flags: [flies, insubstantial]
 resists: {cold: 1}
 exp: 944
 genus: wraith

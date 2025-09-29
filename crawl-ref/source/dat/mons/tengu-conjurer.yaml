@@ -1,6 +1,6 @@
 name: "tengu conjurer"
 glyph: {char: "Q", colour: blue}
-flags: [flies, see_invis, speaks, warm_blood]
+flags: [flies, speaks, warm_blood]
 exp: 341
 species: tengu
 will: 20

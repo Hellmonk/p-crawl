@@ -1,6 +1,5 @@
 name: "green death"
 glyph: {char: "2", colour: green}
-flags: [see_invis]
 resists: {poison: 1}
 exp: 928
 holiness: [demonic]

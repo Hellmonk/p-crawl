@@ -6799,11 +6799,6 @@ static void _cast_bestow_arms(monster& caster)
 
             if (!mi->shield())
                 two_hand_eligable = true;
-
-            // Attempting to give a ranged weapon to a dual-wielder is strange
-            // and somewhat buggy, so let's not.
-            if (!mons_wields_two_weapons(**mi))
-                ranged_eligable = true;
         }
     }
 
@@ -6847,8 +6842,6 @@ static void _cast_bestow_arms(monster& caster)
     {
         // Skip if this monster is not a valid recipient of this weapon
         if (mon->hands_reqd(wpn) == HANDS_TWO && mon->shield())
-            continue;
-        if (mons_wields_two_weapons(*mon) && is_ranged_weapon_type(wpn.sub_type))
             continue;
 
         item_def clone = wpn;

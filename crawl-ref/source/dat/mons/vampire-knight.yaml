@@ -1,6 +1,6 @@
 name: "vampire knight"
 glyph: {char: "V", colour: cyan}
-flags: [fighter, see_invis, speaks, warm_blood]
+flags: [fighter, speaks, warm_blood]
 resists: {cold: 1}
 exp: 1049
 species: vampire

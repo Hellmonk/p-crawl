@@ -1,6 +1,6 @@
 name: "vampire mage"
 glyph: {char: "V", colour: magenta}
-flags: [flies, see_invis, speaks, warm_blood]
+flags: [flies, speaks, warm_blood]
 resists: {cold: 1}
 exp: 802
 species: vampire

@@ -1259,8 +1259,6 @@ int main(int argc, char* argv[])
         mons_check_flag(bool(me->bitfields & M_CRASH_DOORS), monsterflags,
                         colour(LIGHTRED, "breaks doors"));
 
-        mons_check_flag(mons_wields_two_weapons(mon), monsterflags,
-                        "two-weapon");
         mons_check_flag(mon.is_fighter(), monsterflags, "fighter");
         if (mon.is_archer())
         {
@@ -1279,8 +1277,6 @@ int main(int argc, char* argv[])
                         "spellcaster");
         mons_check_flag(bool(me->bitfields & M_COLD_BLOOD), monsterflags,
                         "cold-blooded");
-        mons_check_flag(bool(me->bitfields & M_SEE_INVIS), monsterflags,
-                        "see invisible");
         mons_check_flag(bool(me->bitfields & M_FLIES), monsterflags, "fly");
         mons_check_flag(bool(me->bitfields & M_FAST_REGEN), monsterflags,
                         "regen");

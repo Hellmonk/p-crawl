@@ -1127,9 +1127,6 @@ static monster* _place_monster_aux(const mgen_data &mg, const monster *leader,
     if (mons_is_unique(mg.cls))
         you.unique_creatures.set(mg.cls);
 
-    if (mons_class_flag(mg.cls, M_INVIS))
-        mon->add_ench(ENCH_INVIS);
-
     if (mons_class_flag(mg.cls, M_CONFUSED))
         mon->add_ench(ENCH_CONFUSION);
 
@@ -1237,9 +1234,6 @@ static monster* _place_monster_aux(const mgen_data &mg, const monster *leader,
              && !mg.props.exists(KIKU_WRETCH_KEY))
     {
         give_item(mon, place.absdepth(), mg.is_summoned());
-        // Give these monsters a second weapon. - bwr
-        if (mons_class_wields_two_weapons(mg.cls))
-            give_weapon(mon, place.absdepth());
 
         unwind_var<int> save_speedinc(mon->speed_increment);
         mon->wield_melee_weapon(false);

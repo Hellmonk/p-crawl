@@ -249,6 +249,7 @@ enum enchant_type
     ENCH_WARDING,
     ENCH_DIMINISHED_SPELLS,
     ENCH_STUN,
+    ENCH_USED_FREE_ACTION,
     // Update enchant_names[] in mon-ench.cc when adding or removing
     // enchantments.
     NUM_ENCHANTMENTS

@@ -1,6 +1,6 @@
 name: "bound soul"
 glyph: {char: "Z", colour: lightred}
-flags: [flies, see_invis, insubstantial, fast_regen]
+flags: [flies, insubstantial, fast_regen]
 resists: {cold: 1}
 species: spectral_thing
 genus: wraith

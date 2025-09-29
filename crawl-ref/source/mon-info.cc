@@ -153,6 +153,8 @@ static map<enchant_type, monster_info_flags> trivial_ench_mb_mappings = {
     { ENCH_PARADOX_TOUCHED, MB_PARADOX },
     { ENCH_WARDING,         MB_WARDING },
     { ENCH_DIMINISHED_SPELLS, MB_DIMINISHED_SPELLS },
+    { ENCH_STUN,            MB_STUNNED },
+    { ENCH_USED_FREE_ACTION,  MB_FREE_ACTION_USED },
 };
 
 static monster_info_flags ench_to_mb(const monster& mons, enchant_type ench)
@@ -337,12 +339,6 @@ monster_info::monster_info(monster_type p_type, monster_type p_base_type)
 
     if (mons_class_flag(type, M_FLIES) || mons_class_flag(base_type, M_FLIES))
         mb.set(MB_AIRBORNE);
-
-    if (mons_class_wields_two_weapons(type)
-        || mons_class_wields_two_weapons(base_type))
-    {
-        mb.set(MB_TWO_WEAPONS);
-    }
 
     if (!mons_class_can_regenerate(type)
         || !mons_class_can_regenerate(base_type))
@@ -603,8 +599,6 @@ monster_info::monster_info(const monster* m, int milev)
 
     if (m->airborne())
         mb.set(MB_AIRBORNE);
-    if (mons_wields_two_weapons(*m))
-        mb.set(MB_TWO_WEAPONS);
     if (!mons_can_regenerate(*m))
         mb.set(MB_NO_REGEN);
     if (m->haloed() && !m->umbraed())
@@ -1950,10 +1944,6 @@ bool monster_info::unravellable() const
 
     // NOTE: assumes that all debuffable enchantments are trivially mapped
     // to MBs.
-
-    // can't debuff innately invisible monsters
-    if (is(MB_INVISIBLE) && !mons_class_flag(type, M_INVIS))
-        return true;
 
     return any_of(begin(dispellable_enchantments),
                   end(dispellable_enchantments),

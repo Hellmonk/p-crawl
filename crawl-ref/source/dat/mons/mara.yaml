@@ -1,6 +1,6 @@
 name: "Mara"
 glyph: {char: "R", colour: lightmagenta}
-flags: [see_invis, speaks, unique, male]
+flags: [speaks, unique, male]
 resists: {poison: 1, fire: 2}
 exp: 4430
 species: rakshasa

@@ -62,6 +62,7 @@
 #define WENT_INVIS_KEY "went_invis"
 #define SCRIED_KEY "scried"
 #define HARP_STARTED_KEY "harp_started"
+#define FREE_ACTION_USED_KEY "free_action_used"
 
 constexpr int ENKINDLE_CHARGE_COST = 40;
 #define ENKINDLE_CHARGES_KEY "enkindle_charges"
@@ -1159,6 +1160,7 @@ string describe_contamination(bool verbose = true);
 
 bool sanguine_armour_valid();
 void activate_sanguine_armour();
+void expend_free_action();
 
 void refresh_weapon_protection();
 
@@ -1238,3 +1240,5 @@ bool player_has_orb();
 bool player_on_orb_run();
 
 bool artefacts_enhance_skill();
+
+bool player_swim_faction();

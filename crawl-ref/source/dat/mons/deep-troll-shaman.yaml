@@ -1,6 +1,6 @@
 name: "deep troll shaman"
 glyph: {char: "T", colour: white}
-flags: [see_invis, unblindable, speaks, warm_blood]
+flags: [unblindable, speaks, warm_blood]
 exp: 814
 species: deep_troll
 genus: troll

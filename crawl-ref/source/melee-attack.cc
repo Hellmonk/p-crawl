@@ -642,8 +642,7 @@ void melee_attack::do_vampire_lifesteal()
         && (you.form == transformation::vampire
             || you.form == transformation::bat_swarm)
         && (stab_attempt || you.hp * 2 <= you.hp_max)
-        && adjacent(you.pos(), mon->pos())
-        && !mons_class_flag(defender->type, M_ACID_SPLASH))
+        && adjacent(you.pos(), mon->pos()))
     {
         // Stabs always heal, but thirsty attacks have a shapeshifting-based
         // chance to heal.
@@ -2852,33 +2851,7 @@ void melee_attack::decapitate()
  */
 void melee_attack::attacker_sustain_passive_damage()
 {
-    // If the defender has been cleaned up, it's too late for anything.
-    if (!defender->alive())
-        return;
-
-    if (!mons_class_flag(defender->type, M_ACID_SPLASH))
-        return;
-
-    if (attacker->res_corr() >= 3)
-        return;
-
-    if (!adjacent(attacker->pos(), defender->pos()) || is_riposte)
-        return;
-
-    const int dmg = resist_adjust_damage(attacker, BEAM_ACID, roll_dice(1, 5));
-
-    if (attacker->is_player())
-        mpr(you.hands_act("burn", "!"));
-    else
-    {
-        simple_monster_message(*attacker->as_monster(),
-                               " is burned by acid!");
-    }
-    attacker->hurt(defender, dmg, BEAM_ACID,
-                   KILLED_BY_ACID);
-
-    if (attacker->alive() && one_chance_in(5))
-        attacker->corrode(defender);
+    return;
 }
 
 int melee_attack::staff_damage(stave_type staff) const

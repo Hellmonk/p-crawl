@@ -1747,6 +1747,9 @@ static void _pre_monster_move(monster& mons)
             mons.del_ench(ENCH_HEXED);
     }
 
+    if (mons.has_ench(ENCH_USED_FREE_ACTION))
+        mons.del_ench(ENCH_USED_FREE_ACTION);
+
     // Dissipate player ball lightnings and foxfires
     // that have left the player's sight
     // (monsters are allowed to 'cheat', as with orb of destruction)

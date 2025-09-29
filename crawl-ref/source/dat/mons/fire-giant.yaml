@@ -1,6 +1,6 @@
 name: "fire giant"
 glyph: {char: "C", colour: red}
-flags: [fighter, see_invis, speaks, warm_blood]
+flags: [fighter, speaks, warm_blood]
 resists: {fire: 2}
 exp: 1281
 genus: giant

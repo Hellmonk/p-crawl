@@ -1,6 +1,6 @@
 name: "orb of winter"
 glyph: {char: "*", colour: lightblue}
-flags: [flies, see_invis, insubstantial]
+flags: [flies, insubstantial]
 resists: {elec: 3, fire: 1, cold: 3}
 exp: 4638
 holiness: [nonliving]

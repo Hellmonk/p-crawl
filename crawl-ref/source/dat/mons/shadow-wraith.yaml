@@ -1,6 +1,6 @@
 name: "shadow wraith"
 glyph: {char: "W", colour: lightmagenta}
-flags: [flies, invis, see_invis, insubstantial]
+flags: [flies, insubstantial]
 exp: 761
 genus: wraith
 holiness: [undead]

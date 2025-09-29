@@ -1,6 +1,6 @@
 name: "antique champion"
 glyph: {char: "z", colour: blue}
-flags: [fighter, see_invis]
+flags: [fighter]
 resists: {cold: 1}
 exp: 1518
 species: ancient_champion

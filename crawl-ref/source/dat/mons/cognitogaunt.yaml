@@ -1,6 +1,6 @@
 name: "cognitogaunt"
 glyph: {char: "n", colour: magenta}
-flags: [see_invis, no_zombie, speaks]
+flags: [no_zombie, speaks]
 resists: {cold: 1}
 exp: 963
 holiness: [undead]

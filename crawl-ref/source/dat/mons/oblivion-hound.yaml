@@ -1,6 +1,6 @@
 name: "oblivion hound"
 glyph: {char: "h", colour: green}
-flags: [see_invis, unblindable]
+flags: [unblindable]
 exp: 2059
 genus: hound
 holiness: [demonic]

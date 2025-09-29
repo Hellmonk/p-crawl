@@ -1,7 +1,6 @@
 name: "naga"
 glyph: {char: "N", colour: green}
-flags: [see_invis, speaks, warm_blood]
-resists: {poison: 1}
+flags: [speaks, warm_blood, slow_movement]
 exp: 161
 will: 40
 attacks:

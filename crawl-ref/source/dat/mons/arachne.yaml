@@ -1,6 +1,6 @@
 name: "Arachne"
 glyph: {char: "H", colour: lightcyan}
-flags: [see_invis, speaks, web_immune, warm_blood, unique, female]
+flags: [speaks, web_immune, warm_blood, unique, female]
 exp: 3900
 genus: spider
 will: 80
