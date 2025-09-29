@@ -1650,10 +1650,11 @@ int player_prot_life(bool temp, bool items)
     return pl;
 }
 
-// Even a slight speed advantage is very good... and we certainly don't
-// want to go past 6 (see below). -- bwr
+// You will move at speed 10 and like it.
 int player_movement_speed(bool check_terrain, bool temp)
 {
+    return 10;
+    
     int mv = get_form()->base_move_speed;
 
     if (check_terrain && feat_is_water(env.grid(you.pos())))
@@ -1721,32 +1722,10 @@ int player_movement_speed(bool check_terrain, bool temp)
     return mv;
 }
 
-// This function differs from the above in that it's used to set the
-// initial time_taken value for the turn. Everything else (movement,
-// spellcasting, combat) applies a ratio to this value.
+// You will act at speed 10 and like it.
 int player_speed()
 {
-    int ps = 10;
-
-    // When paralysed, speed is irrelevant.
-    if (you.cannot_act())
-        return ps;
-
-    if (you.duration[DUR_SLOW] || have_stat_zero())
-        ps = haste_mul(ps);
-
-    if (you.duration[DUR_BERSERK] && !have_passive(passive_t::no_haste))
-        ps = berserk_div(ps);
-    else if (you.duration[DUR_HASTE])
-        ps = haste_div(ps);
-
-    if (you.form == transformation::statue || you.duration[DUR_PETRIFYING])
-    {
-        ps *= 15;
-        ps /= 10;
-    }
-
-    return ps;
+    return 10;
 }
 
 int player_detection_level()
