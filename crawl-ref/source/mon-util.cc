@@ -476,7 +476,6 @@ int monster::scan_artefacts(artefact_prop_type ra_prop,
     if (mons_itemuse(*this) >= MONUSE_STARTING_EQUIPMENT)
     {
         const int weap      = inv[MSLOT_WEAPON];
-        const int second    = inv[MSLOT_ALT_WEAPON]; // Two-headed ogres, etc.
         const int armour    = inv[MSLOT_ARMOUR];
         const int shld      = inv[MSLOT_SHIELD];
         const int jewellery = inv[MSLOT_JEWELLERY];

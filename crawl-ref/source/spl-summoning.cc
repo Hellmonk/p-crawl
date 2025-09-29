@@ -2299,8 +2299,6 @@ static item_def* _find_spectral_weapon_item(const monster& mons)
         item_def* primary_weapon = owning_mons->mslot_item(MSLOT_WEAPON);
         if (_is_item_for_spectral_weapon(primary_weapon, mons.mid))
             return primary_weapon;
-
-        item_def* secondary_weapon = owning_mons->mslot_item(MSLOT_ALT_WEAPON);
     }
     return nullptr;
 }

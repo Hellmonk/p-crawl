@@ -1654,7 +1654,7 @@ int player_prot_life(bool temp, bool items)
 int player_movement_speed(bool check_terrain, bool temp)
 {
     return 10;
-    
+
     int mv = get_form()->base_move_speed;
 
     if (check_terrain && feat_is_water(env.grid(you.pos())))
