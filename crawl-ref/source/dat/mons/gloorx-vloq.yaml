@@ -15,7 +15,6 @@ ev: 10
 spells: gloorx_vloq
 shout: moan
 intelligence: human
-speed: 20
 uses: open_doors
 size: large
 shape: humanoid

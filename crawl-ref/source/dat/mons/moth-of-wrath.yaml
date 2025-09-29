@@ -13,6 +13,5 @@ ev: 10
 spells: moth_of_wrath
 has_corpse: true
 intelligence: animal
-speed: 12
 size: small
 shape: insect_winged

@@ -14,7 +14,6 @@ spells: sphinx_marauder
 has_corpse: true
 shout: shout
 intelligence: human
-speed: 12
 uses: open_doors
 size: large
 shape: quadruped_winged

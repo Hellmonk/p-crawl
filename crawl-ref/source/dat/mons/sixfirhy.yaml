@@ -11,8 +11,6 @@ hp_10x: 385
 ac: 2
 ev: 20
 intelligence: human
-speed: 40
-energy: {move: 6}
 uses: open_doors
 size: little
 shape: humanoid

@@ -12,6 +12,5 @@ hp_10x: 145
 ac: 1
 ev: 14
 intelligence: animal
-speed: 30
 size: tiny
 shape: bat

@@ -16,7 +16,6 @@ ev: 15
 spells: executioner
 shout: scream
 intelligence: human
-speed: 20
 uses: open_doors
 size: large
 shape: humanoid

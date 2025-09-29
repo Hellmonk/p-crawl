@@ -16,7 +16,6 @@ ev: 4
 has_corpse: true
 shout: shout
 intelligence: human
-speed: 7
 uses: open_doors
 size: large
 shape: humanoid

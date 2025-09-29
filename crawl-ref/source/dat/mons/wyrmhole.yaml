@@ -15,7 +15,6 @@ spells: wyrmhole
 shout: hiss
 has_corpse: false
 intelligence: animal
-speed: 12
 size: small
 shape: quadruped
 tile_variance: random

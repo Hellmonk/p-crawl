@@ -16,7 +16,6 @@ ev: 20
 spells: seraph
 shout: shout
 intelligence: human
-speed: 15
 uses: open_doors
 size: medium
 shape: humanoid_winged

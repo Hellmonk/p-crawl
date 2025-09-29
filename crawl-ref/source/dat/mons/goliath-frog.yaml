@@ -13,7 +13,5 @@ ev: 16
 has_corpse: true
 intelligence: animal
 habitat: amphibious
-speed: 12
-energy: {swim: 6}
 size: little
 shape: quadruped_tailless

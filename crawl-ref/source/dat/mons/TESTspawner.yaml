@@ -13,7 +13,5 @@ ev: 127
 spells: test_spawner
 intelligence: brainless
 habitat: amphibious
-speed: 14
-energy: {swim: 6}
 size: large
 shape: misc

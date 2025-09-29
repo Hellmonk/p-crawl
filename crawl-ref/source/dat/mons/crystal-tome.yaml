@@ -15,6 +15,5 @@ ev: 5
 spells: walking_tome
 shout: rustle
 intelligence: brainless
-energy: {attack: 20}
 size: small
 shape: misc

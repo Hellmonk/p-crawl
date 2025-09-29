@@ -15,7 +15,6 @@ spells: fenstrider_witch
 has_corpse: true
 shout: shout
 intelligence: human
-speed: 13
 uses: open_doors
 size: giant
 shape: humanoid

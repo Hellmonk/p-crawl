@@ -13,6 +13,5 @@ ev: 15
 has_corpse: true
 shout: howl
 intelligence: animal
-speed: 17
 size: medium
 shape: quadruped

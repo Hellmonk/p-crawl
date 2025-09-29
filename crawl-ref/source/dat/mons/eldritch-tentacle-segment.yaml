@@ -12,7 +12,6 @@ ac: 13
 ev: 0
 intelligence: animal
 habitat: eldritch_tentacle
-speed: 12
 size: giant
 shape: misc
 tile: program_bug

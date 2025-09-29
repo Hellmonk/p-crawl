@@ -13,7 +13,6 @@ ac: 5
 ev: 14
 shout: random
 intelligence: human
-speed: 15
 uses: open_doors
 size: large
 shape: humanoid

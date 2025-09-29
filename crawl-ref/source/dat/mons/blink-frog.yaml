@@ -15,7 +15,5 @@ has_corpse: true
 shout: croak
 intelligence: animal
 habitat: amphibious
-speed: 14
-energy: {swim: 6}
 size: medium
 shape: quadruped_tailless

@@ -15,7 +15,5 @@ spells: orb_spider
 has_corpse: true
 shout: faint_skitter
 intelligence: animal
-speed: 12
-energy: {spell: 20}
 size: small
 shape: arachnid

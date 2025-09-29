@@ -10,7 +10,6 @@ hp_10x: 825
 ac: 13
 ev: 13
 intelligence: human
-speed: 14
 uses: open_doors
 size: giant
 shape: misc

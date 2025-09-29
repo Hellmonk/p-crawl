@@ -17,7 +17,5 @@ has_corpse: true
 shout: scream
 intelligence: animal
 habitat: amphibious
-speed: 15
-energy: {attack: 45}
 size: large
 shape: quadruped

@@ -15,6 +15,5 @@ spells: culicivora
 has_corpse: true
 shout: faint_skitter
 intelligence: animal
-speed: 15
 size: small
 shape: arachnid

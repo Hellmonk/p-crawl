@@ -15,7 +15,6 @@ ev: 6
 spells: menkaure
 shout: shout
 intelligence: human
-speed: 8
 uses: open_doors
 size: medium
 shape: humanoid

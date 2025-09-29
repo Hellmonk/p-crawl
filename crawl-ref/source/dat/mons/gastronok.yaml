@@ -15,7 +15,6 @@ has_corpse: true
 shout: gurgle
 intelligence: human
 habitat: amphibious
-speed: 5
 uses: open_doors
 size: giant
 shape: snail

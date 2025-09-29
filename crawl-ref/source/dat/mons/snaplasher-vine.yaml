@@ -13,7 +13,6 @@ hp_10x: 240
 ac: 4
 ev: 7
 intelligence: brainless
-speed: 13
 size: large
 shape: snake
 tile: program_bug

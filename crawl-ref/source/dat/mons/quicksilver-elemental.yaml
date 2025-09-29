@@ -14,6 +14,5 @@ ac: 1
 ev: 30
 spells: quicksilver_dragon
 intelligence: animal
-speed: 20
 size: large
 shape: misc

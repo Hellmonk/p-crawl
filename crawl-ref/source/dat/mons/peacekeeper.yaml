@@ -15,6 +15,5 @@ ev: 3
 spells: peacekeeper
 shout: roar
 intelligence: brainless
-speed: 15
 size: medium
 shape: quadruped_tailless

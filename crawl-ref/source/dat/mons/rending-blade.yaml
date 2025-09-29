@@ -12,6 +12,5 @@ hp_10x: 400
 ac: 15
 ev: 10
 intelligence: brainless
-speed: 20
 size: medium
 shape: misc

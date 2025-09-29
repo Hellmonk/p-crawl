@@ -11,6 +11,5 @@ hp_10x: 150
 ac: 5
 ev: 17
 intelligence: brainless
-speed: 10
 size: tiny
 shape: orb

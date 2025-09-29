@@ -12,7 +12,5 @@ ev: 15
 has_corpse: true
 intelligence: animal
 habitat: amphibious
-speed: 8
-energy: {swim: 6}
 size: large
 shape: snake

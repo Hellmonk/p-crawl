@@ -12,7 +12,6 @@ hp_10x: 1110
 ac: 0
 ev: 10
 intelligence: brainless
-speed: 10
 size: small
 shape: orb
 tile_variance: cycle

@@ -15,7 +15,5 @@ ev: 9
 spells: thorn_hunter
 intelligence: animal
 habitat: amphibious
-speed: 12
-energy: {swim: 12}
 size: large
 shape: plant

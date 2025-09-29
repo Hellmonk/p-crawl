@@ -14,8 +14,6 @@ ev: 5
 has_corpse: true
 shout: shout
 intelligence: human
-speed: 15
-energy: {attack: 45}
 uses: open_doors
 size: giant
 shape: humanoid

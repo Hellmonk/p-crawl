@@ -17,7 +17,6 @@ ev: 29
 spells: mnoleg
 shout: buzz
 intelligence: human
-speed: 13
 uses: open_doors
 size: large
 shape: humanoid

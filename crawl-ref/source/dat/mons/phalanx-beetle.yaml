@@ -7,7 +7,6 @@ holiness: [nonliving]
 will: invuln
 attacks:
  - {type: bite, damage: 21}
-energy: {move: 5}
 hd: 11
 hp_10x: 580
 ac: 12

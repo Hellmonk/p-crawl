@@ -16,7 +16,6 @@ spells: bog_body
 has_corpse: true
 intelligence: human
 habitat: amphibious
-energy: {swim: 14}
 uses: open_doors
 size: medium
 shape: humanoid

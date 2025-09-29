@@ -18,7 +18,6 @@ ev: 15
 spells: ignacio
 shout: shout
 intelligence: human
-speed: 20
 uses: open_doors
 size: large
 shape: humanoid

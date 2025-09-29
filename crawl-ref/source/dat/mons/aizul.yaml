@@ -15,7 +15,6 @@ spells: aizul
 has_corpse: true
 shout: shout
 intelligence: human
-speed: 15
 uses: open_doors
 size: large
 shape: snake

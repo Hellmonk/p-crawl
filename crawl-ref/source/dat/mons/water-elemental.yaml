@@ -14,6 +14,5 @@ ac: 4
 ev: 7
 intelligence: animal
 habitat: amphibious
-energy: {swim: 6}
 size: large
 shape: misc

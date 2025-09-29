@@ -16,6 +16,5 @@ spells: pearl_dragon
 has_corpse: true
 shout: loud_roar
 intelligence: animal
-speed: 12
 size: giant
 shape: quadruped_winged

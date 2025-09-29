@@ -13,7 +13,6 @@ hp_10x: 495
 ac: 1
 ev: 2
 intelligence: human
-energy: {attack: 30}
 uses: open_doors
 size: giant
 shape: humanoid

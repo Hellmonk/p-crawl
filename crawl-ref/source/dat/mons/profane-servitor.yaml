@@ -14,7 +14,6 @@ hp_10x: 1530
 ac: 10
 ev: 20
 intelligence: human
-speed: 15
 uses: open_doors
 size: medium
 shape: humanoid_winged

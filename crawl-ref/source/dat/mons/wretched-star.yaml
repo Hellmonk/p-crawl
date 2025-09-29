@@ -12,6 +12,5 @@ ac: 10
 ev: 10
 spells: wretched_star
 intelligence: human
-energy: {move: 8}
 size: little
 shape: orb

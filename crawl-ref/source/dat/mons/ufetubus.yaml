@@ -13,7 +13,6 @@ ac: 2
 ev: 15
 shout: shout
 intelligence: human
-speed: 15
 uses: open_doors
 size: small
 shape: bird

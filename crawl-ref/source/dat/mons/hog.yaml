@@ -12,6 +12,5 @@ ev: 9
 has_corpse: true
 shout: squeal
 intelligence: animal
-speed: 13
 size: small
 shape: quadruped

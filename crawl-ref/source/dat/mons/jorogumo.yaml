@@ -13,7 +13,6 @@ spells: jorogumo
 has_corpse: true
 shout: shout
 intelligence: human
-speed: 12
 uses: open_doors
 size: medium
 shape: arachnid

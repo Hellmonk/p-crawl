@@ -13,6 +13,5 @@ ev: 1
 spells: curse_toe
 shout: moan
 intelligence: human
-energy: {move: 14}
 size: tiny
 shape: misc

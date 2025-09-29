@@ -13,6 +13,5 @@ ev: 14
 has_corpse: true
 shout: faint_skitter
 intelligence: animal
-speed: 30
 size: little
 shape: insect

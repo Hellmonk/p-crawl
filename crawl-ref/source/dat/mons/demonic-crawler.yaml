@@ -16,6 +16,5 @@ ev: 6
 has_corpse: true
 shout: scream
 intelligence: animal
-speed: 13
 size: large
 shape: centipede

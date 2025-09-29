@@ -14,6 +14,5 @@ ev: 10
 has_corpse: true
 shout: loud_roar
 intelligence: animal
-speed: 12
 size: little
 shape: quadruped

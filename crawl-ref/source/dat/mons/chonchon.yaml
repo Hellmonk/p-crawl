@@ -14,8 +14,6 @@ spells: chonchon
 has_corpse: true
 shout: screech
 intelligence: human
-speed: 20
-energy: {spell: 20}
 size: tiny
 shape: misc
 tile_variance: random

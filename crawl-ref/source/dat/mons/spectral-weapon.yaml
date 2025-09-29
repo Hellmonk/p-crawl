@@ -13,7 +13,6 @@ hp_10x: 250
 ac: 5
 ev: 10
 intelligence: brainless
-speed: 30
 size: medium
 shape: misc
 tile: spectral_sbl

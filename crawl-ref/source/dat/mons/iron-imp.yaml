@@ -13,7 +13,6 @@ ac: 6
 ev: 8
 shout: shout
 intelligence: human
-speed: 8
 uses: open_doors
 size: small
 shape: humanoid

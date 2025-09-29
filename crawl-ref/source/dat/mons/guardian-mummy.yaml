@@ -13,7 +13,6 @@ hp_10x: 455
 ac: 6
 ev: 9
 intelligence: human
-speed: 8
 uses: open_doors
 size: large
 shape: humanoid

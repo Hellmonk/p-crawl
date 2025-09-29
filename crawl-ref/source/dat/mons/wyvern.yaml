@@ -12,6 +12,5 @@ ev: 10
 has_corpse: true
 shout: hiss
 intelligence: animal
-speed: 15
 size: large
 shape: quadruped_winged

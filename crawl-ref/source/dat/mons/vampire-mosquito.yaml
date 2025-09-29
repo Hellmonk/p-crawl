@@ -13,6 +13,5 @@ ev: 15
 has_corpse: true
 shout: buzz
 intelligence: animal
-speed: 19
 size: little
 shape: insect_winged

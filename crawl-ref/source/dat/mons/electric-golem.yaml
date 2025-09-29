@@ -17,7 +17,6 @@ ac: 5
 ev: 20
 spells: electric_golem
 intelligence: brainless
-speed: 16
 uses: open_doors
 size: large
 shape: humanoid

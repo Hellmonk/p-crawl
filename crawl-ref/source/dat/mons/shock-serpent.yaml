@@ -15,6 +15,5 @@ spells: shock_serpent
 has_corpse: true
 shout: hiss
 intelligence: animal
-speed: 15
 size: medium
 shape: snake

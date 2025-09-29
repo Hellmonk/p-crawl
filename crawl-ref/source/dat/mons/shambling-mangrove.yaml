@@ -13,7 +13,6 @@ ev: 3
 spells: shambling_mangrove
 intelligence: human
 habitat: amphibious
-speed: 8
 size: giant
 shape: plant
 tile: treant

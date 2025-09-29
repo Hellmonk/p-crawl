@@ -14,6 +14,5 @@ ev: 15
 has_corpse: true
 shout: hiss
 intelligence: animal
-speed: 18
 size: medium
 shape: snake

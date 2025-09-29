@@ -14,7 +14,6 @@ spells: kobold_blastminer
 has_corpse: true
 shout: shout
 intelligence: human
-energy: {spell: 15}
 uses: open_doors
 size: small
 shape: humanoid

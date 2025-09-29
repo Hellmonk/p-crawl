@@ -15,6 +15,5 @@ ac: 18
 ev: 7
 has_corpse: true
 intelligence: animal
-speed: 12
 size: giant
 shape: arachnid

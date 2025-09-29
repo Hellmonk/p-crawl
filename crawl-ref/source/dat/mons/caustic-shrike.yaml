@@ -13,6 +13,5 @@ ev: 18
 has_corpse: true
 shout: screech
 intelligence: animal
-speed: 20
 size: tiny
 shape: bird

@@ -13,6 +13,5 @@ ev: 1
 has_corpse: true
 intelligence: animal
 habitat: amphibious
-speed: 7
 size: large
 shape: snail

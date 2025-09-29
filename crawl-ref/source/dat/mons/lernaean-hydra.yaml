@@ -16,6 +16,5 @@ has_corpse: true
 shout: loud_roar
 intelligence: animal
 habitat: amphibious
-energy: {swim: 6}
 size: giant
 shape: quadruped

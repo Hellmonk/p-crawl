@@ -16,7 +16,6 @@ spells: naga_warrior
 has_corpse: true
 shout: shout
 intelligence: human
-energy: {move: 14}
 uses: open_doors
 size: large
 shape: naga

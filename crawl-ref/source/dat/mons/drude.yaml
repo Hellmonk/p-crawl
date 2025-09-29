@@ -10,7 +10,6 @@ attacks:
  - {type: hit, damage: 8, flavour: doom}
 hd: 4
 hp_10x: 210
-speed: 13
 ac: 4
 ev: 17
 shout: shout

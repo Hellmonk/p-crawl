@@ -17,6 +17,5 @@ spells: iron_dragon
 has_corpse: true
 shout: loud_roar
 intelligence: animal
-speed: 8
 size: giant
 shape: quadruped

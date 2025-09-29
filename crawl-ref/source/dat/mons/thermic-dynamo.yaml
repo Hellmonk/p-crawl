@@ -15,7 +15,6 @@ ac: 4
 ev: 16
 spells: thermic_dynamo
 intelligence: brainless
-energy: {move: 8}
 size: medium
 shape: misc
 tile_variance: cycle

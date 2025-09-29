@@ -13,7 +13,6 @@ ac: 12
 ev: 4
 spells: worldbinder
 intelligence: animal
-speed: 14
 uses: open_doors
 size: small
 shape: misc

@@ -13,7 +13,6 @@ ac: 3
 ev: 14
 shout: shout
 intelligence: human
-energy: {move: 7}
 uses: open_doors
 size: little
 shape: humanoid_winged

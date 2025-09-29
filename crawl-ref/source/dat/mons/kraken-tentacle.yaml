@@ -12,7 +12,6 @@ ac: 5
 ev: 7
 intelligence: animal
 habitat: amphibious
-speed: 17
 size: large
 shape: snake
 tile: program_bug

@@ -11,6 +11,5 @@ ac: 5
 ev: 30
 has_corpse: true
 intelligence: animal
-speed: 12
 size: little
 shape: insect

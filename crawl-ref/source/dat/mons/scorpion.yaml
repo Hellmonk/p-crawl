@@ -12,6 +12,5 @@ ac: 5
 ev: 10
 has_corpse: true
 intelligence: animal
-speed: 12
 size: small
 shape: arachnid

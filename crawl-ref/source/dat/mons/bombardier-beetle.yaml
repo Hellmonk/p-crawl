@@ -13,6 +13,5 @@ ev: 7
 spells: bombardier_beetle
 has_corpse: true
 intelligence: animal
-speed: 6
 size: little
 shape: insect

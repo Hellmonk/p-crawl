@@ -12,7 +12,6 @@ hp_10x: 75
 ac: 0
 ev: 4
 intelligence: brainless
-speed: 5
 size: small
 shape: misc
 tile: zombie_small

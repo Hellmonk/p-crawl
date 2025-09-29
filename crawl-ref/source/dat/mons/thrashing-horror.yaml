@@ -15,6 +15,5 @@ ev: 10
 spells: thrashing_horror
 shout: roar
 intelligence: animal
-speed: 25
 size: large
 shape: misc

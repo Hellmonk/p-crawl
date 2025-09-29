@@ -15,6 +15,5 @@ spells: quicksilver_dragon
 has_corpse: true
 shout: loud_roar
 intelligence: animal
-speed: 15
 size: giant
 shape: quadruped_winged

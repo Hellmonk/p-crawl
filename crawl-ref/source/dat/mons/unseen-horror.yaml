@@ -10,6 +10,5 @@ hp_10x: 385
 ac: 5
 ev: 10
 intelligence: animal
-speed: 30
 size: medium
 shape: misc

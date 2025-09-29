@@ -14,7 +14,6 @@ ac: 5
 ev: 5
 intelligence: human
 habitat: amphibious
-speed: 14
 uses: open_doors
 size: medium
 shape: humanoid

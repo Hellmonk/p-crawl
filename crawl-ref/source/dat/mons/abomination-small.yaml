@@ -11,7 +11,6 @@ hp_10x: 270
 ac: 6
 ev: 9
 intelligence: brainless
-speed: 12
 size: large
 shape: misc
 tile_variance: mod

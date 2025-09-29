@@ -16,7 +16,6 @@ spells: meliai
 has_corpse: true
 shout: buzz
 intelligence: human
-speed: 20
 uses: open_doors
 size: small
 shape: insect_winged

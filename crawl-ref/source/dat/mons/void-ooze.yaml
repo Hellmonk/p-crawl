@@ -13,6 +13,5 @@ hp_10x: 500
 ac: 3
 ev: 15
 intelligence: brainless
-speed: 16
 size: giant
 shape: blob

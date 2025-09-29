@@ -16,7 +16,6 @@ ev: 4
 spells: moon_troll
 shout: shout
 intelligence: human
-speed: 12
 uses: open_doors
 size: large
 shape: humanoid

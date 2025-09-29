@@ -15,7 +15,6 @@ ev: 12
 spells: tormentor
 shout: roar
 intelligence: human
-speed: 13
 uses: open_doors
 size: medium
 shape: humanoid

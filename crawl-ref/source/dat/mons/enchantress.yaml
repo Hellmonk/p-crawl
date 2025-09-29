@@ -15,7 +15,6 @@ spells: enchantress
 has_corpse: true
 shout: shout
 intelligence: human
-energy: {move: 6}
 uses: open_doors
 size: little
 shape: humanoid

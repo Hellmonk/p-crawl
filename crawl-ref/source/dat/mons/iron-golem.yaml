@@ -15,8 +15,6 @@ ac: 24
 ev: 2
 shout: squeak
 intelligence: brainless
-speed: 7
-energy: {attack: 7}
 uses: open_doors
 size: large
 shape: humanoid

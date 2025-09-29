@@ -11,7 +11,6 @@ ac: 5
 ev: 7
 intelligence: animal
 habitat: amphibious
-speed: 18
 size: large
 shape: misc
 tile: program_bug

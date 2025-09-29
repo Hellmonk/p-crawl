@@ -14,7 +14,5 @@ ev: 9
 has_corpse: true
 intelligence: animal
 habitat: amphibious
-speed: 12
-energy: {swim: 8}
 size: large
 shape: quadruped

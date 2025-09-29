@@ -11,6 +11,5 @@ ac: 1
 ev: 14
 has_corpse: true
 intelligence: animal
-speed: 30
 size: tiny
 shape: bat

@@ -14,8 +14,6 @@ spells: swamp_worm
 has_corpse: true
 intelligence: animal
 habitat: amphibious
-speed: 12
-energy: {move: 12}
 size: medium
 shape: snake
 tile_variance: water

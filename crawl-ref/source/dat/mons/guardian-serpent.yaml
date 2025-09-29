@@ -14,6 +14,5 @@ spells: guardian_serpent
 has_corpse: true
 shout: shout
 intelligence: human
-speed: 15
 size: large
 shape: snake

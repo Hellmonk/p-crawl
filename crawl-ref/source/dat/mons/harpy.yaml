@@ -14,6 +14,5 @@ ev: 10
 has_corpse: true
 shout: screech
 intelligence: human
-speed: 25
 size: medium
 shape: humanoid_winged

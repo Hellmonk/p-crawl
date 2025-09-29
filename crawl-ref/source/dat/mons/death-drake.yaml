@@ -15,6 +15,5 @@ spells: death_drake
 has_corpse: true
 shout: hiss
 intelligence: animal
-speed: 13
 size: large
 shape: quadruped_winged

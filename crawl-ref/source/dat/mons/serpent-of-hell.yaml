@@ -19,7 +19,6 @@ ev: 12
 spells: serpent_of_hell_geh
 shout: loud_roar
 intelligence: human
-speed: 14
 size: giant
 shape: quadruped_winged
 tile: serpent_of_hell_gehenna

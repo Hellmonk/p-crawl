@@ -13,6 +13,5 @@ ac: 6
 ev: 8
 has_corpse: true
 intelligence: animal
-energy: {move: 7}
 size: large
 shape: fish

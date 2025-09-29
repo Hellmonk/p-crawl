@@ -14,7 +14,6 @@ spells: natasha
 has_corpse: true
 shout: hiss
 intelligence: human
-energy: {move: 8}
 uses: open_doors
 size: little
 shape: quadruped

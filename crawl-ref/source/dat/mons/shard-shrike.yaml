@@ -14,6 +14,5 @@ spells: shard_shrike
 has_corpse: true
 shout: screech
 intelligence: animal
-speed: 30
 size: tiny
 shape: bird

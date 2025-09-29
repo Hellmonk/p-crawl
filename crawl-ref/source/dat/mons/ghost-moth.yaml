@@ -16,6 +16,5 @@ ev: 10
 spells: ghost_moth
 has_corpse: true
 intelligence: animal
-speed: 12
 size: large
 shape: insect_winged

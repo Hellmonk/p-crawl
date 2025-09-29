@@ -8,7 +8,6 @@ hd: 10
 hp_10x: 250
 ac: 9
 ev: 15
-speed: 5
 spells: shadow_turret
 intelligence: brainless
 size: medium

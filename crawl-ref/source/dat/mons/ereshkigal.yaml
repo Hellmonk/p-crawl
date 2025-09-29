@@ -15,7 +15,6 @@ ev: 30
 spells: ereshkigal
 shout: shout
 intelligence: human
-speed: 14
 uses: open_doors
 size: large
 shape: humanoid

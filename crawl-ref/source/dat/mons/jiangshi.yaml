@@ -15,7 +15,5 @@ hp_10x: 650
 ac: 10
 ev: 10
 intelligence: animal
-speed: 18
-energy: {move: 6}
 size: medium
 shape: humanoid
