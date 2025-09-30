@@ -44,6 +44,7 @@ free_action_type actor::free_action_available() const
         if (mon->has_ench(ENCH_USED_FREE_ACTION))
             return FACT_NONE;
 
+        // slow blocks all free actions unless also hasted
         if (mon->has_ench(ENCH_SLOW))
         {
             if (!mon->has_ench(ENCH_HASTE))

@@ -6184,14 +6184,6 @@ static string _monster_stat_description(const monster_info& mi, bool mark_spells
     // Might be better to have some place where players can see holiness &
     // information about holiness.......?
 
-    if (mi.type == MONS_SHADOWGHAST)
-    {
-        // Cf. monster::action_energy() in monster.cc.
-        result << uppercase_first(pronoun) << " "
-               << conjugate_verb("cover", plural)
-               << " ground more quickly when invisible.\n";
-    }
-
     if (mi.type == MONS_ROYAL_JELLY)
     {
         result << "It will release varied jellies when damaged or killed, with"
