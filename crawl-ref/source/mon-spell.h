@@ -2537,6 +2537,12 @@ static const mon_spellbook mspell_list[] =
       }
     },
 
+    {  MST_RUK,
+      {
+       { SPELL_THROW_BOULDER, 150, MON_SPELL_NATURAL },
+      }
+    },
+
     {  MST_ASSASSIN,
       {
        { SPELL_TOXIC_DART, 80, MON_SPELL_NATURAL },

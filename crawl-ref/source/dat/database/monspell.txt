@@ -272,6 +272,10 @@ Throw Bolas cast
 
 @The_monster@ hurls a bolas @at@ @target@.
 %%%%
+Throw Boulder cast
+
+@The_monster@ hurls a massive boulder @at@ @target@.
+%%%%
 Throw Klown Pie cast
 
 @The_monster@ pies @target@ viciously!

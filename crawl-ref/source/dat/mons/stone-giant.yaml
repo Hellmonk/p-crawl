@@ -5,11 +5,12 @@ exp: 1084
 genus: giant
 will: 80
 attacks:
- - {type: hit, damage: 45}
-hd: 16
-hp_10x: 880
+ - {type: hit, damage: 23}
+hd: 7
+hp_10x: 580
 ac: 12
-ev: 2
+ev: 0
+spells: ruk
 has_corpse: true
 shout: shout
 intelligence: human

@@ -649,5 +649,6 @@ enum spell_type : int
     SPELL_SHOOT_ARROW,
     SPELL_TOXIC_DART,
     SPELL_MASS_REPULSION,
+    SPELL_THROW_BOULDER,
     NUM_SPELLS
 };

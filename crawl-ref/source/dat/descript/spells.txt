@@ -2396,3 +2396,8 @@ Shoot Arrow spell
 
 Fires an arrow. The damage dealt by the arrow depends significantly on the
 difficulty of the monster firing it. Monsters won't shoot arrows in melee range.
+%%%%
+Throw Boulder spell
+
+Throws a massive boulder that can penetrate through multiple targets. Monsters
+won't throw boulders at targets in melee range.
