@@ -1,15 +1,15 @@
 name: "ogre mage"
 glyph: {char: "O", colour: magenta}
-flags: [speaks, warm_blood]
+flags: [speaks, warm_blood, slow_attacks]
 exp: 848
 species: ogre
 will: 80
 attacks:
- - {type: hit, damage: 16}
-hd: 10
-hp_10x: 550
+ - {type: hit, damage: 20}
+hd: 5
+hp_10x: 300
 ac: 1
-ev: 7
+ev: 0
 spells: ogre_mage
 has_corpse: true
 shout: shout

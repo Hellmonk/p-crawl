@@ -8,11 +8,11 @@ genus: walking_tome
 holiness: [nonliving]
 will: invuln
 attacks:
- - {type: hit, flavour: cold, damage: 20}
-hd: 20
-hp_10x: 1000
+ - {type: hit, flavour: cold, damage: 10}
+hd: 4
+hp_10x: 400
 ac: 10
-ev: 10
+ev: 0
 spells: walking_tome
 shout: rustle
 intelligence: brainless

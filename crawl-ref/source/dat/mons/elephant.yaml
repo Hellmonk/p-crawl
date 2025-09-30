@@ -4,12 +4,12 @@ flags: [warm_blood]
 exp: 480
 will: 60
 attacks:
- - {type: trample, flavour: trample, damage: 20}
+ - {type: trample, flavour: trample, damage: 8}
  - {type: trunk_slap, damage: 5}
-hd: 9
-hp_10x: 675
+hd: 4
+hp_10x: 350
 ac: 8
-ev: 2
+ev: 0
 has_corpse: true
 shout: trumpet
 intelligence: animal

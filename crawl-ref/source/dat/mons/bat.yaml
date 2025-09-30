@@ -1,14 +1,14 @@
 name: "bat"
 glyph: {char: "b", colour: lightgray}
-flags: [flies, unblindable, batty, warm_blood]
+flags: [flies, unblindable, batty, quick, warm_blood]
 exp: 1
 will: 0
 attacks:
- - {type: hit, damage: 1}
+ - {type: hit, damage: 2}
 hd: 1
-hp_10x: 35
+hp_10x: 30
 ac: 1
-ev: 14
+ev: 80
 has_corpse: true
 intelligence: animal
 size: tiny

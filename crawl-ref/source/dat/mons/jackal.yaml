@@ -1,15 +1,15 @@
 name: "jackal"
 glyph: {char: "h", colour: brown}
-flags: [warm_blood]
+flags: [warm_blood, quick]
 exp: 2
 genus: hound
 will: 0
 attacks:
  - {type: bite, damage: 3}
 hd: 1
-hp_10x: 55
-ac: 2
-ev: 12
+hp_10x: 50
+ac: 1
+ev: 10
 has_corpse: true
 shout: bark
 intelligence: animal

@@ -4,13 +4,13 @@ flags: [flies, cold_blood, no_skeleton]
 exp: 767
 will: 40
 attacks:
- - {type: bite, flavour: bloodzerk, damage: 20}
- - {type: tail_slap, damage: 10}
- - {type: tail_slap, damage: 10}
-hd: 10
-hp_10x: 750
-ac: 6
-ev: 8
+ - {type: bite, flavour: bloodzerk, damage: 10}
+ - {type: tail_slap, damage: 5}
+ - {type: tail_slap, damage: 5}
+hd: 5
+hp_10x: 350
+ac: 3
+ev: 10
 has_corpse: true
 intelligence: animal
 size: large

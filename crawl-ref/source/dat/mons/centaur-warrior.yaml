@@ -1,16 +1,17 @@
 name: "centaur warrior"
 glyph: {char: "c", colour: yellow}
-flags: [fighter, speaks, warm_blood, archer]
+flags: [fighter, speaks, warm_blood, archer, fast_moving]
 exp: 836
 species: centaur
 will: 40
 attacks:
- - {type: hit, damage: 16}
- - {type: kick, damage: 5}
-hd: 10
-hp_10x: 550
+ - {type: hit, damage: 7}
+ - {type: kick, damage: 7}
+hd: 6
+hp_10x: 400
 ac: 4
-ev: 8
+ev: 0
+spells: archer
 has_corpse: true
 shout: shout
 intelligence: human

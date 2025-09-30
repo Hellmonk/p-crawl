@@ -1350,36 +1350,17 @@ static void _cast_brain_bite(monster &caster, mon_spell_slot slot, bolt&)
     int drain = 0;
 
     if (foe->is_player())
-    {
-        if (you.magic_points <= you.max_magic_points / 5)
-        {
-            dam_multiplier = 2;
-            mpr("Something gnaws heavily on your mind!");
-            xom_is_stimulated(30);
-        }
-        else
             mpr("Something gnaws on your mind!");
-
-    }
     else
-    {
-        monster* mon_foe = foe->as_monster();
-        if (mon_foe->has_ench(ENCH_ANTIMAGIC))
-        {
-            dam_multiplier = 2;
-            simple_monster_message(*foe->as_monster(), " mind is heavily gnawed upon.", true);
-        }
-        else
-            simple_monster_message(*foe->as_monster(), " mind is gnawed upon.", true);
-    }
+        simple_monster_message(*foe->as_monster(), " mind is gnawed upon.", true);
 
-    foe->hurt(&caster, (4 + random2avg(5, 2)) * dam_multiplier,
+    foe->hurt(&caster, (5 + random2(5)) * dam_multiplier,
               BEAM_MISSILE, KILLED_BY_BEAM, "", "by psychic fangs");
     _whack(caster, *foe);
 
     if (foe->is_player())
     {
-        drain = min(you.magic_points, max(1, you.max_magic_points / 5));
+        drain = min(you.magic_points, caster.spell_hd(SPELL_BRAIN_BITE));
         if (drain > 0)
         {
             mprf(MSGCH_WARN, "You feel your power leaking away.");
@@ -6720,7 +6701,7 @@ static bool _cast_dirge(monster& caster, bool check_only = false)
             continue;
         }
 
-        if (mons->has_ench(ENCH_MIGHT) && mons->has_ench(ENCH_SWIFT))
+        if (mons->has_ench(ENCH_MIGHT) && mons->has_ench(ENCH_HASTE))
             continue;
 
         // We found at least one valid target; this is good enough.
@@ -6747,7 +6728,7 @@ static bool _cast_dirge(monster& caster, bool check_only = false)
         int buffRange = random_range(3, 5);
         mons->add_ench(mon_enchant(ENCH_MIGHT, 1, &caster, buffRange
                                                            * BASELINE_DELAY));
-        mons->add_ench(mon_enchant(ENCH_SWIFT, 1, &caster, buffRange
+        mons->add_ench(mon_enchant(ENCH_HASTE, 1, &caster, buffRange
                                                            * BASELINE_DELAY));
 
         if (mons->asleep())

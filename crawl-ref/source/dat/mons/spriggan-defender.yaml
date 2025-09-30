@@ -1,15 +1,16 @@
 name: "spriggan defender"
 glyph: {char: "i", colour: yellow}
-flags: [fighter, speaks, warm_blood]
+flags: [fighter, speaks, warm_blood, fast_moving]
 exp: 1116
 species: spriggan
 will: 140
 attacks:
- - {type: hit, damage: 30}
-hd: 15
-hp_10x: 675
+ - {type: hit, flavour: weakness, damage: 19}
+ - {type: hit, flavour: weakness, damage: 12}
+hd: 8
+hp_10x: 500
 ac: 3
-ev: 22
+ev: 60
 has_corpse: true
 shout: shout
 intelligence: human

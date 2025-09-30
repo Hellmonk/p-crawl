@@ -1,16 +1,16 @@
 name: "fire giant"
 glyph: {char: "C", colour: red}
 flags: [fighter, speaks, warm_blood]
-resists: {fire: 2}
+resists: {fire: 1}
 exp: 1281
 genus: giant
 will: 80
 attacks:
- - {type: hit, damage: 30}
-hd: 16
-hp_10x: 960
-ac: 8
-ev: 4
+ - {type: hit, flavour: fire, damage: 15}
+hd: 7
+hp_10x: 660
+ac: 7
+ev: 0
 spells: fire_giant
 has_corpse: true
 shout: shout

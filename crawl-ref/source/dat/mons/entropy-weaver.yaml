@@ -4,14 +4,14 @@ flags: [fighter, speaks, web_immune, warm_blood, no_skeleton]
 exp: 898
 will: 60
 attacks:
- - {type: hit, damage: 17}
- - {type: hit, damage: 17}
- - {type: hit, damage: 17}
- - {type: hit, damage: 17}
-hd: 7
-hp_10x: 715
-ac: 7
-ev: 13
+ - {type: hit, damage: 5}
+ - {type: hit, damage: 5}
+ - {type: hit, damage: 5}
+ - {type: hit, damage: 5}
+hd: 6
+hp_10x: 380
+ac: 4
+ev: 10
 spells: entropy_weaver
 has_corpse: true
 shout: shout

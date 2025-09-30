@@ -1078,7 +1078,8 @@ bool attack_cleaves(const actor &attacker, const item_def *weap)
     }
     else if (attacker.is_monster()
              && (attacker.as_monster()->has_ench(ENCH_INSTANT_CLEAVE)
-             || _monster_has_reachcleave(attacker)))
+             || _monster_has_reachcleave(attacker)
+             || attacker.as_monster()->has_attack_flavour(AF_CLEAVE)))
     {
         return true;
     }

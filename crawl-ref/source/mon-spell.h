@@ -65,11 +65,9 @@ static const mon_spellbook mspell_list[] =
     // Deep elf annihilators and draconian annihilators.
     {  MST_ANNIHILATOR,
       {
-       { SPELL_LIGHTNING_BOLT, 11, MON_SPELL_WIZARD },
-       { SPELL_POISON_ARROW, 11, MON_SPELL_WIZARD },
-       { SPELL_IRON_SHOT, 11, MON_SPELL_WIZARD },
-       { SPELL_LEHUDIBS_CRYSTAL_SPEAR, 11, MON_SPELL_WIZARD },
-       { SPELL_BLINK, 22, MON_SPELL_WIZARD },
+       { SPELL_IRON_SHOT, 20, MON_SPELL_WIZARD },
+       { SPELL_LEHUDIBS_CRYSTAL_SPEAR, 20, MON_SPELL_WIZARD },
+       { SPELL_BLINK, 20, MON_SPELL_WIZARD },
       }
     },
 
@@ -146,11 +144,11 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_DEEP_ELF_ELEMENTALIST,
       {
-       { SPELL_HOARFROST_CANNONADE, 33, MON_SPELL_WIZARD },
-       { SPELL_FIREBALL, 11, MON_SPELL_WIZARD },
-       { SPELL_LRD, 33, MON_SPELL_WIZARD },
-       { SPELL_REPEL_MISSILES, 11, MON_SPELL_WIZARD },
-       { SPELL_HASTE, 11, MON_SPELL_WIZARD },
+       { SPELL_FREEZING_CLOUD, 20, MON_SPELL_WIZARD },
+       { SPELL_FIREBALL, 20, MON_SPELL_WIZARD },
+       { SPELL_LRD, 20, MON_SPELL_WIZARD },
+       { SPELL_REPEL_MISSILES, 20, MON_SPELL_WIZARD },
+       { SPELL_HASTE, 20, MON_SPELL_WIZARD },
       }
     },
 
@@ -182,9 +180,9 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_DEEP_ELF_DEATH_MAGE,
       {
-       { SPELL_BOLT_OF_DRAINING, 22, MON_SPELL_WIZARD },
-       { SPELL_VAMPIRIC_DRAINING, 22, MON_SPELL_WIZARD },
-       { SPELL_CALL_LOST_SOULS, 22, MON_SPELL_WIZARD },
+       { SPELL_BOLT_OF_DRAINING, 20, MON_SPELL_WIZARD },
+       { SPELL_VAMPIRIC_DRAINING, 20, MON_SPELL_WIZARD },
+       { SPELL_CALL_LOST_SOULS, 20, MON_SPELL_WIZARD },
       }
     },
 
@@ -381,18 +379,17 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_MERFOLK_AQUAMANCER,
       {
-        { SPELL_PRIMAL_WAVE, 16, MON_SPELL_WIZARD },
-        { SPELL_STEAM_BALL, 16, MON_SPELL_WIZARD },
-        { SPELL_THROW_ICICLE, 16, MON_SPELL_WIZARD },
-        { SPELL_BLINK, 16, MON_SPELL_WIZARD | MON_SPELL_EMERGENCY },
+        { SPELL_PRIMAL_WAVE, 20, MON_SPELL_WIZARD },
+        { SPELL_STEAM_BALL, 20, MON_SPELL_WIZARD },
+        { SPELL_BLINK, 20, MON_SPELL_WIZARD | MON_SPELL_EMERGENCY },
       }
     },
 
     // ('n') Undead corpses.
     {  MST_BOG_BODY,
       {
-       { SPELL_BOLT_OF_COLD, 28, MON_SPELL_WIZARD },
-       { SPELL_SLOW, 28, MON_SPELL_WIZARD },
+       { SPELL_BOLT_OF_COLD, 20, MON_SPELL_WIZARD },
+       { SPELL_SLOW, 20, MON_SPELL_WIZARD },
       }
     },
 
@@ -442,9 +439,9 @@ static const mon_spellbook mspell_list[] =
     // ('p') Humans.
     {  MST_BURIAL_ACOLYTE,
       {
-       { SPELL_MALIGN_OFFERING, 16, MON_SPELL_PRIEST },
-       { SPELL_DISPEL_UNDEAD, 12, MON_SPELL_PRIEST },
-       { SPELL_FUNERAL_DIRGE, 22, MON_SPELL_PRIEST },
+       { SPELL_MALIGN_OFFERING, 20, MON_SPELL_PRIEST },
+       { SPELL_DISPEL_UNDEAD, 20, MON_SPELL_PRIEST },
+       { SPELL_FUNERAL_DIRGE, 20, MON_SPELL_PRIEST },
       }
     },
 
@@ -470,8 +467,7 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_DEATH_KNIGHT,
       {
-       { SPELL_AGONY, 15, MON_SPELL_PRIEST },
-       { SPELL_HURL_TORCHLIGHT, 30, MON_SPELL_PRIEST },
+       { SPELL_INJURY_MIRROR, 40, MON_SPELL_PRIEST },
       }
     },
 
@@ -695,7 +691,7 @@ static const mon_spellbook mspell_list[] =
 
     { MST_BRAIN_WORM,
       {
-        { SPELL_BRAIN_BITE, 32, MON_SPELL_NATURAL },
+        { SPELL_BRAIN_BITE, 40, MON_SPELL_NATURAL },
       }
     },
 
@@ -870,14 +866,14 @@ static const mon_spellbook mspell_list[] =
     // ('C') Giants.
     {  MST_FIRE_GIANT,
       {
-       { SPELL_BOLT_OF_FIRE, 29, MON_SPELL_WIZARD },
-       { SPELL_FIREBALL, 29, MON_SPELL_WIZARD },
+       { SPELL_BOLT_OF_FIRE, 20, MON_SPELL_WIZARD },
+       { SPELL_FIREBALL, 20, MON_SPELL_WIZARD },
       }
     },
 
     {  MST_FROST_GIANT,
       {
-       { SPELL_BOLT_OF_COLD, 66, MON_SPELL_WIZARD },
+       { SPELL_BOLT_OF_COLD, 60, MON_SPELL_WIZARD },
       }
     },
 
@@ -891,9 +887,9 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_IRON_GIANT,
       {
-       { SPELL_IRON_SHOT, 24, MON_SPELL_WIZARD },
-       { SPELL_HARPOON_SHOT, 36, MON_SPELL_WIZARD },
-       { SPELL_THROW_ALLY, 36, MON_SPELL_NATURAL },
+       { SPELL_IRON_SHOT, 20, MON_SPELL_WIZARD },
+       { SPELL_HARPOON_SHOT, 20, MON_SPELL_WIZARD },
+       { SPELL_THROW_ALLY, 20, MON_SPELL_NATURAL },
       }
     },
 
@@ -1095,9 +1091,9 @@ static const mon_spellbook mspell_list[] =
     {  MST_GUARDIAN_SPHINX,
       {
        { SPELL_CONFUSE, 10, MON_SPELL_WIZARD },
-       { SPELL_SLOW, 14, MON_SPELL_WIZARD },
-       { SPELL_PARALYSE, 14, MON_SPELL_WIZARD },
-       { SPELL_SMITING, 14, MON_SPELL_WIZARD },
+       { SPELL_SLOW, 10, MON_SPELL_WIZARD },
+       { SPELL_PARALYSE, 10, MON_SPELL_WIZARD },
+       { SPELL_SMITING, 10, MON_SPELL_WIZARD },
       }
     },
 
@@ -1438,8 +1434,8 @@ static const mon_spellbook mspell_list[] =
     // ('T') Trolls.
     {  MST_DEEP_TROLL_EARTH_MAGE,
       {
-       { SPELL_LRD, 31, MON_SPELL_WIZARD },
-       { SPELL_DIG, 31, MON_SPELL_WIZARD },
+       { SPELL_LRD, 20, MON_SPELL_WIZARD },
+       { SPELL_DIG, 20, MON_SPELL_WIZARD },
       }
     },
 
@@ -1466,11 +1462,10 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_VAMPIRE_KNIGHT,
       {
-       { SPELL_BLINK_CLOSE, 12, MON_SPELL_WIZARD },
-       { SPELL_PARALYSE, 12, MON_SPELL_WIZARD },
-       { SPELL_HASTE, 12, MON_SPELL_WIZARD },
-       { SPELL_INVISIBILITY, 12, MON_SPELL_WIZARD },
-       { SPELL_VAMPIRIC_DRAINING, 50, MON_SPELL_WIZARD },
+       { SPELL_BLINK_CLOSE, 20, MON_SPELL_WIZARD },
+       { SPELL_PARALYSE, 20, MON_SPELL_WIZARD },
+       { SPELL_HASTE, 20, MON_SPELL_WIZARD },
+       { SPELL_VAMPIRIC_DRAINING, 20, MON_SPELL_WIZARD },
       }
     },
 
@@ -1492,8 +1487,8 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_EIDOLON,
       {
-       { SPELL_BOLT_OF_DRAINING, 21, MON_SPELL_MAGICAL },
-       { SPELL_CAUSE_FEAR, 21, MON_SPELL_MAGICAL },
+       { SPELL_BOLT_OF_DRAINING, 20, MON_SPELL_MAGICAL },
+       { SPELL_CAUSE_FEAR, 20, MON_SPELL_MAGICAL },
       }
     },
 
@@ -1547,7 +1542,7 @@ static const mon_spellbook mspell_list[] =
     // ('Y') Bovids and elephants.
     {  MST_CATOBLEPAS,
       {
-       { SPELL_PETRIFYING_CLOUD, 41, MON_SPELL_NATURAL },
+       { SPELL_PETRIFYING_CLOUD, 40, MON_SPELL_NATURAL },
       }
     },
 
@@ -1748,7 +1743,7 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_WAR_GARGOYLE,
       {
-       { SPELL_METAL_SPLINTERS, 52, MON_SPELL_NATURAL | MON_SPELL_BREATH
+       { SPELL_METAL_SPLINTERS, 60, MON_SPELL_NATURAL | MON_SPELL_BREATH
                                      | MON_SPELL_NOISY },
       }
     },

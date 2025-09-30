@@ -5,11 +5,11 @@ exp: 40
 species: gnoll
 will: 20
 attacks:
- - {type: hit, damage: 10}
+ - {type: hit, damage: 7}
 hd: 3
-hp_10x: 195
+hp_10x: 120
 ac: 2
-ev: 9
+ev: 20
 spells: bouda
 has_corpse: true
 shout: shout

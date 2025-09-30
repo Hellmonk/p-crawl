@@ -1,17 +1,17 @@
 name: "bog body"
 glyph: {char: "n", colour: green}
-flags: [no_zombie]
+flags: [no_zombie, fast_swimmer]
 resists: {fire: 1, cold: 1}
 exp: 684
 genus: ghoul
 holiness: [undead]
 will: 40
 attacks:
- - {type: touch, flavour: cold, damage: 20}
-hd: 10
-hp_10x: 390
+ - {type: touch, flavour: cold, damage: 6}
+hd: 1
+hp_10x: 190
 ac: 1
-ev: 9
+ev: 10
 spells: bog_body
 has_corpse: true
 intelligence: human

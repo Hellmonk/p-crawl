@@ -4,11 +4,11 @@ flags: [speaks, web_immune, warm_blood]
 exp: 847
 will: 60
 attacks:
- - {type: hit, flavour: poison_paralyse, damage: 28}
-hd: 12
-hp_10x: 850
+ - {type: hit, flavour: poison_paralyse, damage: 8}
+hd: 5
+hp_10x: 550
 ac: 4
-ev: 14
+ev: 30
 spells: jorogumo
 has_corpse: true
 shout: shout

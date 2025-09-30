@@ -6,10 +6,10 @@ genus: ribbon_worm
 will: 20
 attacks:
  - {type: bite, damage: 6}
-hd: 5
+hd: 3
 hp_10x: 200
 ac: 1
-ev: 5
+ev: 0
 spells: brain_worm
 has_corpse: true
 intelligence: human

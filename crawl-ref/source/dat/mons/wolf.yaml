@@ -1,15 +1,15 @@
 name: "wolf"
 glyph: {char: "h", colour: lightgray}
-flags: [unblindable, warm_blood]
+flags: [unblindable, warm_blood, quick]
 exp: 117
 genus: hound
 will: 20
 attacks:
  - {type: bite, damage: 12}
 hd: 4
-hp_10x: 220
+hp_10x: 200
 ac: 4
-ev: 15
+ev: 20
 has_corpse: true
 shout: howl
 intelligence: animal

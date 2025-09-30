@@ -5,13 +5,13 @@ exp: 1729
 genus: sphinx
 will: 80
 attacks:
- - {type: bite, damage: 30}
- - {type: claw, damage: 15}
- - {type: claw, damage: 15}
-hd: 18
-hp_10x: 1080
-ac: 10
-ev: 6
+ - {type: bite, damage: 15}
+ - {type: claw, damage: 12}
+ - {type: claw, damage: 12}
+hd: 9
+hp_10x: 840
+ac: 5
+ev: 20
 spells: guardian_sphinx
 has_corpse: true
 shout: shout

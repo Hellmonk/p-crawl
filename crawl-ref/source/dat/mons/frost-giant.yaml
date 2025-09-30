@@ -6,11 +6,11 @@ exp: 1249
 genus: giant
 will: 80
 attacks:
- - {type: hit, damage: 35}
-hd: 16
-hp_10x: 1040
-ac: 9
-ev: 3
+ - {type: hit, flavour: cold, damage: 15}
+hd: 7
+hp_10x: 660
+ac: 7
+ev: 0
 spells: frost_giant
 has_corpse: true
 shout: shout

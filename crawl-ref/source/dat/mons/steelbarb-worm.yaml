@@ -1,16 +1,15 @@
 name: "steelbarb worm"
 glyph: {char: "w", colour: lightgray}
-flags: [web_immune, no_skeleton]
-resists: {fire: 1}
+flags: [web_immune, no_skeleton, variable_speed]
 exp: 634
 genus: ribbon_worm
 will: 10
 attacks:
- - {type: hit, flavour: barbs, damage: 29}
-hd: 10
-hp_10x: 690
+ - {type: hit, flavour: barbs, damage: 13}
+hd: 3
+hp_10x: 490
 ac: 11
-ev: 7
+ev: 10
 has_corpse: true
 intelligence: animal
 size: small

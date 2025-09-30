@@ -229,8 +229,8 @@ break free.
 Brain Bite spell
 
 Drains a small amount of a visible enemy's mind and a proportion of their magic,
-with no direct line of fire required. If the enemy has near-emptied magic
-reserves, they will take doubled damage.
+with no direct line of fire required. The amount of magic drained depends on the
+monster's difficulty, but the damage does not.
 %%%%
 Brom's Barrelling Boulder spell
 

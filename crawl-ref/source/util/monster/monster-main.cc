@@ -256,9 +256,9 @@ static dice_def mi_calc_iood_damage(monster* mons)
     return iood_damage(pow, INFINITE_DISTANCE);
 }
 
-static string mi_calc_smiting_damage(monster* /*mons*/) { return "7-17"; }
+static string mi_calc_smiting_damage(monster* /*mons*/) { return "5-10"; }
 
-static string mi_calc_brain_bite_damage(monster* /*mons*/) { return "4-8*"; }
+static string mi_calc_brain_bite_damage(monster* /*mons*/) { return "5-10"; }
 
 static string mi_calc_pyre_arrow_damage(monster* mons)
 {
@@ -1017,6 +1017,8 @@ int main(int argc, char* argv[])
                     monsterattacks +=
                         colour(YELLOW, damage_flavour("acid", "4d3"));
                     break;
+                case AF_CLEAVE:
+                    monsterattacks += "(cleave)";
                 case AF_AIRSTRIKE:
                 {
                     short int min = pow(hd, 1.2) * 2 / 9;
@@ -1182,6 +1184,7 @@ int main(int argc, char* argv[])
                 case AF_CRUSH:
                 case AF_PLAIN:
                 case AF_REACH:
+                case AF_CLEAVE:
                 case AF_REACH_STING:
                     break;
 #if TAG_MAJOR_VERSION == 34

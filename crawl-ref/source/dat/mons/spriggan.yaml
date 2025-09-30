@@ -1,14 +1,14 @@
 name: "spriggan"
 glyph: {char: "i", colour: lightgray}
-flags: [speaks, warm_blood]
+flags: [speaks, warm_blood, fast_moving]
 exp: 217
 will: 60
 attacks:
- - {type: hit, damage: 15}
-hd: 7
-hp_10x: 245
-ac: 1
-ev: 18
+ - {type: hit, damage: 12}
+hd: 2
+hp_10x: 200
+ac: 2
+ev: 50
 has_corpse: true
 shout: shout
 intelligence: human

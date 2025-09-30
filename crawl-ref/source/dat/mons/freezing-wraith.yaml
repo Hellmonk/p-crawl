@@ -7,12 +7,12 @@ genus: wraith
 holiness: [undead]
 will: 40
 attacks:
- - {type: hit, flavour: cold, damage: 16}
- - {type: hit, flavour: drain_speed, damage: 15}
-hd: 8
-hp_10x: 440
-ac: 12
-ev: 10
+ - {type: hit, flavour: cold, damage: 12}
+ - {type: hit, flavour: drain_speed, damage: 12}
+hd: 4
+hp_10x: 300
+ac: 8
+ev: 20
 intelligence: human
 uses: open_doors
 size: medium

@@ -6,12 +6,12 @@ exp: 1091
 genus: jelly
 will: 60
 attacks:
- - {type: sting, flavour: minipara, damage: 37}
+ - {type: sting, flavour: minipara, damage: 8}
  - {type: constrict, flavour: crush, damage: 5}
-hd: 15
-hp_10x: 1200
+hd: 1
+hp_10x: 260
 ac: 0
-ev: 3
+ev: 0
 spells: blink_close
 intelligence: brainless
 habitat: amphibious
