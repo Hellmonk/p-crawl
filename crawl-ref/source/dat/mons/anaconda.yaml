@@ -6,11 +6,11 @@ genus: snake
 will: 40
 attacks:
  - {type: constrict, flavour: crush, damage: 6}
- - {type: bite, damage: 20}
-hd: 11
-hp_10x: 605
+ - {type: bite, damage: 12}
+hd: 3
+hp_10x: 300
 ac: 4
-ev: 16
+ev: 20
 has_corpse: true
 shout: hiss
 intelligence: animal

@@ -3920,8 +3920,7 @@ void bolt::affect_player_enchantment(bool resistible)
 
     case BEAM_ROOTS:
     {
-        const int turns = 1 + random_range(div_rand_round(ench_power, 20),
-                                           div_rand_round(ench_power, 12) + 1);
+        const int turns = 1 + random_range(ench_power, ench_power * 3 / 2);
         if (start_ranged_constriction(*agent(), you, turns, CONSTRICT_ROOTS))
             obvious_effect = true;
         break;
@@ -6741,8 +6740,7 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
 
     case BEAM_ROOTS:
     {
-        const int dur = 3 + random_range(div_rand_round(ench_power, 22),
-                                         div_rand_round(ench_power, 16) + 1);
+        const int dur = 1 + random_range(ench_power, ench_power * 3 / 2);
         if (start_ranged_constriction(*agent(), *mon, dur, CONSTRICT_ROOTS))
             obvious_effect = true;
         return MON_AFFECTED;

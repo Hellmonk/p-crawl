@@ -1441,8 +1441,7 @@ static void _cast_grasping_roots(monster &caster, mon_spell_slot, bolt&)
     ASSERT(foe);
 
     const int pow = mons_spellpower(caster, SPELL_GRASPING_ROOTS);
-    const int turns = 1 + random_range(div_rand_round(pow, 20),
-                                       div_rand_round(pow, 12) + 1);
+    const int turns = 1 + random_range(pow, pow * 3 / 2);
     dprf("Grasping roots turns: %d", turns);
     start_ranged_constriction(caster, *foe, turns, CONSTRICT_ROOTS);
 }

@@ -1834,9 +1834,6 @@ static int _player_temporary_evasion_modifiers()
     if (you.duration[DUR_VERTIGO])
         evbonus -= 5;
 
-    if (you.is_constricted())
-        evbonus -= 10;
-
     return evbonus;
 }
 
@@ -1859,6 +1856,9 @@ static int _player_apply_evasion_multipliers(int prescaled_ev, const int scale)
         const int ev_bonus = max(2 * scale, prescaled_ev / 4);
         return prescaled_ev + ev_bonus;
     }
+    
+    if (you.is_constricted())
+        prescaled_ev /= 2;
 
     return prescaled_ev;
 }
@@ -7843,7 +7843,7 @@ void player::goto_place(const level_id &lid)
 
 static int _constriction_escape_chance(int attempts)
 {
-    static int escape_chance[] = {40, 75, 100};
+    static int escape_chance[] = {50, 75, 100};
     return escape_chance[min(3, attempts) - 1];
 }
 
@@ -7869,8 +7869,7 @@ bool player::attempt_escape()
         mprf("You escape %s grasp.", object.c_str());
 
         // Stun the monster we struggled again and prevent the player from being
-        // constricted for several turns (so that they are guaranteed to be able
-        // to make it up the stairs after pulling away this way)
+        // constricted for several turns
         if (constr_typ == CONSTRICT_MELEE)
         {
             themonst->speed_increment -= 10;

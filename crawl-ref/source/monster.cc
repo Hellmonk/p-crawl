@@ -2602,11 +2602,10 @@ int monster::constriction_damage(constrict_type typ) const
         }
         return -1;
     case CONSTRICT_ROOTS:
-        return roll_dice(2, div_rand_round(60 +
-                    mons_spellpower(*this, SPELL_GRASPING_ROOTS), 50));
+        return roll_dice(2, mons_spellpower(*this, SPELL_GRASPING_ROOTS));
     case CONSTRICT_BVC:
-        return roll_dice(3, div_rand_round(40 +
-                    mons_spellpower(*this, SPELL_BORGNJORS_VILE_CLUTCH), 30));
+        return roll_dice(3, div_rand_round(4 +
+                    mons_spellpower(*this, SPELL_BORGNJORS_VILE_CLUTCH), 3));
     default:
         return 0;
     }
@@ -3038,7 +3037,7 @@ int monster::evasion(bool ignore_temporary, const actor* /*act*/) const
         ev += AGILITY_BONUS;
 
     if (is_constricted())
-        ev -= 10;
+        ev /= 2;
 
     return max(ev, 0);
 }
@@ -5987,17 +5986,17 @@ bool monster::attempt_escape()
     escape_attempts += 1;
 
     const auto constr_typ = get_constrict_type();
-    int escape_pow = 5 + get_hit_dice() + (escape_attempts * escape_attempts * 5);
+    int escape_pow = 2 * escape_attempts + get_hit_dice();
     int hold_pow;
 
     if (constricted_by == MID_PLAYER)
     {
         if (constr_typ == CONSTRICT_BVC)
-            hold_pow = 80 + div_rand_round(you.props[VILE_CLUTCH_POWER_KEY].get_int(), 3);
+            hold_pow = 10 + you.props[VILE_CLUTCH_POWER_KEY].get_int();
         else if (constr_typ == CONSTRICT_ROOTS)
-            hold_pow = 50 + div_rand_round(you.props[FASTROOT_POWER_KEY].get_int(), 2);
+            hold_pow = 10 + you.props[FASTROOT_POWER_KEY].get_int();
         else
-            hold_pow = 40 + you.get_experience_level() * 3;
+            hold_pow = 10 + you.get_experience_level() / 2;
     }
     else
     {
@@ -6005,7 +6004,7 @@ bool monster::attempt_escape()
         ASSERT(themonst);
 
         // Monsters use the same escape formula for all forms of constriction.
-        hold_pow = 40 + themonst->get_hit_dice() * 3;
+        hold_pow = 10 + themonst->get_hit_dice();
     }
 
     if (x_chance_in_y(escape_pow, hold_pow))

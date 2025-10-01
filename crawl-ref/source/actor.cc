@@ -790,8 +790,6 @@ void actor::constriction_damage_defender(actor &defender)
     const auto typ = defender.get_constrict_type();
     int damage = constriction_damage(typ);
     DIAG_ONLY(const int basedam = damage);
-    damage = defender.apply_ac(damage, 0, ac_type::half);
-    DIAG_ONLY(const int acdam = damage);
     damage = timescale_damage(this, damage);
     DIAG_ONLY(const int timescale_dam = damage);
 
@@ -854,10 +852,10 @@ void actor::constriction_damage_defender(actor &defender)
                            "", false);
     DIAG_ONLY(const int infdam = damage);
 
-    dprf("constrict at: %s df: %s base %d ac %d tsc %d inf %d",
+    dprf("constrict at: %s df: %s base %d tsc %d inf %d",
          name(DESC_PLAIN, true).c_str(),
          defender.name(DESC_PLAIN, true).c_str(),
-         basedam, acdam, timescale_dam, infdam);
+         basedam, timescale_dam, infdam);
 
     if (defender.is_monster()
         && defender.type != MONS_NO_MONSTER // already dead and reset
