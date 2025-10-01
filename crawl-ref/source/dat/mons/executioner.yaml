@@ -6,13 +6,13 @@ exp: 1531
 holiness: [demonic]
 will: 140
 attacks:
- - {type: hit, damage: 30}
+ - {type: hit, damage: 20}
  - {type: hit, damage: 10}
  - {type: hit, damage: 10}
-hd: 12
-hp_10x: 660
+hd: 8
+hp_10x: 600
 ac: 10
-ev: 15
+ev: 30
 spells: executioner
 shout: scream
 intelligence: human

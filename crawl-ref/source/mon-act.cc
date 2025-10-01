@@ -2538,24 +2538,16 @@ static void _ancient_zyme_sicken(monster* mons)
     {
         if (!you.duration[DUR_SICKNESS])
         {
-            if (!you.duration[DUR_SICKENING])
-            {
-                mprf(MSGCH_WARN, "You feel yourself growing ill in the "
+            mprf(MSGCH_WARN, "You feel yourself grow ill in the "
                                  "presence of %s.",
-                    mons->name(DESC_THE).c_str());
-            }
+            mons->name(DESC_THE).c_str());
 
-            you.duration[DUR_SICKENING] += (2 + random2(4)) * BASELINE_DELAY;
-            if (you.duration[DUR_SICKENING] > 100)
-            {
-                you.sicken(40 + random2(30));
-                you.duration[DUR_SICKENING] = 0;
-            }
+            you.sicken(40 + random2(30));
         }
         else
         {
-            if (x_chance_in_y(you.time_taken, 60))
-                you.sicken(15 + random2(30));
+            if (x_chance_in_y(you.time_taken, 10))
+                you.sicken(10 + random2(10));
         }
     }
 

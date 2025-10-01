@@ -2371,8 +2371,11 @@ static void _vampiric_draining_effect(actor& victim, actor& agent, int damage)
     }
     else
     {
-        if (you.duration[DUR_DEATHS_DOOR] || you.hp == you.hp_max)
+        if (you.duration[DUR_DEATHS_DOOR] || you.duration[DUR_SICKNESS] 
+            || you.hp == you.hp_max)
+        {
             return;
+        }
 
         const int hp_gain = div_rand_round(drain_amount, 2);
         if (hp_gain)

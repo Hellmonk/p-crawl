@@ -675,7 +675,8 @@ void melee_attack::do_vampire_lifesteal()
         if (can_heal)
         {
             int heal = random2(damage_done);
-            if (heal > 0 && you.hp < you.hp_max && !you.duration[DUR_DEATHS_DOOR])
+            if (heal > 0 && you.hp < you.hp_max && !you.duration[DUR_DEATHS_DOOR]
+                && !you.duration[DUR_SICKNESS])
             {
                 you.heal(heal);
                 canned_msg(MSG_GAIN_HEALTH);
@@ -1069,6 +1070,8 @@ static void _devour(monster &victim)
 
     // Healing.
     if (you.duration[DUR_DEATHS_DOOR])
+        return;
+    if (you.duration[DUR_SICKNESS])
         return;
 
     const int xl = victim.get_experience_level();

@@ -218,7 +218,9 @@ without taking damage.
 %%%%
 Sick status
 
-You have been sickened, and your health will no longer regenerate.
+You have been sickened. You can't restore HP by any method until your sickness
+ends, though effects that grant temporary max HP (like berserking) work as 
+normal.
 %%%%
 Vertigo status
 

@@ -2051,7 +2051,8 @@ static void _player_on_kill_effects(monster& mons, killer_type killer,
             mp_heal += random_range(min, min + mons.get_experience_level() / 3);
         }
 
-        bool healing = hp_heal && you.hp < you.hp_max && !you.duration[DUR_DEATHS_DOOR];
+        bool healing = hp_heal && you.hp < you.hp_max && !you.duration[DUR_DEATHS_DOOR]
+            && !you.duration[DUR_SICKNESS];
         bool powering = mp_heal && you.magic_points < you.max_magic_points;
 
         if (feed && (healing || powering))

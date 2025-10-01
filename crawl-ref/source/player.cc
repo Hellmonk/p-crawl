@@ -4658,7 +4658,7 @@ void dec_elixir_player(int delay)
         you.duration[DUR_ELIXIR] = 0;
 
     const int hp = (delay * you.hp_max / 10) / BASELINE_DELAY;
-    if (!you.duration[DUR_DEATHS_DOOR])
+    if (!you.duration[DUR_DEATHS_DOOR] && !you.duration[DUR_SICKNESS])
         inc_hp(hp);
 
     const int mp = (delay * you.max_magic_points / 10) / BASELINE_DELAY;
@@ -4680,7 +4680,7 @@ void dec_ambrosia_player(int delay)
     const int hp_restoration = div_rand_round(delay*(3 + random2(3)), BASELINE_DELAY);
     const int mp_restoration = div_rand_round(delay*(3 + random2(3)), BASELINE_DELAY);
 
-    if (!you.duration[DUR_DEATHS_DOOR])
+    if (!you.duration[DUR_DEATHS_DOOR] && !you.duration[DUR_SICKNESS])
     {
         int heal = you.scale_potion_healing(hp_restoration);
         inc_hp(heal);

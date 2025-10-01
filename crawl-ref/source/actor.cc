@@ -57,7 +57,7 @@ free_action_type actor::free_action_available() const
             return FACT_ANY;
         if (mons_class_flag(mon->type, M_FAST_SWIMMER))
             return FACT_SWIM;
-        if (mons_class_flag(mon->type, M_FAST_MOVING))
+        if (mons_class_flag(mon->type, M_FAST_MOVING) || mon->has_ench(ENCH_ROLLING))
             return FACT_MOVE;
         if (mons_class_flag(mon->type, M_VARIABLE_SPEED))
             return FACT_VARIABLE;
