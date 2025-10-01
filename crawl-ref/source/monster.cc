@@ -6063,7 +6063,7 @@ bool monster::cloud_immune(bool items) const
 
 bool monster::damage_immune(const actor* source) const
 {
-    if (has_ench(ENCH_WARDING) && source && !adjacent(source->pos(), pos()))
+    if (has_ench(ENCH_WARDING) && source && !adjacent(you.pos(), pos()))
         return true;
 
     return false;
