@@ -1,7 +1,7 @@
 name: "shadow dragon"
 glyph: {char: "D", colour: magenta}
 flags: [flies, cold_blood]
-resists: {poison: 1, cold: 2, neg: 3}
+resists: {cold: 2, neg: 3}
 exp: 1406
 genus: dragon
 will: 120

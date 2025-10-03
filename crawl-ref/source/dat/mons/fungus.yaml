@@ -1,7 +1,6 @@
 name: "fungus"
 glyph: {char: "P", colour: lightgray}
 flags: [fragile, stationary, no_exp_gain, no_threat]
-resists: {poison: 1}
 holiness: [plant]
 will: invuln
 attacks:

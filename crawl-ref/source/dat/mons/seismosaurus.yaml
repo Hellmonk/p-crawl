@@ -5,11 +5,11 @@ exp: 799
 genus: giant_lizard
 will: 80
 attacks:
- - {type: tail_slap, damage: 31}
-hd: 11
+ - {type: tail_slap, damage: 27}
+hd: 6
 hp_10x: 810
 ac: 13
-ev: 5
+ev: 0
 has_corpse: true
 spells: seismosaurus
 shout: roar

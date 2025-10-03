@@ -6,10 +6,10 @@ species: human
 will: 60
 attacks:
  - {type: hit, damage: 20}
-hd: 13
-hp_10x: 715
-ac: 1
-ev: 13
+hd: 6
+hp_10x: 600
+ac: 6
+ev: 10
 has_corpse: true
 shout: shout
 intelligence: human

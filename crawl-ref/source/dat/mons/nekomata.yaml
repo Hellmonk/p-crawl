@@ -1,7 +1,7 @@
 name: "nekomata"
 glyph: {char: "R", colour: white}
 flags: [flies, fighter, archer, speaks]
-resists: {fire: 1, poison: 1}
+resists: {fire: 1}
 exp: 2054
 holiness: [demonic]
 will: 120

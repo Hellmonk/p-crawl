@@ -1,7 +1,6 @@
 name: "nagaraja"
 glyph: {char: "N", colour: lightmagenta}
 flags: [fighter, speaks, warm_blood]
-resists: {poison: 1}
 exp: 1323
 species: naga
 will: 140

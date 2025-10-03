@@ -1,7 +1,7 @@
 name: "cacodemon"
 glyph: {char: "2", colour: yellow}
 flags: [flies]
-resists: {elec: 1, poison: 1}
+resists: {elec: 1}
 exp: 1139
 holiness: [demonic]
 will: 160

@@ -1,17 +1,17 @@
 name: "meliai"
 glyph: {char: "y", colour: green}
-flags: [flies, web_immune, no_skeleton]
-resists: {poison: -1}
+flags: [flies, web_immune, no_skeleton, quick]
+resists: {fire: -1}
 exp: 484
 genus: killer_bee
 will: 20
 attacks:
  - {type: hit, damage: 14}
- - {type: sting, flavour: poison, damage: 12}
-hd: 7
-hp_10x: 245
+ - {type: sting, flavour: minipara, damage: 12}
+hd: 5
+hp_10x: 240
 ac: 2
-ev: 14
+ev: 40
 spells: meliai
 has_corpse: true
 shout: buzz

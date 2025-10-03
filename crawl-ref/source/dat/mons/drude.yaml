@@ -1,6 +1,6 @@
 name: "drude"
 glyph: {char: "5", colour: lightmagenta}
-resists: {poison: 1, fire: 1}
+resists: {fire: 1}
 flags: [speaks]
 exp: 38
 holiness: [demonic]

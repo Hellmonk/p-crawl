@@ -1,6 +1,6 @@
 name: "hellion"
 glyph: {char: "2", colour: lightred}
-resists: {poison: 1, damnation: 1}
+resists: {damnation: 1}
 exp: 384
 holiness: [demonic]
 will: 60

@@ -1792,7 +1792,7 @@ int mons_adjust_flavoured(monster* mons, bolt &pbolt, int hurted,
 
     case BEAM_SEISMIC:
         if (mons->airborne())
-            hurted = hurted / 3;
+            hurted = 0;
         break;
 
     case BEAM_BOLAS:
@@ -2371,7 +2371,7 @@ static void _vampiric_draining_effect(actor& victim, actor& agent, int damage)
     }
     else
     {
-        if (you.duration[DUR_DEATHS_DOOR] || you.duration[DUR_SICKNESS] 
+        if (you.duration[DUR_DEATHS_DOOR] || you.duration[DUR_SICKNESS]
             || you.hp == you.hp_max)
         {
             return;
@@ -3313,6 +3313,9 @@ bool bolt::is_harmless(const monster* mon) const
     case BEAM_UMBRAL_TORCHLIGHT:
         return (bool)!(mon->holiness() & (MH_NATURAL | MH_DEMONIC | MH_HOLY));
 
+    case BEAM_SEISMIC:
+        return mon->airborne();
+
     default:
         return false;
     }
@@ -3396,6 +3399,9 @@ bool bolt::harmless_to_player() const
     case BEAM_UMBRAL_TORCHLIGHT:
         return you_worship(GOD_YREDELEMNUL)
                 || (bool)!(you.holiness() & (MH_NATURAL | MH_DEMONIC | MH_HOLY));
+
+    case BEAM_SEISMIC:
+        return you.airborne();
 
     case BEAM_QAZLAL:
         return true;
@@ -4495,14 +4501,9 @@ void bolt::affect_player()
         you.vitrify(agent(), random_range(8, 18));
 
     if (origin_spell == SPELL_SOJOURNING_BOLT
-        && final_dam > 0 && x_chance_in_y(2, 3))
+        && final_dam > 0)
     {
-        you.teleport();
-        if (you.duration[DUR_TELEPORT])
-        {
-            mprf(MSGCH_DANGER, "You feel a distressing malevolence running through your instability!");
-            you.props[SJ_TELEPORTITIS_SOURCE].get_int() = agent(true) ? agent(true)->mid : MID_NOBODY;
-        }
+        you.teleport(true);
     }
 
     if (origin_spell == SPELL_THROW_PIE && final_dam > 0)
@@ -5243,9 +5244,9 @@ void bolt::monster_post_hit(monster* mon, int dmg)
     }
 
     if (origin_spell == SPELL_SOJOURNING_BOLT
-        && x_chance_in_y(2, 3) && !(mon->no_tele()))
+        && !(mon->no_tele()) && dmg)
     {
-        monster_teleport(mon, false, false, false, agent());
+        monster_teleport(mon, true, false, false, agent());
     }
 
     if (flavour == BEAM_CRYSTALLISING && !one_chance_in(4))

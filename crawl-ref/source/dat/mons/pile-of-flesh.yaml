@@ -1,7 +1,6 @@
 name: "pile of flesh"
 glyph: {char: "I", colour: magenta}
 flags: [stationary, no_exp_gain, no_threat, no_poly_to, no_skeleton, no_zombie, no_gen_derived]
-resists: {poison: 1}
 will: invuln
 attacks:
 hd: 6

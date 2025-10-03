@@ -1,6 +1,6 @@
 name: "wendigo"
 glyph: {char: "R", colour: blue}
-resists: {poison: 1, fire: -1, cold: 3}
+resists: {fire: -1, cold: 3}
 exp: 994
 holiness: [demonic]
 will: 140

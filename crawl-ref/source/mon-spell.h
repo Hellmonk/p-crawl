@@ -283,9 +283,9 @@ static const mon_spellbook mspell_list[] =
     // ('i') Spriggans.
     {  MST_SPRIGGAN_BERSERKER,
       {
-       { SPELL_BROTHERS_IN_ARMS, 21, MON_SPELL_PRIEST },
-       { SPELL_BERSERKER_RAGE, 21, MON_SPELL_PRIEST },
-       { SPELL_TROGS_HAND, 21, MON_SPELL_PRIEST },
+       { SPELL_BROTHERS_IN_ARMS, 20, MON_SPELL_PRIEST },
+       { SPELL_BERSERKER_RAGE, 20, MON_SPELL_PRIEST },
+       { SPELL_TROGS_HAND, 20, MON_SPELL_PRIEST },
       }
     },
 
@@ -361,7 +361,7 @@ static const mon_spellbook mspell_list[] =
     // ('m') Merfolk and friends.
     {  MST_MERFOLK_SIREN,
       {
-       { SPELL_SIREN_SONG, 160, MON_SPELL_WIZARD },
+       { SPELL_SIREN_SONG, 80, MON_SPELL_WIZARD },
       }
     },
 
@@ -488,8 +488,8 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_IRONBOUND_PRESERVER,
       {
-       { SPELL_INJURY_BOND, 21, MON_SPELL_WIZARD },
-       { SPELL_MINOR_HEALING, 41, MON_SPELL_WIZARD },
+       { SPELL_INJURY_BOND, 20, MON_SPELL_WIZARD },
+       { SPELL_RESONANCE_STRIKE, 40, MON_SPELL_WIZARD },
       }
     },
 
@@ -730,8 +730,8 @@ static const mon_spellbook mspell_list[] =
     // ('y') Flying insects.
     {  MST_MELIAI,
       {
-       { SPELL_SMITING, 18, MON_SPELL_PRIEST },
-       { SPELL_HEAL_OTHER, 18, MON_SPELL_PRIEST },
+       { SPELL_SMITING, 20, MON_SPELL_PRIEST },
+       { SPELL_HEAL_OTHER, 20, MON_SPELL_PRIEST },
       }
     },
 
@@ -782,7 +782,7 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_LAUGHING_SKULL,
       {
-       { SPELL_BOLT_OF_DRAINING, 30, MON_SPELL_MAGICAL | MON_SPELL_NOISY },
+       { SPELL_BOLT_OF_DRAINING, 20, MON_SPELL_MAGICAL | MON_SPELL_NOISY },
       }
     },
 
@@ -879,9 +879,9 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_TITAN,
       {
-       { SPELL_LIGHTNING_BOLT, 18, MON_SPELL_WIZARD },
-       { SPELL_MINOR_HEALING, 36, MON_SPELL_WIZARD },
-       { SPELL_AIRSTRIKE, 18, MON_SPELL_WIZARD },
+       { SPELL_ORB_OF_ELECTRICITY, 20, MON_SPELL_WIZARD },
+       { SPELL_MINOR_HEALING, 20, MON_SPELL_WIZARD },
+       { SPELL_AIRSTRIKE, 20, MON_SPELL_WIZARD },
       }
     },
 
@@ -1053,9 +1053,8 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_GLOWING_ORANGE_BRAIN,
       {
-       { SPELL_CAUSE_FEAR, 14, MON_SPELL_MAGICAL },
-       { SPELL_SHADOW_CREATURES, 14, MON_SPELL_MAGICAL },
-       { SPELL_MASS_CONFUSION, 14, MON_SPELL_MAGICAL },
+       { SPELL_SHADOW_CREATURES, 20, MON_SPELL_MAGICAL },
+       { SPELL_MASS_CONFUSION, 20, MON_SPELL_MAGICAL },
       }
     },
 
@@ -1371,7 +1370,7 @@ static const mon_spellbook mspell_list[] =
       {
        { SPELL_FORCE_LANCE, 20, MON_SPELL_MAGICAL },
        { SPELL_PHANTOM_MIRROR, 20, MON_SPELL_MAGICAL },
-       { SPELL_BLINK, 10, MON_SPELL_MAGICAL },
+       { SPELL_BLINK, 20, MON_SPELL_MAGICAL },
       }
     },
 

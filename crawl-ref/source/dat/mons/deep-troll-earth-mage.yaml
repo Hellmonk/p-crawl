@@ -1,4 +1,5 @@
-name: "deep troll earth mage"
+name: "troll earth mage"
+enum: deep_troll_earth_mage
 glyph: {char: "T", colour: magenta}
 flags: [unblindable, speaks, warm_blood]
 exp: 805
@@ -6,12 +7,12 @@ species: deep_troll
 genus: troll
 will: 40
 attacks:
- - {type: bite, damage: 27}
- - {type: claw, damage: 20}
- - {type: claw, damage: 20}
-hd: 12
+ - {type: claw, damage: 10}
+ - {type: claw, damage: 10}
+ - {type: bite, damage: 7}
+hd: 7
 hp_10x: 480
-ac: 12
+ac: 7
 ev: 10
 spells: deep_troll_earth_mage
 has_corpse: true

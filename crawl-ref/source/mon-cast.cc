@@ -1513,7 +1513,8 @@ static bool _cast_seismic_stomp(const monster& caster, bolt& beam, bool check_on
     {
         if (grid_distance(mi->pos(), caster.pos()) <= range
             && !mi->is_firewood()
-            && !mons_aligned(&caster, *mi))
+            && !mons_aligned(&caster, *mi)
+            && !mi->airborne())
         {
             if (check_only)
                 return true;
@@ -1526,7 +1527,7 @@ static bool _cast_seismic_stomp(const monster& caster, bolt& beam, bool check_on
         return false;
 
     const int pow = mons_spellpower(caster, SPELL_SEISMIC_STOMP);
-    const unsigned int num_targs = 2 + div_rand_round((int)max(0, pow - 50), 40);
+    const unsigned int num_targs = 1 + pow;
     shuffle_array(targs);
     for (size_t i = 0; i < targs.size() && i < num_targs; ++i)
     {
@@ -1543,15 +1544,6 @@ static bool _cast_seismic_stomp(const monster& caster, bolt& beam, bool check_on
         beam.source = targs[i]->pos();
         beam.target = targs[i]->pos();
         beam.fire();
-
-        if (monster* mon = targs[i]->as_monster())
-        {
-            if (mon->alive() && !mon->airborne() && one_chance_in(3))
-            {
-                simple_monster_message(*mon, " stumbles on the uneven ground.");
-                mon->speed_increment -= random_range(10, 13);
-            }
-        }
     }
 
     return true;
@@ -2561,22 +2553,18 @@ bool setup_mons_cast(const monster* mons, bolt &pbolt, spell_type spell_cast,
     // Laughing skulls get a power boost based on other nearby laughing skulls.
     // (Doing it here feels a little hacky, but I'm not sure where else it
     // should go, unless we duplicate bolt of draining just for their trick.)
+    // each additional skull raises power by 2.
     if (mons->type == MONS_LAUGHING_SKULL)
     {
-        int skull_count = 0;
         for (distance_iterator di(mons->pos(), false, true, 5); di; ++di)
         {
             if (monster_at(*di) && monster_at(*di)->type == MONS_LAUGHING_SKULL
                 && mons_aligned(mons, monster_at(*di))
                 && mons->see_cell_no_trans(*di))
             {
-                ++skull_count;
+                power+= 2;
             }
         }
-
-        // Power boost is +25% for each nearby skull, to a maximum of +100%
-        int skull_mult = 100 + min(100, skull_count * 25);
-        power = power * skull_mult / 100;
     }
 
     bolt theBeam = mons_spell_beam(mons, spell_cast, power);
@@ -6355,13 +6343,12 @@ static void _cast_resonance_strike(monster &caster, mon_spell_slot, bolt&)
     if (!target)
         return;
 
-    // base damage 3d(spell hd)
+    // base damage 1d(spell hd)
     const int pow = caster.spell_hd(SPELL_RESONANCE_STRIKE);
     dice_def dice = resonance_strike_base_damage(pow);
-    // + 1 die for every 2 adjacent constructs, up to a total of 7 dice when
+    // + 1 die for every adjacent construct, up to a total of 9 dice when
     // fully surrounded by 8 constructs
-    const int constructs = _count_nearby_constructs(caster, target->pos());
-    dice.num += div_rand_round(constructs, 2);
+    dice.num += _count_nearby_constructs(caster, target->pos());
     const int dam = target->apply_ac(dice.roll());
     const string constructs_desc
         = _describe_nearby_constructs(caster, target->pos());
@@ -6423,7 +6410,7 @@ dice_def waterstrike_damage(int spell_hd)
  */
 dice_def resonance_strike_base_damage(int spell_hd)
 {
-    return dice_def(3, spell_hd);
+    return dice_def(1, 1 + spell_hd);
 }
 
 static void _sheep_message(int num_sheep, int sleep_pow, bool seen, actor& foe)
@@ -8955,13 +8942,6 @@ static ai_action::goodness _siren_goodness(monster* mons, bool avatar)
     // (merfolk avatars should still sing since their song has other effects)
     if (!avatar && you.berserk())
         return ai_action::bad();
-
-    // If the mer is trying to mesmerise you anew, only sing half as often.
-    if (!you.beheld_by(*mons) && mons->foe == MHITYOU && you.can_see(*mons)
-        && coinflip())
-    {
-        return ai_action::bad();
-    }
 
     // We can do it!
     return ai_action::good();

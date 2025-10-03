@@ -3517,6 +3517,15 @@ void melee_attack::mons_apply_attack_flavour()
         break;
     }
 
+    case AF_SICK:
+    {
+        // standin for "is not a living creature"
+        if (defender->res_poison() >= 3)
+            break;
+        defender->sicken(10 + 5 * damage_done);
+        break;
+    }
+
     case AF_POISON_PARALYSE:
     {
         // standin for "is not a living creature"

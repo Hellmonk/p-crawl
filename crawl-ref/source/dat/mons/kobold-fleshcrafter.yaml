@@ -1,7 +1,6 @@
 name: "kobold fleshcrafter"
 glyph: {char: "K", colour: lightmagenta}
 flags: [speaks, warm_blood, fast_regen]
-resists: {poison: 1}
 exp: 955
 species: kobold
 will: 60

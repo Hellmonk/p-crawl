@@ -1,7 +1,6 @@
 name: "ballistomycete"
 glyph: {char: "P", colour: magenta}
 flags: [stationary]
-resists: {poison: 1}
 genus: fungus
 holiness: [plant]
 will: invuln

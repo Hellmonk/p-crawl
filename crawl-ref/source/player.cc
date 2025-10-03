@@ -1856,7 +1856,7 @@ static int _player_apply_evasion_multipliers(int prescaled_ev, const int scale)
         const int ev_bonus = max(2 * scale, prescaled_ev / 4);
         return prescaled_ev + ev_bonus;
     }
-    
+
     if (you.is_constricted())
         prescaled_ev /= 2;
 

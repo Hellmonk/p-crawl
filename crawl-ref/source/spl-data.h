@@ -3302,7 +3302,7 @@ static const struct spell_desc spelldata[] =
     spflag::dir_or_target | spflag::needs_tracer | spflag::monster,
     6,
     200,
-    5, 5,
+    4, 4,
     0,
     TILEG_SOJOURNING_BOLT,
 },

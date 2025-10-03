@@ -1,7 +1,6 @@
 name: "warg"
 glyph: {char: "h", colour: white}
 flags: [unblindable, warm_blood]
-resists: {poison: 1}
 exp: 187
 genus: hound
 will: 40

@@ -4,13 +4,13 @@ flags: [flies, warm_blood]
 exp: 529
 will: 40
 attacks:
- - {type: bite, damage: 26}
- - {type: claw, damage: 14}
- - {type: claw, damage: 14}
-hd: 9
-hp_10x: 495
+ - {type: bite, damage: 13}
+ - {type: claw, damage: 7}
+ - {type: claw, damage: 7}
+hd: 5
+hp_10x: 490
 ac: 5
-ev: 7
+ev: 0
 spells: manticore
 has_corpse: true
 intelligence: animal

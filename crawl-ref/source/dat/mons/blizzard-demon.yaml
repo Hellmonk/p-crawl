@@ -1,7 +1,7 @@
 name: "blizzard demon"
 glyph: {char: "2", colour: lightblue}
 flags: [flies, insubstantial]
-resists: {elec: 3, poison: 1, fire: -1, cold: 2}
+resists: {elec: 3, fire: -1, cold: 2}
 exp: 935
 holiness: [demonic]
 will: 140

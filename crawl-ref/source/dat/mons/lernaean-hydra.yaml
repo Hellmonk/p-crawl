@@ -2,7 +2,6 @@ name: "the Lernaean hydra"
 enum: lernaean_hydra
 glyph: {char: "D", colour: yellow}
 flags: [cold_blood, unique, fast_regen, tall_tile]
-resists: {poison: 1}
 exp: 3031
 species: hydra
 will: 120

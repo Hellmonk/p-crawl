@@ -1,7 +1,6 @@
 name: "swamp drake"
 glyph: {char: "k", colour: brown}
 flags: [flies, warm_blood]
-resists: {poison: 1}
 exp: 135
 genus: drake
 will: 20

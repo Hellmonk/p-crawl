@@ -2,7 +2,7 @@ name: "the Serpent of Hell"
 enum: serpent_of_hell_cocytus
 glyph: {char: "D", colour: etc_ice}
 flags: [crash_doors, flies, unique, tall_tile]
-resists: {poison: 1, cold: 3}
+resists: {cold: 3}
 exp: 6666
 species: serpent_of_hell
 genus: dragon

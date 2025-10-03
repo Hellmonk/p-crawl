@@ -1,7 +1,7 @@
 name: "Lom Lobon"
 glyph: {char: "&", colour: lightblue}
 flags: [flies, fighter, speaks, unique, tall_tile, gender_neutral]
-resists: {elec: 3, poison: 1, fire: 1, cold: 3}
+resists: {elec: 3, fire: 1, cold: 3}
 exp: 6087
 genus: pandemonium_lord
 holiness: [demonic]

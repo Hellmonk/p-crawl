@@ -1,7 +1,6 @@
 name: "neqoxec"
 glyph: {char: "3", colour: lightmagenta}
 flags: [variable_speed, flies]
-resists: {poison: 1}
 exp: 182
 holiness: [demonic]
 will: 40

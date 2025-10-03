@@ -1646,8 +1646,8 @@ types of projectile - even while otherwise incapacitated.
 Resonance Strike spell
 
 Calls a surge of power from the earth, striking an enemy within the caster's
-sight. The spell cascades through nearby constructs, growing in strength with
-each one standing near the target.
+sight, with no direct line of fire required. Each nonliving creature adjacent to
+the target amplifies the spell's damage by adding an additional die.
 %%%%
 Rimeblight spell
 
@@ -1717,10 +1717,8 @@ the endpoint.
 Seismic Stomp spell
 
 Stomps heavily upon the ground, sending out violent shockwaves that fracture the
-ground beneath multiple nearby enemies. Flying creatures take greatly reduced
-damage from this attack, but those on the ground may sometimes to lose their
-footing altogether, delaying their next action as they struggle to regain
-balance on the uneven terrain.
+ground beneath multiple nearby enemies. Flying creatures are immune to (and will
+not be targeted by) this attack.
 %%%%
 Sentinel's Mark spell
 
@@ -1869,6 +1867,7 @@ Fires a sharp dart of hardened chitin.
 Smiting spell
 
 Smites any targeted enemy within sight, with no direct line of fire required.
+The damage dealt is completely irresistible by AC, EV, or SH.
 %%%%
 Sojourning Bolt spell
 

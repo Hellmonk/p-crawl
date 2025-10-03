@@ -1,15 +1,15 @@
 name: "merfolk siren"
 glyph: {char: "m", colour: cyan}
-flags: [speaks, warm_blood]
+flags: [speaks, warm_blood, fast_swimmer]
 exp: 469
 species: merfolk
 will: 60
 attacks:
- - {type: hit, damage: 19}
-hd: 9
-hp_10x: 405
-ac: 4
-ev: 12
+ - {type: hit, damage: 11}
+hd: 5
+hp_10x: 400
+ac: 2
+ev: 20
 spells: merfolk_siren
 has_corpse: true
 shout: shout

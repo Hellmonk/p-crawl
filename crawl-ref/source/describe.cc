@@ -4854,6 +4854,7 @@ static string _flavour_base_desc(attack_flavour flavour)
         { AF_REACH_CLEAVE_UGLY, "random ugly thing damage" },
         { AF_DOOM,              "inflict doom" },
         { AF_BIG_FIRE,          "deal up to %d extra fire damage" },
+        { AF_SICK,              "inflict sickness" },
         { AF_PLAIN,             "" },
     };
 

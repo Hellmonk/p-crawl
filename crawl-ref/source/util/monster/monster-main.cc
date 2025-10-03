@@ -1077,6 +1077,9 @@ int main(int argc, char* argv[])
                 case AF_POISON_PARALYSE:
                     monsterattacks += colour(LIGHTRED, "(paralyse or slow)");
                     break;
+                case AF_SICK:
+                    monsterattacks += colour(LIGHTRED, "(sicken)");
+                    break;
                 case AF_POISON:
                     monsterattacks += colour(
                         YELLOW, damage_flavour("poison", hd * 2, hd * 4));

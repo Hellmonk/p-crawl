@@ -1,13 +1,13 @@
 name: "goblin rider"
 glyph: {char: "g", colour: green}
-flags: [flies, fighter, speaks, warm_blood]
+flags: [flies, fighter, speaks, warm_blood, fast_moving]
 exp: 308
 species: goblin
 will: 10
 attacks:
- - {type: hit, damage: 20}
+ - {type: hit, damage: 12}
 hd: 5
-hp_10x: 295
+hp_10x: 170
 ac: 4
 ev: 10
 has_corpse: true

@@ -4,11 +4,11 @@ flags: [speaks, fast_swimmer, warm_blood]
 exp: 301
 will: 40
 attacks:
- - {type: hit, damage: 22}
-hd: 10
-hp_10x: 550
+ - {type: hit, flavour: reach, damage: 11}
+hd: 4
+hp_10x: 400
 ac: 4
-ev: 12
+ev: 20
 has_corpse: true
 shout: shout
 intelligence: human
