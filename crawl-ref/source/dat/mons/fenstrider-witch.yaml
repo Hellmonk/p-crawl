@@ -4,12 +4,12 @@ flags: [speaks, warm_blood]
 exp: 1315
 will: 100
 attacks:
- - {type: hit, damage: 25}
- - {type: kick, damage: 25}
-hd: 16
-hp_10x: 666
+ - {type: hit, damage: 15}
+ - {type: kick, damage: 15}
+hd: 6
+hp_10x: 660
 ac: 3
-ev: 15
+ev: 20
 spells: fenstrider_witch
 has_corpse: true
 shout: shout

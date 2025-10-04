@@ -7,9 +7,9 @@ will: 20
 attacks:
  - {type: bite, damage: 5}
 hd: 2
-hp_10x: 170
+hp_10x: 110
 ac: 4
-ev: 7
+ev: 0
 spells: bombardier_beetle
 has_corpse: true
 intelligence: animal

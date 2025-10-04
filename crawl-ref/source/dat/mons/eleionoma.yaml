@@ -4,9 +4,9 @@ flags: [speaks, warm_blood]
 exp: 1028
 will: 100
 attacks:
- - {type: hit, damage: 25}
-hd: 16
-hp_10x: 800
+ - {type: hit, damage: 15}
+hd: 6
+hp_10x: 300
 ac: 2
 ev: 10
 spells: eleionoma

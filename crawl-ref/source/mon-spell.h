@@ -189,8 +189,8 @@ static const mon_spellbook mspell_list[] =
     // ('f') Mobile plants and fungi.
     {  MST_THORN_HUNTER,
       {
-       { SPELL_THORN_VOLLEY, 43, MON_SPELL_NATURAL },
-       { SPELL_WALL_OF_BRAMBLES, 22, MON_SPELL_MAGICAL },
+       { SPELL_THORN_VOLLEY, 40, MON_SPELL_NATURAL },
+       { SPELL_WALL_OF_BRAMBLES, 20, MON_SPELL_MAGICAL },
       }
     },
 
@@ -651,8 +651,8 @@ static const mon_spellbook mspell_list[] =
     // ('v') Vortices.
     {  MST_THERMIC_DYNAMO,
       {
-       { SPELL_REBOUNDING_BLAZE, 32, MON_SPELL_MAGICAL },
-       { SPELL_REBOUNDING_CHILL, 32, MON_SPELL_MAGICAL },
+       { SPELL_REBOUNDING_BLAZE, 20, MON_SPELL_MAGICAL },
+       { SPELL_REBOUNDING_CHILL, 20, MON_SPELL_MAGICAL },
       }
     },
 
@@ -1074,9 +1074,8 @@ static const mon_spellbook mspell_list[] =
 
     { MST_FENSTRIDER_WITCH,
       {
-       { SPELL_PARALYSE, 15, MON_SPELL_WIZARD },
-       { SPELL_AGONISING_TOUCH, 30, MON_SPELL_WIZARD },
-       { SPELL_HURL_SLUDGE, 15, MON_SPELL_WIZARD },
+       { SPELL_PARALYSE, 20, MON_SPELL_WIZARD },
+       { SPELL_HURL_SLUDGE, 20, MON_SPELL_WIZARD },
       }
     },
 
@@ -1391,7 +1390,7 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_ELEIONOMA,
       {
-       { SPELL_SPLINTERSPRAY, 50, MON_SPELL_MAGICAL },
+       { SPELL_THORN_VOLLEY, 40, MON_SPELL_MAGICAL },
        { SPELL_WOODWEAL, 150, MON_SPELL_MAGICAL | MON_SPELL_EMERGENCY },
       }
     },

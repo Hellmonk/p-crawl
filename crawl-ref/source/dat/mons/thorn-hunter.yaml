@@ -6,12 +6,13 @@ genus: plant
 holiness: [plant]
 will: 100
 attacks:
- - {type: hit, damage: 27}
- - {type: hit, damage: 23}
-hd: 15
-hp_10x: 975
+ - {type: hit, damage: 17}
+ - {type: hit, damage: 13}
+ - {type: hit, damage: 13}
+hd: 10
+hp_10x: 450
 ac: 9
-ev: 9
+ev: 10
 spells: thorn_hunter
 intelligence: animal
 habitat: amphibious
