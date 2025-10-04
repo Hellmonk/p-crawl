@@ -620,6 +620,7 @@ static int _mons_class_halo_radius(monster_type type)
     case MONS_GLOW_WORM:
         return 1;
     case MONS_MENNAS:
+    case MONS_SUN_MOTH:
         return 2;
     default:
         return -1;
@@ -628,8 +629,6 @@ static int _mons_class_halo_radius(monster_type type)
 
 int monster::halo_radius() const
 {
-    int size = -1;
-
     return _mons_class_halo_radius(type);
 }
 

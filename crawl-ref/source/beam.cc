@@ -4414,10 +4414,7 @@ void bolt::affect_player()
     if (origin_spell == SPELL_STICKY_FLAME
         || flavour == BEAM_STICKY_FLAME)
     {
-        // ench_power here is equal to 12 * caster HD for pyre arrow and
-        // 8 * caster HD for sticky flame (mostly since player ghosts tend to
-        // have higher HD)
-        const int intensity = 2 + ench_power / 14;
+        const int intensity = 2 + ench_power;
 
         if (!player_res_sticky_flame())
         {
@@ -5225,7 +5222,7 @@ void bolt::monster_post_hit(monster* mon, int dmg)
     {
         // Current numbers of monster sticky flame versus other monsters are
         // more arbitrary.
-        sticky_flame_monster(mon, agent(), 3 + random2(ench_power / 20));
+        sticky_flame_monster(mon, agent(), 2 + ench_power);
     }
 
     if (origin_spell == SPELL_QUICKSILVER_BOLT)

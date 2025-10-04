@@ -762,7 +762,7 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_SUN_MOTH,
       {
-       { SPELL_PYRE_ARROW, 35, MON_SPELL_NATURAL },
+       { SPELL_PYRE_ARROW, 40, MON_SPELL_NATURAL },
       }
     },
 

@@ -4373,7 +4373,7 @@ void dec_sticky_flame_player(int delay)
         return;
     }
 
-    int base_damage = roll_dice(2, you.props[STICKY_FLAME_POWER_KEY].get_int());
+    int base_damage = roll_dice(1, you.props[STICKY_FLAME_POWER_KEY].get_int());
     int damage = resist_adjust_damage(&you, BEAM_FIRE, base_damage);
 
     mprf(MSGCH_WARN, "The liquid fire burns you%s!",
