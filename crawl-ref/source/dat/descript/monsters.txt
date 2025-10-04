@@ -1557,6 +1557,15 @@ A gnoll witch possessed by a spirit of spite which flashes out from behind
 their eyes. Its strange chants and ululations send other gnolls into a wild
 frenzy.
 %%%%
+gnoll electrician
+
+Somebody's gotta keep the lights on.
+%%%%
+gnoll halberdier
+
+A gnoll well-armed and lightly skilled (as gnolls often are) in the use of a
+halberd. It tends to attack from behind the cover of its allies.
+%%%%
 gnoll sergeant
 
 A commander of a pack of gnolls. Scars on its stout body give evidence of how
@@ -2302,10 +2311,20 @@ A heavily armoured orc, covered in scars from many past battles. It commands
 its brethren in battle, rousing them to greater, more violent efforts with
 bloodcurdling shouts.
 %%%%
+orc lancer
+
+An orc warrior who specializes in the use of a long spear. It can make reaching
+attacks from behind its allies with great force and precision.
+%%%%
 orc priest
 
 A servant of Beogh, the ancient god of the orcs. Beogh rewards its devoted
 prayers by striking down its enemies.
+%%%%
+orc sniper
+
+A heavily armoured, crossbow wielding orc. It excels at ranged combat, but is
+quite capable in melee range as well.
 %%%%
 orc sorcerer
 

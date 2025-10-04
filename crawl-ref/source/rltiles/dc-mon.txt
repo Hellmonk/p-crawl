@@ -1234,6 +1234,8 @@ ironbound_mechanist MONS_IRONBOUND_MECHANIST
 gnoll MONS_GNOLL
 gnoll_shaman MONS_GNOLL_BOUDA
 gnoll_sergeant MONS_GNOLL_SERGEANT
+gnoll_electrician MONS_GNOLL_ELECTRICIAN
+gnoll_halberdier MONS_GNOLL_HALBERDIER
 %rim 1
 boggart MONS_BOGGART
 
@@ -1298,7 +1300,9 @@ orc MONS_ORC
 orc_wizard MONS_ORC_WIZARD
 orc_priest MONS_ORC_PRIEST
 orc_warrior MONS_ORC_WARRIOR
+orc_lancer MONS_ORC_LANCER
 orc_knight MONS_ORC_KNIGHT
+orc_sniper MONS_ORC_SNIPER
 orc_warlord MONS_ORC_WARLORD
 orc_sorcerer MONS_ORC_SORCERER
 orc_high_priest MONS_ORC_HIGH_PRIEST
