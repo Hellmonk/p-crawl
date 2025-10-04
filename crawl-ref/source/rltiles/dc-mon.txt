@@ -215,6 +215,7 @@ swamp_worm MONS_SWAMP_WORM
 swamp_worm_water
 %rim 1
 %sdir mon/animals
+glow_worm MONS_GLOW_WORM
 ribbon_worm MONS_RIBBON_WORM
 %rim 0
 brain_worm MONS_BRAIN_WORM

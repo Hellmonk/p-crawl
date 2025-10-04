@@ -615,11 +615,12 @@ static int _mons_class_halo_radius(monster_type type)
     case MONS_OPHAN:
         return 6;
     case MONS_SERAPH:
-        return 7; // highest rank among sentient ones
+        return 7;
     case MONS_HOLY_SWINE:
-        return 1;  // only notionally holy
+    case MONS_GLOW_WORM:
+        return 1;
     case MONS_MENNAS:
-        return 2;  // ???  Low on grace or what?
+        return 2;
     default:
         return -1;
     }
@@ -628,18 +629,6 @@ static int _mons_class_halo_radius(monster_type type)
 int monster::halo_radius() const
 {
     int size = -1;
-
-    item_def* wpn = mslot_item(MSLOT_WEAPON);
-    if (wpn && is_unrandom_artefact(*wpn, UNRAND_EOS))
-        size = max(size, 3);
-
-    item_def* alt_wpn = mslot_item(MSLOT_ALT_WEAPON);
-
-    if (wearing_ego(OBJ_ARMOUR, SPARM_LIGHT))
-        size = max(size, 3);
-
-    if (!(holiness() & MH_HOLY))
-        return size;
 
     return _mons_class_halo_radius(type);
 }

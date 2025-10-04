@@ -3368,6 +3368,11 @@ A cloud of thick fog, with faint, feeble claws constantly reaching out and then
 fading back into the fog. When threatened, it calls forth creatures banished to
 the void between realities, using them to defend itself.
 %%%%
+glow worm
+
+A worm well-fed on the remains of priests. This has made the worm enlightened,
+and its food holey.
+%%%%
 wraith
 
 A cloud of black mist surrounding an insubstantial skeletal form. Its eyes burn
