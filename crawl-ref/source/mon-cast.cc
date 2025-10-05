@@ -2525,6 +2525,7 @@ bool setup_mons_cast(const monster* mons, bolt &pbolt, spell_type spell_cast,
     case SPELL_HELLFIRE_MORTAR:
     case SPELL_GLOOM:
     case SPELL_MASS_REPULSION:
+    case SPELL_STEELSKIN:
         pbolt.range = 0;
         pbolt.glyph = 0;
         return true;
@@ -2858,6 +2859,43 @@ static bool _mass_repulsion(const monster& mage, bool check_only = false)
 
         affected++;
         mi->add_ench(mon_enchant(ENCH_REPEL_MISSILES));
+    }
+
+    if (affected == 0)
+        return false;
+
+    return true;
+}
+
+static bool _steelskin(const monster& mage, bool check_only = false)
+{
+    const actor *foe = mage.get_foe();
+    // Check for valid hostile target
+    if (!foe
+        || foe->is_player() && mage.friendly()
+        || !mage.see_cell_no_trans(foe->pos()))
+    {
+        return false;
+    }
+
+    int affected = 0;
+    for (monster_near_iterator mi(mage.pos(), LOS_NO_TRANS); mi; ++mi)
+    {
+        const monster *mons = *mi;
+
+        // only buff allies
+        if (!mons_aligned(&mage, mons))
+            continue;
+
+        // already buffed
+        if (mons->has_ench(ENCH_STEELSKIN))
+            continue;
+
+        if (check_only)
+            return true; // just need to check
+
+        affected++;
+        mi->add_ench(mon_enchant(ENCH_STEELSKIN));
     }
 
     if (affected == 0)
@@ -7034,18 +7072,7 @@ static bool _cast_dominate_undead(const monster& caster, int pow, bool check_onl
 
 static bool _mons_can_be_tempered(const monster& targ)
 {
-    if (!(targ.holiness() & MH_NONLIVING))
-        return false;
-
-    // We considerable LRD-able non-living monsters to be 'constructs',
-    // excepting gargoyles (too 'alive') and including dancing weapons.
-    if (targ.type == MONS_DANCING_WEAPON || targ.type == MONS_HOARFROST_CANNON
-        || mons_genus(targ.type) != MONS_GARGOYLE && monster_type_is_fraggable(targ.type))
-    {
-        return true;
-    }
-
-    return false;
+    return true;
 }
 
 static bool _mon_cast_tempering(const monster& caster, bool check_only)
@@ -8108,6 +8135,11 @@ void mons_cast(monster* mons, bolt pbolt, spell_type spell_cast,
     case SPELL_MASS_REPULSION:
         simple_monster_message(*mons, " repels missiles from its allies!");
         _mass_repulsion(*mons);
+        return;
+
+    case SPELL_STEELSKIN:
+        simple_monster_message(*mons, " armours its allies with hardened steel!");
+        _steelskin(*mons);
         return;
 
     case SPELL_BIND_SOULS:
@@ -9406,6 +9438,9 @@ ai_action::goodness monster_spell_goodness(monster* mon, spell_type spell)
 
     case SPELL_MASS_REPULSION:
         return ai_action::good_or_bad(_mass_repulsion(*mon, true));
+
+    case SPELL_STEELSKIN:
+        return ai_action::good_or_bad(_steelskin(*mon, true));
 
     case SPELL_CONFUSION_GAZE:
         // why is this handled here unlike other gazes?

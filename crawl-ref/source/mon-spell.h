@@ -230,8 +230,9 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_IRONBOUND_MECHANIST,
       {
-       { SPELL_PHALANX_BEETLE, 35, MON_SPELL_WIZARD },
-       { SPELL_ALL_PURPOSE_TEMPERING, 45, MON_SPELL_WIZARD },
+       { SPELL_PHALANX_BEETLE, 20, MON_SPELL_WIZARD },
+       { SPELL_STEELSKIN, 20, MON_SPELL_WIZARD },
+       { SPELL_ALL_PURPOSE_TEMPERING, 20, MON_SPELL_WIZARD },
       }
     },
 

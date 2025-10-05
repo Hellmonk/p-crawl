@@ -261,6 +261,7 @@ enum monster_info_flags
     MB_DIMINISHED_SPELLS,
     MB_STUNNED,
     MB_FREE_ACTION_USED,
+    MB_STEELSKIN,
     NUM_MB_FLAGS
 };
 

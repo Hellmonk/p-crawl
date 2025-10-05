@@ -650,5 +650,6 @@ enum spell_type : int
     SPELL_TOXIC_DART,
     SPELL_MASS_REPULSION,
     SPELL_THROW_BOULDER,
+    SPELL_STEELSKIN,
     NUM_SPELLS
 };

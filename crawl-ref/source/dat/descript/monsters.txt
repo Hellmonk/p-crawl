@@ -1854,9 +1854,9 @@ forth deadly frost from its surrounds, freezing foes that are next to walls.
 %%%%
 ironbound mechanist
 
-A well-armoured coglin whose talents with machinery have been harnessed by the
-Ironbound order to repair and augment the many constructs that help guard the
-Vaults.
+A well-armoured goblin whose talents with machinery have been harnessed by the
+Ironbound order to repair and augment the many strange creations of the
+Workshop.
 %%%%
 ironbound thunderhulk
 

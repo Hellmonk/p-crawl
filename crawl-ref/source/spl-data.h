@@ -761,6 +761,18 @@ static const struct spell_desc spelldata[] =
 },
 
 {
+    SPELL_STEELSKIN, "Steelskin",
+    spschool::earth,
+    spflag::monster,
+    5,
+    200,
+    -1, -1,
+    0,
+
+    TILEG_STEELSKIN,
+},
+
+{
     SPELL_BERSERKER_RAGE, "Berserker Rage",
     spschool::earth,
     spflag::hasty | spflag::monster | spflag::selfench,

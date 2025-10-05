@@ -836,6 +836,11 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
             simple_monster_message(*this, " is no longer repelling missiles.");
         break;
 
+    case ENCH_STEELSKIN:
+        if (!quiet)
+            simple_monster_message(*this, " is less armoured.");
+        break;
+
     case ENCH_RESISTANCE:
         if (!quiet)
             simple_monster_message(*this, " is no longer unusually resistant.");
@@ -1474,6 +1479,7 @@ void monster::apply_enchantment(const mon_enchant &me)
     case ENCH_PARADOX_TOUCHED:
     case ENCH_WARDING:
     case ENCH_DIMINISHED_SPELLS:
+    case ENCH_STEELSKIN:
         decay_enchantment(en);
         break;
 
@@ -2255,7 +2261,7 @@ static const char *enchant_names[] =
     "deep sleep", "drowsy",
     "vampire thrall", "pyrrhic recollection", "clockwork bee cast",
     "phalanx barrier", "figment", "paradox-touched", "warding",
-    "diminished_spells", "stunned", "free action used",
+    "diminished_spells", "stunned", "free action used", "steelskin",
     "buggy", // NUM_ENCHANTMENTS
 };
 

@@ -1348,11 +1348,11 @@ This spell requires line of sight but not line of fire.
 %%%%
 Nazja's All-Purpose Tempering spell
 
-Manifests a magical hammer that repairs and temporarily augments the offensive
-capabilities of any nearby construct - be it golem or phalanx beetle or even
-dancing weapon. This process results in a flurry of sparks, slag, and concussive
-shockwaves that do considerable damage to any enemies adjacent to the targeted
-construct, but it cannot be recast upon the same object until the enhancement
+Manifests a magical hammer that cybernetically heals an ally (whether nonliving,
+living, or something else entirely) and increases their difficulty by 4.
+This process results in a flurry of sparks, slag, and concussive
+shockwaves that deal damage to any enemies adjacent to the targeted
+monster, but it cannot be recast upon the same creature until the enhancement
 wears off.
 %%%%
 Nazja's Percussive Tempering spell
@@ -1982,6 +1982,11 @@ creature and deals armour-ignoring fire damage over several turns. If the victim
 is allowed to move, it will put out the fire prematurely.
 
 If the target is insubstantial, the liquid fire will fail to stick.
+%%%%
+Steelskin spell
+
+Shrouds the caster's allies in magical armour, greatly increasing their AC for
+a time.
 %%%%
 Still Winds spell
 

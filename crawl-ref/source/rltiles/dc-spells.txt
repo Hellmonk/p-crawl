@@ -37,6 +37,7 @@ sandblast SANDBLAST
 shatter SHATTER
 statue_form STATUE_FORM
 stone_arrow STONE_ARROW
+steelskin STEELSKIN
 
 %sdir gui/spells/enchantment
 anguish ANGUISH

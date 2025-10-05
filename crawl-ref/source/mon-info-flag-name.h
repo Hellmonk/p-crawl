@@ -165,4 +165,5 @@ static const vector<monster_info_flag_name> monster_info_flag_names = {
     { MB_DIMINISHED_SPELLS, "dim", "diminished spells", "dim"},
     { MB_STUNNED, "stunned", "stunned", "stunned"},
     { MB_FREE_ACTION_USED, "free action used", "free action used", "free action used"},
+    { MB_STEELSKIN, "steelskin", "steelskin", "steelskin"},
 };

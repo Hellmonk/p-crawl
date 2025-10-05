@@ -2946,6 +2946,9 @@ int monster::armour_class() const
     if (has_ench(ENCH_PHALANX_BARRIER))
         ac += 10;
 
+    if (has_ench(ENCH_STEELSKIN))
+        ac += 10;
+
     return max(ac, 0);
 }
 

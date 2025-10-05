@@ -5,12 +5,12 @@ species: goblin
 exp: 1000
 will: 80
 attacks:
- - {type: hit, damage: 22}
- - {type: hit, damage: 22}
-hd: 13
-hp_10x: 645
+ - {type: hit, damage: 12}
+ - {type: hit, damage: 12}
+hd: 5
+hp_10x: 400
 ac: 1
-ev: 13
+ev: 20
 spells: ironbound_mechanist
 has_corpse: true
 shout: shout
