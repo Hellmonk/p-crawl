@@ -5,11 +5,11 @@ exp: 466
 species: kobold
 will: 20
 attacks:
- - {type: hit, damage: 12}
-hd: 8
-hp_10x: 390
+ - {type: hit, damage: 6}
+hd: 2
+hp_10x: 100
 ac: 4
-ev: 14
+ev: 30
 spells: kobold_blastminer
 has_corpse: true
 shout: shout

@@ -2961,17 +2961,6 @@ static bool _mons_awaken_flesh(const monster& caster, const int power,
                     60, TILE_BOLT_CHAOS_BUFF);
         }
 
-        bolt shockwave;
-        shockwave.set_agent(&caster);
-        shockwave.attitude = caster.temp_attitude();
-        shockwave.source = mi->pos();
-        shockwave.target = mi->pos();
-        shockwave.is_explosion = true;
-        shockwave.ex_size = 1;
-        shockwave.origin_spell = SPELL_AWAKEN_FLESH;
-        zappy(ZAP_AWAKEN_FLESH, power, true, shockwave);
-        shockwave.explode(true, true);
-
         change_monster_type(*mi, MONS_ABOMINATION_LARGE, true);
 
         // All three abomination buffs at once. Chaos is strong.

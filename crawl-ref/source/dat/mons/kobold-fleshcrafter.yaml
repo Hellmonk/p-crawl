@@ -5,12 +5,12 @@ exp: 955
 species: kobold
 will: 60
 attacks:
- - {type: hit, damage: 24}
- - {type: tentacle_slap, flavour: poison, damage: 16}
-hd: 13
-hp_10x: 660
-ac: 8
-ev: 16
+ - {type: hit, damage: 14}
+ - {type: tentacle_slap, flavour: blink, damage: 9}
+hd: 5
+hp_10x: 330
+ac: 6
+ev: 30
 spells: kobold_fleshcrafter
 has_corpse: true
 shout: shout
