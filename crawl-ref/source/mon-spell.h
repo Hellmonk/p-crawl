@@ -1484,9 +1484,9 @@ static const mon_spellbook mspell_list[] =
     },
 
     // ('W') Incorporeal undead.
-    {  MST_SHADOWGHAST,
+     {  MST_BES_KEMWAR,
       {
-       { SPELL_INVISIBILITY, 33, MON_SPELL_NATURAL },
+       { SPELL_DIMINISH_SPELLS, 40, MON_SPELL_NATURAL },
       }
     },
 

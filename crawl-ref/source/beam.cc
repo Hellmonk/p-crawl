@@ -3977,6 +3977,11 @@ void bolt::affect_player_enchantment(bool resistible)
         nice  = true;
         break;
 
+    case BEAM_DIMINISH_SPELLS:
+        you.diminish(agent(), 9);
+        obvious_effect = true;
+        break;
+
     case BEAM_SAP_MAGIC:
         mprf(MSGCH_WARN, "Your magic feels %stainted.",
              you.duration[DUR_SAP_MAGIC] ? "more " : "");
@@ -5968,6 +5973,7 @@ bool bolt::has_saving_throw() const
     case BEAM_SHADOW_TORPOR:
     case BEAM_ILL_OMEN:
     case BEAM_WARP_BODY:
+    case BEAM_DIMINISH_SPELLS:
         return false;
     case BEAM_VULNERABILITY:
         return !one_chance_in(3);  // Ignores will 1/3 of the time
@@ -6049,6 +6055,7 @@ bool ench_flavour_affects_monster(actor *agent, beam_type flavour,
         break;
 
     case BEAM_DRAIN_MAGIC:
+    case BEAM_DIMINISH_SPELLS:
         rc = mon->antimagic_susceptible();
         break;
 
@@ -6664,6 +6671,11 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
                 obvious_effect = true;
             }
         }
+        return MON_AFFECTED;
+
+    case BEAM_DIMINISH_SPELLS:
+        mon->diminish(agent(), 9);
+        obvious_effect = true;
         return MON_AFFECTED;
 
     case BEAM_DRAIN_MAGIC:
@@ -7654,6 +7666,7 @@ static string _beam_type_name(beam_type type)
     case BEAM_AGILITY:               return "agility";
     case BEAM_SAP_MAGIC:             return "sap magic";
     case BEAM_DRAIN_MAGIC:           return "drain magic";
+    case BEAM_DIMINISH_SPELLS:       return "diminish spells";
     case BEAM_TUKIMAS_DANCE:         return "tukima's dance";
     case BEAM_DEATH_RATTLE:          return "breath of the dead";
     case BEAM_RESISTANCE:            return "resistance";

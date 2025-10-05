@@ -196,5 +196,6 @@ enum zap_type
     ZAP_SHOOT_ARROW,
     ZAP_TOXIC_DART,
     ZAP_THROW_BOULDER,
+    ZAP_DIMINISH_SPELLS,
     NUM_ZAPS
 };

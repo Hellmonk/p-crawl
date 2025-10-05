@@ -5224,6 +5224,20 @@ void monster::weaken(const actor *attacker, int pow)
                          (pow + random2(pow + 3)) * BASELINE_DELAY));
 }
 
+void monster::diminish(const actor *attacker, int pow)
+{
+    if (!this->antimagic_susceptible())
+        return;
+
+    if (!has_ench(ENCH_DIMINISHED_SPELLS))
+        mprf("%s spells grow weaker.", name(DESC_ITS).c_str());
+    else
+        mprf("%s spells grow weaker yet longer.", name(DESC_ITS).c_str());
+
+    add_ench(mon_enchant(ENCH_DIMINISHED_SPELLS, 1, attacker,
+                         (6 + random2(5 * pow)) * BASELINE_DELAY));
+}
+
 bool monster::strip_willpower(actor *attacker, int dur, bool quiet)
 {
     // Infinite will enemies are immune
