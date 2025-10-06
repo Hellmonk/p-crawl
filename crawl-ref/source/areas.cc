@@ -618,6 +618,7 @@ static int _mons_class_halo_radius(monster_type type)
         return 7;
     case MONS_HOLY_SWINE:
     case MONS_GLOW_WORM:
+    case MONS_GLOWING_IMP:
         return 1;
     case MONS_MENNAS:
     case MONS_SUN_MOTH:

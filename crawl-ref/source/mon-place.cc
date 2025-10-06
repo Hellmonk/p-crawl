@@ -1970,7 +1970,7 @@ static const map<monster_type, band_set> bands_by_leader = {
                                    {{ BAND_SPECTRALS, {2, 6}, true} }}},
     { MONS_GRUNN,            { {}, {{ BAND_OBLIVION_HOUNDS, {2, 4}, true }}}},
     { MONS_NORRIS,           { {}, {{ BAND_SKYSHARKS, {2, 5}, true }}}},
-    { MONS_UFETUBUS,         { {}, {{ BAND_UFETUBI, {1, 2} }}}},
+    { MONS_BRAIN_IMP,         { {}, {{ BAND_UFETUBI, {1, 2} }}}},
     { MONS_SIN_BEAST,        { {}, {{ BAND_SIN_BEASTS, {1, 2} }}}},
     { MONS_KOBOLD_BLASTMINER, { {}, {{ BAND_BLASTMINER, {0, 2} }}}},
     { MONS_ARACHNE,          { {}, {{ BAND_ORB_SPIDERS, {3, 5}}}}},
@@ -2230,7 +2230,7 @@ static const map<band_type, vector<member_possibilities>> band_membership = {
     { BAND_WIGHTS,              {{{MONS_WIGHT, 1}}}},
     { BAND_JACKALS,             {{{MONS_JACKAL, 1}}}},
     { BAND_KOBOLDS,             {{{MONS_KOBOLD, 1}}}},
-    { BAND_PIKEL,               {{{MONS_LEMURE, 1}}}},
+    { BAND_PIKEL,               {{{MONS_ACID_IMP, 1}}}},
     { BAND_JOSEPHINE,           {{{MONS_WRAITH, 1}}}},
     { BAND_MELIAI,              {{{MONS_MELIAI, 1}}}},
     { BAND_BOGGARTS,            {{{MONS_BOGGART, 1}}}},
@@ -2287,7 +2287,7 @@ static const map<band_type, vector<member_possibilities>> band_membership = {
                                 {{MONS_DEEP_TROLL, 1}}}},
     { BAND_BONE_DRAGONS,        {{{MONS_BONE_DRAGON, 1}}}},
     { BAND_SPECTRALS,           {{{MONS_SPECTRAL_THING, 1}}}},
-    { BAND_UFETUBI,             {{{MONS_UFETUBUS, 1}}}},
+    { BAND_UFETUBI,             {{{MONS_BRAIN_IMP, 1}}}},
     { BAND_SIN_BEASTS,          {{{MONS_SIN_BEAST, 1}}}},
     { BAND_BLASTMINER,          {{{MONS_KOBOLD_BLASTMINER, 1}}}},
     { BAND_THERMIC_DYNAMOS,     {{{MONS_THERMIC_DYNAMO, 1}}}},
@@ -3191,9 +3191,9 @@ monster_type random_demon_by_tier(int tier)
     case 5:
         return random_choose(MONS_CRIMSON_IMP,
                              MONS_WHITE_IMP,
-                             MONS_UFETUBUS,
+                             MONS_BRAIN_IMP,
                              MONS_IRON_IMP,
-                             MONS_DRUDE,
+                             MONS_DRAIN_IMP,
                              MONS_SHADOW_IMP);
     case 4:
         return random_choose(MONS_ICE_DEVIL,
@@ -3519,12 +3519,12 @@ static const vector<pop_entry> band_weights[] =
 
 // APOSTLE_BAND_DEMONS,
 {
-    {0, 25, 80, FALL, MONS_CRIMSON_IMP},
-    {0, 25, 80, FALL, MONS_WHITE_IMP},
-    {0, 25, 80, FALL, MONS_UFETUBUS},
-    {0, 25, 80, FALL, MONS_IRON_IMP},
+    {0, 25, 80, FALL, MONS_CRIMSON_IMP },
+    {0, 25, 80, FALL, MONS_WHITE_IMP },
+    {0, 25, 80, FALL, MONS_BRAIN_IMP },
+    {0, 25, 80, FALL, MONS_IRON_IMP },
     {0, 25, 80, FALL, MONS_SHADOW_IMP},
-    {0, 25, 80, FALL, MONS_DRUDE},
+    {0, 25, 80, FALL, MONS_DRAIN_IMP},
 
     {20, 55, 125, SEMI, MONS_ICE_DEVIL},
     {20, 55, 125, SEMI, MONS_RUST_DEVIL},

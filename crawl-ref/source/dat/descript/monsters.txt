@@ -1028,8 +1028,7 @@ victims with implaceable inevitability.
 %%%%
 crimson imp
 
-A small, ugly minor demon. Its fanged maw seems locked in a permanent malign
-grin, and its horns protrude obscenely from its scaly pate.
+An annoying little imp that regenerates quickly.
 %%%%
 crocodile
 
@@ -1312,10 +1311,9 @@ A cold and hollow apparition of the drowned dead, chained by some lingering
 attachment to the depths in which it perished. It rushes to embrace the living,
 sharing the last moments of its watery fate with whatever it touches.
 %%%%
-drude
+drain imp
 
-A conniving demon born from the nightmares of sleeping mages. It delights in
-coaxing the imagined fears of mortals into reality.
+An annoying little imp capable of draining both health and magical power.
 %%%%
 dryad
 
@@ -1835,7 +1833,7 @@ locomotion through some esoteric means.
 %%%%
 iron imp
 
-An ugly, twisted little minor demon with metal skin.
+An annoying little imp with metal skin.
 %%%%
 iron troll
 
@@ -1982,10 +1980,9 @@ lava snake
 A burning red snake which dwells in pools of lava. It spits gobs of molten rock
 at passers-by.
 %%%%
-lemure
+acid imp
 
-An accursed soul magically bound to hellish servitude for the highest bidder.
-If its master is slain, it will be freed, departing this realm with gratitude.
+An annoying little imp that drips with corrosive ooze.
 %%%%
 lich
 
@@ -3166,10 +3163,9 @@ A horrific fallen divinity, possessing jaws of gnashing stone and a necklace of
 starry organs. It spreads disease and despair, and patiently awaits the end of
 days when it will devour the sun.
 %%%%
-ufetubus
+brain imp
 
-A chattering and shrieking minor demon. They delight in sneaking past and
-backstabbing their prey.
+An annoying little imp whose attacks befuddle the mind.
 %%%%
 undying armoury
 
@@ -3350,7 +3346,7 @@ A muscular white-scaled humanoid with a reptilian tail and small wings.
 %%%%
 white imp
 
-A small and mischievous minor demon covered in frost.
+An annoying little imp covered in frost.
 %%%%
 wight
 

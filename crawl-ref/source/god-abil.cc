@@ -7275,7 +7275,7 @@ static const vector<random_pick_entry<monster_type>> _makhleb_torturers =
 {
   {  -5,  3, 200, FALL, MONS_WHITE_IMP },
   {  -4,  3, 200, SEMI, MONS_IRON_IMP },
-  {  -3,  3, 200, SEMI, MONS_UFETUBUS },
+  {  -3,  3, 200, SEMI, MONS_BRAIN_IMP },
   {  0,  8,  100, SEMI, MONS_ICE_DEVIL },
   {  2,  10,  120, SEMI, MONS_ORANGE_DEMON },
   {  2,  12, 110, SEMI, MONS_RUST_DEVIL },

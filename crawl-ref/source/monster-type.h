@@ -684,10 +684,10 @@ enum monster_type                      // env.mons[].type
 
     // Demons:
     MONS_CRIMSON_IMP,
-    MONS_DRUDE,
+    MONS_DRAIN_IMP,
     MONS_WHITE_IMP,
-    MONS_LEMURE,
-    MONS_UFETUBUS,
+    MONS_ACID_IMP,
+    MONS_BRAIN_IMP,
     MONS_IRON_IMP,
     MONS_SHADOW_IMP,
 #if TAG_MAJOR_VERSION > 34
@@ -1375,6 +1375,7 @@ enum monster_type                      // env.mons[].type
     MONS_GLOW_WORM,
     MONS_KOBOLD_GEOMANCER,
     MONS_BES_KEMWAR,
+    MONS_GLOWING_IMP,
 #endif
 
     NUM_MONSTERS,               // used for polymorph

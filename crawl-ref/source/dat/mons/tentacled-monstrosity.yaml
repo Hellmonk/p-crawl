@@ -5,14 +5,14 @@ exp: 1843
 holiness: [demonic]
 will: 160
 attacks:
- - {type: tentacle_slap, damage: 22}
- - {type: tentacle_slap, damage: 17}
- - {type: tentacle_slap, damage: 13}
+ - {type: tentacle_slap, damage: 16}
+ - {type: tentacle_slap, damage: 16}
+ - {type: tentacle_slap, damage: 16}
  - {type: constrict, flavour: crush, damage: 6}
-hd: 23
-hp_10x: 1265
+hd: 10
+hp_10x: 800
 ac: 5
-ev: 5
+ev: 0
 intelligence: human
 habitat: amphibious
 uses: open_doors

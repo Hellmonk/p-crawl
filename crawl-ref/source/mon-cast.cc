@@ -7524,7 +7524,7 @@ void mons_cast(monster* mons, bolt pbolt, spell_type spell_cast,
         for (sumcount = 0; sumcount < sumcount2; ++sumcount)
         {
             create_monster(
-                mgen_data(MONS_UFETUBUS, SAME_ATTITUDE(mons), mons->pos(),
+                mgen_data(MONS_BRAIN_IMP, SAME_ATTITUDE(mons), mons->pos(),
                           mons->foe, MG_NONE, god)
                 .set_summoned(mons, spell_cast, summ_dur(duration)));
         }

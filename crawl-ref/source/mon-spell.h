@@ -1567,13 +1567,19 @@ static const mon_spellbook mspell_list[] =
     // ('5') Minor demons.
     {  MST_WHITE_IMP,
       {
-       { SPELL_THROW_FROST, 52, MON_SPELL_MAGICAL },
+       { SPELL_THROW_FROST, 40, MON_SPELL_MAGICAL },
       }
     },
 
     {  MST_SHADOW_IMP,
       {
-       { SPELL_PAIN, 17, MON_SPELL_MAGICAL },
+       { SPELL_PAIN, 20, MON_SPELL_MAGICAL },
+      }
+    },
+
+    {  MST_GLOWING_IMP,
+      {
+       { SPELL_MAGIC_DART, 40, MON_SPELL_MAGICAL },
       }
     },
 

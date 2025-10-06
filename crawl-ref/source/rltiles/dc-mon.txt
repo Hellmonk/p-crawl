@@ -464,16 +464,17 @@ hellwing MONS_HELLWING
 crimson_imp MONS_CRIMSON_IMP
 cerulean_imp MONS_CERULEAN_IMP
 %rim 0
-lemure MONS_LEMURE
-drude MONS_DRUDE
+acid_imp MONS_ACID_IMP
+drain_imp MONS_DRAIN_IMP
 %rim 1
 iron_imp MONS_IRON_IMP
 %rim 0
 shadow_imp MONS_SHADOW_IMP
 mon/unique/grinder MONS_GRINDER
 %rim 1
-ufetubus MONS_UFETUBUS
+brain_imp MONS_BRAIN_IMP
 white_imp MONS_WHITE_IMP
+glowing_imp MONS_GLOWING_IMP
 
 # demonspawn ('6')
 %sdir mon/humanoids/demonspawn
