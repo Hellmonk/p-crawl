@@ -1,0 +1,19 @@
+name: "drain imp"
+glyph: {char: "5", colour: lightmagenta}
+flags: [speaks, quick]
+exp: 38
+holiness: [demonic]
+will: 40
+attacks:
+ - {type: hit, damage: 2, flavour: drain}
+ - {type: hit, damage: 3, flavour: antimagic}
+ - {type: hit, damage: 3, flavour: antimagic}
+hd: 2
+hp_10x: 30
+ac: 1
+ev: 50
+shout: shout
+intelligence: human
+uses: open_doors
+size: little
+shape: humanoid

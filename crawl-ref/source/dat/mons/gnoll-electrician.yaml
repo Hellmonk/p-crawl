@@ -1,0 +1,18 @@
+name: "gnoll electrician"
+glyph: {char: "j", colour: lightblue}
+flags: [speaks, warm_blood]
+exp: 14
+species: gnoll
+will: 10
+attacks:
+ - {type: hit, flavour: elec, damage: 7}
+hd: 2
+hp_10x: 120
+ac: 2
+ev: 0
+has_corpse: true
+shout: shout
+intelligence: human
+uses: open_doors
+size: medium
+shape: humanoid

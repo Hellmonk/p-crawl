@@ -1,0 +1,19 @@
+name: "orc lancer"
+glyph: {char: "o", colour: lightred}
+flags: [fighter, speaks, warm_blood]
+exp: 133
+species: orc
+will: 20
+attacks:
+ - {type: hit, flavour: reach, damage: 6}
+ - {type: hit, flavour: reach, damage: 6}
+hd: 4
+hp_10x: 180
+ac: 3
+ev: 10
+has_corpse: true
+shout: shout
+intelligence: human
+uses: open_doors
+size: medium
+shape: humanoid
