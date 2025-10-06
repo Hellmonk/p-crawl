@@ -3053,6 +3053,13 @@ item_def* monster_die(monster& mons, killer_type killer,
             bennu_revive_fineff::schedule(mons.pos(), revives, att, mons.foe,
                                           duel, gozag_bribe);
         }
+        else if (mons.type == MONS_WYVERN_EGG && real_death)
+        {
+            const beh_type att = mons.has_ench(ENCH_CHARM)
+                                 ? BEH_HOSTILE : SAME_ATTITUDE(&mons);
+
+            wyvern_egg_hatch_fineff::schedule(mons.pos(), att, mons.foe);
+        }
     }
 
     // Must be done after health is set to zero and monster is properly marked dead.

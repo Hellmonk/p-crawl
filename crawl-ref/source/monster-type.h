@@ -1376,6 +1376,7 @@ enum monster_type                      // env.mons[].type
     MONS_KOBOLD_GEOMANCER,
     MONS_BES_KEMWAR,
     MONS_GLOWING_IMP,
+    MONS_WYVERN_EGG,
 #endif
 
     NUM_MONSTERS,               // used for polymorph

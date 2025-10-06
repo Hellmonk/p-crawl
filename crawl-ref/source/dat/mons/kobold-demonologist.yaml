@@ -6,10 +6,10 @@ species: kobold
 will: 40
 attacks:
  - {type: hit, damage: 4}
-hd: 6
-hp_10x: 390
+hd: 4
+hp_10x: 190
 ac: 2
-ev: 13
+ev: 20
 spells: kobold_demonologist
 has_corpse: true
 shout: shout

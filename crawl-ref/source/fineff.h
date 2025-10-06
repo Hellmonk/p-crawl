@@ -404,6 +404,26 @@ protected:
     mon_enchant gozag_bribe;
 };
 
+class wyvern_egg_hatch_fineff : public final_effect
+{
+public:
+    // Each trigger is from a different egg ---no merging.
+    bool mergeable(const final_effect &) const override { return false; }
+    void fire() override;
+
+    static void schedule(coord_def pos, beh_type attitude, unsigned short foe)
+    {
+        final_effect::schedule(new wyvern_egg_hatch_fineff(pos, attitude, foe));
+    }
+protected:
+    wyvern_egg_hatch_fineff(coord_def pos, beh_type _att, unsigned short _foe)
+        : final_effect(0, 0, pos), attitude(_att), foe(_foe)
+    {
+    }
+    beh_type attitude;
+    unsigned short foe;
+};
+
 class avoided_death_fineff : public final_effect
 {
 public:

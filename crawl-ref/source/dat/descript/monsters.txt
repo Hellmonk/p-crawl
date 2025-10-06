@@ -1583,19 +1583,17 @@ it travels. If it collides with either a creature or wall, it will explode
 violently - though its creator is protected from the wild destruction unleashed
 as it does so.
 %%%%
+glowing imp
+
+An annoying little imp outlined in light.
+%%%%
 goblin
 
-A short, impatient and unfriendly humanoid. Goblins first appeared only a few
-years ago, but are now remarkably numerous. Sadly, no number of raucous goblin
-parties will put them in a welcoming mood toward adventurers.
+A short, impatient and unfriendly humanoid.
 %%%%
 goblin rider
 
-Goblin clans fractured over the advent of steel exoskeletons long ago, prompting
-an experimental arms race for goblin hegemony. Some volunteered to join forces
-with other species, an alliance that has enabled capturing and taming wyverns.
-From uptop their majestic dragon-like mounts, these goblins swiftly soar about
-and skewer those who intrude upon their allies' domain.
+Goblins who have managed to tame wyverns without getting eaten.
 %%%%
 golden dragon
 
@@ -1940,7 +1938,7 @@ maker's mark, and is fiercely loyal; it will fire for none other.
 %%%%
 kobold demonologist
 
-A kobold in league with demonic powers, able to call forth beings from the
+A kobold in league with demonic powers, able to call forth imps from the
 depths of Hell.
 %%%%
 kobold fleshcrafter
@@ -3407,6 +3405,12 @@ wyvern
 
 A dragon-like creature with a long, sharply pointed tail. Although smaller and
 less formidable than true dragons, it is nonetheless a foe to be reckoned with.
+%%%%
+wyvern egg
+
+The frail and immobile egg of a wyvern. If you happened to break it, you'd have
+to deal with the much less frail and more mobile wyvern within. Surely you
+aren't stupid enough to do that, right?
 %%%%
 yak
 

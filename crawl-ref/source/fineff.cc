@@ -696,6 +696,15 @@ void bennu_revive_fineff::fire()
         newmons->add_ench(gozag_bribe);
 }
 
+void wyvern_egg_hatch_fineff::fire()
+{
+    bool res_visible = you.see_cell(posn);
+
+    monster *newmons = create_monster(mgen_data(MONS_WYVERN, attitude, posn, foe,
+                                                res_visible ? MG_DONT_COME
+                                                            : MG_NONE));
+}
+
 void avoided_death_fineff::fire()
 {
     ASSERT(defender() && defender()->is_monster());

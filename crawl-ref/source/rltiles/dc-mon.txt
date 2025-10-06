@@ -829,6 +829,7 @@ tainted_leviathan MONS_TAINTED_LEVIATHAN
 ## Drakes ('k')
 %sdir mon/dragons
 wyvern MONS_WYVERN
+wyvern_egg MONS_WYVERN_EGG
 swamp_drake MONS_SWAMP_DRAKE
 rime_drake MONS_RIME_DRAKE
 lindwurm MONS_LINDWURM

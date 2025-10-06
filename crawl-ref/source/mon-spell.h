@@ -1145,9 +1145,7 @@ static const mon_spellbook mspell_list[] =
     // ('K') Kobolds.
     {  MST_KOBOLD_DEMONOLOGIST,
       {
-       { SPELL_CANTRIP, 19, MON_SPELL_WIZARD },
-       { SPELL_SUMMON_MINOR_DEMON, 19, MON_SPELL_WIZARD },
-       { SPELL_SUMMON_DEMON, 19, MON_SPELL_WIZARD },
+       { SPELL_CALL_IMP, 40, MON_SPELL_WIZARD },
       }
     },
 
