@@ -683,7 +683,7 @@ void bennu_revive_fineff::fire()
                                                 res_visible ? MG_DONT_COME
                                                             : MG_NONE));
     if (newmons)
-        newmons->props[BENNU_REVIVES_KEY].get_byte() = revives + 1;
+        newmons->props[REVIVES_KEY].get_byte() = revives + 1;
 
     // If we were dueling the original bennu, the duel continues.
     if (duel)
@@ -695,6 +695,31 @@ void bennu_revive_fineff::fire()
     if (gozag_bribe.ench != ENCH_NONE)
         newmons->add_ench(gozag_bribe);
 }
+
+void phoenix_revive_fineff::fire()
+{
+    // XXX: merge with the bennu one some time
+
+    bool res_visible = you.see_cell(posn);
+
+
+    monster *newmons = create_monster(mgen_data(MONS_PHOENIX, attitude, posn, foe,
+                                                res_visible ? MG_DONT_COME
+                                                            : MG_NONE));
+    if (newmons)
+        newmons->props[REVIVES_KEY].get_byte() = revives + 1;
+
+    // If we were dueling the original bennu, the duel continues.
+    if (duel)
+    {
+        newmons->props[OKAWARU_DUEL_TARGET_KEY] = true;
+        newmons->props[OKAWARU_DUEL_CURRENT_KEY] = true;
+    }
+
+    if (gozag_bribe.ench != ENCH_NONE)
+        newmons->add_ench(gozag_bribe);
+}
+
 
 void wyvern_egg_hatch_fineff::fire()
 {

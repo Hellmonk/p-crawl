@@ -5406,11 +5406,11 @@ bool monster::maybe_free_action(energy_use_type et)
 
 bool monster::takes_two_turns(energy_use_type et)
 {
-    if (mons_class_flag(this->type, M_SLOW_ACTING))
+    if (mons_class_flag(this->type, M_SLOW_ACTING) || has_ench(ENCH_SLOW))
         return true;
     if (mons_class_flag(this->type, M_SLOW_ATTACKS))
         return et == EUT_ATTACK;
-    if (mons_class_flag(this->type, M_SLOW_MOVEMENT))
+    if (mons_class_flag(this->type, M_SLOW_MOVEMENT) || has_ench(ENCH_FROZEN))
         return et == EUT_MOVE || et == EUT_SWIM;
 
     return false;

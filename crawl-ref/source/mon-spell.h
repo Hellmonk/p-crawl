@@ -309,7 +309,7 @@ static const mon_spellbook mspell_list[] =
     // ('k') Drakes.
     { MST_RIME_DRAKE,
       {
-        { SPELL_FLASH_FREEZE, 62, MON_SPELL_NATURAL | MON_SPELL_BREATH },
+        { SPELL_FLASH_FREEZE, 60, MON_SPELL_NATURAL | MON_SPELL_BREATH },
       }
     },
 
@@ -329,7 +329,7 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_LINDWURM,
       {
-       { SPELL_FIRE_BREATH, 62, MON_SPELL_NATURAL | MON_SPELL_BREATH },
+       { SPELL_FIRE_BREATH, 60, MON_SPELL_NATURAL | MON_SPELL_BREATH },
       }
     },
 
@@ -1813,7 +1813,7 @@ static const mon_spellbook mspell_list[] =
     {  MST_WRETCHED_STAR,
       {
        { SPELL_FORCE_LANCE, 60, MON_SPELL_MAGICAL },
-       { SPELL_CORRUPTING_PULSE, 40, MON_SPELL_MAGICAL },
+       { SPELL_MALMUTATE, 20, MON_SPELL_MAGICAL },
       }
     },
 

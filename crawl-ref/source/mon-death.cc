@@ -2218,6 +2218,11 @@ static void _player_on_kill_effects(monster& mons, killer_type killer,
     }
 }
 
+static bool _mons_resurrects(monster_type type)
+{
+    return type == MONS_BENNU || type == MONS_PHOENIX;
+}
+
 /**
  * Kill off a monster.
  *
@@ -2534,6 +2539,22 @@ item_def* monster_die(monster& mons, killer_type killer,
     }
     else if (mons.type == MONS_FLAYED_GHOST)
         end_flayed_effect(&mons);
+    else if (mons.type == MONS_LINDWURM && !was_banished
+        && !mons.pacified() && (!summoned || duration > 0))
+    {
+        if (you.can_see(mons))
+        {
+            mprf("Flames billow from the dead %s!",
+                mons.name(DESC_PLAIN).c_str());
+        }
+
+        map_cloud_spreader_marker *marker =
+            new map_cloud_spreader_marker(mons.pos(), CLOUD_FIRE, 10,
+                                          18 + random2(7), 4, 8, &mons);
+        env.markers.add(marker);
+        env.markers.clear_need_activate();
+    }
+
     else if (mons.type == MONS_PLAYER_SHADOW)
         dithmenos_cleanup_player_shadow(&mons);
 
@@ -3031,12 +3052,12 @@ item_def* monster_die(monster& mons, killer_type killer,
         }
         else if (mons_is_elven_twin(&mons))
             elven_twin_died(&mons, in_transit, killer, killer_index);
-        else if (mons.type == MONS_BENNU && !mons.pacified() && real_death
-                 && mons_bennu_can_revive(&mons))
+        else if (_mons_resurrects(mons.type) && !mons.pacified() && real_death
+                 && mons_can_revive(&mons))
         {
             // All this information may be lost by the time the monster revives.
-            const int revives = (mons.props.exists(BENNU_REVIVES_KEY))
-                                ? mons.props[BENNU_REVIVES_KEY].get_byte() : 0;
+            const int revives = (mons.props.exists(REVIVES_KEY))
+                                ? mons.props[REVIVES_KEY].get_byte() : 0;
             const bool duel = mons.props.exists(OKAWARU_DUEL_CURRENT_KEY);
             const beh_type att = mons.has_ench(ENCH_CHARM)
                                  ? BEH_HOSTILE : SAME_ATTITUDE(&mons);
@@ -4059,8 +4080,8 @@ void mons_felid_revive(monster* mons)
     }
 }
 
-bool mons_bennu_can_revive(const monster* mons)
+bool mons_can_revive(const monster* mons)
 {
-    return !mons->props.exists(BENNU_REVIVES_KEY)
-           || mons->props[BENNU_REVIVES_KEY].get_byte() < 1;
+    return !mons->props.exists(REVIVES_KEY)
+           || mons->props[REVIVES_KEY].get_byte() < 1;
 }

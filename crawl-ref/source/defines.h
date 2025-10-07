@@ -305,7 +305,7 @@ const char * const THUNDERBOLT_AIM_KEY     = "thunderbolt_aim";
 #define ZIN_ID_KEY "zin_id"
 #define BLAME_KEY "blame"
 #define NO_ANNOTATE_KEY "no_annotate"
-#define BENNU_REVIVES_KEY "bennu_revives"
+#define REVIVES_KEY "monster_revives"
 #define FELID_REVIVES_KEY "felid_revives"
 #define SPECTRAL_WEAPON_KEY "spectral_weapon"
 #define FAKE_MON_KEY "fake"

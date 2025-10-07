@@ -243,7 +243,8 @@ Your melee attacks do 25% less damage.
 %%%%
 Frozen status
 
-You are covered in ice, and your movement speed is reduced.
+You are covered in ice and cannot move easily. Moving will stun you for a turn.
+Other actions you may take are unaffected.
 %%%%
 Sap status
 

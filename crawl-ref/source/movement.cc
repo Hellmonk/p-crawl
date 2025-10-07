@@ -1145,6 +1145,8 @@ void move_player_action(coord_def move)
         // stun the player after moving if there was a monster onscreen before moving
         if (you.is_nervous() && you.wearing_ego(OBJ_ARMOUR, SPARM_PONDEROUSNESS))
             you.stun(&you);
+        else if (you.duration[DUR_FROZEN])
+            you.stun(&you);
 
         coord_def old_pos = you.pos();
         // Don't trigger things that require movement

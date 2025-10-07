@@ -688,10 +688,10 @@ ancient zyme
 A nexus of sentient cancer and disease, borne aloft perhaps by malice alone.
 Its nature inflicts withering illness on all living beings in its presence.
 %%%%
-angel
+clockwork angel
 
-A divine warrior of the Shining One. It is a towering winged figure of
-unnatural beauty surrounded by an aura of brilliant white light.
+A replica of a divine warrior of the Shining One. What it lacks in divine
+substance, it makes up for in sheer mechanical precision.
 %%%%
 apis
 
@@ -1997,10 +1997,10 @@ lightning spire
 A buzzing contraption made from a coil and a rod. It irregularly zaps
 electricity at the most distant enemy in its range.
 %%%%
-lindwurm
+fire eater
 
-A small serpentine dragon with a pair of strong forelimbs. Its thick scales
-give off an eerie red glow.
+A false dragon that eats flame and belches them back out. When it dies, the fire
+it has consumed billows outward in great clouds of flame.
 %%%%
 living spell
 
@@ -2412,6 +2412,11 @@ pharaoh ant
 A royal ant returned to unlife through strange, probably horrifying means. It
 binds the souls of its allies when slain, allowing them to fight on after death
 as simulacra.
+%%%%
+phoenix
+
+A legendary firebird that can revive itself from death in a great burst of
+flame.
 %%%%
 pile of debris
 

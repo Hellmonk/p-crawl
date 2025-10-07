@@ -3082,7 +3082,8 @@ bool mons_destroyed_on_impact(const monster& m)
 // cease to exist?
 bool mons_blows_up(const monster& m)
 {
-    return mon_explodes_on_death(m.type) && m.type != MONS_BENNU;
+    return mon_explodes_on_death(m.type) && m.type != MONS_BENNU
+                                         && m.type != MONS_PHOENIX;
 }
 
 // When this monster reaches its target, does it cease to exist?

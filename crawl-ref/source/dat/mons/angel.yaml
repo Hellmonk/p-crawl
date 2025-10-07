@@ -1,16 +1,17 @@
-name: "angel"
+name: "clockwork angel"
+enum: angel
 glyph: {char: "A", colour: white}
-flags: [flies, fighter, speaks]
+flags: [flies, fighter, speaks, variable_speed]
 exp: 1155
-holiness: [holy]
+holiness: [nonliving]
 will: 120
 attacks:
- - {type: hit, damage: 25}
- - {type: hit, damage: 10}
-hd: 12
-hp_10x: 1020
-ac: 10
-ev: 20
+ - {type: hit, damage: 21}
+ - {type: hit, flavour: holy, damage: 14}
+hd: 9
+hp_10x: 770
+ac: 7
+ev: 40
 spells: angel
 shout: shout
 intelligence: human

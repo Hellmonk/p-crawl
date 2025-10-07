@@ -871,8 +871,8 @@ enum monster_type                      // env.mons[].type
     MONS_FRAVASHI,
 #endif
     MONS_SERAPH,
-#if TAG_MAJOR_VERSION == 34
     MONS_PHOENIX,
+#if TAG_MAJOR_VERSION == 34
     MONS_SILVER_STAR,
     MONS_BLESSED_TOE,
     MONS_SHEDU,
