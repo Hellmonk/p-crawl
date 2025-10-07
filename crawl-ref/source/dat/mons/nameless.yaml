@@ -6,11 +6,11 @@ exp: 11
 holiness: [nonliving]
 will: invuln
 attacks:
- - {type: hit, flavour: antimagic, damage: 30}
-hd: 15
-hp_10x: 600
-ac: 8
-ev: 2
+ - {type: hit, flavour: antimagic, damage: 13}
+hd: 5
+hp_10x: 500
+ac: 5
+ev: 0
 spells: nameless
 intelligence: brainless
 size: giant

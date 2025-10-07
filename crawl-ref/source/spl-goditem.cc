@@ -402,7 +402,7 @@ static vector<duration_type> _dispellable_player_buffs()
         //      there aren't yet enough of these effects to bother doing such)
         if (i == DUR_SLOW && aura_is_active_on_player(TORPOR_SLOWED_KEY))
             continue;
-        else if (i == DUR_SENTINEL_MARK && aura_is_active_on_player(OPHAN_MARK_KEY))
+        else if (i == DUR_SENTINEL_MARK && aura_is_active_on_player(EYE_MARK_KEY))
             continue;
 
         dispellables.push_back((duration_type) i);

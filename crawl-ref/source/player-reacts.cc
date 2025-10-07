@@ -134,7 +134,7 @@ static bool _decrement_a_duration(duration_type dur, int delay,
             "expiration delay loss %d not less than duration expiration point %d",
             exploss * BASELINE_DELAY, exppoint);
 
-    if (dur == DUR_SENTINEL_MARK && aura_is_active_on_player(OPHAN_MARK_KEY))
+    if (dur == DUR_SENTINEL_MARK && aura_is_active_on_player(EYE_MARK_KEY))
         return false;
     else if (dur == DUR_PHALANX_BARRIER && aura_is_active_on_player(PHALANX_BARRIER_KEY))
         return false;

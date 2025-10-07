@@ -46,10 +46,8 @@ enum monster_type                      // env.mons[].type
 #if TAG_MAJOR_VERSION == 34
     MONS_LABORATORY_RAT,
 #endif
-    MONS_QUOKKA,         // Quokka are a type of wallaby, returned -- bwr 382
-#if TAG_MAJOR_VERSION == 34
+    MONS_QUOKKA,
     MONS_PORCUPINE,
-#endif
 #if TAG_MAJOR_VERSION > 34
     MONS_CRYSTAL_ECHIDNA,
     MONS_ARMATAUR,
@@ -318,7 +316,7 @@ enum monster_type                      // env.mons[].type
     MONS_WOOD_GOLEM,
     MONS_STONE_GOLEM,
 #else
-    MONS_SALTLING,
+    MONS_ORELING,
     MONS_PEACEKEEPER,
 #endif
     MONS_IRON_GOLEM,
@@ -644,8 +642,8 @@ enum monster_type                      // env.mons[].type
 #endif
 
     // Water monsters:
-#if TAG_MAJOR_VERSION == 34
     MONS_BIG_FISH,
+#if TAG_MAJOR_VERSION == 34
     MONS_GIANT_GOLDFISH,
 #endif
     MONS_ELECTRIC_EEL,
@@ -1219,7 +1217,7 @@ enum monster_type                      // env.mons[].type
     MONS_MELIAI,
     MONS_BAI_SUZHEN,
     MONS_BAI_SUZHEN_DRAGON,
-    MONS_SALTLING,
+    MONS_ORELING,
     MONS_IMPERIAL_MYRMIDON,
     MONS_SERVANT_OF_WHISPERS,
     MONS_PEACEKEEPER,
@@ -1377,6 +1375,7 @@ enum monster_type                      // env.mons[].type
     MONS_BES_KEMWAR,
     MONS_GLOWING_IMP,
     MONS_WYVERN_EGG,
+    MONS_MOUNTAINSHELL,
 #endif
 
     NUM_MONSTERS,               // used for polymorph

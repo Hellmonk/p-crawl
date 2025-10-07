@@ -794,6 +794,10 @@ A minor hairy maggot spirit, phasing in and out of this plane. Each regional
 variant inflicts different minor ailments: the ones found in the Dungeon
 cause one's magic to grow weak.
 %%%%
+big fish
+
+They'll never believe you.
+%%%%
 black bear
 
 A small black bear. Like all ursines, it will become enraged if badly hurt.
@@ -1403,9 +1407,10 @@ Executioner
 A horribly powerful and swift demon, its shape obscured by a cloud of swirling
 scythe-like blades.
 %%%%
-eye of devastation
+piercing eye
 
-A huge eyeball, encased in a levitating globe of incandescent energy.
+A huge eyeball with a penetrating gaze. Merely being within its vision will
+reveal you to all.
 %%%%
 faun
 
@@ -2101,10 +2106,16 @@ A moth known for its ability to inspire rage by touching its foes, or merely
 gazing at its friends. For some inexplicable reason, it was eradicated from
 the surface centuries ago.
 %%%%
+mountainshell
+
+An enormous land tortoise whose shell is nearly impervious to any destructive
+force; only at close range can one properly aim for the narrow gaps between its
+plates to strike the tender flesh within.
+%%%%
 mummy
 
 An undead figure covered in bandages and embalming fluids, compelled to walk by
-an ancient curse. It radiates a malign aura.
+an ancient curse.
 %%%%
 mummy priest
 
@@ -2643,11 +2654,9 @@ An intimidating volcano lord. It commands the magma of its realm as an
 extension of its body, and the majesty of its gaze can weaken even the proudest
 challenger.
 %%%%
-saltling
+oreling
 
-A small, human-shaped agglomeration of salt. It was created by the last
-fugitive loyalists of the fallen eastern empire, forced in desperation to
-construct golems from local resources to defend themselves.
+A small, human-shaped agglomeration of metal.
 %%%%
 satyr
 
@@ -3715,6 +3724,11 @@ phase spider
 
 An otherworldly spider that can move short and medium distances by briefly
 shifting between the planes of reality, in order to better ensnare its prey.
+%%%%
+porcupine
+
+A somewhat fast, spiny mammal. Attacking it in melee is likely to be painful.
+Not to be confused with a hedgehog.
 %%%%
 pristine statue
 

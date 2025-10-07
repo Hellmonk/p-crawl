@@ -355,7 +355,7 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_SEISMOSAURUS,
       {
-       { SPELL_SEISMIC_STOMP, 56, MON_SPELL_NATURAL },
+       { SPELL_SEISMIC_STOMP, 60, MON_SPELL_NATURAL },
       }
     },
 
@@ -659,8 +659,8 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_WILL_O_THE_WISP,
       {
-       { SPELL_MARSHLIGHT, 50, MON_SPELL_MAGICAL },
-       { SPELL_BLINK, 12, MON_SPELL_MAGICAL },
+       { SPELL_FOXFIRE, 40, MON_SPELL_MAGICAL },
+       { SPELL_BLINK, 20, MON_SPELL_MAGICAL },
       }
     },
 
@@ -1020,7 +1020,7 @@ static const mon_spellbook mspell_list[] =
     // ('G') Organs.
     {  MST_GLASS_EYE,
       {
-       { SPELL_VITRIFYING_GAZE, 75, MON_SPELL_MAGICAL | MON_SPELL_INSTANT },
+       { SPELL_VITRIFYING_GAZE, 60, MON_SPELL_MAGICAL | MON_SPELL_INSTANT },
       }
     },
 

@@ -1237,7 +1237,6 @@ static const map<monster_type, monster_frag> fraggable_monsters = {
     // I made saltlings not have a big crystal explosion for balance reasons -
     // there are so many of them, it seems wrong to have them be so harmful to
     // their own allies. This could be wrong!
-    { MONS_SALTLING,          { "salt crystal", WHITE } },
     { MONS_PILE_OF_DEBRIS,    { "stone", LIGHTGRAY } },
     { MONS_PETRIFIED_FLOWER,  { "stone", LIGHTGRAY } },
     { MONS_EARTH_ELEMENTAL,   { "rock", BROWN } },

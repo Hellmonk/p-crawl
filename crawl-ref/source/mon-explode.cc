@@ -171,7 +171,7 @@ static void _setup_shadow_prism_explosion(bolt& beam, const monster& origin)
 
 static dice_def _bennu_damage(int hd)
 {
-    return dice_def(3, 5 + hd * 5 / 4);
+    return dice_def(2, 5 + hd);
 }
 
 static void _setup_bennu_explosion(bolt& beam, const monster& origin)
