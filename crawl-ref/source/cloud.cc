@@ -1542,7 +1542,7 @@ static bool _mons_avoids_cloud(const monster* mons, const cloud_struct& cloud,
                                                    dam_info.base, false);
         // Add in an arbitrary proxy for poison damage from poison/miasma clouds.
         const int bonus_dam = cloud.type == CLOUD_POISON ? roll_dice(3, 4)
-                              : cloud.type == CLOUD_MIASMA ? roll_dice(3, 5) : 0;
+                              : cloud.type == CLOUD_MIASMA ? roll_dice(2, 5) : 0;
         const int damage = resist_adjust_damage(mons,
                                                 clouds[cloud.type].beam_effect,
                                                 base_damage + bonus_dam);

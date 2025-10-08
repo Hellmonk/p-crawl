@@ -1490,7 +1490,7 @@ static void _protean_explosion(monster* mons)
     monster dummy;
     dummy.type = MONS_SHAPESHIFTER;
     define_monster(dummy);
-    dummy.set_hit_dice(12);
+    dummy.set_hit_dice(5);
     init_poly_set(&dummy);
     const CrawlVector &set = dummy.props[POLY_SET_KEY];
     monster_type target = (monster_type)set[0].get_int();
@@ -1515,12 +1515,6 @@ static void _protean_explosion(monster* mons)
     // (Going down that far should be extremely rare, but
     //  polymorph code is weird.)
     int num_children = 2;
-    if (mons_class_hit_dice(target) < 9)
-        num_children += 2;
-    else if (mons_class_hit_dice(target) < 11)
-        ++num_children;
-    else if (mons_class_hit_dice(target) < 12 && coinflip())
-        ++num_children;
 
     int summoned_duration = 0;
     int summon_type = 0;

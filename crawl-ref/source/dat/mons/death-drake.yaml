@@ -1,16 +1,16 @@
 name: "death drake"
 glyph: {char: "k", colour: lightgray}
-flags: [flies, cold_blood]
+flags: [flies, cold_blood, fast_moving]
 resists: {miasma: 1}
 exp: 737
 genus: drake
 will: 40
 attacks:
  - {type: bite, damage: 12}
-hd: 9
-hp_10x: 765
+hd: 5
+hp_10x: 430
 ac: 6
-ev: 14
+ev: 20
 spells: death_drake
 has_corpse: true
 shout: hiss

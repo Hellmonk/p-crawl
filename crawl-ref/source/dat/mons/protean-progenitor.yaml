@@ -5,11 +5,11 @@ exp: 1314
 genus: giant
 will: 120
 attacks:
- - {type: random, damage: 55}
-hd: 14
+ - {type: random, damage: 25}
+hd: 9
 hp_10x: 820
 ac: 7
-ev: 8
+ev: 10
 spells: protean_progenitor
 shout: gurgle
 intelligence: human

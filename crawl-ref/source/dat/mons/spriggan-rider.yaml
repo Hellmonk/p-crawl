@@ -6,7 +6,7 @@ species: spriggan
 will: 100
 attacks:
  - {type: hit, flavour: reach, damage: 16}
-hd: 7
+hd: 5
 hp_10x: 400
 ac: 2
 ev: 30

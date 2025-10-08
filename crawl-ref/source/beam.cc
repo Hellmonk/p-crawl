@@ -2085,17 +2085,11 @@ bool miasma_monster(monster* mons, const actor* who)
         return false;
 
     bool success = false;
-    if (poison_monster(mons, who))
-    {
-        // Do additional impact damage to monsters who fail an rPois check
-        mons->hurt(who, roll_dice(2, 4), BEAM_MMISSILE, KILLED_BY_CLOUD);
-        success = true;
-    }
 
     if (who && who->is_player() && is_good_god(you.religion))
         did_god_conduct(DID_EVIL, 5 + random2(3));
 
-    if (mons->alive() && one_chance_in(3))
+    if (mons->alive())
     {
         do_slow_monster(*mons, who, random_range(8, 12) * BASELINE_DELAY);
         success = true;

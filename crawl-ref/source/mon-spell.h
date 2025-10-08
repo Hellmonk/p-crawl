@@ -292,10 +292,9 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_SPRIGGAN_DRUID,
       {
-       { SPELL_STONE_ARROW, 15, MON_SPELL_WIZARD },
-       { SPELL_DRUIDS_CALL, 15, MON_SPELL_WIZARD },
-       { SPELL_AWAKEN_FOREST, 25, MON_SPELL_WIZARD },
-       { SPELL_MINOR_HEALING, 15, MON_SPELL_WIZARD | MON_SPELL_EMERGENCY },
+       { SPELL_STONE_ARROW, 20, MON_SPELL_WIZARD },
+       { SPELL_DRUIDS_CALL, 20, MON_SPELL_WIZARD },
+       { SPELL_MINOR_HEALING, 20, MON_SPELL_WIZARD | MON_SPELL_EMERGENCY },
       }
     },
 
@@ -321,7 +320,7 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_WIND_DRAKE,
       {
-       { SPELL_WIND_BLAST, 50, MON_SPELL_NATURAL | MON_SPELL_BREATH },
+       { SPELL_WIND_BLAST, 40, MON_SPELL_NATURAL | MON_SPELL_BREATH },
        { SPELL_AIRSTRIKE, 20, MON_SPELL_NATURAL },
        { SPELL_REPEL_MISSILES, 20, MON_SPELL_NATURAL },
       }
@@ -335,13 +334,13 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_DEATH_DRAKE,
       {
-       { SPELL_MIASMA_BREATH, 59, MON_SPELL_NATURAL | MON_SPELL_BREATH },
+       { SPELL_MIASMA_BREATH, 60, MON_SPELL_NATURAL | MON_SPELL_BREATH },
       }
     },
 
     {  MST_WYRMHOLE,
       {
-       { SPELL_SOJOURNING_BOLT, 50, MON_SPELL_NATURAL | MON_SPELL_BREATH
+       { SPELL_SOJOURNING_BOLT, 40, MON_SPELL_NATURAL | MON_SPELL_BREATH
                                         | MON_SPELL_NOISY },
       }
     },
@@ -724,7 +723,7 @@ static const mon_spellbook mspell_list[] =
 
     { MST_CHONCHON,
       {
-        { SPELL_BECKONING_GALE, 26, MON_SPELL_WIZARD },
+        { SPELL_BECKONING_GALE, 20, MON_SPELL_WIZARD },
       }
     },
 
@@ -1068,7 +1067,7 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_HIPPOGRIFF,
       {
-        { SPELL_WARNING_CRY, 35, MON_SPELL_VOCAL | MON_SPELL_BREATH },
+        { SPELL_WARNING_CRY, 20, MON_SPELL_VOCAL | MON_SPELL_BREATH },
         { SPELL_BECKONING_GALE, 60, MON_SPELL_NATURAL },
       }
     },

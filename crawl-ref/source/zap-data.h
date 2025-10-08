@@ -256,7 +256,7 @@ static const zap_info zap_data[] =
     "foul vapour",
     nullptr,
     nullptr,
-    new dicedef_calculator<3, 5, 1, 24>,
+    new dicedef_calculator<2, 5, 1, 1>,
     new tohit_calculator<17, 1, 20>,
     DARKGREY,
     false,
