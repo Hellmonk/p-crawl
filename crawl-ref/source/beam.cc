@@ -2141,9 +2141,6 @@ static bool _curare_hits_player(actor* agent, string name,
         return false;
     }
 
-    // We force apply this poison, since the 1-in-3 chance was already passed
-    poison_player(roll_dice(2, 12) + bonus_poison + 1, source_name, name, true);
-
     mpr("You have difficulty breathing.");
     ouch(roll_dice(2, 6), KILLED_BY_CURARE, agent->mid, "curare-induced apnoea");
     slow_player(10 + random2(2 + random2(6)));

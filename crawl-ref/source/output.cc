@@ -1003,7 +1003,7 @@ static void _print_stats_hp(int x, int y)
     }
     else
 #endif
-        HP_Bar.draw(19, y, you.hp, you.hp_max, you.hp - max(0, poison_survival()));
+        HP_Bar.draw(19, y, you.hp, you.hp_max, you.hp);
 
     you.redraw_hit_points = false;
 }
@@ -1550,7 +1550,7 @@ void print_stats()
         you.redraw_magic_points = true;
 
     // Poison display depends on regen rate, so should be redrawn every turn.
-    if (you.duration[DUR_POISONING])
+    if (you.attribute[ATTR_POISON_STRENGTH])
     {
         you.redraw_hit_points = true;
         you.redraw_status_lights = true;

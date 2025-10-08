@@ -93,9 +93,11 @@ again for a short duration.
 %%%%
 Pois status
 
-You are poisoned and will continually lose health. While poisoned, your current
-health will be partially recoloured to display the eventual poison damage that
-will be dealt. Poison can be cured immediately by potions of curing.
+You are poisoned and will continually lose health. Getting poisoned again will
+increase the speed at which your health depletes. Poison will never kill you
+directly, but will continue to reduce your health until your final hitpoint, or
+until you cure it (by moving to the next floor, or with a specific item
+or divine ability capable of curing poison).
 %%%%
 Conf status
 

@@ -3153,11 +3153,9 @@ bool melee_attack::mons_do_poison()
     const int hd = attacker->get_hit_dice();
 
     if (attk_flavour == AF_POISON_STRONG)
-        amount = random_range(hd * 11 / 3, hd * 13 / 2);
-    else if (attk_flavour == AF_MINIPARA)
-        amount = random_range(hd, hd * 2);
+        amount = 2;
     else
-        amount = random_range(hd * 2, hd * 4);
+        amount = 1;
 
     if (attacker->as_monster()->has_ench(ENCH_CONCENTRATE_VENOM))
     {

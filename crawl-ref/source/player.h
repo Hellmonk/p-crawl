@@ -1180,9 +1180,8 @@ bool poison_player(int amount, string source, string source_aux = "",
                    bool force = false);
 void paralyse_player(string source);
 void handle_player_poison(int delay);
-void reduce_player_poison(int amount);
+void end_player_poison();
 int get_player_poisoning();
-bool poison_is_lethal();
 int poison_survival();
 
 bool miasma_player(actor *who, string source_aux = "");

@@ -1242,7 +1242,7 @@ void player_reacts()
         you.duration[DUR_MEDUSA_COOLDOWN] = 0;
     }
 
-    if (you.duration[DUR_POISONING])
+    if (you.attribute[ATTR_POISON_STRENGTH])
         handle_player_poison(you.time_taken);
 
     if (you.has_mutation(MUT_TRICKSTER))

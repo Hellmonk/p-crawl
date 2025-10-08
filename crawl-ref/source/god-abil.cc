@@ -1343,7 +1343,7 @@ void elyvilon_purification()
     mpr("You feel purified!");
 
     you.duration[DUR_SICKNESS] = 0;
-    you.duration[DUR_POISONING] = 0;
+    end_player_poison();
     you.duration[DUR_CONF] = 0;
     you.duration[DUR_SLOW] = 0;
     you.duration[DUR_PETRIFYING] = 0;

@@ -3579,7 +3579,7 @@ void toxic_radiance_effect(actor* agent, int mult, bool on_cast)
                     "by Olgreb's Toxic Radiance", true,
                     agent->as_monster()->name(DESC_A).c_str());
 
-                int poison = roll_dice(2, 3 + div_rand_round(pow, 24));
+                int poison = 1;
 
                 // rPois = 1/3 poison each tick instead of a 1/3 chance
                 // of full poison each tick. Looks smoother.

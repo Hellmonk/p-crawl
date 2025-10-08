@@ -445,8 +445,9 @@ bool fill_status_info(int status, status_info& inf)
         break;
     }
 
-    case DUR_POISONING:
-        _describe_poison(inf);
+    case STATUS_POISONED:
+        if (you.attribute[ATTR_POISON_STRENGTH] > 0)
+            _describe_poison(inf);
         break;
 
     case DUR_POWERED_BY_DEATH:
@@ -1147,18 +1148,15 @@ static void _describe_regen(status_info& inf)
 
 static void _describe_poison(status_info& inf)
 {
-    int pois_perc = (you.hp <= 0) ? 100
-                                  : ((you.hp - max(0, poison_survival())) * 100 / you.hp);
+    int pois = get_player_poisoning();
     inf.light_colour = (player_res_poison() >= 3
-                        ? DARKGREY : _bad_ench_colour(pois_perc, 35, 100));
+                        ? DARKGREY : _bad_ench_colour(pois, 4, 8));
     inf.light_text   = "Pois";
     const string adj =
-         (pois_perc >= 100) ? "lethally" :
-         (pois_perc > 65)   ? "seriously" :
-         (pois_perc > 35)   ? "quite"
-                            : "mildly";
-    inf.short_text   = adj + " poisoned"
-        + make_stringf(" (%d -> %d)", you.hp, poison_survival());
+         (pois > 8)   ? "seriously" :
+         (pois > 4)   ? "quite"
+                            : "";
+    inf.short_text   = adj + " poisoned";
     inf.long_text    = "You are " + inf.short_text + ".";
 }
 

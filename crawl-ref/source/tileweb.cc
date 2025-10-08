@@ -1127,9 +1127,6 @@ void TilesFramework::_send_player(bool force_full)
     _update_int(force_full, c.dd_real_mp_max, 0, "dd_real_mp_max");
 #endif
 
-    _update_int(force_full, c.poison_survival, max(0, poison_survival()),
-                "poison_survival");
-
     _update_int(force_full, c.armour_class, you.armour_class_scaled(1), "ac");
     _update_int(force_full, c.evasion, you.evasion_scaled(1), "ev");
     _update_int(force_full, c.shield_class, player_displayed_shield_class(),

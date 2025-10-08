@@ -2442,8 +2442,9 @@ int mon_enchant::calc_duration(const monster* mons,
         cturn = 120 / _mod_speed(25, mons->speed);
         break;
     case ENCH_CONTAM: // TODO: maybe faster
-    case ENCH_POISON:
         cturn = 1000 * deg / _mod_speed(125, mons->speed);
+    case ENCH_POISON:
+        cturn = 25 * deg;
         break;
     case ENCH_STICKY_FLAME:
         cturn = 1000 * deg / _mod_speed(200, mons->speed);

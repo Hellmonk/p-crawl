@@ -460,12 +460,7 @@ void hints_new_turn()
         return;
     }
 
-    if (poison_is_lethal())
-    {
-        if (Hints.hints_events[HINT_NEED_POISON_HEALING])
-            learned_something_new(HINT_NEED_POISON_HEALING);
-    }
-    else if (2*you.hp < you.hp_max)
+    if (2*you.hp < you.hp_max)
         learned_something_new(HINT_RUN_AWAY);
 
     if (Hints.hints_type == HINT_MAGIC_CHAR && you.magic_points < 1)

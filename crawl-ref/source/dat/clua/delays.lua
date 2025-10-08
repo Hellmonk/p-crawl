@@ -73,7 +73,7 @@ function delay_handle_hploss(hplost, source)
     -- If the the poison in your system is less than the given percentages
     -- of both current and maximum hp, ignore
     local hp, mhp = you.hp()
-    local poison_damage_prediction = hp - you.poison_survival()
+    local poison_damage_prediction = hp - 1
     if (poison_damage_prediction * 100 / hp) <= g_delay_pois_curhp_ratio
        and (poison_damage_prediction * 100 / mhp) <= g_delay_pois_maxhp_ratio then
         return nil
