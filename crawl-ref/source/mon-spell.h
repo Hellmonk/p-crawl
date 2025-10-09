@@ -1429,7 +1429,7 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_SHOCK_SERPENT,
       {
-       { SPELL_ELECTRICAL_BOLT, 33, MON_SPELL_NATURAL },
+       { SPELL_ELECTRICAL_BOLT, 20, MON_SPELL_NATURAL },
       }
     },
 

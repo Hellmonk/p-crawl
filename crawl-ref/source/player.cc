@@ -2089,6 +2089,42 @@ int get_exp_progress()
     return (you.experience - current) * 100 / (next - current);
 }
 
+void discharge_random_evoker()
+{
+    FixedVector<item_def*, NUM_MISCELLANY> evokers(nullptr);
+    list_charging_evokers(evokers);
+
+    int choices = 0;
+    int type = NUM_MISCELLANY;
+
+    for (int i = 0; i < NUM_MISCELLANY; ++i)
+    {
+        item_def* evoker = evokers[i];
+        if (!evoker)
+            continue;
+
+        if (evoker_charges(type) == 0)
+            continue;
+
+        choices++;
+
+        if (one_chance_in(choices))
+            type = i;
+    }
+
+    if (type == NUM_MISCELLANY)
+        return;
+
+    item_def* to_discharge = evokers[type];
+
+    if (!to_discharge)
+        return;
+
+    expend_xp_evoker(to_discharge->sub_type);
+    mprf("Your %s loses %s charge!", to_discharge->name(DESC_PLAIN),
+        evoker_charges(type) == 0 ? "its" : "a");
+}
+
 // for jumper cables
 // returns true if an item was charged
 bool recharge_random_evoker()

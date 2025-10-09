@@ -3504,6 +3504,11 @@ void melee_attack::mons_apply_attack_flavour()
         }
         break;
 
+    case AF_DISCHARGE:
+        if (defender->is_player() && coinflip())
+            discharge_random_evoker();
+        break;
+
     case AF_MINIPARA:
     {
         // standin for "is not a living creature"

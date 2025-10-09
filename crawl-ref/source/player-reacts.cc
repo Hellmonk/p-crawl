@@ -136,6 +136,8 @@ static bool _decrement_a_duration(duration_type dur, int delay,
 
     if (dur == DUR_SENTINEL_MARK && aura_is_active_on_player(EYE_MARK_KEY))
         return false;
+    if (dur == DUR_SAP_MAGIC && aura_is_active_on_player(TEAL_SAP_KEY))
+        return false;
     else if (dur == DUR_PHALANX_BARRIER && aura_is_active_on_player(PHALANX_BARRIER_KEY))
         return false;
 

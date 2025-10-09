@@ -869,6 +869,10 @@ A mighty undead abomination, pieced together from the broken bones of many
 dragons by powerful necromantic magic. Fortunately, whatever organ produces a
 dragon's fearsome breath was lost in the process.
 %%%%
+boring beetle
+
+Well, they aren't called exciting beetles.
+%%%%
 boulder
 
 A mass of fast-rolling stone, crushing everything in its path.
@@ -2795,8 +2799,9 @@ A strangely deformed floating eyeball, pulsating with flesh-twisting energy.
 shock serpent
 
 A sinuous serpent whose body crackles with volatile electricity. Its electric
-shroud can discharge when struck, inflicting a painful shock on any nearby
-foes.
+shroud discharges when the serpent is hurt, inflicting a painful shock on 
+distant foes. Foes adjacent to the serpent must merely handle its shocking bite
+and unavoidable electrical bolts.
 %%%%
 silent spectre
 
@@ -3065,6 +3070,11 @@ Before even the oldest of ancient liches mastered life and death, a group of
 titans attempted to pull themselves free of mortality through brute strength.
 They almost succeeded before rot dragged them to Ereshkigal. A glimmer of their
 former beauty remains, alluring despite the stench.
+%%%%
+teal worm
+
+The most fearsome worm of all, and one of the final guardians of this place. It
+saps the ambient magic of its surroundings.
 %%%%
 tengu
 

@@ -218,6 +218,7 @@ swamp_worm_water
 %sdir mon/animals
 glow_worm MONS_GLOW_WORM
 ribbon_worm MONS_RIBBON_WORM
+teal_worm MONS_TEAL_WORM
 %rim 0
 brain_worm MONS_BRAIN_WORM
 %rim 1
@@ -249,6 +250,7 @@ jellyfish MONS_FORMLESS_JELLYFISH
 %sdir mon/animals
 %rim 0
 bombardier_beetle MONS_BOMBARDIER_BEETLE
+boring_beetle MONS_BORING_BEETLE
 boulder_beetle MONS_BOULDER_BEETLE
 boulder_beetle_rolling0 MONS_BOULDER_BEETLE_ROLLING
 boulder_beetle_rolling1

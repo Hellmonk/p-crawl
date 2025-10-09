@@ -1033,6 +1033,9 @@ int main(int argc, char* argv[])
                 case AF_BLINK:
                     monsterattacks += colour(MAGENTA, "(blink self)");
                     break;
+                case AF_DISCHARGE:
+                    monsterattacks += colour(LIGHTCYAN, "(discharge evoker)");
+                    break;
                 case AF_BLINK_WITH:
                     monsterattacks += colour(MAGENTA, "(blink together)");
                     break;

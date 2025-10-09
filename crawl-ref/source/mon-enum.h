@@ -163,6 +163,7 @@ enum attack_flavour
     AF_BIG_FIRE,
     AF_CLEAVE,
     AF_SICK,
+    AF_DISCHARGE,
 };
 
 // Non-spell "summoning" types to give to monster::mark_summoned(), or

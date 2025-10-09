@@ -599,7 +599,7 @@ Recalls woodland creatures from elsewhere on the same level.
 %%%%
 Electrical Bolt spell
 
-Throws a bolt of electricity at the target, with high accuracy.
+Throws a bolt of electricity at the target, with perfect accuracy.
 %%%%
 Enfeeble spell
 

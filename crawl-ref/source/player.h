@@ -1102,6 +1102,7 @@ void display_char_status();
 void forget_map(bool rot = false);
 
 int get_exp_progress();
+void discharge_random_evoker();
 bool recharge_random_evoker();
 unsigned int gain_exp(unsigned int exp_gained);
 void apply_exp();

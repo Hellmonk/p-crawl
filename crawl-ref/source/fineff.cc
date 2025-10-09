@@ -521,14 +521,13 @@ void shock_discharge_fineff::fire()
     if (!oppressor.alive())
         return;
 
-    const int max_range = 3; // v0v
-    if (grid_distance(oppressor.pos(), position) > max_range
+    if (grid_distance(oppressor.pos(), position) < 2
         || !cell_see_cell(position, oppressor.pos(), LOS_SOLID_SEE))
     {
         return;
     }
 
-    const int amount = roll_dice(3, 4 + power * 3 / 2);
+    const int amount = roll_dice(2, 4 + power);
     int final_dmg = resist_adjust_damage(&oppressor, BEAM_ELECTRICITY, amount);
     final_dmg = oppressor.apply_ac(final_dmg, 0, ac_type::half);
 

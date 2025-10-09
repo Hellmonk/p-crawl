@@ -250,8 +250,8 @@ enum monster_type                      // env.mons[].type
 #endif
 #if TAG_MAJOR_VERSION == 34
     MONS_BEETLE,
-    MONS_BORING_BEETLE,
 #endif
+    MONS_BORING_BEETLE,
     MONS_BOULDER_BEETLE,
 #if TAG_MAJOR_VERSION > 34
     MONS_DEATH_SCARAB,
@@ -1376,6 +1376,7 @@ enum monster_type                      // env.mons[].type
     MONS_GLOWING_IMP,
     MONS_WYVERN_EGG,
     MONS_MOUNTAINSHELL,
+    MONS_TEAL_WORM,
 #endif
 
     NUM_MONSTERS,               // used for polymorph
