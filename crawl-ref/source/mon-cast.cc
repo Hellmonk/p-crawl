@@ -2138,6 +2138,10 @@ bolt mons_spell_beam(const monster* mons, spell_type spell_cast, int power,
     case SPELL_THROW_BOULDER:
         zappy(spell_to_zap(real_spell), power, true, beam);
         break;
+        
+    case SPELL_PORTAL_PROJECTILE:
+        zappy(ZAP_SHOOT_ARROW, power, true, beam);
+        break;
 
     case SPELL_FREEZING_CLOUD: // battlesphere special-case
         zappy(ZAP_FREEZING_BLAST, power, true, beam);
@@ -2218,7 +2222,6 @@ bolt mons_spell_beam(const monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_IOOD:                  // tracer only
-    case SPELL_PORTAL_PROJECTILE:     // for noise generation purposes
     case SPELL_GLACIATE:              // ditto
         _setup_fake_beam(beam, *mons);
         break;
@@ -2573,7 +2576,13 @@ bool setup_mons_cast(const monster* mons, bolt &pbolt, spell_type spell_cast,
     bolt_parent_init(theBeam, pbolt);
     if (!theBeam.target.origin())
         pbolt.target = theBeam.target;
-    pbolt.source = mons->pos();
+    
+    // Portal projectile smites
+    if (spell_cast == SPELL_PORTAL_PROJECTILE)
+        pbolt.source = theBeam.target;
+    else
+        pbolt.source = mons->pos();
+    
     pbolt.set_is_tracer(false);
     if (pbolt.aux_source.empty() && !pbolt.is_enchantment())
         pbolt.aux_source = pbolt.name;
@@ -7214,12 +7223,6 @@ void mons_cast(monster* mons, bolt pbolt, spell_type spell_cast,
     // Wizard-mode cast monster spells may target the boundary (shift-dir).
     ASSERT(map_bounds(pbolt.target) || !(flags & spflag::targeting_mask));
 
-    if (spell_cast == SPELL_PORTAL_PROJECTILE
-        || logic && (logic->flags & MSPELL_NO_AUTO_NOISE))
-    {
-        do_noise = false;       // Spell itself does the messaging.
-    }
-
     if (do_noise)
         mons_cast_noise(mons, pbolt, spell_cast, slot_flags);
 
@@ -7957,19 +7960,6 @@ void mons_cast(monster* mons, bolt pbolt, spell_type spell_cast,
     case SPELL_DISCHARGE:
         cast_discharge(min(200, splpow), *mons);
         return;
-
-    case SPELL_PORTAL_PROJECTILE:
-    {
-        // Swap weapons if necessary so that that happens before the spell
-        // casting message.
-        const item_def *weapon = mons->mslot_item(MSLOT_WEAPON);
-        const item_def *swap = mons->mslot_item(MSLOT_ALT_WEAPON);
-        if (swap && is_range_weapon(*swap) && (!weapon || !is_range_weapon(*weapon)))
-            mons->swap_weapons();
-        mons_cast_noise(mons, pbolt, spell_cast, slot_flags);
-        handle_throw(mons, pbolt, true, false);
-        return;
-    }
 
     case SPELL_IGNITE_POISON:
         cast_ignite_poison(mons, splpow, false);
@@ -9274,15 +9264,6 @@ ai_action::goodness monster_spell_goodness(monster* mon, spell_type spell)
         // Perhaps it will be used recklessly like chain lightning...
         return ai_action::good_or_bad(foe && adjacent(foe->pos(), mon->pos()));
 
-    case SPELL_PORTAL_PROJECTILE:
-    {
-        bolt beam;
-        beam.source    = mon->pos();
-        beam.target    = mon->target;
-        beam.source_id = mon->mid;
-        return ai_action::good_or_bad(handle_throw(mon, beam, true, true));
-    }
-
     case SPELL_SIGN_OF_RUIN:
         return ai_action::good_or_impossible(foe &&
                                              cast_sign_of_ruin(*mon, foe->pos(), 1, true)
@@ -9322,6 +9303,11 @@ ai_action::goodness monster_spell_goodness(monster* mon, spell_type spell)
         ASSERT(foe);
         return ai_action::good_or_bad(grid_distance(mon->pos(), foe->pos())
                                       > mon->reach_range());
+    
+    // Same as above, but allowed at melee range.
+    case SPELL_PORTAL_PROJECTILE:
+        ASSERT(foe);
+        return ai_action::good();
 
     case SPELL_BATTLECRY:
         return ai_action::good_or_bad(_battle_cry(*mon, SPELL_BATTLECRY,

@@ -96,7 +96,7 @@ static const mon_spellbook mspell_list[] =
       {
        { SPELL_CORONA, 20, MON_SPELL_WIZARD },
        { SPELL_STRIP_WILLPOWER, 20, MON_SPELL_WIZARD },
-       { SPELL_SHOOT_ARROW, 80, MON_SPELL_WIZARD },
+       { SPELL_SHOOT_ARROW, 80, MON_SPELL_NATURAL },
       }
     },
 
@@ -104,7 +104,7 @@ static const mon_spellbook mspell_list[] =
       {
        { SPELL_BATTLECRY, 20, MON_SPELL_VOCAL },
        { SPELL_SLEEP, 20, MON_SPELL_WIZARD },
-       { SPELL_SHOOT_ARROW, 80, MON_SPELL_WIZARD },
+       { SPELL_SHOOT_ARROW, 80, MON_SPELL_NATURAL },
       }
     },
 
@@ -138,7 +138,7 @@ static const mon_spellbook mspell_list[] =
        { SPELL_SLOW, 20, MON_SPELL_WIZARD },
        { SPELL_REPEL_MISSILES, 20, MON_SPELL_WIZARD },
        { SPELL_BLINK_RANGE, 20, MON_SPELL_WIZARD | MON_SPELL_SHORT_RANGE },
-       { SPELL_SHOOT_ARROW, 100, MON_SPELL_WIZARD },
+       { SPELL_SHOOT_ARROW, 100, MON_SPELL_NATURAL },
       }
     },
 
@@ -1277,6 +1277,7 @@ static const mon_spellbook mspell_list[] =
     {  MST_NAGA_SHARPSHOOTER,
       {
        { SPELL_PORTAL_PROJECTILE, 60, MON_SPELL_WIZARD },
+       { SPELL_SHOOT_ARROW, 100, MON_SPELL_NATURAL },
       }
     },
 

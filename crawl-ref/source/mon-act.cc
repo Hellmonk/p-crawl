@@ -2190,11 +2190,7 @@ void handle_monster_move(monster* mons)
     }
 
     // Please change _slouch_damage to match!
-    if (mons->cannot_act()
-        || mons->type == MONS_SIXFIRHY // these move only 8 of 24 turns
-            && ++mons->move_spurt / 8 % 3 != 2  // but are not helpless
-        || mons->type == MONS_JIANGSHI // similarly, but more irregular (48 of 90)
-            && (++mons->move_spurt / 6 % 3 == 1 || mons->move_spurt / 3 % 5 == 1))
+    if (mons->cannot_act())
     {
         mons->speed_increment -= non_move_energy;
         return;

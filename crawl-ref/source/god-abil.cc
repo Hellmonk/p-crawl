@@ -1898,13 +1898,9 @@ int slouch_damage_for_speed(int mon_speed, int mon_action_energy, int jerk_num,
 int slouch_damage(monster *victim)
 {
     // Please change handle_monster_move in mon-act.cc to match.
-    const int jerk_num = victim->type == MONS_SIXFIRHY ? 8
-                       : victim->type == MONS_JIANGSHI ? 48
-                                                       : 1;
+    const int jerk_num = 1;
 
-    const int jerk_denom = victim->type == MONS_SIXFIRHY ? 24
-                         : victim->type == MONS_JIANGSHI ? 90
-                                                         : 1;
+    const int jerk_denom = 1;
 
     return slouch_damage_for_speed(victim->speed,
                                    victim->action_energy(EUT_MOVE),

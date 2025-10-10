@@ -5443,7 +5443,7 @@ void monster::react_to_damage(const actor *oppressor, int damage,
             shock_discharge_fineff::schedule(this,
                                              const_cast<actor&>(*oppressor),
                                              pos(), pow, "electric aura");
-        }
+        }   
     }
 
     // The (real) royal jelly objects to taking damage and will SULK. :-)

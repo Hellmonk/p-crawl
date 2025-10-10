@@ -2815,7 +2815,7 @@ An icy replica of a monster, animated by heretical magics.
 sixfirhy
 
 A small vile creature that moves in bursts, stopping then darting with
-lightning speed. It sprays sparks as it goes.
+lightning speed. It drains charges from evokable devices.
 %%%%
 skeletal warrior
 
