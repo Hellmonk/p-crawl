@@ -1,0 +1,17 @@
+name: "mountainshell"
+glyph: {char: "t", colour: yellow}
+flags: [cold_blood, warded, slow_movement]
+exp: 940
+will: 80
+attacks:
+ - {type: headbutt, damage: 19}
+hd: 4
+hp_10x: 410
+ac: 7
+ev: 0
+has_corpse: true
+shout: growl
+intelligence: animal
+size: large
+shape: quadruped_tailless
+spells: seismosaurus

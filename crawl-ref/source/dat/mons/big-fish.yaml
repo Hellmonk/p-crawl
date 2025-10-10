@@ -1,0 +1,16 @@
+name: "big fish"
+glyph: {char: "F", colour: green}
+flags: [cold_blood]
+exp: 54
+will: 10
+attacks:
+ - {type: hit, damage: 33}
+hd: 3
+hp_10x: 1200
+ac: 3
+ev: 0
+has_corpse: true
+intelligence: animal
+habitat: water
+size: giant
+shape: fish

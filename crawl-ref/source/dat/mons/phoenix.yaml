@@ -1,0 +1,17 @@
+name: "phoenix"
+glyph: {char: "b", colour: lightred}
+flags: [flies, speaks, warm_blood, fast_moving]
+resists: {fire: 3}
+exp: 1011
+will: 140
+attacks:
+ - {type: peck, flavour: fire, damage: 8}
+ - {type: claw, flavour: fire, damage: 5}
+hd: 4
+hp_10x: 380
+ac: 3
+ev: 30
+shout: screech
+intelligence: human
+size: medium
+shape: bird
