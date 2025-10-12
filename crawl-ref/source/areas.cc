@@ -22,6 +22,7 @@
 #include "losglobal.h"
 #include "message.h"
 #include "mon-behv.h"
+#include "monster-type.h"
 #include "mutation.h"
 #include "religion.h"
 #include "stepdown.h"

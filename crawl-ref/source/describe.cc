@@ -5578,36 +5578,11 @@ static void _describe_mons_to_hit(const monster_info& mi, ostringstream &result)
     if (crawl_state.game_is_arena() || !crawl_state.need_save)
         return;
 
-    const item_def* weapon = mi.inv[MSLOT_WEAPON].get();
-    const bool melee = weapon == nullptr || !is_range_weapon(*weapon);
-    const bool skilled = mons_class_flag(mi.type, melee ? M_FIGHTER : M_ARCHER);
-    const int base_to_hit = mon_to_hit_base(mi.hd, skilled);
-    const int weapon_to_hit = weapon ? weapon->plus + property(*weapon, PWPN_HIT) : 0;
-    const int total_base_hit = base_to_hit + weapon_to_hit;
-
-    int post_roll_modifiers = 0;
-    if (mi.is(MB_CONFUSED))
-        post_roll_modifiers += CONFUSION_TO_HIT_MALUS;
-
-    const bool invisible = !_visible_to(mi);
-    if (invisible)
-        post_roll_modifiers -= total_base_hit * 35 / 100;
-    else
-    {
-        post_roll_modifiers += TRANSLUCENT_SKIN_TO_HIT_MALUS
-                               * you.get_mutation_level(MUT_TRANSLUCENT_SKIN);
-
-    }
-    // We ignore pproj because monsters never have it passively.
-
     const int scaled_ev = you.evasion_scaled(100);
 
-    const int to_land = weapon && is_unrandom_artefact(*weapon, UNRAND_SNIPER) ? AUTOMATIC_HIT :
-                                                                total_base_hit + post_roll_modifiers;
-    const int beat_ev_chance = mon_to_hit_pct(to_land, scaled_ev);
-
+    const int beat_ev_chance = max(1000, 10000 - scaled_ev);
     const int scaled_sh = player_shield_class(100, false);
-    const int beat_sh_chance = mon_beat_sh_pct(scaled_sh);
+    const int beat_sh_chance = max(0, 10000 - scaled_sh);
 
     const int hit_chance = beat_ev_chance * beat_sh_chance / 100;
     result << uppercase_first(mi.pronoun(PRONOUN_SUBJECTIVE)) << " "

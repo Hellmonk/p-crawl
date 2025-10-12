@@ -1567,7 +1567,7 @@ spells. The caster's demise will cause the transformation to end.
 %%%%
 Portal Projectile spell
 
-Magically teleports an arrow at a targeted enemy, without requiring line of 
+Magically teleports an arrow at a targeted enemy, without requiring line of
 fire. Monsters will use this spell even against targets in melee range.
 %%%%
 Prayer of Brilliance spell

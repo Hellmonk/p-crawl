@@ -53,7 +53,7 @@ static const vector<mon_aura_data> aura_map =
             {  mprf("%s gaze reveals you to all!",
                         source.name(DESC_ITS).c_str());
             }},
-            
+
     {MONS_TEAL_WORM,
         ENCH_NONE, 1, true, DUR_SAP_MAGIC, TEAL_SAP_KEY,
          nullptr,

@@ -2138,9 +2138,13 @@ bolt mons_spell_beam(const monster* mons, spell_type spell_cast, int power,
     case SPELL_THROW_BOULDER:
         zappy(spell_to_zap(real_spell), power, true, beam);
         break;
-        
+
     case SPELL_PORTAL_PROJECTILE:
         zappy(ZAP_SHOOT_ARROW, power, true, beam);
+        beam.set_is_tracer(false);
+        beam.source = beam.target;
+        beam.aux_source.clear();
+        beam.use_target_as_pos = true;
         break;
 
     case SPELL_FREEZING_CLOUD: // battlesphere special-case
@@ -2576,14 +2580,14 @@ bool setup_mons_cast(const monster* mons, bolt &pbolt, spell_type spell_cast,
     bolt_parent_init(theBeam, pbolt);
     if (!theBeam.target.origin())
         pbolt.target = theBeam.target;
-    
-    // Portal projectile smites
-    if (spell_cast == SPELL_PORTAL_PROJECTILE)
-        pbolt.source = theBeam.target;
+
+    if (spell_cast == SPELL_PORTAL_PROJECTILE && !pbolt.target.origin())
+        pbolt.source = pbolt.target;
     else
         pbolt.source = mons->pos();
-    
+
     pbolt.set_is_tracer(false);
+
     if (pbolt.aux_source.empty() && !pbolt.is_enchantment())
         pbolt.aux_source = pbolt.name;
 
@@ -9303,7 +9307,7 @@ ai_action::goodness monster_spell_goodness(monster* mon, spell_type spell)
         ASSERT(foe);
         return ai_action::good_or_bad(grid_distance(mon->pos(), foe->pos())
                                       > mon->reach_range());
-    
+
     // Same as above, but allowed at melee range.
     case SPELL_PORTAL_PROJECTILE:
         ASSERT(foe);

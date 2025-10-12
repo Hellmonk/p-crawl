@@ -2799,7 +2799,7 @@ A strangely deformed floating eyeball, pulsating with flesh-twisting energy.
 shock serpent
 
 A sinuous serpent whose body crackles with volatile electricity. Its electric
-shroud discharges when the serpent is hurt, inflicting a painful shock on 
+shroud discharges when the serpent is hurt, inflicting a painful shock on
 distant foes. Foes adjacent to the serpent must merely handle its shocking bite
 and unavoidable electrical bolts.
 %%%%

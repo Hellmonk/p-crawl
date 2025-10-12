@@ -1287,7 +1287,7 @@ static const struct spell_desc spelldata[] =
     spflag::monster,
     3,
     50,
-    -1, -1,
+    LOS_RADIUS, LOS_RADIUS,
     0,
     TILEG_PORTAL_PROJECTILE,
 },
