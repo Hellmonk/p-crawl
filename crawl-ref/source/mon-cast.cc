@@ -7094,9 +7094,7 @@ static bool _mon_cast_tempering(const monster& caster, bool check_only)
     for (monster_near_iterator mi(caster.pos()); mi; ++mi)
     {
         if (!mons_aligned(&caster, *mi) || mi->has_ench(ENCH_TEMPERED))
-        {
             continue;
-        }
 
         if (mi->hit_points < mi->max_hit_points)
         {
