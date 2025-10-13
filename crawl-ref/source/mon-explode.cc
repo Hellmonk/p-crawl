@@ -200,9 +200,8 @@ static void _setup_inner_flame_explosion(bolt & beam, const monster& origin,
                                          actor* agent)
 {
     _setup_base_explosion(beam, origin);
-    const int size   = origin.body_size(PSIZE_BODY);
     beam.flavour     = BEAM_FIRE;
-    beam.damage      = dice_def(2, 20);
+    beam.damage      = dice_def(3, 20);
     beam.name        = "fiery explosion";
     beam.colour      = RED;
     beam.ex_size     = 1;

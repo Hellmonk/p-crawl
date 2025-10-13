@@ -2988,8 +2988,7 @@ static bool _mons_call_of_chaos(const monster& mon, bool check_only = false)
  * Awakens piles of flesh into buffed large abominations, while also making
  * explosions of chaos that'll only hit enemies.
  */
-static bool _mons_awaken_flesh(const monster& caster, const int power,
-                               bool check_only = false)
+static bool _mons_awaken_flesh(const monster& caster, bool check_only = false)
 {
     int affected = 0;
     int seen_affected = 0;
@@ -7083,11 +7082,6 @@ static bool _cast_dominate_undead(const monster& caster, int pow, bool check_onl
     return true;
 }
 
-static bool _mons_can_be_tempered(const monster& targ)
-{
-    return true;
-}
-
 static bool _mon_cast_tempering(const monster& caster, bool check_only)
 {
     // Find all possible targets (and return early, if we're just checking if
@@ -7099,8 +7093,7 @@ static bool _mon_cast_tempering(const monster& caster, bool check_only)
     int valid = 0;
     for (monster_near_iterator mi(caster.pos()); mi; ++mi)
     {
-        if (!mons_aligned(&caster, *mi) || mi->has_ench(ENCH_TEMPERED)
-            || !_mons_can_be_tempered(**mi))
+        if (!mons_aligned(&caster, *mi) || mi->has_ench(ENCH_TEMPERED))
         {
             continue;
         }
@@ -8119,7 +8112,7 @@ void mons_cast(monster* mons, bolt pbolt, spell_type spell_cast,
         return;
 
     case SPELL_AWAKEN_FLESH:
-        _mons_awaken_flesh(*mons, splpow);
+        _mons_awaken_flesh(*mons);
         return;
 
     case SPELL_PRAYER_OF_BRILLIANCE:
@@ -9462,7 +9455,7 @@ ai_action::goodness monster_spell_goodness(monster* mon, spell_type spell)
         return ai_action::good_or_bad(_mons_call_of_chaos(*mon, true));
 
     case SPELL_AWAKEN_FLESH:
-        return ai_action::good_or_bad(_mons_awaken_flesh(*mon, 0, true));
+        return ai_action::good_or_bad(_mons_awaken_flesh(*mon, true));
 
     case SPELL_PRAYER_OF_BRILLIANCE:
         if (!foe || !mon->can_see(*foe))

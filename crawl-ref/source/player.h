@@ -1180,7 +1180,7 @@ bool confuse_player(int amount, bool quiet = false, bool force = false);
 bool poison_player(int amount, string source, string source_aux = "",
                    bool force = false);
 void paralyse_player(string source);
-void handle_player_poison(int delay);
+void handle_player_poison();
 void end_player_poison();
 int get_player_poisoning();
 int poison_survival();

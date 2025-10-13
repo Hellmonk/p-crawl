@@ -3150,7 +3150,6 @@ void melee_attack::announce_hit()
 bool melee_attack::mons_do_poison()
 {
     int amount;
-    const int hd = attacker->get_hit_dice();
 
     if (attk_flavour == AF_POISON_STRONG)
         amount = 2;

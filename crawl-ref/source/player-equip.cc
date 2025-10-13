@@ -45,8 +45,6 @@
 #include "transform.h"
 #include "xom.h"
 
-static void _mark_unseen_monsters();
-
 /**
  * Returns how many slots of a given type the player character currently has
  * (potentially accounting for additional slots granted by forms, mutations, and
@@ -2509,18 +2507,4 @@ static void _unequip_jewellery_effect(item_def &item, bool meld)
 
     // Must occur after ring is removed. -- bwr
     calc_mp();
-}
-
-static void _mark_unseen_monsters()
-{
-
-    for (monster_iterator mi; mi; ++mi)
-    {
-        if (testbits((*mi)->flags, MF_WAS_IN_VIEW) && !you.can_see(**mi))
-        {
-            (*mi)->went_unseen_this_turn = true;
-            (*mi)->unseen_pos = (*mi)->pos();
-        }
-
-    }
 }

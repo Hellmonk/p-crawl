@@ -2123,8 +2123,7 @@ bool sticky_flame_monster(monster* mons, const actor *who, int dur, bool verbose
     return new_flame.degree > old_flame.degree;
 }
 
-static bool _curare_hits_player(actor* agent, string name,
-                                string source_name, int bonus_poison)
+static bool _curare_hits_player(actor* agent)
 {
     ASSERT(!crawl_state.game_is_arena());
 
@@ -2160,7 +2159,7 @@ bool curare_actor(actor* source, actor* target, string name,
                   string source_name, int bonus_poison)
 {
     if (target->is_player())
-        return _curare_hits_player(source, name, source_name, bonus_poison);
+        return _curare_hits_player(source);
     else
         return _curare_hits_monster(source, target->as_monster(), bonus_poison);
 }

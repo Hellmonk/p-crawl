@@ -2121,7 +2121,7 @@ void discharge_random_evoker()
         return;
 
     expend_xp_evoker(to_discharge->sub_type);
-    mprf("Your %s loses %s charge!", to_discharge->name(DESC_PLAIN),
+    mprf("Your %s loses %s charge!", to_discharge->name(DESC_PLAIN).c_str(),
         evoker_charges(type) == 0 ? "its" : "a");
 }
 
@@ -4083,7 +4083,7 @@ int get_player_poisoning()
     return you.attribute[ATTR_POISON_STRENGTH];
 }
 
-void handle_player_poison(int delay)
+void handle_player_poison()
 {
     // Transforming into a form with no metabolism merely suspends the poison
     // but doesn't let your body get rid of it.

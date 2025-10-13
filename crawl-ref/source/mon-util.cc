@@ -5595,3 +5595,8 @@ int mons_leash_range(monster_type mc)
         default:                    return 0; // No leashing
     }
 }
+
+bool mons_is_glowing(monster_type type)
+{
+    return type == MONS_GLOW_WORM || type == MONS_GLOWING_IMP;
+}

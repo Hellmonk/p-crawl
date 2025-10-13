@@ -600,6 +600,9 @@ int player::halo_radius() const
 
 static int _mons_class_halo_radius(monster_type type)
 {
+    if (mons_is_glowing(type))
+        return 1;
+
     // The values here depend on 1. power, 2. sentience. Thus, high-ranked
     // sentient celestials have really big haloes, while holy animals get
     // little or none.
@@ -618,8 +621,6 @@ static int _mons_class_halo_radius(monster_type type)
     case MONS_SERAPH:
         return 7;
     case MONS_HOLY_SWINE:
-    case MONS_GLOW_WORM:
-    case MONS_GLOWING_IMP:
         return 1;
     case MONS_MENNAS:
     case MONS_SUN_MOTH:
@@ -765,16 +766,6 @@ int monster::umbra_radius() const
 
     if (mons_is_ghost_demon(type))
         size = ghost_umbra_radius();
-
-    item_def* wpn = mslot_item(MSLOT_WEAPON);
-    if (wpn && is_unrandom_artefact(*wpn, UNRAND_BRILLIANCE))
-        size = max(size, 3);
-
-    item_def* alt_wpn = mslot_item(MSLOT_ALT_WEAPON);
-
-    item_def* ring = mslot_item(MSLOT_JEWELLERY);
-    if (ring && is_unrandom_artefact(*ring, UNRAND_SHADOWS))
-        size = max(size, 3);
 
     // Death knights get a small umbra.
     if (type == MONS_DEATH_KNIGHT)

@@ -1245,7 +1245,7 @@ void player_reacts()
     }
 
     if (you.attribute[ATTR_POISON_STRENGTH])
-        handle_player_poison(you.time_taken);
+        handle_player_poison();
 
     if (you.has_mutation(MUT_TRICKSTER))
         _handle_trickster_decay(you.time_taken);

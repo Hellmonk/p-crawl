@@ -5559,14 +5559,6 @@ void describe_hit_chance(int hit_chance, ostringstream &result, const item_def *
     }
 }
 
-static bool _visible_to(const monster_info& mi)
-{
-    // XXX: this duplicates player::visible_to
-    const bool invis_to = you.invisible() && !mi.can_see_invisible()
-                          && !you.in_water();
-    return mi.attitude == ATT_FRIENDLY || (!mi.is(MB_BLIND) && !invis_to);
-}
-
 /**
  * Display the % chance of a the given monster hitting the player.
  *
@@ -6439,13 +6431,6 @@ void get_monster_db_desc(const monster_info& mi, describe_info &inf,
     {
         inf.body << "\n" << result;
         has_stat_desc = true;
-    }
-
-    bool did_stair_use = false;
-    if (!mons_class_can_use_stairs(mi.type))
-    {
-        inf.body << It << " " << is << " incapable of using stairs.\n";
-        did_stair_use = true;
     }
 
     result = _monster_current_target_description(mi);
