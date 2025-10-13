@@ -1364,6 +1364,7 @@ enum monster_type                      // env.mons[].type
     MONS_ORB_OF_ENTROPY,
     MONS_ORB_OF_WINTER,
     MONS_SCREAMING_REFRACTION,
+#endif
     MONS_GNOLL_ELECTRICIAN,
     MONS_GNOLL_HALBERDIER,
     MONS_ORC_LANCER,
@@ -1375,7 +1376,6 @@ enum monster_type                      // env.mons[].type
     MONS_WYVERN_EGG,
     MONS_MOUNTAINSHELL,
     MONS_TEAL_WORM,
-#endif
 
     NUM_MONSTERS,               // used for polymorph
 
