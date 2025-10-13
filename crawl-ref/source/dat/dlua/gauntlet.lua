@@ -404,7 +404,7 @@ tier1_gauntlet_arenas = {
     weight = 5,
   },
   {
-    first  = {mons = "eye of devastation", min = 1, max = 1},
+    first  = {mons = "shining eye", min = 1, max = 1},
     second = {mons = "glass eye / golden eye", min = 1, max = 2},
     weight = 5,
   },

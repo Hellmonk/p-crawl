@@ -49,7 +49,7 @@ function pan_lord_setup(_G, name)
                  "neqoxec w:200 / chaos spawn w:200 / " ..
                  "cacodemon w:300 / tormentor / " ..
                  "tentacled monstrosity w:5 / " ..
-                 "golden eye band / eye of devastation / " ..
+                 "golden eye band / " ..
                  "shining eye / very ugly thing band / "..
                  "demonspawn corrupter",
         ['Lom Lobon'] = "hellwing w:300 / sixfirhy w:100 / " ..
@@ -645,7 +645,7 @@ TAGS:       mnoleg uniq_mnoleg
 NSUBST:     O = 1:O / *:|
 TILE:       c = dngn_stone_wall_yellow
 MONS:       patrolling mnoleg
-MONS:       golden eye / eye of devastation / \
+MONS:       golden eye / \
             shining eye
 MONS:       w:3 large abomination / w:2 tentacled monstrosity
 MONS:       cacodemon
