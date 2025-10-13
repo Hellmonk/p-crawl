@@ -1190,7 +1190,6 @@ int main(int argc, char* argv[])
                 case AF_CRUSH:
                 case AF_PLAIN:
                 case AF_REACH:
-                case AF_CLEAVE:
                 case AF_REACH_STING:
                     break;
 #if TAG_MAJOR_VERSION == 34

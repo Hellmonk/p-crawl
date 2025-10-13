@@ -9301,7 +9301,8 @@ ai_action::goodness monster_spell_goodness(monster* mon, spell_type spell)
 
     // Same as above, but allowed at melee range.
     case SPELL_PORTAL_PROJECTILE:
-        ASSERT(foe);
+        if (!foe)
+            return ai_action::impossible();
         return ai_action::good();
 
     case SPELL_BATTLECRY:
