@@ -11,6 +11,7 @@ hp_10x: 80
 ac: 2
 ev: 30
 has_corpse: true
+spells: kobold_geomancer
 shout: shout
 intelligence: human
 uses: open_doors

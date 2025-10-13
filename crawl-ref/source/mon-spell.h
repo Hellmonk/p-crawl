@@ -1148,7 +1148,7 @@ static const mon_spellbook mspell_list[] =
       }
     },
 
-     {  MST_KOBOLD_GEOMANCER,
+    {  MST_KOBOLD_GEOMANCER,
       {
        { SPELL_LRD, 40, MON_SPELL_WIZARD },
       }
