@@ -238,7 +238,7 @@ function fiery_guardians (e, intelligent, village)
         if set_weight < 4 then
             -- "Beastial" monster pack.
             e.mons("hell hound / fire bat band w:8")
-            e.mons("hell hog / lindwurm w:12")
+            e.mons("hell hog / hell hog w:12")
             e.mons("fire crab w:12 / fire dragon")
         elseif set_weight < 8 then
             -- "Demonic" monster pack.
@@ -512,7 +512,7 @@ NAME:    nicolae_volcano_entry_vermiform
 NSUBST:  A = l / ., B = l / ., C = l / ., D = l / .
 SHUFFLE: 1V'/Ov-
 SUBST:   Y = xxxx., y = ....x, v = X, V = x, - = S, ' = ., _ = xxxx_
-KMONS:   1 = patrolling lindwurm
+KMONS:   1 = patrolling fire crab
 CLEAR:   _
 : volcano_portal(_G)
 MAP
@@ -954,7 +954,7 @@ NAME:   volcano_aerie
 TAGS:   no_item_gen no_monster_gen
 ORIENT: encompass
 WEIGHT: 20
-MONS:   lindwurm, efreet
+MONS:   fire crab, efreet
 MONS:   molten gargoyle / earth elemental w:8 / toenail golem w:2
 MONS:   fire elemental / nothing w:5
 KFEAT:  K = l
@@ -1130,7 +1130,7 @@ ORIENT: encompass
 WEIGHT: 20
 KITEM:  4 = scroll of fog q:2 w:20 / condensation vane / cloak of the thief w:1
 MONS:   smoke demon / hell hound
-MONS:   sun demon, lindwurm
+MONS:   sun demon, sun demon
 KMONS:  4 = fire dragon
 SUBST:  a = ..xxl, p = ..'xl, q = .x, ' = '.
 SUBST:  1 = ..1, D = 2., 2 : 23
