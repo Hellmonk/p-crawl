@@ -116,6 +116,7 @@ paradox PARADOX
 warding WARDING
 dim DIMMED
 sentinel_mark SENTINEL_MARK
+steelskin STEELSKIN
 
 something_under SOMETHING_UNDER
 new_stair NEW_STAIR

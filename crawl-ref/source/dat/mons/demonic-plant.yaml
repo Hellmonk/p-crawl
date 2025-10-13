@@ -1,7 +1,6 @@
 name: "demonic plant"
 glyph: {char: "P", colour: etc_random}
 flags: [fragile, stationary, no_exp_gain, no_threat]
-resists: {poison: 1}
 genus: plant
 holiness: [plant]
 will: invuln

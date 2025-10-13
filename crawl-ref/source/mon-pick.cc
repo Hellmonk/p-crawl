@@ -24,24 +24,6 @@ int branch_ood_cap(branch_type branch)
     switch (branch)
     {
     case BRANCH_DUNGEON:
-        return 27;
-    case BRANCH_COCYTUS:
-    case BRANCH_GEHENNA:
-    case BRANCH_TARTARUS:
-    case BRANCH_DIS:
-        return 14;
-    case BRANCH_DEPTHS:
-        return 13;
-    case BRANCH_VAULTS:
-    case BRANCH_LAIR:
-        return 12;
-    case BRANCH_ELF:
-    case BRANCH_SWAMP:
-    case BRANCH_SPIDER:
-    case BRANCH_ZOT:
-        return 7;
-    case BRANCH_CRYPT:
-    case BRANCH_TOMB:
         return 5;
     default:
         return branches[branch].numlevels;
@@ -286,7 +268,11 @@ void debug_monpick()
         {
             if (!pick_monster_all_branches(absdungeon_depth(br, d),
                                            _not_skeletonable)
-                && br != BRANCH_ZIGGURAT) // order is ok, check the loop
+                && br != BRANCH_ZIGGURAT
+                && br != BRANCH_TEMPLE
+                && br != BRANCH_BAZAAR
+                && br != BRANCH_TROVE
+                && br != BRANCH_OSSUARY) // order is ok, check the loop
             {
                 fails += make_stringf(
                     "%s: no valid skeletons in any parallel branch\n",

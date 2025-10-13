@@ -5,11 +5,11 @@ exp: 1118
 species: human
 will: 40
 attacks:
- - {type: hit, damage: 25}
-hd: 14
-hp_10x: 1120
-ac: 0
-ev: 6
+ - {type: hit, damage: 11}
+hd: 6
+hp_10x: 700
+ac: 4
+ev: 0
 spells: ironbound_preserver
 has_corpse: true
 shout: shout

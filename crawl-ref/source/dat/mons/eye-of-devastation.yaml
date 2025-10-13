@@ -1,16 +1,16 @@
-name: "eye of devastation"
+name: "piercing eye"
+enum:  eye_of_devastation
 glyph: {char: "G", colour: yellow}
-flags: [flies, see_invis, no_skeleton]
+flags: [flies, no_skeleton, has_aura]
 exp: 434
 genus: floating_eye
 will: 100
 attacks:
-hd: 10
+hd: 6
 hp_10x: 550
-ac: 12
-ev: 1
+ac: 0
+ev: 0
 spells: eye_of_devastation
 intelligence: brainless
-speed: 7
 size: medium
 shape: orb

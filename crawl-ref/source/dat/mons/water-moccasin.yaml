@@ -1,7 +1,6 @@
 name: "water moccasin"
 glyph: {char: "S", colour: brown}
 flags: [cold_blood]
-resists: {poison: 1}
 exp: 149
 genus: snake
 will: 20
@@ -15,7 +14,5 @@ has_corpse: true
 shout: hiss
 intelligence: animal
 habitat: amphibious
-speed: 14
-energy: {swim: 6}
 size: small
 shape: snake

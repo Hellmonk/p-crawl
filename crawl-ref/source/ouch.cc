@@ -186,8 +186,7 @@ int check_your_resists(int hurted, beam_type flavour, string source,
             // used with this beam type (as it does not provide a valid beam).
             ASSERT(beam);
 
-            int pois = div_rand_round(beam->damage.num * beam->damage.size, 2);
-            pois = 3 + random_range(pois * 2 / 3, pois * 4 / 3);
+            int pois = 1;
 
             // If Concentrate Venom is active, we apply the normal amount of
             // poison this beam would have applied on TOP of the curare effect.
@@ -218,8 +217,7 @@ int check_your_resists(int hurted, beam_type flavour, string source,
             // See also melee-attack.cc:_print_resist_messages() which cannot be
             // used with this beam type (as it does not provide a valid beam).
             ASSERT(beam);
-            int pois = div_rand_round(beam->damage.num * beam->damage.size, 2);
-            pois = 3 + random_range(pois * 2 / 3, pois * 4 / 3);
+            int pois = 1;
 
             const int resist = player_res_poison();
             poison_player((resist ? pois / 2 : pois), source, kaux, true);
@@ -1355,7 +1353,7 @@ void ouch(int dam, kill_method_type death_type, mid_t source, const char *aux,
 
         if (you.hp > 0 && dam > 0)
         {
-            if (death_type != KILLED_BY_POISON || poison_is_lethal())
+            if (death_type != KILLED_BY_POISON)
                 flush_hp();
 
             hints_healing_check();

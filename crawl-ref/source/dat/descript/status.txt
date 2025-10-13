@@ -93,9 +93,11 @@ again for a short duration.
 %%%%
 Pois status
 
-You are poisoned and will continually lose health. While poisoned, your current
-health will be partially recoloured to display the eventual poison damage that
-will be dealt. Poison can be cured immediately by potions of curing.
+You are poisoned and will continually lose health. Getting poisoned again will
+increase the speed at which your health depletes. Poison will never kill you
+directly, but will continue to reduce your health until your final hitpoint, or
+until you cure it (by moving to the next floor, or with a specific item
+or divine ability capable of curing poison).
 %%%%
 Conf status
 
@@ -218,7 +220,9 @@ without taking damage.
 %%%%
 Sick status
 
-You have been sickened, and your health will no longer regenerate.
+You have been sickened. You can't restore HP by any method until your sickness
+ends, though effects that grant temporary max HP (like berserking) work as
+normal.
 %%%%
 Vertigo status
 
@@ -241,7 +245,8 @@ Your melee attacks do 25% less damage.
 %%%%
 Frozen status
 
-You are covered in ice, and your movement speed is reduced.
+You are covered in ice and cannot move easily. Moving will stun you for a turn.
+Other actions you may take are unaffected.
 %%%%
 Sap status
 

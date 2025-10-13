@@ -1,6 +1,6 @@
 name: "ettin"
 glyph: {char: "C", colour: brown}
-flags: [speaks, warm_blood, two_weapons]
+flags: [speaks, warm_blood]
 exp: 929
 genus: giant
 will: 40

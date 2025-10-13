@@ -1,6 +1,6 @@
 name: "hound"
 glyph: {char: "h", colour: yellow}
-flags: [see_invis, unblindable, warm_blood]
+flags: [unblindable, warm_blood]
 exp: 42
 will: 10
 attacks:
@@ -12,6 +12,5 @@ ev: 13
 has_corpse: true
 shout: bark
 intelligence: animal
-speed: 15
 size: small
 shape: quadruped

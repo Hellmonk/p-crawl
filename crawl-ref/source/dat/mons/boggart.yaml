@@ -1,18 +1,17 @@
 name: "boggart"
 glyph: {char: "g", colour: magenta}
-flags: [see_invis, warm_blood]
+flags: [warm_blood]
 exp: 117
 will: 40
 attacks:
  - {type: hit, damage: 5}
-hd: 4
+hd: 1
 hp_10x: 200
 ac: 0
-ev: 12
+ev: 60
 spells: boggart
 shout: shout
 intelligence: human
-speed: 12
 uses: open_doors
 size: little
 shape: humanoid

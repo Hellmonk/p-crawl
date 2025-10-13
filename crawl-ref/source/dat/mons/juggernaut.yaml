@@ -1,21 +1,18 @@
 name: "juggernaut"
 glyph: {char: "C", colour: lightgreen}
-flags: [fighter, see_invis, speaks, warm_blood]
+flags: [fighter, speaks, warm_blood, fast_moving, slow_attacks]
 exp: 3979
 genus: giant
 will: 120
 attacks:
- - {type: hit, damage: 80}
- - {type: hit, damage: 40}
-hd: 20
-hp_10x: 1700
-ac: 20
-ev: 5
+ - {type: hit, flavour: cleave, damage: 45}
+hd: 10
+hp_10x: 700
+ac: 13
+ev: 10
 has_corpse: true
 shout: shout
 intelligence: human
-speed: 15
-energy: {attack: 45}
 uses: open_doors
 size: giant
 shape: humanoid

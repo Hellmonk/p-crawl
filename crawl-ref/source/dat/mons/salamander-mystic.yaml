@@ -8,15 +8,14 @@ genus: naga
 will: 60
 attacks:
  - {type: hit, flavour: fire, damage: 10}
-hd: 10
-hp_10x: 650
+hd: 4
+hp_10x: 350
 ac: 5
-ev: 7
+ev: 0
 spells: salamander_mystic
 has_corpse: true
 intelligence: human
 habitat: amphibious_lava
-energy: {swim: 7}
 uses: open_doors
 size: medium
 shape: naga

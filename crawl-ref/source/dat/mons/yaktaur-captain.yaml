@@ -5,11 +5,12 @@ exp: 895
 species: yaktaur
 will: 60
 attacks:
- - {type: hit, damage: 30}
-hd: 14
+ - {type: hit, damage: 20}
+hd: 10
 hp_10x: 770
 ac: 5
-ev: 5
+ev: 0
+spells: archer
 has_corpse: true
 shout: shout
 intelligence: human

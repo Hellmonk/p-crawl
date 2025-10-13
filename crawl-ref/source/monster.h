@@ -216,6 +216,8 @@ public:
     bool del_ench(enchant_type ench, bool quiet = false, bool effect = true);
     bool lose_ench_duration(const mon_enchant &e, int levels);
     bool lose_ench_levels(const mon_enchant &e, int lev, bool infinite = false);
+    bool maybe_free_action(energy_use_type et);
+    bool takes_two_turns(energy_use_type et);
     void lose_energy(energy_use_type et, int div = 1, int mult = 1);
     int energy_cost(energy_use_type et, int div = 1, int mult = 1) const;
 
@@ -506,6 +508,7 @@ public:
     void put_to_sleep(actor *attacker, int duration = 0, bool hibernate = false)
         override;
     void weaken(const actor *attacker, int pow) override;
+    void diminish(const actor *attacker, int pow) override;
     bool strip_willpower(actor *attacker, int dur, bool quiet = false) override;
     void daze(int duration) override;
     void vitrify(const actor *attacker, int duration, bool quiet = false) override;

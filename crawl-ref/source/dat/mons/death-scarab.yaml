@@ -1,18 +1,17 @@
 name: "death scarab"
 glyph: {char: "B", colour: blue}
-flags: [batty, web_immune, no_skeleton, no_zombie]
+flags: [batty, web_immune, no_skeleton, no_zombie, quick]
 exp: 812
 holiness: [undead]
 will: 60
 attacks:
- - {type: bite, flavour: scarab, damage: 33}
-hd: 8
+ - {type: bite, flavour: scarab, damage: 16}
+hd: 5
 hp_10x: 320
 ac: 7
-ev: 14
+ev: 40
 has_corpse: true
 shout: faint_skitter
 intelligence: animal
-speed: 30
 size: little
 shape: insect

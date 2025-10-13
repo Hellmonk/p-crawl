@@ -1930,7 +1930,7 @@ static int _wu_jian_number_of_attacks(bool wall_jump)
                            ? 100
                            : player_movement_speed() * player_speed();
 
-    int attack_delay = you.attack_delay().roll();
+    int attack_delay = 10;
 
     return div_rand_round(wall_jump ? 2 * move_delay : move_delay,
                           attack_delay * BASELINE_DELAY);

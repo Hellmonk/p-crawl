@@ -13,7 +13,6 @@ ev: 10
 has_corpse: true
 shout: gurgle
 intelligence: animal
-energy: {move: 9}
 uses: open_doors
 size: large
 shape: misc

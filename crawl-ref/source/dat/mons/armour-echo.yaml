@@ -13,6 +13,5 @@ ac: 8
 ev: 5
 uses: starting_equipment
 intelligence: brainless
-energy: {move: 30}
 size: medium
 shape: humanoid

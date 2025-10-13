@@ -4,11 +4,11 @@ flags: [speaks, warm_blood]
 exp: 14
 will: 10
 attacks:
- - {type: hit, damage: 6}
+ - {type: hit, damage: 7}
 hd: 2
-hp_10x: 130
+hp_10x: 120
 ac: 2
-ev: 9
+ev: 0
 has_corpse: true
 shout: shout
 intelligence: human

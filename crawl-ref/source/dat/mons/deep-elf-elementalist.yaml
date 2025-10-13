@@ -1,15 +1,17 @@
 name: "deep elf elementalist"
 glyph: {char: "e", colour: lightred}
-flags: [see_invis, speaks, warm_blood]
+flags: [speaks, warm_blood]
 exp: 1187
 species: elf
 will: 120
 attacks:
- - {type: hit, damage: 12}
-hd: 14
-hp_10x: 630
+ - {type: hit, flavour: fire, damage: 4}
+ - {type: hit, flavour: cold, damage: 4}
+ - {type: hit, flavour: elec, damage: 4}
+hd: 6
+hp_10x: 530
 ac: 0
-ev: 13
+ev: 30
 spells: deep_elf_elementalist
 has_corpse: true
 shout: shout

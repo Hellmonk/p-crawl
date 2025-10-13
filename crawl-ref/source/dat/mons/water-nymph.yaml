@@ -4,11 +4,11 @@ flags: [speaks, warm_blood]
 exp: 444
 will: 100
 attacks:
- - {type: touch, flavour: drown, damage: 12}
-hd: 10
-hp_10x: 400
-ac: 2
-ev: 13
+ - {type: touch, flavour: drown, damage: 9}
+hd: 4
+hp_10x: 300
+ac: 4
+ev: 20
 spells: water_nymph
 has_corpse: true
 shout: shout

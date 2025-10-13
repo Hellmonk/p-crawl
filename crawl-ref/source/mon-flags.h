@@ -23,17 +23,17 @@ enum monclass_flag_type : uint64_t
     /// monster is skilled fighter
     M_FIGHTER           = BIT(3),
 
-    /// do not give (unique) a wand
-    M_NO_WAND           = BIT(4),
+    /// monster gets a free movement action
+    M_FAST_MOVING       = BIT(4),
 
-    /// do not give a high tier wand
-    M_NO_HT_WAND        = BIT(5),
+    /// monster gets a free action of any type
+    M_QUICK             = BIT(5),
 
-    /// is created invis
-    M_INVIS             = BIT(6),
+    /// gets free actions in water
+    M_FAST_SWIMMER      = BIT(6),
 
-    /// can see invis
-    M_SEE_INVIS         = BIT(7),
+    /// "sometimes" gets free actions, at random
+    M_VARIABLE_SPEED    = BIT(7),
 
     /// can't be blinded
     M_UNBLINDABLE       = BIT(8),
@@ -77,8 +77,8 @@ enum monclass_flag_type : uint64_t
     /// monster is a unique
     M_UNIQUE            = BIT(21),
 
-    /// Passive acid splash when hit.
-    M_ACID_SPLASH       = BIT(22),
+    /// monster moves slowly but attacks at normal speed.
+    M_SLOW_MOVEMENT     = BIT(22),
 
     /// gets various archery boosts
     M_ARCHER            = BIT(23),
@@ -86,8 +86,8 @@ enum monclass_flag_type : uint64_t
     /// is insubstantial
     M_INSUBSTANTIAL     = BIT(24),
 
-    /// wields two weapons at once
-    M_TWO_WEAPONS       = BIT(25),
+    /// monster attacks slowly, but moves at normal speed
+    M_SLOW_ATTACKS      = BIT(25),
 
     /// has extra-fast regeneration
     M_FAST_REGEN        = BIT(26),
@@ -178,8 +178,8 @@ enum monclass_flag_type : uint64_t
     /// monster will never harm the player
     M_NO_THREAT         = BIT(55),
 
-    /// monster always receives a wand
-    M_ALWAYS_WAND       = BIT(56),
+    /// monster acts slowly
+    M_SLOW_ACTING       = BIT(56),
 
     /// uses they/them pronouns
     M_GENDER_NEUTRAL    = BIT(57),

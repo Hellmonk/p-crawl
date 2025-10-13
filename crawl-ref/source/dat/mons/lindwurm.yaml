@@ -1,17 +1,18 @@
-name: "lindwurm"
+name: "fire eater"
+enum: lindwurm
 glyph: {char: "k", colour: lightred}
 flags: [warm_blood]
 exp: 644
 genus: drake
 will: 40
 attacks:
- - {type: bite, damage: 20}
+ - {type: bite, damage: 10}
  - {type: claw, damage: 10}
  - {type: claw, damage: 10}
-hd: 9
-hp_10x: 495
+hd: 4
+hp_10x: 500
 ac: 8
-ev: 6
+ev: 0
 spells: lindwurm
 has_corpse: true
 shout: roar

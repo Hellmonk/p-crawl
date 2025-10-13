@@ -1,7 +1,7 @@
 name: "tormentor"
 glyph: {char: "2", colour: lightmagenta}
 flags: [speaks]
-resists: {poison: 1, fire: 1}
+resists: {fire: 1}
 exp: 348
 holiness: [demonic]
 will: 60
@@ -15,7 +15,6 @@ ev: 12
 spells: tormentor
 shout: roar
 intelligence: human
-speed: 13
 uses: open_doors
 size: medium
 shape: humanoid

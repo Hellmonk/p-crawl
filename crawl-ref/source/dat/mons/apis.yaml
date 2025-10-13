@@ -5,11 +5,11 @@ exp: 1042
 holiness: [holy]
 will: 100
 attacks:
- - {type: gore, flavour: holy, damage: 44}
-hd: 16
-hp_10x: 960
-ac: 9
-ev: 5
+ - {type: gore, damage: 22}
+hd: 5
+hp_10x: 530
+ac: 4
+ev: 10
 has_corpse: true
 intelligence: animal
 size: large

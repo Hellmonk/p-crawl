@@ -1,4 +1,5 @@
-name: "acid dragon"
+name: "acid drake"
+enum: acid_dragon
 glyph: {char: "D", colour: green}
 flags: [flies, warm_blood]
 resists: {poison: 1, corr: 1}
@@ -6,11 +7,11 @@ exp: 155
 genus: dragon
 will: 20
 attacks:
- - {type: bite, damage: 15}
+ - {type: bite, damage: 12}
  - {type: claw, damage: 6}
 hd: 5
-hp_10x: 275
-ac: 5
+hp_10x: 300
+ac: 3
 ev: 10
 spells: acid_dragon
 has_corpse: true

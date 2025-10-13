@@ -13,7 +13,6 @@ ac: 10
 ev: 15
 shout: moan
 intelligence: human
-speed: 25
 uses: open_doors
 size: tiny
 shape: humanoid

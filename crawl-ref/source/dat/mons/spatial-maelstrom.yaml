@@ -13,7 +13,6 @@ hp_10x: 750
 ac: 0
 ev: 5
 intelligence: brainless
-speed: 16
 size: giant
 shape: misc
 tile_variance: cycle

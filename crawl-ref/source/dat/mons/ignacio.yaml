@@ -1,7 +1,7 @@
 name: "Ignacio"
 glyph: {char: "1", colour: lightmagenta}
-flags: [fighter, see_invis, speaks, unique, male]
-resists: {elec: 1, poison: 1, fire: 1, cold: 1}
+flags: [fighter, speaks, unique, male]
+resists: {elec: 1, fire: 1, cold: 1}
 exp: 6807
 species: executioner
 holiness: [demonic]
@@ -18,7 +18,6 @@ ev: 15
 spells: ignacio
 shout: shout
 intelligence: human
-speed: 20
 uses: open_doors
 size: large
 shape: humanoid

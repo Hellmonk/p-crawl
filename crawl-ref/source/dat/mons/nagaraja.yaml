@@ -1,7 +1,6 @@
 name: "nagaraja"
 glyph: {char: "N", colour: lightmagenta}
-flags: [fighter, see_invis, speaks, warm_blood]
-resists: {poison: 1}
+flags: [fighter, speaks, warm_blood]
 exp: 1323
 species: naga
 will: 140
@@ -16,7 +15,6 @@ spells: nagaraja
 has_corpse: true
 shout: shout
 intelligence: human
-energy: {move: 14}
 uses: open_doors
 size: large
 shape: naga

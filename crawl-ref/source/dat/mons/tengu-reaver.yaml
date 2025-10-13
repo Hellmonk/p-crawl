@@ -1,17 +1,17 @@
 name: "tengu reaver"
 glyph: {char: "Q", colour: lightmagenta}
-flags: [flies, fighter, see_invis, speaks, warm_blood]
+flags: [flies, fighter, speaks, warm_blood]
 exp: 1406
 species: tengu
 will: 60
 attacks:
- - {type: hit, damage: 27}
- - {type: peck, damage: 11}
- - {type: claw, damage: 11}
-hd: 17
-hp_10x: 850
-ac: 2
-ev: 17
+ - {type: hit, damage: 17}
+ - {type: peck, damage: 8}
+ - {type: claw, damage: 8}
+hd: 9
+hp_10x: 550
+ac: 3
+ev: 30
 spells: tengu_reaver
 has_corpse: true
 shout: shout

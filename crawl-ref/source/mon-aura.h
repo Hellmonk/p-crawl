@@ -10,7 +10,8 @@
 
 #define PHALANX_BARRIER_KEY "phalanx_barrier"
 #define TORPOR_SLOWED_KEY "torpor_slowed"
-#define OPHAN_MARK_KEY "ophan_mark"
+#define EYE_MARK_KEY "eye_mark"
+#define TEAL_SAP_KEY "teal_sap"
 
 class mon_enchant;
 

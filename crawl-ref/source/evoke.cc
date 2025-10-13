@@ -461,6 +461,11 @@ static bool _harp_of_healing()
         mpr("You cannot hear the harp's music in death's doorway!");
         return false;
     }
+    else if (you.duration[DUR_SICKNESS])
+    {
+        mpr("You cannot heal due to your sickness!");
+        return false;
+    }
 
     int pow = you.skill(SK_EVOCATIONS);
 
@@ -478,7 +483,8 @@ void handle_playing_harp()
 {
     // Various special cases if user can no longer play harp
     if (you.confused() || you.berserk() || you.duration[DUR_MESMERISED]
-        || silenced(you.pos()) || you.duration[DUR_DEATHS_DOOR])
+        || silenced(you.pos()) || you.duration[DUR_DEATHS_DOOR]
+        || you.duration[DUR_SICKNESS])
     {
         end_playing_harp(false);
         return;

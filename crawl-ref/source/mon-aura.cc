@@ -46,11 +46,19 @@ static const vector<mon_aura_data> aura_map =
                         source.name(DESC_THE).c_str());
             }},
 
-    {MONS_OPHAN,
-        ENCH_NONE, 1, true, DUR_SENTINEL_MARK, OPHAN_MARK_KEY,
+    {MONS_EYE_OF_DEVASTATION,
+        ENCH_NONE, 1, true, DUR_SENTINEL_MARK, EYE_MARK_KEY,
          nullptr,
          [](const monster& source)
             {  mprf("%s gaze reveals you to all!",
+                        source.name(DESC_ITS).c_str());
+            }},
+
+    {MONS_TEAL_WORM,
+        ENCH_NONE, 1, true, DUR_SAP_MAGIC, TEAL_SAP_KEY,
+         nullptr,
+         [](const monster& source)
+            {  mprf("Being near %s saps your magic.",
                         source.name(DESC_ITS).c_str());
             }},
 

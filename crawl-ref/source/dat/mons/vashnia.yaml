@@ -1,7 +1,6 @@
 name: "Vashnia"
 glyph: {char: "N", colour: lightcyan}
-flags: [see_invis, speaks, warm_blood, unique, archer, female, prefer_ranged]
-resists: {poison: 1}
+flags: [speaks, warm_blood, unique, archer, female, prefer_ranged]
 exp: 3195
 species: naga
 will: 120
@@ -16,7 +15,6 @@ spells: vashnia
 has_corpse: true
 shout: shout
 intelligence: human
-energy: {move: 14}
 uses: open_doors
 size: large
 shape: naga

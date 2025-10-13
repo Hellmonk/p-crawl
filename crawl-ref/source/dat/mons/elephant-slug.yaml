@@ -12,7 +12,6 @@ ac: 2
 ev: 1
 has_corpse: true
 intelligence: animal
-speed: 4
 size: giant
 shape: snail
 tile: dart_slug

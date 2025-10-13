@@ -6,7 +6,6 @@ holiness: [undead]
 will: invuln
 attacks:
  - {type: hit, flavour: trickster, damage: 1}
-energy: {move: 5}
 hd: 10
 hp_10x: 320
 ac: 13

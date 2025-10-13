@@ -1127,9 +1127,6 @@ static monster* _place_monster_aux(const mgen_data &mg, const monster *leader,
     if (mons_is_unique(mg.cls))
         you.unique_creatures.set(mg.cls);
 
-    if (mons_class_flag(mg.cls, M_INVIS))
-        mon->add_ench(ENCH_INVIS);
-
     if (mons_class_flag(mg.cls, M_CONFUSED))
         mon->add_ench(ENCH_CONFUSION);
 
@@ -1181,8 +1178,11 @@ static monster* _place_monster_aux(const mgen_data &mg, const monster *leader,
     }
 
 
-    if (mon->has_spell(SPELL_REPEL_MISSILES))
+    if (mon->has_spell(SPELL_REPEL_MISSILES)
+        || mon->has_spell(SPELL_MASS_REPULSION))
+    {
         mon->add_ench(mon_enchant(ENCH_REPEL_MISSILES, 1, mon, INFINITE_DURATION));
+    }
 
     if (mons_class_flag(mon->type, M_FIRE_RING))
         mon->add_ench(ENCH_RING_OF_FLAMES);
@@ -1234,9 +1234,6 @@ static monster* _place_monster_aux(const mgen_data &mg, const monster *leader,
              && !mg.props.exists(KIKU_WRETCH_KEY))
     {
         give_item(mon, place.absdepth(), mg.is_summoned());
-        // Give these monsters a second weapon. - bwr
-        if (mons_class_wields_two_weapons(mg.cls))
-            give_weapon(mon, place.absdepth());
 
         unwind_var<int> save_speedinc(mon->speed_increment);
         mon->wield_melee_weapon(false);
@@ -1858,7 +1855,7 @@ static const map<monster_type, band_set> bands_by_leader = {
     { MONS_POLYPHEMUS,      { {}, {{ BAND_POLYPHEMUS, {3, 6}, true }}}},
     { MONS_HARPY,           { {}, {{ BAND_HARPIES, {2, 5} }}}},
     { MONS_CHONCHON,        { {2}, {{ BAND_CHONCHON, {2, 3} }}}},
-    { MONS_SALTLING,        { {}, {{ BAND_SALTLINGS, {2, 4} }}}},
+    { MONS_ORELING,        { {}, {{ BAND_SALTLINGS, {2, 4} }}}},
     { MONS_PEACEKEEPER,     { { 0, 0, []() {
         return player_in_branch(BRANCH_VAULTS); }},
                                   {{ BAND_GOLEMS, {1, 3}, true }}}},
@@ -1973,7 +1970,7 @@ static const map<monster_type, band_set> bands_by_leader = {
                                    {{ BAND_SPECTRALS, {2, 6}, true} }}},
     { MONS_GRUNN,            { {}, {{ BAND_OBLIVION_HOUNDS, {2, 4}, true }}}},
     { MONS_NORRIS,           { {}, {{ BAND_SKYSHARKS, {2, 5}, true }}}},
-    { MONS_UFETUBUS,         { {}, {{ BAND_UFETUBI, {1, 2} }}}},
+    { MONS_BRAIN_IMP,         { {}, {{ BAND_UFETUBI, {1, 2} }}}},
     { MONS_SIN_BEAST,        { {}, {{ BAND_SIN_BEASTS, {1, 2} }}}},
     { MONS_KOBOLD_BLASTMINER, { {}, {{ BAND_BLASTMINER, {0, 2} }}}},
     { MONS_ARACHNE,          { {}, {{ BAND_ORB_SPIDERS, {3, 5}}}}},
@@ -2233,7 +2230,7 @@ static const map<band_type, vector<member_possibilities>> band_membership = {
     { BAND_WIGHTS,              {{{MONS_WIGHT, 1}}}},
     { BAND_JACKALS,             {{{MONS_JACKAL, 1}}}},
     { BAND_KOBOLDS,             {{{MONS_KOBOLD, 1}}}},
-    { BAND_PIKEL,               {{{MONS_LEMURE, 1}}}},
+    { BAND_PIKEL,               {{{MONS_ACID_IMP, 1}}}},
     { BAND_JOSEPHINE,           {{{MONS_WRAITH, 1}}}},
     { BAND_MELIAI,              {{{MONS_MELIAI, 1}}}},
     { BAND_BOGGARTS,            {{{MONS_BOGGART, 1}}}},
@@ -2290,7 +2287,7 @@ static const map<band_type, vector<member_possibilities>> band_membership = {
                                 {{MONS_DEEP_TROLL, 1}}}},
     { BAND_BONE_DRAGONS,        {{{MONS_BONE_DRAGON, 1}}}},
     { BAND_SPECTRALS,           {{{MONS_SPECTRAL_THING, 1}}}},
-    { BAND_UFETUBI,             {{{MONS_UFETUBUS, 1}}}},
+    { BAND_UFETUBI,             {{{MONS_BRAIN_IMP, 1}}}},
     { BAND_SIN_BEASTS,          {{{MONS_SIN_BEAST, 1}}}},
     { BAND_BLASTMINER,          {{{MONS_KOBOLD_BLASTMINER, 1}}}},
     { BAND_THERMIC_DYNAMOS,     {{{MONS_THERMIC_DYNAMO, 1}}}},
@@ -2569,7 +2566,7 @@ static const map<band_type, vector<member_possibilities>> band_membership = {
                                   {MONS_SERVANT_OF_WHISPERS, 2},
                                   {MONS_PEACEKEEPER, 2}},
 
-                                 {{MONS_SALTLING, 150},
+                                 {{MONS_ORELING, 150},
                                   {MONS_RAGGED_HIEROPHANT, 5},
                                   {MONS_SERVANT_OF_WHISPERS, 5},
                                   {MONS_PEACEKEEPER, 5},
@@ -3194,9 +3191,9 @@ monster_type random_demon_by_tier(int tier)
     case 5:
         return random_choose(MONS_CRIMSON_IMP,
                              MONS_WHITE_IMP,
-                             MONS_UFETUBUS,
+                             MONS_BRAIN_IMP,
                              MONS_IRON_IMP,
-                             MONS_DRUDE,
+                             MONS_DRAIN_IMP,
                              MONS_SHADOW_IMP);
     case 4:
         return random_choose(MONS_ICE_DEVIL,
@@ -3522,12 +3519,12 @@ static const vector<pop_entry> band_weights[] =
 
 // APOSTLE_BAND_DEMONS,
 {
-    {0, 25, 80, FALL, MONS_CRIMSON_IMP},
-    {0, 25, 80, FALL, MONS_WHITE_IMP},
-    {0, 25, 80, FALL, MONS_UFETUBUS},
-    {0, 25, 80, FALL, MONS_IRON_IMP},
+    {0, 25, 80, FALL, MONS_CRIMSON_IMP },
+    {0, 25, 80, FALL, MONS_WHITE_IMP },
+    {0, 25, 80, FALL, MONS_BRAIN_IMP },
+    {0, 25, 80, FALL, MONS_IRON_IMP },
     {0, 25, 80, FALL, MONS_SHADOW_IMP},
-    {0, 25, 80, FALL, MONS_DRUDE},
+    {0, 25, 80, FALL, MONS_DRAIN_IMP},
 
     {20, 55, 125, SEMI, MONS_ICE_DEVIL},
     {20, 55, 125, SEMI, MONS_RUST_DEVIL},

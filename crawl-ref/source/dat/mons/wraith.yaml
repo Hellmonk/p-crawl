@@ -1,16 +1,15 @@
 name: "wraith"
 glyph: {char: "W", colour: lightgray}
-flags: [flies, see_invis, insubstantial]
-resists: {cold: 1}
+flags: [flies, insubstantial]
 exp: 209
 holiness: [undead]
 will: 60
 attacks:
- - {type: hit, flavour: drain_speed, damage: 15}
-hd: 6
+ - {type: hit, flavour: drain_speed, damage: 9}
+hd: 3
 hp_10x: 330
-ac: 10
-ev: 10
+ac: 0
+ev: 0
 intelligence: human
 uses: open_doors
 size: medium

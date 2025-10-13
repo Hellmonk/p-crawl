@@ -7,15 +7,16 @@ genus: fire_vortex
 holiness: [nonliving]
 will: invuln
 attacks:
- - {type: touch, flavour: fire, damage: 18}
- - {type: engulf, flavour: cold, damage: 14}
-hd: 10
+ - {type: touch, flavour: fire, damage: 6}
+ - {type: touch, flavour: fire, damage: 6}
+ - {type: touch, flavour: cold, damage: 4}
+ - {type: touch, flavour: cold, damage: 4}
+hd: 5
 hp_10x: 380
 ac: 4
-ev: 16
+ev: 20
 spells: thermic_dynamo
 intelligence: brainless
-energy: {move: 8}
 size: medium
 shape: misc
 tile_variance: cycle

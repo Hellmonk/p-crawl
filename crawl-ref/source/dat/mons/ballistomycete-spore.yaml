@@ -1,7 +1,6 @@
 name: "ballistomycete spore"
 glyph: {char: "*", colour: green}
 flags: [flies, no_exp_gain, unstable, peripheral]
-resists: {poison: 1}
 genus: fungus
 holiness: [plant]
 will: invuln
@@ -12,6 +11,5 @@ hp_10x: 10
 ac: 0
 ev: 10
 intelligence: brainless
-speed: 15
 size: small
 shape: orb

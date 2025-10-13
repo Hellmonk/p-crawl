@@ -228,6 +228,7 @@ static bool _jelly_eat_missile(const item_def& projectile, int damage_done)
     if (you.has_mutation(MUT_JELLY_MISSILE)
         && you.hp < you.hp_max
         && !you.duration[DUR_DEATHS_DOOR]
+        && !you.duration[DUR_SICKNESS]
         && item_is_jelly_edible(projectile)
         && !one_chance_in(3))
     {

@@ -6,14 +6,13 @@ genus: drake
 will: 40
 attacks:
  - {type: bite, damage: 12}
-hd: 8
-hp_10x: 600
+hd: 4
+hp_10x: 300
 ac: 3
-ev: 14
+ev: 20
 spells: wind_drake
 has_corpse: true
 shout: hiss
 intelligence: animal
-speed: 12
 size: large
 shape: quadruped_winged

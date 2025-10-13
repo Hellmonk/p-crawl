@@ -794,6 +794,12 @@ spret cast_a_spell(bool check_range, spell_type spell, dist *_target,
     // to trigger Celebrant or time-warped blood.
     makhleb_celebrant_bloodrite();
     _maybe_blood_hastes_allies();
+
+    free_action_type faction = you.free_action_available();
+
+    if (faction == FACT_SPELL)
+        expend_free_action();
+
     you.turn_is_over = true;
     alert_nearby_monsters();
 

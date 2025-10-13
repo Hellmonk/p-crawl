@@ -1,6 +1,6 @@
 name: "ophan"
 glyph: {char: "G", colour: red}
-flags: [flies, see_invis, has_aura]
+flags: [flies]
 exp: 1082
 genus: angel
 holiness: [holy]

@@ -100,6 +100,7 @@ raven MONS_RAVEN
 bennu MONS_BENNU
 caustic_shrike MONS_CAUSTIC_SHRIKE
 shard_shrike MONS_SHARD_SHRIKE
+phoenix MONS_PHOENIX
 %sdir mon/vault
 microbat MONS_MICROBAT
 %rim 1
@@ -173,6 +174,7 @@ rat MONS_RAT
 green_rat MONS_RIVER_RAT
 orange_rat MONS_HELL_RAT
 crystal_echidna MONS_CRYSTAL_ECHIDNA
+porcupine MONS_PORCUPINE
 %rim 1
 quokka MONS_QUOKKA
 %rim 0
@@ -201,10 +203,9 @@ pharaoh_ant  MONS_PHARAOH_ANT
 
 ## Turtles and crabs ('t')
 %sdir mon/animals
-%rim 1
 snapping_turtle MONS_SNAPPING_TURTLE
 alligator_snapping_turtle MONS_ALLIGATOR_SNAPPING_TURTLE
-%rim 0
+mountainshell MONS_MOUNTAINSHELL
 fire_crab MONS_FIRE_CRAB
 ghost_crab MONS_GHOST_CRAB
 
@@ -215,7 +216,9 @@ swamp_worm MONS_SWAMP_WORM
 swamp_worm_water
 %rim 1
 %sdir mon/animals
+glow_worm MONS_GLOW_WORM
 ribbon_worm MONS_RIBBON_WORM
+teal_worm MONS_TEAL_WORM
 %rim 0
 brain_worm MONS_BRAIN_WORM
 %rim 1
@@ -247,6 +250,7 @@ jellyfish MONS_FORMLESS_JELLYFISH
 %sdir mon/animals
 %rim 0
 bombardier_beetle MONS_BOMBARDIER_BEETLE
+boring_beetle MONS_BORING_BEETLE
 boulder_beetle MONS_BOULDER_BEETLE
 boulder_beetle_rolling0 MONS_BOULDER_BEETLE_ROLLING
 boulder_beetle_rolling1
@@ -270,6 +274,9 @@ blink_frog MONS_BLINK_FROG
 blinking_frog MONS_BLINK_FROG_BLINKING
 cane_toad MONS_CANE_TOAD
 goliath_frog MONS_GOLIATH_FROG
+%sdir mon/aquatic
+big_fish MONS_BIG_FISH
+%sdir mon/animals
 skyshark MONS_SKYSHARK
 %sdir mon/undead
 marrowcuda MONS_MARROWCUDA
@@ -463,16 +470,17 @@ hellwing MONS_HELLWING
 crimson_imp MONS_CRIMSON_IMP
 cerulean_imp MONS_CERULEAN_IMP
 %rim 0
-lemure MONS_LEMURE
-drude MONS_DRUDE
+acid_imp MONS_ACID_IMP
+drain_imp MONS_DRAIN_IMP
 %rim 1
 iron_imp MONS_IRON_IMP
 %rim 0
 shadow_imp MONS_SHADOW_IMP
 mon/unique/grinder MONS_GRINDER
 %rim 1
-ufetubus MONS_UFETUBUS
+brain_imp MONS_BRAIN_IMP
 white_imp MONS_WHITE_IMP
+glowing_imp MONS_GLOWING_IMP
 
 # demonspawn ('6')
 %sdir mon/humanoids/demonspawn
@@ -577,7 +585,7 @@ walking_alembic MONS_WALKING_ALEMBIC
 iron_golem MONS_IRON_GOLEM
 ushabti MONS_USHABTI
 peacekeeper MONS_PEACEKEEPER
-saltling MONS_SALTLING
+oreling MONS_ORELING
 armour_echo MONS_ARMOUR_ECHO
 platinum_paragon MONS_PLATINUM_PARAGON
 %rim 1
@@ -827,6 +835,7 @@ tainted_leviathan MONS_TAINTED_LEVIATHAN
 ## Drakes ('k')
 %sdir mon/dragons
 wyvern MONS_WYVERN
+wyvern_egg MONS_WYVERN_EGG
 swamp_drake MONS_SWAMP_DRAKE
 rime_drake MONS_RIME_DRAKE
 lindwurm MONS_LINDWURM
@@ -991,6 +1000,9 @@ kobold_brigand MONS_KOBOLD_BRIGAND
 kobold_demonologist MONS_KOBOLD_DEMONOLOGIST
 kobold_blastminer MONS_KOBOLD_BLASTMINER
 kobold_fleshcrafter MONS_KOBOLD_FLESHCRAFTER
+kobold_geomancer0 MONS_KOBOLD_GEOMANCER
+kobold_geomancer1
+kobold_geomancer2
 
 ## Liches ('L')
 %sdir mon/unique
@@ -1127,6 +1139,7 @@ jory MONS_JORY
 
 ## Wraiths ('W')
 %sdir mon/undead
+bes_kemwar MONS_BES_KEMWAR
 wraith MONS_WRAITH
 shadow_wraith MONS_SHADOW_WRAITH
 freezing_wraith MONS_FREEZING_WRAITH
@@ -1234,6 +1247,8 @@ ironbound_mechanist MONS_IRONBOUND_MECHANIST
 gnoll MONS_GNOLL
 gnoll_shaman MONS_GNOLL_BOUDA
 gnoll_sergeant MONS_GNOLL_SERGEANT
+gnoll_electrician MONS_GNOLL_ELECTRICIAN
+gnoll_halberdier MONS_GNOLL_HALBERDIER
 %rim 1
 boggart MONS_BOGGART
 
@@ -1244,6 +1259,7 @@ spriggan_rider MONS_SPRIGGAN_RIDER
 spriggan_druid MONS_SPRIGGAN_DRUID
 spriggan_berserker MONS_SPRIGGAN_BERSERKER
 spriggan_defender MONS_SPRIGGAN_DEFENDER
+spriggan_assassin MONS_SPRIGGAN_ASSASSIN
 %rim 0
 spriggan_air_mage MONS_SPRIGGAN_AIR_MAGE
 %rim 1
@@ -1298,7 +1314,9 @@ orc MONS_ORC
 orc_wizard MONS_ORC_WIZARD
 orc_priest MONS_ORC_PRIEST
 orc_warrior MONS_ORC_WARRIOR
+orc_lancer MONS_ORC_LANCER
 orc_knight MONS_ORC_KNIGHT
+orc_sniper MONS_ORC_SNIPER
 orc_warlord MONS_ORC_WARLORD
 orc_sorcerer MONS_ORC_SORCERER
 orc_high_priest MONS_ORC_HIGH_PRIEST

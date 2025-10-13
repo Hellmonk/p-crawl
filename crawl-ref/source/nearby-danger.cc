@@ -287,12 +287,12 @@ bool i_feel_safe(bool announce, bool want_move, bool just_monsters,
             }
         }
 
-        if (poison_is_lethal())
+        if (you.attribute[ATTR_POISON_STRENGTH])
         {
             if (announce)
             {
                 mprf(MSGCH_WARN,
-                     "There is a lethal amount of poison in your body!");
+                     "You are poisoned!");
             }
             return false;
         }

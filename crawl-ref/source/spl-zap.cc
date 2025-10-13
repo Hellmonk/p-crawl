@@ -179,6 +179,10 @@ static pair<spell_type, zap_type> _spl_zaps[] =
     { SPELL_DOOM_BOLT, ZAP_DOOM_BOLT },
     { SPELL_WARP_BODY, ZAP_WARP_BODY },
     { SPELL_ACID_BALL, ZAP_ACID_BALL },
+    { SPELL_SHOOT_ARROW, ZAP_SHOOT_ARROW },
+    { SPELL_TOXIC_DART, ZAP_TOXIC_DART },
+    { SPELL_THROW_BOULDER, ZAP_THROW_BOULDER },
+    { SPELL_DIMINISH_SPELLS, ZAP_DIMINISH_SPELLS },
 
     // This is just to satisfy monster spell setup code
     { SPELL_HELLFIRE_MORTAR, ZAP_HELLFIRE_MORTAR_DIG },

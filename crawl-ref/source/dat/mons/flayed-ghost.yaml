@@ -6,11 +6,11 @@ genus: phantom
 holiness: [undead]
 will: 60
 attacks:
- - {type: hit, damage: 30}
-hd: 11
-hp_10x: 605
+ - {type: hit, damage: 20}
+hd: 5
+hp_10x: 400
 ac: 0
-ev: 14
+ev: 30
 spells: flayed_ghost
 intelligence: human
 uses: open_doors

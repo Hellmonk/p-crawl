@@ -46,10 +46,8 @@ enum monster_type                      // env.mons[].type
 #if TAG_MAJOR_VERSION == 34
     MONS_LABORATORY_RAT,
 #endif
-    MONS_QUOKKA,         // Quokka are a type of wallaby, returned -- bwr 382
-#if TAG_MAJOR_VERSION == 34
+    MONS_QUOKKA,
     MONS_PORCUPINE,
-#endif
 #if TAG_MAJOR_VERSION > 34
     MONS_CRYSTAL_ECHIDNA,
     MONS_ARMATAUR,
@@ -252,8 +250,8 @@ enum monster_type                      // env.mons[].type
 #endif
 #if TAG_MAJOR_VERSION == 34
     MONS_BEETLE,
-    MONS_BORING_BEETLE,
 #endif
+    MONS_BORING_BEETLE,
     MONS_BOULDER_BEETLE,
 #if TAG_MAJOR_VERSION > 34
     MONS_DEATH_SCARAB,
@@ -318,7 +316,7 @@ enum monster_type                      // env.mons[].type
     MONS_WOOD_GOLEM,
     MONS_STONE_GOLEM,
 #else
-    MONS_SALTLING,
+    MONS_ORELING,
     MONS_PEACEKEEPER,
 #endif
     MONS_IRON_GOLEM,
@@ -470,9 +468,7 @@ enum monster_type                      // env.mons[].type
     MONS_DEEP_ELF_MASTER_ARCHER,
     MONS_SPRIGGAN,
     MONS_SPRIGGAN_DRUID,
-#if TAG_MAJOR_VERSION == 34
     MONS_SPRIGGAN_ASSASSIN,
-#endif
     MONS_SPRIGGAN_RIDER,
     MONS_SPRIGGAN_BERSERKER,
     MONS_SPRIGGAN_DEFENDER,
@@ -646,8 +642,8 @@ enum monster_type                      // env.mons[].type
 #endif
 
     // Water monsters:
-#if TAG_MAJOR_VERSION == 34
     MONS_BIG_FISH,
+#if TAG_MAJOR_VERSION == 34
     MONS_GIANT_GOLDFISH,
 #endif
     MONS_ELECTRIC_EEL,
@@ -686,10 +682,10 @@ enum monster_type                      // env.mons[].type
 
     // Demons:
     MONS_CRIMSON_IMP,
-    MONS_DRUDE,
+    MONS_DRAIN_IMP,
     MONS_WHITE_IMP,
-    MONS_LEMURE,
-    MONS_UFETUBUS,
+    MONS_ACID_IMP,
+    MONS_BRAIN_IMP,
     MONS_IRON_IMP,
     MONS_SHADOW_IMP,
 #if TAG_MAJOR_VERSION > 34
@@ -875,8 +871,8 @@ enum monster_type                      // env.mons[].type
     MONS_FRAVASHI,
 #endif
     MONS_SERAPH,
-#if TAG_MAJOR_VERSION == 34
     MONS_PHOENIX,
+#if TAG_MAJOR_VERSION == 34
     MONS_SILVER_STAR,
     MONS_BLESSED_TOE,
     MONS_SHEDU,
@@ -1221,7 +1217,7 @@ enum monster_type                      // env.mons[].type
     MONS_MELIAI,
     MONS_BAI_SUZHEN,
     MONS_BAI_SUZHEN_DRAGON,
-    MONS_SALTLING,
+    MONS_ORELING,
     MONS_IMPERIAL_MYRMIDON,
     MONS_SERVANT_OF_WHISPERS,
     MONS_PEACEKEEPER,
@@ -1317,9 +1313,7 @@ enum monster_type                      // env.mons[].type
     MONS_PILE_OF_DEBRIS,
     MONS_PILLAR_OF_RIME,
     MONS_HOARFROST_CANNON,
-#if TAG_MAJOR_VERSION == 34
     MONS_ELECTROFERRIC_VORTEX,
-#endif
     MONS_POLTERGUARDIAN,
     MONS_MARROWCUDA,
     MONS_UNDYING_ARMOURY,
@@ -1371,6 +1365,17 @@ enum monster_type                      // env.mons[].type
     MONS_ORB_OF_WINTER,
     MONS_SCREAMING_REFRACTION,
 #endif
+    MONS_GNOLL_ELECTRICIAN,
+    MONS_GNOLL_HALBERDIER,
+    MONS_ORC_LANCER,
+    MONS_ORC_SNIPER,
+    MONS_GLOW_WORM,
+    MONS_KOBOLD_GEOMANCER,
+    MONS_BES_KEMWAR,
+    MONS_GLOWING_IMP,
+    MONS_WYVERN_EGG,
+    MONS_MOUNTAINSHELL,
+    MONS_TEAL_WORM,
 
     NUM_MONSTERS,               // used for polymorph
 

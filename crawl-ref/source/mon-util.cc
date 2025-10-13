@@ -394,20 +394,6 @@ int monster::wearing(object_class_type obj_type, int sub_type,
     {
     case OBJ_WEAPONS:
     case OBJ_STAVES:
-        {
-            const mon_inv_type end = mons_wields_two_weapons(*this)
-                                     ? MSLOT_ALT_WEAPON : MSLOT_WEAPON;
-
-            for (int i = MSLOT_WEAPON; i <= end; i = i + 1)
-            {
-                item = mslot_item((mon_inv_type) i);
-                if (item && item->base_type == obj_type
-                    && item->sub_type == sub_type)
-                {
-                    ret++;
-                }
-            }
-        }
         break;
 
     case OBJ_ARMOUR:
@@ -448,20 +434,6 @@ int monster::wearing_ego(object_class_type obj_type, int special) const
     switch (obj_type)
     {
     case OBJ_WEAPONS:
-        {
-            const mon_inv_type end = mons_wields_two_weapons(*this)
-                                     ? MSLOT_ALT_WEAPON : MSLOT_WEAPON;
-
-            for (int i = MSLOT_WEAPON; i <= end; i++)
-            {
-                item = mslot_item((mon_inv_type) i);
-                if (item && item->base_type == OBJ_WEAPONS
-                    && get_weapon_brand(*item) == special)
-                {
-                    ret++;
-                }
-            }
-        }
         break;
 
     case OBJ_ARMOUR:
@@ -504,7 +476,6 @@ int monster::scan_artefacts(artefact_prop_type ra_prop,
     if (mons_itemuse(*this) >= MONUSE_STARTING_EQUIPMENT)
     {
         const int weap      = inv[MSLOT_WEAPON];
-        const int second    = inv[MSLOT_ALT_WEAPON]; // Two-headed ogres, etc.
         const int armour    = inv[MSLOT_ARMOUR];
         const int shld      = inv[MSLOT_SHIELD];
         const int jewellery = inv[MSLOT_JEWELLERY];
@@ -513,12 +484,6 @@ int monster::scan_artefacts(artefact_prop_type ra_prop,
             && is_artefact(env.item[weap]))
         {
             ret += artefact_property(env.item[weap], ra_prop);
-        }
-
-        if (second != NON_ITEM && env.item[second].base_type == OBJ_WEAPONS
-            && is_artefact(env.item[second]) && mons_wields_two_weapons(*this))
-        {
-            ret += artefact_property(env.item[second], ra_prop);
         }
 
         if (armour != NON_ITEM && env.item[armour].base_type == OBJ_ARMOUR
@@ -1447,35 +1412,13 @@ int mons_class_regen_amount(monster_type mc)
     switch (mc)
     {
     case MONS_PARGHIT:            return 27;
-    case MONS_DEMONIC_CRAWLER:
+    case MONS_DEMONIC_CRAWLER:    return 15;
     case MONS_PROTEAN_PROGENITOR:
     case MONS_ASPIRING_FLESH:
     case MONS_MARTYRED_SHADE:     return 6;
     case MONS_BOUNDLESS_TESSERACT: return 10;
     default:                      return 1;
     }
-}
-
-/**
- * Do monsters of the given type ever leave a hide?
- *
- * @param mc      The class of monster in question.
- * @return        Whether the monster has a chance of dropping a hide when
- *                butchered.
- */
-bool mons_class_leaves_hide(monster_type mc)
-{
-    return hide_for_monster(mc) != NUM_ARMOURS;
-}
-
-bool mons_class_leaves_wand(monster_type mc)
-{
-    return mc == MONS_ELEIONOMA || mc == MONS_FENSTRIDER_WITCH;
-}
-
-bool mons_class_leaves_organ(monster_type mc)
-{
-    return mons_class_leaves_hide(mc) || mons_class_leaves_wand(mc);
 }
 
 int mons_zombie_size(monster_type mc)
@@ -2133,6 +2076,7 @@ int flavour_damage(attack_flavour flavour, int HD, bool random)
     switch (flavour)
     {
         case AF_FIRE:
+        case AF_BIG_FIRE:
             if (random)
                 return HD + random2(HD);
             return HD * 2;
@@ -2141,16 +2085,14 @@ int flavour_damage(attack_flavour flavour, int HD, bool random)
                 return HD + random2(HD*2);
             return HD * 3;
         case AF_ELEC:
-            if (random)
-                return HD + random2(HD/2);
-            return HD * 3 / 2;
+            return 7 + HD;
         case AF_PURE_FIRE:
             if (random)
                 return HD * 3 / 2 + random2(HD);
             return HD * 5 / 2;
         case AF_DROWN:
             if (random)
-                return HD * 3 / 4 + random2(HD * 3 / 4);
+                return HD + random2(HD);
             return HD * 3 / 2;
         // Note: This value is only used for displaying monster damage with xv
         //       and is a lie against non-player targets.
@@ -2278,14 +2220,8 @@ int mons_class_willpower(monster_type type, monster_type base)
  */
 bool mons_class_sees_invis(monster_type type, monster_type base)
 {
-    if (mons_class_flag(type, M_SEE_INVIS))
-        return true;
-
-    if (base != MONS_NO_MONSTER && mons_is_draconian(type)
-        && mons_class_flag(draconian_subspecies(type, base), M_SEE_INVIS))
-    {
-        return true;
-    }
+    if (base != MONS_NO_MONSTER && mons_is_draconian(type))
+        return false;
 
     return false;
 }
@@ -2810,7 +2746,7 @@ static const colour_t ugly_colour_values[] =
 
 colour_t ugly_thing_random_colour()
 {
-    return RANDOM_ELEMENT(ugly_colour_values);
+    return random_choose(RED, BROWN, CYAN, MAGENTA, LIGHTGREY);
 }
 
 int str_to_ugly_thing_colour(const string &s)
@@ -3135,19 +3071,6 @@ bool mons_atts_aligned(mon_attitude_type fr1, mon_attitude_type fr2)
     return fr1 == fr2;
 }
 
-bool mons_class_wields_two_weapons(monster_type mc)
-{
-    return mons_class_flag(mc, M_TWO_WEAPONS);
-}
-
-bool mons_wields_two_weapons(const monster& mon)
-{
-    if (testbits(mon.flags, MF_TWO_WEAPONS))
-        return true;
-
-    return mons_class_wields_two_weapons(mons_base_type(mon));
-}
-
 // When this monster reaches its target, does it do impact damage
 // and then cease to exist?
 bool mons_destroyed_on_impact(const monster& m)
@@ -3159,7 +3082,8 @@ bool mons_destroyed_on_impact(const monster& m)
 // cease to exist?
 bool mons_blows_up(const monster& m)
 {
-    return mon_explodes_on_death(m.type) && m.type != MONS_BENNU;
+    return mon_explodes_on_death(m.type) && m.type != MONS_BENNU
+                                         && m.type != MONS_PHOENIX;
 }
 
 // When this monster reaches its target, does it cease to exist?
@@ -5445,10 +5369,6 @@ void throw_monster_bits(const monster& mon)
                 target->name(DESC_THE, false).c_str(),
                 mon.name(DESC_THE, false).c_str());
 
-        // Because someone will get a kick out of this some day.
-        if (mons_class_flag(mons_base_type(mon), M_ACID_SPLASH))
-            target->corrode(&you, "a flying bit");
-
         behaviour_event(target, ME_ANNOY, &you, you.pos());
         target->hurt(&you, damage);
     }
@@ -5674,4 +5594,9 @@ int mons_leash_range(monster_type mc)
         case MONS_HAUNTED_ARMOUR:   return 2;
         default:                    return 0; // No leashing
     }
+}
+
+bool mons_is_glowing(monster_type type)
+{
+    return type == MONS_GLOW_WORM || type == MONS_GLOWING_IMP;
 }

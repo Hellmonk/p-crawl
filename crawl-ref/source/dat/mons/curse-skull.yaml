@@ -1,6 +1,6 @@
 name: "curse skull"
 glyph: {char: "z", colour: lightmagenta}
-flags: [flies, see_invis, speaks]
+flags: [flies, speaks]
 resists: {elec: 1, fire: 2, cold: 2}
 exp: 1166
 holiness: [undead]
@@ -13,6 +13,5 @@ ev: 3
 spells: curse_skull
 shout: moan
 intelligence: human
-speed: 15
 size: tiny
 shape: misc

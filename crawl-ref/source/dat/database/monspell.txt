@@ -160,6 +160,10 @@ Hoarfrost Bullet cast finale
 
 @The_monster@ launches the last of @reflexive@ @at@ @target@ with a shrill rumble.
 %%%%
+Toxic Dart cast
+
+@The_monster@ throws a toxic dart at @target@.
+%%%%
 Holy Flames cast
 
 @The_monster@ calls forth blessed flames!
@@ -252,6 +256,10 @@ Sticks to Snakes cast
 
 @The_monster@ drops twin branches, and they both wriggle to life!
 %%%%
+Shoot Arrow cast
+
+@The_monster@ shoots an arrow at @target@.
+%%%%
 Sticky Flame cast
 
 @The_monster@ sprays @target@ with liquid fire.
@@ -263,6 +271,10 @@ Stunning Burst cast
 Throw Bolas cast
 
 @The_monster@ hurls a bolas @at@ @target@.
+%%%%
+Throw Boulder cast
+
+@The_monster@ hurls a massive boulder @at@ @target@.
 %%%%
 Throw Klown Pie cast
 
@@ -650,6 +662,10 @@ basilisk cast targeted
 basilisk cast
 
 @floating eye cast@
+%%%%
+bes kemwar cast
+
+@The_monster@ writhes about, and something writhes within @target@.
 %%%%
 Airstrike blizzard demon cast
 

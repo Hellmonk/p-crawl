@@ -1,19 +1,19 @@
 name: "cyclops"
 glyph: {char: "C", colour: yellow}
-flags: [speaks, warm_blood]
+flags: [speaks, warm_blood, slow_movement]
 exp: 547
 genus: giant
 will: 40
 attacks:
- - {type: hit, damage: 35}
-hd: 9
-hp_10x: 495
+ - {type: hit, damage: 16}
+hd: 4
+hp_10x: 390
 ac: 5
-ev: 3
+ev: 0
+spells: ruk
 has_corpse: true
 shout: shout
 intelligence: human
-speed: 7
 uses: open_doors
 size: giant
 shape: humanoid

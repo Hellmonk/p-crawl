@@ -404,6 +404,54 @@ protected:
     mon_enchant gozag_bribe;
 };
 
+class phoenix_revive_fineff : public final_effect
+{
+public:
+    // Each trigger is from the death of a different phoenix---no merging.
+    bool mergeable(const final_effect &) const override { return false; }
+    void fire() override;
+
+    static void schedule(coord_def pos, int revives, beh_type attitude,
+                         unsigned short foe, bool duel, mon_enchant gozag_bribe)
+    {
+        final_effect::schedule(new phoenix_revive_fineff(pos, revives, attitude,
+                                                       foe, duel, gozag_bribe));
+    }
+protected:
+    phoenix_revive_fineff(coord_def pos, int _revives, beh_type _att,
+                        unsigned short _foe, bool _duel,
+                        mon_enchant _gozag_bribe)
+        : final_effect(0, 0, pos), revives(_revives), attitude(_att), foe(_foe),
+          duel(_duel), gozag_bribe(_gozag_bribe)
+    {
+    }
+    int revives;
+    beh_type attitude;
+    unsigned short foe;
+    bool duel;
+    mon_enchant gozag_bribe;
+};
+
+class wyvern_egg_hatch_fineff : public final_effect
+{
+public:
+    // Each trigger is from a different egg ---no merging.
+    bool mergeable(const final_effect &) const override { return false; }
+    void fire() override;
+
+    static void schedule(coord_def pos, beh_type attitude, unsigned short foe)
+    {
+        final_effect::schedule(new wyvern_egg_hatch_fineff(pos, attitude, foe));
+    }
+protected:
+    wyvern_egg_hatch_fineff(coord_def pos, beh_type _att, unsigned short _foe)
+        : final_effect(0, 0, pos), attitude(_att), foe(_foe)
+    {
+    }
+    beh_type attitude;
+    unsigned short foe;
+};
+
 class avoided_death_fineff : public final_effect
 {
 public:

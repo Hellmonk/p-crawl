@@ -1,15 +1,15 @@
 name: "deep elf death mage"
 glyph: {char: "e", colour: white}
-flags: [see_invis, speaks, warm_blood]
+flags: [speaks, warm_blood]
 exp: 1027
 species: elf
 will: 120
 attacks:
- - {type: hit, damage: 12}
-hd: 17
-hp_10x: 775
+ - {type: hit, damage: 8}
+hd: 5
+hp_10x: 500
 ac: 0
-ev: 13
+ev: 30
 spells: deep_elf_death_mage
 has_corpse: true
 shout: shout

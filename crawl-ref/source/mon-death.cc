@@ -178,15 +178,6 @@ static bool _explode_corpse(item_def& corpse, const coord_def& where)
     // Don't want results to show up behind the player.
     los_def ld(where, opc_no_actor);
 
-    if (mons_class_leaves_organ(corpse.mon_type))
-    {
-        // Uh... magical organs are tough stuff and it keeps the monster in
-        // one piece?  More importantly, it prevents a flavour feature
-        // from becoming a trap for the unwary.
-
-        return false;
-    }
-
     ld.update();
 
     const int max_chunks = max_corpse_chunks(corpse.mon_type);
@@ -1499,7 +1490,7 @@ static void _protean_explosion(monster* mons)
     monster dummy;
     dummy.type = MONS_SHAPESHIFTER;
     define_monster(dummy);
-    dummy.set_hit_dice(12);
+    dummy.set_hit_dice(5);
     init_poly_set(&dummy);
     const CrawlVector &set = dummy.props[POLY_SET_KEY];
     monster_type target = (monster_type)set[0].get_int();
@@ -1524,12 +1515,6 @@ static void _protean_explosion(monster* mons)
     // (Going down that far should be extremely rare, but
     //  polymorph code is weird.)
     int num_children = 2;
-    if (mons_class_hit_dice(target) < 9)
-        num_children += 2;
-    else if (mons_class_hit_dice(target) < 11)
-        ++num_children;
-    else if (mons_class_hit_dice(target) < 12 && coinflip())
-        ++num_children;
 
     int summoned_duration = 0;
     int summon_type = 0;
@@ -2060,7 +2045,8 @@ static void _player_on_kill_effects(monster& mons, killer_type killer,
             mp_heal += random_range(min, min + mons.get_experience_level() / 3);
         }
 
-        bool healing = hp_heal && you.hp < you.hp_max && !you.duration[DUR_DEATHS_DOOR];
+        bool healing = hp_heal && you.hp < you.hp_max && !you.duration[DUR_DEATHS_DOOR]
+            && !you.duration[DUR_SICKNESS];
         bool powering = mp_heal && you.magic_points < you.max_magic_points;
 
         if (feed && (healing || powering))
@@ -2224,6 +2210,11 @@ static void _player_on_kill_effects(monster& mons, killer_type killer,
         if (--you.attribute[ATTR_TEMP_MUT_KILLS] <= 0)
             temp_mutation_wanes();
     }
+}
+
+static bool _mons_resurrects(monster_type type)
+{
+    return type == MONS_BENNU || type == MONS_PHOENIX;
 }
 
 /**
@@ -2542,6 +2533,22 @@ item_def* monster_die(monster& mons, killer_type killer,
     }
     else if (mons.type == MONS_FLAYED_GHOST)
         end_flayed_effect(&mons);
+    else if (mons.type == MONS_LINDWURM && !was_banished
+        && !mons.pacified() && (!summoned || duration > 0))
+    {
+        if (you.can_see(mons))
+        {
+            mprf("Flames billow from the dead %s!",
+                mons.name(DESC_PLAIN).c_str());
+        }
+
+        map_cloud_spreader_marker *marker =
+            new map_cloud_spreader_marker(mons.pos(), CLOUD_FIRE, 10,
+                                          18 + random2(7), 4, 8, &mons);
+        env.markers.add(marker);
+        env.markers.clear_need_activate();
+    }
+
     else if (mons.type == MONS_PLAYER_SHADOW)
         dithmenos_cleanup_player_shadow(&mons);
 
@@ -3039,12 +3046,12 @@ item_def* monster_die(monster& mons, killer_type killer,
         }
         else if (mons_is_elven_twin(&mons))
             elven_twin_died(&mons, in_transit, killer, killer_index);
-        else if (mons.type == MONS_BENNU && !mons.pacified() && real_death
-                 && mons_bennu_can_revive(&mons))
+        else if (_mons_resurrects(mons.type) && !mons.pacified() && real_death
+                 && mons_can_revive(&mons))
         {
             // All this information may be lost by the time the monster revives.
-            const int revives = (mons.props.exists(BENNU_REVIVES_KEY))
-                                ? mons.props[BENNU_REVIVES_KEY].get_byte() : 0;
+            const int revives = (mons.props.exists(REVIVES_KEY))
+                                ? mons.props[REVIVES_KEY].get_byte() : 0;
             const bool duel = mons.props.exists(OKAWARU_DUEL_CURRENT_KEY);
             const beh_type att = mons.has_ench(ENCH_CHARM)
                                  ? BEH_HOSTILE : SAME_ATTITUDE(&mons);
@@ -3060,6 +3067,13 @@ item_def* monster_die(monster& mons, killer_type killer,
 
             bennu_revive_fineff::schedule(mons.pos(), revives, att, mons.foe,
                                           duel, gozag_bribe);
+        }
+        else if (mons.type == MONS_WYVERN_EGG && real_death)
+        {
+            const beh_type att = mons.has_ench(ENCH_CHARM)
+                                 ? BEH_HOSTILE : SAME_ATTITUDE(&mons);
+
+            wyvern_egg_hatch_fineff::schedule(mons.pos(), att, mons.foe);
         }
     }
 
@@ -4060,8 +4074,8 @@ void mons_felid_revive(monster* mons)
     }
 }
 
-bool mons_bennu_can_revive(const monster* mons)
+bool mons_can_revive(const monster* mons)
 {
-    return !mons->props.exists(BENNU_REVIVES_KEY)
-           || mons->props[BENNU_REVIVES_KEY].get_byte() < 1;
+    return !mons->props.exists(REVIVES_KEY)
+           || mons->props[REVIVES_KEY].get_byte() < 1;
 }

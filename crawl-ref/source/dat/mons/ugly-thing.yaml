@@ -4,15 +4,14 @@ flags: [warm_blood, ghost_demon, herd, no_gen_derived]
 exp: 555
 will: 40
 attacks:
- - {type: hit, damage: 17}
-hd: 12
-hp_10x: 660
+ - {type: hit, damage: 13}
+hd: 6
+hp_10x: 460
 ac: 4
 ev: 10
 has_corpse: true
 shout: gurgle
 intelligence: animal
-energy: {move: 9}
 uses: open_doors
 size: medium
 shape: misc

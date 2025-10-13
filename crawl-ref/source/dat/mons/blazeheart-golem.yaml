@@ -13,7 +13,6 @@ hp_10x: 400
 ac: 9
 ev: 2
 intelligence: brainless
-energy: {attack: 20}
 uses: open_doors
 size: large
 shape: humanoid

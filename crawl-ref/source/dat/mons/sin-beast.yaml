@@ -1,19 +1,19 @@
-name: "sin beast"
+name: "hell beast"
+enum: sin_beast
 glyph: {char: "2", colour: cyan}
-flags: [fighter]
+flags: [fighter, quick]
 exp: 1287
 holiness: [demonic]
 will: 20
 attacks:
- - {type: bite, flavour: antimagic, damage: 28}
- - {type: trample, flavour: trample, damage: 20}
-hd: 12
-hp_10x: 810
+ - {type: bite, flavour: antimagic, damage: 10}
+ - {type: trample, flavour: trample, damage: 12}
+hd: 6
+hp_10x: 440
 ac: 5
-ev: 14
+ev: 30
 shout: random
 intelligence: human
-speed: 15
 uses: open_doors
 size: large
 shape: humanoid

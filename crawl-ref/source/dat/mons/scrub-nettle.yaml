@@ -1,7 +1,6 @@
 name: "scrub nettle"
 glyph: {char: "P", colour: lightred}
-flags: [see_invis, stationary]
-resists: {poison: 1}
+flags: [stationary]
 exp: 39
 species: bush
 genus: plant

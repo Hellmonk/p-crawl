@@ -1,7 +1,6 @@
 name: "warg"
 glyph: {char: "h", colour: white}
-flags: [see_invis, unblindable, warm_blood]
-resists: {poison: 1}
+flags: [unblindable, warm_blood]
 exp: 187
 genus: hound
 will: 40
@@ -14,6 +13,5 @@ ev: 12
 has_corpse: true
 shout: howl
 intelligence: animal
-speed: 15
 size: large
 shape: quadruped

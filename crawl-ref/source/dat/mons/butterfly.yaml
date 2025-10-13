@@ -9,7 +9,6 @@ hp_10x: 10
 ac: 0
 ev: 20
 intelligence: brainless
-speed: 25
 size: tiny
 shape: insect_winged
 tile_variance: mod

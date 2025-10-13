@@ -169,29 +169,39 @@ static void _setup_shadow_prism_explosion(bolt& beam, const monster& origin)
     beam.origin_spell = SPELL_SHADOW_PRISM;
 }
 
-static dice_def _bennu_damage(int hd)
+static dice_def _resmon_damage(int hd)
 {
-    return dice_def(3, 5 + hd * 5 / 4);
+    return dice_def(2, 5 + hd);
 }
 
 static void _setup_bennu_explosion(bolt& beam, const monster& origin)
 {
     _setup_base_explosion(beam, origin);
     beam.flavour = BEAM_NEG;
-    beam.damage  = _bennu_damage(origin.get_hit_dice());
+    beam.damage  = _resmon_damage(origin.get_hit_dice());
     beam.name    = "pyre of ghostly fire";
     beam.explode_noise_msg = "You hear an otherworldly crackling!";
     beam.colour  = CYAN;
     beam.ex_size = 2;
 }
 
+static void _setup_phoenix_explosion(bolt& beam, const monster& origin)
+{
+    _setup_base_explosion(beam, origin);
+    beam.flavour = BEAM_FIRE;
+    beam.damage  = _resmon_damage(origin.get_hit_dice());
+    beam.name    = "pyre of flame";
+    beam.explode_noise_msg = "You hear a roaring fire!";
+    beam.colour  = CYAN;
+    beam.ex_size = 4;
+}
+
 static void _setup_inner_flame_explosion(bolt & beam, const monster& origin,
                                          actor* agent)
 {
     _setup_base_explosion(beam, origin);
-    const int size   = origin.body_size(PSIZE_BODY);
     beam.flavour     = BEAM_FIRE;
-    beam.damage      = dice_def(2, 20);
+    beam.damage      = dice_def(3, 20);
     beam.name        = "fiery explosion";
     beam.colour      = RED;
     beam.ex_size     = 1;
@@ -220,7 +230,7 @@ static void _setup_haemoclasm_explosion(bolt& beam, const monster& origin)
 
 static dice_def _bloated_husk_damage(int hd)
 {
-    return dice_def(8, hd);
+    return dice_def(3, hd);
 }
 
 static void _setup_bloated_husk_explosion(bolt & beam, const monster& origin)
@@ -265,7 +275,12 @@ static const map<monster_type, monster_explosion> explosions {
     } },
     { MONS_BENNU, {
         _setup_bennu_explosion,
-        _bennu_damage,
+        _resmon_damage,
+        "fires are quelled",
+    } },
+    { MONS_PHOENIX, {
+        _setup_phoenix_explosion,
+        _resmon_damage,
         "fires are quelled",
     } },
     { MONS_BLOATED_HUSK, {
@@ -341,7 +356,7 @@ bool explode_monster(monster* mons, killer_type killer, bool pet_kill)
         sanct_msg = string("By Zin's power, ") +
                     apostrophise(mons->name(DESC_THE)) + " " +
                     effect + ".";
-        if (type == MONS_BENNU)
+        if (type == MONS_BENNU || type == MONS_PHOENIX)
             boom_msg = make_stringf("%s blazes out!", mons->full_name(DESC_THE).c_str());
     }
     else if (mons->has_ench(ENCH_INNER_FLAME))
@@ -376,7 +391,7 @@ bool explode_monster(monster* mons, killer_type killer, bool pet_kill)
 
     if (beam.aux_source.empty())
     {
-        if (type == MONS_BENNU)
+        if (type == MONS_BENNU || type == MONS_PHOENIX)
         {
             if (YOU_KILL(killer))
                 beam.aux_source = "ignited by themself";

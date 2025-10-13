@@ -101,12 +101,6 @@ void give_specific_item(monster* mon, const item_def& tpl)
     give_specific_item(mon, thing);
 }
 
-static bool _should_give_unique_item(monster* mon)
-{
-    // Don't give Natasha an item for dying.
-    return mon->type != MONS_NATASHA || !mon->props.exists(FELID_REVIVES_KEY);
-}
-
 static talisman_type _talisman_for(monster_type mtyp)
 {
     switch (mtyp)
@@ -151,22 +145,9 @@ static void _give_talisman(monster* mon, int level)
 
 static void _give_wand(monster* mon, int level)
 {
-    const bool always_wand = mons_class_flag(mon->type, M_ALWAYS_WAND);
-    if (!always_wand)
-    {
-        if (!mons_is_unique(mon->type)
-            || mons_class_flag(mon->type, M_NO_WAND)
-            || !_should_give_unique_item(mon)
-            || !one_chance_in(5))
-        {
-            return;
-        }
-    }
-
     // Don't give top-tier wands before 5 HD, except to Ijyb and not in sprint.
     const bool no_high_tier =
-            (mon->get_experience_level() < 5
-                || mons_class_flag(mon->type, M_NO_HT_WAND))
+            (mon->get_experience_level() < 5)
             && (mon->type != MONS_IJYB || crawl_state.game_is_sprint());
 
     const int idx = items(false, OBJ_WANDS, OBJ_RANDOM, level);
@@ -188,7 +169,7 @@ static void _give_wand(monster* mon, int level)
                                     !mon->likes_wand(wand) ?      "weak" :
                                                                   nullptr;
 
-    if (rejection_reason && !always_wand)
+    if (rejection_reason)
     {
         dprf(DIAG_MONPLACE,
              "Destroying %s because %s doesn't want a %s wand.",

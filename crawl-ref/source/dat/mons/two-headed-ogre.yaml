@@ -1,21 +1,20 @@
 name: "two-headed ogre"
 enum: two_headed_ogre
 glyph: {char: "O", colour: lightred}
-flags: [speaks, warm_blood, two_weapons]
+flags: [speaks, warm_blood, slow_attacks]
 exp: 824
 genus: ogre
 will: 40
 attacks:
  - {type: hit, damage: 20}
- - {type: hit, damage: 15}
-hd: 10
-hp_10x: 550
-ac: 3
-ev: 6
+ - {type: hit, damage: 20}
+hd: 4
+hp_10x: 200
+ac: 1
+ev: 0
 has_corpse: true
 shout: shout2
 intelligence: human
-energy: {attack: 15}
 uses: open_doors
 size: large
 shape: humanoid

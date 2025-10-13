@@ -11,8 +11,6 @@ ac: 0
 ev: 0
 intelligence: brainless
 habitat: amphibious
-speed: 14
-energy: {swim: 6}
 size: large
 shape: misc
 tile: test_spawner

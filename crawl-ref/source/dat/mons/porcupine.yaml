@@ -1,0 +1,15 @@
+name: "porcupine"
+glyph: {char: "r", colour: blue}
+flags: [spiny, no_poly_to, variable_speed]
+exp: 600
+will: 60
+genus: rat
+attacks:
+ - {type: hit, damage: 7}
+hd: 2
+hp_10x: 140
+ac: 2
+ev: 20
+intelligence: animal
+size: tiny
+shape: quadruped

@@ -1,17 +1,17 @@
 name: "tengu conjurer"
 glyph: {char: "Q", colour: blue}
-flags: [flies, see_invis, speaks, warm_blood]
+flags: [flies, speaks, warm_blood]
 exp: 341
 species: tengu
 will: 20
 attacks:
- - {type: hit, damage: 10}
- - {type: peck, damage: 5}
- - {type: claw, damage: 5}
-hd: 7
-hp_10x: 315
-ac: 2
-ev: 17
+ - {type: hit, damage: 9}
+ - {type: peck, damage: 4}
+ - {type: claw, damage: 4}
+hd: 4
+hp_10x: 310
+ac: 1
+ev: 30
 spells: tengu_conjurer
 has_corpse: true
 shout: shout

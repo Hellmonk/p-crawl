@@ -1,21 +1,21 @@
 name: "wyrmhole"
 glyph: {char: "k", colour: lightmagenta}
-flags: [flies, see_invis, insubstantial]
+flags: [flies, insubstantial, fast_moving]
 resists: {fire: 1, cold: 1, elec: 1}
 exp: 2297
-holiness: [nonliving]
 will: invuln
 attacks:
- - {type: bite, flavour: blink_with, damage: 44}
-hd: 18
-hp_10x: 845
-ac: 8
-ev: 22
+ - {type: bite, flavour: blink_with, damage: 13}
+ - {type: bite, flavour: blink_with, damage: 13}
+ - {type: claw,  damage: 21}
+hd: 8
+hp_10x: 710
+ac: 3
+ev: 50
 spells: wyrmhole
 shout: hiss
 has_corpse: false
 intelligence: animal
-speed: 12
 size: small
 shape: quadruped
 tile_variance: random

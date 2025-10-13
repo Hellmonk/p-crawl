@@ -646,5 +646,11 @@ enum spell_type : int
     SPELL_MUTAGENIC_GAZE,
     SPELL_PLANAR_OVERLAY,   // Dummy spell for description purposes
     SPELL_ACID_BALL,
+    SPELL_SHOOT_ARROW,
+    SPELL_TOXIC_DART,
+    SPELL_MASS_REPULSION,
+    SPELL_THROW_BOULDER,
+    SPELL_STEELSKIN,
+    SPELL_DIMINISH_SPELLS,
     NUM_SPELLS
 };

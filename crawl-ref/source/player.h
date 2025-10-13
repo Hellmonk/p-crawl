@@ -62,6 +62,7 @@
 #define WENT_INVIS_KEY "went_invis"
 #define SCRIED_KEY "scried"
 #define HARP_STARTED_KEY "harp_started"
+#define FREE_ACTION_USED_KEY "free_action_used"
 
 constexpr int ENKINDLE_CHARGE_COST = 40;
 #define ENKINDLE_CHARGES_KEY "enkindle_charges"
@@ -753,6 +754,7 @@ public:
     void slow_down(actor *, int str) override;
     void confuse(actor *, int strength) override;
     void weaken(const actor *attacker, int pow) override;
+    void diminish(const actor *attacker, int pow) override;
     bool strip_willpower(actor *attacker, int dur, bool quiet = false) override;
     void daze(int duration) override;
     void end_daze();
@@ -1100,6 +1102,7 @@ void display_char_status();
 void forget_map(bool rot = false);
 
 int get_exp_progress();
+void discharge_random_evoker();
 bool recharge_random_evoker();
 unsigned int gain_exp(unsigned int exp_gained);
 void apply_exp();
@@ -1159,6 +1162,7 @@ string describe_contamination(bool verbose = true);
 
 bool sanguine_armour_valid();
 void activate_sanguine_armour();
+void expend_free_action();
 
 void refresh_weapon_protection();
 
@@ -1176,10 +1180,9 @@ bool confuse_player(int amount, bool quiet = false, bool force = false);
 bool poison_player(int amount, string source, string source_aux = "",
                    bool force = false);
 void paralyse_player(string source);
-void handle_player_poison(int delay);
-void reduce_player_poison(int amount);
+void handle_player_poison();
+void end_player_poison();
 int get_player_poisoning();
-bool poison_is_lethal();
 int poison_survival();
 
 bool miasma_player(actor *who, string source_aux = "");
@@ -1238,3 +1241,5 @@ bool player_has_orb();
 bool player_on_orb_run();
 
 bool artefacts_enhance_skill();
+
+bool player_swim_faction();

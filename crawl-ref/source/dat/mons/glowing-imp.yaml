@@ -1,0 +1,17 @@
+name: "glowing imp"
+glyph: {char: "5", colour: green}
+exp: 49
+holiness: [demonic]
+will: 40
+attacks:
+ - {type: hit, damage: 7}
+hd: 2
+hp_10x: 80
+ac: 1
+ev: 0
+shout: shout
+spells: glowing_imp
+intelligence: human
+uses: open_doors
+size: little
+shape: humanoid_winged

@@ -618,13 +618,12 @@ tileidx_t tileidx_player()
             ch |= TILE_FLAG_NET;
     }
 
-    if (you.duration[DUR_POISONING])
+    if (you.attribute[ATTR_POISON_STRENGTH])
     {
-        int pois_perc = (you.hp <= 0) ? 100
-                                  : ((you.hp - max(0, poison_survival())) * 100 / you.hp);
-        if (pois_perc >= 100)
+        int str = you.attribute[ATTR_POISON_STRENGTH];
+        if (str >= 12)
             ch |= TILE_FLAG_MAX_POISON;
-        else if (pois_perc >= 35)
+        else if (str >= 8)
             ch |= TILE_FLAG_MORE_POISON;
         else
             ch |= TILE_FLAG_POISON;

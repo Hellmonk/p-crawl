@@ -1,6 +1,6 @@
 name: "vault warden"
 glyph: {char: "p", colour: lightred}
-flags: [fighter, see_invis, speaks, warm_blood]
+flags: [fighter, speaks, warm_blood]
 exp: 1219
 species: human
 will: 60

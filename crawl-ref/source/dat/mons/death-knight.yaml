@@ -1,15 +1,15 @@
 name: "death knight"
 glyph: {char: "p", colour: green}
-flags: [fighter, speaks, warm_blood]
+flags: [speaks, warm_blood]
 exp: 1020
 species: human
 will: 80
 attacks:
- - {type: hit, damage: 32}
-hd: 14
-hp_10x: 840
-ac: 6
-ev: 14
+ - {type: hit, damage: 15}
+hd: 5
+hp_10x: 200
+ac: 3
+ev: 10
 spells: death_knight
 has_corpse: true
 shout: shout

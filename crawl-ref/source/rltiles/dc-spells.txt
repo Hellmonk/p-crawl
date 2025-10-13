@@ -11,6 +11,7 @@ shock SHOCK
 silence SILENCE
 static_discharge STATIC_DISCHARGE
 swiftness SWIFTNESS
+mass_repulsion MASS_REPULSION
 
 %sdir gui/spells/conjuration
 battlesphere BATTLESPHERE
@@ -36,6 +37,7 @@ sandblast SANDBLAST
 shatter SHATTER
 statue_form STATUE_FORM
 stone_arrow STONE_ARROW
+steelskin STEELSKIN
 
 %sdir gui/spells/enchantment
 anguish ANGUISH
@@ -235,6 +237,7 @@ creeping_frost CREEPING_FROST
 crystallising_shot CRYSTALLISING_SHOT
 death_rattle DEATH_RATTLE
 dimensional_anchor DIMENSIONAL_ANCHOR
+diminish_spells DIMINISH_SPELLS
 dominate_undead DOMINATE_UNDEAD
 doom_bolt DOOM_BOLT
 oblivion_howl OBLIVION_HOWL

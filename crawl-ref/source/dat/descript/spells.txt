@@ -85,8 +85,7 @@ Spellpower increases its durability.
 Awaken Flesh spell
 
 Channels a surge of chaotic energy through each pile of flesh in the caster's
-sight, animating them into empowered large abominations and dealing chaos damage
-to any foes unfortunate enough to be standing next to them.
+sight, animating them into empowered large abominations.
 %%%%
 Awaken Forest spell
 
@@ -229,8 +228,8 @@ break free.
 Brain Bite spell
 
 Drains a small amount of a visible enemy's mind and a proportion of their magic,
-with no direct line of fire required. If the enemy has near-emptied magic
-reserves, they will take doubled damage.
+with no direct line of fire required. The amount of magic drained depends on the
+monster's difficulty, but the damage does not.
 %%%%
 Brom's Barrelling Boulder spell
 
@@ -503,6 +502,10 @@ Weaves a link between the caster's weaponry and a chosen target. Whenever the
 caster fires or throws something at a *different* enemy, a matching projectile
 will be teleported at the target. Spellpower increases their accuracy.
 %%%%
+Diminish Spells spell
+
+Irresistibly weakens the power of an enemy's spells for a period of time.
+%%%%
 Discord spell
 
 Drives nearby creatures into an wild frenzy, causing them to mercilessly
@@ -596,7 +599,7 @@ Recalls woodland creatures from elsewhere on the same level.
 %%%%
 Electrical Bolt spell
 
-Throws a bolt of electricity at the target, with high accuracy.
+Throws a bolt of electricity at the target, with perfect accuracy.
 %%%%
 Enfeeble spell
 
@@ -1249,6 +1252,10 @@ Causes all allied monsters nearby to rapidly regenerate over a short period of
 time. This regeneration is proportional to each of those creature's maximum
 health.
 %%%%
+Mass Repulsion spell
+
+Causes all of the caster's nearby allies to begin repelling missiles.
+%%%%
 Maxwell's Capacitive Coupling spell
 
 Gradually builds up electric charge in the caster, so long as they maintain
@@ -1345,11 +1352,11 @@ This spell requires line of sight but not line of fire.
 %%%%
 Nazja's All-Purpose Tempering spell
 
-Manifests a magical hammer that repairs and temporarily augments the offensive
-capabilities of any nearby construct - be it golem or phalanx beetle or even
-dancing weapon. This process results in a flurry of sparks, slag, and concussive
-shockwaves that do considerable damage to any enemies adjacent to the targeted
-construct, but it cannot be recast upon the same object until the enhancement
+Manifests a magical hammer that cybernetically heals an ally (whether nonliving,
+living, or something else entirely) and increases their difficulty by 4.
+This process results in a flurry of sparks, slag, and concussive
+shockwaves that deal damage to any enemies adjacent to the targeted
+monster, but it cannot be recast upon the same creature until the enhancement
 wears off.
 %%%%
 Nazja's Percussive Tempering spell
@@ -1560,7 +1567,8 @@ spells. The caster's demise will cause the transformation to end.
 %%%%
 Portal Projectile spell
 
-Teleports a fired or thrown missile at a targeted enemy.
+Magically teleports an arrow at a targeted enemy, without requiring line of
+fire. Monsters will use this spell even against targets in melee range.
 %%%%
 Prayer of Brilliance spell
 
@@ -1642,8 +1650,8 @@ types of projectile - even while otherwise incapacitated.
 Resonance Strike spell
 
 Calls a surge of power from the earth, striking an enemy within the caster's
-sight. The spell cascades through nearby constructs, growing in strength with
-each one standing near the target.
+sight, with no direct line of fire required. Each nonliving creature adjacent to
+the target amplifies the spell's damage by adding an additional die.
 %%%%
 Rimeblight spell
 
@@ -1713,10 +1721,8 @@ the endpoint.
 Seismic Stomp spell
 
 Stomps heavily upon the ground, sending out violent shockwaves that fracture the
-ground beneath multiple nearby enemies. Flying creatures take greatly reduced
-damage from this attack, but those on the ground may sometimes to lose their
-footing altogether, delaying their next action as they struggle to regain
-balance on the uneven terrain.
+ground beneath multiple nearby enemies. Flying creatures are immune to (and will
+not be targeted by) this attack.
 %%%%
 Sentinel's Mark spell
 
@@ -1865,6 +1871,7 @@ Fires a sharp dart of hardened chitin.
 Smiting spell
 
 Smites any targeted enemy within sight, with no direct line of fire required.
+The damage dealt is completely irresistible by AC, EV, or SH.
 %%%%
 Sojourning Bolt spell
 
@@ -1980,6 +1987,11 @@ creature and deals armour-ignoring fire damage over several turns. If the victim
 is allowed to move, it will put out the fire prematurely.
 
 If the target is insubstantial, the liquid fire will fail to stick.
+%%%%
+Steelskin spell
+
+Shrouds the caster's allies in magical armour, greatly increasing their AC for
+a time.
 %%%%
 Still Winds spell
 
@@ -2238,6 +2250,11 @@ Thunderbolt spell
 
 Creates an arc of electricity.
 %%%%
+Toxic Dart spell
+
+Fires a projectile tipped with toxins, which will either slow, confuse, or
+paralyse any living or demonic being it hits.
+%%%%
 Trog's Hand spell
 
 <Trog's Hand ability>
@@ -2382,3 +2399,13 @@ destructive mutagenic radiation. The victim and anyone adjacent will be
 blasted and heavily deformed, weakening them and reducing their armour.
 Summoned creatures are particularly vulnerable, as the enchantments binding
 them to this plane will unravel and cause them to be dismissed immediately.
+%%%%
+Shoot Arrow spell
+
+Fires an arrow. The damage dealt by the arrow depends significantly on the
+difficulty of the monster firing it. Monsters won't shoot arrows in melee range.
+%%%%
+Throw Boulder spell
+
+Throws a massive boulder that can penetrate through multiple targets. Monsters
+won't throw boulders at targets in melee range.

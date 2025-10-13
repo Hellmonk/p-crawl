@@ -1,0 +1,16 @@
+name: "bes kemwar"
+glyph: {char: "W", colour: green}
+flags: [flies, insubstantial, variable_speed]
+exp: 65
+holiness: [undead]
+will: 10
+attacks:
+ - {type: bite, damage: 7}
+hd: 2
+hp_10x: 90
+ac: 5
+ev: 10
+spells: bes_kemwar
+intelligence: animal
+size: tiny
+shape: snake

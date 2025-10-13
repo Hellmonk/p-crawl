@@ -443,7 +443,7 @@ spret cast_percussive_tempering(const actor& caster, monster& target, int power,
     zappy(ZAP_PERCUSSIVE_TEMPERING, power, true, shockwave);
     shockwave.explode(true, true);
 
-    target.heal(roll_dice(3, 10));
+    target.heal(roll_dice(2, 10));
     target.add_ench(mon_enchant(ENCH_TEMPERED, 0, &caster, random_range(70, 100)));
 
     // Give a small bit of extra duration if we're about to time out, just to

@@ -260,6 +260,8 @@ enum monster_info_flags
     MB_PLAYER_DAMAGE_IMMUNE,    // Currently immune to damage from the player for any reason
     MB_DIMINISHED_SPELLS,
     MB_STUNNED,
+    MB_FREE_ACTION_USED,
+    MB_STEELSKIN,
     NUM_MB_FLAGS
 };
 

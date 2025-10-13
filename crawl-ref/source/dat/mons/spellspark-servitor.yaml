@@ -12,6 +12,5 @@ hp_10x: 800
 ac: 10
 ev: 10
 intelligence: brainless
-energy: {spell: 18}
 size: medium
 shape: humanoid

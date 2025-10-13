@@ -1,6 +1,6 @@
 name: "Sprozz"
 glyph: {char: "g", colour: cyan}
-flags: [speaks, warm_blood, unique, male, two_weapons]
+flags: [speaks, warm_blood, unique, male]
 species: goblin
 exp: 575
 will: 60

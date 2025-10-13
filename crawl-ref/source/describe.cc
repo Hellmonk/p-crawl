@@ -4814,12 +4814,12 @@ static string _flavour_base_desc(attack_flavour flavour)
         { AF_ELEC,              "electric damage" },
         { AF_FIRE,              "fire damage" },
         { AF_SEAR,              "remove fire resistance" },
-        { AF_MINIPARA,          "poison and momentary paralysis" },
-        { AF_POISON_PARALYSE,   "poison and paralysis/slowing" },
+        { AF_MINIPARA,          "stun (1/3 chance)" },
+        { AF_POISON_PARALYSE,   "paralysis (1/3 chance) or slow" },
         { AF_POISON,            "poison" },
         { AF_REACH_STING,       "poison" },
         { AF_POISON_STRONG,     "strong poison" },
-        { AF_DISTORT,           "distortion" },
+        { AF_DISTORT,           "blink the defender" },
         { AF_RIFT,              "distortion" },
         { AF_RAGE,              "drive defenders berserk" },
         { AF_CHAOTIC,           "chaos" },
@@ -4853,6 +4853,9 @@ static string _flavour_base_desc(attack_flavour flavour)
         { AF_TRICKSTER,         "drain, daze, or confuse" },
         { AF_REACH_CLEAVE_UGLY, "random ugly thing damage" },
         { AF_DOOM,              "inflict doom" },
+        { AF_BIG_FIRE,          "deal up to %d extra fire damage" },
+        { AF_SICK,              "inflict sickness" },
+        { AF_DISCHARGE,         "discharge an evocable item" },
         { AF_PLAIN,             "" },
     };
 
@@ -5209,7 +5212,8 @@ static void _attacks_table_row(const monster_info &mi, mon_attack_desc_info &di,
         if (flavour_has_reach(attack.flavour))
         {
             bonus_desc += (bonus_desc.empty() ? "Reaches"
-                           : (attack.flavour == AF_REACH_CLEAVE_UGLY) ? "; cleaves"
+                           : (attack.flavour == AF_REACH_CLEAVE_UGLY
+                              || attack.flavour == AF_BIG_FIRE) ? "; cleaves"
                            : "; reaches");
             bonus_desc += (attack.flavour == AF_RIFT ? " very far"
                                                      : " from afar");
@@ -5555,14 +5559,6 @@ void describe_hit_chance(int hit_chance, ostringstream &result, const item_def *
     }
 }
 
-static bool _visible_to(const monster_info& mi)
-{
-    // XXX: this duplicates player::visible_to
-    const bool invis_to = you.invisible() && !mi.can_see_invisible()
-                          && !you.in_water();
-    return mi.attitude == ATT_FRIENDLY || (!mi.is(MB_BLIND) && !invis_to);
-}
-
 /**
  * Display the % chance of a the given monster hitting the player.
  *
@@ -5574,36 +5570,11 @@ static void _describe_mons_to_hit(const monster_info& mi, ostringstream &result)
     if (crawl_state.game_is_arena() || !crawl_state.need_save)
         return;
 
-    const item_def* weapon = mi.inv[MSLOT_WEAPON].get();
-    const bool melee = weapon == nullptr || !is_range_weapon(*weapon);
-    const bool skilled = mons_class_flag(mi.type, melee ? M_FIGHTER : M_ARCHER);
-    const int base_to_hit = mon_to_hit_base(mi.hd, skilled);
-    const int weapon_to_hit = weapon ? weapon->plus + property(*weapon, PWPN_HIT) : 0;
-    const int total_base_hit = base_to_hit + weapon_to_hit;
-
-    int post_roll_modifiers = 0;
-    if (mi.is(MB_CONFUSED))
-        post_roll_modifiers += CONFUSION_TO_HIT_MALUS;
-
-    const bool invisible = !_visible_to(mi);
-    if (invisible)
-        post_roll_modifiers -= total_base_hit * 35 / 100;
-    else
-    {
-        post_roll_modifiers += TRANSLUCENT_SKIN_TO_HIT_MALUS
-                               * you.get_mutation_level(MUT_TRANSLUCENT_SKIN);
-
-    }
-    // We ignore pproj because monsters never have it passively.
-
     const int scaled_ev = you.evasion_scaled(100);
 
-    const int to_land = weapon && is_unrandom_artefact(*weapon, UNRAND_SNIPER) ? AUTOMATIC_HIT :
-                                                                total_base_hit + post_roll_modifiers;
-    const int beat_ev_chance = mon_to_hit_pct(to_land, scaled_ev);
-
+    const int beat_ev_chance = max(1000, 10000 - scaled_ev);
     const int scaled_sh = player_shield_class(100, false);
-    const int beat_sh_chance = mon_beat_sh_pct(scaled_sh);
+    const int beat_sh_chance = max(0, 10000 - scaled_sh);
 
     const int hit_chance = beat_ev_chance * beat_sh_chance / 100;
     result << uppercase_first(mi.pronoun(PRONOUN_SUBJECTIVE)) << " "
@@ -6182,14 +6153,6 @@ static string _monster_stat_description(const monster_info& mi, bool mark_spells
     // Might be better to have some place where players can see holiness &
     // information about holiness.......?
 
-    if (mi.type == MONS_SHADOWGHAST)
-    {
-        // Cf. monster::action_energy() in monster.cc.
-        result << uppercase_first(pronoun) << " "
-               << conjugate_verb("cover", plural)
-               << " ground more quickly when invisible.\n";
-    }
-
     if (mi.type == MONS_ROYAL_JELLY)
     {
         result << "It will release varied jellies when damaged or killed, with"
@@ -6470,13 +6433,6 @@ void get_monster_db_desc(const monster_info& mi, describe_info &inf,
         has_stat_desc = true;
     }
 
-    bool did_stair_use = false;
-    if (!mons_class_can_use_stairs(mi.type))
-    {
-        inf.body << It << " " << is << " incapable of using stairs.\n";
-        did_stair_use = true;
-    }
-
     result = _monster_current_target_description(mi);
     if (!result.empty())
         inf.body << "\n" << result;
@@ -6506,20 +6462,10 @@ void get_monster_db_desc(const monster_info& mi, describe_info &inf,
             inf.body << "Killing " << it_o << " yields ";
         inf.body << "no experience or items";
 
-        if (!did_stair_use)
-            inf.body << "; " << it << " " << is << " incapable of using stairs";
-
         inf.body << ".\n";
     }
     else if (mi.is(MB_NO_REWARD))
         inf.body << "\nKilling this monster yields no experience or items.";
-    else if (mons_class_leaves_hide(mi.type))
-    {
-        inf.body << "\nIf " << it << " " << is <<
-                    " slain, it may be possible to recover "
-                 << mi.pronoun(PRONOUN_POSSESSIVE)
-                 << " hide, which can be used as armour.\n";
-    }
 
     if (!inf.quote.empty())
         inf.quote += "\n";

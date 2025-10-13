@@ -1,6 +1,5 @@
 name: "peacekeeper"
 glyph: {char: "9", colour: yellow}
-flags: [see_invis]
 resists: {elec: 1, fire: 1, cold: 1}
 exp: 859
 genus: golem
@@ -16,6 +15,5 @@ ev: 3
 spells: peacekeeper
 shout: roar
 intelligence: brainless
-speed: 15
 size: medium
 shape: quadruped_tailless

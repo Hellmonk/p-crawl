@@ -1,8 +1,8 @@
 name: "the Serpent of Hell"
 enum: serpent_of_hell_tartarus
 glyph: {char: "D", colour: etc_death}
-flags: [crash_doors, flies, see_invis, unique, tall_tile]
-resists: {poison: 1, cold: 2}
+flags: [crash_doors, flies, unique, tall_tile]
+resists: {cold: 2}
 exp: 6666
 species: serpent_of_hell
 genus: dragon
@@ -20,6 +20,5 @@ ev: 12
 spells: serpent_of_hell_tar
 shout: loud_roar
 intelligence: human
-speed: 14
 size: giant
 shape: quadruped_winged

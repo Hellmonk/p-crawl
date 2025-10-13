@@ -1,19 +1,17 @@
 name: "cactus giant"
 glyph: {char: "C", colour: green}
-flags: [spiny, no_poly_to]
-resists: {poison: 1}
+flags: [spiny, no_poly_to, slow_attacks]
 exp: 600
 genus: giant
 holiness: [plant]
 will: 60
 attacks:
- - {type: hit, damage: 10}
-hd: 9
-hp_10x: 495
+ - {type: hit, damage: 16}
+hd: 3
+hp_10x: 600
 ac: 1
-ev: 2
+ev: 0
 intelligence: human
-energy: {attack: 30}
 uses: open_doors
 size: giant
 shape: humanoid

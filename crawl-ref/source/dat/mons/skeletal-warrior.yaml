@@ -7,8 +7,8 @@ holiness: [undead]
 will: 100
 attacks:
  - {type: hit, damage: 25}
-hd: 10
-hp_10x: 650
+hd: 5
+hp_10x: 250
 ac: 15
 ev: 10
 intelligence: human

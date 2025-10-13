@@ -103,7 +103,7 @@ bool mons_matches_daction(const monster* mon, daction_type act)
 
     // Not a stored counter:
     case DACT_PIKEL_MINIONS:
-        return mon->type == MONS_LEMURE
+        return mon->type == MONS_ACID_IMP
                && mon->props.exists(PIKEL_BAND_KEY);
 
     case DACT_OLD_CHARMD_SOULS_POOF:
@@ -293,7 +293,7 @@ static void _pikel_band_message()
     int visible_minions = 0;
     for (monster_iterator mi; mi; ++mi)
     {
-        if (mi->type == MONS_LEMURE
+        if (mi->type == MONS_ACID_IMP
             && mi->props.exists(PIKEL_BAND_KEY)
             && mi->observable())
         {

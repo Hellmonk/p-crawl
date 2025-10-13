@@ -1,6 +1,6 @@
 name: "halazid warlock"
 glyph: {char: "L", colour: green}
-flags: [see_invis, speaks]
+flags: [speaks]
 resists: {cold: 2}
 exp: 998
 species: lich

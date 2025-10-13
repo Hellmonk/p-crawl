@@ -641,7 +641,10 @@ namespace quiver
                     mprf("You attack %s.",
                          feature_description_at(target.target,
                                                 false, DESC_THE).c_str());
-                    you.time_taken = attack_delay;
+                    if (you.free_action_available() == FACT_MELEE)
+                        expend_free_action();
+                    else
+                        you.time_taken = attack_delay;
                     you.turn_is_over = true;
                     return;
                 }
@@ -699,7 +702,11 @@ namespace quiver
                     {
                         // Let's assume friendlies cooperate.
                         mpr("You could not reach far enough!");
-                        you.time_taken = attack_delay;
+                        if (you.free_action_available() == FACT_MELEE)
+                            expend_free_action();
+                        else
+                            you.time_taken = attack_delay;
+
                         you.turn_is_over = true;
                         return;
                     }
@@ -727,7 +734,11 @@ namespace quiver
                     else
                         mpr("You attack empty space.");
                 }
-                you.time_taken = attack_delay;
+                if (you.free_action_available() == FACT_MELEE)
+                        expend_free_action();
+                else
+                    you.time_taken = attack_delay;
+
                 you.turn_is_over = true;
             }
             else
@@ -747,6 +758,9 @@ namespace quiver
                     // turn_is_over may have been reset to false by fight_melee, but
                     // a failed attempt to reach further should not be free; instead,
                     // charge the same as a successful attempt.
+                    if (you.free_action_available() == FACT_MELEE)
+                        expend_free_action();
+
                     you.time_taken = attack_delay;
                     you.turn_is_over = true;
                 }

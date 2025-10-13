@@ -616,12 +616,7 @@ static void _handle_spectral_cloud(const cloud_struct& cloud)
     if (!x_chance_in_y(chance, you.time_taken * 600))
         return;
 
-    monster_type basetype =
-        random_choose_weighted(4,   MONS_ANACONDA,
-                               6,   MONS_HYDRA,
-                               3,   MONS_SNAPPING_TURTLE,
-                               2,   MONS_ALLIGATOR_SNAPPING_TURTLE,
-                               100, RANDOM_MONSTER);
+    monster_type basetype = MONS_HYDRA;
 
     monster* agent = monster_by_mid(cloud.source);
     create_monster(mgen_data(MONS_SPECTRAL_THING,
@@ -1149,7 +1144,7 @@ static bool _actor_apply_cloud_side_effects(actor *act,
         if (player)
         {
             const actor* agent = cloud.agent();
-            poison_player(5 + roll_dice(3, 8), agent ? agent->name(DESC_A) : "",
+            poison_player(1, agent ? agent->name(DESC_A) : "",
                           cloud.cloud_name());
         }
         else
@@ -1547,7 +1542,7 @@ static bool _mons_avoids_cloud(const monster* mons, const cloud_struct& cloud,
                                                    dam_info.base, false);
         // Add in an arbitrary proxy for poison damage from poison/miasma clouds.
         const int bonus_dam = cloud.type == CLOUD_POISON ? roll_dice(3, 4)
-                              : cloud.type == CLOUD_MIASMA ? roll_dice(3, 5) : 0;
+                              : cloud.type == CLOUD_MIASMA ? roll_dice(2, 5) : 0;
         const int damage = resist_adjust_damage(mons,
                                                 clouds[cloud.type].beam_effect,
                                                 base_damage + bonus_dam);

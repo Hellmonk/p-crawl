@@ -1,8 +1,8 @@
 name: "the Serpent of Hell"
 enum: serpent_of_hell
 glyph: {char: "D", colour: etc_fire}
-flags: [crash_doors, flies, see_invis, unique, tall_tile]
-resists: {poison: 1, fire: 3}
+flags: [crash_doors, flies, unique, tall_tile]
+resists: {fire: 3}
 exp: 6666
 genus: dragon
 holiness: [demonic]
@@ -19,7 +19,6 @@ ev: 12
 spells: serpent_of_hell_geh
 shout: loud_roar
 intelligence: human
-speed: 14
 size: giant
 shape: quadruped_winged
 tile: serpent_of_hell_gehenna

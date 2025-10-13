@@ -7,11 +7,11 @@ genus: golem
 holiness: [nonliving]
 will: 40
 attacks:
- - {type: hit, damage: 20}
-hd: 6
-hp_10x: 270
-ac: 18
-ev: 6
+ - {type: hit, damage: 12}
+hd: 3
+hp_10x: 170
+ac: 14
+ev: 0
 spells: gargoyle
 intelligence: human
 uses: open_doors

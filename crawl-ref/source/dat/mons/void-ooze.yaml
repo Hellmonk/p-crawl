@@ -1,18 +1,17 @@
 name: "void ooze"
 glyph: {char: "J", colour: cyan}
-flags: [eat_doors, see_invis, unblindable, amorphous, no_skeleton]
-resists: {poison: 1, corr: 3}
+flags: [eat_doors, unblindable, amorphous, no_skeleton]
 exp: 1110
 genus: jelly
 will: invuln
 attacks:
- - {type: hit, flavour: engulf, damage: 27}
- - {type: hit, flavour: antimagic, damage: 15}
-hd: 13
+ - {type: hit, flavour: engulf, damage: 18}
+ - {type: hit, flavour: antimagic, damage: 6}
+ - {type: hit, flavour: antimagic, damage: 6}
+hd: 4
 hp_10x: 500
-ac: 3
-ev: 15
+ac: 0
+ev: 30
 intelligence: brainless
-speed: 16
 size: giant
 shape: blob

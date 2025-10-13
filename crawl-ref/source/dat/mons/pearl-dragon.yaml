@@ -1,6 +1,6 @@
 name: "pearl dragon"
 glyph: {char: "D", colour: etc_holy}
-flags: [flies, see_invis, warm_blood]
+flags: [flies, warm_blood]
 exp: 2256
 genus: dragon
 holiness: [holy]
@@ -16,6 +16,5 @@ spells: pearl_dragon
 has_corpse: true
 shout: loud_roar
 intelligence: animal
-speed: 12
 size: giant
 shape: quadruped_winged

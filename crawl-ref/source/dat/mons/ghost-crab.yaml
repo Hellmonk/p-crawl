@@ -6,12 +6,12 @@ genus: crab
 holiness: [undead]
 will: 40
 attacks:
- - {type: bite, flavour: drain, damage: 20}
+ - {type: bite, flavour: drain, damage: 15}
  - {type: claw, flavour: drain, damage: 15}
-hd: 9
-hp_10x: 585
+hd: 4
+hp_10x: 580
 ac: 9
-ev: 6
+ev: 0
 spells: ghost_crab
 has_corpse: true
 intelligence: animal

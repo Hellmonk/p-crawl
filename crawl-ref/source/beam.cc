@@ -1560,6 +1560,21 @@ int mons_adjust_flavoured(monster* mons, bolt &pbolt, int hurted,
         break;
     }
 
+    case BEAM_TOXIC:
+    {
+        hurted = resist_adjust_damage(mons, pbolt.flavour, hurted);
+
+        if (!hurted && doFlavouredEffects)
+        {
+            simple_monster_message(*mons,
+                                   (original > 0) ? " completely resists."
+                                                  : " appears unharmed.");
+        }
+        else if (doFlavouredEffects)
+            toxic_dart_actor(mons, pbolt.get_source_name());
+        break;
+    }
+
     case BEAM_POISON_ARROW:
     {
         hurted = resist_adjust_damage(mons, pbolt.flavour, hurted);
@@ -1777,7 +1792,7 @@ int mons_adjust_flavoured(monster* mons, bolt &pbolt, int hurted,
 
     case BEAM_SEISMIC:
         if (mons->airborne())
-            hurted = hurted / 3;
+            hurted = 0;
         break;
 
     case BEAM_BOLAS:
@@ -2014,6 +2029,17 @@ static bool _curare_hits_monster(actor *agent, monster* mons, int bonus_poison)
     return true;
 }
 
+static bool _toxic_dart_monster(monster* mons)
+{
+    if (!mons->alive())
+        return false;
+
+    enchant_type ench = random_choose(ENCH_SLOW, ENCH_CONFUSION, ENCH_PARALYSIS);
+    mons->add_ench(ench);
+
+    return true;
+}
+
 // Actually poisons a monster (with message).
 bool poison_monster(monster* mons, const actor *who, int levels,
                     bool force, bool verbose)
@@ -2059,17 +2085,11 @@ bool miasma_monster(monster* mons, const actor* who)
         return false;
 
     bool success = false;
-    if (poison_monster(mons, who))
-    {
-        // Do additional impact damage to monsters who fail an rPois check
-        mons->hurt(who, roll_dice(2, 4), BEAM_MMISSILE, KILLED_BY_CLOUD);
-        success = true;
-    }
 
     if (who && who->is_player() && is_good_god(you.religion))
         did_god_conduct(DID_EVIL, 5 + random2(3));
 
-    if (mons->alive() && one_chance_in(3))
+    if (mons->alive())
     {
         do_slow_monster(*mons, who, random_range(8, 12) * BASELINE_DELAY);
         success = true;
@@ -2103,8 +2123,7 @@ bool sticky_flame_monster(monster* mons, const actor *who, int dur, bool verbose
     return new_flame.degree > old_flame.degree;
 }
 
-static bool _curare_hits_player(actor* agent, string name,
-                                string source_name, int bonus_poison)
+static bool _curare_hits_player(actor* agent)
 {
     ASSERT(!crawl_state.game_is_arena());
 
@@ -2115,9 +2134,6 @@ static bool _curare_hits_player(actor* agent, string name,
         return false;
     }
 
-    // We force apply this poison, since the 1-in-3 chance was already passed
-    poison_player(roll_dice(2, 12) + bonus_poison + 1, source_name, name, true);
-
     mpr("You have difficulty breathing.");
     ouch(roll_dice(2, 6), KILLED_BY_CURARE, agent->mid, "curare-induced apnoea");
     slow_player(10 + random2(2 + random2(6)));
@@ -2125,14 +2141,35 @@ static bool _curare_hits_player(actor* agent, string name,
     return true;
 }
 
+static bool _toxic_dart_player(string source_name)
+{
+    ASSERT(!crawl_state.game_is_arena());
+
+    if (one_chance_in(3))
+        slow_player(10 + random2(6));
+    else if (coinflip())
+        confuse_player(6 + random2(6));
+    else
+        paralyse_player(source_name);
+
+    return true;
+}
 
 bool curare_actor(actor* source, actor* target, string name,
                   string source_name, int bonus_poison)
 {
     if (target->is_player())
-        return _curare_hits_player(source, name, source_name, bonus_poison);
+        return _curare_hits_player(source);
     else
         return _curare_hits_monster(source, target->as_monster(), bonus_poison);
+}
+
+bool toxic_dart_actor(actor* target, string source_name)
+{
+    if (target->is_player())
+        return _toxic_dart_player(source_name);
+    else
+        return _toxic_dart_monster(target->as_monster());
 }
 
 // XXX: This is a terrible place for this, but it at least does go with
@@ -2324,8 +2361,11 @@ static void _vampiric_draining_effect(actor& victim, actor& agent, int damage)
     }
     else
     {
-        if (you.duration[DUR_DEATHS_DOOR] || you.hp == you.hp_max)
+        if (you.duration[DUR_DEATHS_DOOR] || you.duration[DUR_SICKNESS]
+            || you.hp == you.hp_max)
+        {
             return;
+        }
 
         const int hp_gain = div_rand_round(drain_amount, 2);
         if (hp_gain)
@@ -3251,6 +3291,9 @@ bool bolt::is_harmless(const monster* mon) const
     case BEAM_POISON:
         return mon->res_poison() >= 3;
 
+    case BEAM_TOXIC:
+        return mon->holiness() & MH_UNDEAD || mon->holiness() & MH_NONLIVING;
+
     case BEAM_ACID:
         return mon->res_corr() >= 3;
 
@@ -3259,6 +3302,9 @@ bool bolt::is_harmless(const monster* mon) const
 
     case BEAM_UMBRAL_TORCHLIGHT:
         return (bool)!(mon->holiness() & (MH_NATURAL | MH_DEMONIC | MH_HOLY));
+
+    case BEAM_SEISMIC:
+        return mon->airborne();
 
     default:
         return false;
@@ -3322,6 +3368,9 @@ bool bolt::harmless_to_player() const
     case BEAM_MEPHITIC:
         return player_res_poison() > 0 || you.clarity();
 
+    case BEAM_TOXIC:
+        return you.holiness() & MH_UNDEAD || you.holiness() & MH_NONLIVING;
+
     case BEAM_PETRIFY:
         return you.res_petrify() || you.petrified();
 
@@ -3340,6 +3389,9 @@ bool bolt::harmless_to_player() const
     case BEAM_UMBRAL_TORCHLIGHT:
         return you_worship(GOD_YREDELEMNUL)
                 || (bool)!(you.holiness() & (MH_NATURAL | MH_DEMONIC | MH_HOLY));
+
+    case BEAM_SEISMIC:
+        return you.airborne();
 
     case BEAM_QAZLAL:
         return true;
@@ -3867,8 +3919,7 @@ void bolt::affect_player_enchantment(bool resistible)
 
     case BEAM_ROOTS:
     {
-        const int turns = 1 + random_range(div_rand_round(ench_power, 20),
-                                           div_rand_round(ench_power, 12) + 1);
+        const int turns = 1 + random_range(ench_power, ench_power * 3 / 2);
         if (start_ranged_constriction(*agent(), you, turns, CONSTRICT_ROOTS))
             obvious_effect = true;
         break;
@@ -3916,6 +3967,11 @@ void bolt::affect_player_enchantment(bool resistible)
         nice  = true;
         break;
 
+    case BEAM_DIMINISH_SPELLS:
+        you.diminish(agent(), 9);
+        obvious_effect = true;
+        break;
+
     case BEAM_SAP_MAGIC:
         mprf(MSGCH_WARN, "Your magic feels %stainted.",
              you.duration[DUR_SAP_MAGIC] ? "more " : "");
@@ -3925,7 +3981,7 @@ void bolt::affect_player_enchantment(bool resistible)
 
     case BEAM_DRAIN_MAGIC:
     {
-        int amount = min(you.magic_points, random2avg(ench_power / 8, 3));
+        int amount = min(you.magic_points, ench_power);
         if (!amount)
             break;
         mprf(MSGCH_WARN, "You feel your power leaking away.");
@@ -4332,6 +4388,9 @@ void bolt::affect_player()
     if (flavour == BEAM_MIASMA && final_dam > 0)
         was_affected = miasma_player(agent(), name);
 
+    if (flavour == BEAM_TOXIC)
+        was_affected = toxic_dart_actor((actor*) &you, source_name);
+
     if (flavour == BEAM_DESTRUCTION) // MINDBURST already handled
         blood_spray(you.pos(), MONS_PLAYER, final_dam / 5);
 
@@ -4350,10 +4409,7 @@ void bolt::affect_player()
     if (origin_spell == SPELL_STICKY_FLAME
         || flavour == BEAM_STICKY_FLAME)
     {
-        // ench_power here is equal to 12 * caster HD for pyre arrow and
-        // 8 * caster HD for sticky flame (mostly since player ghosts tend to
-        // have higher HD)
-        const int intensity = 2 + ench_power / 14;
+        const int intensity = 2 + ench_power;
 
         if (!player_res_sticky_flame())
         {
@@ -4437,14 +4493,9 @@ void bolt::affect_player()
         you.vitrify(agent(), random_range(8, 18));
 
     if (origin_spell == SPELL_SOJOURNING_BOLT
-        && final_dam > 0 && x_chance_in_y(2, 3))
+        && final_dam > 0)
     {
-        you.teleport();
-        if (you.duration[DUR_TELEPORT])
-        {
-            mprf(MSGCH_DANGER, "You feel a distressing malevolence running through your instability!");
-            you.props[SJ_TELEPORTITIS_SOURCE].get_int() = agent(true) ? agent(true)->mid : MID_NOBODY;
-        }
+        you.teleport(true);
     }
 
     if (origin_spell == SPELL_THROW_PIE && final_dam > 0)
@@ -5166,7 +5217,7 @@ void bolt::monster_post_hit(monster* mon, int dmg)
     {
         // Current numbers of monster sticky flame versus other monsters are
         // more arbitrary.
-        sticky_flame_monster(mon, agent(), 3 + random2(ench_power / 20));
+        sticky_flame_monster(mon, agent(), 2 + ench_power);
     }
 
     if (origin_spell == SPELL_QUICKSILVER_BOLT)
@@ -5185,9 +5236,9 @@ void bolt::monster_post_hit(monster* mon, int dmg)
     }
 
     if (origin_spell == SPELL_SOJOURNING_BOLT
-        && x_chance_in_y(2, 3) && !(mon->no_tele()))
+        && !(mon->no_tele()) && dmg)
     {
-        monster_teleport(mon, false, false, false, agent());
+        monster_teleport(mon, true, false, false, agent());
     }
 
     if (flavour == BEAM_CRYSTALLISING && !one_chance_in(4))
@@ -5303,7 +5354,7 @@ static int _knockback_dist(spell_type origin, int pow)
     switch (origin)
     {
         case SPELL_ISKENDERUNS_MYSTIC_BLAST:
-            return 2 + div_rand_round(pow, 50);
+            return 2 + div_rand_round(pow, 3);
         case SPELL_FORCE_LANCE:
             return 4;
         default:
@@ -5912,6 +5963,7 @@ bool bolt::has_saving_throw() const
     case BEAM_SHADOW_TORPOR:
     case BEAM_ILL_OMEN:
     case BEAM_WARP_BODY:
+    case BEAM_DIMINISH_SPELLS:
         return false;
     case BEAM_VULNERABILITY:
         return !one_chance_in(3);  // Ignores will 1/3 of the time
@@ -5993,6 +6045,7 @@ bool ench_flavour_affects_monster(actor *agent, beam_type flavour,
         break;
 
     case BEAM_DRAIN_MAGIC:
+    case BEAM_DIMINISH_SPELLS:
         rc = mon->antimagic_susceptible();
         break;
 
@@ -6610,6 +6663,11 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
         }
         return MON_AFFECTED;
 
+    case BEAM_DIMINISH_SPELLS:
+        mon->diminish(agent(), 9);
+        obvious_effect = true;
+        return MON_AFFECTED;
+
     case BEAM_DRAIN_MAGIC:
     {
         if (!mon->antimagic_susceptible())
@@ -6685,8 +6743,7 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
 
     case BEAM_ROOTS:
     {
-        const int dur = 3 + random_range(div_rand_round(ench_power, 22),
-                                         div_rand_round(ench_power, 16) + 1);
+        const int dur = 1 + random_range(ench_power, ench_power * 3 / 2);
         if (start_ranged_constriction(*agent(), *mon, dur, CONSTRICT_ROOTS))
             obvious_effect = true;
         return MON_AFFECTED;
@@ -7599,6 +7656,7 @@ static string _beam_type_name(beam_type type)
     case BEAM_AGILITY:               return "agility";
     case BEAM_SAP_MAGIC:             return "sap magic";
     case BEAM_DRAIN_MAGIC:           return "drain magic";
+    case BEAM_DIMINISH_SPELLS:       return "diminish spells";
     case BEAM_TUKIMAS_DANCE:         return "tukima's dance";
     case BEAM_DEATH_RATTLE:          return "breath of the dead";
     case BEAM_RESISTANCE:            return "resistance";
@@ -7633,6 +7691,7 @@ static string _beam_type_name(beam_type type)
     case BEAM_BAT_CLOUD:             return "cloud of bats";
     case BEAM_ILL_OMEN:              return "omen";
     case BEAM_WARP_BODY:             return "warp body";
+    case BEAM_TOXIC:                 return "toxic dart";
 
     case NUM_BEAMS:                  die("invalid beam type");
     }

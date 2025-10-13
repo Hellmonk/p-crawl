@@ -1,7 +1,6 @@
 name: "naga ritualist"
 glyph: {char: "N", colour: brown}
-flags: [see_invis, speaks, warm_blood]
-resists: {poison: 1}
+flags: [speaks, warm_blood]
 exp: 686
 species: naga
 will: 60
@@ -16,7 +15,6 @@ spells: naga_ritualist
 has_corpse: true
 shout: shout
 intelligence: human
-energy: {move: 14}
 uses: open_doors
 size: large
 shape: naga

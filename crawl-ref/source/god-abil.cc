@@ -1343,7 +1343,7 @@ void elyvilon_purification()
     mpr("You feel purified!");
 
     you.duration[DUR_SICKNESS] = 0;
-    you.duration[DUR_POISONING] = 0;
+    end_player_poison();
     you.duration[DUR_CONF] = 0;
     you.duration[DUR_SLOW] = 0;
     you.duration[DUR_PETRIFYING] = 0;
@@ -1898,13 +1898,9 @@ int slouch_damage_for_speed(int mon_speed, int mon_action_energy, int jerk_num,
 int slouch_damage(monster *victim)
 {
     // Please change handle_monster_move in mon-act.cc to match.
-    const int jerk_num = victim->type == MONS_SIXFIRHY ? 8
-                       : victim->type == MONS_JIANGSHI ? 48
-                                                       : 1;
+    const int jerk_num = 1;
 
-    const int jerk_denom = victim->type == MONS_SIXFIRHY ? 24
-                         : victim->type == MONS_JIANGSHI ? 90
-                                                         : 1;
+    const int jerk_denom = 1;
 
     return slouch_damage_for_speed(victim->speed,
                                    victim->action_energy(EUT_MOVE),
@@ -7275,7 +7271,7 @@ static const vector<random_pick_entry<monster_type>> _makhleb_torturers =
 {
   {  -5,  3, 200, FALL, MONS_WHITE_IMP },
   {  -4,  3, 200, SEMI, MONS_IRON_IMP },
-  {  -3,  3, 200, SEMI, MONS_UFETUBUS },
+  {  -3,  3, 200, SEMI, MONS_BRAIN_IMP },
   {  0,  8,  100, SEMI, MONS_ICE_DEVIL },
   {  2,  10,  120, SEMI, MONS_ORANGE_DEMON },
   {  2,  12, 110, SEMI, MONS_RUST_DEVIL },

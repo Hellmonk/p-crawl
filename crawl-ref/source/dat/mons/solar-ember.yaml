@@ -1,6 +1,6 @@
 name: "solar ember"
 glyph: {char: "*", colour: red}
-flags: [flies, see_invis, unblindable, insubstantial, no_exp_gain, no_poly_to, avatar, fast_regen]
+flags: [flies, unblindable, insubstantial, no_exp_gain, no_poly_to, avatar, fast_regen]
 resists: {fire: 3, cold: -1}
 holiness: [nonliving]
 will: invuln
@@ -10,6 +10,5 @@ hp_10x: 320
 ac: 5
 ev: 15
 intelligence: brainless
-speed: 40
 size: little
 shape: orb

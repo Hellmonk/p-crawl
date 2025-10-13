@@ -1,19 +1,17 @@
 name: "guardian serpent"
 glyph: {char: "S", colour: white}
-flags: [see_invis, speaks, warm_blood]
-resists: {poison: 1}
+flags: [speaks, warm_blood, variable_speed]
 exp: 456
 will: 60
 attacks:
  - {type: hit, damage: 26}
-hd: 8
+hd: 5
 hp_10x: 440
 ac: 6
-ev: 14
+ev: 20
 spells: guardian_serpent
 has_corpse: true
 shout: shout
 intelligence: human
-speed: 15
 size: large
 shape: snake

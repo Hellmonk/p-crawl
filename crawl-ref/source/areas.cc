@@ -22,6 +22,7 @@
 #include "losglobal.h"
 #include "message.h"
 #include "mon-behv.h"
+#include "monster-type.h"
 #include "mutation.h"
 #include "religion.h"
 #include "stepdown.h"
@@ -532,7 +533,7 @@ int player::demon_silence_radius() const
 int monster::silence_radius() const
 {
     if (type == MONS_SILENT_SPECTRE)
-        return 10;
+        return 3;
 
     if (!has_ench(ENCH_SILENCE))
         return -1;
@@ -599,6 +600,9 @@ int player::halo_radius() const
 
 static int _mons_class_halo_radius(monster_type type)
 {
+    if (mons_is_glowing(type))
+        return 1;
+
     // The values here depend on 1. power, 2. sentience. Thus, high-ranked
     // sentient celestials have really big haloes, while holy animals get
     // little or none.
@@ -615,11 +619,12 @@ static int _mons_class_halo_radius(monster_type type)
     case MONS_OPHAN:
         return 6;
     case MONS_SERAPH:
-        return 7; // highest rank among sentient ones
+        return 7;
     case MONS_HOLY_SWINE:
-        return 1;  // only notionally holy
+        return 1;
     case MONS_MENNAS:
-        return 2;  // ???  Low on grace or what?
+    case MONS_SUN_MOTH:
+        return 2;
     default:
         return -1;
     }
@@ -627,25 +632,6 @@ static int _mons_class_halo_radius(monster_type type)
 
 int monster::halo_radius() const
 {
-    int size = -1;
-
-    item_def* wpn = mslot_item(MSLOT_WEAPON);
-    if (wpn && is_unrandom_artefact(*wpn, UNRAND_EOS))
-        size = max(size, 3);
-
-    item_def* alt_wpn = mslot_item(MSLOT_ALT_WEAPON);
-    if (mons_wields_two_weapons(*this) && alt_wpn
-        && is_unrandom_artefact(*alt_wpn, UNRAND_EOS))
-    {
-        size = max(size, 3);
-    }
-
-    if (wearing_ego(OBJ_ARMOUR, SPARM_LIGHT))
-        size = max(size, 3);
-
-    if (!(holiness() & MH_HOLY))
-        return size;
-
     return _mons_class_halo_radius(type);
 }
 
@@ -780,21 +766,6 @@ int monster::umbra_radius() const
 
     if (mons_is_ghost_demon(type))
         size = ghost_umbra_radius();
-
-    item_def* wpn = mslot_item(MSLOT_WEAPON);
-    if (wpn && is_unrandom_artefact(*wpn, UNRAND_BRILLIANCE))
-        size = max(size, 3);
-
-    item_def* alt_wpn = mslot_item(MSLOT_ALT_WEAPON);
-    if (mons_wields_two_weapons(*this) && alt_wpn
-        && is_unrandom_artefact(*alt_wpn, UNRAND_BRILLIANCE))
-    {
-        size = max(size, 3);
-    }
-
-    item_def* ring = mslot_item(MSLOT_JEWELLERY);
-    if (ring && is_unrandom_artefact(*ring, UNRAND_SHADOWS))
-        size = max(size, 3);
 
     // Death knights get a small umbra.
     if (type == MONS_DEATH_KNIGHT)

@@ -1,6 +1,6 @@
 name: "lich"
 glyph: {char: "L", colour: lightgray}
-flags: [see_invis, speaks]
+flags: [speaks]
 resists: {cold: 2}
 exp: 1745
 holiness: [undead]

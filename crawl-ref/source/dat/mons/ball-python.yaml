@@ -1,21 +1,19 @@
 name: "ball python"
 glyph: {char: "S", colour: green}
-flags: [cold_blood]
+flags: [cold_blood, variable_speed]
 exp: 1
 genus: snake
 will: 0
 attacks:
- - {type: bite, damage: 2}
- - {type: constrict, flavour: crush, damage: 1}
+ - {type: bite, damage: 3}
+ - {type: constrict, flavour: crush, damage: 2}
 hd: 1
-hp_10x: 35
+hp_10x: 40
 ac: 0
-ev: 9
+ev: 10
 has_corpse: true
 shout: hiss
 intelligence: animal
 habitat: amphibious
-speed: 12
-energy: {swim: 6}
 size: medium
 shape: snake

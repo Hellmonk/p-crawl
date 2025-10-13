@@ -836,6 +836,11 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
             simple_monster_message(*this, " is no longer repelling missiles.");
         break;
 
+    case ENCH_STEELSKIN:
+        if (!quiet)
+            simple_monster_message(*this, " is less armoured.");
+        break;
+
     case ENCH_RESISTANCE:
         if (!quiet)
             simple_monster_message(*this, " is no longer unusually resistant.");
@@ -1474,6 +1479,7 @@ void monster::apply_enchantment(const mon_enchant &me)
     case ENCH_PARADOX_TOUCHED:
     case ENCH_WARDING:
     case ENCH_DIMINISHED_SPELLS:
+    case ENCH_STEELSKIN:
         decay_enchantment(en);
         break;
 
@@ -1533,8 +1539,7 @@ void monster::apply_enchantment(const mon_enchant &me)
         break;
 
     case ENCH_INVIS:
-        if (!mons_class_flag(type, M_INVIS))
-            decay_enchantment(en);
+        decay_enchantment(en);
         break;
 
     case ENCH_POISON:
@@ -2256,7 +2261,7 @@ static const char *enchant_names[] =
     "deep sleep", "drowsy",
     "vampire thrall", "pyrrhic recollection", "clockwork bee cast",
     "phalanx barrier", "figment", "paradox-touched", "warding",
-    "diminished_spells", "stunned",
+    "diminished_spells", "stunned", "free action used", "steelskin",
     "buggy", // NUM_ENCHANTMENTS
 };
 
@@ -2437,8 +2442,9 @@ int mon_enchant::calc_duration(const monster* mons,
         cturn = 120 / _mod_speed(25, mons->speed);
         break;
     case ENCH_CONTAM: // TODO: maybe faster
-    case ENCH_POISON:
         cturn = 1000 * deg / _mod_speed(125, mons->speed);
+    case ENCH_POISON:
+        cturn = 25 * deg;
         break;
     case ENCH_STICKY_FLAME:
         cturn = 1000 * deg / _mod_speed(200, mons->speed);

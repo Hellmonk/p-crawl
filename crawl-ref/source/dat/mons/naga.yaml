@@ -1,7 +1,6 @@
 name: "naga"
 glyph: {char: "N", colour: green}
-flags: [see_invis, speaks, warm_blood]
-resists: {poison: 1}
+flags: [speaks, warm_blood, slow_movement]
 exp: 161
 will: 40
 attacks:
@@ -15,7 +14,6 @@ spells: naga
 has_corpse: true
 shout: shout
 intelligence: human
-energy: {move: 14}
 uses: open_doors
 size: large
 shape: naga

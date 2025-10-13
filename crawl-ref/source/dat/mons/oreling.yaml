@@ -1,17 +1,16 @@
-name: "saltling"
-glyph: {char: "9", colour: white}
+name: "oreling"
+glyph: {char: "9", colour: etc_iron}
 genus: golem
 holiness: [nonliving]
 exp: 271
 will: invuln
 attacks:
- - {type: hit, damage: 20}
-hd: 8
+ - {type: hit, damage: 14}
+hd: 1
 hp_10x: 270
-ac: 15
-ev: 5
+ac: 8
+ev: 20
 intelligence: brainless
-speed: 12
 uses: open_doors
 size: small
 shape: humanoid

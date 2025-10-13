@@ -11,7 +11,6 @@ ac: 0
 ev: 0
 intelligence: brainless
 habitat: amphibious
-speed: 10
 size: giant
 shape: misc
 tile: program_bug

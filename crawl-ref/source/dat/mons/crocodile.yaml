@@ -4,14 +4,13 @@ flags: [cold_blood]
 exp: 120
 will: 20
 attacks:
- - {type: bite, flavour: drag, damage: 15}
-hd: 6
-hp_10x: 360
+ - {type: bite, flavour: drag, damage: 11}
+hd: 2
+hp_10x: 240
 ac: 4
-ev: 12
+ev: 10
 has_corpse: true
 intelligence: animal
 habitat: amphibious
-energy: {swim: 6}
 size: large
 shape: quadruped

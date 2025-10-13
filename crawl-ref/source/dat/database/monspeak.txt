@@ -6445,8 +6445,6 @@ _Pikel_common_
 
 @The_monster@ says, "Hell isn't that bad."
 
-@The_monster@ says, "You'll make a fine lemure." @player_only@
-
 @The_monster@ says @to_foe@, "You'll feel the lick of my whip!"
 
 VISUAL:@The_monster@ waves @possessive@ whip at you.

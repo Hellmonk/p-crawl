@@ -1,15 +1,15 @@
-name: "lemure"
+name: "acid imp"
 glyph: {char: "5", colour: yellow}
 flags: [speaks]
 exp: 106
 holiness: [demonic]
 will: 20
 attacks:
- - {type: hit, damage: 10}
-hd: 5
-hp_10x: 275
-ac: 4
-ev: 12
+ - {type: hit, flavour: corrode, damage: 5}
+hd: 2
+hp_10x: 60
+ac: 5
+ev: 0
 shout: shout
 intelligence: human
 uses: open_doors

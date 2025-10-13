@@ -401,7 +401,13 @@ bool fight_melee(actor *attacker, actor *defender, bool *did_hit, bool simu)
         if (attk.cancel_attack)
             you.turn_is_over = false;
         else
-            you.time_taken = you.attack_delay().roll();
+        {
+            free_action_type faction = you.free_action_available();
+            if (faction == FACT_MELEE)
+                expend_free_action();
+            else
+                you.time_taken = you.attack_delay().roll();
+        }
 
         if (!success)
             return !attk.cancel_attack;
@@ -1026,7 +1032,8 @@ bool dont_harm(const actor &attacker, const actor &defender)
 bool _monster_has_reachcleave(const actor &attacker)
 {
     if (attacker.is_monster()
-        && attacker.as_monster()->has_attack_flavour(AF_REACH_CLEAVE_UGLY))
+        && (attacker.as_monster()->has_attack_flavour(AF_REACH_CLEAVE_UGLY)
+            ||attacker.as_monster()->has_attack_flavour(AF_BIG_FIRE)))
     {
         return true;
     }
@@ -1071,7 +1078,8 @@ bool attack_cleaves(const actor &attacker, const item_def *weap)
     }
     else if (attacker.is_monster()
              && (attacker.as_monster()->has_ench(ENCH_INSTANT_CLEAVE)
-             || _monster_has_reachcleave(attacker)))
+             || _monster_has_reachcleave(attacker)
+             || attacker.as_monster()->has_attack_flavour(AF_CLEAVE)))
     {
         return true;
     }
@@ -1557,8 +1565,8 @@ bool can_reach_attack_between(coord_def source, coord_def target, int range)
 dice_def spines_damage(monster_type mon)
 {
     if (mon == MONS_CACTUS_GIANT)
-        return dice_def(5, 8);
-    return dice_def(5, 4);
+        return dice_def(2, 8);
+    return dice_def(2, 4);
 }
 
 int archer_bonus_damage(int hd)

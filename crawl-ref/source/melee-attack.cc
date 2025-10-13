@@ -642,8 +642,7 @@ void melee_attack::do_vampire_lifesteal()
         && (you.form == transformation::vampire
             || you.form == transformation::bat_swarm)
         && (stab_attempt || you.hp * 2 <= you.hp_max)
-        && adjacent(you.pos(), mon->pos())
-        && !mons_class_flag(defender->type, M_ACID_SPLASH))
+        && adjacent(you.pos(), mon->pos()))
     {
         // Stabs always heal, but thirsty attacks have a shapeshifting-based
         // chance to heal.
@@ -676,7 +675,8 @@ void melee_attack::do_vampire_lifesteal()
         if (can_heal)
         {
             int heal = random2(damage_done);
-            if (heal > 0 && you.hp < you.hp_max && !you.duration[DUR_DEATHS_DOOR])
+            if (heal > 0 && you.hp < you.hp_max && !you.duration[DUR_DEATHS_DOOR]
+                && !you.duration[DUR_SICKNESS])
             {
                 you.heal(heal);
                 canned_msg(MSG_GAIN_HEALTH);
@@ -1070,6 +1070,8 @@ static void _devour(monster &victim)
 
     // Healing.
     if (you.duration[DUR_DEATHS_DOOR])
+        return;
+    if (you.duration[DUR_SICKNESS])
         return;
 
     const int xl = victim.get_experience_level();
@@ -2852,33 +2854,7 @@ void melee_attack::decapitate()
  */
 void melee_attack::attacker_sustain_passive_damage()
 {
-    // If the defender has been cleaned up, it's too late for anything.
-    if (!defender->alive())
-        return;
-
-    if (!mons_class_flag(defender->type, M_ACID_SPLASH))
-        return;
-
-    if (attacker->res_corr() >= 3)
-        return;
-
-    if (!adjacent(attacker->pos(), defender->pos()) || is_riposte)
-        return;
-
-    const int dmg = resist_adjust_damage(attacker, BEAM_ACID, roll_dice(1, 5));
-
-    if (attacker->is_player())
-        mpr(you.hands_act("burn", "!"));
-    else
-    {
-        simple_monster_message(*attacker->as_monster(),
-                               " is burned by acid!");
-    }
-    attacker->hurt(defender, dmg, BEAM_ACID,
-                   KILLED_BY_ACID);
-
-    if (attacker->alive() && one_chance_in(5))
-        attacker->corrode(defender);
+    return;
 }
 
 int melee_attack::staff_damage(stave_type staff) const
@@ -3174,14 +3150,11 @@ void melee_attack::announce_hit()
 bool melee_attack::mons_do_poison()
 {
     int amount;
-    const int hd = attacker->get_hit_dice();
 
     if (attk_flavour == AF_POISON_STRONG)
-        amount = random_range(hd * 11 / 3, hd * 13 / 2);
-    else if (attk_flavour == AF_MINIPARA)
-        amount = random_range(hd, hd * 2);
+        amount = 2;
     else
-        amount = random_range(hd * 2, hd * 4);
+        amount = 1;
 
     if (attacker->as_monster()->has_ench(ENCH_CONCENTRATE_VENOM))
     {
@@ -3372,6 +3345,7 @@ void melee_attack::mons_apply_attack_flavour()
         break;
 
     case AF_FIRE:
+    case AF_BIG_FIRE:
         special_damage =
             resist_adjust_damage(defender,
                                  BEAM_FIRE,
@@ -3529,50 +3503,40 @@ void melee_attack::mons_apply_attack_flavour()
         }
         break;
 
+    case AF_DISCHARGE:
+        if (defender->is_player() && coinflip())
+            discharge_random_evoker();
+        break;
+
     case AF_MINIPARA:
     {
-        // Doesn't affect the poison-immune.
-        if (defender->is_player() && you.duration[DUR_DIVINE_STAMINA] > 0)
-        {
-            mpr("Your divine stamina protects you from poison!");
-            break;
-        }
+        // standin for "is not a living creature"
         if (defender->res_poison() >= 3)
             break;
-        if (defender->res_poison() > 0 && !one_chance_in(3))
+        if (!one_chance_in(3))
             break;
-        defender->paralyse(attacker, 1);
-        mons_do_poison();
+        defender->stun(attacker);
+        break;
+    }
+
+    case AF_SICK:
+    {
+        // standin for "is not a living creature"
+        if (defender->res_poison() >= 3)
+            break;
+        defender->sicken(10 + 5 * damage_done);
         break;
     }
 
     case AF_POISON_PARALYSE:
     {
-        // Doesn't affect the poison-immune.
-        if (defender->is_player() && you.duration[DUR_DIVINE_STAMINA] > 0)
-        {
-            mpr("Your divine stamina protects you from poison!");
-            break;
-        }
-        else if (defender->res_poison() >= 3)
+        // standin for "is not a living creature"
+        if (defender->res_poison() >= 3)
             break;
 
-        // Same frequency as AF_POISON and AF_POISON_STRONG.
         if (one_chance_in(3))
-        {
-            int dmg = random_range(attacker->get_hit_dice() * 3 / 2,
-                                   attacker->get_hit_dice() * 5 / 2);
-            defender->poison(attacker, dmg);
-        }
-
-        // Try to apply either paralysis or slowing, with the normal 2/3
-        // chance to resist with rPois.
-        if (one_chance_in(6))
-        {
-            if (defender->res_poison() <= 0 || one_chance_in(3))
                 defender->paralyse(attacker, roll_dice(1, 3));
-        }
-        else if (defender->res_poison() <= 0 || one_chance_in(3))
+        else
             defender->slow_down(attacker, roll_dice(1, 3));
 
         break;
@@ -3653,41 +3617,7 @@ void melee_attack::mons_apply_attack_flavour()
     }
 
     case AF_ANTIMAGIC:
-
-        // Apply extra stacks of the effect to monsters that have none.
-        if (defender->is_monster()
-            && !defender->as_monster()->has_ench(ENCH_ANTIMAGIC))
-        {
-            antimagic_affects_defender(attacker->get_hit_dice() * 18);
-        }
-        else
-            antimagic_affects_defender(attacker->get_hit_dice() * 12);
-
-        if (mons_genus(attacker->type) == MONS_VINE_STALKER
-            && attacker->is_monster())
-        {
-            const bool spell_user = defender->antimagic_susceptible();
-
-            if (you.can_see(*attacker) || you.can_see(*defender))
-            {
-                mprf("%s drains %s %s.",
-                     attacker->name(DESC_THE).c_str(),
-                     defender->pronoun(PRONOUN_POSSESSIVE).c_str(),
-                     spell_user ? "magic" : "power");
-            }
-
-            monster* vine = attacker->as_monster();
-            if (vine->has_ench(ENCH_ANTIMAGIC)
-                && !defender->is_summoned() && !defender->is_firewood())
-            {
-                mon_enchant me = vine->get_ench(ENCH_ANTIMAGIC);
-                vine->lose_ench_duration(me, random2(damage_done) + 1);
-                simple_monster_message(*attacker->as_monster(),
-                                       spell_user
-                                       ? " looks very invigorated."
-                                       : " looks invigorated.");
-            }
-        }
+        antimagic_affects_defender(attacker->get_hit_dice());
         break;
 
     case AF_PAIN:

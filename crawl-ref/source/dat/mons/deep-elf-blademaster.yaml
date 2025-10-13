@@ -1,6 +1,6 @@
 name: "deep elf blademaster"
 glyph: {char: "e", colour: lightcyan}
-flags: [fighter, speaks, warm_blood, two_weapons]
+flags: [fighter, speaks, warm_blood]
 exp: 1664
 species: elf
 will: 120
@@ -14,7 +14,6 @@ ev: 25
 has_corpse: true
 shout: shout
 intelligence: human
-speed: 15
 uses: open_doors
 size: medium
 shape: humanoid

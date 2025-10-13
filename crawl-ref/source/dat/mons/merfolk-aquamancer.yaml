@@ -1,21 +1,20 @@
 name: "merfolk aquamancer"
 glyph: {char: "m", colour: green}
-flags: [see_invis, speaks, warm_blood]
+flags: [speaks, warm_blood, fast_swimmer]
 exp: 829
 species: merfolk
 will: 80
 attacks:
- - {type: hit, damage: 15}
-hd: 14
+ - {type: hit, damage: 11}
+hd: 6
 hp_10x: 630
 ac: 0
-ev: 12
+ev: 20
 spells: merfolk_aquamancer
 has_corpse: true
 shout: shout
 intelligence: human
 habitat: amphibious
-energy: {swim: 6}
 uses: open_doors
 size: medium
 shape: humanoid

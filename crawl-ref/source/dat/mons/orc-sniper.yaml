@@ -1,0 +1,19 @@
+name: "orc sniper"
+glyph: {char: "o", colour: lightblue}
+flags: [fighter, speaks, warm_blood]
+exp: 617
+species: orc
+will: 40
+attacks:
+ - {type: hit, damage: 12}
+hd: 5
+hp_10x: 180
+ac: 5
+ev: 0
+spells: archer
+has_corpse: true
+shout: shout
+intelligence: human
+uses: open_doors
+size: medium
+shape: humanoid

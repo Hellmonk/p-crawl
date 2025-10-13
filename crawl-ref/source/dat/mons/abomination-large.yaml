@@ -6,11 +6,11 @@ genus: abomination_small
 holiness: [undead]
 will: 100
 attacks:
- - {type: hit, damage: 32}
-hd: 11
-hp_10x: 495
+ - {type: hit, damage: 24}
+hd: 6
+hp_10x: 490
 ac: 11
-ev: 6
+ev: 0
 intelligence: brainless
 size: large
 shape: misc

@@ -183,7 +183,7 @@ function necropolis_generic_spawns(e, _0, _9, _8)
     e.kmons(_0 .. " = bullfrog / water moccasin / wyvern / basilisk / yak / \
                       polar bear / spectral bullfrog w:20 / spectral yak w:20")
     e.kmons(_9 .. " = cane toad / black mamba / elephant / death yak / \
-                      rime drake / lindwurm / dream sheep / raven w:2")
+                      rime drake / dream sheep / raven w:2")
     e.kmons(_8 .. " = skyshark / anaconda / manticore / wolf spider / \
                       alligator / dire elephant / catoblepas / \
                       anaconda zombie w:5 / wolf spider zombie w:5 / \

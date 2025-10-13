@@ -1,0 +1,19 @@
+name: "brain imp"
+glyph: {char: "5", colour: lightcyan}
+flags: [variable_speed]
+resists: {fire: -1}
+exp: 8
+holiness: [demonic]
+will: 10
+attacks:
+ - {type: hit, flavour: flank, damage: 3}
+ - {type: hit, flavour: confuse, damage: 4}
+hd: 2
+hp_10x: 70
+ac: 2
+ev: 20
+shout: shout
+intelligence: human
+uses: open_doors
+size: small
+shape: bird

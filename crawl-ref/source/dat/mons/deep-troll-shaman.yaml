@@ -1,17 +1,18 @@
-name: "deep troll shaman"
+name: "troll shaman"
+enum: deep_troll_shaman
 glyph: {char: "T", colour: white}
-flags: [see_invis, unblindable, speaks, warm_blood]
+flags: [unblindable, speaks, warm_blood]
 exp: 814
 species: deep_troll
 genus: troll
 will: 40
 attacks:
- - {type: bite, damage: 27}
- - {type: claw, damage: 20}
- - {type: claw, damage: 20}
-hd: 12
-hp_10x: 480
-ac: 6
+ - {type: claw, damage: 6}
+ - {type: claw, damage: 6}
+ - {type: bite, damage: 3}
+hd: 3
+hp_10x: 190
+ac: 5
 ev: 10
 spells: deep_troll_shaman
 has_corpse: true

@@ -1,0 +1,15 @@
+name: "boring beetle"
+glyph: {char: "B", colour: brown}
+flags: [no_skeleton, burrows]
+exp: 73
+will: 20
+attacks:
+ - {type: bite, damage: 16}
+hd: 4
+hp_10x: 370
+ac: 8
+ev: 0
+has_corpse: true
+intelligence: animal
+size: large
+shape: insect

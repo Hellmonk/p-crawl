@@ -1,7 +1,6 @@
 name: "bunyip"
 glyph: {char: "x", colour: yellow}
 flags: [warm_blood]
-resists: {poison: 1}
 exp: 992
 will: 60
 attacks:
@@ -17,7 +16,5 @@ has_corpse: true
 shout: scream
 intelligence: animal
 habitat: amphibious
-speed: 15
-energy: {attack: 45}
 size: large
 shape: quadruped

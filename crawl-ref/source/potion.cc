@@ -147,7 +147,7 @@ public:
         // need to redraw from yellow to green even if no hp was gained
         if (you.duration[DUR_POISONING])
             you.redraw_hit_points = true;
-        you.duration[DUR_POISONING] = 0;
+        end_player_poison();
         you.duration[DUR_CONF] = 0;
         return true;
     }

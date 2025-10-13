@@ -1,6 +1,6 @@
 name: "Gastronok"
 glyph: {char: "w", colour: magenta}
-flags: [no_wand, see_invis, speaks, unique, male]
+flags: [speaks, unique, male]
 exp: 1506
 species: elephant_slug
 will: 80
@@ -15,7 +15,6 @@ has_corpse: true
 shout: gurgle
 intelligence: human
 habitat: amphibious
-speed: 5
 uses: open_doors
 size: giant
 shape: snail

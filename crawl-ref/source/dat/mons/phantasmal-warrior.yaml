@@ -1,15 +1,15 @@
 name: "phantasmal warrior"
 glyph: {char: "W", colour: lightgreen}
-flags: [flies, fighter, see_invis, insubstantial]
+flags: [flies, insubstantial]
 resists: {cold: 1}
 exp: 638
 genus: wraith
 holiness: [undead]
 will: 80
 attacks:
- - {type: hit, flavour: vuln, damage: 39}
+ - {type: hit, flavour: vuln, damage: 19}
 hd: 9
-hp_10x: 495
+hp_10x: 490
 ac: 12
 ev: 10
 spells: blink_close

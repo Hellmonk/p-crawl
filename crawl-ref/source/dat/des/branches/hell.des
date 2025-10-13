@@ -581,7 +581,7 @@ ORIENT: float
 WEIGHT: 5
 KMASK:  O = opaque
 KMONS:  1 = sun demon
-KMONS:  2 = shining eye / eye of devastation / great orb of eyes
+KMONS:  2 = shining eye / great orb of eyes
 KMONS:  3 = hell hound / hell hog / hellion
 NSUBST: - = 4=1 / 8=1. / 2=2 / 4=2. / 1=3 / 2=3. / .
 : hell_entry_feature(_G, 'O')

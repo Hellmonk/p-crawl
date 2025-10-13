@@ -185,12 +185,6 @@ LUARET1(you_sh, number, player_displayed_shield_class())
  */
 LUARET1(you_drain, number, player_drained())
 
-/*** Minimum hp after poison wears off.
- * @treturn int
- * @function poison_survival
- */
-LUARET1(you_poison_survival, number, poison_survival())
-
 /*** Corrosion amount.
  * @treturn int
  * @function corrosion
@@ -474,7 +468,7 @@ LUARET1(you_rooted, boolean, you.duration[DUR_GRASPING_ROOTS])
  * @treturn boolean
  * @function poisoned
  */
-LUARET1(you_poisoned, boolean, you.duration[DUR_POISONING])
+LUARET1(you_poisoned, boolean, you.attribute[ATTR_POISON_STRENGTH])
 
 /*** Are you invisible?
  * @treturn boolean
@@ -1474,7 +1468,6 @@ static const struct luaL_reg you_clib[] =
     { "anchored",     you_anchored },
     { "rooted",       you_rooted },
     { "poisoned",     you_poisoned },
-    { "poison_survival", you_poison_survival },
     { "corrosion",    you_corrosion },
     { "invisible",    you_invisible },
     { "mesmerised",   you_mesmerised },

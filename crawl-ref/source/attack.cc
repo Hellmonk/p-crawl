@@ -1045,7 +1045,8 @@ bool attack::apply_damage_brand(const char *what)
             || defender->alive()
             || !actor_is_susceptible_to_vampirism(*defender)
             || attacker->stat_hp() == attacker->stat_maxhp()
-            || attacker->is_player() && you.duration[DUR_DEATHS_DOOR])
+            || attacker->is_player() && you.duration[DUR_DEATHS_DOOR]
+            || attacker->is_player() && you.duration[DUR_SICKNESS])
         {
             break;
         }

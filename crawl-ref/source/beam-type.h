@@ -47,6 +47,7 @@ enum beam_type                  // bolt::flavour
     BEAM_BOLAS,
     BEAM_MERCURY,
     BEAM_BAT_CLOUD,
+    BEAM_TOXIC,
 
     // Enchantments
     BEAM_SLOW,
@@ -107,7 +108,8 @@ enum beam_type                  // bolt::flavour
     BEAM_VEX,
     BEAM_ILL_OMEN,
     BEAM_WARP_BODY,
-    BEAM_LAST_ENCHANTMENT = BEAM_WARP_BODY,
+    BEAM_DIMINISH_SPELLS,
+    BEAM_LAST_ENCHANTMENT = BEAM_DIMINISH_SPELLS,
 
     BEAM_MEPHITIC,
     BEAM_AIR,

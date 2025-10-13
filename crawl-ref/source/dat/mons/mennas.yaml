@@ -1,7 +1,7 @@
 name: "Mennas"
 glyph: {char: "A", colour: lightcyan}
 flags: [flies, fighter, speaks, unique, male]
-resists: {elec: 1, poison: 1}
+resists: {elec: 1}
 exp: 4370
 species: angel
 holiness: [holy]
@@ -15,7 +15,6 @@ ac: 15
 ev: 28
 spells: mennas
 intelligence: human
-speed: 15
 uses: open_doors
 size: medium
 shape: humanoid_winged

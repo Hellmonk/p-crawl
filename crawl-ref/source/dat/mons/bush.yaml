@@ -1,7 +1,7 @@
 name: "bush"
 glyph: {char: "P", colour: brown}
 flags: [stationary, no_exp_gain, no_threat]
-resists: {poison: 1, fire: -1}
+resists: {fire: -1}
 genus: plant
 holiness: [plant]
 will: invuln

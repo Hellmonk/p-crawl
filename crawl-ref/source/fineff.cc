@@ -521,14 +521,13 @@ void shock_discharge_fineff::fire()
     if (!oppressor.alive())
         return;
 
-    const int max_range = 3; // v0v
-    if (grid_distance(oppressor.pos(), position) > max_range
+    if (grid_distance(oppressor.pos(), position) < 2
         || !cell_see_cell(position, oppressor.pos(), LOS_SOLID_SEE))
     {
         return;
     }
 
-    const int amount = roll_dice(3, 4 + power * 3 / 2);
+    const int amount = roll_dice(2, 4 + power);
     int final_dmg = resist_adjust_damage(&oppressor, BEAM_ELECTRICITY, amount);
     final_dmg = oppressor.apply_ac(final_dmg, 0, ac_type::half);
 
@@ -683,7 +682,7 @@ void bennu_revive_fineff::fire()
                                                 res_visible ? MG_DONT_COME
                                                             : MG_NONE));
     if (newmons)
-        newmons->props[BENNU_REVIVES_KEY].get_byte() = revives + 1;
+        newmons->props[REVIVES_KEY].get_byte() = revives + 1;
 
     // If we were dueling the original bennu, the duel continues.
     if (duel)
@@ -694,6 +693,40 @@ void bennu_revive_fineff::fire()
 
     if (gozag_bribe.ench != ENCH_NONE)
         newmons->add_ench(gozag_bribe);
+}
+
+void phoenix_revive_fineff::fire()
+{
+    // XXX: merge with the bennu one some time
+
+    bool res_visible = you.see_cell(posn);
+
+
+    monster *newmons = create_monster(mgen_data(MONS_PHOENIX, attitude, posn, foe,
+                                                res_visible ? MG_DONT_COME
+                                                            : MG_NONE));
+    if (newmons)
+        newmons->props[REVIVES_KEY].get_byte() = revives + 1;
+
+    // If we were dueling the original bennu, the duel continues.
+    if (duel)
+    {
+        newmons->props[OKAWARU_DUEL_TARGET_KEY] = true;
+        newmons->props[OKAWARU_DUEL_CURRENT_KEY] = true;
+    }
+
+    if (gozag_bribe.ench != ENCH_NONE)
+        newmons->add_ench(gozag_bribe);
+}
+
+
+void wyvern_egg_hatch_fineff::fire()
+{
+    bool res_visible = you.see_cell(posn);
+
+    create_monster(mgen_data(MONS_WYVERN, attitude, posn, foe,
+                                                res_visible ? MG_DONT_COME
+                                                            : MG_NONE));
 }
 
 void avoided_death_fineff::fire()

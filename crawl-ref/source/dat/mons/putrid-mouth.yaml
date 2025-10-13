@@ -1,6 +1,6 @@
 name: "putrid mouth"
 glyph: {char: "W", colour: lightred}
-flags: [flies, see_invis, insubstantial]
+flags: [flies, insubstantial]
 exp: 1023
 genus: wraith
 holiness: [undead]

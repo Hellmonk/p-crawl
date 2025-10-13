@@ -7,13 +7,12 @@ genus: elemental
 holiness: [nonliving]
 will: invuln
 attacks:
- - {type: hit, flavour: pure_fire, damage: 0}
-hd: 6
+ - {type: hit, flavour: big_fire, damage: 10}
+hd: 4
 hp_10x: 330
 ac: 4
-ev: 12
+ev: 20
 intelligence: animal
 habitat: amphibious_lava
-speed: 13
 size: large
 shape: misc

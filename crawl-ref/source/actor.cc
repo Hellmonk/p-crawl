@@ -36,6 +36,48 @@ actor::~actor()
         delete constricting;
 }
 
+free_action_type actor::free_action_available() const
+{
+    if (is_monster())
+    {
+        const monster* mon = as_monster();
+        if (mon->has_ench(ENCH_USED_FREE_ACTION))
+            return FACT_NONE;
+
+        // slow blocks all free actions unless also hasted
+        if (mon->has_ench(ENCH_SLOW))
+        {
+            if (!mon->has_ench(ENCH_HASTE))
+                return FACT_NONE;
+        }
+        else if (mon->has_ench(ENCH_HASTE))
+            return FACT_ANY;
+
+        if (mons_class_flag(mon->type, M_QUICK))
+            return FACT_ANY;
+        if (mons_class_flag(mon->type, M_FAST_SWIMMER))
+            return FACT_SWIM;
+        if (mons_class_flag(mon->type, M_FAST_MOVING) || mon->has_ench(ENCH_ROLLING))
+            return FACT_MOVE;
+        if (mons_class_flag(mon->type, M_VARIABLE_SPEED))
+            return FACT_VARIABLE;
+
+        return FACT_NONE;
+    }
+    else if (you.props.exists(FREE_ACTION_USED_KEY))
+        return FACT_NONE;
+
+    if (you.duration[DUR_SLOW])
+    {
+        if (!you.duration[DUR_HASTE])
+            return FACT_NONE;
+    }
+    else if (you.duration[DUR_HASTE])
+        return FACT_ANY;
+
+    return FACT_NONE;
+}
+
 bool actor::will_trigger_shaft() const
 {
     return is_valid_shaft_level()
@@ -748,8 +790,6 @@ void actor::constriction_damage_defender(actor &defender)
     const auto typ = defender.get_constrict_type();
     int damage = constriction_damage(typ);
     DIAG_ONLY(const int basedam = damage);
-    damage = defender.apply_ac(damage, 0, ac_type::half);
-    DIAG_ONLY(const int acdam = damage);
     damage = timescale_damage(this, damage);
     DIAG_ONLY(const int timescale_dam = damage);
 
@@ -812,10 +852,10 @@ void actor::constriction_damage_defender(actor &defender)
                            "", false);
     DIAG_ONLY(const int infdam = damage);
 
-    dprf("constrict at: %s df: %s base %d ac %d tsc %d inf %d",
+    dprf("constrict at: %s df: %s base %d tsc %d inf %d",
          name(DESC_PLAIN, true).c_str(),
          defender.name(DESC_PLAIN, true).c_str(),
-         basedam, acdam, timescale_dam, infdam);
+         basedam, timescale_dam, infdam);
 
     if (defender.is_monster()
         && defender.type != MONS_NO_MONSTER // already dead and reset

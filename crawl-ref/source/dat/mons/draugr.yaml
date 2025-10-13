@@ -11,7 +11,6 @@ hp_10x: 0
 ac: 0
 ev: 0
 intelligence: brainless
-speed: 5
 size: small
 shape: misc
 tile: draugr_small

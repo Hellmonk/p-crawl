@@ -1,19 +1,19 @@
 name: "centaur"
 glyph: {char: "c", colour: brown}
-flags: [speaks, warm_blood, archer]
+flags: [speaks, warm_blood, archer, fast_moving]
 exp: 112
 will: 20
 attacks:
- - {type: hit, damage: 7}
- - {type: kick, damage: 3}
-hd: 4
-hp_10x: 220
+ - {type: hit, damage: 4}
+ - {type: kick, damage: 4}
+hd: 2
+hp_10x: 160
 ac: 3
-ev: 7
+ev: 0
+spells: archer
 has_corpse: true
 shout: shout
 intelligence: human
-speed: 15
 uses: open_doors
 size: large
 shape: centaur

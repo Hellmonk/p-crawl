@@ -1,18 +1,17 @@
 name: "smoke demon"
 glyph: {char: "3", colour: lightgray}
 flags: [flies, insubstantial]
-resists: {poison: 1, fire: 2}
 exp: 428
 holiness: [demonic]
 will: 60
 attacks:
- - {type: hit, damage: 8}
  - {type: hit, damage: 5}
  - {type: hit, damage: 5}
-hd: 7
-hp_10x: 385
+ - {type: hit, damage: 5}
+hd: 3
+hp_10x: 370
 ac: 5
-ev: 9
+ev: 40
 spells: smoke_demon
 shout: roar
 intelligence: human

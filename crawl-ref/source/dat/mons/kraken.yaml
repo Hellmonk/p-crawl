@@ -13,6 +13,5 @@ spells: kraken
 has_corpse: true
 intelligence: animal
 habitat: deep_water
-speed: 14
 size: giant
 shape: misc

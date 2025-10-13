@@ -1,7 +1,6 @@
 name: "cane toad"
 glyph: {char: "F", colour: yellow}
 flags: [cold_blood]
-resists: {poison: 1}
 exp: 407
 genus: frog
 will: 20
@@ -15,7 +14,5 @@ has_corpse: true
 shout: croak
 intelligence: animal
 habitat: amphibious
-speed: 12
-energy: {swim: 6}
 size: medium
 shape: quadruped_tailless

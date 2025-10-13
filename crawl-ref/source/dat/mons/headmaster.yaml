@@ -1,7 +1,7 @@
 name: "Head Instructor"
 enum: headmaster
 glyph: {char: "@", colour: etc_iron}
-flags: [fighter, see_invis, speaks, warm_blood, two_weapons, always_named]
+flags: [fighter, speaks, warm_blood, always_named]
 exp: 3034
 species: human
 will: 100
@@ -16,7 +16,6 @@ spells: headmaster
 has_corpse: true
 shout: shout
 intelligence: human
-speed: 15
 uses: open_doors
 size: medium
 shape: humanoid

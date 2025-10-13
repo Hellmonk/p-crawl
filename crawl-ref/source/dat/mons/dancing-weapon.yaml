@@ -13,7 +13,6 @@ hp_10x: 150
 ac: 10
 ev: 20
 intelligence: brainless
-speed: 15
 size: small
 shape: misc
 tile: tile_unseen_weapon

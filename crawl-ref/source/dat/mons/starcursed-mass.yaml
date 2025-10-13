@@ -1,13 +1,12 @@
 name: "starcursed mass"
 glyph: {char: "X", colour: blue}
-flags: [see_invis]
 exp: 993
 holiness: [nonliving]
 will: 100
 attacks:
- - {type: touch, damage: 16}
-hd: 12
-hp_10x: 1500
+ - {type: touch, damage: 8}
+hd: 7
+hp_10x: 800
 ac: 10
 ev: 0
 intelligence: animal

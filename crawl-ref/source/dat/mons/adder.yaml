@@ -14,7 +14,5 @@ has_corpse: true
 shout: hiss
 intelligence: animal
 habitat: amphibious
-speed: 13
-energy: {swim: 6}
 size: little
 shape: snake

@@ -1,20 +1,19 @@
 name: "spriggan air mage"
 glyph: {char: "i", colour: lightcyan}
-flags: [flies, see_invis, speaks, warm_blood]
+flags: [flies, speaks, warm_blood, fast_moving]
 exp: 851
 species: spriggan
 will: 140
 attacks:
- - {type: hit, damage: 16}
-hd: 14
-hp_10x: 490
+ - {type: hit, flavour: elec, damage: 8}
+hd: 5
+hp_10x: 410
 ac: 1
-ev: 24
+ev: 40
 spells: spriggan_air_mage
 has_corpse: true
 shout: shout
 intelligence: human
-energy: {move: 6}
 uses: open_doors
 size: little
 shape: humanoid

@@ -1,16 +1,14 @@
 name: "rakshasa"
 glyph: {char: "R", colour: yellow}
-flags: [see_invis]
-resists: {poison: 1}
 exp: 870
 holiness: [demonic]
 will: 140
 attacks:
  - {type: hit, damage: 20}
-hd: 11
-hp_10x: 660
+hd: 5
+hp_10x: 560
 ac: 6
-ev: 14
+ev: 20
 spells: rakshasa
 intelligence: human
 uses: open_doors

@@ -256,9 +256,9 @@ static dice_def mi_calc_iood_damage(monster* mons)
     return iood_damage(pow, INFINITE_DISTANCE);
 }
 
-static string mi_calc_smiting_damage(monster* /*mons*/) { return "7-17"; }
+static string mi_calc_smiting_damage(monster* /*mons*/) { return "5-10"; }
 
-static string mi_calc_brain_bite_damage(monster* /*mons*/) { return "4-8*"; }
+static string mi_calc_brain_bite_damage(monster* /*mons*/) { return "5-10"; }
 
 static string mi_calc_pyre_arrow_damage(monster* mons)
 {
@@ -1017,6 +1017,8 @@ int main(int argc, char* argv[])
                     monsterattacks +=
                         colour(YELLOW, damage_flavour("acid", "4d3"));
                     break;
+                case AF_CLEAVE:
+                    monsterattacks += "(cleave)";
                 case AF_AIRSTRIKE:
                 {
                     short int min = pow(hd, 1.2) * 2 / 9;
@@ -1030,6 +1032,9 @@ int main(int argc, char* argv[])
                     break;
                 case AF_BLINK:
                     monsterattacks += colour(MAGENTA, "(blink self)");
+                    break;
+                case AF_DISCHARGE:
+                    monsterattacks += colour(LIGHTCYAN, "(discharge evoker)");
                     break;
                 case AF_BLINK_WITH:
                     monsterattacks += colour(MAGENTA, "(blink together)");
@@ -1060,18 +1065,23 @@ int main(int argc, char* argv[])
                     monsterattacks += colour(
                         LIGHTRED, damage_flavour("fire", hd, hd * 2 - 1));
                     break;
+                case AF_BIG_FIRE:
+                    monsterattacks += colour(
+                        LIGHTRED, damage_flavour("fire", hd, hd * 2 - 1));
+                    break;
                 case AF_PURE_FIRE:
                     monsterattacks +=
                         colour(LIGHTRED, damage_flavour("pure fire", hd * 3 / 2,
                                                         hd * 5 / 2 - 1));
                     break;
                 case AF_MINIPARA:
-                    monsterattacks += colour(LIGHTRED,
-                                             damage_flavour("(minipara)", hd, hd * 2));
+                    monsterattacks += colour(LIGHTRED, "(stun)");
                     break;
                 case AF_POISON_PARALYSE:
-                    monsterattacks += colour(LIGHTRED,
-                                             damage_flavour("(paralyse)", hd * 3/2, hd * 5/2));
+                    monsterattacks += colour(LIGHTRED, "(paralyse or slow)");
+                    break;
+                case AF_SICK:
+                    monsterattacks += colour(LIGHTRED, "(sicken)");
                     break;
                 case AF_POISON:
                     monsterattacks += colour(
@@ -1120,8 +1130,8 @@ int main(int argc, char* argv[])
                 case AF_DROWN:
                     monsterattacks += colour(LIGHTBLUE,
                                              damage_flavour("(drown)",
-                                                            hd * 3 / 4,
-                                                            hd * 3 / 2));
+                                                            hd,
+                                                            hd * 2));
                     break;
                 case AF_ENGULF:
                     monsterattacks += colour(LIGHTBLUE, "(engulf)");
@@ -1257,8 +1267,6 @@ int main(int argc, char* argv[])
         mons_check_flag(bool(me->bitfields & M_CRASH_DOORS), monsterflags,
                         colour(LIGHTRED, "breaks doors"));
 
-        mons_check_flag(mons_wields_two_weapons(mon), monsterflags,
-                        "two-weapon");
         mons_check_flag(mon.is_fighter(), monsterflags, "fighter");
         if (mon.is_archer())
         {
@@ -1277,8 +1285,6 @@ int main(int argc, char* argv[])
                         "spellcaster");
         mons_check_flag(bool(me->bitfields & M_COLD_BLOOD), monsterflags,
                         "cold-blooded");
-        mons_check_flag(bool(me->bitfields & M_SEE_INVIS), monsterflags,
-                        "see invisible");
         mons_check_flag(bool(me->bitfields & M_FLIES), monsterflags, "fly");
         mons_check_flag(bool(me->bitfields & M_FAST_REGEN), monsterflags,
                         "regen");

@@ -1,7 +1,7 @@
 name: "moon troll"
 glyph: {char: "T", colour: lightcyan}
-flags: [see_invis, speaks, warm_blood, fast_regen, no_poly_to, no_gen_derived, warded]
-resists: {poison: 1, fire: 1, cold: 1}
+flags: [speaks, warm_blood, fast_regen, no_poly_to, no_gen_derived, warded]
+resists: {fire: 1, cold: 1}
 exp: 1763
 genus: troll
 will: 140
@@ -16,7 +16,6 @@ ev: 4
 spells: moon_troll
 shout: shout
 intelligence: human
-speed: 12
 uses: open_doors
 size: large
 shape: humanoid

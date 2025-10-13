@@ -1,6 +1,6 @@
 name: "Jory"
 glyph: {char: "V", colour: lightred}
-flags: [fighter, see_invis, speaks, warm_blood, unique, male]
+flags: [fighter, speaks, warm_blood, unique, male]
 resists: {cold: 1}
 exp: 2381
 species: vampire

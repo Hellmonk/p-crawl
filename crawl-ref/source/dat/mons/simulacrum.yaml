@@ -12,7 +12,6 @@ hp_10x: 110
 ac: 10
 ev: 4
 intelligence: brainless
-speed: 7
 size: small
 shape: misc
 habitat: amphibious

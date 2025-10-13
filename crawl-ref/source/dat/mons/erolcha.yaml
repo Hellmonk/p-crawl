@@ -1,6 +1,6 @@
 name: "Erolcha"
 glyph: {char: "O", colour: lightblue}
-flags: [see_invis, speaks, warm_blood, unique, female]
+flags: [speaks, warm_blood, unique, female]
 exp: 867
 species: ogre
 will: 60
@@ -14,7 +14,6 @@ spells: erolcha
 has_corpse: true
 shout: shout
 intelligence: human
-energy: {attack: 15}
 uses: open_doors
 size: large
 shape: humanoid

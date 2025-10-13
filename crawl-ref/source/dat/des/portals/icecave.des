@@ -133,7 +133,7 @@ function simulacrum_monsters()
     end
 
     if dgn.persist.ice_cave_hard then
-        mons["animal"] = "lindwurm simulacrum / dire elephant simulacrum" ..
+        mons["animal"] = "harpy simulacrum / dire elephant simulacrum" ..
             " / alligator simulacrum / harpy simulacrum / anaconda simulacrum"
     else
         mons["animal"] = "wolf simulacrum / elephant simulacrum" ..

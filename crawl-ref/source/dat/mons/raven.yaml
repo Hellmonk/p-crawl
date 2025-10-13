@@ -13,6 +13,5 @@ spells: raven
 has_corpse: true
 shout: caw
 intelligence: animal
-speed: 20
 size: tiny
 shape: bird

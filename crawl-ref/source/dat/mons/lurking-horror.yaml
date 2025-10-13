@@ -8,8 +8,7 @@ attacks:
 hd: 1
 hp_10x: 10
 ac: 0
-ev: 10
+ev: 40
 intelligence: brainless
-speed: 12
 size: small
 shape: orb

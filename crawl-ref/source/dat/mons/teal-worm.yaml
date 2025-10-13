@@ -1,0 +1,16 @@
+name: "teal worm"
+glyph: {char: "w", colour: lightcyan}
+flags: [fast_regen, no_skeleton, has_aura]
+resists: {elec: 3, fire: 3, cold: 3}
+exp: 4
+will: 10
+attacks:
+ - {type: bite, flavour: discharge, damage: 22}
+hd: 9
+hp_10x: 890
+ac: 7
+ev: 0
+has_corpse: true
+intelligence: animal
+size: small
+shape: snake

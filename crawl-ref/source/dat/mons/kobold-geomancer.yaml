@@ -1,0 +1,20 @@
+name: "kobold geomancer"
+glyph: {char: "K", colour: green}
+flags: [speaks, warm_blood]
+exp: 1
+species: kobold
+will: 0
+attacks:
+ - {type: hit, damage: 3}
+hd: 1
+hp_10x: 80
+ac: 2
+ev: 30
+has_corpse: true
+spells: kobold_geomancer
+shout: shout
+intelligence: human
+uses: open_doors
+size: small
+shape: humanoid
+tile_variance: cycle

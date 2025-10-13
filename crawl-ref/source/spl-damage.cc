@@ -968,7 +968,7 @@ spret cast_airstrike(int pow, coord_def target, bool fail)
 
     const int empty_space = airstrike_space_around(target, true);
 
-    dice_def to_roll = base_airstrike_damage(pow, true);
+    dice_def to_roll = base_airstrike_damage(pow);
     to_roll.size += empty_space * AIRSTRIKE_PER_SPACE_BONUS;
     int hurted = to_roll.roll();
 #ifdef DEBUG_DIAGNOSTICS
@@ -993,11 +993,9 @@ spret cast_airstrike(int pow, coord_def target, bool fail)
 
 // maximum damage before accounting for empty space
 // used for damage display
-dice_def base_airstrike_damage(int pow, bool random)
+dice_def base_airstrike_damage(int pow)
 {
-    if (random)
-        return dice_def(2, div_rand_round(pow, 14));
-    return dice_def(2, (pow + 13) / 14);
+    return dice_def(1, 1 + pow);
 }
 
 string describe_airstrike_dam(dice_def dice)
@@ -1239,7 +1237,6 @@ static const map<monster_type, monster_frag> fraggable_monsters = {
     // I made saltlings not have a big crystal explosion for balance reasons -
     // there are so many of them, it seems wrong to have them be so harmful to
     // their own allies. This could be wrong!
-    { MONS_SALTLING,          { "salt crystal", WHITE } },
     { MONS_PILE_OF_DEBRIS,    { "stone", LIGHTGRAY } },
     { MONS_PETRIFIED_FLOWER,  { "stone", LIGHTGRAY } },
     { MONS_EARTH_ELEMENTAL,   { "rock", BROWN } },
@@ -2037,7 +2034,7 @@ vector<coord_def> find_near_hostiles(int range, bool affect_invis, const actor& 
 dice_def irradiate_damage(int pow, bool random)
 {
     const int dice = 3;
-    const int max_dam = 35 + (random ? div_rand_round(pow, 2) : pow / 2);
+    const int max_dam = 30 + (random ? div_rand_round(pow, 2) : pow / 2);
     return calc_dice(dice, max_dam, random);
 }
 
@@ -2076,14 +2073,7 @@ static int _irradiate_cell(coord_def where, int pow, const actor &agent)
     else if (dam)
         act->hurt(&agent, dam, BEAM_MMISSILE);
 
-    if (act->alive())
-    {
-        // be nice and "only" contaminate the player a lot
-        if (hitting_player)
-            contaminate_player(random_range(400, 600));
-        else if (coinflip())
-            act->malmutate(&agent);
-    }
+    act->malmutate(&agent);
 
     return dam;
 }
@@ -3589,7 +3579,7 @@ void toxic_radiance_effect(actor* agent, int mult, bool on_cast)
                     "by Olgreb's Toxic Radiance", true,
                     agent->as_monster()->name(DESC_A).c_str());
 
-                int poison = roll_dice(2, 3 + div_rand_round(pow, 24));
+                int poison = 1;
 
                 // rPois = 1/3 poison each tick instead of a 1/3 chance
                 // of full poison each tick. Looks smoother.

@@ -1747,6 +1747,9 @@ static void _pre_monster_move(monster& mons)
             mons.del_ench(ENCH_HEXED);
     }
 
+    if (mons.has_ench(ENCH_USED_FREE_ACTION))
+        mons.del_ench(ENCH_USED_FREE_ACTION);
+
     // Dissipate player ball lightnings and foxfires
     // that have left the player's sight
     // (monsters are allowed to 'cheat', as with orb of destruction)
@@ -2187,11 +2190,7 @@ void handle_monster_move(monster* mons)
     }
 
     // Please change _slouch_damage to match!
-    if (mons->cannot_act()
-        || mons->type == MONS_SIXFIRHY // these move only 8 of 24 turns
-            && ++mons->move_spurt / 8 % 3 != 2  // but are not helpless
-        || mons->type == MONS_JIANGSHI // similarly, but more irregular (48 of 90)
-            && (++mons->move_spurt / 6 % 3 == 1 || mons->move_spurt / 3 % 5 == 1))
+    if (mons->cannot_act())
     {
         mons->speed_increment -= non_move_energy;
         return;
@@ -2535,24 +2534,16 @@ static void _ancient_zyme_sicken(monster* mons)
     {
         if (!you.duration[DUR_SICKNESS])
         {
-            if (!you.duration[DUR_SICKENING])
-            {
-                mprf(MSGCH_WARN, "You feel yourself growing ill in the "
+            mprf(MSGCH_WARN, "You feel yourself grow ill in the "
                                  "presence of %s.",
-                    mons->name(DESC_THE).c_str());
-            }
+            mons->name(DESC_THE).c_str());
 
-            you.duration[DUR_SICKENING] += (2 + random2(4)) * BASELINE_DELAY;
-            if (you.duration[DUR_SICKENING] > 100)
-            {
-                you.sicken(40 + random2(30));
-                you.duration[DUR_SICKENING] = 0;
-            }
+            you.sicken(40 + random2(30));
         }
         else
         {
-            if (x_chance_in_y(you.time_taken, 60))
-                you.sicken(15 + random2(30));
+            if (x_chance_in_y(you.time_taken, 10))
+                you.sicken(10 + random2(10));
         }
     }
 

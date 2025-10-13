@@ -749,6 +749,41 @@ static const struct spell_desc spelldata[] =
 },
 
 {
+    SPELL_MASS_REPULSION, "Mass Repulsion",
+    spschool::air,
+    spflag::monster,
+    6,
+    200,
+    -1, -1,
+    0,
+
+    TILEG_MASS_REPULSION,
+},
+
+{
+    SPELL_STEELSKIN, "Steelskin",
+    spschool::earth,
+    spflag::monster,
+    5,
+    200,
+    -1, -1,
+    0,
+
+    TILEG_STEELSKIN,
+},
+
+{
+    SPELL_DIMINISH_SPELLS, "Diminish Spells",
+    spschool::hexes,
+    spflag::dir_or_target | spflag::monster | spflag::needs_tracer,
+    3,
+    200,
+    LOS_RADIUS, LOS_RADIUS,
+    4,
+    TILEG_DIMINISH_SPELLS,
+},
+
+{
     SPELL_BERSERKER_RAGE, "Berserker Rage",
     spschool::earth,
     spflag::hasty | spflag::monster | spflag::selfench,
@@ -1252,7 +1287,7 @@ static const struct spell_desc spelldata[] =
     spflag::monster,
     3,
     50,
-    -1, -1,
+    LOS_RADIUS, LOS_RADIUS,
     0,
     TILEG_PORTAL_PROJECTILE,
 },
@@ -3290,7 +3325,7 @@ static const struct spell_desc spelldata[] =
     spflag::dir_or_target | spflag::needs_tracer | spflag::monster,
     6,
     200,
-    5, 5,
+    4, 4,
     0,
     TILEG_SOJOURNING_BOLT,
 },
@@ -4559,6 +4594,39 @@ static const struct spell_desc spelldata[] =
     5, 5,
     0,
     TILEG_ACID_BALL,
+},
+
+{
+    SPELL_SHOOT_ARROW, "Shoot Arrow",
+    spschool::earth,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::monster,
+    4,
+    200,
+    LOS_RADIUS, LOS_RADIUS,
+    0,
+    TILEG_ERROR,
+},
+
+{
+    SPELL_TOXIC_DART, "Toxic Dart",
+    spschool::earth,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::monster,
+    3,
+    200,
+    LOS_RADIUS, LOS_RADIUS,
+    0,
+    TILEG_ERROR,
+},
+
+{
+    SPELL_THROW_BOULDER, "Throw Boulder",
+    spschool::earth,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::monster,
+    4,
+    200,
+    LOS_RADIUS, LOS_RADIUS,
+    0,
+    TILEG_ERROR,
 },
 
 {

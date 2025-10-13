@@ -1,6 +1,6 @@
 name: "revenant"
 glyph: {char: "z", colour: magenta}
-flags: [see_invis, speaks]
+flags: [speaks]
 resists: {cold: 1}
 exp: 200
 holiness: [undead]

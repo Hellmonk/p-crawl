@@ -4,11 +4,11 @@ flags: [speaks, warm_blood]
 exp: 538
 will: 40
 attacks:
- - {type: hit, damage: 23}
-hd: 10
-hp_10x: 500
+ - {type: hit, damage: 8}
+hd: 2
+hp_10x: 200
 ac: 2
-ev: 10
+ev: 20
 spells: faun
 has_corpse: true
 shout: shout

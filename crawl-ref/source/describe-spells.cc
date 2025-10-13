@@ -529,7 +529,7 @@ static string _effect_string(spell_type spell, const monster_info *mon_owner,
     }
 
     if (spell == SPELL_SMITING)
-        return "7-17"; // sigh
+        return "5-10"; // sigh
 
     if (spell == SPELL_BRAIN_BITE)
         return "4-8*"; // >_>

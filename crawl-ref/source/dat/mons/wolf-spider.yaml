@@ -15,6 +15,5 @@ ev: 10
 has_corpse: true
 shout: skitter
 intelligence: animal
-speed: 15
 size: medium
 shape: arachnid

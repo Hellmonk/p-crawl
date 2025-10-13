@@ -1977,11 +1977,17 @@ static bool _check_ability_possible(const ability_def& abil, bool quiet = false)
                 mpr("You can't heal while in death's door.");
             return false;
         }
+        if (you.duration[DUR_SICKNESS])
+        {
+            if (!quiet)
+                mpr("You can't heal while sick.");
+            return false;
+        }
         return true;
 
     case ABIL_ELYVILON_PURIFICATION:
         if (!you.duration[DUR_SICKNESS]
-            && !you.duration[DUR_POISONING]
+            && !you.attribute[ATTR_POISON_STRENGTH]
             && !you.duration[DUR_CONF] && !you.duration[DUR_SLOW]
             && !you.petrifying()
             && !player_drained()
@@ -2145,6 +2151,12 @@ static bool _check_ability_possible(const ability_def& abil, bool quiet = false)
         {
             if (!quiet)
                 mpr("You can't heal while in death's door.");
+            return false;
+        }
+        if (you.duration[DUR_SICKNESS])
+        {
+            if (!quiet)
+                mpr("You can't heal while sick.");
             return false;
         }
         if (get_real_mp(false) < 1)

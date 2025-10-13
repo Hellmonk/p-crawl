@@ -4,11 +4,12 @@ flags: [speaks, warm_blood, archer]
 exp: 360
 will: 40
 attacks:
- - {type: hit, damage: 20}
-hd: 8
+ - {type: hit, damage: 15}
+hd: 5
 hp_10x: 440
 ac: 4
-ev: 4
+ev: 0
+spells: archer
 has_corpse: true
 shout: shout
 intelligence: human

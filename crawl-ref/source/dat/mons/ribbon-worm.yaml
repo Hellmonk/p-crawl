@@ -5,13 +5,12 @@ exp: 4
 will: 10
 attacks:
  - {type: bite, damage: 9}
-hd: 4
+hd: 2
 hp_10x: 180
-ac: 1
-ev: 5
+ac: 0
+ev: 0
 spells: ribbon_worm
 has_corpse: true
 intelligence: animal
-speed: 8
 size: small
 shape: snake

@@ -1248,12 +1248,6 @@ static void _summon_demon_card(int power)
     {
         mpr("You see a puff of smoke.");
     }
-    else if (hostile
-             && mons_class_flag(dct, M_INVIS)
-             && !you.can_see_invisible())
-    {
-        mpr("You sense the presence of something unfriendly.");
-    }
 
     _friendly(dct2, 5 - power_level);
 }

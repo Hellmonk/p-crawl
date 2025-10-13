@@ -317,7 +317,7 @@ tier1_gauntlet_arenas = {
   },
   {
     first  = {mons = "sixfirhy", min = 1, max = 1},
-    second = {mons = "ufetubus", min = 2, max = 4},
+    second = {mons = "brain imp", min = 2, max = 4},
     liquid = "water",
     plant  = "demonic",
   },
@@ -404,7 +404,7 @@ tier1_gauntlet_arenas = {
     weight = 5,
   },
   {
-    first  = {mons = "eye of devastation", min = 1, max = 1},
+    first  = {mons = "shining eye", min = 1, max = 1},
     second = {mons = "glass eye / golden eye", min = 1, max = 2},
     weight = 5,
   },
@@ -428,7 +428,7 @@ tier1_gauntlet_arenas = {
   },
   {
     first  = {mons = "oklob plant", min = 1, max = 1},
-    second = {mons = "acid dragon", min = 1, max = 2},
+    second = {mons = "acid drake", min = 1, max = 2},
   },
   {
     first  = {mons = "necromancer", min = 1, max = 1},
@@ -523,7 +523,7 @@ tier2_gauntlet_arenas = {
   },
   {
     first  = {mons = "cacodemon", min = 1, max = 1},
-    second = {mons = "drude", min = 1, max = 2},
+    second = {mons = "drain imp", min = 1, max = 2},
     plant  = "demonic",
     weight = 5
   },

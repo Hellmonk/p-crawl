@@ -1,7 +1,6 @@
 name: "black mamba"
 glyph: {char: "S", colour: blue}
 flags: [cold_blood]
-resists: {poison: 1}
 exp: 456
 genus: snake
 will: 20
@@ -14,6 +13,5 @@ ev: 15
 has_corpse: true
 shout: hiss
 intelligence: animal
-speed: 18
 size: medium
 shape: snake

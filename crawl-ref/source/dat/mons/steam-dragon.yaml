@@ -1,4 +1,5 @@
-name: "steam dragon"
+name: "steam drake"
+enum: steam_dragon
 glyph: {char: "D", colour: blue}
 flags: [flies, warm_blood]
 resists: {steam: 1}
@@ -10,7 +11,7 @@ attacks:
  - {type: claw, damage: 6}
 hd: 4
 hp_10x: 300
-ac: 5
+ac: 3
 ev: 10
 spells: steam_dragon
 has_corpse: true

@@ -4,13 +4,13 @@ flags: [flies, warm_blood]
 exp: 263
 will: 20
 attacks:
- - {type: peck, damage: 12}
- - {type: claw, damage: 9}
- - {type: claw, damage: 9}
-hd: 7
-hp_10x: 425
+ - {type: peck, damage: 8}
+ - {type: claw, damage: 4}
+ - {type: claw, damage: 4}
+hd: 2
+hp_10x: 240
 ac: 2
-ev: 7
+ev: 10
 spells: hippogriff
 has_corpse: true
 shout: screech

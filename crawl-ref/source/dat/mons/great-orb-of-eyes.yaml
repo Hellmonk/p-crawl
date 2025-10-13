@@ -1,15 +1,15 @@
 name: "great orb of eyes"
 glyph: {char: "G", colour: lightgreen}
-flags: [flies, see_invis, no_skeleton]
+flags: [flies, no_skeleton]
 exp: 878
 genus: floating_eye
 will: 120
 attacks:
- - {type: bite, damage: 20}
-hd: 13
+ - {type: bite, damage: 14}
+hd: 9
 hp_10x: 660
-ac: 10
-ev: 3
+ac: 7
+ev: 0
 spells: great_orb_of_eyes
 intelligence: human
 size: large

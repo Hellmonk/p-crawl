@@ -276,8 +276,6 @@ bool mons_is_beast(monster_type mc);
 bool mons_is_avatar(monster_type mc);
 int mons_demon_tier(monster_type mc);
 
-bool mons_class_wields_two_weapons(monster_type mc);
-bool mons_wields_two_weapons(const monster& m);
 bool mons_self_destructs(const monster& m);
 bool mons_blows_up(const monster& m);
 bool mons_destroyed_on_impact(const monster& m);
@@ -320,9 +318,6 @@ bool mons_class_is_animated_object(monster_type type);
 bool mons_class_is_remnant(monster_type type);
 monster_type mons_base_type(const monster& mon);
 bool mons_class_can_leave_corpse(monster_type mc);
-bool mons_class_leaves_hide(monster_type mc);
-bool mons_class_leaves_wand(monster_type mc);
-bool mons_class_leaves_organ(monster_type mc);
 bool mons_is_zombified(const monster& mons);
 bool mons_class_can_be_zombified(monster_type mc);
 bool mons_can_be_zombified(const monster& mon);
@@ -581,3 +576,4 @@ bool shoot_through_monster(const actor* agent, const monster& mon,bool do_messag
 bool shoot_through_monster(const actor* agent, const monster* mon, bool do_message = false);
 bool never_harm_monster(const actor* agent, const monster& mon, bool do_message = false);
 bool never_harm_monster(const actor* agent, const monster* mon, bool do_message = false);
+bool mons_is_glowing(monster_type type);

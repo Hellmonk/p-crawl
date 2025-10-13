@@ -334,7 +334,7 @@ function arena_sprint_init_boss_table()
     bs[9] = {"place:Coc:$", "antaeus", "icy rune of zot"}
     -- Pan sets are based on those in pan.des
     bs[10] = {"neqoxec / cacodemon / tormentor / tentacled monstrosity / " ..
-              "golden eye / eye of devastation / " ..
+              "golden eye / " ..
               "shining eye", "mnoleg", "glowing rune of zot"}
     bs[11] = {"smoke demon / blizzard demon / green death / rakshasa / " ..
               "glowing orange brain / titan / lich / draconian annihilator / " ..

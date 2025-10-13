@@ -319,7 +319,7 @@ function index_vaults_room_themes (e, set, hard)
     if crawl.x_chance_in_y(d, 10) then
       sl = sl + 1
     end
-    e.mons('lindwurm w:' .. 7 - d .. ' / crawling flesh cage w:5 / ' ..
+    e.mons('fire crab w:' .. 7 - d .. ' / crawling flesh cage w:5 / ' ..
            'crystal guardian w:' .. d)
     e.mons('great orb of eyes w:' .. 7 - d .. ' / ' ..
            'boggart band w:5 / glowing orange brain w:' .. d + 1)
@@ -355,7 +355,7 @@ function index_vaults_room_themes (e, set, hard)
     e.tags('no_pool_fixup')
     e.mons('harpy w:' .. 80 - d * 20 .. ' / ' ..
            'wolf spider w:' .. 20 - d * 3 .. ' / ' ..
-           'lindwurm w:' .. 140 - d * 20 .. ' / ' ..
+           'fire crab w:' .. 140 - d * 20 .. ' / ' ..
            'dire elephant w:' .. d * 3 )
     e.mons('dire elephant w:' .. 18 - d * 3 .. ' / ' ..
            'formless jellyfish w:' .. 2 + d * 4 .. ' / ' ..

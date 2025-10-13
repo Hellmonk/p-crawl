@@ -1,6 +1,6 @@
 name: "Menkaure"
 glyph: {char: "M", colour: magenta}
-flags: [see_invis, speaks, unique, male]
+flags: [speaks, unique, male]
 resists: {fire: -1, cold: 1}
 exp: 171
 species: mummy
@@ -15,7 +15,6 @@ ev: 6
 spells: menkaure
 shout: shout
 intelligence: human
-speed: 8
 uses: open_doors
 size: medium
 shape: humanoid

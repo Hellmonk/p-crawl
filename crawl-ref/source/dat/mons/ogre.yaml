@@ -1,18 +1,17 @@
 name: "ogre"
 glyph: {char: "O", colour: brown}
-flags: [speaks, warm_blood]
+flags: [speaks, warm_blood, slow_attacks]
 exp: 119
 will: 20
 attacks:
  - {type: hit, damage: 20}
-hd: 5
-hp_10x: 275
+hd: 3
+hp_10x: 200
 ac: 1
-ev: 6
+ev: 0
 has_corpse: true
 shout: shout
 intelligence: human
-energy: {attack: 15}
 uses: open_doors
 size: large
 shape: humanoid

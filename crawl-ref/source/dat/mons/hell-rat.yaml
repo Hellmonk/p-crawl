@@ -6,14 +6,13 @@ genus: rat
 holiness: [demonic]
 will: 20
 attacks:
- - {type: bite, flavour: drain, damage: 20}
-hd: 3
-hp_10x: 165
-ac: 7
-ev: 10
+ - {type: bite, flavour: drain, damage: 14}
+hd: 1
+hp_10x: 90
+ac: 5
+ev: 20
 has_corpse: true
 shout: loud_roar
 intelligence: animal
-speed: 12
 size: little
 shape: quadruped

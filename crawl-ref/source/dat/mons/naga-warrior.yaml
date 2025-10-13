@@ -1,7 +1,6 @@
 name: "naga warrior"
 glyph: {char: "N", colour: blue}
-flags: [fighter, see_invis, speaks, warm_blood]
-resists: {poison: 1}
+flags: [fighter, speaks, warm_blood]
 exp: 791
 species: naga
 will: 80
@@ -16,7 +15,6 @@ spells: naga_warrior
 has_corpse: true
 shout: shout
 intelligence: human
-energy: {move: 14}
 uses: open_doors
 size: large
 shape: naga

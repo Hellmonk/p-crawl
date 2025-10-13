@@ -371,9 +371,6 @@ void change_monster_type(monster* mons, monster_type targetc, bool do_seen)
 
     mons->ench_countdown = old_ench_countdown;
 
-    if (mons_class_flag(mons->type, M_INVIS))
-        mons->add_ench(ENCH_INVIS);
-
     mons->hit_points = mons->max_hit_points * old_hp / old_hp_max;
 
     // Slimifying monsters gets you a fresh, delicious jiggly buddy.

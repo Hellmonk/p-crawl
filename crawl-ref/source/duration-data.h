@@ -650,7 +650,7 @@ static const duration_def duration_data[] =
     { DUR_SICKNESS,
       RED, "Sick",
       "sick", "sickness",
-      "Your sickness prevents you from regenerating health.", D_DISPELLABLE | D_NEGATIVE,
+      "Your sickness prevents you from healing.", D_DISPELLABLE | D_NEGATIVE,
       {{ "You feel your health improve." }}},
     { DUR_BLINK_COOLDOWN,
       YELLOW, "-Blink",

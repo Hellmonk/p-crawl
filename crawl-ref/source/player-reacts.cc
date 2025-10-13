@@ -134,7 +134,9 @@ static bool _decrement_a_duration(duration_type dur, int delay,
             "expiration delay loss %d not less than duration expiration point %d",
             exploss * BASELINE_DELAY, exppoint);
 
-    if (dur == DUR_SENTINEL_MARK && aura_is_active_on_player(OPHAN_MARK_KEY))
+    if (dur == DUR_SENTINEL_MARK && aura_is_active_on_player(EYE_MARK_KEY))
+        return false;
+    if (dur == DUR_SAP_MAGIC && aura_is_active_on_player(TEAL_SAP_KEY))
         return false;
     else if (dur == DUR_PHALANX_BARRIER && aura_is_active_on_player(PHALANX_BARRIER_KEY))
         return false;
@@ -1242,8 +1244,8 @@ void player_reacts()
         you.duration[DUR_MEDUSA_COOLDOWN] = 0;
     }
 
-    if (you.duration[DUR_POISONING])
-        handle_player_poison(you.time_taken);
+    if (you.attribute[ATTR_POISON_STRENGTH])
+        handle_player_poison();
 
     if (you.has_mutation(MUT_TRICKSTER))
         _handle_trickster_decay(you.time_taken);

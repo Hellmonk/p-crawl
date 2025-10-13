@@ -1,0 +1,19 @@
+name: "spriggan assassin"
+glyph: {char: "i", colour: magenta}
+flags: [speaks, warm_blood, fast_moving]
+exp: 792
+species: spriggan
+will: 120
+attacks:
+ - {type: hit, damage: 19}
+hd: 5
+hp_10x: 340
+ac: 2
+ev: 90
+spells: assassin
+has_corpse: true
+shout: shout
+intelligence: human
+uses: open_doors
+size: little
+shape: humanoid

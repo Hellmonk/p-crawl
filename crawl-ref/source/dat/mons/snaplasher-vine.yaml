@@ -1,7 +1,6 @@
 name: "snaplasher vine"
 glyph: {char: "w", colour: lightgreen}
 flags: [stationary, no_exp_gain, no_poly_to, peripheral]
-resists: {poison: 1}
 genus: plant
 holiness: [plant]
 will: 40
@@ -13,7 +12,6 @@ hp_10x: 240
 ac: 4
 ev: 7
 intelligence: brainless
-speed: 13
 size: large
 shape: snake
 tile: program_bug
