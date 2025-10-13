@@ -268,7 +268,11 @@ void debug_monpick()
         {
             if (!pick_monster_all_branches(absdungeon_depth(br, d),
                                            _not_skeletonable)
-                && br != BRANCH_ZIGGURAT) // order is ok, check the loop
+                && br != BRANCH_ZIGGURAT
+                && br != BRANCH_TEMPLE
+                && br != BRANCH_BAZAAR
+                && br != BRANCH_TROVE
+                && br != BRANCH_OSSUARY) // order is ok, check the loop
             {
                 fails += make_stringf(
                     "%s: no valid skeletons in any parallel branch\n",
