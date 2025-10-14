@@ -625,10 +625,11 @@ Corrodes the target, with no direct line of fire required.
 Eringya's Noxious Bog spell
 
 Causes the caster to release a torrent of sludge that transforms nearby areas
-into a toxic bog. The sludge damages and poisons all monsters, even those
-resistant to poison. The bog cannot form on areas adjacent to multiple solid
-features, nor on areas that lack solid floor, like deep water or lava. The
-transformation is temporary and cannot be sustained out of the caster's sight.
+into a bog. The sludge damages all grounded monsters and causes them to take the
+same movement and attack penalties as shallow water. The bog cannot form on 
+areas adjacent to multiple solid features, nor on areas that lack solid floor, 
+like deep water or lava. The transformation is temporary and cannot be 
+sustained out of the caster's sight.
 Spellpower will increase how long the bog lingers.
 %%%%
 Eringya's Surprising Crocodile spell
@@ -1453,7 +1454,7 @@ gateways close a short time after being opened, or immediately once entered.
 %%%%
 Passwall spell
 
-Allows the caster to travel a short distance through an adjacent rock wall and
+Allows the caster to travel up to three tiles through an adjacent rock wall and
 emerge again on the other side. This spell takes an unusally long time to cast,
 during which the caster will be unable to act, but also gain increased armour
 from their attunement to the rock.
@@ -2094,10 +2095,10 @@ Summons one or more fire elementals.
 Summon Forest spell
 
 Forcefully intersects a forested plane with this world. It requires open space
-to succeed. While the spell holds, a spirit of the forest will be called forth,
+to succeed. While the spell holds, a dryad will be called forth,
 and the trees of the forest will be awakened to deal damage to nearby enemies.
 Spell power increases the duration, size, and thickness of the intersected
-plane; as well as the strength of the spirit.
+plane; and slightly increases the strength of the spirit.
 %%%%
 Summon Greater Demon spell
 

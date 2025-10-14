@@ -6,10 +6,10 @@ exp: 344
 will: 80
 attacks:
  - {type: hit, damage: 10}
-hd: 8
-hp_10x: 520
-ac: 6
-ev: 12
+hd: 3
+hp_10x: 270
+ac: 3
+ev: 10
 spells: dryad
 has_corpse: true
 shout: shout

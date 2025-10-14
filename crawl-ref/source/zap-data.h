@@ -345,7 +345,7 @@ static const zap_info zap_data[] =
 {
     ZAP_PERMAFROST_ERUPTION_COLD,
     "piercing cold",
-    new calcdice_calculator<4, 6, 3, 8>,
+    new calcdice_calculator<1, 16, 1, 1>,
     new tohit_calculator<AUTOMATIC_HIT>,
     new dicedef_calculator<3, 7, 1, 20>,
     new tohit_calculator<AUTOMATIC_HIT>,
@@ -360,7 +360,7 @@ static const zap_info zap_data[] =
 {
     ZAP_PERMAFROST_ERUPTION_EARTH,
     "mass of rock",
-    new calcdice_calculator<4, 6, 3, 8>,
+    new calcdice_calculator<1, 16, 1, 1>,
     new tohit_calculator<AUTOMATIC_HIT>,
     new dicedef_calculator<3, 7, 1, 20>,
     new tohit_calculator<AUTOMATIC_HIT>,

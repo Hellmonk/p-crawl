@@ -152,7 +152,7 @@ static const struct spell_desc spelldata[] =
     SPELL_PERMAFROST_ERUPTION, "Permafrost Eruption",
     spschool::ice | spschool::earth,
     spflag::destructive,
-    6,
+    3,
     200,
     6, 6, // reduce cases of hitting something outside LOS
     0,
@@ -2549,9 +2549,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_SUMMON_FOREST, "Summon Forest",
-    spschool::summoning | spschool::translocation,
+    spschool::summoning | spschool::translocation | spschool::earth,
     spflag::none,
-    5,
+    2,
     200,
     -1, -1,
     10,
@@ -3432,9 +3432,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_NOXIOUS_BOG, "Eringya's Noxious Bog",
-    spschool::hexes,
+    spschool::hexes | spschool::earth,
     spflag::area | spflag::no_ghost | spflag::destructive,
-    6,
+    3,
     200,
     4, 4,
     0,
