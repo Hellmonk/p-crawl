@@ -1012,6 +1012,8 @@ unique_ptr<targeter> find_spell_targeter(spell_type spell, int pow, int range)
     case SPELL_POISONOUS_CLOUD:
     case SPELL_HOLY_BREATH:
         return make_unique<targeter_cloud>(&you, spell_to_cloud(spell), range);
+    case SPELL_STEAM_BURST:
+        return make_unique<targeter_cloud>(&you, spell_to_cloud(spell), 1);
     case SPELL_THUNDERBOLT:
         return make_unique<targeter_thunderbolt>(&you, range,
                    get_thunderbolt_last_aim(&you));
@@ -2431,6 +2433,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     case SPELL_PILEDRIVER:
         return cast_piledriver(beam.target, powc, fail);
 
+    case SPELL_STEAM_BURST:
+        return cast_steam_burst(powc, fail);
+
     // Just to do extra messaging; spell is handled by default zapping
     case SPELL_COMBUSTION_BREATH:
     case SPELL_GLACIAL_BREATH:
@@ -2608,6 +2613,7 @@ string spell_max_damage_string(spell_type spell)
     {
     case SPELL_MAXWELLS_COUPLING:
     case SPELL_FREEZING_CLOUD:
+    case SPELL_STEAM_BURST:
         // These have damage strings, but don't scale with power.
         return "";
     case SPELL_FORTRESS_BLAST:
@@ -2639,6 +2645,8 @@ string spell_damage_string(spell_type spell, bool evoked, int pow, bool terse)
             return Options.char_set == CSET_ASCII ? "death" : "\u221e"; //"∞"
         case SPELL_FREEZING_CLOUD:
             return desc_cloud_damage(CLOUD_COLD, false);
+        case SPELL_STEAM_BURST:
+            return desc_cloud_damage(CLOUD_STEAM, false);
         case SPELL_DISCHARGE:
         {
             const int max = discharge_max_damage(pow);

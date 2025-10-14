@@ -1981,6 +1981,14 @@ Steam Breath spell
 
 <Steam breath ability>
 %%%%
+Steam Burst spell
+
+Condenses, then superheats water from the atmosphere into a cloud of hot, opaque
+steam centered on the caster. The caster is not immune to the cloud;
+caution is advised.
+
+Spellpower slightly increases the size of the cloud.
+%%%%
 Sticks to Snakes spell
 
 Casts forth sticks and transforms them into snakes. Stronger casters will always

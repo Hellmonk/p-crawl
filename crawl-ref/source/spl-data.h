@@ -4663,6 +4663,17 @@ static const struct spell_desc spelldata[] =
     TILEG_PASSAGE_OF_GOLUBRIA,
 },
 
+{
+    SPELL_STEAM_BURST, "Steam Burst",
+    spschool::ice | spschool::fire | spschool::air,
+    spflag::area | spflag::destructive | spflag::cloud,
+    2,
+    200,
+    -1, -1,
+    0,
+    TILEG_STEAM_BURST,
+},
+
 #if TAG_MAJOR_VERSION == 34
 #define AXED_SPELL(tag, name) \
     { tag, name, spschool::none, spflag::none, 7, 0, -1, -1, 0, TILEG_ERROR },
