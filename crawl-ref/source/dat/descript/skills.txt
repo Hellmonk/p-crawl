@@ -113,8 +113,8 @@ of the spell's schools.
 %%%%
 Fire Magic
 
-Fire Magic focuses mainly on dealing fire damage over long distances, with many
-effective Conjurations.
+Fire Magic focuses mainly on dealing fire damage and has many ways to cause
+large explosions.
 
 Spells require a skill equal to their spell level in each of their schools
 before they can be cast. Spell power also increases with the average skill level

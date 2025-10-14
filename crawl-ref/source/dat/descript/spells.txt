@@ -1094,10 +1094,10 @@ performs against them to strike with perfect accuracy and a small slaying bonus.
 %%%%
 Volatile Blastmotes spell
 
-Brings forth a cloud of volatile blastmotes around the caster. These explode
-on contact with open flame or with creatures - including any caster foolish
-enough to linger in them! The explosion is concussive, knocking adjacent
-creatures away. Damage done rises with the spell's power.
+Brings forth a cloud of volatile blastmotes beneath you. These explode
+on contact with open flame or with creatures - including you if you stay in
+them! The explosion knocks away adjacent creatures and stuns them. Damage done 
+rises with the spell's power.
 %%%%
 Launch Bomblet spell
 
