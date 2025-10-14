@@ -6710,15 +6710,7 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
     case BEAM_UNRAVELLING:
         if (!monster_can_be_unravelled(*mon))
             return MON_UNAFFECTED;
-
-        if (mon->is_abjurable())
-        {
-            mprf("The magic binding %s to this plane unravels!",
-                 mon->name(DESC_THE).c_str());
-            monster_die(*mon, KILL_RESET, actor_to_death_source(agent()));
-        }
-        else
-            debuff_monster(*mon);
+        debuff_monster(*mon);
         _unravelling_explode(*this);
         return MON_AFFECTED;
 

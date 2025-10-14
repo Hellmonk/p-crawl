@@ -473,13 +473,14 @@ Fires a ray which does massive damage (1500 hp) and always hits.
 %%%%
 Detonation Catalyst spell
 
-Affixes a volatile catalyst to the caster's fists or melee weapon, causing each
-of their strikes to release a fiery explosion at its primary target. The caster
-and their allies are protected from the explosion's effects. The activity of the
-catalyst may be prolonged indefinitely as long as the caster continues to
-attack, but it rapidly loses potency when they take other actions. The base
-damage of the caster's weapon and the caster's spellpower each increase the
-explosion's damage.
+Affixes a volatile catalyst to your fists or melee weapon, causing each
+of your strikes to release a fiery explosion. You
+and your allies are protected from the explosion's effects. The activity of the
+catalyst may be prolonged indefinitely as long as you continue to
+attack, but it rapidly loses potency when you take other actions.
+
+The explosion's damage depends on your weapon's base damage (halved if you lack
+sufficient weapon skill) and spellpower.
 %%%%
 Diamond Sawblades spell
 
@@ -670,13 +671,14 @@ Summons demons of flame and damnation.
 %%%%
 Fireball spell
 
-Hurls an explosive ball of fire.
+It's every wizard's favorite spell. Like all explosions, it is quite loud but
+impossible to dodge or block.
 %%%%
 Flame Wave spell
 
-Blasts the caster's surroundings with a wave of fire. If the caster maintains
-focus and supplies the spell with magical power (by waiting in place and not
-taking any other actions), more and larger flame waves will radiate outward.
+Blasts the caster's surroundings with a wave of fire. If the caster supplies the
+spell with 1 additional MP per turn (by waiting in place and not
+taking any other actions), larger flame waves will radiate outward.
 %%%%
 Flaming Cloud spell
 
@@ -707,14 +709,14 @@ varies with the caster.
 %%%%
 Forge Blazeheart Golem spell
 
-Constructs a shell of slag iron around a volatile elemental spark. It is capable
-of raining down powerful blows on its creator's adversaries - so powerful that
-the golem itself is often damaged by their impact.
+Constructs a shell of slag iron around a volatile elemental spark. It is only
+tenuously independent of your magic and will quickly go dormant if you do not
+remain adjacent to it.
 
-Only tenuously independent of its creator's magic, the flames within it will
-rapidly go dormant if the two ever leave each other's side. If its shell is
-destroyed while the golem is still active, its exposed core will violently
-detonate a moment later.
+Its attacks violently tear apart the shell from which it is made. If its shell
+is destroyed (either by itself or by your enemies) while the golem is still
+active, its core will be exposed and will violently detonate, dealing incredible
+damage in a one tile radius a moment later.
 
 It gains greater explosive damage at higher power.
 %%%%
@@ -760,9 +762,10 @@ entirely upon the caster's AC.
 %%%%
 Foxfire spell
 
-Conjures two balls of burning swamp gas adjacent to the caster. The balls will
+Conjures balls of burning swamp gas adjacent to the caster. The balls will
 rapidly seek the nearest monster and burn them. They will dissipate harmlessly
-if unable to reach a target or if the caster swaps places with them.
+if unable to reach a target or if the caster swaps places with them. The number
+of balls created increases with spellpower.
 %%%%
 Freeze spell
 
@@ -1033,9 +1036,9 @@ Releases a thick cloud of ink to obscure vision.
 %%%%
 Inner Flame spell
 
-Fills an enemy with an intense fire. This fire is released any time the target
-is hit, and explosively released upon death. The size of the explosion caused
-is dependent on the size of the target.
+Fills an enemy with an intense fire. This fire is explosively released upon
+death, dealing high damage to anything adjacent and placing clouds of flame.
+It must overcome the enemy's willpower to have any effect.
 %%%%
 Invisibility spell
 
@@ -1508,8 +1511,10 @@ specific branch varies with each cast of the spell.
 Plasma Beam spell
 
 Fires a penetrating beam of plasma at one of the caster's most distant foes.
-The ionised beam bypasses half of defenders' armour, and a second beam of fire
-follows in its wake.
+The ionised electrical beam bypasses half of defenders' armour, and a second
+beam of fire follows in its wake, targeting the same enemy as the first.
+
+The damage dealt by the spell increases rapidly with spellpower.
 %%%%
 Platinum Paragon spell
 
@@ -1687,8 +1692,9 @@ briefly preventing them from casting any further spells.
 %%%%
 Scorch spell
 
-Scorches a random foe. Those injured by this have their resistance to fire
-burned away for a short time.
+Scorches random foes. The number of foes targeted increases with spellpower. Any
+creature targeted that isn't entirely immune to fire will become more vulnerable
+to fire for a short time.
 %%%%
 Sculpt Simulacrum spell
 
@@ -2395,10 +2401,8 @@ Yara's Violent Unravelling spell
 
 If cast upon a creature already blessed (or cursed) with magical enchantments,
 those enchantments will be torn apart, transforming into a spray of
-destructive mutagenic radiation. The victim and anyone adjacent will be
-blasted and heavily deformed, weakening them and reducing their armour.
-Summoned creatures are particularly vulnerable, as the enchantments binding
-them to this plane will unravel and cause them to be dismissed immediately.
+destructive radiation. The victim and anyone adjacent will be
+blasted and malmutated.
 %%%%
 Shoot Arrow spell
 

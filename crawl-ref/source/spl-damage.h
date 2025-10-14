@@ -115,7 +115,7 @@ spret cast_glaciate(actor *caster, int pow, coord_def aim,
 
 spret cast_scorch(const actor& agent, int pow, bool fail = false);
 void explosive_brand(actor *wielder, coord_def where, int pow);
-dice_def scorch_damage(int pow, bool random);
+dice_def scorch_damage(int pow);
 
 vector<coord_def> get_ignition_blast_sources(const actor *agent,
                                              bool tracer = false);

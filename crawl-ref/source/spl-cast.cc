@@ -388,8 +388,6 @@ int calc_spell_power(spell_type spell)
     if (you.divine_exegesis)
         power += you.skill(SK_INVOCATIONS);
 
-    power = (power * you.intel()) / 10;
-
     // Wild magic boosts spell power, subdued magic decreases it.
     power += you.get_mutation_level(MUT_WILD_MAGIC);
     power -= you.get_mutation_level(MUT_SUBDUED_MAGIC);
@@ -2564,7 +2562,7 @@ static dice_def _spell_damage(spell_type spell, int power)
         case SPELL_SHATTER:
             return shatter_damage(power);
         case SPELL_SCORCH:
-            return scorch_damage(power, false);
+            return scorch_damage(power);
         case SPELL_BATTLESPHERE:
             return battlesphere_damage_from_power(power);
         case SPELL_FROZEN_RAMPARTS:

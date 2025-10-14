@@ -85,7 +85,7 @@ static void _setup_inferno_explosion(bolt & beam, const monster& origin)
 
 static dice_def _blazeheart_damage(int hd)
 {
-    return dice_def(3, 6 + hd);
+    return dice_def(2, 6 + hd);
 }
 
 static void _setup_blazeheart_core_explosion(bolt & beam, const monster& origin)

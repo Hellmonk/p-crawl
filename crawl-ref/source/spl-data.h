@@ -50,9 +50,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_FIREBALL, "Fireball",
-    spschool::enchantments | spschool::fire,
-    spflag::dir_or_target | spflag::needs_tracer,
-    5,
+    spschool::fire,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::destructive,
+    1,
     200,
     5, 5,
     0,
@@ -141,7 +141,7 @@ static const struct spell_desc spelldata[] =
     SPELL_PLASMA_BEAM, "Plasma Beam",
     spschool::fire | spschool::air,
     spflag::noisy | spflag::destructive,
-    6,
+    4,
     200,
     LOS_RADIUS, LOS_RADIUS,
     20,
@@ -2057,7 +2057,7 @@ static const struct spell_desc spelldata[] =
     SPELL_INNER_FLAME, "Inner Flame",
     spschool::hexes | spschool::fire,
     spflag::target | spflag::not_self | spflag::WL_check | spflag::destructive,
-    3,
+    1,
     100,
     LOS_RADIUS, LOS_RADIUS,
     0,
@@ -2571,9 +2571,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_FORGE_BLAZEHEART_GOLEM, "Forge Blazeheart Golem",
-    spschool::fire,
+    spschool::summoning | spschool::fire,
     spflag::none,
-    4,
+    3,
     100,
     -1, -1,
     0,
@@ -3067,9 +3067,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_VIOLENT_UNRAVELLING, "Yara's Violent Unravelling",
-    spschool::hexes,
+    spschool::hexes | spschool::fire,
     spflag::target | spflag::no_ghost | spflag::chaotic | spflag::destructive,
-    5,
+    3,
     200,
     LOS_RADIUS, LOS_RADIUS,
     0,
@@ -3399,10 +3399,10 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_FOXFIRE, "Foxfire",
-    spschool::enchantments | spschool::fire,
+    spschool::summoning | spschool::fire,
     spflag::none,
     1,
-    25,
+    200,
     -1, -1,
     0,
     TILEG_FOXFIRE,
@@ -3668,20 +3668,20 @@ static const struct spell_desc spelldata[] =
     spschool::fire,
     spflag::destructive,
     2,
-    50,
+    200,
     3, 3,
-    8,
+    0,
     TILEG_SCORCH,
 },
 
 {
     SPELL_FLAME_WAVE, "Flame Wave",
-    spschool::enchantments | spschool::fire,
-    spflag::area,
+    spschool::fire,
+    spflag::area | spflag::destructive,
     4,
     100,
-    3, 3, // sort of...
-    12, // increases as it's channeled
+    5, 5, // sort of...
+    6, // increases as it's channeled
     TILEG_FLAME_WAVE,
 },
 
@@ -4488,9 +4488,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_DETONATION_CATALYST, "Detonation Catalyst",
-    spschool::fire,
+    spschool::enchantments | spschool::fire,
     spflag::selfench,
-    5,
+    3,
     100,
     -1, -1,
     15,

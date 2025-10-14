@@ -1926,14 +1926,9 @@ void explosive_brand(actor *wielder, coord_def where, int pow)
     scaled_delay(50);
 }
 
-dice_def scorch_damage(int pow, bool random)
+dice_def scorch_damage(int pow)
 {
-    if (random)
-    {
-        const int max_dam = 10 + div_rand_round(pow, 6);
-        return calc_dice(2, max_dam);
-    }
-    return dice_def(2, (10 + pow / 6) / 2);
+    return dice_def(1, 8 + pow);
 }
 
 spret cast_scorch(const actor& agent, int pow, bool fail)
@@ -1942,74 +1937,73 @@ spret cast_scorch(const actor& agent, int pow, bool fail)
 
     const int range = spell_range(SPELL_SCORCH, pow);
     auto targeter = make_unique<targeter_scorch>(agent, range, true);
+    const int num_targets = 1 + div_rand_round(pow, 3);
     actor *targ = nullptr;
-    int seen = 0;
+    int hit = 0;
     for (auto ti = targeter->affected_iterator(AFF_MAYBE); ti; ++ti)
-        if (one_chance_in(++seen))
-            targ = actor_at(*ti);
-
-    if (!targ)
     {
-        canned_msg(MSG_NOTHING_HAPPENS);
-        return spret::success;
-    }
+        if (hit >= num_targets)
+            return spret::success;
 
-    const int base_dam = scorch_damage(pow, true).roll();
-    const int post_ac_dam = max(0, targ->apply_ac(base_dam));
+        targ = monster_at(*ti);
 
-    mprf("Flames lash %s%s.", targ->name(DESC_THE).c_str(),
-         post_ac_dam ? "" : " but do no damage");
-    const coord_def p = targ->pos();
-    noisy(spell_effect_noise(SPELL_SCORCH), p);
+        if (!targ)
+            continue;
 
-    bolt beam;
-    beam.flavour = BEAM_FIRE;
+        hit++;
+        const int base_dam = scorch_damage(pow).roll();
+        const int post_ac_dam = max(0, targ->apply_ac(base_dam));
 
-    const int damage = (targ->is_monster())
+        mprf("Flames lash %s%s.", targ->name(DESC_THE).c_str(),
+            post_ac_dam ? "" : " but do no damage");
+        const coord_def p = targ->pos();
+
+        bolt beam;
+        beam.flavour = BEAM_FIRE;
+
+        const int damage = (targ->is_monster())
                         ? mons_adjust_flavoured(targ->as_monster(), beam, post_ac_dam)
                         : check_your_resists(post_ac_dam, BEAM_FIRE, "scorch", &beam);
 
-    if (agent.is_player())
-        _player_hurt_monster(*targ->as_monster(), damage, beam.flavour);
-    else
-        targ->hurt(&agent, damage, BEAM_FIRE);
+        if (agent.is_player())
+            _player_hurt_monster(*targ->as_monster(), damage, beam.flavour);
+        else
+            targ->hurt(&agent, damage, BEAM_FIRE);
 
-    // XXX: interact with clouds of cold?
-    // XXX: dedup with beam::affect_place_clouds()?
-    if (feat_is_water(env.grid(p)) && !cloud_at(p))
-        place_cloud(CLOUD_STEAM, p, 2 + random2(5), &agent, 11);
+        // XXX: interact with clouds of cold?
+        // XXX: dedup with beam::affect_place_clouds()?
+        if (feat_is_water(env.grid(p)) && !cloud_at(p))
+            place_cloud(CLOUD_STEAM, p, 2 + random2(5), &agent, 11);
 
-    if (!targ->alive())
-    {
-        flash_tile(p, RED);
-        return spret::success;
-    }
+        if (!targ->alive())
+        {
+            flash_tile(p, RED);
+            return spret::success;
+        }
 
-    if (agent.is_player())
-        you.pet_target = targ->mindex();
+        if (agent.is_player())
+            you.pet_target = targ->mindex();
 
-    if (damage > 0)
-    {
-        const int dur = 3 + div_rand_round(damage, 3);
+        const int dur = 5 + div_rand_round(damage, 3);
         if (targ->is_monster())
         {
             monster* mon = targ->as_monster();
-            if (you.can_see(*mon) && !mon->has_ench(ENCH_FIRE_VULN))
+            if (!mon->has_ench(ENCH_FIRE_VULN) && mon->res_fire() <= 1)
             {
                 mprf("%s fire resistance burns away.",
                     mon->name(DESC_ITS).c_str());
+                mon->add_ench(mon_enchant(ENCH_FIRE_VULN, 1, &agent,
+                                  dur * BASELINE_DELAY));
             }
-            mon->add_ench(mon_enchant(ENCH_FIRE_VULN, 1, &agent,
-                                      dur * BASELINE_DELAY));
         }
         else
         {
             mprf(MSGCH_DANGER, "Your fire resistance burns away!");
             you.duration[DUR_FIRE_VULN] += dur * 3 / 2;
         }
-    }
 
-    flash_tile(targ->pos(), RED);
+        flash_tile(targ->pos(), RED);
+    }
     return spret::success;
 }
 
@@ -2022,12 +2016,12 @@ vector<coord_def> find_near_hostiles(int range, bool affect_invis, const actor& 
         actor *act = actor_at(*ri);
         if (act
             && !mons_aligned(&agent, act)
-            && _act_worth_targeting(agent, *act)
-            && (affect_invis || agent.can_see(*act)))
+            && _act_worth_targeting(agent, *act))
         {
             hostiles.push_back(*ri);
         }
     }
+    shuffle_array(hostiles);
     return hostiles;
 }
 
@@ -5278,14 +5272,17 @@ static int _catalyst_weapon_power(const item_def* wpn, bool random)
     if (!wpn)
         return unarmed_base_damage(random) + unarmed_base_damage_bonus(random);
 
-    const int wpn_dam = property(*wpn, PWPN_DAMAGE);
-    return random ? div_rand_round(wpn_dam * 9, 5) : wpn_dam * 9 / 5;
+    int wpn_dam = property(*wpn, PWPN_DAMAGE);
+    if (weapon_skill_requirement(*wpn) > you.skill(item_attack_skill(*wpn)))
+        wpn_dam = random ? div_rand_round(wpn_dam, 2) : wpn_dam / 2;
+
+    return wpn_dam;
 }
 
 dice_def detonation_catalyst_damage(int pow, bool real, const item_def* wpn)
 {
     int wpn_dam = 0;
-    int power_factor = real ? div_rand_round(pow, 10) : pow / 10;
+    int power_factor = real ? div_rand_round(pow, 4) : pow / 4;
 
     if (real)
         wpn_dam = _catalyst_weapon_power(wpn, true);
@@ -5303,9 +5300,7 @@ dice_def detonation_catalyst_damage(int pow, bool real, const item_def* wpn)
         }
     }
 
-    // Flat penalty on damage, capped below at 1.
-    // Power reduces the penalty, eventually turning into a bonus.
-    wpn_dam = max(1, wpn_dam - (8 - power_factor));
+    wpn_dam = max(1, wpn_dam + power_factor);
 
     return calc_dice(2, wpn_dam, real);
 }

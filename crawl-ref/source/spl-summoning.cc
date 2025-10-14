@@ -1069,7 +1069,7 @@ spret cast_forge_blazeheart_golem(int pow, bool fail)
 
     mgen_data golem = _pal_data(MONS_BLAZEHEART_GOLEM, summ_dur(3),
                                 SPELL_FORGE_BLAZEHEART_GOLEM, false);
-    golem.hd = 6 + div_rand_round(pow, 10);
+    golem.hd = 4 + div_rand_round(pow, 2);
 
     monster* mons = (create_monster(golem));
 
@@ -2957,13 +2957,14 @@ spret cast_foxfire(actor &agent, int pow, bool fail, bool marshlight)
     fail_check();
 
     int created = 0;
+    int num_to_create = 1 + div_rand_round(pow, 2);
 
     for (fair_adjacent_iterator ai(agent.pos()); ai; ++ai)
     {
         if (!_create_foxfire(agent, *ai, pow, marshlight))
             continue;
         ++created;
-        if (created == 2)
+        if (created >= num_to_create)
             break;
     }
 
