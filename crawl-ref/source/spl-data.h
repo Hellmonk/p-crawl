@@ -244,7 +244,7 @@ static const struct spell_desc spelldata[] =
     SPELL_PETRIFY, "Petrify",
     spschool::earth,
     spflag::dir_or_target | spflag::needs_tracer | spflag::WL_check,
-    4,
+    2,
     200,
     6, 6,
     0,
@@ -1819,7 +1819,7 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_IOOD, "Orb of Destruction",
-    spschool::enchantments,
+    spschool::earth,
     spflag::dir_or_target | spflag::not_self | spflag::needs_tracer,
     7,
     200,
@@ -3797,7 +3797,7 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_BOULDER, "Brom's Barrelling Boulder",
-    spschool::earth | spschool::enchantments,
+    spschool::earth,
     spflag::target | spflag::not_self,
     4,
     100,

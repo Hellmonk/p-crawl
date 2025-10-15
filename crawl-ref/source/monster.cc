@@ -4481,13 +4481,6 @@ bool monster::sicken(int amount)
 void monster::calc_speed()
 {
     speed = mons_base_speed(*this);
-
-    if (this->berserk_or_frenzied())
-        speed = berserk_mul(speed);
-    else if (has_ench(ENCH_HASTE))
-        speed = haste_mul(speed);
-    if (has_ench(ENCH_SLOW))
-        speed = haste_div(speed);
 }
 
 // Check speed and speed_increment sanity.
@@ -5403,8 +5396,11 @@ bool monster::maybe_free_action(energy_use_type et)
 
 bool monster::takes_two_turns(energy_use_type et)
 {
-    if (mons_class_flag(this->type, M_SLOW_ACTING) || has_ench(ENCH_SLOW))
+    if (mons_class_flag(this->type, M_SLOW_ACTING) || has_ench(ENCH_SLOW)
+        || has_ench(ENCH_PETRIFYING))
+    {
         return true;
+    }
     if (mons_class_flag(this->type, M_SLOW_ATTACKS))
         return et == EUT_ATTACK;
     if (mons_class_flag(this->type, M_SLOW_MOVEMENT) || has_ench(ENCH_FROZEN))

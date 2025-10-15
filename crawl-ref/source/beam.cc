@@ -5044,45 +5044,11 @@ void fill_chain_targets(const bolt& beam, coord_def centre,
     if (candidates.empty())
         return;
 
-    const size_t MAX_CHAIN_BOUNCES = 2;
-    if (candidates.size() >= MAX_CHAIN_BOUNCES)
-    {
-        for (coord_def candidate : candidates)
-            targs.push_back(candidate);
-        if (!random)
-            return;
-
-        shuffle_array(targs);
-        targs.resize(MAX_CHAIN_BOUNCES);
-        return;
-    }
-
-    // OK. Can we bounce further out?
-    set<coord_def> scs;
     for (coord_def candidate : candidates) // only runs once
-    {
         targs.push_back(candidate);
-        // Ensure adjacent targets show up before later-ring ones.
-        _add_chain_candidates(beam, candidate, scs);
-    }
+
     if (random)
         shuffle_array(targs);
-
-    scs.erase(centre);
-    if (scs.empty())
-        return;
-
-    // OK, we found some later bounces.
-    if (random)
-    {
-        vector<coord_def> subcand_array(scs.begin(), scs.end());
-        // Assumes MAX_CHAIN_BOUNCES = 2. Sorry!
-        targs.push_back(*random_iterator(subcand_array));
-        return;
-    }
-
-    for (coord_def sc : scs)
-        targs.push_back(sc);
 }
 
 void bolt::handle_enchant_chaining(coord_def centre)
