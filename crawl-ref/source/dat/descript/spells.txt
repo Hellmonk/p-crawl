@@ -626,9 +626,9 @@ Eringya's Noxious Bog spell
 
 Causes the caster to release a torrent of sludge that transforms nearby areas
 into a bog. The sludge damages all grounded monsters and causes them to take the
-same movement and attack penalties as shallow water. The bog cannot form on 
-areas adjacent to multiple solid features, nor on areas that lack solid floor, 
-like deep water or lava. The transformation is temporary and cannot be 
+same movement and attack penalties as shallow water. The bog cannot form on
+areas adjacent to multiple solid features, nor on areas that lack solid floor,
+like deep water or lava. The transformation is temporary and cannot be
 sustained out of the caster's sight.
 Spellpower will increase how long the bog lingers.
 %%%%
@@ -1097,7 +1097,7 @@ Volatile Blastmotes spell
 
 Brings forth a cloud of volatile blastmotes beneath you. These explode
 on contact with open flame or with creatures - including you if you stay in
-them! The explosion knocks away adjacent creatures and stuns them. Damage done 
+them! The explosion knocks away adjacent creatures and stuns them. Damage done
 rises with the spell's power.
 %%%%
 Launch Bomblet spell
@@ -2422,3 +2422,15 @@ Throw Boulder spell
 
 Throws a massive boulder that can penetrate through multiple targets. Monsters
 won't throw boulders at targets in melee range.
+%%%%
+Tomb of Doroklohe spell
+
+Entombs you within walls of rock. These walls will grow in any open tile,
+but are obstructed by the presence of creatures or other objects. The walls will
+expire after a period of time; spellpower increases the duration of the effect.
+%%%%
+Warp Gravity spell
+
+Momentarily increases gravity at the caster's location, drawing in all nearby
+creatures. Anything adjacent to the caster will be severely damaged and may be
+stunned by the intense gravitational force.

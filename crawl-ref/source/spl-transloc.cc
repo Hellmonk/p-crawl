@@ -17,11 +17,13 @@
 #include "art-enum.h"
 #include "artefact.h"
 #include "cloud.h"
+#include "colour.h"
 #include "coordit.h"
 #include "delay.h"
 #include "directn.h"
 #include "dungeon.h"
 #include "english.h"
+#include "fight.h"
 #include "god-abil.h" // fedhas_passthrough for armataur charge
 #include "god-conduct.h"
 #include "item-prop.h"
@@ -43,6 +45,7 @@
 #include "orb.h"
 #include "output.h"
 #include "prompt.h"
+#include "random.h"
 #include "religion.h"
 #include "shout.h"
 #include "spl-damage.h" // cancel_polar_vortex
@@ -2053,6 +2056,38 @@ void attract_monsters(int delay)
         attract_monster(*mi, div_rand_round(3 * delay, BASELINE_DELAY));
 }
 
+dice_def gravity_damage(int pow, bool random)
+{
+    return random ? dice_def(1, 25 + div_rand_round(pow * 2, 3))
+                  : dice_def(1, 25 + pow * 2/3);
+}
+
+static int _gravity_cell(coord_def where, int pow, actor *agent)
+{
+    monster *mons = monster_at(where);
+    if (!mons)
+        return 0; // XXX: handle damaging the player for mons casts...?
+
+    int dam = gravity_damage(pow, true).roll();
+    dam = mons->apply_ac(dam);
+
+    if (you.can_see(*mons))
+    {
+        mprf("%s is crushed by gravitational force!",
+             mons->name(DESC_THE).c_str());
+    }
+
+    mons->hurt(agent, dam, BEAM_MMISSILE);
+
+    if (mons->alive() && !mons->stunned() && x_chance_in_y(2,3))
+    {
+        mprf("%s is stunned!", mons->name(DESC_THE).c_str());
+        mons->stun(&you);
+    }
+
+    return 1;
+}
+
 vector<monster *> find_chaos_targets(bool just_check)
 {
     vector<monster *> targets;
@@ -2069,6 +2104,86 @@ vector<monster *> find_chaos_targets(bool just_check)
     }
 
     return targets;
+}
+
+bool fatal_attraction(const coord_def& pos, const actor *agent, int pow)
+{
+    vector <actor *> victims;
+
+    for (actor_near_iterator ai(pos, LOS_SOLID); ai; ++ai)
+    {
+        if (*ai == agent || ai->is_stationary() || ai->pos() == pos)
+            continue;
+
+        const int range = (pos - ai->pos()).rdist();
+        if (range > spell_range(SPELL_WARP_GRAVITY, pow))
+            continue;
+
+        victims.push_back(*ai);
+    }
+
+    if (victims.empty())
+        return false;
+
+    near_to_far_sorter sorter = {you.pos()};
+    sort(victims.begin(), victims.end(), sorter);
+
+    for (actor * ai : victims)
+    {
+        const int range = (pos - ai->pos()).rdist();
+        if (range > spell_range(SPELL_WARP_GRAVITY, pow))
+            continue;
+
+        const int strength =
+            min(LOS_RADIUS, (div_rand_round(pow * 4 + 100, 5 * range * range)));
+
+        monster* mon = ai->as_monster();
+        attract_monster(*mon, strength);
+    }
+
+    return true;
+
+}
+
+spret warp_gravity(int pow, bool fail, bool tracer)
+{
+    int radius = spell_range(SPELL_WARP_GRAVITY, pow);
+
+    targeter_radius hitfunc(&you, LOS_NO_TRANS, radius);
+
+    if (stop_attack_prompt(hitfunc, "warp", nullptr))
+        return spret::abort;
+
+    if (tracer)
+    {
+        coord_def pos = you.pos();
+        for (actor_near_iterator ai(pos, LOS_SOLID); ai; ++ai)
+        {
+            if (*ai == &you || ai->is_stationary() || ai->pos() == pos)
+                continue;
+
+            const int range = (pos - ai->pos()).rdist();
+            if (range > spell_range(SPELL_WARP_GRAVITY, pow))
+                continue;
+
+            return spret::success;
+        }
+
+        return spret::abort;
+    }
+
+    fail_check();
+
+    flash_view_delay(UA_PLAYER, ETC_WARP, 80);
+    flash_view_delay(UA_PLAYER, BROWN, 80);
+
+    mprf("Gravity intensifies.");
+    fatal_attraction(you.pos(), &you, pow);
+    apply_random_around_square([pow] (coord_def where) {
+        return _gravity_cell(where, pow, &you);
+    }, you.pos(), true, 8);
+
+    return spret::success;
 }
 
 spret word_of_chaos(int pow, bool fail)

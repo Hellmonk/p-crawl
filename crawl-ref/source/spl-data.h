@@ -3290,7 +3290,7 @@ static const struct spell_desc spelldata[] =
     SPELL_BORGNJORS_VILE_CLUTCH, "Borgnjor's Vile Clutch",
     spschool::necromancy | spschool::earth,
     spflag::dir_or_target | spflag::not_self | spflag::needs_tracer,
-    5,
+    3,
     200,
     6, 6,
     5,
@@ -4630,6 +4630,39 @@ static const struct spell_desc spelldata[] =
 },
 
 {
+    SPELL_STEAM_BURST, "Steam Burst",
+    spschool::ice | spschool::fire | spschool::air,
+    spflag::area | spflag::destructive | spflag::cloud,
+    2,
+    200,
+    -1, -1,
+    0,
+    TILEG_STEAM_BURST,
+},
+
+{
+    SPELL_TOMB_OF_DOROKLOHE, "Tomb of Doroklohe",
+    spschool::earth | spschool::enchantments,
+    spflag::none,
+    5,
+    200,
+    -1, -1,
+    10,
+    TILEG_TOMB_OF_DOROKLOHE,
+},
+
+{
+    SPELL_WARP_GRAVITY, "Warp Gravity",
+    spschool::earth | spschool::translocation,
+    spflag::none,
+    3,
+    200,
+    4, 4,
+    0,
+    TILEG_GRAVITAS,
+},
+
+{
     SPELL_NO_SPELL, "nonexistent spell",
     spschool::none,
     spflag::testing,
@@ -4661,17 +4694,6 @@ static const struct spell_desc spelldata[] =
     -1, -1,
     0,
     TILEG_PASSAGE_OF_GOLUBRIA,
-},
-
-{
-    SPELL_STEAM_BURST, "Steam Burst",
-    spschool::ice | spschool::fire | spschool::air,
-    spflag::area | spflag::destructive | spflag::cloud,
-    2,
-    200,
-    -1, -1,
-    0,
-    TILEG_STEAM_BURST,
 },
 
 #if TAG_MAJOR_VERSION == 34
@@ -4761,7 +4783,6 @@ AXED_SPELL(SPELL_HYDRA_FORM, "Hydra Form")
 AXED_SPELL(SPELL_VORTEX, "Vortex")
 AXED_SPELL(SPELL_GOAD_BEASTS, "Goad Beasts")
 AXED_SPELL(SPELL_TELEPORT_SELF, "Teleport Self")
-AXED_SPELL(SPELL_TOMB_OF_DOROKLOHE, "Tomb of Doroklohe")
 AXED_SPELL(SPELL_EXCRUCIATING_WOUNDS, "Excruciating Wounds")
 AXED_SPELL(SPELL_CONJURE_FLAME, "Conjure Flame")
 AXED_SPELL(SPELL_CORPSE_ROT, "Corpse Rot")

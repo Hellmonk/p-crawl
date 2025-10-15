@@ -38,6 +38,7 @@ shatter SHATTER
 statue_form STATUE_FORM
 stone_arrow STONE_ARROW
 steelskin STEELSKIN
+tomb_of_doroklohe TOMB_OF_DOROKLOHE
 
 %sdir gui/spells/enchantment
 anguish ANGUISH

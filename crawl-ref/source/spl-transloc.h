@@ -78,3 +78,7 @@ spret cast_teleport_other(const coord_def& target, int power, bool fail);
 
 vector<coord_def> get_bestial_landing_spots(coord_def target);
 spret do_bestial_takedown(coord_def target);
+
+dice_def gravity_damage(int pow, bool random = true);
+bool fatal_attraction(const coord_def& pos, const actor *agent, int pow);
+spret warp_gravity(int pow, bool fail, bool tracer);

@@ -42,6 +42,8 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_BLINK,
     SPELL_CALL_IMP,
     SPELL_STEAM_BURST,
+    SPELL_WARP_GRAVITY,
+    SPELL_TOMB_OF_DOROKLOHE,
 },
 
 {   // Book of Conjurations
