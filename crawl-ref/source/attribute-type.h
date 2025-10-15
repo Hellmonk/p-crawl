@@ -110,5 +110,6 @@ enum attribute_type
     ATTR_OSTRACISM,            // How much your piety is temporarily capped by
     ATTR_LAST_CONTAM,          // Timestamp of when contam was last inflicted
     ATTR_POISON_STRENGTH,      // Number of times the player has been poisoned
+    ATTR_FORCE_QUAKE,          // Track what hit of force quake we're on
     NUM_ATTRIBUTES
 };

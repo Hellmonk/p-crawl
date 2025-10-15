@@ -5356,6 +5356,7 @@ static int _knockback_dist(spell_type origin, int pow)
         case SPELL_ISKENDERUNS_MYSTIC_BLAST:
             return 2 + div_rand_round(pow, 3);
         case SPELL_FORCE_LANCE:
+        case SPELL_FORCE_QUAKE:
             return 4;
         default:
             return 1;
@@ -7709,6 +7710,9 @@ string bolt::get_source_name() const
 */
 bool bolt::can_knockback(int dam) const
 {
+    if (name == "aftershock" && dam > 0)
+        return true;
+
     switch (origin_spell)
     {
     case SPELL_PRIMAL_WAVE:

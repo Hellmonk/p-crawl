@@ -192,3 +192,8 @@ void fire_life_bolt(actor& attacker, coord_def target);
 spret cast_watery_grave();
 
 spret cast_golden_breath(bolt& beam, int power, bool fail);
+
+void handle_force_quake();
+spret cast_force_quake(bool fail);
+void force_quake();
+dice_def force_quake_damage(int pow, bool random = false);

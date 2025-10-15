@@ -387,6 +387,26 @@ bool fill_status_info(int status, status_info& inf)
         }
         break;
 
+    case STATUS_FORCE_QUAKE:
+    {
+        switch (you.attribute[ATTR_FORCE_QUAKE])
+        {
+        case 1:
+        case 2:
+            inf.light_text = "Quake";
+            inf.light_colour = WHITE;
+            break;
+        case 3:
+            inf.light_text = "Quake+";
+            inf.light_colour = WHITE;
+            break;
+
+        default:
+            break;
+        }
+        break;
+    }
+
     case STATUS_NET:
         if (you.attribute[ATTR_HELD])
         {

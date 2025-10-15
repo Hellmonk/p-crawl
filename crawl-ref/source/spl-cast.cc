@@ -2156,6 +2156,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     case SPELL_WARP_GRAVITY:
         return warp_gravity(powc, fail, false);
 
+    case SPELL_FORCE_QUAKE:
+        return cast_force_quake(fail);
+
     case SPELL_LEDAS_LIQUEFACTION:
         return cast_liquefaction(powc, fail);
 

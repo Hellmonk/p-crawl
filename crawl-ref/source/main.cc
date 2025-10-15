@@ -1198,6 +1198,7 @@ static void _input()
                 _do_berserk_no_combat_penalty();
 
             _do_playing_harp();
+            handle_force_quake();
 
             world_reacts();
         }

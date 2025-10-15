@@ -702,6 +702,13 @@ Fires a shaft of concussive force. If the impact deals damage, it may knock the
 target back. If this knockback causes the target to hit a wall or another
 creature, both will take additional damage.
 %%%%
+Force Quake spell
+
+Suffuses translocational energy into the ground at your feet, producing
+a localized earthquake that damages adjacent creatures, moves with you,
+and lasts for three turns. The final aftershock releases the translocational
+energy and may knock back anything it hits.
+%%%%
 Forceful Invitation spell
 
 Summons some creatures from one of the Snake Pit, the Spider Nest, the Swamp,
