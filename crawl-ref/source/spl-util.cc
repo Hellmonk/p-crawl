@@ -1308,7 +1308,7 @@ string spell_uselessness_reason(spell_type spell, bool temp, bool prevent,
                 return "you can't move.";
         }
         break;
-        
+
      case SPELL_DEFLECT_MISSILES:
         if (temp && you.duration[DUR_DEFLECT_MISSILES])
             return "you're already deflecting missiles.";

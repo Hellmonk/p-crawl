@@ -893,7 +893,7 @@ static void _decrement_durations()
         handle_player_drowning(delay);
 
     _decrement_a_duration(DUR_HARP, delay, "Your harp's song finishes.");
-    
+
     _decrement_a_duration(DUR_DEFLECT_MISSILES, delay,
             "You are no longer deflecting missiles.");
 

@@ -2340,7 +2340,7 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     // Our few remaining self-enchantments.
     case SPELL_SWIFTNESS:
         return cast_swiftness(powc, fail);
-        
+
     case SPELL_DEFLECT_MISSILES:
         return deflection(powc, fail);
 
