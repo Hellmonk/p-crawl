@@ -43,3 +43,4 @@ spret cast_confusing_touch(int power, bool fail);
 spret cast_detonation_catalyst(bool fail);
 void remove_condensation_shield();
 spret cast_condensation_shield(int pow, bool fail);
+spret deflection(int pow, bool fail);

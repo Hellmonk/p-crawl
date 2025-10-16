@@ -112,7 +112,7 @@ spret cast_swiftness(int power, bool fail)
 {
     fail_check();
 
-    you.set_duration(DUR_SWIFTNESS, 12 + random2(power)/2, 30,
+    you.set_duration(DUR_SWIFTNESS, 7 + random2(2 * power), 30,
                      "You feel quick.");
     you.attribute[ATTR_SWIFTNESS] = you.duration[DUR_SWIFTNESS];
 
@@ -224,8 +224,7 @@ spret cast_silence(int pow, bool fail)
     fail_check();
     mpr("A profound silence engulfs you.");
 
-    you.increase_duration(DUR_SILENCE, 20 + div_rand_round(pow,5)
-                            + random2avg(div_rand_round(pow,2), 2), 100);
+    you.increase_duration(DUR_SILENCE, 16 + pow + random2(1 + 2 * pow), 100);
     invalidate_agrid(true);
 
     if (you.beheld())
@@ -339,6 +338,15 @@ spret cast_condensation_shield(int pow, bool fail)
     you.increase_duration(DUR_CONDENSATION_SHIELD, 10 + random2(3 * pow), 60);
     you.props[CONDENSATION_SHIELD_KEY] = pow;
     you.redraw_armour_class = true;
+
+    return spret::success;
+}
+
+spret deflection(int pow, bool fail)
+{
+    fail_check();
+    you.set_duration(DUR_DEFLECT_MISSILES, 5 + random2(1 + pow), 30,
+        "You feel very safe from missiles.");
 
     return spret::success;
 }

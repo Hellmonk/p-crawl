@@ -176,7 +176,7 @@ static const struct spell_desc spelldata[] =
     spschool::air | spschool::translocation,
     spflag::noisy | spflag::dir_or_target, // hack - should have spflag::needs_tracer
                    // and maybe spflag::hasty?
-    4,
+    1,
     50,
     4, 4,
     0,
@@ -321,12 +321,12 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_MEPHITIC_CLOUD, "Mephitic Cloud",
-    spschool::enchantments | spschool::air,
+    spschool::hexes | spschool::air,
     spflag::dir_or_target | spflag::area
         | spflag::needs_tracer | spflag::cloud,
-    3,
-    100,
-    4, 4,
+    1,
+    25,
+    3, 3,
     0,
     TILEG_MEPHITIC_CLOUD,
 },
@@ -944,13 +944,24 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_SWIFTNESS, "Swiftness",
-    spschool::air,
+    spschool::air | spschool::enchantments,
     spflag::hasty | spflag::selfench | spflag::utility,
-    3,
+    2,
     100,
     -1, -1,
     0,
     TILEG_SWIFTNESS,
+},
+
+{
+    SPELL_DEFLECT_MISSILES, "Deflect Missiles",
+    spschool::air | spschool::enchantments,
+    spflag::selfench | spflag::utility,
+    3,
+    100,
+    -1, -1,
+    0,
+    TILEG_DEFLECT_MISSILES,
 },
 
 {
@@ -1161,7 +1172,7 @@ static const struct spell_desc spelldata[] =
     SPELL_SILENCE, "Silence",
     spschool::hexes | spschool::air,
     spflag::area | spflag::silent, // of course!
-    5,
+    2,
     200,
     -1, -1,
     0,
@@ -3479,7 +3490,7 @@ static const struct spell_desc spelldata[] =
     SPELL_MAXWELLS_COUPLING, "Maxwell's Capacitive Coupling",
     spschool::air,
     spflag::no_ghost | spflag::destructive,
-    8,
+    9,
     200,
     LOS_RADIUS, LOS_RADIUS,
     25,
@@ -4756,7 +4767,6 @@ AXED_SPELL(SPELL_CONTROL_WINDS, "Control Winds")
 AXED_SPELL(SPELL_CORRUPT_BODY, "Corrupt Body")
 AXED_SPELL(SPELL_CURE_POISON, "Cure Poison")
 AXED_SPELL(SPELL_DARKNESS, "Darkness")
-AXED_SPELL(SPELL_DEFLECT_MISSILES, "Deflect Missiles")
 AXED_SPELL(SPELL_DELAYED_FIREBALL, "Delayed Fireball")
 AXED_SPELL(SPELL_DEMONIC_HORDE, "Demonic Horde")
 AXED_SPELL(SPELL_DRACONIAN_BREATH, "Draconian Breath")

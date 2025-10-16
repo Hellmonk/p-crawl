@@ -1500,9 +1500,7 @@ static vector<string> _desc_meph_chance(const monster_info& mi)
     if (get_resist(mi.resists(), MR_RES_POISON) >= 1 || mi.is(MB_CLARITY))
         return vector<string>{"not susceptible"};
 
-    int pct_chance = 2;
-    if (mi.hd < MEPH_HD_CAP)
-        pct_chance = 100 - (100 * mi.hd / MEPH_HD_CAP);
+    int pct_chance = 100 - (100 * mi.hd / 11);
     return vector<string>{make_stringf("chance to affect: %d%%", pct_chance)};
 }
 
@@ -2342,6 +2340,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     // Our few remaining self-enchantments.
     case SPELL_SWIFTNESS:
         return cast_swiftness(powc, fail);
+        
+    case SPELL_DEFLECT_MISSILES:
+        return deflection(powc, fail);
 
     case SPELL_OZOCUBUS_ARMOUR:
         return ice_armour(powc, fail);

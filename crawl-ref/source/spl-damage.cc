@@ -4684,7 +4684,7 @@ spret cast_maxwells_coupling(int pow, bool fail, bool tracer)
     mpr("You begin accumulating electric charge.");
 
     you.props[COUPLING_TIME_KEY] =
-       you.elapsed_time + (30 + div_rand_round(random2((200 - pow) * 40), 200));
+       you.elapsed_time + (30 + max(0, 40 - random2(4 * pow)));
 
     start_channelling_spell(SPELL_MAXWELLS_COUPLING, "continue charging", false);
 

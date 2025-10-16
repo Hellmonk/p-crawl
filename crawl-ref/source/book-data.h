@@ -426,6 +426,7 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_HAILSTORM,
     SPELL_ICE_STATUE,
     SPELL_PERMAFROST_ERUPTION,
+    SPELL_DEFLECT_MISSILES,
 },
 
 { // Book of Storms

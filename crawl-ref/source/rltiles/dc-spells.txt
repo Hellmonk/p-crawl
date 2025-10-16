@@ -12,6 +12,7 @@ silence SILENCE
 static_discharge STATIC_DISCHARGE
 swiftness SWIFTNESS
 mass_repulsion MASS_REPULSION
+deflect_missiles DEFLECT_MISSILES
 
 %sdir gui/spells/conjuration
 battlesphere BATTLESPHERE

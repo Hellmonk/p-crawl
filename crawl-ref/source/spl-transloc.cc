@@ -858,21 +858,12 @@ spret electric_charge(actor& agent, int powc, bool fail, const coord_def &target
 
     // Player Vhi's damage is based on spellpower, distance, and their melee damage
     if (agent.is_player())
-        charge_atk.charge_pow = powc + 50 * grid_distance(initial_pos, agent.pos());
+        charge_atk.charge_pow = 3 * powc + 30 * grid_distance(initial_pos, agent.pos());
     // Monster Vhi's damage is flatly based on their HD
     else
         charge_atk.charge_pow = powc;
 
     charge_atk.launch_attack_set();
-
-    // Monsters will already use up attack energy via the melee attack itself,
-    // so we only need to handle delay for players.
-    if (agent.is_player())
-    {
-        // Normally this is 10 aut (times haste, chei etc), but slow weapons
-        // take longer. Most relevant for low-skill players and Dark Maul.
-        you.time_taken = max(you.attack_delay().roll(), player_speed());
-    }
 
     return spret::success;
 }

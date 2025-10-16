@@ -3121,10 +3121,10 @@ void bolt::affect_place_explosion_clouds()
     if (flavour == BEAM_MEPHITIC)
     {
         const coord_def center = (aimed_at_feet ? source : ray.pos());
-        if (p == center || x_chance_in_y(125 + ench_power, 225))
+        if (p == center || x_chance_in_y(75 + ench_power, 100))
         {
             place_cloud(CLOUD_MEPHITIC, p, roll_dice(2,
-                        8 + div_rand_round(ench_power, 20)), agent());
+                        5 + div_rand_round(ench_power, 3)), agent());
         }
     }
 
@@ -3585,10 +3585,11 @@ bool bolt::misses_player()
     dodge += repel;
 
     const int hit_margin = you.duration[DUR_AUTODODGE] ? -1000
+                            : you.duration[DUR_DEFLECT_MISSILES] ? -1000
                             : _test_beam_hit(real_tohit, dodge);
     if (hit_margin < 0)
     {
-        if (hit_margin > -repel)
+        if (repel && hit_margin > -1 * repel)
         {
             mprf("The %s is repelled.", name.c_str());
             count_action(CACT_DODGE, DODGE_REPEL);
@@ -5694,7 +5695,7 @@ void bolt::affect_monster(monster* mon)
         if (mon->observable())
         {
             // if it would have hit otherwise...
-            if (hit_margin > -repel)
+            if (repel && hit_margin > -1 * repel)
             {
                 msg::stream << mon->name(DESC_THE) << " "
                             << "repels the " << name

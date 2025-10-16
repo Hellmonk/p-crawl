@@ -1308,6 +1308,11 @@ string spell_uselessness_reason(spell_type spell, bool temp, bool prevent,
                 return "you can't move.";
         }
         break;
+        
+     case SPELL_DEFLECT_MISSILES:
+        if (temp && you.duration[DUR_DEFLECT_MISSILES])
+            return "you're already deflecting missiles.";
+        break;
 
     case SPELL_DIMENSIONAL_BULLSEYE:
         if (you.has_mutation(MUT_NO_GRASPING))
@@ -2002,7 +2007,6 @@ const set<spell_type> removed_spells =
     SPELL_CORRUPT_BODY,
     SPELL_CURE_POISON,
     SPELL_DARKNESS,
-    SPELL_DEFLECT_MISSILES,
     SPELL_DELAYED_FIREBALL,
     SPELL_DEMONIC_HORDE,
     SPELL_DRACONIAN_BREATH,

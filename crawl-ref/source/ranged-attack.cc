@@ -87,6 +87,10 @@ bool ranged_attack::attack()
         ev += REPEL_MISSILES_EV_BONUS;
 
     ev_margin = test_hit(to_hit, ev, !attacker->is_player());
+    
+    if (defender->is_player() && you.duration[DUR_DEFLECT_MISSILES])
+        ev_margin = -100;
+    
     bool shield_blocked = attack_shield_blocked(false);
 
     god_conduct_trigger conducts[3];
