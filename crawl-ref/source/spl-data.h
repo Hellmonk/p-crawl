@@ -309,13 +309,13 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_FREEZING_CLOUD, "Freezing Cloud",
-    spschool::enchantments | spschool::ice | spschool::air,
+    spschool::ice | spschool::air,
     spflag::target | spflag::area | spflag::needs_tracer
         | spflag::cloud,
-    5,
+    3,
     200,
     5, 5,
-    2,
+    0,
     TILEG_FREEZING_CLOUD,
 },
 
@@ -707,7 +707,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_ICE_BEAST, "Summon Ice Beast",
     spschool::ice | spschool::summoning,
-    spflag::none,
+    spflag::monster,
     3,
     100,
     -1, -1,
@@ -717,9 +717,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_OZOCUBUS_ARMOUR, "Ozocubu's Armour",
-    spschool::ice,
+    spschool::ice | spschool::enchantments,
     spflag::no_ghost,
-    3,
+    1,
     100,
     -1, -1,
     0,
@@ -3468,9 +3468,9 @@ static const struct spell_desc spelldata[] =
     SPELL_FROZEN_RAMPARTS, "Frozen Ramparts",
     spschool::ice,
     spflag::area | spflag::no_ghost | spflag::destructive,
-    3,
-    50,
-    2, 2,
+    5,
+    100,
+    5, 5,
     8,
     TILEG_FROZEN_RAMPARTS,
 },
@@ -4674,6 +4674,39 @@ static const struct spell_desc spelldata[] =
 },
 
 {
+    SPELL_WINTERS_EMBRACE, "Winter's Embrace",
+    spschool::ice,
+    spflag::destructive,
+    7,
+    200,
+    4, 4,
+    0,
+    TILEG_OZOCUBUS_REFRIGERATION,
+},
+
+{
+    SPELL_CONDENSATION_SHIELD, "Condensation Shield",
+    spschool::ice | spschool::enchantments,
+    spflag::utility,
+    2,
+    50,
+    -1, -1,
+    0,
+    TILEG_CONDENSATION_SHIELD,
+},
+
+{
+    SPELL_ICE_STATUE, "Ice Statue",
+    spschool::ice | spschool::summoning,
+    spflag::none,
+    2,
+    100,
+    -1, -1,
+    0,
+    TILEG_SUMMON_ICE_BEAST,
+},
+
+{
     SPELL_NO_SPELL, "nonexistent spell",
     spschool::none,
     spflag::testing,
@@ -4716,7 +4749,6 @@ AXED_SPELL(SPELL_BOLT_OF_INACCURACY, "Bolt of Inaccuracy")
 AXED_SPELL(SPELL_CHANT_FIRE_STORM, "Chant Fire Storm")
 AXED_SPELL(SPELL_CIGOTUVIS_DEGENERATION, "Cigotuvi's Degeneration")
 AXED_SPELL(SPELL_CIGOTUVIS_EMBRACE, "Cigotuvi's Embrace")
-AXED_SPELL(SPELL_CONDENSATION_SHIELD, "Condensation Shield")
 AXED_SPELL(SPELL_CONTROLLED_BLINK, "Controlled Blink")
 AXED_SPELL(SPELL_CONTROL_TELEPORT, "Control Teleport")
 AXED_SPELL(SPELL_CONTROL_UNDEAD, "Control Undead")

@@ -355,17 +355,17 @@ spret cast_awaken_armour(int pow, bool fail)
     return spret::success;
 }
 
-spret cast_summon_ice_beast(int pow, bool fail)
+spret cast_summon_ice_statue(int pow, bool fail)
 {
-    if (!player_summon_check(MONS_ICE_BEAST))
+    if (!player_summon_check(MONS_ICE_STATUE))
         return spret::abort;
 
     fail_check();
 
-    mgen_data ice_beast = _pal_data(MONS_ICE_BEAST, summ_dur(3), SPELL_SUMMON_ICE_BEAST);
-    ice_beast.hd = (3 + div_rand_round(pow, 13));
+    mgen_data statue = _pal_data(MONS_ICE_STATUE, 3, SPELL_ICE_STATUE);
+    statue.hd = (1 + div_rand_round(pow, 5));
 
-    if (create_monster(ice_beast))
+    if (create_monster(statue))
         mpr("A chill wind blows around you.");
     else
         canned_msg(MSG_NOTHING_HAPPENS);
@@ -2432,7 +2432,7 @@ static const map<spell_type, summon_cap> summonsdata =
     // Player- and monster-castable spells
     { SPELL_SUMMON_SMALL_MAMMAL,      { 2, 4 } },
     { SPELL_CALL_CANINE_FAMILIAR,     { 1, 1 } },
-    { SPELL_SUMMON_ICE_BEAST,         { 1, 3 } },
+    { SPELL_ICE_STATUE,               { 1, 1 } },
     { SPELL_SUMMON_HYDRA,             { 2, 3 } },
     { SPELL_SUMMON_MANA_VIPER,        { 1, 3 } },
     { SPELL_CALL_IMP,                 { 1, 3 } },
@@ -2458,6 +2458,7 @@ static const map<spell_type, summon_cap> summonsdata =
     // Monster-only spells
     { SPELL_SHADOW_CREATURES,         { 0, 4 } },
     { SPELL_SUMMON_SPIDERS,           { 0, 5 } },
+    { SPELL_SUMMON_ICE_BEAST,         { 0, 3 } },
     { SPELL_SUMMON_UFETUBUS,          { 0, 8 } },
     { SPELL_SUMMON_SIN_BEAST,         { 0, 5 } },
     { SPELL_SUMMON_UNDEAD,            { 0, 8 } },

@@ -197,3 +197,6 @@ void handle_force_quake();
 spret cast_force_quake(bool fail);
 void force_quake();
 dice_def force_quake_damage(int pow, bool random = false);
+
+dice_def winter_damage(int pow, bool random = false);
+spret cast_winters_embrace(int pow, bool fail, bool tracer = false);

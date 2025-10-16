@@ -1006,6 +1006,14 @@ static bool _update_statuses(player_info& c)
                 continue;
             inf.short_text = "acrobatic";
         }
+        else if (status == DUR_CONDENSATION_SHIELD)
+        {
+            inf = status_info();
+            if (!you.duration[status])
+                continue;
+
+            inf.short_text = "icily shielded";
+        }
         else if (!fill_status_info(status, inf)) // this will reset inf itself
             continue;
 

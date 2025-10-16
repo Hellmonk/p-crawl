@@ -364,6 +364,14 @@ Combustion Breath spell
 
 <Combustion Breath ability>
 %%%%
+Condensation Shield spell
+
+Causes a disc of dense vapour to condense out of the air surrounding the
+caster. It blocks attacks like a normal shield, but its effectiveness depends
+solely on power, and not on the Shields skill. The disc is controlled by the
+caster's mind, and thus will not conflict with the wielding of a two-handed
+weapon, or any other limitation that prevents the use of a normal shield.
+%%%%
 Confuse spell
 
 Induces a state of bewilderment and confusion in a creature's mind.
@@ -914,6 +922,8 @@ Conjures a cannonade of hail, battering nearby creatures that fail to dodge.
 The eye of the storm is wide enough that monsters adjacent to the caster are
 unaffected. Due to the strong impact and cutting edges, half of its damage
 bypasses cold resistance.
+
+Spellpower strongly increases the damage dealt.
 %%%%
 Haste Other spell
 
@@ -1003,6 +1013,11 @@ Iceblast spell
 
 Fires a large mass of ice, which explodes on impact. Half of its damage
 bypasses cold resistance.
+%%%%
+Ice Statue spell
+
+Summons a fragile statue made of ice. Though lacking in defenses and unable to
+attack itself, the statue can summon large numbers of ice beasts.
 %%%%
 Ignite Poison spell
 
@@ -1297,10 +1312,9 @@ caster's line of sight will end the effect.
 %%%%
 Metabolic Englaciation spell
 
-Lowers the metabolic rate of every creature in the caster's vicinity, slowing
-all those who are not resistant to cold. Cold-blooded creatures will be
-affected much more strongly, and tougher creatures will be slowed for a
-shorter time.
+Lowers the metabolic rate of every hostile creature in the caster's line of
+sight, slowing them. The duration of the effect is reduced by the creature's
+difficulty and their resistance to cold, but is always at least one turn.
 %%%%
 Metal Splinters spell
 
@@ -1425,9 +1439,7 @@ Ozocubu's Armour spell
 
 Envelops the caster's body in a protective layer of thick ice, granting a
 substantial bonus to armour as long as they remain in their current location.
-The ice will crack and fall away if the caster moves to a new position. The
-spell decreases in effectiveness in heavier armour, granting a lower bonus the
-higher the encumbrance rating of the caster's armour.
+The ice will crack and fall away if the caster moves to a new position.
 %%%%
 Ozocubu's Refrigeration spell
 
@@ -1476,9 +1488,9 @@ never explodes next to the caster.
 Petrify spell
 
 Petrifies a targeted creature and any hostile creatures directly adjacent to
-them. It must overcome the enemy's willpower to have an effect. If successful, 
+them. It must overcome the enemy's willpower to have an effect. If successful,
 the affected creature is slowed down briefly until it is temporarily turned into
-stone. In this state, they will be unable to act at all and cannot evade 
+stone. In this state, they will be unable to act at all and cannot evade
 attacks.
 %%%%
 Petrifying Cloud spell
@@ -1807,8 +1819,8 @@ caster's enemies.
 Shatter spell
 
 Causes an enormous burst of concussive force around the caster, dealing severe
-damage to all damage to all creatures within line of sight. It is less effective 
-against flying and insubstantial creatures, dealing one-third normal damage. 
+damage to all damage to all creatures within line of sight. It is less effective
+against flying and insubstantial creatures, dealing one-third normal damage.
 It may also destroy nearby walls, doors, trees, and statues.
 %%%%
 Sheza's Dance spell
@@ -2437,3 +2449,9 @@ Warp Gravity spell
 Momentarily increases gravity at the caster's location, drawing in all nearby
 creatures. Anything adjacent to the caster will be severely damaged and may be
 stunned by the intense gravitational force.
+%%%%
+Winter's Embrace spell
+
+Drains heat from the caster's surroundings, causing harm to all
+creatures within range 4. Additionally, creatures that do not resist cold may
+fall asleep.

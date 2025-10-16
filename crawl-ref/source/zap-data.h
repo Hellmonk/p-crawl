@@ -1789,7 +1789,7 @@ _mon_hex_zap(ZAP_VITRIFY, BEAM_VITRIFY),
 {
     ZAP_HAILSTORM,
     "hail",
-    new calcdice_calculator<3, 15, 1, 3>,
+    new calcdice_calculator<1, 12, 3, 1>,
     new tohit_calculator<9, 1, 10>,
     nullptr,
     nullptr,

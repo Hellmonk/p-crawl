@@ -320,3 +320,25 @@ spret cast_detonation_catalyst(bool fail)
 
     return spret::success;
 }
+
+void remove_condensation_shield()
+{
+    mprf(MSGCH_DURATION, "Your icy shield evaporates.");
+    you.duration[DUR_CONDENSATION_SHIELD] = 0;
+    you.redraw_armour_class = true;
+}
+
+spret cast_condensation_shield(int pow, bool fail)
+{
+    fail_check();
+    if (you.duration[DUR_CONDENSATION_SHIELD] > 0)
+        mpr("The disc of vapour around you crackles some more.");
+    else
+        mpr("A crackling disc of dense vapour forms in the air!");
+
+    you.increase_duration(DUR_CONDENSATION_SHIELD, 10 + random2(3 * pow), 60);
+    you.props[CONDENSATION_SHIELD_KEY] = pow;
+    you.redraw_armour_class = true;
+
+    return spret::success;
+}

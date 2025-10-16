@@ -49,7 +49,7 @@ monster *find_canine_familiar();
 spret cast_call_canine_familiar(int pow, bool fail);
 
 spret cast_awaken_armour(int pow, bool fail);
-spret cast_summon_ice_beast(int pow, bool fail);
+spret cast_summon_ice_statue(int pow, bool fail);
 spret cast_summon_cactus(int pow, bool fail);
 spret cast_monstrous_menagerie(monster* caster, int pow);
 spret cast_sphinx_sisters(const actor& caster, int pow, bool fail);

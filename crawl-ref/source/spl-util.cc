@@ -1691,6 +1691,9 @@ bool spell_no_hostile_in_range(spell_type spell)
     case SPELL_HAILSTORM:
         return cast_hailstorm(-1, false, true) == spret::abort;
 
+    case SPELL_WINTERS_EMBRACE:
+        return cast_winters_embrace(-1, false, true) == spret::abort;
+
     case SPELL_GLOOM:
         return cast_gloom(&you, pow, false, true) == spret::abort;
 
@@ -1990,7 +1993,6 @@ const set<spell_type> removed_spells =
     SPELL_CIGOTUVIS_DEGENERATION,
     SPELL_CIGOTUVIS_EMBRACE,
     SPELL_CLOUD_CONE,
-    SPELL_CONDENSATION_SHIELD,
     SPELL_CONJURE_FLAME,
     SPELL_CONTROLLED_BLINK,
     SPELL_CONTROL_TELEPORT,

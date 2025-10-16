@@ -1051,6 +1051,10 @@ unique_ptr<targeter> find_spell_targeter(spell_type spell, int pow, int range)
         return make_unique<targeter_radius>(&you, LOS_SOLID_SEE, range, 0, 1);
     case SPELL_STARBURST:
         return make_unique<targeter_starburst>(&you, range, pow);
+    case SPELL_WINTERS_EMBRACE:
+        return make_unique<targeter_radius>(&you, LOS_SOLID_SEE, range, 0, 1);
+    case SPELL_WARP_GRAVITY:
+        return make_unique<targeter_radius>(&you, LOS_SOLID_SEE, range, 0, 1);
     case SPELL_IRRADIATE:
         return make_unique<targeter_maybe_radius>(&you, LOS_NO_TRANS, 1, 0, 1);
     case SPELL_DISCHARGE: // not entirely accurate...maybe should highlight
@@ -1145,7 +1149,7 @@ unique_ptr<targeter> find_spell_targeter(spell_type spell, int pow, int range)
     // find_newmons_square
     case SPELL_SUMMON_SMALL_MAMMAL:
     case SPELL_AWAKEN_ARMOUR:
-    case SPELL_SUMMON_ICE_BEAST:
+    case SPELL_ICE_STATUE:
     case SPELL_SPHINX_SISTERS:
     case SPELL_SUMMON_CACTUS:
     case SPELL_SUMMON_HYDRA:
@@ -2165,6 +2169,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     case SPELL_OZOCUBUS_REFRIGERATION:
         return fire_los_attack_spell(spell, powc, &you, fail);
 
+    case SPELL_WINTERS_EMBRACE:
+        return cast_winters_embrace(powc, fail);
+
     case SPELL_OLGREBS_TOXIC_RADIANCE:
         return cast_toxic_radiance(&you, powc, fail);
 
@@ -2199,8 +2206,8 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     case SPELL_AWAKEN_ARMOUR:
         return cast_awaken_armour(powc, fail);
 
-    case SPELL_SUMMON_ICE_BEAST:
-        return cast_summon_ice_beast(powc, fail);
+    case SPELL_ICE_STATUE:
+        return cast_summon_ice_statue(powc, fail);
 
     case SPELL_SUMMON_CACTUS:
         return cast_summon_cactus(powc, fail);
@@ -2338,6 +2345,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
 
     case SPELL_OZOCUBUS_ARMOUR:
         return ice_armour(powc, fail);
+
+    case SPELL_CONDENSATION_SHIELD:
+        return cast_condensation_shield(powc, fail);
 
     case SPELL_SILENCE:
         return cast_silence(powc, fail);
@@ -2568,6 +2578,8 @@ static dice_def _spell_damage(spell_type spell, int power)
     {
         case SPELL_FULMINANT_PRISM:
             return prism_damage(prism_hd(power, false), true);
+        case SPELL_WINTERS_EMBRACE:
+            return winter_damage(power);
         case SPELL_CONJURE_BALL_LIGHTNING:
             return ball_lightning_damage(ball_lightning_hd(power, false), false);
         case SPELL_IOOD:

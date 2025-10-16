@@ -1991,6 +1991,9 @@ int player_shield_class(int scale, bool random, bool ignore_temporary)
     if (you.duration[DUR_SPWPN_SHIELDING])
         shield += 2500;
 
+    if (you.duration[DUR_CONDENSATION_SHIELD])
+        shield += 4000;
+
     shield += qazlal_sh_boost() * 100;
     shield += you.wearing_jewellery(RING_REFLECTION) * 100;
     shield += you.scan_artefacts(ARTP_SHIELDING) * 200;
@@ -5438,6 +5441,7 @@ bool player::shielded() const
            || duration[DUR_DIVINE_SHIELD]
            || duration[DUR_SPWPN_SHIELDING]
            || duration[DUR_EPHEMERAL_SHIELD]
+           || duration[DUR_CONDENSATION_SHIELD]
            || get_mutation_level(MUT_LARGE_BONE_PLATES) > 0
            || qazlal_sh_boost() > 0
            || you.wearing_jewellery(RING_REFLECTION)
@@ -5936,10 +5940,7 @@ int player::armour_class_scaled(int scale) const
     int AC = base_ac(100);
 
     if (duration[DUR_ICY_ARMOUR])
-    {
-        AC += max(0, 500 + you.props[ICY_ARMOUR_KEY].get_int() * 8
-                     - unadjusted_body_armour_penalty() * 50);
-    }
+        AC += max(0, 300 + you.props[ICY_ARMOUR_KEY].get_int() * 50);
 
     if (has_mutation(MUT_ICEMAIL))
         AC += 100 * player_icemail_armour_class();

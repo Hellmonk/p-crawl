@@ -82,6 +82,7 @@ steam_burst STEAM_BURST
 
 %sdir gui/spells/ice
 bolt_of_cold BOLT_OF_COLD
+condensation_shield CONDENSATION_SHIELD
 ensorcelled_hibernation ENSORCELLED_HIBERNATION
 freeze FREEZE
 freezing_cloud FREEZING_CLOUD

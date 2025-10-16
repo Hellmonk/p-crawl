@@ -34,8 +34,8 @@ int englaciate(coord_def where, int pow, actor *agent)
     if (!victim || victim == agent)
         return 0;
 
-    if (agent->is_monster() && mons_aligned(agent, victim))
-        return 0; // don't let monsters hit friendlies
+    if (mons_aligned(agent, victim))
+        return 0; // don't hit friendlies
 
     monster* mons = victim->as_monster();
 
@@ -43,7 +43,7 @@ int englaciate(coord_def where, int pow, actor *agent)
     if (victim->is_peripheral() || never_harm_monster(agent, mons))
         return 0;
 
-    if (victim->res_cold() > 0)
+    if (victim->is_stationary())
     {
         if (!mons)
             canned_msg(MSG_YOU_UNAFFECTED);
@@ -52,17 +52,9 @@ int englaciate(coord_def where, int pow, actor *agent)
         return 0;
     }
 
-    int duration = div_rand_round(roll_dice(3, 1 + pow), 6)
-                    - div_rand_round(victim->get_hit_dice() - 1, 2);
-
-    if (duration <= 0)
-    {
-        if (!mons)
-            canned_msg(MSG_YOU_RESIST);
-        else
-            simple_monster_message(*mons, " resists.");
-        return 0;
-    }
+    const int rc = victim->res_cold();
+    int duration = 1 + pow + random2(2 + pow * 2) - random2(victim->get_hit_dice());
+    duration -= rc * 5;
 
     if ((!mons && you.get_mutation_level(MUT_COLD_BLOODED))
         || (mons && mons_class_flag(mons->type, M_COLD_BLOOD)))
@@ -70,8 +62,8 @@ int englaciate(coord_def where, int pow, actor *agent)
         duration *= 2;
     }
 
-    // Guarantee a minimum duration if not fully resisted.
-    duration = max(duration, 2 + random2(4));
+    // Guarantee a minimum duration.
+    duration = max(duration, 2 + random2(2));
 
     if (!mons)
         return slow_player(duration);

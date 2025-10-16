@@ -4591,7 +4591,7 @@ spret cast_frozen_ramparts(int pow, bool fail)
 
     mpr("The walls around you are covered in ice.");
     you.duration[DUR_FROZEN_RAMPARTS] = random_range(40 + pow,
-                                                     80 + pow * 3 / 2);
+                                                     80 + pow * 2);
     return spret::success;
 }
 
@@ -4617,9 +4617,9 @@ void end_frozen_ramparts()
 
 dice_def ramparts_damage(int pow, bool random)
 {
-    int size = 1 + pow * 3 / 10;
+    int size = 3 + pow / 2;
     if (random)
-        size = 1 + div_rand_round(pow * 3, 10);
+        size = 3 + div_rand_round(pow, 2);
     return dice_def(1, size);
 }
 
@@ -4820,8 +4820,8 @@ bool siphon_essence_affects(const monster &m)
 dice_def boulder_damage(int pow, bool random)
 {
     if (random)
-        return dice_def(2, 4 + div_rand_round(pow, 10));
-    return dice_def(2, 4 + pow / 10);
+        return dice_def(2, 3 + div_rand_round(pow, 3));
+    return dice_def(2, 3 + pow / 3);
 }
 
 void do_boulder_impact(monster& boulder, actor& victim, bool quiet)
@@ -5451,4 +5451,80 @@ void fire_life_bolt(actor& attacker, coord_def target)
         return;
 
     beam.fire();
+}
+
+dice_def winter_damage(int pow, bool random)
+{
+    if (random)
+        return dice_def(1, 36 + div_rand_round(pow, 3));
+
+    return dice_def(1, 36 + pow / 3);
+}
+
+//Handle Winter's Embrace at a given cell
+static void _embrace_cell(coord_def where, int pow, actor *agent)
+{
+    bolt beam;
+    beam.flavour    = BEAM_COLD;
+    beam.thrower    = agent->is_player() ? KILL_YOU : KILL_MON;
+    beam.source_id  = agent->mid;
+    beam.attitude   = agent->temp_attitude();
+    beam.glyph      = dchar_glyph(DCHAR_FIRED_BURST);
+    beam.colour     = BLUE;
+
+#ifdef USE_TILE
+    beam.tile_beam  = -1;
+#endif
+
+    beam.draw_delay = 10;
+    beam.source     = where;
+    beam.target     = where;
+    beam.damage     = winter_damage(pow, true);
+    beam.hit        = AUTOMATIC_HIT;
+    beam.loudness   = 0;
+    beam.name       = "cold";
+    beam.hit_verb   = "envelops";
+
+    monster *mons = monster_at(where);
+    if (mons && mons->res_cold() > 1)
+    {
+        string msg = "%s is unaffected.";
+        mprf(msg.c_str(), mons->name(DESC_THE).c_str());
+        beam.draw(where);
+        return;
+    }
+
+    beam.fire();
+}
+
+spret cast_winters_embrace(int pow, bool fail, bool tracer)
+{
+    if (tracer)
+    {
+        for (radius_iterator ri(you.pos(), 4, C_SQUARE, LOS_NO_TRANS, true); ri; ++ri)
+        {
+            const monster* mon = monster_at(*ri);
+            if (mon && you.can_see(*mon) && mon->res_cold() > 1 && !mon->friendly())
+                return spret::success;
+        }
+
+        return spret::abort;
+    }
+
+    fail_check();
+    mprf("You drain the heat from your surroundings.");
+    noisy(spell_effect_noise(SPELL_WINTERS_EMBRACE), you.pos());
+
+    for (radius_iterator ri(you.pos(), 4, C_SQUARE, LOS_NO_TRANS, true); ri; ++ri)
+    {
+        _embrace_cell(*ri, pow, &you);
+        monster* mons = monster_at(*ri);
+        if (mons && x_chance_in_y(20 + 2 * pow, 50 + 5 * mons->get_hit_dice()))
+        {
+            mprf("%s falls asleep.", mons->name(DESC_THE).c_str());
+                mons->put_to_sleep(&you, pow, true);
+        }
+    }
+
+    return spret::success;
 }

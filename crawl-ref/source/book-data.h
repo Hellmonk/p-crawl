@@ -43,8 +43,10 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_BLINK,
     SPELL_CALL_IMP,
     SPELL_STEAM_BURST,
+    SPELL_CONDENSATION_SHIELD,
     SPELL_WARP_GRAVITY,
     SPELL_TOMB_OF_DOROKLOHE,
+    SPELL_WINTERS_EMBRACE,
 },
 
 {   // Book of Conjurations
@@ -286,7 +288,7 @@ static const vector<spell_type> spellbook_templates[] =
 },
 
 {   // Book of Beasts
-    SPELL_SUMMON_ICE_BEAST,
+    SPELL_ICE_STATUE,
     SPELL_SUMMON_SEISMOSAURUS_EGG,
     SPELL_SUMMON_MANA_VIPER,
     SPELL_SPHINX_SISTERS,
@@ -364,7 +366,7 @@ static const vector<spell_type> spellbook_templates[] =
 #if TAG_MAJOR_VERSION == 34
 { // Book of Rime
     SPELL_FROZEN_RAMPARTS,
-    SPELL_SUMMON_ICE_BEAST,
+    SPELL_ICE_STATUE,
 },
 #endif
 
@@ -422,7 +424,7 @@ static const vector<spell_type> spellbook_templates[] =
 
 { // Book of the Tundra
     SPELL_HAILSTORM,
-    SPELL_SUMMON_ICE_BEAST,
+    SPELL_ICE_STATUE,
     SPELL_PERMAFROST_ERUPTION,
 },
 
