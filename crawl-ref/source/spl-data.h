@@ -366,9 +366,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_DEATHS_DOOR, "Death's Door",
-    spschool::necromancy,
+    spschool::necromancy | spschool::enchantments,
     spflag::utility | spflag::no_ghost,
-    9,
+    5,
     200,
     -1, -1,
     0,
@@ -593,10 +593,10 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_ANIMATE_DEAD, "Animate Dead",
-    spschool::necromancy,
+    spschool::necromancy | spschool::enchantments,
     spflag::helpful | spflag::utility
         | spflag::no_ghost,
-    4,
+    1,
     100,
     -1, -1,
     0,
@@ -631,7 +631,7 @@ static const struct spell_desc spelldata[] =
     SPELL_VAMPIRIC_DRAINING, "Vampiric Draining",
     spschool::necromancy,
     spflag::dir_or_target | spflag::not_self,
-    3,
+    4,
     100,
     1, 1,
     0,
@@ -1013,9 +1013,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_DEATH_CHANNEL, "Death Channel",
-    spschool::necromancy,
+    spschool::necromancy | spschool::enchantments,
     spflag::helpful | spflag::utility | spflag::selfench,
-    6,
+    3,
     200,
     -1, -1,
     0,
@@ -3722,7 +3722,7 @@ static const struct spell_desc spelldata[] =
     SPELL_ANGUISH, "Anguish",
     spschool::hexes | spschool::necromancy,
     spflag::area | spflag::WL_check,
-    4,
+    2,
     200,
     LOS_RADIUS, LOS_RADIUS,
     0,

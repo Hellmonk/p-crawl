@@ -49,16 +49,17 @@ targets, as the bolt is quite painful if it manages to connect.
 %%%%
 Anguish spell
 
-Afflicts nearby foes with supernatural anguish, causing all damage they deal to
-rebound on them for the duration of the effect. Strong-willed foes can resist the
+Afflicts nearby foes with supernatural anguish, causing them to receive damage
+equal to the damage they deal for a duration. Strong-willed foes can resist the
 necromantic visions of pain and suffering, and mindless creatures are unaffected.
 %%%%
 Animate Dead spell
 
 For some time after casting this, living creatures killed by the caster will rise
 as zombies. The chance of reanimating a monster and the duration of the effect
-increase with spell power. Re-casting this spell will return zombies to dust, as
-will leaving the floor.
+increase with spell power. increase with spell power. Re-casting this spell will
+return any existing zombies to dust. More durable monsters will make more
+durable zombies, though all creatures reanimated by this spell are quite frail.
 %%%%
 Apportation spell
 
@@ -223,7 +224,8 @@ caster staggering backwards.
 Borgnjor's Revivification spell
 
 Instantly heals any and all wounds suffered by the caster, but also permanently
-damages their health, to a degree dependent on (and inversely related to) power.
+lowers their maximum health. Spellpower reduces the amount of maximum health
+lost, but never fully prevents it.
 
 It is powerful enough to cancel the effects of Death's Door, although doing so
 will briefly paralyse the caster. It has no effect on the undead.
@@ -2067,9 +2069,10 @@ sometimes prevent it.
 %%%%
 Sublimation of Blood spell
 
-Converts some of the caster's blood into magical energy. The process is painful
-but never directly lethal. The efficiency of the conversion increases with the
-spell's power.
+Converts some of the caster's blood into magical energy. The process is painful,
+dealing 10 damage that cannot be prevented in any way, and the spell cannot be
+cast at all with insufficient health to power it. The amount of magic restored
+increases with spellpower.
 %%%%
 Summon Air Elementals spell
 

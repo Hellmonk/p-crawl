@@ -1904,10 +1904,6 @@ spret mass_enchantment(enchant_type wh_enchant, int pow, bool fail)
     fail_check();
     bool did_msg = false;
 
-    // Give mass enchantments a power multiplier.
-    pow *= 3;
-    pow /= 2;
-
     pow = min(pow, 200);
 
     for (monster_iterator mi; mi; ++mi)
@@ -3364,7 +3360,7 @@ bool bolt::harmless_to_player() const
         return you.res_miasma();
 
     case BEAM_NEG:
-        return player_prot_life() >= 3;
+        return you.holiness() & MH_UNDEAD || you.holiness() & MH_NONLIVING;
 
     case BEAM_POISON:
         return player_res_poison() >= 3
