@@ -5600,3 +5600,14 @@ bool mons_is_glowing(monster_type type)
 {
     return type == MONS_GLOW_WORM || type == MONS_GLOWING_IMP;
 }
+
+bool mons_is_boltable(const monster& targ)
+{
+    // never bolt an ally
+    if (targ.friendly())
+           return false;
+
+    return targ.alive()
+        && !targ.is_peripheral()
+        && mons_class_is_threatening(targ.type);
+}

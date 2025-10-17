@@ -506,6 +506,12 @@ public:
     targeter_ignite_poison(actor *a);
 };
 
+class targeter_rot : public targeter_multiposition
+{
+public:
+    targeter_rot(actor *a);
+};
+
 class targeter_multimonster : public targeter
 {
 public:

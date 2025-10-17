@@ -200,3 +200,6 @@ dice_def force_quake_damage(int pow, bool random = false);
 
 dice_def winter_damage(int pow, bool random = false);
 spret cast_winters_embrace(int pow, bool fail, bool tracer = false);
+bool rot_affects_cell(const coord_def where, actor* agent);
+spret cast_putrefaction(actor* agent, int powc, bool fail, bool tracer = false);
+spret cast_thunderbolt_hd(int powc, bool fail);

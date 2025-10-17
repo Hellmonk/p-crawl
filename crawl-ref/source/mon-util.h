@@ -577,3 +577,4 @@ bool shoot_through_monster(const actor* agent, const monster* mon, bool do_messa
 bool never_harm_monster(const actor* agent, const monster& mon, bool do_message = false);
 bool never_harm_monster(const actor* agent, const monster* mon, bool do_message = false);
 bool mons_is_glowing(monster_type type);
+bool mons_is_boltable(const monster& targ);

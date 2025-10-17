@@ -688,6 +688,7 @@ beam_type get_beam_resist_type(beam_type flavour)
         case BEAM_ELECTRICITY:
         case BEAM_THUNDER:
         case BEAM_STUN_BOLT:
+        case BEAM_INACCURACY:
             return BEAM_ELECTRICITY;
 
         case BEAM_NEG:
@@ -974,7 +975,7 @@ bool player_unrand_bad_target(const item_def &weapon,
     }
     if (is_unrandom_artefact(weapon, UNRAND_POWER))
     {
-        targeter_beam hitfunc(&you, 4, ZAP_SWORD_BEAM, 100, 0, 0);
+        targeter_beam hitfunc(&you, 4, ZAP_INACCURACY, 100, 0, 0);
         hitfunc.beam.chose_ray = true;
         hitfunc.beam.aimed_at_spot = false;
         find_life_bolt_ray(hitfunc.beam.source, defender.pos(), hitfunc.beam.ray);

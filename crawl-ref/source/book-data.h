@@ -425,6 +425,7 @@ static const vector<spell_type> spellbook_templates[] =
 { // Book of the Tundra
     SPELL_HAILSTORM,
     SPELL_ICE_STATUE,
+    SPELL_BOLT_OF_INACCURACY,
     SPELL_PERMAFROST_ERUPTION,
     SPELL_DEFLECT_MISSILES,
 },
@@ -517,6 +518,7 @@ static const vector<spell_type> spellbook_templates[] =
 { // Maxwell's Memoranda
     SPELL_PILEDRIVER,
     SPELL_MAGNAVOLT,
+    SPELL_THUNDERBOLT_HD,
     SPELL_MAXWELLS_COUPLING,
 },
 

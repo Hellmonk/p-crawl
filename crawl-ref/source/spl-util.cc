@@ -1690,6 +1690,9 @@ bool spell_no_hostile_in_range(spell_type spell)
     case SPELL_IGNITE_POISON:
         return cast_ignite_poison(&you, -1, false, true) == spret::abort;
 
+    case SPELL_PUTREFACTION:
+        return cast_putrefaction(&you, -1, false, true) == spret::abort;
+
     case SPELL_STARBURST:
         return cast_starburst(-1, false, true) == spret::abort;
 
@@ -1969,7 +1972,6 @@ bool spell_can_be_enkindled(spell_type spell)
         case SPELL_GRAVE_CLAW:
         case SPELL_VAMPIRIC_DRAINING:
         case SPELL_BORGNJORS_VILE_CLUTCH:
-        case SPELL_PUTREFACTION:
         case SPELL_DISPEL_UNDEAD:
             return true;
 
@@ -1993,7 +1995,6 @@ const set<spell_type> removed_spells =
     SPELL_AWAKEN_EARTH,
     SPELL_BEASTLY_APPENDAGE,
     SPELL_BLADE_HANDS,
-    SPELL_BOLT_OF_INACCURACY,
     SPELL_CHANT_FIRE_STORM,
     SPELL_CIGOTUVIS_DEGENERATION,
     SPELL_CIGOTUVIS_EMBRACE,

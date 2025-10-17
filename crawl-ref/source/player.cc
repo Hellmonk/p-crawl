@@ -4135,7 +4135,7 @@ void end_player_poison()
     you.redraw_hit_points = true;
 }
 
-bool miasma_player(actor *who, string source_aux)
+bool miasma_player()
 {
     ASSERT(!crawl_state.game_is_arena());
 

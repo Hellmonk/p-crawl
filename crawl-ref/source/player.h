@@ -1186,7 +1186,7 @@ void end_player_poison();
 int get_player_poisoning();
 int poison_survival();
 
-bool miasma_player(actor *who, string source_aux = "");
+bool miasma_player();
 
 bool sticky_flame_player(int intensity, int duration, string source, string source_aux = "");
 void dec_sticky_flame_player(int delay);

@@ -888,12 +888,12 @@ static const struct spell_desc spelldata[] =
 },
 
 {
-    SPELL_PUTREFACTION, "Cigotuvi's Putrefaction",
+    SPELL_PUTREFACTION, "Cigotuvi's Creeping Rot",
     spschool::necromancy | spschool::air,
-    spflag::target | spflag::unclean,
-    4,
+    spflag::unclean,
+    1,
     100,
-    5, 5,
+    -1, -1,
     0,
     TILEG_CORPSE_ROT,
 },
@@ -1272,7 +1272,7 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_CONJURE_BALL_LIGHTNING, "Conjure Ball Lightning",
-    spschool::air | spschool::enchantments,
+    spschool::air,
     spflag::none,
     6,
     200,
@@ -4718,6 +4718,28 @@ static const struct spell_desc spelldata[] =
 },
 
 {
+    SPELL_BOLT_OF_INACCURACY, "Alistair's Dodgeable Bolt",
+    spschool::air,
+    spflag::destructive,
+    4,
+    100,
+    4, 4,
+    0,
+    TILEG_SHOCK,
+},
+
+{
+    SPELL_THUNDERBOLT_HD, "SUPER THUNDERBOLT HD",
+    spschool::air,
+    spflag::no_ghost | spflag::destructive,
+    8,
+    200,
+    -1, -1,
+    40,
+    TILEG_CHAIN_LIGHTNING,
+},
+
+{
     SPELL_NO_SPELL, "nonexistent spell",
     spschool::none,
     spflag::testing,
@@ -4756,7 +4778,6 @@ static const struct spell_desc spelldata[] =
     { tag, name, spschool::none, spflag::none, 7, 0, -1, -1, 0, TILEG_ERROR },
 
 AXED_SPELL(SPELL_AURA_OF_ABJURATION, "Aura of Abjuration")
-AXED_SPELL(SPELL_BOLT_OF_INACCURACY, "Bolt of Inaccuracy")
 AXED_SPELL(SPELL_CHANT_FIRE_STORM, "Chant Fire Storm")
 AXED_SPELL(SPELL_CIGOTUVIS_DEGENERATION, "Cigotuvi's Degeneration")
 AXED_SPELL(SPELL_CIGOTUVIS_EMBRACE, "Cigotuvi's Embrace")

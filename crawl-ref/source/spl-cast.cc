@@ -1254,7 +1254,7 @@ unique_ptr<targeter> find_spell_targeter(spell_type spell, int pow, int range)
         return make_unique<targeter_mortar>(&you, range);
 
     case SPELL_PUTREFACTION:
-        return make_unique<targeter_putrefaction>(range);
+        return make_unique<targeter_rot>(&you);
 
     case SPELL_DIAMOND_SAWBLADES:
         return make_unique<targeter_multiposition>(&you,
@@ -2194,6 +2194,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     case SPELL_FROZEN_RAMPARTS:
         return cast_frozen_ramparts(powc, fail);
 
+    case SPELL_THUNDERBOLT_HD:
+        return cast_thunderbolt_hd(powc, fail);
+
     // Summoning spells, and other spells that create new monsters.
     case SPELL_SUMMON_SMALL_MAMMAL:
         return cast_summon_small_mammal(powc, fail);
@@ -2335,7 +2338,7 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
         return cast_vile_clutch(powc, beam, fail);
 
     case SPELL_PUTREFACTION:
-        return cast_putrefaction(monster_at(target), powc, fail);
+        return cast_putrefaction(&you, powc, fail);
 
     // Our few remaining self-enchantments.
     case SPELL_SWIFTNESS:
@@ -2582,7 +2585,7 @@ static dice_def _spell_damage(spell_type spell, int power)
         case SPELL_WINTERS_EMBRACE:
             return winter_damage(power);
         case SPELL_CONJURE_BALL_LIGHTNING:
-            return ball_lightning_damage(ball_lightning_hd(power, false), false);
+            return ball_lightning_damage(ball_lightning_hd(power, false));
         case SPELL_IOOD:
             return iood_damage(power, INFINITE_DISTANCE, false);
         case SPELL_IRRADIATE:
@@ -2668,6 +2671,11 @@ string spell_damage_string(spell_type spell, bool evoked, int pow, bool terse)
     {
         case SPELL_MAXWELLS_COUPLING:
             return Options.char_set == CSET_ASCII ? "death" : "\u221e"; //"∞"
+        case SPELL_THUNDERBOLT_HD:
+        {
+            const int max = 50 + 10 * pow;
+            return make_stringf("50-%d", max);
+        }
         case SPELL_FREEZING_CLOUD:
             return desc_cloud_damage(CLOUD_COLD, false);
         case SPELL_STEAM_BURST:

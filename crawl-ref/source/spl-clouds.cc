@@ -30,31 +30,6 @@
 #include "target.h"
 #include "terrain.h"
 
-spret cast_putrefaction(monster* target, int pow, bool fail)
-{
-    fail_check();
-
-    // Place one miasma cloud immediately beneath the target.
-    place_cloud(CLOUD_MIASMA, target->pos(), random_range(5, 9), &you);
-
-    // Then start a spread of fiant miasma that will become proper miasma a
-    // turn later.
-    map_cloud_spreader_marker *marker =
-    new map_cloud_spreader_marker(target->pos(), CLOUD_FAINT_MIASMA, 7,
-                                        random_range(18, 28), 5, 2, &you);
-
-    // Start the cloud at radius 1, regardless of the speed of the killing blow
-    marker->speed_increment -= you.time_taken - 7;
-    env.markers.add(marker);
-    env.markers.clear_need_activate();
-
-    mprf("Rot billows forth from %s wounds!", target->name(DESC_ITS).c_str());
-
-    drain_player(75 - div_rand_round(pow * 4, 10), true, true);
-
-    return spret::success;
-}
-
 spret kindle_blastmotes(int pow, bool fail)
 {
     if (cloud_at(you.pos()))

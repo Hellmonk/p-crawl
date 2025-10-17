@@ -1502,6 +1502,7 @@ int mons_adjust_flavoured(monster* mons, bolt &pbolt, int hurted,
     case BEAM_STUN_BOLT:
     case BEAM_ELECTRICITY:
     case BEAM_THUNDER:
+    case BEAM_INACCURACY:
         hurted = resist_adjust_damage(mons, pbolt.flavour, hurted);
         if (!hurted)
         {
@@ -3246,6 +3247,9 @@ static int _test_beam_hit(int hit, int ev)
     if (hit == AUTOMATIC_HIT)
         return true;
 
+    if (hit == AUTOMATIC_MISS && ev > 0)
+        return false;
+
     hit = random2(hit);
 
     return hit - min(ev, 100 - MIN_HIT_PERCENTAGE) >= 0;
@@ -3286,6 +3290,7 @@ bool bolt::is_harmless(const monster* mon) const
         return mon->res_negative_energy() == 3;
 
     case BEAM_ELECTRICITY:
+    case BEAM_INACCURACY:
         return mon->res_elec() >= 3;
 
     case BEAM_POISON:
@@ -4387,7 +4392,7 @@ void bolt::affect_player()
     }
 
     if (flavour == BEAM_MIASMA && final_dam > 0)
-        was_affected = miasma_player(agent(), name);
+        was_affected = miasma_player();
 
     if (flavour == BEAM_TOXIC)
         was_affected = toxic_dart_actor((actor*) &you, source_name);
@@ -4609,6 +4614,8 @@ int bolt::apply_AC(const actor *victim, int hurted)
         if (flavour == BEAM_DAMNATION)
             ac_rule = ac_type::none;
         else if (get_beam_resist_type(flavour) == BEAM_ELECTRICITY)
+            ac_rule = ac_type::half;
+        else if (get_beam_resist_type(flavour) == BEAM_INACCURACY)
             ac_rule = ac_type::half;
         else if (flavour == BEAM_FRAG)
             ac_rule = ac_type::triple;
@@ -7652,6 +7659,7 @@ static string _beam_type_name(beam_type type)
     case BEAM_ILL_OMEN:              return "omen";
     case BEAM_WARP_BODY:             return "warp body";
     case BEAM_TOXIC:                 return "toxic dart";
+    case BEAM_INACCURACY:            return "trick lightning";
 
     case NUM_BEAMS:                  die("invalid beam type");
     }

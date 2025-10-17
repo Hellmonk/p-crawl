@@ -38,6 +38,15 @@ their toxic byproducts at whatever it punches. When it has built up enough heat
 to complete its synthesis, it will automatically dispense the finished potions
 to nearby allies before falling apart.
 %%%%
+Alistair's Dodgeable Bolt spell
+
+A wizard's party trick, this spell conjures a trick bolt of lightning that is
+laughably easy to avoid. Any target capable of evading it is guaranteed to do
+so.
+
+Not recommended for use on clumsy, sleeping, or otherwise incapacitated
+targets, as the bolt is quite painful if it manages to connect.
+%%%%
 Anguish spell
 
 Afflicts nearby foes with supernatural anguish, causing all damage they deal to
@@ -333,18 +342,12 @@ Chaos Breath spell
 
 Exhales a large cloud of fumes filled with the very essence of chaos.
 %%%%
-Cigotuvi's Putrefaction spell
+Cigotuvi's Creeping Rot spell
 
-Magically accelerates the decay of damaged living tissue, causing great clouds
-of miasma to billow forth from a targeted victim's wounds over several turns
-which may slow and heavily poison any living creature who stands in them. Air
-currents will prevent this pestilence from forming wherever the caster is
-standing, but they are not otherwise protected from its effects.
-
-This spell may only be cast on a living creature who is at least heavily
-wounded, and channelling such necrotic energies will leave the caster's own
-health temporarily drained (though spellpower will reduce the intensity of this
-side-effect).
+Transforms every cloud in the caster's sight into a cloud of miasma. The miasma
+slows and heavily damages living and demonic creatures that linger within it,
+but undead creatures or artifical constructs are immune. Most susceptible
+creatures are terrified of miasma and will not willingly enter it.
 %%%%
 Cleansing Flame spell
 
@@ -392,11 +395,11 @@ Conjure Ball Lightning spell
 
 Creates a pack of ball lightnings, which seek out the nearest enemy before
 exploding in a huge blast of electricity. The damage dealt bypasses half of
-defenders' armour. Casters are advised to use caution; the lightning is not
-mindful of what it may hit.
+defenders' armour. Casters are advised to use extreme caution; the lightning is
+not mindful of what it may hit.
 
 The magic which keeps ball lightnings cohesive has limited range, so they may
-dissipate harmlessly if allowed to drift too far away from their caster before
+dissipate harmlessly if allowed to drift out of their caster's sight before
 exploding.
 %%%%
 Conjure Living Spells spell
@@ -2231,6 +2234,13 @@ Summons multiple rats, spiders, worms, and frogs.
 Summon Water Elementals spell
 
 Summons one or more water elementals.
+%%%%
+SUPER THUNDERBOLT HD spell
+
+CALLS DOWN AN INCREDIBLY POWERFUL LIGHTNING BOLT UPON A RANDOM ENEMY SOMEWHERE
+ON THE CURRENT LEVEL, WHETHER YOU CAN SEE THEM OR NOT. THOUGH LIKELY TO
+BE LETHAL TO ANYTHING THAT IS NOT RESISTANT, BE ADVISED THAT THE SPELL IS ALSO
+VERY LOUD; OTHER ENEMIES WILL BE MADE AWARE OF YOUR POSITION.
 %%%%
 Swiftness spell
 

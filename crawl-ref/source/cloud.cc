@@ -1154,7 +1154,7 @@ static bool _actor_apply_cloud_side_effects(actor *act,
 
     case CLOUD_MIASMA:
         if (player)
-            return miasma_player(cloud.agent(), cloud.cloud_name());
+            return miasma_player();
         else
             return miasma_monster(mons, cloud.agent());
 

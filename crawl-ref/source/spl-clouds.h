@@ -7,8 +7,6 @@ struct bolt;
 class dist;
 class actor;
 
-spret cast_putrefaction(monster* target, int pow, bool fail);
-
 spret kindle_blastmotes(int pow, bool fail);
 void explode_blastmotes_at(coord_def p);
 
