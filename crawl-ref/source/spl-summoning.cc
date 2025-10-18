@@ -1667,6 +1667,61 @@ spret cast_martyrs_knell(const actor* caster, int pow, bool fail)
     return spret::success;
 }
 
+spret cast_ghostly_legion (int pow, bool fail, bool tracer)
+{
+    vector<actor *> targets;
+
+    for (actor_near_iterator ai(you.pos(), LOS_NO_TRANS); ai; ++ai)
+    {
+        if (ai->is_monster()
+            && !ai->as_monster()->wont_attack()
+            && !ai->as_monster()->is_firewood()
+            && !ai->as_monster()->is_peripheral())
+        {
+            targets.emplace_back(*ai);
+        }
+    }
+
+    if (tracer)
+        return targets.empty() ? spret::abort : spret::success;
+
+    fail_check();
+
+    if (targets.empty())
+        canned_msg(MSG_NOTHING_HAPPENS);
+    else
+    {
+        int success = 0;
+        int to_summon = min(2 + random2avg(2 + div_rand_round(pow, 3), 2),
+                            static_cast<int>(targets.size()));
+
+        shuffle_array(targets);
+        for (int i = 0; i < to_summon; i++)
+        {
+            const monster_type mon = MONS_PHANTASMAL_WARRIOR;
+            int mi = targets[i]->mindex();
+            if (monster *mons = create_monster(
+                mgen_data(mon, BEH_FRIENDLY, targets[i]->pos(),
+                mi, MG_FORCE_BEH)
+                .set_summoned(&you, SPELL_GHOSTLY_LEGION, summ_dur(3))))
+            {
+                success++;
+                mons->add_ench(mon_enchant(ENCH_HAUNTING, 1,
+                    targets[i], INFINITE_DURATION));
+                mons->foe = mi;
+            }
+        }
+
+        if (success > 1)
+            mpr("Insubstantial figures form in the air.");
+        else if (success)
+            mpr("An insubstantial figure forms in the air.");
+        else
+            canned_msg(MSG_NOTHING_HAPPENS);
+    }
+    return spret::success;
+}
+
 static spell_type servitor_spells[] =
 {
     // primary spells
@@ -2388,34 +2443,13 @@ monster* create_spectral_weapon(const actor &agent, coord_def pos,
     return mons;
 }
 
-static void _setup_infestation(bolt &beam, int pow)
+spret cast_infestation(int pow, bool fail)
 {
-    beam.name         = "infestation";
-    beam.aux_source   = "infestation";
-    beam.flavour      = BEAM_INFESTATION;
-    beam.glyph        = dchar_glyph(DCHAR_FIRED_BURST);
-    beam.colour       = GREEN;
-    beam.source_id    = MID_PLAYER;
-    beam.thrower      = KILL_YOU;
-    beam.is_explosion = true;
-    beam.ex_size      = 2;
-    beam.ench_power   = pow;
-    beam.origin_spell = SPELL_INFESTATION;
-}
-
-spret cast_infestation(int pow, bolt &beam, bool fail)
-{
-    if (cell_is_solid(beam.target))
-    {
-        canned_msg(MSG_SOMETHING_IN_WAY);
-        return spret::abort;
-    }
-
     fail_check();
 
-    _setup_infestation(beam, pow);
     mpr("You call forth a plague of scarabs!");
-    beam.explode();
+    const int dur = 10 + div_rand_round(pow, 2) + random2(11 + pow);
+    you.increase_duration(DUR_INFESTATION, dur, 50);
 
     return spret::success;
 }

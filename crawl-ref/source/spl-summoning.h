@@ -97,6 +97,7 @@ void remove_player_servitor();
 
 monster_type pick_random_wraith();
 spret cast_haunt(int pow, const coord_def& where, bool fail);
+spret cast_ghostly_legion(int pow, bool fail, bool tracer = false);
 
 spret cast_martyrs_knell(const actor* caster, int pow, bool fail);
 
@@ -120,7 +121,7 @@ void check_spectral_weapon(actor &agent);
 monster* create_spectral_weapon(const actor &agent, coord_def pos,
                                 item_def& weapon);
 
-spret cast_infestation(int pow, bolt &beam, bool fail);
+spret cast_infestation(int pow, bool fail);
 
 void summoned_monster(const monster* mons, const actor* caster,
                       spell_type spell);

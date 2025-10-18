@@ -641,10 +641,21 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_HAUNT, "Haunt",
     spschool::summoning | spschool::necromancy,
-    spflag::target | spflag::not_self | spflag::mons_abjure,
+    spflag::target | spflag::not_self | spflag::mons_abjure | spflag::monster,
     7,
     200,
     LOS_RADIUS, LOS_RADIUS,
+    0,
+    TILEG_HAUNT,
+},
+
+{
+    SPELL_GHOSTLY_LEGION, "Ghostly Legion",
+    spschool::summoning | spschool::necromancy,
+    spflag::none,
+    4,
+    200,
+    -1, -1,
     0,
     TILEG_HAUNT,
 },
@@ -3188,11 +3199,11 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_INFESTATION, "Infestation",
-    spschool::necromancy,
-    spflag::target | spflag::unclean,
-    8,
+    spschool::necromancy | spschool::hexes | spschool::summoning,
+    spflag::none,
+    3,
     200,
-    LOS_RADIUS, LOS_RADIUS,
+    -1, -1,
     4,
     TILEG_INFESTATION,
 },

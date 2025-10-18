@@ -776,6 +776,17 @@ bool melee_attack::handle_phase_hit()
     // Detonation catalyst should trigger even if the defender dies later on.
     maybe_trigger_detonation();
 
+    if (attacker->is_player() && you.duration[DUR_INFESTATION])
+    {
+        if (!defender->is_summoned() && !(defender->as_monster()->flags & MF_HARD_RESET))
+        {
+            const int dur = (15 + random2(30)) * BASELINE_DELAY;
+            defender->as_monster()->add_ench(mon_enchant(ENCH_INFESTATION, 0, &you, dur));
+            mprf("%s is infested!", you.can_see(*defender)?
+                    defender->name(DESC_THE).c_str() : "something");
+        }
+    }
+
     // This does more than just calculate the damage, it also sets up
     // messages, etc. It also wakes nearby creatures on a failed stab,
     // meaning it could have made the attacked creature vanish. That

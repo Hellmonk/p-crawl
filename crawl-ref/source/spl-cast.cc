@@ -2261,6 +2261,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     case SPELL_HAUNT:
         return cast_haunt(powc, beam.target, fail);
 
+    case SPELL_GHOSTLY_LEGION:
+        return cast_ghostly_legion(powc, fail);
+
     case SPELL_DEATH_CHANNEL:
         return cast_death_channel(powc, god, fail);
 
@@ -2271,7 +2274,7 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
         return cast_battlesphere(&you, powc, fail);
 
     case SPELL_INFESTATION:
-        return cast_infestation(powc, beam, fail);
+        return cast_infestation(powc, fail);
 
     case SPELL_FOXFIRE:
         return cast_foxfire(you, powc, fail);

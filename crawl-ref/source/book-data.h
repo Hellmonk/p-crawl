@@ -513,6 +513,7 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_SCORCH,
     SPELL_FLAME_WAVE,
     SPELL_SUMMON_CACTUS,
+    SPELL_GHOSTLY_LEGION,
 },
 
 { // Maxwell's Memoranda

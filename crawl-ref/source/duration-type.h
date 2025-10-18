@@ -296,5 +296,6 @@ enum duration_type
     DUR_STUN,
     DUR_HARP,
     DUR_LANTERN,
+    DUR_INFESTATION,
     NUM_DURATIONS
 };
