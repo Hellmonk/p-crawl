@@ -9,8 +9,8 @@ Hurls an explosive ball of corrosive acid.
 %%%%
 Agonising Touch spell
 
-Cuts the health of an adjacent creature in half. This damage is never
-directly lethal.
+Cuts the health of an adjacent creature in half if it defeats the target's
+willpower. This damage is never directly lethal.
 %%%%
 Agony spell
 

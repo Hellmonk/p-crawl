@@ -403,6 +403,7 @@ static const vector<spell_type> spellbook_templates[] =
 },
 
 { // Book of Blasting
+    SPELL_AGONISING_TOUCH,
     SPELL_BLASTMOTE,
     SPELL_FULMINANT_PRISM,
     SPELL_ISKENDERUNS_MYSTIC_BLAST,

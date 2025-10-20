@@ -1024,8 +1024,8 @@ static const struct spell_desc spelldata[] =
     SPELL_AGONISING_TOUCH, "Agonising Touch",
     spschool::necromancy,
     spflag::dir_or_target | spflag::not_self | spflag::needs_tracer
-        | spflag::WL_check | spflag::monster,
-    5,
+        | spflag::WL_check,
+    1,
     200,
     1, 1,
     0,
