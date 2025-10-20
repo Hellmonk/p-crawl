@@ -1193,6 +1193,7 @@ string casting_uselessness_reason(spell_type spell, bool temp)
     case SPELL_FORGE_BLAZEHEART_GOLEM:
     case SPELL_FORGE_LIGHTNING_SPIRE:
     case SPELL_AWAKEN_ARMOUR:
+    case SPELL_AMMO_TO_ANACONDAS:
         if (you.allies_forbidden())
             return "you cannot coerce anything to obey you.";
         break;

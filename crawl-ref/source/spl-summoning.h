@@ -211,3 +211,4 @@ void trigger_rending_blade();
 
 spret cast_summon_elemental(bool fail);
 spret cast_eldritch_ichor(int pow, bool fail);;
+spret cast_ammo_to_anacondas(int pow, bool fail);

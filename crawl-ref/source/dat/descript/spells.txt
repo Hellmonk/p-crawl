@@ -46,6 +46,15 @@ so.
 Not recommended for use on clumsy, sleeping, or otherwise incapacitated
 targets, as the bolt is quite painful if it manages to connect.
 %%%%
+Ammunition to Anacondas spell
+
+Transmutes random throwable items in your inventory into one or more summoned
+anacondas. The spell cannot be cast without sufficient ammunition, but it has
+no summon cap.
+
+Spellpower increases the likelihood of summoning multiple anacondas, and reduces
+the ammunition required to create each one.
+%%%%
 Anguish spell
 
 Afflicts nearby foes with supernatural anguish, causing them to receive damage

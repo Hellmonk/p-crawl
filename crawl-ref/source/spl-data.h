@@ -4807,6 +4807,17 @@ static const struct spell_desc spelldata[] =
 },
 
 {
+    SPELL_AMMO_TO_ANACONDAS, "Ammunition to Anacondas",
+    spschool::summoning,
+    spflag::no_ghost,
+    2,
+    100,
+    -1, -1,
+    0,
+    TILEG_STICKS_TO_SNAKES,
+},
+
+{
     SPELL_NO_SPELL, "nonexistent spell",
     spschool::none,
     spflag::testing,

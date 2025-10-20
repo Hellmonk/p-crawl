@@ -4870,3 +4870,58 @@ spret cast_summon_elemental(bool fail)
 
     return spret::success;
 }
+
+spret cast_ammo_to_anacondas(int pow, bool fail)
+{
+    vector<item_def*> ammo;
+    int num_ammo = 0;
+    for (item_def& i : you.inv)
+    {
+        if (i.base_type == OBJ_MISSILES)
+            ammo.push_back(&i);
+
+        num_ammo += i.quantity;
+    }
+
+    if (ammo.empty())
+    {
+        mpr("You don't have anything to turn into an anaconda.");
+        return spret::abort;
+    }
+
+    fail_check();
+
+    shuffle_array(ammo);
+
+    int count = 0;
+    int how_many_max = 1 + div_rand_round(1 + random2(1 + pow), 12);
+
+    item_def *stick = nullptr;
+
+    for (int i = 0; i < how_many_max; i++)
+    {
+        if (!stick || stick->quantity == 0)
+        {
+            stick = ammo.back();
+            ammo.pop_back();
+        }
+        if (monster *snake = create_monster(_pal_data(MONS_ANACONDA, 0,
+                                                      SPELL_STICKS_TO_SNAKES),
+                                            false))
+        {
+            count++;
+            int qty = max(1, 6 - random2(1 + div_rand_round(pow, 4)));
+            dec_inv_item_quantity(letter_to_index(stick->slot), min(qty, static_cast<int>(stick->quantity)));
+            snake->add_ench(mon_enchant(ENCH_FAKE_ABJURATION, summ_dur(3)));
+        }
+    }
+
+    if (count > 1)
+            mprf("You create %d snakes!", count);
+    else if (count)
+        mpr("You create a snake!");
+    else
+        mpr("You fail to create any snakes.");
+
+    return spret::success;
+}

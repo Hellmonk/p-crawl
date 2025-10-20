@@ -1163,6 +1163,7 @@ unique_ptr<targeter> find_spell_targeter(spell_type spell, int pow, int range)
     case SPELL_FORGE_LIGHTNING_SPIRE:
     case SPELL_BATTLESPHERE:
     case SPELL_SUMMON_ELEMENTAL:
+    case SPELL_AMMO_TO_ANACONDAS:
         return make_unique<targeter_maybe_radius>(&you, LOS_NO_TRANS, 2, 0, 1);
     case SPELL_SUMMON_SEISMOSAURUS_EGG:
     case SPELL_HOARFROST_CANNONADE:
@@ -2203,6 +2204,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     // Summoning spells, and other spells that create new monsters.
     case SPELL_SUMMON_SMALL_MAMMAL:
         return cast_summon_small_mammal(powc, fail);
+
+    case SPELL_AMMO_TO_ANACONDAS:
+        return cast_ammo_to_anacondas(powc, fail);
 
     case SPELL_CALL_CANINE_FAMILIAR:
         return cast_call_canine_familiar(powc, fail);
