@@ -647,8 +647,11 @@ Shoots a stream of webbing at a creature, ensnaring the target in a sticky web.
 %%%%
 Ensorcelled Hibernation spell
 
-Lowers its target's metabolic rate, inducing hibernation. After awakening, the
-target will be unable to be put to sleep again for some time.
+Lowers a target's metabolic rate, inducing sleep. Willpower can resist this
+effect. A monster affected this way will not wake before your next turn, but can
+otherwise awaken from noise or from noticing you. After awakening, the
+target will be unable to be put to sleep again for some time. Creatures that
+resist cold cannot be affected by this spell.
 %%%%
 Entropic Weave spell
 

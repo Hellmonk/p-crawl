@@ -6315,11 +6315,8 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
         {
             if (simple_monster_message(*mon, " looks drowsy..."))
                 obvious_effect = true;
-            // Since 1 turn will pass for the player's own action here, EH will
-            // put a monster to sleep for between ~20-55 aut, slanted towards
-            // the low end.
-            const int dur = max(30, 10 + random2avg(55, 3));
-            mon->put_to_sleep(agent(), dur, true);
+
+            mon->put_to_sleep(agent(), 0, true);
             return MON_AFFECTED;
         }
         return MON_UNAFFECTED;
