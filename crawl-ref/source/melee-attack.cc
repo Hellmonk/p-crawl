@@ -324,7 +324,7 @@ bool melee_attack::handle_phase_attempted()
         if (grapnel.agent() == attacker)
         {
             to_hit = AUTOMATIC_HIT;
-            flat_dmg_bonus = random_range(0, 3);
+            flat_dmg_bonus = random_range(0, 5);
             defender->as_monster()->del_ench(ENCH_KINETIC_GRAPNEL, true);
             if (attacker->is_player())
                 mpr("The grapnel guides your strike.");

@@ -5305,7 +5305,7 @@ void bolt::monster_post_hit(monster* mon, int dmg)
         mon->add_ench(mon_enchant(ENCH_BOUND, 0, agent(), random_range(2, 4) * BASELINE_DELAY));
     }
 
-    if (origin_spell == SPELL_KINETIC_GRAPNEL && dmg > 0)
+    if (origin_spell == SPELL_KINETIC_GRAPNEL)
         mon->add_ench(mon_enchant(ENCH_KINETIC_GRAPNEL, 0, agent(), random_range(30, 50)));
 
     // Watery Grave

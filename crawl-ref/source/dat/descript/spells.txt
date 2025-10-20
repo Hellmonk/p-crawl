@@ -1148,9 +1148,9 @@ fae also reduces the caster's own willpower for a time.
 Kinetic Grapnel spell
 
 Weaves a thin kinetic filament around the caster's melee weapon and launches the
-other end of it at a nearby enemy. If this grapnel successfully hits and does
-damage, it will become lodged in them, allowing the next melee attack the caster
-performs against them to strike with perfect accuracy and a small slaying bonus.
+other end of it at a nearby enemy. The grapnel always hits and will become
+lodged in the enemy, guaranteeing the next melee attack the caster performs
+against them hits and making it deal between 0 and 5 bonus damage.
 %%%%
 Volatile Blastmotes spell
 
