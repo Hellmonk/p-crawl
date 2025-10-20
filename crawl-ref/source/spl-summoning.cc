@@ -335,7 +335,7 @@ spret cast_awaken_armour(int pow, bool fail)
 
     mgen_data mg = _pal_data(MONS_ARMOUR_ECHO, summ_dur(2),
                              SPELL_AWAKEN_ARMOUR, false);
-    mg.hd = 15 + div_rand_round(pow, 10);
+    mg.hd = 2 + div_rand_round(pow, 4);
     mg.set_range(1, 2);
     monster* spirit = create_monster(mg);
     if (!spirit)
@@ -4709,13 +4709,13 @@ spret cast_summon_seismosaurus_egg(const actor& agent, int pow, bool fail)
 
     mgen_data egg = _summon_data(agent, MONS_SEISMOSAURUS_EGG, summ_dur(3),
                                  SPELL_SUMMON_SEISMOSAURUS_EGG);
-    egg.hd = (7 + div_rand_round(pow, 20));
+    egg.hd = (7 + div_rand_round(pow, 5));
     egg.set_range(3, 3, 1);
 
     if (monster* mons = create_monster(egg))
     {
         mpr("A rock-encrusted egg appears nearby and begins to stir.");
-        mons->add_ench(mon_enchant(ENCH_HATCHING, 0, &agent, random_range(6, 9)));
+        mons->add_ench(mon_enchant(ENCH_HATCHING, 0, &agent, random_range(5, 8)));
 
         // Mark all terrain in range.
         for (distance_iterator di(mons->pos(), false, false, 4); di; ++di)

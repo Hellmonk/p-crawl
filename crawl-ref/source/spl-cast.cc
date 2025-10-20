@@ -1213,6 +1213,8 @@ unique_ptr<targeter> find_spell_targeter(spell_type spell, int pow, int range)
                                                    _simple_find_all_hostiles());
     case SPELL_SCORCH:
         return make_unique<targeter_scorch>(you, range, false);
+    case SPELL_PHASE_KNIFE:
+        return make_unique<targeter_scorch>(you, range, false);
     case SPELL_DRAGON_CALL: // this is just convenience: you can start the spell
                             // with no enemies in sight
         return make_unique<targeter_multifireball>(&you,
@@ -2147,6 +2149,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     case SPELL_SCORCH:
         return cast_scorch(you, powc, fail);
 
+    case SPELL_PHASE_KNIFE:
+        return cast_phase_knife(powc, fail);
+
     case SPELL_POISONOUS_VAPOURS:
         return cast_poisonous_vapours(you, powc, target, fail);
 
@@ -2606,6 +2611,8 @@ static dice_def _spell_damage(spell_type spell, int power)
             return shatter_damage(power);
         case SPELL_SCORCH:
             return scorch_damage(power);
+        case SPELL_PHASE_KNIFE:
+            return phase_knife_damage(power);
         case SPELL_BATTLESPHERE:
             return battlesphere_damage_from_power(power);
         case SPELL_FROZEN_RAMPARTS:

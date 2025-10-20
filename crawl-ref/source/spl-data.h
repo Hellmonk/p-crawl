@@ -3610,10 +3610,10 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_AWAKEN_ARMOUR, "Awaken Armour",
-    spschool::earth,
+    spschool::summoning | spschool::earth,
     spflag::none,
-    4,
-    50,
+    1,
+    100,
     -1, -1,
     0,
     TILEG_AWAKEN_ARMOUR,
@@ -3739,6 +3739,17 @@ static const struct spell_desc spelldata[] =
     3, 3,
     0,
     TILEG_SCORCH,
+},
+
+{
+    SPELL_PHASE_KNIFE, "Phase Knife",
+    spschool::translocation,
+    spflag::none,
+    1,
+    100,
+    1, 1,
+    0,
+    TILEG_PHASE_KNIFE,
 },
 
 {

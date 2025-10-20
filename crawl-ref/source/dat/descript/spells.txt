@@ -1545,6 +1545,13 @@ Phantom Mirror spell
 Creates a phantom copy of a creature. The copy will be somewhat fragile, but
 otherwise almost indistinguishable from the original.
 %%%%
+Phase Knife spell
+
+Slices a random adjacent enemy with a thin blade of distorted space. The blade
+can be dodged, but its damage cannot be reduced by AC. If the target can be
+stabbed, the spell deals additional damage as if you stabbed the monster with a
+short blade, using translocations skill in place of your weapon skill.
+%%%%
 Phase Shift spell
 
 Causes the caster to phase in and out of the material plane, greatly increasing

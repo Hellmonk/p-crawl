@@ -203,3 +203,6 @@ spret cast_winters_embrace(int pow, bool fail, bool tracer = false);
 bool rot_affects_cell(const coord_def where, actor* agent);
 spret cast_putrefaction(actor* agent, int powc, bool fail, bool tracer = false);
 spret cast_thunderbolt_hd(int powc, bool fail);
+
+dice_def phase_knife_damage(int pow);
+spret cast_phase_knife(int pow, bool fail);

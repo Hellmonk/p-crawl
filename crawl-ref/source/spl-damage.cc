@@ -1967,6 +1967,53 @@ spret cast_scorch(const actor& agent, int pow, bool fail)
     return spret::success;
 }
 
+dice_def phase_knife_damage(int pow)
+{
+    return dice_def(1, 5 + pow);
+}
+
+spret cast_phase_knife(int pow, bool fail)
+{
+    fail_check();
+    auto targeter = make_unique<targeter_scorch>(you, 1, true);
+
+    actor *targ = nullptr;
+    int seen = 0;
+    for (auto ti = targeter->affected_iterator(AFF_MAYBE); ti; ++ti)
+        if (one_chance_in(++seen))
+            targ = actor_at(*ti);
+
+    if (!targ)
+    {
+        canned_msg(MSG_NOTHING_HAPPENS);
+        return spret::success;
+    }
+
+    // phase knife is allowed to miss
+    if (x_chance_in_y(targ->evasion(), 100))
+    {
+        mprf("The phase knife misses %s", targ->name(DESC_THE).c_str());
+        return spret::success;
+    }
+
+    const int base_dam = phase_knife_damage(pow).roll();
+    bool stabbed = find_player_stab_type(*targ->as_monster()) != STAB_NO_STAB;
+    int final_dam = base_dam;
+
+    // equivalent to "good stab" roll, but uses tloc skill instead of wskill
+    if (stabbed)
+    {
+        final_dam += you.skill(SK_TRANSLOCATIONS, 1) + you.skill(SK_STEALTH, 2);
+        final_dam *= 4;
+    }
+
+    mprf("The phase knife %s%s%s", stabbed ? "stabs " : "slices ",
+        targ->name(DESC_THE).c_str(), stabbed ? "!" : ".");
+    _player_hurt_monster(*targ->as_monster(), final_dam, BEAM_MMISSILE);
+
+    return spret::success;
+}
+
 /// Scorch's target selection (see targeter_scorch)
 vector<coord_def> find_near_hostiles(int range, bool affect_invis, const actor& agent)
 {

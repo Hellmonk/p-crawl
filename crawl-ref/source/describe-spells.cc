@@ -396,6 +396,8 @@ static dice_def _spell_damage(spell_type spell, int hd, int pow)
     {
         case SPELL_SCORCH:
             return scorch_damage(pow);
+        case SPELL_PHASE_KNIFE:
+            return phase_knife_damage(pow);
         case SPELL_WATERSTRIKE:
             return waterstrike_damage(hd);
         case SPELL_IOOD:

@@ -506,6 +506,7 @@ static const vector<spell_type> spellbook_templates[] =
 },
 
 { // Book of the Hunter
+    SPELL_PHASE_KNIFE,
     SPELL_SIGIL_OF_BINDING,
     SPELL_CALL_CANINE_FAMILIAR,
     SPELL_DIMENSIONAL_BULLSEYE,

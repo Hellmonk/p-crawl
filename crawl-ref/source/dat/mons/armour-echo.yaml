@@ -1,16 +1,16 @@
 name: "armour echo"
 glyph: {char: "[", colour: green}
-flags: [flies, unblindable]
+flags: [flies, unblindable, slow_movement]
 exp: 800
 holiness: [nonliving]
 will: invuln
 attacks:
  - {type: hit, damage: 1}
  - {type: hit, damage: 1}
-hd: 15
-hp_10x: 350
+hd: 5
+hp_10x: 200
 ac: 8
-ev: 5
+ev: 10
 uses: starting_equipment
 intelligence: brainless
 size: medium
