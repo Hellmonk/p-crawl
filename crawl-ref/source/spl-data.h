@@ -3820,10 +3820,10 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_KISS_OF_DEATH, "Kiss of Death",
-    spschool::enchantments | spschool::necromancy,
+    spschool::necromancy,
     spflag::dir_or_target | spflag::needs_tracer | spflag::not_self,
-    1,
-    25,
+    3,
+    100,
     1, 1,
     0,
     TILEG_KISS_OF_DEATH,

@@ -815,7 +815,7 @@ _mon_hex_zap(ZAP_POLYMORPH, BEAM_POLYMORPH),
 {
     ZAP_KISS_OF_DEATH,
     "fragment of death",
-    new calcdice_calculator<2, 11, 3, 5>, // caps at 2d13... spooky
+    new dicedef_calculator<2, 15, 1, 4>, // caps at 2d13... spooky
     new tohit_calculator<AUTOMATIC_HIT>, // XXX: should we let this miss?
     new calcdice_calculator<2, 13, 2, 7>,
     new tohit_calculator<AUTOMATIC_HIT>,

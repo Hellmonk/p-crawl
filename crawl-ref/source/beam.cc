@@ -5312,6 +5312,13 @@ void bolt::monster_post_hit(monster* mon, int dmg)
     if (origin_spell == SPELL_SHOCK && mon->is_nonliving())
         mon->stun(agent());
 
+    if (origin_spell == SPELL_KISS_OF_DEATH && dmg > 0
+        && mon->check_willpower(agent(true), ench_power) <= 0)
+    {
+        simple_monster_message(*mon, " is slain by the fragment of death!");
+        mon->hurt(agent(), INSTANT_DEATH);
+    }
+
     // Watery Grave
     if (name == "grasping water" && !mon->is_unbreathing())
         _waterlog_mon(*mon, ench_power);

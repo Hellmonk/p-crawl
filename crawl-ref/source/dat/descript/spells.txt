@@ -2346,8 +2346,10 @@ Trog's Hand spell
 Kiss of Death spell
 
 Conjures forth a fragment of the caster's essence and twists it into a fragment
-of death, painfully draining the victim. The caster, too, will find their health
-reduced, until they gain enough experience to recover.
+of death, dealing heavy damage. If the target's willpower fails,
+they will be instantly slain after damage is dealt.
+
+Regardless of the outcome, you will be drained by casting this spell.
 %%%%
 Tukima's Dance spell
 
