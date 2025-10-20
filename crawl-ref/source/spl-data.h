@@ -504,11 +504,34 @@ static const struct spell_desc spelldata[] =
     SPELL_BLINK, "Blink",
     spschool::translocation,
     spflag::escape | spflag::selfench | spflag::utility,
-    2,
-    50,
+    3,
+    0,
     -1, -1,
     0,
     TILEG_BLINK,
+},
+
+{
+    SPELL_CONTROLLED_BLINK, "Controlled Blink",
+    spschool::translocation,
+    spflag::escape | spflag::selfench | spflag::utility,
+    9,
+    0,
+    -1, -1,
+    0,
+    TILEG_CONTROLLED_BLINK,
+},
+
+{
+    SPELL_PHASE_SHIFT, "Phase Shift",
+    spschool::translocation | spschool::enchantments,
+    spflag::helpful | spflag::utility,
+    3,
+    200,
+    -1, -1,
+    0,
+
+    TILEG_PHASE_SHIFT,
 },
 
 {
@@ -1115,7 +1138,7 @@ static const struct spell_desc spelldata[] =
     SPELL_CONFUSING_TOUCH, "Confusing Touch",
     spschool::hexes,
     spflag::selfench | spflag::WL_check, // Show success in the static targeter
-    3,
+    1,
     100,
     -1, -1,
     0,
@@ -1172,7 +1195,7 @@ static const struct spell_desc spelldata[] =
     spschool::hexes | spschool::ice,
     spflag::dir_or_target | spflag::not_self | spflag::needs_tracer
         | spflag::WL_check | spflag::silent,
-    2,
+    1,
     50,
     LOS_RADIUS, LOS_RADIUS,
     0,
@@ -1218,7 +1241,7 @@ static const struct spell_desc spelldata[] =
     spflag::area | spflag::escape,
     6,
     200,
-    1, 4,
+    4, 4,
     0,
     TILEG_DISPERSAL,
 },
@@ -1250,8 +1273,8 @@ static const struct spell_desc spelldata[] =
     SPELL_INTOXICATE, "Alistair's Intoxication",
     spschool::hexes,
     spflag::none,
-    5,
-    150,
+    7,
+    20,
     -1, -1,
     0,
     TILEG_ALISTAIRS_INTOXICATION,
@@ -3276,11 +3299,11 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_BECKONING, "Lesser Beckoning",
-    spschool::translocation,
+    spschool::translocation | spschool::hexes,
     spflag::dir_or_target | spflag::not_self | spflag::needs_tracer,
     2,
     50,
-    3, 5,
+    4, 4,
     0,
     TILEG_BECKONING,
 },
@@ -3600,7 +3623,7 @@ static const struct spell_desc spelldata[] =
     SPELL_MANIFOLD_ASSAULT, "Manifold Assault",
     spschool::translocation,
     spflag::none,
-    7,
+    3,
     200,
     -1, -1,
     0,
@@ -3733,7 +3756,7 @@ static const struct spell_desc spelldata[] =
     SPELL_ENFEEBLE, "Enfeeble",
     spschool::hexes,
     spflag::dir_or_target | spflag::needs_tracer | spflag::WL_check,
-    7,
+    5,
     200,
     LOS_RADIUS, LOS_RADIUS,
     0,
@@ -3832,7 +3855,7 @@ static const struct spell_desc spelldata[] =
     SPELL_DIMENSIONAL_BULLSEYE, "Dimensional Bullseye",
     spschool::translocation | spschool::hexes,
     spflag::target | spflag::not_self | spflag::prefer_farthest,
-    4,
+    2,
     200,
     LOS_RADIUS, LOS_RADIUS,
     0,
@@ -4814,7 +4837,6 @@ AXED_SPELL(SPELL_AURA_OF_ABJURATION, "Aura of Abjuration")
 AXED_SPELL(SPELL_CHANT_FIRE_STORM, "Chant Fire Storm")
 AXED_SPELL(SPELL_CIGOTUVIS_DEGENERATION, "Cigotuvi's Degeneration")
 AXED_SPELL(SPELL_CIGOTUVIS_EMBRACE, "Cigotuvi's Embrace")
-AXED_SPELL(SPELL_CONTROLLED_BLINK, "Controlled Blink")
 AXED_SPELL(SPELL_CONTROL_TELEPORT, "Control Teleport")
 AXED_SPELL(SPELL_CONTROL_UNDEAD, "Control Undead")
 AXED_SPELL(SPELL_CONTROL_WINDS, "Control Winds")
@@ -4845,7 +4867,6 @@ AXED_SPELL(SPELL_IRON_ELEMENTALS, "Summon Iron Elementals")
 AXED_SPELL(SPELL_LETHAL_INFUSION, "Lethal Infusion")
 AXED_SPELL(SPELL_MELEE, "Melee")
 AXED_SPELL(SPELL_MISLEAD, "Mislead")
-AXED_SPELL(SPELL_PHASE_SHIFT, "Phase Shift")
 AXED_SPELL(SPELL_POISON_WEAPON, "Poison Weapon")
 AXED_SPELL(SPELL_RANDOM_BOLT, "Random Bolt")
 AXED_SPELL(SPELL_REARRANGE_PIECES, "Rearrange the Pieces")

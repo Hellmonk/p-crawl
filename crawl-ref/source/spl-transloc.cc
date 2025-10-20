@@ -82,10 +82,8 @@ static void _place_tloc_cloud(const coord_def &origin)
 spret cast_disjunction(int pow, bool fail)
 {
     fail_check();
-    int rand = random_range(35, 45) + random2(div_rand_round(pow, 12));
-    you.duration[DUR_DISJUNCTION] = min(90 + div_rand_round(pow, 12),
-        max(you.duration[DUR_DISJUNCTION] + rand,
-        30 + rand));
+    int dur = 4 + div_rand_round(pow,4) + random2(1 + div_rand_round(pow, 2));
+    you.increase_duration(DUR_DISJUNCTION, dur, 25);
     disjunction_spell();
     return spret::success;
 }
@@ -944,9 +942,6 @@ spret cast_blink(int pow, bool fail)
     fail_check();
     uncontrolled_blink();
 
-    you.increase_duration(DUR_BLINK_COOLDOWN,
-                          2 + random2(3) + div_rand_round(50 - pow, 10));
-
     return spret::success;
 }
 
@@ -1404,7 +1399,6 @@ spret cast_dimensional_bullseye(int pow, monster *target, bool fail)
     if (target == nullptr || !you.can_see(*target))
     {
         canned_msg(MSG_NOTHING_THERE);
-        // You cannot place a bullseye on invisible enemies, so just abort
         return spret::abort;
     }
 
@@ -1432,8 +1426,7 @@ spret cast_dimensional_bullseye(int pow, monster *target, bool fail)
     target->add_ench(ENCH_BULLSEYE_TARGET);
 
     you.props[BULLSEYE_TARGET_KEY].get_int() = target->mid;
-    int dur = random_range(5 + div_rand_round(pow, 5),
-                           7 + div_rand_round(pow, 4));
+    int dur = random_range(5 + pow, 7 + div_rand_round(pow * 3, 2));
     you.set_duration(DUR_DIMENSIONAL_BULLSEYE, dur);
     return spret::success;
 }
@@ -1525,8 +1518,8 @@ spret cast_manifold_assault(actor& agent, int pow, bool fail, bool real,
     shuffle_array(targets);
     // UC is worse at launching multiple manifold assaults, since
     // shapeshifters have a much easier time casting it.
-    const size_t max_targets = weapon ? 4 + div_rand_round(pow, 25)
-                                      : 2 + div_rand_round(pow, 50);
+    const size_t max_targets = agent.is_player() ? 1 + div_rand_round(pow, 8)
+                               : 1 + div_rand_round(pow, 2);
     const size_t target_count = std::min(max_targets, targets.size());
     int animation_delay = 80 / target_count;
 
@@ -1802,8 +1795,8 @@ static int _disperse_monster(monster& mon, int pow)
         monster_teleport(&mon, true);
 
     // Moving the monster may have killed it in apply_location_effects.
-    if (mon.alive() && mon.check_willpower(&you, pow) <= 0)
-        mon.confuse(&you, 1 + random2avg(1 + div_rand_round(pow, 10), 2));
+    if (mon.alive())
+        mon.confuse(&you, 1 + random2(1 + div_rand_round(pow, 4)));
 
     return true;
 }
@@ -1983,6 +1976,9 @@ bool beckon(actor &beckoned, const bolt &path)
     mprf("%s %s suddenly forward!",
          beckoned.name(DESC_THE).c_str(),
          beckoned.conj_verb("hurl").c_str());
+
+    if (coinflip())
+        beckoned.stun(&you);
 
     beckoned.apply_location_effects(old_pos); // traps, etc.
     if (beckoned.is_monster())
@@ -2761,4 +2757,16 @@ spret do_bestial_takedown(coord_def target)
     noisy(5, you.pos(), MID_PLAYER);
 
     return spret::success;
+}
+
+spret cast_controlled_blink(bool safe)
+{
+    // don't prompt if it's useless
+    if (you.no_tele(true, true))
+    {
+        canned_msg(MSG_STRANGE_STASIS);
+        return spret::abort;
+    }
+
+    return controlled_blink(safe);
 }

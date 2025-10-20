@@ -25,10 +25,9 @@ meteorological fury. It does more damage to targets surrounded by empty space.
 Alistair's Intoxication spell
 
 Converts a small portion of the brain matter of those around you into alcohol,
-attempting to confuse all intelligent creatures within view (although
-poison-resistant creatures may resist the effects). The caster will experience
-vertigo briefly if they successfully make contact with other minds. It is
-frequently used as an icebreaker at wizard parties.
+attempting to confuse all living and demonic monsters you can see. The spell
+has a fixed chance of success depending on power and is not resistible by other
+means. It is frequently used as an icebreaker at wizard parties.
 %%%%
 Alistair's Walking Alembic spell
 
@@ -175,9 +174,7 @@ still within sight of the target.
 %%%%
 Blink spell
 
-Randomly translocates the caster a short distance. After translocating in this
-way, the spell cannot be cast again for a short period of time depending on
-spell power.
+Randomly translocates the caster to another place within their line of sight.
 %%%%
 Blinkbolt spell
 
@@ -382,10 +379,10 @@ Induces a state of bewilderment and confusion in a creature's mind.
 %%%%
 Confusing Touch spell
 
-Enchants the caster's dominant hand with magical energy. This energy is
-released when the caster touches a monster, and may induce a state of confusion
-in the monster. The caster's attacks do no damage while attempting to touch a
-monster in this way.
+Enchants the caster's dominant hand with magical energy. The energy may induce
+confusion in a monster the caster touches, which will end the effect. The
+caster's melee attacks do no damage while attempting to touch a monster in this
+way.
 %%%%
 Confusion Gaze spell
 
@@ -414,6 +411,11 @@ Constructs a simple mechanical trap within an adjacent wall which repeatedly
 skewers random adjacent enemies. Protected by the wall itself, it is
 invulnerable to most forms of damage, but will fall apart if the caster leaves
 its vicinity.
+%%%%
+Controlled Blink spell
+
+Translocates the caster to any tile they choose that is within their vision,
+unoccupied, and not behind walls.
 %%%%
 Corona spell
 
@@ -519,7 +521,10 @@ Dimensional Bullseye spell
 
 Weaves a link between the caster's weaponry and a chosen target. Whenever the
 caster fires or throws something at a *different* enemy, a matching projectile
-will be teleported at the target. Spellpower increases their accuracy.
+will be teleported at the target. The marked target is also unable to dodge
+ranged attacks, whether they were the original target of the attack or not.
+
+Spellpower increases the duration of the effect.
 %%%%
 Diminish Spells spell
 
@@ -550,8 +555,8 @@ Dispersal spell
 
 Teleports away any creatures within a short distance of the caster. Any
 creature with the Will to resist will still be irresistibly blinked a shorter
-distance, and any monster it affects at all has a separate Will-based chance
-of being confused by the warping of space.
+distance, distance, and any monster it affects at all will be (very briefly)
+confused.
 %%%%
 Divine Armament spell
 
@@ -634,8 +639,7 @@ Enfeeble spell
 
 Overwhelms an enemy with malignant energies, irresistibly weakening their melee
 attacks and reducing the power of their spells. It will additionally daze and
-blind any foe that fails to resist the full force of the curse - even those
-without visual senses!
+slow any foe that fails to resist the full force of the curse.
 %%%%
 Ensnare spell
 
@@ -1209,7 +1213,9 @@ Hurls a lethally sharp shard of crystal.
 %%%%
 Lesser Beckoning spell
 
-Beckons the target forward, attempting to place them adjacent to the caster.
+Beckons the target forward, attempting to place them adjacent to the caster. If
+a monster is moved by this effect, they may be irresistibly stunned
+(50% chance).
 %%%%
 Lightning Bolt spell
 
@@ -1265,15 +1271,12 @@ cannot affect artificial beings, and the undead will decompose if affected.
 %%%%
 Manifold Assault spell
 
-Warps space into paradoxical configurations to strike many visible foes with
-one melee attack. Power increases the number of foes attacked with one cast,
-though unarmed attacks strike only half as many targets at once, as additional
-care must be taken when warping one's own limbs.
+Warps space into paradoxical configurations to strike one or more visible foes
+with one melee attack. Power increases the number of foes attacked with one
+cast.
 
-The time taken for the attack is exactly the same as a normal melee attack.
-Attacks performed this way never miss, but the exact spot struck cannot be
-controlled precisely, making them unable to do extra damage against unsuspecting
-foes.
+Attacks made with this spell do not deal extra damage against unsuspecting foes,
+and may be reduced by armour as usual, but never miss.
 %%%%
 Mara Summon spell
 
@@ -1541,6 +1544,11 @@ Phantom Mirror spell
 
 Creates a phantom copy of a creature. The copy will be somewhat fragile, but
 otherwise almost indistinguishable from the original.
+%%%%
+Phase Shift spell
+
+Causes the caster to phase in and out of the material plane, greatly increasing
+their evasion for a duration.
 %%%%
 Planar Overlay spell
 

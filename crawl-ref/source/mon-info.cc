@@ -156,6 +156,7 @@ static map<enchant_type, monster_info_flags> trivial_ench_mb_mappings = {
     { ENCH_STUN,            MB_STUNNED },
     { ENCH_USED_FREE_ACTION,  MB_FREE_ACTION_USED },
     { ENCH_STEELSKIN,       MB_STEELSKIN },
+    { ENCH_PHASE_SHIFT,     MB_PHASE_SHIFT },
 };
 
 static monster_info_flags ench_to_mb(const monster& mons, enchant_type ench)

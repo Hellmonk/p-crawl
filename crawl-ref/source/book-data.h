@@ -412,6 +412,7 @@ static const vector<spell_type> spellbook_templates[] =
 { // Book of Iron
     SPELL_AWAKEN_ARMOUR,
     SPELL_LRD,
+    SPELL_PHASE_SHIFT,
     SPELL_MAGNAVOLT,
 },
 

@@ -1826,6 +1826,9 @@ static int _player_temporary_evasion_modifiers()
     if (you.duration[DUR_AGILITY])
         evbonus += AGILITY_BONUS;
 
+    if (you.duration[DUR_PHASE_SHIFT])
+        evbonus += 35;
+
     // Bane of stumbling triggers on the same conditions as acrobat (thus
     // sharing its timer).
     if (you.has_bane(BANE_STUMBLING) && you.duration[DUR_ACROBAT])

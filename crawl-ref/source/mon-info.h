@@ -262,6 +262,7 @@ enum monster_info_flags
     MB_STUNNED,
     MB_FREE_ACTION_USED,
     MB_STEELSKIN,
+    MB_PHASE_SHIFT,
     NUM_MB_FLAGS
 };
 

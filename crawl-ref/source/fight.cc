@@ -171,6 +171,10 @@ int to_hit_pct(const monster_info& mi, attack &atk, bool melee,
                bool penetrating, int distance)
 {
     const int to_land = atk.calc_pre_roll_to_hit(false);
+
+    if (!melee && mi.is(MB_BULLSEYE_TARGET))
+        return 100;
+
     const double hit_chance = _to_hit_hit_chance(mi, melee, to_land);
     const double shield_chance = _to_hit_shield_chance(mi, melee, to_land, penetrating);
     const int blind_miss_chance = player_blind_miss_chance(distance);

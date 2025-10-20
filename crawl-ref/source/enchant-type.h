@@ -251,6 +251,7 @@ enum enchant_type
     ENCH_STUN,
     ENCH_USED_FREE_ACTION,
     ENCH_STEELSKIN,
+    ENCH_PHASE_SHIFT,
     // Update enchant_names[] in mon-ench.cc when adding or removing
     // enchantments.
     NUM_ENCHANTMENTS

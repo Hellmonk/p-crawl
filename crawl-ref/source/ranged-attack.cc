@@ -86,7 +86,10 @@ bool ranged_attack::attack()
     if (defender->missile_repulsion())
         ev += REPEL_MISSILES_EV_BONUS;
 
-    ev_margin = test_hit(to_hit, ev, !attacker->is_player());
+    const bool bullseye = defender->is_monster()
+                      && defender->as_monster()->has_ench(ENCH_BULLSEYE_TARGET);
+
+    ev_margin = test_hit(to_hit, ev, bullseye);
 
     if (defender->is_player() && you.duration[DUR_DEFLECT_MISSILES])
         ev_margin = -100;

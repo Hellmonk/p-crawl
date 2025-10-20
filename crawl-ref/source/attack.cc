@@ -787,15 +787,15 @@ int attack::calc_damage()
     return 0;
 }
 
-int attack::test_hit(int to_land, int ev, bool randomise_ev)
+int attack::test_hit(int to_land, int ev, bool bullseye)
 {
     int margin = AUTOMATIC_HIT;
 
     if (defender->is_player() && you.duration[DUR_AUTODODGE])
         return -1000;
 
-    if (randomise_ev)
-        ev = ev;
+    if (bullseye)
+        ev = 0;
     if (to_land >= AUTOMATIC_HIT)
         return true;
 

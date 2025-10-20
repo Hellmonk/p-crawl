@@ -1429,10 +1429,7 @@ static vector<string> _desc_intoxicate_chance(const monster_info& mi,
     if (hitfunc && !hitfunc->affects_monster(mi))
         return vector<string>{"not susceptible"};
 
-    int conf_pct = 40 + pow / 3;
-
-    if (get_resist(mi.resists(), MR_RES_POISON) >= 1)
-        conf_pct =  conf_pct / 3;
+    int conf_pct = min(40 + pow * 3, 100);
 
     return vector<string>{make_stringf("chance to confuse: %d%%", conf_pct)};
 }
@@ -1590,7 +1587,7 @@ static vector<string> _desc_enfeeble_chance(const monster_info& mi, int pow)
     if (wl != WILL_INVULN)
     {
         const int success = hex_success_chance(wl, pow, 100);
-        all_effects.push_back(make_stringf("chance to daze and blind: %d%%", success));
+        all_effects.push_back(make_stringf("chance to daze and slow: %d%%", success));
     }
 
     if (all_effects.empty())
@@ -2360,6 +2357,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     case SPELL_CONDENSATION_SHIELD:
         return cast_condensation_shield(powc, fail);
 
+    case SPELL_PHASE_SHIFT:
+        return cast_phase_shift(powc, fail);
+
     case SPELL_SILENCE:
         return cast_silence(powc, fail);
 
@@ -2385,6 +2385,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     // Escape spells.
     case SPELL_BLINK:
         return cast_blink(powc, fail);
+
+    case SPELL_CONTROLLED_BLINK:
+        return cast_controlled_blink();
 
     case SPELL_BLASTMOTE:
         return kindle_blastmotes(powc, fail);

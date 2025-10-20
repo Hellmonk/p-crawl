@@ -841,6 +841,11 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
             simple_monster_message(*this, " is less armoured.");
         break;
 
+    case ENCH_PHASE_SHIFT:
+        if (!quiet)
+            simple_monster_message(*this, " seems more solid.");
+        break;
+
     case ENCH_RESISTANCE:
         if (!quiet)
             simple_monster_message(*this, " is no longer unusually resistant.");
@@ -2236,6 +2241,7 @@ static const char *enchant_names[] =
     "vampire thrall", "pyrrhic recollection", "clockwork bee cast",
     "phalanx barrier", "figment", "paradox-touched", "warding",
     "diminished_spells", "stunned", "free action used", "steelskin",
+    "phase shift",
     "buggy", // NUM_ENCHANTMENTS
 };
 

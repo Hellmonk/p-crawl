@@ -3040,6 +3040,9 @@ int monster::evasion(bool ignore_temporary, const actor* /*act*/) const
     if (has_ench(ENCH_AGILE))
         ev += AGILITY_BONUS;
 
+    if (has_ench(ENCH_PHASE_SHIFT))
+        ev += 35;
+
     if (is_constricted())
         ev /= 2;
 

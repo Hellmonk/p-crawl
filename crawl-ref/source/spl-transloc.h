@@ -82,3 +82,4 @@ spret do_bestial_takedown(coord_def target);
 dice_def gravity_damage(int pow, bool random = true);
 bool fatal_attraction(const coord_def& pos, const actor *agent, int pow);
 spret warp_gravity(int pow, bool fail, bool tracer);
+spret cast_controlled_blink(bool safe = true);
