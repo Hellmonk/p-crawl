@@ -1174,8 +1174,8 @@ spret cast_permafrost_eruption(actor &caster, int pow, bool fail)
 
 dice_def base_fragmentation_damage(int pow, bool random)
 {
-    return dice_def(3, random ? 4 + div_rand_round(pow, 5)
-                              : 4 + pow / 5);
+    return dice_def(3, random ? 3 + div_rand_round(pow, 2)
+                              : 3 + pow / 2);
 }
 
 enum class frag_damage_type
@@ -1240,14 +1240,11 @@ static const map<monster_type, monster_frag> fraggable_monsters = {
     { MONS_PILE_OF_DEBRIS,    { "stone", LIGHTGRAY } },
     { MONS_PETRIFIED_FLOWER,  { "stone", LIGHTGRAY } },
     { MONS_EARTH_ELEMENTAL,   { "rock", BROWN } },
-    { MONS_ROCKSLIME,         { "rock", BROWN } },
     { MONS_BOULDER,           { "rock", BROWN } },
-    { MONS_USHABTI,           { "rock", BROWN } },
     { MONS_STATUE,            { "rock", BROWN } },
     { MONS_GARGOYLE,          { "rock", BROWN } },
     { MONS_VV,                { "rock", BROWN } },
     { MONS_HELLFIRE_MORTAR,   { "rock", BROWN } },
-    { MONS_CRAWLING_FLESH_CAGE, { "metal", CYAN, frag_damage_type::metal } },
     { MONS_IRON_ELEMENTAL,    { "metal", CYAN, frag_damage_type::metal } },
     { MONS_IRON_GOLEM,        { "metal", CYAN, frag_damage_type::metal } },
     { MONS_PEACEKEEPER,       { "metal", CYAN, frag_damage_type::metal } },
@@ -1311,17 +1308,11 @@ static bool _init_frag_monster(frag_effect &effect, const monster &mon)
         effect.colour     = minfo.colour();
         return true;
     }
-    if (mon.is_icy()) // blast of ice
+    if (mon.is_nonliving())
     {
-        effect.name       = "icy blast";
-        effect.colour     = WHITE;
-        effect.damage     = frag_damage_type::ice;
-        return true;
-    }
-    if (mon.is_skeletal()) // blast of bone
-    {
-        effect.name   = "blast of bone shards";
-        effect.colour = LIGHTGREY;
+        monster_info minfo(&mon);
+        effect.name       = "blast of matter";
+        effect.colour     = minfo.colour();
         return true;
     }
     // Targeted monster not shatterable.
@@ -1456,25 +1447,6 @@ bool setup_fragmentation_beam(bolt &beam, int pow, const actor *caster,
     beam.damage  = base_fragmentation_damage(pow, caster->is_player());
     beam.flavour = BEAM_FRAG;
     beam.ex_size = 1;
-    switch (effect.damage)
-    {
-        case frag_damage_type::rock:
-        default:
-            break;
-        case frag_damage_type::metal:
-            beam.damage.num++;
-            break;
-        case frag_damage_type::crystal:
-            beam.damage.num++;
-            beam.ex_size++;
-            break;
-        case frag_damage_type::ice:
-            beam.flavour = BEAM_ICE;
-            break;
-        case frag_damage_type::player_gargoyle:
-            beam.damage.num--;
-            break;
-    }
 
     if (effect.hit_centre)
         hole = false;

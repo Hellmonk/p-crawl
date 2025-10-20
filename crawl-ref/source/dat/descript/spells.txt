@@ -1194,14 +1194,10 @@ connection to the ground slows the caster's movement, even if they are flying.
 %%%%
 Lee's Rapid Deconstruction spell
 
-Fragments a wall or a suitably brittle visible monster into an explosion of
-deadly shrapnel. It can be used on monsters made of ice, bone, or any wall-like
-substance, as well as those turned to stone by petrification. Its damage is
-strongly reduced by armour.
-
-Targets made from rock, stone, ice or bone will cause a small explosion. Metal
-targets will cause a small but more damaging explosion, and targets made from
-crystal will cause a large and more damaging explosion.
+Causes a wall, nonliving creature, or petrifying creature to explode in a burst
+of fragments, damaging anything adjacent. Damage from the fragments is reduced
+thrice by armour; creatures directly targeted by the spell cannot reduce the
+damage they take in this way.
 %%%%
 Legendary Destruction spell
 
