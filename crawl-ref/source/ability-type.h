@@ -17,7 +17,6 @@ enum ability_type
     ABIL_NOXIOUS_BREATH,
     ABIL_CAUSTIC_BREATH,
     // Others
-    ABIL_IMBUE_SERVITOR,
     ABIL_IMPRINT_WEAPON,
     // Abort duration-based spells
     ABIL_END_TRANSFORMATION,

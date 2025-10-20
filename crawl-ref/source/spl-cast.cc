@@ -1162,6 +1162,7 @@ unique_ptr<targeter> find_spell_targeter(spell_type spell, int pow, int range)
     case SPELL_SPELLSPARK_SERVITOR:
     case SPELL_FORGE_LIGHTNING_SPIRE:
     case SPELL_BATTLESPHERE:
+    case SPELL_SUMMON_ELEMENTAL:
         return make_unique<targeter_maybe_radius>(&you, LOS_NO_TRANS, 2, 0, 1);
     case SPELL_SUMMON_SEISMOSAURUS_EGG:
     case SPELL_HOARFROST_CANNONADE:
@@ -2227,6 +2228,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
 
     case SPELL_SUMMON_MANA_VIPER:
         return cast_summon_mana_viper(powc, fail);
+
+    case SPELL_SUMMON_ELEMENTAL:
+        return cast_summon_elemental(fail);
 
     case SPELL_SUMMON_SEISMOSAURUS_EGG:
         return cast_summon_seismosaurus_egg(you, powc, fail);

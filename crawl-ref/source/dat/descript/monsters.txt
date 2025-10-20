@@ -1999,7 +1999,8 @@ skeletal, desiccated corpse kept intact by a mighty exercise of dark magic.
 lightning spire
 
 A buzzing contraption made from a coil and a rod. It irregularly zaps
-electricity at the most distant enemy in its range.
+electricity at the most distant enemy in its range, and discharges around itself
+when struck by lightning.
 %%%%
 fire eater
 

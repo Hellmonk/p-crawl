@@ -2621,7 +2621,7 @@ spret cast_ignition(const actor *agent, int pow, bool fail)
     return spret::success;
 }
 
-static const int DISCHARGE_POWER_DIV = 12;
+static const int DISCHARGE_POWER_DIV = 3;
 
 static int _discharge_monsters(const coord_def &where, int pow,
                                const actor &agent, int remaining)
@@ -2801,11 +2801,11 @@ spret cast_discharge(int pow, const actor &agent, bool fail, bool prompt)
 
     fail_check();
 
-    const int num_targs = 1 + random2(2 + div_rand_round(pow, 25));
+    const int num_targs = 1 + random2(2 + div_rand_round(pow, 3));
     const int dam =
         apply_random_around_square([pow, &agent](coord_def target) {
         return _discharge_monsters(target, pow, agent,
-            1 + random2(2 + div_rand_round(pow, 25)));
+            1 + random2(2 + div_rand_round(pow, 3)));
     }, agent.pos(), true, num_targs);
 
     dprf("Arcs: %d Damage: %d", num_targs, dam);

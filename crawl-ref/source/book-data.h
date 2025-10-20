@@ -302,7 +302,7 @@ static const vector<spell_type> spellbook_templates[] =
 
 {   // Grand Grimoire
     SPELL_MALIGN_GATEWAY,
-    SPELL_SUMMON_HORRIBLE_THINGS,
+    SPELL_ELDRITCH_ICHOR,
 },
 
 {   // Necronomicon
@@ -512,6 +512,7 @@ static const vector<spell_type> spellbook_templates[] =
 { // Book of Scorching
     SPELL_SCORCH,
     SPELL_FLAME_WAVE,
+    SPELL_SUMMON_ELEMENTAL,
     SPELL_SUMMON_CACTUS,
     SPELL_GHOSTLY_LEGION,
 },

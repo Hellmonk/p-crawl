@@ -284,9 +284,8 @@ or nearly adjacent cannot be struck by this.
 %%%%
 Call Imp spell
 
-Calls forth a minor demon from the pits of Hell, equipped with a spear with
-which to jab at the caster's enemies. The quality of the imp's weaponry rises
-with spell power.
+Calls forth one of many types of minor demon from the pits of Hell. No refunds,
+all sales are final.
 %%%%
 Call Lost Souls spell
 
@@ -587,9 +586,9 @@ Dragon's Call spell
 
 Issues a powerful call to a draconic realm, beckoning forth dragon after dragon
 to engage the summoner's enemies. The spell is taxing to maintain, and each new
-dragon which answers the call will further drain the summoner's magical
-reserves. After the call ends, it cannot be issued again for a short time. The
-duration of the call and the species of dragons called depend on spell power.
+dragon which answers the call will cost an additional 1 mp. After the call ends,
+it cannot be issued again for a short time. The duration of the call depends on
+spell power.
 %%%%
 Drain Life spell
 
@@ -616,6 +615,16 @@ and duration of this effect.
 Druid's Call spell
 
 Recalls woodland creatures from elsewhere on the same level.
+%%%%
+Eldritch Ichor spell
+
+Taints the caster with horrible energies from a distant plane. Striking an
+enemy while the spell is active may summon a tentacled monstrosity from this
+plane to attack the same foe, though these creatures never stick around for
+long.
+
+Greater spellpower will increase the chance of a successful summoning on each
+hit.
 %%%%
 Electrical Bolt spell
 
@@ -751,7 +760,11 @@ Forge Lightning Spire spell
 
 Constructs an immobile lightning spire at a nearby location. This spire
 irregularly discharges bolts of electricity at the caster's foes, prioritizing
-whichever of them is most distant from it.
+whichever of them is most distant from it, and discharges electricity at
+adjacent targets when hit by electrical spells (though it is immune to
+electrical damage itself).
+
+The strength of the spire depends on spellpower.
 %%%%
 Forge Monarch Bomb spell
 
@@ -1238,8 +1251,8 @@ Tears a gash in reality, creating a self-sustained but temporary portal to an
 unknown, tainted otherworld. It requires open space to succeed. After a short
 time, a powerful clawed tentacle will reach through the portal, remaining bound
 to the caster's will for a duration depending on power. With the portal's
-expiry, the tentacle will be severed and turn on the caster. The duration of
-the portal increases with spell power.
+expiry, expiry, the tentacle will be severed and briefly turn neutral before
+dying.
 %%%%
 Malign Offering spell
 
@@ -1948,13 +1961,10 @@ coalesce from the mist over time.
 Spellspark Servitor spell
 
 Constructs a metallic servant with a spark of the caster's own arcane knowledge
-at its core. This spark allows the servitor to unleash some of the destructive
-spells known to its creator, though the strongest and most volatile
-of magics cannot be imbued in this fashion. The strength of the servitor
-increases with spell power.
-
-(While you know this spell, you may choose which of your eligible spells it will
-cast with the Imbue Servitor ability.)
+at its core. The servitor has an affinity for the caster's most
+skilled magical school (excluding summonings and enchantments) and will cast a
+powerful spell of that school. The strength of the servitor increases with spell
+power.
 %%%%
 Sphinx Sisters spell
 
@@ -2089,9 +2099,9 @@ Summons one or more air elementals.
 %%%%
 Summon Cactus Giant spell
 
-Summons a warrior from a particularly prickly tribe. Foes that strike these
-giants in melee are in for a painful surprise! When cast at a higher power,
-older, more robust warriors will answer the call.
+Summons a giant from a particularly prickly tribe. Foes that strike these
+giants in melee are in for a painful surprise! The maximum hitpoints of the
+summoned giant increases significantly with spellpower.
 %%%%
 Summon Demon spell
 
@@ -2111,6 +2121,12 @@ Summons multiple drakes and lindwurms.
 Summon Earth Elementals spell
 
 Summons one or more earth elementals.
+%%%%
+Summon Elemental spell
+
+Summons an elemental. The type of elemental summoned matches the caster's
+highest skill among the four elemental magics (or is randomly chosen from among
+them in case of a tie), and its strength depends upon the level of that skill.
 %%%%
 Summon Emperor Scorpions spell
 
@@ -2177,9 +2193,8 @@ prowess as the original, and can cast the same spells.
 %%%%
 Summon Mana Viper spell
 
-Summons a violet-scaled serpent whose bite can swiftly drain the magical
-reserves of nearly any foe. At higher power, the antimagic properties of the
-viper's bite grow even stronger.
+Summons a violet-scaled serpent whose bite can inflict antimagic, reducing
+foes' ability to cast spells.
 %%%%
 Summon Minor Demon spell
 

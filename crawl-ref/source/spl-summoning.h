@@ -208,3 +208,6 @@ spret cast_phalanx_beetle(const actor& agent, int pow, bool fail);
 dice_def rending_blade_damage(int power, bool include_mp);
 spret cast_rending_blade(int pow, bool fail);
 void trigger_rending_blade();
+
+spret cast_summon_elemental(bool fail);
+spret cast_eldritch_ichor(int pow, bool fail);;

@@ -560,8 +560,19 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_HORRIBLE_THINGS, "Summon Horrible Things",
     spschool::summoning,
-    spflag::unholy | spflag::chaotic | spflag::mons_abjure,
+    spflag::unholy | spflag::chaotic | spflag::mons_abjure | spflag::monster,
     8,
+    200,
+    -1, -1,
+    0,
+    TILEG_SUMMON_HORRIBLE_THINGS,
+},
+
+{
+    SPELL_ELDRITCH_ICHOR, "Eldritch Ichor",
+    spschool::summoning,
+    spflag::unholy | spflag::chaotic,
+    9,
     200,
     -1, -1,
     0,
@@ -572,7 +583,7 @@ static const struct spell_desc spelldata[] =
     SPELL_MALIGN_GATEWAY, "Malign Gateway",
     spschool::summoning | spschool::translocation,
     spflag::unholy | spflag::chaotic,
-    7,
+    5,
     200,
     -1, -1,
     15,
@@ -741,7 +752,7 @@ static const struct spell_desc spelldata[] =
     SPELL_CALL_IMP, "Call Imp",
     spschool::summoning,
     spflag::unholy,
-    2,
+    1,
     50,
     -1, -1,
     0,
@@ -2188,7 +2199,7 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_FORCE_LANCE, "Force Lance",
-    spschool::enchantments | spschool::translocation,
+    spschool::translocation,
     spflag::dir_or_target | spflag::needs_tracer | spflag::monster,
     4,
     100,
@@ -2582,9 +2593,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_FORGE_LIGHTNING_SPIRE, "Forge Lightning Spire",
-    spschool::air,
+    spschool::summoning | spschool::air,
     spflag::none,
-    4,
+    2,
     100,
     -1, -1,
     0,
@@ -2638,9 +2649,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_DRAGON_CALL, "Dragon's Call",
-    spschool::summoning,
+    spschool::summoning | spschool::fire,
     spflag::none,
-    9,
+    7,
     200,
     -1, -1,
     15,
@@ -2651,7 +2662,7 @@ static const struct spell_desc spelldata[] =
     SPELL_SPELLSPARK_SERVITOR, "Spellspark Servitor",
     spschool::enchantments,
     spflag::none,
-    7,
+    4,
     200,
     -1, -1,
     0,
@@ -2661,12 +2672,23 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_MANA_VIPER, "Summon Mana Viper",
     spschool::summoning | spschool::hexes,
-    spflag::mons_abjure,
-    5,
+    spflag::none,
+    2,
     100,
     -1, -1,
     0,
     TILEG_SUMMON_MANA_VIPER,
+},
+
+{
+    SPELL_SUMMON_ELEMENTAL, "Summon Elemental",
+    spschool::summoning,
+    spflag::none,
+    4,
+    100,
+    -1, -1,
+    0,
+    TILEG_SUMMON_ELEMENTAL,
 },
 
 {
@@ -4839,7 +4861,6 @@ AXED_SPELL(SPELL_SONG_OF_SHIELDING, "Song of Shielding")
 AXED_SPELL(SPELL_SPECTRAL_WEAPON, "Spectral Weapon")
 AXED_SPELL(SPELL_STONESKIN, "Stoneskin")
 AXED_SPELL(SPELL_SUMMON_BUTTERFLIES, "Summon Butterflies")
-AXED_SPELL(SPELL_SUMMON_ELEMENTAL, "Summon Elemental")
 AXED_SPELL(SPELL_SUMMON_RAKSHASA, "Summon Rakshasa")
 AXED_SPELL(SPELL_SUMMON_TWISTER, "Summon Twister")
 AXED_SPELL(SPELL_SUNRAY, "Sunray")

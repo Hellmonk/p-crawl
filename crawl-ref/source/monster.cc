@@ -61,6 +61,7 @@
 #include "ouch.h"
 #include "religion.h"
 #include "spl-clouds.h" // explode_blastmotes_at
+#include "spl-damage.h"
 #include "spl-monench.h"
 #include "spl-other.h"
 #include "spl-summoning.h"
@@ -3873,6 +3874,12 @@ int monster::hurt(const actor *agent, int amount, beam_type flavour,
             }
         }
 
+        if (type == MONS_LIGHTNING_SPIRE && flavour == BEAM_ELECTRICITY
+            && agent->as_monster()->type != MONS_LIGHTNING_SPIRE)
+        {
+            cast_discharge(3 + get_hit_dice(), *this);
+        }
+
         if (amount == INSTANT_DEATH)
             amount = hit_points;
         else if (get_hit_dice() <= 0)
@@ -5518,6 +5525,19 @@ void monster::react_to_damage(const actor *oppressor, int damage,
     if (x_chance_in_y(scan_artefacts(ARTP_SILENCE), 100))
         silence_monster(*this, oppressor, (4 + random2(7) * BASELINE_DELAY));
 
+    if (oppressor == &you && you.duration[DUR_ICHOR]
+        && !this->is_firewood()
+        && !this->is_peripheral()
+        && !wont_attack()
+        && x_chance_in_y(20 + calc_spell_power(SPELL_ELDRITCH_ICHOR), 60))
+    {
+        mgen_data mg(MONS_TENTACLED_MONSTROSITY, BEH_FRIENDLY,
+                        pos(), this->mindex(), MG_NONE);
+
+        mg.set_summoned(&you, summ_dur(1), SPELL_ELDRITCH_ICHOR);
+        if (create_monster(mg))
+            mpr("A tentacled monstrosity appears!");
+    }
 
     if (mons_species() == MONS_BUSH
         && res_fire() < 0 && flavour == BEAM_FIRE
