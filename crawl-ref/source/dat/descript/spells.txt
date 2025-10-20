@@ -813,8 +813,9 @@ of balls created increases with spellpower.
 %%%%
 Freeze spell
 
-Freezes an adjacent creature, dealing damage that bypasses any armour the
-target may have. This may temporarily slow cold-blooded creatures.
+Freezes an adjacent creature, dealing damage that always hits and bypasses AC.
+Creatures that don't resist cold will also become frozen for a short time,
+requiring extra energy to move.
 %%%%
 Freezing Cloud spell
 
@@ -1872,7 +1873,8 @@ animating them and sending them out to attack.
 %%%%
 Shock spell
 
-Throws a bouncing bolt of electricity. It bypasses half of defenders' armour.
+Throws a bolt of electricity that bypasses half of defenders' armour.
+Nonliving monsters hit by the spell will be stunned.
 %%%%
 Shred spell
 

@@ -840,8 +840,6 @@ spret fire_los_attack_spell(spell_type spell, int pow, const actor* agent,
 
 spret cast_freeze(int pow, monster* mons, bool fail)
 {
-    pow = min(25, pow);
-
     if (!mons)
     {
         fail_check();
@@ -884,6 +882,8 @@ spret cast_freeze(int pow, monster* mons, bool fail)
     if (mons->alive())
     {
         mons->expose_to_element(BEAM_COLD, orig_hurted, &you);
+        if (mons->res_cold() < 1)
+            mons->add_ench(mon_enchant(ENCH_FROZEN, 0, &you));
         you.pet_target = mons->mindex();
     }
 

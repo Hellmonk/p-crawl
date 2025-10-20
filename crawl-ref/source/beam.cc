@@ -2416,6 +2416,7 @@ bool bolt::is_bouncy(dungeon_feature_type feat) const
     if (flavour == BEAM_ELECTRICITY
         && origin_spell != SPELL_BLINKBOLT
         && origin_spell != SPELL_MAGNAVOLT
+        && origin_spell != SPELL_SHOCK
         && !feat_is_metal(feat)
         && !feat_is_tree(feat))
     {
@@ -5307,6 +5308,9 @@ void bolt::monster_post_hit(monster* mon, int dmg)
 
     if (origin_spell == SPELL_KINETIC_GRAPNEL)
         mon->add_ench(mon_enchant(ENCH_KINETIC_GRAPNEL, 0, agent(), random_range(30, 50)));
+
+    if (origin_spell == SPELL_SHOCK && mon->is_nonliving())
+        mon->stun(agent());
 
     // Watery Grave
     if (name == "grasping water" && !mon->is_unbreathing())
