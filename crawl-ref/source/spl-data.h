@@ -4076,9 +4076,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_FULSOME_FUSILLADE, "Fulsome Fusillade",
-    spschool::enchantments,
+    spschool::fire | spschool::air | spschool::earth | spschool::ice,
     spflag::area | spflag::destructive | spflag::chaotic,
-    8,
+    4,
     200,
     LOS_RADIUS, LOS_RADIUS,
     0,

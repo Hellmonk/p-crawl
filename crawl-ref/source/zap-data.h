@@ -2079,7 +2079,7 @@ _mon_hex_zap(ZAP_VITRIFY, BEAM_VITRIFY),
 {
     ZAP_FULSOME_FUSILLADE,
     "volatile concoction",
-    new dicedef_calculator<3, 5, 1, 8>,
+    new dicedef_calculator<3, 5, 1, 1>,
     new tohit_calculator<AUTOMATIC_HIT>,
     nullptr,
     nullptr,

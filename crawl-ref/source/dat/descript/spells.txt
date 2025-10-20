@@ -863,15 +863,15 @@ weaker.
 %%%%
 Fulsome Fusillade spell
 
-A magnum opus of reckless chemistry, this spell conjures up a surfeit of
-volatile reagents to rain down upon your enemies. For the next several turns, up
-to 3 random enemies in sight will be struck by an exploding beaker that inflicts
-either fire, cold, electric, or poison damage. If any of these explosions
+A magnum opus of reckless chemistry, this spell conjures up volatile reagents
+to rain down upon your enemies. For the next several turns, up to 3 random
+enemies in sight will be struck by an exploding beaker that inflicts
+either fire, cold, electric, or fragmentation damage. If any of these explosions
 overlap each other, the resulting reaction will inflict even greater
 irresistible damage and sometimes apply a random deleterious status on whoever
 is caught in the blast.
 
-This spell costs a small amount of the caster's magical energy each turn to
+This spell costs an additional 1 mp each turn to
 maintain, and while it will never aim an explosion where it could hurt the
 caster, the caster's allies (and anything else in the general vicinity) are not
 so fortunate.

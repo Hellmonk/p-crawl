@@ -4991,7 +4991,7 @@ static vector<beam_type> concoction_flavours =
 {
     BEAM_FIRE,
     BEAM_COLD,
-    BEAM_POISON_ARROW,
+    BEAM_FRAG,
     BEAM_ELECTRICITY,
 };
 
@@ -4999,7 +4999,7 @@ static map<beam_type, string> concoction_description =
 {
     { BEAM_FIRE, "fiery phlogiston" },
     { BEAM_COLD, "frigid brine" },
-    { BEAM_POISON_ARROW, "noxious sulphur" },
+    { BEAM_FRAG, "dense lead" },
     { BEAM_ELECTRICITY, "flickering plasma" },
     { BEAM_MMISSILE, "unstable reaction" },
 };
@@ -5018,20 +5018,17 @@ static map<beam_type, tileidx_t> concoction_tile =
 {
     { BEAM_FIRE, TILE_BOLT_FULSOME_FIRE },
     { BEAM_COLD, TILE_BOLT_FULSOME_ICE },
-    { BEAM_POISON_ARROW, TILE_BOLT_FULSOME_POISON },
+    { BEAM_FRAG, TILE_BOLT_FULSOME_POISON },
     { BEAM_ELECTRICITY, TILE_BOLT_FULSOME_ELECTRIC },
     { BEAM_MMISSILE, TILE_BOLT_FULSOME_QUINTESSENCE },
 };
 
 static vector<pair<beam_type, int>> reaction_effects =
 {
-    { BEAM_NONE, 200 },
     { BEAM_MALMUTATE, 30 },
     { BEAM_SLOW, 30 },
-    { BEAM_WEAKNESS, 30 },
-    { BEAM_CONFUSION, 20 },
-    { BEAM_ENSNARE, 20 },
-    { BEAM_PETRIFY, 10 },
+    { BEAM_CONFUSION, 30 },
+    { BEAM_PETRIFY, 30 },
 };
 
 static void _show_fusillade_explosion(map<coord_def, beam_type>& hit_map,
@@ -5093,12 +5090,8 @@ static void _do_fusillade_hit(monster* mon, int power, beam_type flavour)
             case BEAM_NONE:
                 break;
 
-            case BEAM_ENSNARE:
-                ensnare(mon);
-                break;
-
             default:
-                enchant_actor_with_flavour(mon, &you, effect, power / 20);
+                enchant_actor_with_flavour(mon, &you, effect, power / 2);
         }
     }
 }
@@ -5133,13 +5126,13 @@ void fire_fusillade()
     // The first volley is included in the casting cost. The rest drain additional mp.
     if (you.duration[DUR_FUSILLADE] != 5)
     {
-        if (!enough_mp(2, true))
+        if (!enough_mp(1, true))
         {
             mpr("Your magical reserves are too exhausted to conjure more reagents.");
             you.duration[DUR_FUSILLADE] = 0;
             return;
         }
-        pay_mp(2);
+        pay_mp(1);
         finalize_mp_cost();
     }
 
