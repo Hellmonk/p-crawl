@@ -552,8 +552,8 @@ the distance from the caster, being nearly certain when directly adjacent.
 %%%%
 Dispel Undead spell
 
-Harms an adjacent undead creature greatly by interfering with the forces
-binding it together.
+Deals incredible damage to an undead creature in melee range. This damage is not
+reduced by AC.
 %%%%
 Dispel Undead Range spell
 
@@ -707,7 +707,7 @@ Breathes a blast of fire at a targeted creature.
 Fire Storm spell
 
 Calls forth a mighty storm of roaring flame directly onto the target, dealing
-damage in a large area and leaving behind short-lived fire vortices. Half of
+damage in a large area and leaving behind clouds of flame. Half of
 its damage bypasses fire resistance.
 %%%%
 Fire Summon spell
@@ -1735,13 +1735,13 @@ the target amplifies the spell's damage by adding an additional die.
 %%%%
 Rimeblight spell
 
-Afflicts a creature (and up to two others near it) with a magical plague that
+Afflicts a creature and anything adjacent to it with a magical plague that
 slowly freezes them from the inside out. Victims take AC-ignoring cold damage
 each turn, and as the disease progresses, shards of crystalline ice will start
 erupting violently from their body, damaging nearby enemies. When they finally
 succumb, the plague may spread to those around them.
 
-In living, holy, or demonic creatures, the disease is especially virulent,
+In living or demonic creatures, the disease is especially virulent,
 feeding off the necromantic energies released by its host's suffering. As they
 approach the point of death, it will accelerate rapidly, devouring the last
 vestiges of their body and leaving nothing behind but a twisted pillar of

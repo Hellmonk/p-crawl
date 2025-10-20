@@ -104,7 +104,7 @@ static actor* _find_closest_target(const actor &caster, int radius, bool tracer)
 void setup_fire_storm(const actor *source, int pow, bolt &beam)
 {
     zappy(ZAP_FIRE_STORM, pow, source->is_monster(), beam);
-    beam.ex_size      = 2 + (random2(1000) < pow);
+    beam.ex_size      = 2 + one_chance_in(5);
     beam.source_id    = source->mid;
     // XXX: Should this be KILL_MON_MISSILE?
     beam.thrower      =

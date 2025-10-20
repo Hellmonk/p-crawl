@@ -237,8 +237,8 @@ static int _age_needed(int r)
 dice_def polar_vortex_dice(int pow, bool random)
 {
     if (random)
-        return dice_def(4, 3 + div_rand_round(pow, 2));
-    return dice_def(4, 3 + pow / 2);
+        return dice_def(4, 8 + div_rand_round(pow, 2));
+    return dice_def(4, 8 + pow / 2);
 }
 
 void polar_vortex_damage(actor *caster, int dur)

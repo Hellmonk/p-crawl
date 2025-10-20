@@ -3128,33 +3128,7 @@ void bolt::affect_place_explosion_clouds()
         place_cloud(CLOUD_FIRE, p, 2 + random2avg(5,2), agent());
 
     if (origin_spell == SPELL_FIRE_STORM)
-    {
         place_cloud(CLOUD_FIRE, p, 2 + random2avg(5,2), agent());
-
-        if (!cell_is_solid(p) && !monster_at(p) && one_chance_in(4))
-        {
-            const god_type god =
-                (crawl_state.is_god_acting()) ? crawl_state.which_god_acting()
-                                              : GOD_NO_GOD;
-            const beh_type att =
-                (whose_kill() == KC_OTHER ? BEH_HOSTILE : BEH_FRIENDLY);
-
-            actor* summ = agent();
-            mgen_data mg(MONS_FIRE_VORTEX, att, p, MHITNOT, MG_NONE, god);
-            mg.set_summoned(summ, SPELL_FIRE_STORM, summ_dur(1), false, false);
-
-            // Spell-summoned monsters need to have a live summoner.
-            if (summ == nullptr || !summ->alive())
-            {
-                if (!source_name.empty())
-                    mg.non_actor_summoner = source_name;
-                else if (god != GOD_NO_GOD)
-                    mg.non_actor_summoner = god_name(god);
-            }
-
-            mons_place(mg);
-        }
-    }
 }
 
 // A little helper function to handle the calling of ouch()...

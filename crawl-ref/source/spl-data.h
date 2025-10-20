@@ -445,9 +445,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_POLAR_VORTEX, "Polar Vortex",
-    spschool::ice,
+    spschool::ice | spschool::air,
     spflag::area | spflag::destructive,
-    9,
+    8,
     200,
     POLAR_VORTEX_RADIUS, POLAR_VORTEX_RADIUS,
     0,
@@ -468,9 +468,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_FIRE_STORM, "Fire Storm",
-    spschool::enchantments | spschool::fire,
+    spschool::fire | spschool::air,
     spflag::target | spflag::area | spflag::needs_tracer,
-    9,
+    7,
     200,
     5, 5,
     0,

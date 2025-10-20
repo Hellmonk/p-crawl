@@ -264,9 +264,9 @@ bool start_ranged_constriction(actor& caster, actor& target, int duration,
 dice_def rimeblight_dot_damage(int pow, bool random)
 {
     if (random)
-        return dice_def(2, 4 + div_rand_round(pow, 17));
+        return dice_def(2, 4 + div_rand_round(pow, 4));
     else
-        return dice_def(2, 4 + pow / 17);
+        return dice_def(2, 4 + pow / 4);
 }
 
 string describe_rimeblight_damage(int pow, bool terse)
@@ -304,7 +304,7 @@ bool apply_rimeblight(monster& victim, int power, bool quiet)
     if (victim.has_ench(ENCH_RIMEBLIGHT))
         return false;
 
-    int duration = (random_range(8, 12) + div_rand_round(power, 30))
+    int duration = (random_range(8, 12) + div_rand_round(power, 8))
                     * BASELINE_DELAY;
     victim.add_ench(mon_enchant(ENCH_RIMEBLIGHT, 0, &you, duration));
     victim.props[RIMEBLIGHT_POWER_KEY] = power;
