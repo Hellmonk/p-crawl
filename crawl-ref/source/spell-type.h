@@ -656,5 +656,6 @@ enum spell_type : int
     SPELL_AMMO_TO_ANACONDAS,
     SPELL_PIERCING_SHOT,
     SPELL_SCRYING,
+    SPELL_ARCANE_NOVA,
     NUM_SPELLS
 };

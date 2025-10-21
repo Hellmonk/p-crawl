@@ -422,6 +422,8 @@ static dice_def _spell_damage(spell_type spell, int hd, int pow)
             return polar_vortex_dice(pow, false);
         case SPELL_WARP_GRAVITY:
             return gravity_damage(pow, false);
+        case SPELL_ARCANE_NOVA:
+            return nova_damage(pow);
         case SPELL_FORCE_QUAKE:
             return force_quake_damage(pow, false);
         case SPELL_ELECTROLUNGE:

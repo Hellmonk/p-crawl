@@ -279,6 +279,7 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_HIBERNATION,
     SPELL_SONG_OF_SLAYING,
     SPELL_ANGUISH,
+    SPELL_ARCANE_NOVA,
 },
 
 {   // Book of Transmutation

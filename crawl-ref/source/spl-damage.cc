@@ -5670,3 +5670,57 @@ spret cast_putrefaction(actor* agent, int powc, bool fail, bool tracer)
 
     return spret::success;
 }
+
+dice_def nova_damage(int pow)
+{
+    return dice_def(1, 30 + pow);
+}
+
+static void _nova_cell(coord_def where, int pow, actor *agent)
+{
+    bolt beam;
+    beam.flavour    = BEAM_FIRE;
+    beam.thrower    = agent->is_player() ? KILL_YOU : KILL_MON;
+    beam.source_id  = agent->mid;
+    beam.attitude   = agent->temp_attitude();
+    beam.glyph      = dchar_glyph(DCHAR_FIRED_BURST);
+    beam.colour     = RED;
+#ifdef USE_TILE
+    beam.tile_beam  = -1;
+#endif
+    beam.draw_delay = 10;
+    beam.source     = where;
+    beam.target     = where;
+    beam.damage     = nova_damage(pow);
+    beam.hit        = AUTOMATIC_HIT;
+    beam.loudness   = 0;
+    beam.name       = "arcane nova";
+    beam.hit_verb   = "sears";
+
+    monster *mons = monster_at(where);
+    if (mons && mons->res_fire() > 1)
+    {
+        string msg = "%s is unaffected.";
+        mprf(msg.c_str(), mons->name(DESC_THE).c_str());
+        beam.draw(where);
+        return;
+    }
+
+    beam.fire();
+}
+
+spret fire_arcane_nova()
+{
+    int pow = calc_spell_power(SPELL_ARCANE_NOVA);
+    flash_view_delay(UA_PLAYER, RED, 100);
+    for (radius_iterator ri(you.pos(), LOS_RADIUS, C_SQUARE, LOS_NO_TRANS, true);
+         ri; ++ri)
+    {
+        _nova_cell(*ri, pow, &you);
+    }
+
+    if (Options.use_animations & UA_BEAM)
+        animation_delay(200, true);
+
+    return spret::success;
+}

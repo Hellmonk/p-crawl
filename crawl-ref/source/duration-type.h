@@ -299,5 +299,6 @@ enum duration_type
     DUR_INFESTATION,
     DUR_ICHOR,
     DUR_PIERCING_SHOT,
+    DUR_NOVA,
     NUM_DURATIONS
 };

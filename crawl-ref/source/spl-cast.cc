@@ -2487,6 +2487,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     case SPELL_STEAM_BURST:
         return cast_steam_burst(powc, fail);
 
+    case SPELL_ARCANE_NOVA:
+        return cast_arcane_nova(powc, fail);
+
     // Just to do extra messaging; spell is handled by default zapping
     case SPELL_COMBUSTION_BREATH:
     case SPELL_GLACIAL_BREATH:
