@@ -2386,6 +2386,15 @@ static void _unravelling_explode(bolt &beam)
     // and it'll explode 'naturally' a little later.
 }
 
+static void _dismissal_explode(bolt &beam)
+{
+    beam.colour       = ETC_WARP;
+    beam.flavour      = BEAM_BLINK;
+    beam.ex_size      = 2;
+    beam.is_explosion = true;
+    // and it'll explode 'naturally' a little later.
+}
+
 bool bolt::is_bouncy(dungeon_feature_type feat) const
 {
     // Beams with no directionality will assert if we try to bounce them.
@@ -3969,6 +3978,9 @@ void bolt::affect_player_enchantment(bool resistible)
         obvious_effect = true;
         break;
 
+    case BEAM_DISMISSAL:
+        break;
+
     case BEAM_RESISTANCE:
         potionlike_effect(POT_RESISTANCE, min(ench_power, 200));
         obvious_effect = true;
@@ -4883,6 +4895,9 @@ void bolt::tracer_affect_monster(monster* mon)
     }
 
     if (flavour == BEAM_UNRAVELLING && monster_can_be_unravelled(*mon))
+        is_explosion = true;
+
+    if (flavour == BEAM_DISMISSAL && mon->is_summoned())
         is_explosion = true;
 
     // Trigger explosion on exploding beams.
@@ -5904,6 +5919,7 @@ bool bolt::has_saving_throw() const
     case BEAM_SAP_MAGIC:
     case BEAM_UNRAVELLING:
     case BEAM_UNRAVELLED_MAGIC:
+    case BEAM_DISMISSAL:
     case BEAM_INFESTATION:
     case BEAM_IRRESISTIBLE_CONFUSION:
     case BEAM_VILE_CLUTCH:
@@ -6664,6 +6680,13 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
         _unravelling_explode(*this);
         return MON_AFFECTED;
 
+    case BEAM_DISMISSAL:
+        if (!mon->is_summoned())
+            return MON_UNAFFECTED;
+        monster_die(*mon, KILL_RESET, actor_to_death_source(agent()));
+        _dismissal_explode(*this);
+        return MON_AFFECTED;
+
     case BEAM_INFESTATION:
     {
         const int dur = (5 + random2avg(div_rand_round(ench_power,2), 2))
@@ -7332,6 +7355,8 @@ bool bolt::nasty_to(const monster* mon) const
             return tukima_affects(*mon); // XXX: move to ench_flavour_affects?
         case BEAM_UNRAVELLING:
             return monster_can_be_unravelled(*mon); // XXX: as tukima's
+        case BEAM_DISMISSAL:
+            return mon->is_summoned();
         default:
             break;
     }
@@ -7635,6 +7660,7 @@ static string _beam_type_name(beam_type type)
     case BEAM_WARP_BODY:             return "warp body";
     case BEAM_TOXIC:                 return "toxic dart";
     case BEAM_INACCURACY:            return "trick lightning";
+    case BEAM_DISMISSAL:             return "spatial implosion";
 
     case NUM_BEAMS:                  die("invalid beam type");
     }

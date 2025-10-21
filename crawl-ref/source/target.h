@@ -775,3 +775,11 @@ public:
     targeter_paragon_deploy(int range);
     bool valid_aim(coord_def a) override;
 };
+
+class targeter_dismissal : public targeter_smite
+{
+public:
+    targeter_dismissal();
+    bool valid_aim(coord_def a) override;
+    bool set_aim(coord_def a) override;
+};

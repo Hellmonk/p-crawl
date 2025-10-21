@@ -489,6 +489,7 @@ bool spell_is_direct_attack(spell_type spell)
         if (spell == SPELL_VIOLENT_UNRAVELLING  // hex
             || spell == SPELL_FORCE_LANCE // transloc
             || spell == SPELL_BLINKBOLT
+            || spell == SPELL_FORCEFUL_DISMISSAL
             || spell == SPELL_BANISHMENT)
         {
             return true;
@@ -1077,12 +1078,13 @@ int spell_effect_noise(spell_type spell)
     case SPELL_FIREBALL:
     case SPELL_VIOLENT_UNRAVELLING:
     case SPELL_IGNITION:
+    case SPELL_LRD:
         expl_size = 1;
         break;
 
-    case SPELL_LRD: // Can reach 3 only with crystal walls, which are rare
     case SPELL_FULMINANT_PRISM: // Players usually want the full size explosion
     case SPELL_TREMORSTONE:
+    case SPELL_FORCEFUL_DISMISSAL:
         expl_size = 2;
         break;
 
@@ -2031,7 +2033,6 @@ const set<spell_type> removed_spells =
     SPELL_FIRE_CLOUD,
     SPELL_FLAME_TONGUE,
     SPELL_FLY,
-    SPELL_FORCEFUL_DISMISSAL,
     SPELL_FREEZING_AURA,
     SPELL_FRENZY,
     SPELL_FULSOME_DISTILLATION,

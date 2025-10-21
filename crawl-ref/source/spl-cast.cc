@@ -1033,10 +1033,8 @@ unique_ptr<targeter> find_spell_targeter(spell_type spell, int pow, int range)
                                                         gravitas_radius(pow));
     case SPELL_VIOLENT_UNRAVELLING:
         return make_unique<targeter_unravelling>();
-    case SPELL_INFESTATION:
-        return make_unique<targeter_smite>(&you, range, 2, 2, true, false, true,
-                                           [](const coord_def& p) -> bool {
-                                              return you.pos() != p; });
+    case SPELL_FORCEFUL_DISMISSAL:
+        return make_unique<targeter_dismissal>();
     case SPELL_PASSWALL:
         return make_unique<targeter_passwall>(range);
     case SPELL_DIG:
@@ -1114,6 +1112,7 @@ unique_ptr<targeter> find_spell_targeter(spell_type spell, int pow, int range)
     case SPELL_BLASTMOTE:
     case SPELL_TOMB_OF_DOROKLOHE:
     case SPELL_GOLUBRIAS_PASSAGE:
+    case SPELL_INFESTATION:
         return make_unique<targeter_radius>(&you, LOS_SOLID_SEE, 0);
 
     // LOS radius:
@@ -2126,6 +2125,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
 
     case SPELL_VIOLENT_UNRAVELLING:
         return cast_unravelling(spd.target, powc, fail);
+
+    case SPELL_FORCEFUL_DISMISSAL:
+        return cast_dismissal(spd.target, powc, fail);
 
     // other effects
     case SPELL_DISCHARGE:

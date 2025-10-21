@@ -208,3 +208,4 @@ dice_def phase_knife_damage(int pow);
 spret cast_phase_knife(int pow, bool fail);
 dice_def nova_damage(int pow);
 spret fire_arcane_nova();
+spret cast_dismissal(coord_def target, int pow, bool fail);

@@ -2757,4 +2757,19 @@ _mon_hex_zap(ZAP_ILL_OMEN, BEAM_ILL_OMEN),
     false,
 },
 
+{
+    ZAP_DISMISSAL,
+    "dismissal",
+    new dicedef_calculator<1, 19, 1, 2>,
+    new tohit_calculator<0, 1, 1>,
+    nullptr,
+    nullptr,
+    ETC_WARP,
+    true,
+    BEAM_DISMISSAL,
+    NUM_DCHAR_TYPES,
+    false,
+    false,
+},
+
 };
