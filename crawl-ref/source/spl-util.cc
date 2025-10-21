@@ -541,14 +541,12 @@ bool spell_is_direct_attack(spell_type spell)
 // not via an evocable or other odd source.
 int spell_mana(spell_type which_spell, bool real_spell)
 {
-    const int level = _seekspell(which_spell)->level;
-
     if (real_spell)
     {
         if (you.duration[DUR_ENKINDLED] && spell_can_be_enkindled(which_spell))
             return 0;
 
-        int cost = level;
+        int cost = 2;
         if (you.wearing_ego(OBJ_GIZMOS, SPGIZMO_SPELLMOTOR))
             cost = max(1, cost - you.rev_tier());
 
@@ -556,11 +554,11 @@ int spell_mana(spell_type which_spell, bool real_spell)
             cost = max(1, cost - you.get_mutation_level(MUT_EFFICIENT_MAGIC));
 
         if (you.duration[DUR_BRILLIANCE] || you.unrand_equipped(UNRAND_FOLLY))
-            cost = cost/2 + cost%2; // round up
+            cost = max(1, cost - 1);
 
         return cost;
     }
-    return level;
+    return 2;
 }
 
 // applied in naughties (more difficult = higher level knowledge = worse)
