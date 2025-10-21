@@ -655,5 +655,6 @@ enum spell_type : int
     SPELL_PHASE_KNIFE,
     SPELL_AMMO_TO_ANACONDAS,
     SPELL_PIERCING_SHOT,
+    SPELL_SCRYING,
     NUM_SPELLS
 };

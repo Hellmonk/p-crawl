@@ -2369,6 +2369,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     case SPELL_PIERCING_SHOT:
         return cast_piercing_shot(powc, fail);
 
+    case SPELL_SCRYING:
+        return scrying(powc, fail);
+
     case SPELL_CONDENSATION_SHIELD:
         return cast_condensation_shield(powc, fail);
 

@@ -1789,6 +1789,11 @@ facsimiles.
 
 You can maintain up to 5 simulacra simultaneously.
 %%%%
+Scrying spell
+
+Provides the caster with astral sight for a brief time, enabling them to see
+through walls with perfect clarity.
+%%%%
 Seal Doors spell
 
 Imparts seals on nearby doors and stairs, preventing those not allied with

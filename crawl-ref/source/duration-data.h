@@ -844,7 +844,7 @@ static const duration_def duration_data[] =
           if (!player_in_branch(BRANCH_GEHENNA))
               mprf(MSGCH_RECOVERY, "You can read scrolls again.");
       }}}},
-    { DUR_REVELATION, 0, "", "", "revelation", "", D_NO_FLAGS, {{""}}},
+    { DUR_REVELATION, WHITE, "Scry", "scrying", "revelation", "", D_EXPIRES, {{""}}},
     { DUR_JINXBITE_LOST_INTEREST, 0, "", "", "", "", D_EXPIRES, {{"", _maybe_expire_jinxbite}}},
     { DUR_RAMPAGE_HEAL, 0, "", "", "rampage heal", "", D_NO_FLAGS},
     { DUR_TEMP_CLOUD_IMMUNITY, 0, "", "", "temp cloud immunity", "", D_EXPIRES},

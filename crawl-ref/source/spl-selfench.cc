@@ -364,3 +364,11 @@ spret cast_piercing_shot(int pow, bool fail)
 
     return spret::success;
 }
+
+spret scrying(int pow, bool fail)
+{
+    fail_check();
+    int dur = 5 + random2(5 + pow * 2);
+    you.increase_duration(DUR_REVELATION, dur);
+    return spret::success;
+}

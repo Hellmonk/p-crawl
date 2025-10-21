@@ -545,6 +545,7 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_PIERCING_SHOT,
     SPELL_BOMBARD,
     SPELL_HELLFIRE_MORTAR,
+    SPELL_SCRYING,
 },
 
 { // Book of Maladies

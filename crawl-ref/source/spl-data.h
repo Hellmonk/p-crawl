@@ -251,6 +251,17 @@ static const struct spell_desc spelldata[] =
 },
 
 {
+    SPELL_SCRYING, "Scrying",
+    spschool::enchantments,
+    spflag::no_ghost,
+    7,
+    100,
+    -1, -1,
+    0,
+    TILEG_SCRYING,
+},
+
+{
     SPELL_PETRIFY, "Petrify",
     spschool::earth,
     spflag::dir_or_target | spflag::needs_tracer | spflag::WL_check,
