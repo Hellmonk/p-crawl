@@ -355,3 +355,12 @@ spret haste_spell(int pow, bool fail)
     haste_player(10 + div_rand_round(pow, 2) + random2(1 + pow * 2));
     return spret::success;
 }
+
+spret cast_piercing_shot(int pow, bool fail)
+{
+    fail_check();
+    int dur = 4 + pow + random2(2 + pow * 3);
+    you.increase_duration(DUR_PIERCING_SHOT, dur);
+
+    return spret::success;
+}

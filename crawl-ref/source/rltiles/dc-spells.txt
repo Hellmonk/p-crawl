@@ -60,6 +60,7 @@ sigil_of_binding SIGIL_OF_BINDING
 slow SLOW
 tukimas_dance TUKIMAS_DANCE
 violent_unravelling VIOLENT_UNRAVELLING
+piercing_shot PIERCING_SHOT
 
 %sdir gui/spells/fire
 volatile_blastmotes BLASTMOTE

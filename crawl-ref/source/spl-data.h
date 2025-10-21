@@ -240,6 +240,17 @@ static const struct spell_desc spelldata[] =
 },
 
 {
+    SPELL_PIERCING_SHOT, "Piercing Shots",
+    spschool::enchantments,
+    spflag::utility,
+    5,
+    200,
+    -1, -1,
+    0,
+    TILEG_PIERCING_SHOT,
+},
+
+{
     SPELL_PETRIFY, "Petrify",
     spschool::earth,
     spflag::dir_or_target | spflag::needs_tracer | spflag::WL_check,

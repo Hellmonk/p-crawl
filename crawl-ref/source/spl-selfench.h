@@ -45,3 +45,4 @@ void remove_condensation_shield();
 spret cast_condensation_shield(int pow, bool fail);
 spret deflection(int pow, bool fail);
 spret haste_spell(int pow, bool fail);
+spret cast_piercing_shot(int pow, bool fail);

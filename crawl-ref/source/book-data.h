@@ -542,6 +542,7 @@ static const vector<spell_type> spellbook_templates[] =
 { // Compendium of Siegecraft
     SPELL_BOULDER,
     SPELL_HOARFROST_CANNONADE,
+    SPELL_PIERCING_SHOT,
     SPELL_BOMBARD,
     SPELL_HELLFIRE_MORTAR,
 },
