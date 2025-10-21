@@ -1124,20 +1124,6 @@ static void _regenerate_hp_and_mp(int delay)
     return;
 }
 
-static void _handle_fugue(int delay)
-{
-    if (you.duration[DUR_FUGUE]
-        && x_chance_in_y(you.props[FUGUE_KEY].get_int() * delay,
-                         9 * BASELINE_DELAY)
-        && !silenced(you.pos()))
-    {
-        // Keep the spam down
-        if (you.props[FUGUE_KEY].get_int() < 3 || one_chance_in(5))
-            mpr("The wailing of tortured souls fills the air!");
-        noisy(spell_effect_noise(SPELL_FUGUE_OF_THE_FALLEN), you.pos());
-    }
-}
-
 static void _handle_trickster_decay(int delay)
 {
     if (you.duration[DUR_TRICKSTER_GRACE] || delay == 0)
@@ -1177,7 +1163,20 @@ void player_reacts()
 
     unrand_reacts();
 
-    _handle_fugue(you.time_taken);
+    // Handle sound-dependent effects that are silenced
+    if (silenced(you.pos()))
+    {
+        if (you.duration[DUR_SONG_OF_SLAYING])
+        {
+            mpr("The silence causes your song to end.");
+            _decrement_a_duration(DUR_SONG_OF_SLAYING, you.duration[DUR_SONG_OF_SLAYING]);
+        }
+    }
+
+    // Singing makes a continuous noise
+    if (you.duration[DUR_SONG_OF_SLAYING])
+        noisy(spell_effect_noise(SPELL_SONG_OF_SLAYING), you.pos());
+
     if (you.has_mutation(MUT_WARMUP_STRIKES))
         you.rev_down(you.time_taken);
 

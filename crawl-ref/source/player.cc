@@ -3354,8 +3354,8 @@ int slaying_bonus(bool ranged, bool random)
     if (you.get_mutation_level(MUT_PROTEAN_GRACE))
         ret += protean_grace_amount();
 
-    if (you.duration[DUR_FUGUE])
-        ret += you.props[FUGUE_KEY].get_int();
+    if (you.duration[DUR_SONG_OF_SLAYING])
+        ret += you.props[SONG_OF_SLAYING_KEY].get_int();
 
     if (you.duration[DUR_WEREFURY])
         ret += you.props[WEREFURY_KEY].get_int();

@@ -2381,8 +2381,8 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     case SPELL_SILENCE:
         return cast_silence(powc, fail);
 
-    case SPELL_FUGUE_OF_THE_FALLEN:
-        return cast_fugue_of_the_fallen(powc, fail);
+    case SPELL_SONG_OF_SLAYING:
+        return cast_song_of_slaying(powc, fail);
 
     case SPELL_DIMENSIONAL_BULLSEYE:
         return cast_dimensional_bullseye(powc, monster_at(target), fail);

@@ -748,12 +748,9 @@ void yell(const actor* mon)
     }
     else
     {
-        const char *fugue_suff = you.duration[DUR_FUGUE] ?
-            ", and the damned howl along" : "";
-        mprf(MSGCH_SOUND, "You %s%s%s!",
+        mprf(MSGCH_SOUND, "You %s%s!",
              shout_verb.c_str(),
-             you.berserk() ? " wildly" : " for attention",
-             fugue_suff);
+             you.berserk() ? " wildly" : " for attention");
     }
 
     noisy(noise_level, you.pos());

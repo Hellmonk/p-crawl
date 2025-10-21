@@ -162,49 +162,19 @@ int cast_selective_amnesia(const string &pre_msg)
     return -1;
 }
 
-spret cast_fugue_of_the_fallen(int pow, bool fail)
+spret cast_song_of_slaying(int pow, bool fail)
 {
     fail_check();
 
-    if (you.duration[DUR_FUGUE])
-        mpr("You release your grip on the fallen and begin the cycle anew!");
+    if (you.duration[DUR_SONG_OF_SLAYING])
+        mpr("You start a new song!");
     else
-        mpr("You call out to the remnants of the fallen!");
+        mpr("You start singing a song of slaying.");
 
-    you.set_duration(DUR_FUGUE, 25 + random2avg(pow, 2));
+    you.set_duration(DUR_SONG_OF_SLAYING, 12 + random2(6 + pow * 3));
 
-    you.props[FUGUE_KEY] = 0;
+    you.props[SONG_OF_SLAYING_KEY] = 0;
     return spret::success;
-}
-
-void do_fugue_wail(const coord_def pos)
-{
-    // Do burst of negative energy damage around the spot that was hit by an
-    // attack with max fugue stacks. Hit anything which isn't friendly and
-    // immune to negative energy.
-    vector <monster*> affected;
-    for (adjacent_iterator ai(pos); ai; ++ai)
-    {
-        monster* mon = monster_at(*ai);
-        if (mon && !mon->is_firewood() && !mon->wont_attack()
-            && mon->res_negative_energy() < 3)
-        {
-            affected.push_back(mon);
-        }
-    }
-
-    int pow = calc_spell_power(SPELL_FUGUE_OF_THE_FALLEN);
-
-    if (!affected.empty())
-        mpr("The fallen lash out in pain!");
-    for (monster *m : affected)
-    {
-        if (m->alive())
-        {
-            m->hurt(&you, roll_dice(2, 3 + div_rand_round(pow, 25)),
-                    BEAM_NEG, KILLED_BY_BEAM);
-        }
-    }
 }
 
 int silence_min_range(int pow)

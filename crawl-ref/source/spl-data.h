@@ -2412,14 +2412,14 @@ static const struct spell_desc spelldata[] =
 },
 
 {
-    SPELL_FUGUE_OF_THE_FALLEN, "Fugue of the Fallen",
-    spschool::necromancy,
+    SPELL_SONG_OF_SLAYING, "Song of Slaying",
+    spschool::enchantments,
     spflag::selfench,
-    3,
+    1,
     100,
     -1, -1,
     8,
-    TILEG_FUGUE_OF_THE_FALLEN,
+    TILEG_SONG_OF_SLAYING,
 },
 
 {

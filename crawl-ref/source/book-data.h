@@ -206,7 +206,7 @@ static const vector<spell_type> spellbook_templates[] =
 #endif
 
 {   // Book of Battle
-    SPELL_FUGUE_OF_THE_FALLEN,
+    SPELL_SONG_OF_SLAYING,
     SPELL_OZOCUBUS_ARMOUR,
     SPELL_DETONATION_CATALYST,
     SPELL_MANIFOLD_ASSAULT,
@@ -277,7 +277,7 @@ static const vector<spell_type> spellbook_templates[] =
 
 {   // Book of Dreams
     SPELL_HIBERNATION,
-    SPELL_FUGUE_OF_THE_FALLEN,
+    SPELL_SONG_OF_SLAYING,
     SPELL_ANGUISH,
 },
 

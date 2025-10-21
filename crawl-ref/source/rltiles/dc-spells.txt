@@ -58,6 +58,7 @@ jinxbite JINXBITE
 mass_confusion MASS_CONFUSION
 sigil_of_binding SIGIL_OF_BINDING
 slow SLOW
+song_of_slaying SONG_OF_SLAYING
 tukimas_dance TUKIMAS_DANCE
 violent_unravelling VIOLENT_UNRAVELLING
 piercing_shot PIERCING_SHOT

@@ -58,6 +58,7 @@
 #include "notes.h"
 #include "religion.h"
 #include "shout.h"
+#include "spl-cast.h"
 #include "spl-damage.h"
 #include "spl-monench.h"
 #include "spl-other.h"
@@ -2109,24 +2110,16 @@ static void _player_on_kill_effects(monster& mons, killer_type killer,
         }
     }
 
-    // Adjust fugue of the fallen bonus. This includes both kills by you and
-    // also by your allies.
-    if (you.duration[DUR_FUGUE]
+    // Adjust song of slaying bonus.
+    if (you.duration[DUR_SONG_OF_SLAYING]
         && ((gives_player_xp
-            && (killer == KILL_YOU || killer == KILL_YOU_MISSILE || pet_kill))
-            || mons.props.exists(KIKU_WRETCH_KEY)))
+            && (killer == KILL_YOU || killer == KILL_YOU_MISSILE))
+            ))
     {
-        const int slaying_bonus = you.props[FUGUE_KEY].get_int();
-        // cap at +7 slay (at which point you do bonus negative energy damage
-        // around targets hit)
-        if (slaying_bonus < FUGUE_MAX_STACKS)
-        {
-            you.props[FUGUE_KEY] = slaying_bonus + 1;
-
-            // Give a message for hitting max stacks
-            if (slaying_bonus + 1 == FUGUE_MAX_STACKS)
-                mpr("The wailing of the fallen reaches a fever pitch!");
-        }
+        const int cappow = calc_spell_power(SPELL_SONG_OF_SLAYING);
+        const int sos_bonus = you.props[SONG_OF_SLAYING_KEY].get_int();
+        if (sos_bonus <= 5 + div_rand_round(cappow, 2))
+            you.props[SONG_OF_SLAYING_KEY] = sos_bonus + 1;
     }
 
     if (you.has_mutation(MUT_MAKHLEB_MARK_TYRANT)

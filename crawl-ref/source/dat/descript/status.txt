@@ -381,11 +381,10 @@ Disjoin status
 You are destabilising space around yourself, causing nearby monsters to be
 randomly blinked away from you.
 %%%%
-Fugue status
+Song status
 
-Your weapon is temporarily enhanced by the souls of the damned, providing
-slaying bonuses that increase with every enemy killed. At the maximum bonus,
-foes adjacent to your attacks' targets suffer pain damage.
+You are singing a Song of Slaying, providing a slaying bonus to your
+attacks which increases every time you slay a foe.
 %%%%
 Debt status
 
