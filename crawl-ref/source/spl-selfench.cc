@@ -348,3 +348,10 @@ spret deflection(int pow, bool fail)
 
     return spret::success;
 }
+
+spret haste_spell(int pow, bool fail)
+{
+    fail_check();
+    haste_player(10 + div_rand_round(pow, 2) + random2(1 + pow * 2));
+    return spret::success;
+}
