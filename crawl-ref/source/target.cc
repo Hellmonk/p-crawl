@@ -2904,3 +2904,10 @@ bool targeter_dismissal::set_aim(coord_def a)
 
     return true;
 }
+
+targeter_blood_explosion::targeter_blood_explosion()
+    : targeter_multiposition(&you, find_blood_explosion_possibles())
+{
+    if (affected_positions.size() == 1)
+        positive = AFF_YES;
+}

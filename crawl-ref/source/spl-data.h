@@ -4863,6 +4863,17 @@ static const struct spell_desc spelldata[] =
 },
 
 {
+    SPELL_BLOOD_EXPLOSION, "Blood Explosion Spell",
+    spschool::necromancy | spschool::fire,
+    spflag::no_ghost | spflag::destructive,
+    4,
+    200,
+    LOS_RADIUS, LOS_RADIUS,
+    0,
+    TILEG_BLOOD_EXPLOSION,
+},
+
+{
     SPELL_NO_SPELL, "nonexistent spell",
     spschool::none,
     spflag::testing,

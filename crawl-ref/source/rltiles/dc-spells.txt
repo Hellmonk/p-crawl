@@ -107,6 +107,7 @@ polar_vortex POLAR_VORTEX
 %sdir gui/spells/necromancy
 agony AGONY
 animate_dead ANIMATE_DEAD
+blood_explosion BLOOD_EXPLOSION
 bolt_of_draining BOLT_OF_DRAINING
 borgnjors_revivification BORGNJORS_REVIVIFICATION
 borgnjors_vile_clutch BORGNJORS_VILE_CLUTCH

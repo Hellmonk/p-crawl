@@ -209,3 +209,7 @@ spret cast_phase_knife(int pow, bool fail);
 dice_def nova_damage(int pow);
 spret fire_arcane_nova();
 spret cast_dismissal(coord_def target, int pow, bool fail);
+
+dice_def blood_explosion_damage(int pow);
+vector<monster *> find_blood_explosion_possibles();
+spret cast_blood_explosion(int pow, bool fail, bool tracer = false);

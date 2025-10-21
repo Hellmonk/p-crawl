@@ -5782,3 +5782,104 @@ spret cast_dismissal(coord_def target, int pow, bool fail)
 
     return spret::success;
 }
+
+static bool _blood_explosion_check(const monster &m)
+{
+    return _act_worth_targeting(you, m) && (m.holiness() & (MH_NATURAL));
+}
+
+static monster* _find_blood_explosion_target(bool tracer)
+{
+    for (distance_iterator di(you.pos(), !tracer, true, LOS_RADIUS); di; ++di)
+    {
+        monster *mon = monster_at(*di);
+        if (mon && _blood_explosion_check(*mon)
+            && (!tracer || you.can_see(*mon)))
+        {
+            return mon;
+        }
+    }
+
+    return nullptr;
+}
+
+vector<monster *> find_blood_explosion_possibles()
+{
+    vector<monster *> result;
+    monster *seed = _find_blood_explosion_target(true);
+    if (!seed)
+        return result;
+
+    const int distance = grid_distance(you.pos(), seed->pos());
+    for (distance_iterator di(you.pos(), true, true, distance); di; ++di)
+    {
+        monster *mon = monster_at(*di);
+        if (mon && _blood_explosion_check(*mon) && you.can_see(*mon))
+            result.push_back(mon);
+    }
+
+    return result;
+}
+
+dice_def blood_explosion_damage(int pow)
+{
+    return dice_def(2, 5 + pow * 4);
+}
+
+spret cast_blood_explosion(int pow, bool fail, bool tracer)
+{
+
+    monster* const mon = _find_blood_explosion_target(tracer);
+
+    if (tracer)
+    {
+        if (!mon || !you.can_see(*mon))
+            return spret::abort;
+        else
+            return spret::success;
+    }
+
+    if (!mon)
+    {
+        mprf("There's nothing to exsanguinate here!");
+        return spret::abort;
+    }
+
+    if (grid_distance(mon->pos(), you.pos()) == 1 &&
+        !yesno("You might be caught in the explosion! Blood explode anyway?", false, 'n'))
+    {
+        canned_msg(MSG_OK);
+        return spret::abort;
+    }
+
+    fail_check();
+
+    string attack_punctuation = attack_strength_punctuation(mon->hit_points);
+
+    mprf("%s explodes in a cloud of flaming blood%s",
+            mon->name(DESC_THE).c_str(), attack_punctuation.c_str());
+
+    bolt beam;
+    beam.name = "blood explosion";
+    beam.flavour = BEAM_FIRE;
+    beam.set_agent(&you);
+    beam.colour = RED;
+    beam.glyph = dchar_glyph(DCHAR_EXPLOSION);
+    beam.range = 1;
+    beam.ex_size = 1;
+    beam.damage = blood_explosion_damage(pow);
+    beam.is_explosion = true;
+    beam.source = mon->pos();
+    beam.target = mon->pos();
+    beam.hit = AUTOMATIC_HIT;
+
+    dec_hp(4 + 2 * mon->get_hit_dice(), false);
+
+
+    mon->flags |= MF_EXPLODE_KILL;
+    monster_die(*mon, KILL_YOU, actor_to_death_source(&you));
+
+    beam.explode();
+
+    return spret::success;
+}

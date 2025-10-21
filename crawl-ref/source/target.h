@@ -783,3 +783,9 @@ public:
     bool valid_aim(coord_def a) override;
     bool set_aim(coord_def a) override;
 };
+
+class targeter_blood_explosion : public targeter_multiposition
+{
+public:
+    targeter_blood_explosion();
+};
