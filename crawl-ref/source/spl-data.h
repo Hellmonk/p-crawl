@@ -2865,9 +2865,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_IRRADIATE, "Irradiate",
-    spschool::enchantments,
+    spschool::fire | spschool::hexes,
     spflag::area | spflag::chaotic,
-    5,
+    4,
     200,
     1, 1,
     0,
@@ -3876,9 +3876,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_JINXBITE, "Jinxbite",
-    spschool::hexes,
+    spschool::hexes | spschool::enchantments,
     spflag::selfench,
-    2,
+    1,
     50,
     -1, -1,
     0,
@@ -4476,7 +4476,7 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_SPLINTERFROST_SHELL, "Splinterfrost Shell",
-    spschool::summoning | spschool::ice,
+    spschool::ice,
     spflag::target | spflag::not_self,
     7,
     200,
@@ -4789,7 +4789,7 @@ static const struct spell_desc spelldata[] =
     SPELL_WINTERS_EMBRACE, "Winter's Embrace",
     spschool::ice,
     spflag::destructive,
-    7,
+    9,
     200,
     4, 4,
     0,

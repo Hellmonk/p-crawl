@@ -250,11 +250,10 @@ spret cast_jinxbite(int pow, bool fail)
          you.duration[DUR_JINXBITE] ? "more" : "some");
 
     const int base_dur = random_range(9, 15);
-    const int will_dur = random_range(base_dur, 15) +
-                         div_rand_round(spell_power_cap(SPELL_JINXBITE), 4);
+    const int will_dur = base_dur + random_range(20, 25);
 
-    you.increase_duration(DUR_JINXBITE, base_dur + div_rand_round(pow, 4), 28);
-    you.increase_duration(DUR_LOWERED_WL, will_dur, 28,
+    you.increase_duration(DUR_JINXBITE, base_dur + div_rand_round(pow, 2), 50);
+    you.increase_duration(DUR_LOWERED_WL, will_dur, 50,
                           "You feel your willpower being sapped.");
 
     return spret::success;

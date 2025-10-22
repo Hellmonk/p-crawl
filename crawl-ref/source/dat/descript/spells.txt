@@ -1747,7 +1747,7 @@ dealing irresistible damage.
 Casting this spell temporarily drains *all* of the caster's remaining magical
 power to constitute the blade, but this energy will be returned to them as soon
 as the blade ceases to exist. Each point of magical power sequestered this way
-slightly increases the damage the blade inflicts.
+increases the damage dealt, equivalent to raising spellpower by the same amount.
 %%%%
 Repel Missiles spell
 

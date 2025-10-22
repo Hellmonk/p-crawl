@@ -2035,7 +2035,7 @@ vector<coord_def> find_near_hostiles(int range, bool affect_invis, const actor& 
 dice_def irradiate_damage(int pow, bool random)
 {
     const int dice = 3;
-    const int max_dam = 30 + (random ? div_rand_round(pow, 2) : pow / 2);
+    const int max_dam = 30 + pow;
     return calc_dice(dice, max_dam, random);
 }
 
@@ -4225,7 +4225,7 @@ spret cast_starburst(int pow, bool fail, bool is_tracer)
 
 dice_def jinxbite_damage(int pow, bool random)
 {
-    return dice_def(2, random ? 2 + div_rand_round(pow, 25) : 2 + pow / 25);
+    return dice_def(1, random ? 4 + div_rand_round(pow, 5) : 4 + pow / 5);
 }
 
 static string _get_jinxsprite_message(const monster& victim)
@@ -4313,11 +4313,6 @@ void attempt_jinxbite_hit(actor& victim)
     }
 
     _player_hurt_monster(*mons, dmg, BEAM_MAGIC);
-
-    // Drain some duration every time we spawn a sprite.
-    you.duration[DUR_JINXBITE] -= 40;
-    if (you.duration[DUR_JINXBITE] < 1)
-        you.duration[DUR_JINXBITE] = 1;
 }
 
 void foxfire_attack(const monster *foxfire, const actor *target)
@@ -5468,9 +5463,9 @@ void fire_life_bolt(actor& attacker, coord_def target)
 dice_def winter_damage(int pow, bool random)
 {
     if (random)
-        return dice_def(1, 36 + div_rand_round(pow, 3));
+        return dice_def(2, 36 + div_rand_round(pow, 3));
 
-    return dice_def(1, 36 + pow / 3);
+    return dice_def(2, 36 + pow / 3);
 }
 
 //Handle Winter's Embrace at a given cell
@@ -5531,7 +5526,7 @@ spret cast_winters_embrace(int pow, bool fail, bool tracer)
     {
         _embrace_cell(*ri, pow, &you);
         monster* mons = monster_at(*ri);
-        if (mons && x_chance_in_y(20 + 2 * pow, 50 + 5 * mons->get_hit_dice()))
+        if (mons && x_chance_in_y(30 + 3 * pow, 50 + 5 * mons->get_hit_dice()))
         {
             mprf("%s falls asleep.", mons->name(DESC_THE).c_str());
                 mons->put_to_sleep(&you, pow, true);

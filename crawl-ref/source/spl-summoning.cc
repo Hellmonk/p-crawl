@@ -4613,7 +4613,7 @@ spret cast_splinterfrost_shell(const actor& agent, const coord_def& aim,
     const int dur = random_range(110, 160);
     mgen_data mg = _summon_data(agent, MONS_SPLINTERFROST_BARRICADE, dur,
                                 SPELL_SPLINTERFROST_SHELL, false);
-    mg.hd = 10 + div_rand_round(pow, 20);
+    mg.hd = 5 + div_rand_round(pow, 5);
     mg.set_range(0);
 
     vector<coord_def> spots = get_splinterfrost_block_spots(agent, aim, 4);
@@ -4761,9 +4761,8 @@ spret cast_phalanx_beetle(const actor& agent, int pow, bool fail)
 
 static int _rending_blade_power(int base_power)
 {
-    const int mp_spent = max(0, you.magic_points - spell_difficulty(SPELL_RENDING_BLADE));
-    const int mp_bonus = stepdown(mp_spent, 10);
-    return base_power * (100 + mp_bonus * 5) / 100;
+    const int mp_spent = max(0, you.magic_points - 2);
+    return base_power + mp_spent;
 }
 
 dice_def rending_blade_damage(int power, bool include_mp)
