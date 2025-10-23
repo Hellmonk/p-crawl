@@ -2034,8 +2034,8 @@ vector<coord_def> find_near_hostiles(int range, bool affect_invis, const actor& 
 
 dice_def irradiate_damage(int pow, bool random)
 {
-    const int dice = 3;
-    const int max_dam = 30 + pow;
+    const int dice = 6;
+    const int max_dam = 40 + pow;
     return calc_dice(dice, max_dam, random);
 }
 
@@ -2136,7 +2136,7 @@ spret cast_irradiate(int powc, actor &caster, bool fail)
     }, caster.pos(), true, 8);
 
     if (caster.is_player())
-        contaminate_player(random_range(185, 400));
+        contaminate_player(random_range(200, 400));
     return spret::success;
 }
 
@@ -2841,7 +2841,7 @@ int discharge_max_damage(int pow)
 
 dice_def arcjolt_damage(int pow, bool random)
 {
-    return dice_def(1, random ? 10 + div_rand_round(pow, 2) : 10 + pow / 2);
+    return dice_def(1, random ? 10 + pow * 2 : 10 + pow * 2);
 }
 
 static vector<coord_def> _get_chain_targets(const actor &agent,
@@ -4631,9 +4631,9 @@ void end_frozen_ramparts()
 
 dice_def ramparts_damage(int pow, bool random)
 {
-    int size = 3 + pow / 2;
+    int size = 6 + pow / 2;
     if (random)
-        size = 3 + div_rand_round(pow, 2);
+        size = 6 + div_rand_round(pow, 2);
     return dice_def(1, size);
 }
 
@@ -5282,7 +5282,7 @@ spret cast_fortress_blast(actor& caster, int pow, bool fail)
 
     if (caster.is_player())
     {
-        const int delay = 70 - div_rand_round(pow * 10, 25);
+        const int delay = max(10, 70 - div_rand_round(pow * 10, 6));
         you.duration[DUR_FORTRESS_BLAST_TIMER] = delay;
         mprf("You steady yourself in place and focus your resilience into a mighty blast.");
     }

@@ -605,6 +605,8 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_ISKENDERUNS_MYSTIC_BLAST,
     SPELL_PERCUSSIVE_TEMPERING,
     SPELL_SPLINTERFROST_SHELL,
+    SPELL_MAGMA_JET,
+    SPELL_DIG,
 },
 
 { // Book of Contraptions

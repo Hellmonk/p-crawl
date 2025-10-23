@@ -363,7 +363,7 @@ spret cast_summon_ice_statue(int pow, bool fail)
 
     fail_check();
 
-    mgen_data statue = _pal_data(MONS_ICE_STATUE, 3, SPELL_ICE_STATUE);
+    mgen_data statue = _pal_data(MONS_ICE_STATUE, summ_dur(5), SPELL_ICE_STATUE);
     statue.hd = (1 + div_rand_round(pow, 5));
 
     if (create_monster(statue))
@@ -2485,7 +2485,6 @@ static const map<spell_type, summon_cap> summonsdata =
     { SPELL_HAUNT,                    { 8, 8 } },
     { SPELL_SUMMON_CACTUS,            { 1, 1 } },
     { SPELL_SOUL_SPLINTER,            { 1, 1 } },
-    { SPELL_SIMULACRUM,               { 5, 5 } },
     { SPELL_HELLFIRE_MORTAR,          { 1, 1 } },
     { SPELL_SURPRISING_CROCODILE,     { 1, 1 } },
     { SPELL_PLATINUM_PARAGON,         { 1, 1 } },
@@ -3244,7 +3243,7 @@ spret cast_simulacrum(coord_def target, int pow, bool fail)
          apostrophise(mons->name(DESC_THE)).c_str());
 
     int num_simulacra = 2;
-    if (x_chance_in_y(pow, 200))
+    if (x_chance_in_y(pow, 50))
         num_simulacra = 3;
 
     int delay = random_range(3, 5) * BASELINE_DELAY;
@@ -3254,7 +3253,7 @@ spret cast_simulacrum(coord_def target, int pow, bool fail)
         mgen_data mg = _pal_data(MONS_BLOCK_OF_ICE, 0, SPELL_NO_SPELL);
         mg.set_summoned(&you, SPELL_SIMULACRUM, delay, false, false);
         mg.base_type = mons->type;
-        mg.hd = 8; // make them more durable
+        mg.hd = 5; // make them more durable
         monster *ice = create_monster(mg);
 
         if (ice)
@@ -3803,7 +3802,7 @@ void clockwork_bee_pick_new_target(monster& bee)
 // For spell menu display only
 dice_def diamond_sawblade_damage(int power)
 {
-    return zap_damage(ZAP_SHRED, (1 + power/ 10) * 12, true, false);
+    return zap_damage(ZAP_SHRED, power, true, false);
 }
 
 vector<coord_def> diamond_sawblade_spots(bool actual)
@@ -3867,7 +3866,7 @@ spret cast_diamond_sawblades(int power, bool fail)
     int dur = random_range(140, 220);
     mgen_data mg = _pal_data(MONS_DIAMOND_SAWBLADE, dur,
                              SPELL_DIAMOND_SAWBLADES, false).set_range(0);
-    mg.hd = 1 + div_rand_round(power, 10);
+    mg.hd = 1 + div_rand_round(power, 4);
 
     // Dmage should increase with power, but HP stay constant.
     mg.hp = 40 + random2avg(20, 2);
@@ -3879,9 +3878,9 @@ spret cast_diamond_sawblades(int power, bool fail)
     }
 
     if (spots.size() == 1)
-        mpr("You forge a whirling saw of razor-sharp crystal.");
+        mpr("You forge a whirling saw of razor-sharp ice.");
     else
-        mpr("You forge whirling saws of razor-sharp crystal.");
+        mpr("You forge whirling saws of razor-sharp ice.");
 
     return spret::success;
 }

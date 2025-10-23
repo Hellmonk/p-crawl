@@ -83,6 +83,7 @@ starburst STARBURST
 sticky_flame STICKY_FLAME
 throw_flame THROW_FLAME
 steam_burst STEAM_BURST
+magma_jet MAGMA_JET
 
 %sdir gui/spells/ice
 bolt_of_cold BOLT_OF_COLD

@@ -2417,9 +2417,9 @@ spret cast_piledriver(const coord_def& target, int pow, bool fail)
 dice_def gavotte_impact_damage(int pow, int dist, bool random)
 {
     if (!random)
-        return dice_def(2, (pow * 3 / 4 + 35) * (dist + 5) / 20 + 1);
+        return dice_def(2, (pow + 35) * (dist + 5) / 20 + 1);
     else
-        return dice_def(2, div_rand_round((pow * 3 / 4 + 35) * (dist + 5), 20) + 1);
+        return dice_def(2, div_rand_round((pow + 35) * (dist + 5), 20) + 1);
 }
 
 static void _maybe_penance_for_collision(god_conduct_trigger conducts[3], actor& victim)
@@ -2549,7 +2549,7 @@ spret cast_gavotte(int pow, const coord_def dir, bool fail)
             _push_actor(*targs[i], dir, GAVOTTE_DISTANCE, pow);
     }
 
-    you.increase_duration(DUR_GAVOTTE_COOLDOWN, random_range(5, 9) - div_rand_round(pow, 50));
+    you.increase_duration(DUR_GAVOTTE_COOLDOWN, random_range(5, 9) - div_rand_round(pow, 10));
 
     return spret::success;
 }

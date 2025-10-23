@@ -520,10 +520,11 @@ attack, but it rapidly loses potency when you take other actions.
 The explosion's damage depends on your weapon's base damage (halved if you lack
 sufficient weapon skill) and spellpower.
 %%%%
-Diamond Sawblades spell
+Icy Sawblades spell
 
 Forges up to four razor-sharp sawblades at fixed positions around the caster
-which shred any enemies adjacent to them over several turns.
+which shred any enemies adjacent to them over several turns. The damage dealt
+is partially cold and partially physical.
 %%%%
 Deflect Missiles spell
 
@@ -1149,7 +1150,7 @@ Hurls a large and heavy metal shot.
 Irradiate spell
 
 Transmutes an ultra-thin layer of the caster's skin (or equivalent) directly
-into pure magical energy, blasting adjacent creatures. It may heavily deform
+into pure magical energy, blasting adjacent creatures. It may malmutate
 its victims, weakening them and reducing their armour. The caster is not left
 entirely unaffected; some of the magic lingers, enough to leave them
 dangerously contaminated after a few castings.
@@ -1272,6 +1273,12 @@ Magnetised creatures are additionally unable to evade attacks and will be
 revealed if invisible. If they die while still coated, they will leave behind a
 short-lived cloud of electrified metal that will continue to serve as a
 lightning rod for this spell.
+%%%%
+Magma Jet spell
+
+Releases a powerful beam of magma from deep within the earth. Half of its damage
+bypasses fire resistance. Any unoccupied space in the beam's path will be
+covered in lava for a duration.
 %%%%
 Major Destruction spell
 
@@ -1800,14 +1807,9 @@ to fire for a short time.
 %%%%
 Sculpt Simulacrum spell
 
-Forms icy simulacra of an adjacent living, demonic, or holy creature. These
-fragile doppelgangers will take shape over a short period of time, eventually
-gaining the ability to move and attack the caster's enemies.
-
-The good gods frown on this spell, as it works blood and ichor into unnatural
-facsimiles.
-
-You can maintain up to 5 simulacra simultaneously.
+Forms icy simulacra from the soul of an adjacent living or demonic creature.
+These fragile doppelgangers will take shape over a short period of time,
+eventually gaining the ability to move and attack the caster's enemies.
 %%%%
 Scrying spell
 

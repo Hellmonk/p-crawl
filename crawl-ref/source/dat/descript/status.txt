@@ -108,7 +108,7 @@ Confusion can be cured immediately by potions of curing.
 Contam status
 
 You are glowing with mutagenic radiation. This can inflict mutations over time
-(usually negative) or even cause you to suffer damage as the unstable magic
+(usually negative) or cause you to suffer damage as the unstable magic
 explodes violently. In addition, your glow prevents invisibility and reduces
 your stealth.
 %%%%

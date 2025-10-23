@@ -86,7 +86,7 @@ static const struct spell_desc spelldata[] =
     spschool::earth,
     spflag::dir_or_target | spflag::not_self | spflag::aim_at_space
         | spflag::utility,
-    4,
+    6,
     200,
     LOS_RADIUS, LOS_RADIUS,
     4,
@@ -1326,10 +1326,10 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_SIMULACRUM, "Sculpt Simulacrum",
-    spschool::ice,
+    spschool::ice | spschool::necromancy,
     spflag::dir_or_target | spflag::not_self | spflag::needs_tracer
         | spflag::unholy,
-    6,
+    2,
     200,
     1, 1,
     0,
@@ -4078,7 +4078,7 @@ static const struct spell_desc spelldata[] =
     SPELL_PILEDRIVER, "Maxwell's Portable Piledriver",
     spschool::translocation,
     spflag::target,
-    3,
+    4,
     100,
     5, 5,
     0,
@@ -4089,7 +4089,7 @@ static const struct spell_desc spelldata[] =
     SPELL_GELLS_GAVOTTE, "Gell's Gavotte",
     spschool::translocation,
     spflag::target | spflag::aim_at_space,
-    6,
+    7,
     200,
     1, 1,
     0,
@@ -4395,10 +4395,10 @@ static const struct spell_desc spelldata[] =
 },
 
 {
-    SPELL_DIAMOND_SAWBLADES, "Diamond Sawblades",
-    spschool::summoning,
+    SPELL_DIAMOND_SAWBLADES, "Icy Sawblades",
+    spschool::ice,
     spflag::none,
-    7,
+    6,
     200,
     -1, -1,
     0,
@@ -4423,7 +4423,7 @@ static const struct spell_desc spelldata[] =
     SPELL_SURPRISING_CROCODILE, "Eringya's Surprising Crocodile",
     spschool::summoning,
     spflag::target | spflag::not_self,
-    4,
+    5,
     100,
     1, 1,
     0,
@@ -4510,7 +4510,7 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_FORTRESS_BLAST, "Fortress Blast",
-    spschool::summoning,
+    spschool::earth,
     spflag::area | spflag::destructive,
     6,
     75,
@@ -4871,6 +4871,17 @@ static const struct spell_desc spelldata[] =
     LOS_RADIUS, LOS_RADIUS,
     0,
     TILEG_BLOOD_EXPLOSION,
+},
+
+{
+    SPELL_MAGMA_JET, "Magma Jet",
+    spschool::earth | spschool::fire,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::destructive,
+    4,
+    200,
+    5, 5,
+    0,
+    TILEG_MAGMA_JET,
 },
 
 {

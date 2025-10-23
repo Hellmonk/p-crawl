@@ -5,9 +5,9 @@ resists: {fire: -1}
 exp: 344
 will: 80
 attacks:
- - {type: hit, damage: 10}
+ - {type: hit, damage: 5}
 hd: 3
-hp_10x: 270
+hp_10x: 140
 ac: 3
 ev: 10
 spells: dryad

@@ -65,8 +65,6 @@ static void _apply_contam_over_time()
     if (you.elapsed_time - you.attribute[ATTR_LAST_CONTAM] <= 70)
         return;
 
-    added_contamination -= 20;
-
     // Scaling to turn length
     added_contamination = div_rand_round(added_contamination * you.time_taken,
                                          BASELINE_DELAY);
