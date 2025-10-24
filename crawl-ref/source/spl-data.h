@@ -476,6 +476,17 @@ static const struct spell_desc spelldata[] =
 },
 
 {
+    SPELL_PLANAR_SLEETSTORM, "Planar Sleetstorm",
+    spschool::ice | spschool::translocation,
+    spflag::area | spflag::destructive,
+    5,
+    200,
+    LOS_RADIUS, LOS_RADIUS,
+    0,
+    TILEG_PLANAR_SLEETSTORM,
+},
+
+{
     SPELL_POISONOUS_CLOUD, "Poisonous Cloud",
     spschool::enchantments | spschool::air,
     spflag::target | spflag::area | spflag::needs_tracer | spflag::cloud
@@ -4787,11 +4798,11 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_WINTERS_EMBRACE, "Winter's Embrace",
-    spschool::ice,
+    spschool::ice | spschool::hexes,
     spflag::destructive,
-    9,
+    5,
     200,
-    4, 4,
+    3, 3,
     0,
     TILEG_OZOCUBUS_REFRIGERATION,
 },

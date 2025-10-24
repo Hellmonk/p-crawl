@@ -1244,6 +1244,26 @@ aff_type targeter_radius::is_affected(coord_def loc)
     return AFF_YES;
 }
 
+targeter_sleetstorm::targeter_sleetstorm(int _range)
+    : targeter_radius(&you, LOS_NO_TRANS, _range, 0, 1)
+{ }
+
+aff_type targeter_sleetstorm::is_affected(coord_def loc)
+{
+    const aff_type base_aff = targeter_radius::is_affected(loc);
+    if (base_aff == AFF_NO)
+        return AFF_NO;
+
+    monster* mons = monster_at(loc);
+
+    if (mons && ! never_harm_monster(&you, mons) && feat_is_water(env.grid(loc)))
+        return AFF_YES;
+    else if (!feat_is_water(env.grid(loc)))
+        return AFF_MAYBE;
+
+    return AFF_NO;
+}
+
 targeter_flame_wave::targeter_flame_wave(int _range)
     : targeter_radius(&you, LOS_NO_TRANS, _range, 0, 1)
 { }

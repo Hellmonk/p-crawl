@@ -213,3 +213,5 @@ spret cast_dismissal(coord_def target, int pow, bool fail);
 dice_def blood_explosion_damage(int pow);
 vector<monster *> find_blood_explosion_possibles();
 spret cast_blood_explosion(int pow, bool fail, bool tracer = false);
+dice_def sleetstorm_damage(int pow);
+spret cast_sleetstorm(int pow, bool fail);

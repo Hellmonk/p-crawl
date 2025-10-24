@@ -1611,6 +1611,16 @@ points - though destroying the tesseract early will immediately grant the player
 the sum total of all experience points that could be obtained by allowing it to
 continue.
 %%%%
+Planar Sleetstorm spell
+
+Briefly opens a portal to a plane of endless cold, sending through a deluge of
+frigid ice and water. Any creature in or above water will take cold damage and
+be frozen. In addition, a large amount of nearby terrain will temporarily be
+flooded with shallow water.
+
+Spellpower increases the damage, the chance to convert tiles into water, and the
+duration of the terrain change for this spell.
+%%%%
 Plane Rend spell
 
 Summons some of the greater threats from one of the Pits of Slime, the Elven

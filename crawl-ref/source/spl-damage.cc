@@ -5463,9 +5463,9 @@ void fire_life_bolt(actor& attacker, coord_def target)
 dice_def winter_damage(int pow, bool random)
 {
     if (random)
-        return dice_def(2, 36 + div_rand_round(pow, 3));
+        return dice_def(1, 31 + div_rand_round(pow, 3));
 
-    return dice_def(2, 36 + pow / 3);
+    return dice_def(1, 31 + pow / 3);
 }
 
 //Handle Winter's Embrace at a given cell
@@ -5875,6 +5875,69 @@ spret cast_blood_explosion(int pow, bool fail, bool tracer)
     monster_die(*mon, KILL_YOU, actor_to_death_source(&you));
 
     beam.explode();
+
+    return spret::success;
+}
+
+dice_def sleetstorm_damage(int pow)
+{
+    return dice_def(4, 1 + pow);
+}
+
+static int _sleet_water_chance(int pow)
+{
+    return 40 + pow * 2;
+}
+
+spret cast_sleetstorm(int pow, bool fail)
+{
+    fail_check();
+    mprf("You open a portal to a frigid plane.");
+
+    for (distance_iterator di(you.pos(), true, true, LOS_RADIUS); di; ++di)
+    {
+        if (!cell_see_cell(you.pos(), *di, LOS_SOLID))
+            continue;
+
+        dungeon_feature_type feat = env.grid(*di);
+
+        // damage to all creatures in water
+        if (feat_is_water(feat))
+        {
+            monster *mons = monster_at(*di);
+            if (!never_harm_monster(&you, *mons))
+            {
+                bolt pbeam;
+                pbeam.flavour = BEAM_COLD;
+                dice_def damage = sleetstorm_damage(pow);
+                int hurted = damage.roll();
+                hurted = mons->apply_ac(mons->beam_resists(pbeam, hurted, false));
+
+                mprf("Sleet pummels %s%s%s",
+                mons->name(DESC_THE).c_str(),
+                hurted ? "" : " but does no damage",
+                attack_strength_punctuation(hurted).c_str());
+
+                _player_hurt_monster(*mons, hurted, pbeam.flavour);
+
+                if (mons->alive())
+                {
+                    you.pet_target = mons->mindex();
+                    mons->add_ench(mon_enchant(ENCH_FROZEN, 0, &you));
+                }
+            }
+        }
+        else
+        {
+        // chance to make other terrain water
+            if (x_chance_in_y(_sleet_water_chance(pow), 100))
+            {
+                temp_change_terrain(*di, DNGN_SHALLOW_WATER,
+                    random_range(300 + pow * 5, 600 + pow * 10),
+                    TERRAIN_CHANGE_FLOOD, you.mid);
+            }
+        }
+    }
 
     return spret::success;
 }

@@ -104,6 +104,7 @@ rimeblight RIMEBLIGHT
 throw_frost THROW_FROST
 throw_icicle THROW_ICICLE
 polar_vortex POLAR_VORTEX
+planar_sleetstorm PLANAR_SLEETSTORM
 
 %sdir gui/spells/necromancy
 agony AGONY
