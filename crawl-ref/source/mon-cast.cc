@@ -1913,7 +1913,7 @@ bool mons_spell_is_spell(spell_type spell)
  */
 int mons_power_for_hd(spell_type spell, int hd)
 {
-    const int power = hd * _mons_power_hd_factor(spell);
+    const int power = hd * _mons_power_hd_factor(spell) + 2;
     return power;
 }
 

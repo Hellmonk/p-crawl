@@ -1335,18 +1335,14 @@ static int _tetrahedral_number(int n)
  */
 int hex_success_chance(const int wl, int powc, int scale, bool round_up)
 {
-    const int pow = ench_power_stepdown(powc);
-    const int target = wl + 100 - pow;
-    const int denom = 101 * 100;
-    const int adjust = round_up ? denom - 1 : 0;
+    const int chance = (powc - wl) * 20;
 
-    if (target <= 0)
-        return scale;
-    if (target > 200)
+    if (chance <= 0)
         return 0;
-    if (target <= 100)
-        return (scale * (denom - _triangular_number(target)) + adjust) / denom;
-    return (scale * _triangular_number(201 - target) + adjust) / denom;
+    if (chance > 100)
+        return scale;
+
+    return round_up ? chance * scale : chance * scale;
 }
 
 // approximates _test_beam_hit in a deterministic fashion.
