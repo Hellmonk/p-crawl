@@ -262,8 +262,8 @@ static const vector<spell_type> spellbook_templates[] =
 },
 
 {   // Book of the Dragon
-    SPELL_CAUSE_FEAR,
     SPELL_FIREBALL,
+    SPELL_CAUSE_FEAR,
     SPELL_DRAGON_CALL,
 },
 
@@ -334,7 +334,6 @@ static const vector<spell_type> spellbook_templates[] =
 { // Book of Spheres
     SPELL_BOULDER,
     SPELL_BATTLESPHERE,
-    SPELL_FIREBALL,
     SPELL_CONJURE_BALL_LIGHTNING,
     SPELL_IOOD,
 },
