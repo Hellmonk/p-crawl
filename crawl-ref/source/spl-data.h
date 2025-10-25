@@ -1316,7 +1316,7 @@ static const struct spell_desc spelldata[] =
     SPELL_LRD, "Lee's Rapid Deconstruction",
     spschool::earth,
     spflag::target | spflag::destructive,
-    5,
+    3,
     200,
     LOS_RADIUS, LOS_RADIUS,
     0,
