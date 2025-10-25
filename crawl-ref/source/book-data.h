@@ -112,7 +112,6 @@ static const vector<spell_type> spellbook_templates[] =
 
 {   // Book of Death
     SPELL_ANIMATE_DEAD,
-    SPELL_HAUNT,
     SPELL_INFESTATION,
 },
 
@@ -309,7 +308,6 @@ static const vector<spell_type> spellbook_templates[] =
 },
 
 {   // Necronomicon
-    SPELL_HAUNT,
     SPELL_BORGNJORS_REVIVIFICATION,
     SPELL_DEATHS_DOOR,
 },
