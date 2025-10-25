@@ -4910,7 +4910,7 @@ spret cast_ammo_to_anacondas(int pow, bool fail)
             count++;
             int qty = max(1, 6 - random2(1 + div_rand_round(pow, 4)));
             dec_inv_item_quantity(letter_to_index(stick->slot), min(qty, static_cast<int>(stick->quantity)));
-            snake->add_ench(mon_enchant(ENCH_FAKE_ABJURATION, summ_dur(3)));
+            snake->add_ench(mon_enchant(ENCH_SUMMON_TIMER, summ_dur(3)));
         }
     }
 
