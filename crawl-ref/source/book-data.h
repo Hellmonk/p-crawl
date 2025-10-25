@@ -614,6 +614,7 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_MONARCH_BOMB,
     SPELL_DIAMOND_SAWBLADES,
     SPELL_PLANAR_SLEETSTORM,
+    SPELL_CONTROLLED_BLINK,
 },
 
 { } // BOOK_PARCHMENT
