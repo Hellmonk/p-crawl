@@ -194,8 +194,8 @@ static const vector<spell_type> spellbook_templates[] =
 
 {   // Book of Unlife
     SPELL_SOUL_SPLINTER,
-    SPELL_MARTYRS_KNELL,
     SPELL_DEATH_CHANNEL,
+    SPELL_MARTYRS_KNELL,
 },
 
 #if TAG_MAJOR_VERSION == 34
