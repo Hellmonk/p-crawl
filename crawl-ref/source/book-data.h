@@ -437,8 +437,8 @@ static const vector<spell_type> spellbook_templates[] =
 
 { // Book of Weapons
     SPELL_DIMENSIONAL_BULLSEYE,
-    SPELL_RENDING_BLADE,
     SPELL_TUKIMAS_DANCE,
+    SPELL_RENDING_BLADE,
     SPELL_PLATINUM_PARAGON,
 },
 
