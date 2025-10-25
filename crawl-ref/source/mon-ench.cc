@@ -2201,9 +2201,8 @@ static const char *enchant_names[] =
 #if TAG_MAJOR_VERSION == 34
     "gold_lust",
 #endif
-    "drained", "repel_missiles",
+    "drained", "repel_missiles", "deflect missiles",
 #if TAG_MAJOR_VERSION == 34
-    "deflect missiles",
     "negative_vuln", "condensation_shield",
 #endif
     "resistant", "hexed",
