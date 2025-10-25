@@ -303,6 +303,7 @@ static const vector<spell_type> spellbook_templates[] =
 },
 
 {   // Grand Grimoire
+    SPELL_AMMO_TO_ANACONDAS,
     SPELL_MALIGN_GATEWAY,
     SPELL_ELDRITCH_ICHOR,
 },
