@@ -320,7 +320,7 @@ static string mi_calc_major_healing(monster* mons)
 static string mi_calc_scorch_damage(monster* mons)
 {
     const int pow = mons_power_for_hd(SPELL_SCORCH, mons->get_hit_dice());
-    return dice_def_string(scorch_damage(pow, false));
+    return dice_def_string(scorch_damage(pow));
 }
 
 static string mi_calc_irradiate_damage(const monster &mon)
@@ -366,13 +366,13 @@ static string mons_human_readable_spell_damage_string(monster* monster,
         case SPELL_CHAIN_LIGHTNING:
             return mi_calc_chain_lightning_damage(monster);
         case SPELL_CONJURE_BALL_LIGHTNING:
-            return "3x" + dice_def_string(ball_lightning_damage(mons_ball_lightning_hd(pow, false)));
+            return "3x" + dice_def_string(ball_lightning_damage(mons_ball_lightning_hd(pow)));
         case SPELL_MARSHLIGHT:
-            return "2x" + dice_def_string(zap_damage(ZAP_FOXFIRE, pow, true));
+            return "2x" + dice_def_string(zap_damage(ZAP_FOXFIRE, pow));
         case SPELL_PLASMA_BEAM:
-            return "2x" + dice_def_string(zap_damage(ZAP_PLASMA, pow, true));
+            return "2x" + dice_def_string(zap_damage(ZAP_PLASMA, pow));
         case SPELL_PERMAFROST_ERUPTION:
-            return "2x" + dice_def_string(zap_damage(ZAP_PERMAFROST_ERUPTION_COLD, pow, true));
+            return "2x" + dice_def_string(zap_damage(ZAP_PERMAFROST_ERUPTION_COLD, pow));
         case SPELL_WATERSTRIKE:
             spell_beam.damage = waterstrike_damage(monster->spell_hd(sp));
             break;
@@ -382,7 +382,7 @@ static string mons_human_readable_spell_damage_string(monster* monster,
             spell_beam.damage = mi_calc_iood_damage(monster);
             break;
         case SPELL_POLAR_VORTEX:
-            return dice_def_string(polar_vortex_dice(pow, true)) + "*";
+            return dice_def_string(polar_vortex_dice(pow)) + "*";
         case SPELL_IRRADIATE:
             return mi_calc_irradiate_damage(*monster);
         case SPELL_VAMPIRIC_DRAINING:
