@@ -326,7 +326,6 @@ static const vector<spell_type> spellbook_templates[] =
 
 { // Book of Winter
     SPELL_OZOCUBUS_ARMOUR,
-    SPELL_ENGLACIATION,
     SPELL_FROZEN_RAMPARTS,
 },
 
