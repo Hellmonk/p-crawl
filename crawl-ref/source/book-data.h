@@ -455,8 +455,8 @@ static const vector<spell_type> spellbook_templates[] =
 
 { // There-And-Back Book
     SPELL_TELEPORT_OTHER,
-    SPELL_GELLS_GAVOTTE,
     SPELL_DISPERSAL,
+    SPELL_GELLS_GAVOTTE,
 },
 
 { // Book of Dangerous Friends
