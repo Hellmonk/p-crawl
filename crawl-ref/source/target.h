@@ -286,6 +286,13 @@ public:
     aff_type is_affected(coord_def loc) override;
 };
 
+class targeter_sleetstorm : public targeter_radius
+{
+public:
+    targeter_sleetstorm(int _range);
+    aff_type is_affected(coord_def loc) override;
+};
+
 class targeter_flame_wave : public targeter_radius
 {
 public:
@@ -504,6 +511,12 @@ class targeter_ignite_poison : public targeter_multiposition
 {
 public:
     targeter_ignite_poison(actor *a);
+};
+
+class targeter_rot : public targeter_multiposition
+{
+public:
+    targeter_rot(actor *a);
 };
 
 class targeter_multimonster : public targeter
@@ -768,4 +781,18 @@ class targeter_paragon_deploy : public targeter_smite
 public:
     targeter_paragon_deploy(int range);
     bool valid_aim(coord_def a) override;
+};
+
+class targeter_dismissal : public targeter_smite
+{
+public:
+    targeter_dismissal();
+    bool valid_aim(coord_def a) override;
+    bool set_aim(coord_def a) override;
+};
+
+class targeter_blood_explosion : public targeter_multiposition
+{
+public:
+    targeter_blood_explosion();
 };

@@ -841,6 +841,11 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
             simple_monster_message(*this, " is less armoured.");
         break;
 
+    case ENCH_PHASE_SHIFT:
+        if (!quiet)
+            simple_monster_message(*this, " seems more solid.");
+        break;
+
     case ENCH_RESISTANCE:
         if (!quiet)
             simple_monster_message(*this, " is no longer unusually resistant.");
@@ -1652,38 +1657,12 @@ void monster::apply_enchantment(const mon_enchant &me)
     }
     break;
 
-    case ENCH_PORTAL_PACIFIED:
-    {
-        if (decay_enchantment(en))
-        {
-            if (has_ench(ENCH_SEVERED))
-                break;
-
-            if (!friendly())
-                break;
-
-            if (!silenced(you.pos()))
-            {
-                if (you.can_see(*this))
-                    simple_monster_message(*this, " suddenly becomes enraged!");
-                else
-                    mpr("You hear a distant and violent thrashing sound.");
-            }
-
-            attitude = ATT_HOSTILE;
-            mons_att_changed(this);
-            if (!crawl_state.game_is_arena())
-                behaviour_event(this, ME_ALERT, &you);
-        }
-    }
-    break;
-
     case ENCH_SEVERED:
     {
         simple_monster_message(*this, " writhes!");
         coord_def base_position = props[BASE_POSITION_KEY].get_coord();
         maybe_bloodify_square(base_position);
-        hurt(me.agent(), 20);
+        hurt(me.agent(), 15);
     }
 
     break;
@@ -2222,9 +2201,8 @@ static const char *enchant_names[] =
 #if TAG_MAJOR_VERSION == 34
     "gold_lust",
 #endif
-    "drained", "repel_missiles",
+    "drained", "repel_missiles", "deflect missiles",
 #if TAG_MAJOR_VERSION == 34
-    "deflect missiles",
     "negative_vuln", "condensation_shield",
 #endif
     "resistant", "hexed",
@@ -2262,6 +2240,7 @@ static const char *enchant_names[] =
     "vampire thrall", "pyrrhic recollection", "clockwork bee cast",
     "phalanx barrier", "figment", "paradox-touched", "warding",
     "diminished_spells", "stunned", "free action used", "steelskin",
+    "phase shift",
     "buggy", // NUM_ENCHANTMENTS
 };
 
@@ -2468,10 +2447,6 @@ int mon_enchant::calc_duration(const monster* mons,
 
     case ENCH_STUN:
         return 20;
-
-    case ENCH_PORTAL_PACIFIED:
-        // Must be set by spell.
-        return 0;
 
     case ENCH_BREATH_WEAPON:
         // Must be set by creature.

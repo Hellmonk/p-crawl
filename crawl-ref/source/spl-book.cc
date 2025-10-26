@@ -1150,50 +1150,6 @@ spret divine_exegesis(bool fail)
     return cast_a_spell(false, spell, nullptr, fail);
 }
 
-static spell_list _get_player_servitor_spells()
-{
-    spell_list spells;
-    for (const spell_type spell : you.spells)
-        if (spell_servitorable(spell))
-            spells.push_back(spell);
-
-    return spells;
-}
-
-spret imbue_servitor()
-{
-    spell_list spells(_get_player_servitor_spells());
-    if (spells.empty())
-    {
-        mpr("You don't know any spells that your servitor could cast!");
-        return spret::abort;
-    }
-
-    SpellLibraryMenu spell_menu(spells, SpellLibraryMenu::action::imbue);
-
-    const vector<MenuEntry*> sel = spell_menu.show();
-    if (!crawl_state.doing_prev_cmd_again)
-    {
-        redraw_screen();
-        update_screen();
-    }
-
-    if (sel.empty())
-        return spret::abort;
-
-    const spell_type spell = *static_cast<spell_type*>(sel[0]->data);
-    if (spell == SPELL_NO_SPELL)
-        return spret::abort;
-
-    ASSERT(is_valid_spell(spell));
-
-    // Remove any servitors that currently exist and start imbuing.
-    remove_player_servitor();
-    start_delay<ImbueDelay>(5, spell);
-
-    return spret::success;
-}
-
 /// For a given dungeon depth (or item level), how much weight should we give
 /// to a spellbook for having a spell of the given level in it?
 /// We add a flat 10 to all these weights later.

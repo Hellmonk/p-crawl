@@ -67,7 +67,9 @@ enum attribute_type
     ATTR_BARBS_POW,            // How badly we are currently skewered
 #if TAG_MAJOR_VERSION == 34
     ATTR_REPEL_MISSILES,       // Repel missiles active
+#endif
     ATTR_DEFLECT_MISSILES,     // Deflect missiles active
+#if TAG_MAJOR_VERSION == 34
     ATTR_PORTAL_PROJECTILE,    // Accuracy bonus during portal projectile
 #endif
     ATTR_GOD_WRATH_XP,         // How much XP before our next god wrath check?
@@ -110,5 +112,6 @@ enum attribute_type
     ATTR_OSTRACISM,            // How much your piety is temporarily capped by
     ATTR_LAST_CONTAM,          // Timestamp of when contam was last inflicted
     ATTR_POISON_STRENGTH,      // Number of times the player has been poisoned
+    ATTR_FORCE_QUAKE,          // Track what hit of force quake we're on
     NUM_ATTRIBUTES
 };

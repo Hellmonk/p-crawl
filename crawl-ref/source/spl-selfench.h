@@ -4,9 +4,6 @@
 #include "spl-cast.h"
 #include "transformation.h"
 
-// Maximum amount of slaying you can stack with fugue
-const int FUGUE_MAX_STACKS = 7;
-
 class actor;
 
 spret cast_deaths_door(int pow, bool fail);
@@ -29,8 +26,7 @@ int silence_min_range(int pow);
 int silence_max_range(int pow);
 spret cast_silence(int pow, bool fail = false);
 
-spret cast_fugue_of_the_fallen(int pow, bool fail);
-void do_fugue_wail(const coord_def pos);
+spret cast_song_of_slaying(int pow, bool fail);
 
 int liquefaction_max_range(int pow);
 spret cast_liquefaction(int pow, bool fail);
@@ -41,3 +37,10 @@ spret cast_jinxbite(int pow, bool fail);
 spret cast_confusing_touch(int power, bool fail);
 
 spret cast_detonation_catalyst(bool fail);
+void remove_condensation_shield();
+spret cast_condensation_shield(int pow, bool fail);
+spret deflection(int pow, bool fail);
+spret haste_spell(int pow, bool fail);
+spret cast_piercing_shot(int pow, bool fail);
+spret scrying(int pow, bool fail);
+spret cast_arcane_nova(int pow, bool fail);

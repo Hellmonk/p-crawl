@@ -62,3 +62,4 @@ vector<coord_def> find_spike_launcher_walls();
 spret cast_spike_launcher(int pow, bool fail);
 void handle_spike_launcher(int delay);
 void end_spike_launcher();
+spret cast_phase_shift(int pow, bool fail);

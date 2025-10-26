@@ -17,11 +17,13 @@
 #include "art-enum.h"
 #include "artefact.h"
 #include "cloud.h"
+#include "colour.h"
 #include "coordit.h"
 #include "delay.h"
 #include "directn.h"
 #include "dungeon.h"
 #include "english.h"
+#include "fight.h"
 #include "god-abil.h" // fedhas_passthrough for armataur charge
 #include "god-conduct.h"
 #include "item-prop.h"
@@ -43,6 +45,7 @@
 #include "orb.h"
 #include "output.h"
 #include "prompt.h"
+#include "random.h"
 #include "religion.h"
 #include "shout.h"
 #include "spl-damage.h" // cancel_polar_vortex
@@ -79,10 +82,8 @@ static void _place_tloc_cloud(const coord_def &origin)
 spret cast_disjunction(int pow, bool fail)
 {
     fail_check();
-    int rand = random_range(35, 45) + random2(div_rand_round(pow, 12));
-    you.duration[DUR_DISJUNCTION] = min(90 + div_rand_round(pow, 12),
-        max(you.duration[DUR_DISJUNCTION] + rand,
-        30 + rand));
+    int dur = 4 + div_rand_round(pow,4) + random2(1 + div_rand_round(pow, 2));
+    you.increase_duration(DUR_DISJUNCTION, dur, 25);
     disjunction_spell();
     return spret::success;
 }
@@ -855,21 +856,12 @@ spret electric_charge(actor& agent, int powc, bool fail, const coord_def &target
 
     // Player Vhi's damage is based on spellpower, distance, and their melee damage
     if (agent.is_player())
-        charge_atk.charge_pow = powc + 50 * grid_distance(initial_pos, agent.pos());
+        charge_atk.charge_pow = 3 * powc + 30 * grid_distance(initial_pos, agent.pos());
     // Monster Vhi's damage is flatly based on their HD
     else
         charge_atk.charge_pow = powc;
 
     charge_atk.launch_attack_set();
-
-    // Monsters will already use up attack energy via the melee attack itself,
-    // so we only need to handle delay for players.
-    if (agent.is_player())
-    {
-        // Normally this is 10 aut (times haste, chei etc), but slow weapons
-        // take longer. Most relevant for low-skill players and Dark Maul.
-        you.time_taken = max(you.attack_delay().roll(), player_speed());
-    }
 
     return spret::success;
 }
@@ -949,9 +941,6 @@ spret cast_blink(int pow, bool fail)
 
     fail_check();
     uncontrolled_blink();
-
-    you.increase_duration(DUR_BLINK_COOLDOWN,
-                          2 + random2(3) + div_rand_round(50 - pow, 10));
 
     return spret::success;
 }
@@ -1410,7 +1399,6 @@ spret cast_dimensional_bullseye(int pow, monster *target, bool fail)
     if (target == nullptr || !you.can_see(*target))
     {
         canned_msg(MSG_NOTHING_THERE);
-        // You cannot place a bullseye on invisible enemies, so just abort
         return spret::abort;
     }
 
@@ -1438,8 +1426,7 @@ spret cast_dimensional_bullseye(int pow, monster *target, bool fail)
     target->add_ench(ENCH_BULLSEYE_TARGET);
 
     you.props[BULLSEYE_TARGET_KEY].get_int() = target->mid;
-    int dur = random_range(5 + div_rand_round(pow, 5),
-                           7 + div_rand_round(pow, 4));
+    int dur = random_range(5 + pow, 7 + div_rand_round(pow * 3, 2));
     you.set_duration(DUR_DIMENSIONAL_BULLSEYE, dur);
     return spret::success;
 }
@@ -1531,8 +1518,8 @@ spret cast_manifold_assault(actor& agent, int pow, bool fail, bool real,
     shuffle_array(targets);
     // UC is worse at launching multiple manifold assaults, since
     // shapeshifters have a much easier time casting it.
-    const size_t max_targets = weapon ? 4 + div_rand_round(pow, 25)
-                                      : 2 + div_rand_round(pow, 50);
+    const size_t max_targets = agent.is_player() ? 1 + div_rand_round(pow, 8)
+                               : 1 + div_rand_round(pow, 2);
     const size_t target_count = std::min(max_targets, targets.size());
     int animation_delay = 80 / target_count;
 
@@ -1712,87 +1699,44 @@ bool golubria_valid_cell(coord_def p, bool just_check)
            && cell_see_cell(you.pos(), p, LOS_NO_TRANS);
 }
 
-spret cast_golubrias_passage(int pow, const coord_def& where, bool fail)
+spret cast_golubrias_passage(int pow, bool fail)
 {
-    if (player_in_branch(BRANCH_GAUNTLET))
-    {
-        mprf(MSGCH_ORB, "A magic seal in the Gauntlet prevents you from "
-                "opening a passage!");
-        return spret::abort;
-    }
-
-    if (grid_distance(where, you.pos())
-        > spell_range(SPELL_GOLUBRIAS_PASSAGE, pow))
-    {
-        mpr("That's out of range!");
-        return spret::abort;
-    }
-
-    if (cell_is_solid(where))
-    {
-        mpr("You can't create a passage there!");
-        return spret::abort;
-    }
-
     int tries = 0;
-    int tries2 = 0;
+
     const int range = GOLUBRIA_FUZZ_RANGE;
-    coord_def randomized_where = where;
     coord_def randomized_here = you.pos();
+
     do
     {
         tries++;
-        randomized_where = where;
-        randomized_where.x += random_range(-range, range);
-        randomized_where.y += random_range(-range, range);
-    }
-    while ((!golubria_valid_cell(randomized_where)
-            || randomized_where == you.pos())
-           && tries < 100);
-
-    do
-    {
-        tries2++;
         randomized_here = you.pos();
         randomized_here.x += random_range(-range, range);
         randomized_here.y += random_range(-range, range);
     }
-    while ((!golubria_valid_cell(randomized_here)
-            || randomized_here == randomized_where)
-           && tries2 < 100);
+    while (!golubria_valid_cell(randomized_here)
+           && tries < 100);
 
-    if (tries >= 100 || tries2 >= 100)
+    if (tries >= 100)
     {
-        if (you.trans_wall_blocking(randomized_where))
-        {
-            mpr("You cannot create a passage on the other side of the "
-                "transparent wall.");
-        }
-        else
-        {
             // XXX: bleh, dumb message
             mpr("Creating a passage of Golubria requires sufficient empty "
                 "space.");
-        }
 
         return spret::abort;
     }
 
     fail_check();
-    place_specific_trap(randomized_where, TRAP_GOLUBRIA);
     place_specific_trap(randomized_here, TRAP_GOLUBRIA);
     env.level_state |= LSTATE_GOLUBRIA;
 
-    trap_def *trap = trap_at(randomized_where);
-    trap_def *trap2 = trap_at(randomized_here);
-    if (!trap || !trap2)
+    trap_def *trap = trap_at(randomized_here);
+    if (!trap)
     {
         mpr("Something buggy happened.");
         return spret::abort;
     }
 
     trap->reveal();
-    trap2->reveal();
 
     return spret::success;
 }
@@ -1808,8 +1752,8 @@ static int _disperse_monster(monster& mon, int pow)
         monster_teleport(&mon, true);
 
     // Moving the monster may have killed it in apply_location_effects.
-    if (mon.alive() && mon.check_willpower(&you, pow) <= 0)
-        mon.confuse(&you, 1 + random2avg(1 + div_rand_round(pow, 10), 2));
+    if (mon.alive())
+        mon.confuse(&you, 1 + random2(1 + div_rand_round(pow, 4)));
 
     return true;
 }
@@ -1990,6 +1934,9 @@ bool beckon(actor &beckoned, const bolt &path)
          beckoned.name(DESC_THE).c_str(),
          beckoned.conj_verb("hurl").c_str());
 
+    if (coinflip())
+        beckoned.stun(&you);
+
     beckoned.apply_location_effects(old_pos); // traps, etc.
     if (beckoned.is_monster())
         mons_relocated(beckoned.as_monster()); // cleanup tentacle segments
@@ -2053,6 +2000,38 @@ void attract_monsters(int delay)
         attract_monster(*mi, div_rand_round(3 * delay, BASELINE_DELAY));
 }
 
+dice_def gravity_damage(int pow, bool random)
+{
+    return random ? dice_def(1, 25 + div_rand_round(pow * 2, 3))
+                  : dice_def(1, 25 + pow * 2/3);
+}
+
+static int _gravity_cell(coord_def where, int pow, actor *agent)
+{
+    monster *mons = monster_at(where);
+    if (!mons)
+        return 0; // XXX: handle damaging the player for mons casts...?
+
+    int dam = gravity_damage(pow, true).roll();
+    dam = mons->apply_ac(dam);
+
+    if (you.can_see(*mons))
+    {
+        mprf("%s is crushed by gravitational force!",
+             mons->name(DESC_THE).c_str());
+    }
+
+    mons->hurt(agent, dam, BEAM_MMISSILE);
+
+    if (mons->alive() && !mons->stunned() && x_chance_in_y(2,3))
+    {
+        mprf("%s is stunned!", mons->name(DESC_THE).c_str());
+        mons->stun(&you);
+    }
+
+    return 1;
+}
+
 vector<monster *> find_chaos_targets(bool just_check)
 {
     vector<monster *> targets;
@@ -2069,6 +2048,86 @@ vector<monster *> find_chaos_targets(bool just_check)
     }
 
     return targets;
+}
+
+bool fatal_attraction(const coord_def& pos, const actor *agent, int pow)
+{
+    vector <actor *> victims;
+
+    for (actor_near_iterator ai(pos, LOS_SOLID); ai; ++ai)
+    {
+        if (*ai == agent || ai->is_stationary() || ai->pos() == pos)
+            continue;
+
+        const int range = (pos - ai->pos()).rdist();
+        if (range > spell_range(SPELL_WARP_GRAVITY, pow))
+            continue;
+
+        victims.push_back(*ai);
+    }
+
+    if (victims.empty())
+        return false;
+
+    near_to_far_sorter sorter = {you.pos()};
+    sort(victims.begin(), victims.end(), sorter);
+
+    for (actor * ai : victims)
+    {
+        const int range = (pos - ai->pos()).rdist();
+        if (range > spell_range(SPELL_WARP_GRAVITY, pow))
+            continue;
+
+        const int strength =
+            min(LOS_RADIUS, (div_rand_round(pow * 4 + 100, 5 * range * range)));
+
+        monster* mon = ai->as_monster();
+        attract_monster(*mon, strength);
+    }
+
+    return true;
+
+}
+
+spret warp_gravity(int pow, bool fail, bool tracer)
+{
+    int radius = spell_range(SPELL_WARP_GRAVITY, pow);
+
+    targeter_radius hitfunc(&you, LOS_NO_TRANS, radius);
+
+    if (stop_attack_prompt(hitfunc, "warp", nullptr))
+        return spret::abort;
+
+    if (tracer)
+    {
+        coord_def pos = you.pos();
+        for (actor_near_iterator ai(pos, LOS_SOLID); ai; ++ai)
+        {
+            if (*ai == &you || ai->is_stationary() || ai->pos() == pos)
+                continue;
+
+            const int range = (pos - ai->pos()).rdist();
+            if (range > spell_range(SPELL_WARP_GRAVITY, pow))
+                continue;
+
+            return spret::success;
+        }
+
+        return spret::abort;
+    }
+
+    fail_check();
+
+    flash_view_delay(UA_PLAYER, ETC_WARP, 80);
+    flash_view_delay(UA_PLAYER, BROWN, 80);
+
+    mprf("Gravity intensifies.");
+    fatal_attraction(you.pos(), &you, pow);
+    apply_random_around_square([pow] (coord_def where) {
+        return _gravity_cell(where, pow, &you);
+    }, you.pos(), true, 8);
+
+    return spret::success;
 }
 
 spret word_of_chaos(int pow, bool fail)
@@ -2358,9 +2417,9 @@ spret cast_piledriver(const coord_def& target, int pow, bool fail)
 dice_def gavotte_impact_damage(int pow, int dist, bool random)
 {
     if (!random)
-        return dice_def(2, (pow * 3 / 4 + 35) * (dist + 5) / 20 + 1);
+        return dice_def(2, (pow + 35) * (dist + 5) / 20 + 1);
     else
-        return dice_def(2, div_rand_round((pow * 3 / 4 + 35) * (dist + 5), 20) + 1);
+        return dice_def(2, div_rand_round((pow + 35) * (dist + 5), 20) + 1);
 }
 
 static void _maybe_penance_for_collision(god_conduct_trigger conducts[3], actor& victim)
@@ -2490,7 +2549,7 @@ spret cast_gavotte(int pow, const coord_def dir, bool fail)
             _push_actor(*targs[i], dir, GAVOTTE_DISTANCE, pow);
     }
 
-    you.increase_duration(DUR_GAVOTTE_COOLDOWN, random_range(5, 9) - div_rand_round(pow, 50));
+    you.increase_duration(DUR_GAVOTTE_COOLDOWN, random_range(5, 9) - div_rand_round(pow, 10));
 
     return spret::success;
 }
@@ -2655,4 +2714,16 @@ spret do_bestial_takedown(coord_def target)
     noisy(5, you.pos(), MID_PLAYER);
 
     return spret::success;
+}
+
+spret cast_controlled_blink(bool safe)
+{
+    // don't prompt if it's useless
+    if (you.no_tele(true, true))
+    {
+        canned_msg(MSG_STRANGE_STASIS);
+        return spret::abort;
+    }
+
+    return controlled_blink(safe);
 }

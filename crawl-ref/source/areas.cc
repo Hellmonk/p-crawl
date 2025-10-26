@@ -587,6 +587,8 @@ int player::halo_radius() const
         size = min(piety(), piety_breakpoint(5)) * you.normal_vision
                                                     / piety_breakpoint(5);
     }
+    else if (you.duration[DUR_NOVA])
+        size = max(size, 4);
 
     if (you.unrand_equipped(UNRAND_EOS))
         size = max(size, 3);

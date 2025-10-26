@@ -150,8 +150,6 @@ bool attack::handle_phase_killed()
 
 bool attack::handle_phase_end()
 {
-    maybe_trigger_fugue_wail(defender->pos());
-
     return true;
 }
 
@@ -787,15 +785,15 @@ int attack::calc_damage()
     return 0;
 }
 
-int attack::test_hit(int to_land, int ev, bool randomise_ev)
+int attack::test_hit(int to_land, int ev, bool bullseye)
 {
     int margin = AUTOMATIC_HIT;
 
     if (defender->is_player() && you.duration[DUR_AUTODODGE])
         return -1000;
 
-    if (randomise_ev)
-        ev = ev;
+    if (bullseye)
+        ev = 0;
     if (to_land >= AUTOMATIC_HIT)
         return true;
 
@@ -1354,15 +1352,6 @@ void attack::maybe_trigger_jinxbite()
 {
     if (attacker->is_player() && you.duration[DUR_JINXBITE])
         jinxbite_fineff::schedule(defender);
-}
-
-void attack::maybe_trigger_fugue_wail(const coord_def pos)
-{
-    if (attacker->is_player() && you.duration[DUR_FUGUE]
-        && (you.props[FUGUE_KEY].get_int() == FUGUE_MAX_STACKS))
-    {
-        do_fugue_wail(pos);
-    }
 }
 
 void attack::maybe_trigger_autodazzler()

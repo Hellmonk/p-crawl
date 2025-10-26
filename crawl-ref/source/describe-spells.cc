@@ -25,6 +25,7 @@
 #include "spl-book.h"
 #include "spl-damage.h"
 #include "spl-summoning.h" // mons_ball_lightning_hd
+#include "spl-transloc.h"
 #include "spl-util.h"
 #include "spl-zap.h"
 #include "stringutil.h"
@@ -394,7 +395,9 @@ static dice_def _spell_damage(spell_type spell, int hd, int pow)
     switch (spell)
     {
         case SPELL_SCORCH:
-            return scorch_damage(pow, false);
+            return scorch_damage(pow);
+        case SPELL_PHASE_KNIFE:
+            return phase_knife_damage(pow);
         case SPELL_WATERSTRIKE:
             return waterstrike_damage(hd);
         case SPELL_IOOD:
@@ -404,7 +407,7 @@ static dice_def _spell_damage(spell_type spell, int hd, int pow)
         case SPELL_GLACIATE:
             return glaciate_damage(pow, 3);
         case SPELL_CONJURE_BALL_LIGHTNING:
-            return ball_lightning_damage(mons_ball_lightning_hd(pow, false));
+            return ball_lightning_damage(mons_ball_lightning_hd(pow));
         case SPELL_ERUPTION:
             return eruption_damage();
         case SPELL_LRD:
@@ -417,6 +420,12 @@ static dice_def _spell_damage(spell_type spell, int hd, int pow)
             return resonance_strike_base_damage(hd);
         case SPELL_POLAR_VORTEX:
             return polar_vortex_dice(pow, false);
+        case SPELL_WARP_GRAVITY:
+            return gravity_damage(pow, false);
+        case SPELL_ARCANE_NOVA:
+            return nova_damage(pow);
+        case SPELL_FORCE_QUAKE:
+            return force_quake_damage(pow, false);
         case SPELL_ELECTROLUNGE:
             return electrolunge_damage(pow);
         case SPELL_FULMINANT_PRISM:

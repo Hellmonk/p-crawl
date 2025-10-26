@@ -168,8 +168,8 @@ enum enchant_type
 #endif
     ENCH_DRAINED,
     ENCH_REPEL_MISSILES,
-#if TAG_MAJOR_VERSION == 34
     ENCH_DEFLECT_MISSILES,
+#if TAG_MAJOR_VERSION == 34
     ENCH_NEGATIVE_VULN,
     ENCH_CONDENSATION_SHIELD,
 #endif
@@ -251,6 +251,7 @@ enum enchant_type
     ENCH_STUN,
     ENCH_USED_FREE_ACTION,
     ENCH_STEELSKIN,
+    ENCH_PHASE_SHIFT,
     // Update enchant_names[] in mon-ench.cc when adding or removing
     // enchantments.
     NUM_ENCHANTMENTS

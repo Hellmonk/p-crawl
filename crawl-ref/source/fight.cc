@@ -171,6 +171,10 @@ int to_hit_pct(const monster_info& mi, attack &atk, bool melee,
                bool penetrating, int distance)
 {
     const int to_land = atk.calc_pre_roll_to_hit(false);
+
+    if (!melee && mi.is(MB_BULLSEYE_TARGET))
+        return 100;
+
     const double hit_chance = _to_hit_hit_chance(mi, melee, to_land);
     const double shield_chance = _to_hit_shield_chance(mi, melee, to_land, penetrating);
     const int blind_miss_chance = player_blind_miss_chance(distance);
@@ -688,6 +692,7 @@ beam_type get_beam_resist_type(beam_type flavour)
         case BEAM_ELECTRICITY:
         case BEAM_THUNDER:
         case BEAM_STUN_BOLT:
+        case BEAM_INACCURACY:
             return BEAM_ELECTRICITY;
 
         case BEAM_NEG:
@@ -974,7 +979,7 @@ bool player_unrand_bad_target(const item_def &weapon,
     }
     if (is_unrandom_artefact(weapon, UNRAND_POWER))
     {
-        targeter_beam hitfunc(&you, 4, ZAP_SWORD_BEAM, 100, 0, 0);
+        targeter_beam hitfunc(&you, 4, ZAP_INACCURACY, 100, 0, 0);
         hitfunc.beam.chose_ray = true;
         hitfunc.beam.aimed_at_spot = false;
         find_life_bolt_ray(hitfunc.beam.source, defender.pos(), hitfunc.beam.ray);

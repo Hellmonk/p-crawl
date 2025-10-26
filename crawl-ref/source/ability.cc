@@ -388,8 +388,6 @@ static vector<ability_def> &_get_ability_list()
         { ABIL_HEAL_WOUNDS, "Heal Wounds",
             0, 0, 0, -1, {fail_basis::xl, 45, 2}, abflag::none },
 #endif
-        { ABIL_IMBUE_SERVITOR, "Imbue Servitor",
-            0, 0, 0, -1, {}, abflag::delay },
         { ABIL_IMPRINT_WEAPON, "Imprint Weapon",
             0, 0, 0, -1, {}, abflag::delay },
         { ABIL_END_TRANSFORMATION, "End Transformation",
@@ -3245,9 +3243,6 @@ static spret _do_ability(const ability_def& abil, bool fail, dist *target,
         break;
     }
 
-    case ABIL_IMBUE_SERVITOR:
-        return imbue_servitor();
-
     case ABIL_IMPRINT_WEAPON:
         {
             item_def *wpn = nullptr;
@@ -4319,8 +4314,6 @@ bool player_has_ability(ability_type abil, bool include_unusable)
         return you.form == transformation::vampire;
     case ABIL_ENKINDLE:
         return you.has_mutation(MUT_MNEMOPHAGE);
-    case ABIL_IMBUE_SERVITOR:
-        return you.has_spell(SPELL_SPELLSPARK_SERVITOR);
     case ABIL_IMPRINT_WEAPON:
         return you.has_spell(SPELL_PLATINUM_PARAGON);
     // mutations
@@ -4417,7 +4410,6 @@ vector<talent> your_talents(bool check_confused, bool include_unusable, bool ign
             ABIL_BREATHE_RUST,
             ABIL_BLINKBOLT,
             ABIL_SIPHON_ESSENCE,
-            ABIL_IMBUE_SERVITOR,
             ABIL_IMPRINT_WEAPON,
             ABIL_END_TRANSFORMATION,
             ABIL_BEGIN_UNTRANSFORM,

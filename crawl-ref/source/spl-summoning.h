@@ -49,7 +49,7 @@ monster *find_canine_familiar();
 spret cast_call_canine_familiar(int pow, bool fail);
 
 spret cast_awaken_armour(int pow, bool fail);
-spret cast_summon_ice_beast(int pow, bool fail);
+spret cast_summon_ice_statue(int pow, bool fail);
 spret cast_summon_cactus(int pow, bool fail);
 spret cast_monstrous_menagerie(monster* caster, int pow);
 spret cast_sphinx_sisters(const actor& caster, int pow, bool fail);
@@ -97,6 +97,7 @@ void remove_player_servitor();
 
 monster_type pick_random_wraith();
 spret cast_haunt(int pow, const coord_def& where, bool fail);
+spret cast_ghostly_legion(int pow, bool fail, bool tracer = false);
 
 spret cast_martyrs_knell(const actor* caster, int pow, bool fail);
 
@@ -120,7 +121,7 @@ void check_spectral_weapon(actor &agent);
 monster* create_spectral_weapon(const actor &agent, coord_def pos,
                                 item_def& weapon);
 
-spret cast_infestation(int pow, bolt &beam, bool fail);
+spret cast_infestation(int pow, bool fail);
 
 void summoned_monster(const monster* mons, const actor* caster,
                       spell_type spell);
@@ -207,3 +208,7 @@ spret cast_phalanx_beetle(const actor& agent, int pow, bool fail);
 dice_def rending_blade_damage(int power, bool include_mp);
 spret cast_rending_blade(int pow, bool fail);
 void trigger_rending_blade();
+
+spret cast_summon_elemental(bool fail);
+spret cast_eldritch_ichor(int pow, bool fail);;
+spret cast_ammo_to_anacondas(int pow, bool fail);

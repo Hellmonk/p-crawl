@@ -58,11 +58,14 @@ static int  _get_dart_chance(const int hd);
 bool is_penetrating_attack(const actor& attacker, const item_def* weapon,
                            const item_def& projectile)
 {
+    const bool pierce = attacker.is_player() && you.duration[DUR_PIERCING_SHOT];
+
     return is_throwable(&attacker, projectile)
-            && projectile.is_type(OBJ_MISSILES, MI_JAVELIN)
+            && (projectile.is_type(OBJ_MISSILES, MI_JAVELIN) || pierce)
            || weapon
               && (get_weapon_brand(*weapon) == SPWPN_PENETRATION
-                  || is_unrandom_artefact(*weapon, UNRAND_STORM_BOW));
+                  || is_unrandom_artefact(*weapon, UNRAND_STORM_BOW)
+                  || pierce);
 }
 
 class fire_target_behaviour : public targeting_behaviour

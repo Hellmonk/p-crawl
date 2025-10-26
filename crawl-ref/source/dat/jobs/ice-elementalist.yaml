@@ -10,7 +10,6 @@ spells:
   - SPELL_FREEZE
   - SPELL_FROZEN_RAMPARTS
   - SPELL_OZOCUBUS_ARMOUR
-  - SPELL_SUMMON_ICE_BEAST
 equipment:
   - "robe"
   - "potion of magic"

@@ -324,7 +324,7 @@ bool melee_attack::handle_phase_attempted()
         if (grapnel.agent() == attacker)
         {
             to_hit = AUTOMATIC_HIT;
-            flat_dmg_bonus = random_range(0, 3);
+            flat_dmg_bonus = random_range(0, 5);
             defender->as_monster()->del_ench(ENCH_KINETIC_GRAPNEL, true);
             if (attacker->is_player())
                 mpr("The grapnel guides your strike.");
@@ -775,6 +775,17 @@ bool melee_attack::handle_phase_hit()
 
     // Detonation catalyst should trigger even if the defender dies later on.
     maybe_trigger_detonation();
+
+    if (attacker->is_player() && you.duration[DUR_INFESTATION])
+    {
+        if (!defender->is_summoned() && !(defender->as_monster()->flags & MF_HARD_RESET))
+        {
+            const int dur = (15 + random2(30)) * BASELINE_DELAY;
+            defender->as_monster()->add_ench(mon_enchant(ENCH_INFESTATION, 0, &you, dur));
+            mprf("%s is infested!", you.can_see(*defender)?
+                    defender->name(DESC_THE).c_str() : "something");
+        }
+    }
 
     // This does more than just calculate the damage, it also sets up
     // messages, etc. It also wakes nearby creatures on a failed stab,
@@ -1309,7 +1320,7 @@ bool melee_attack::handle_phase_end()
         if (mon_attacker->type == MONS_BLAZEHEART_GOLEM && did_hit)
         {
             mon_attacker->hurt(mon_attacker,
-                               mon_attacker->max_hit_points / 3 + 1,
+                               mon_attacker->max_hit_points / 4 + 1,
                                BEAM_MISSILE);
         }
         else if (mon_attacker->type == MONS_CLOCKWORK_BEE && did_hit)
@@ -1700,7 +1711,7 @@ void melee_attack::maybe_trigger_detonation()
 {
     if (attacker->is_player()
                        && you.duration[DUR_DETONATION_CATALYST]
-                       && !cleaving && in_bounds(defender->pos()))
+                       && in_bounds(defender->pos()))
         {
             detonation_fineff::schedule(defender->pos(), weapon);
         }

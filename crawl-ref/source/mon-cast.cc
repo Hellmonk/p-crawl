@@ -1913,7 +1913,7 @@ bool mons_spell_is_spell(spell_type spell)
  */
 int mons_power_for_hd(spell_type spell, int hd)
 {
-    const int power = hd * _mons_power_hd_factor(spell);
+    const int power = hd * _mons_power_hd_factor(spell) + 2;
     return power;
 }
 
@@ -8072,6 +8072,11 @@ void mons_cast(monster* mons, bolt pbolt, spell_type spell_cast,
         mons->add_ench(mon_enchant(ENCH_REPEL_MISSILES, 1, mons, INFINITE_DURATION));
         return;
 
+    case SPELL_PHASE_SHIFT:
+        simple_monster_message(*mons, " phases partway out of reality!");
+        mons->add_ench(mon_enchant(ENCH_PHASE_SHIFT));
+        return;
+
     case SPELL_SUMMON_SCARABS:
     {
         const int num_scarabs = 1 + random2(mons->spell_hd(spell_cast) / 5 + 1);
@@ -9417,6 +9422,9 @@ ai_action::goodness monster_spell_goodness(monster* mon, spell_type spell)
 
     case SPELL_REPEL_MISSILES:
         return ai_action::good_or_impossible(!mon->has_ench(ENCH_REPEL_MISSILES));
+
+    case SPELL_PHASE_SHIFT:
+        return ai_action::good_or_impossible(!mon->has_ench(ENCH_PHASE_SHIFT));
 
     case SPELL_MASS_REPULSION:
         return ai_action::good_or_bad(_mass_repulsion(*mon, true));

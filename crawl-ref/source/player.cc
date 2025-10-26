@@ -1826,6 +1826,9 @@ static int _player_temporary_evasion_modifiers()
     if (you.duration[DUR_AGILITY])
         evbonus += AGILITY_BONUS;
 
+    if (you.duration[DUR_PHASE_SHIFT])
+        evbonus += 35;
+
     // Bane of stumbling triggers on the same conditions as acrobat (thus
     // sharing its timer).
     if (you.has_bane(BANE_STUMBLING) && you.duration[DUR_ACROBAT])
@@ -1990,6 +1993,9 @@ int player_shield_class(int scale, bool random, bool ignore_temporary)
 
     if (you.duration[DUR_SPWPN_SHIELDING])
         shield += 2500;
+
+    if (you.duration[DUR_CONDENSATION_SHIELD])
+        shield += 4000;
 
     shield += qazlal_sh_boost() * 100;
     shield += you.wearing_jewellery(RING_REFLECTION) * 100;
@@ -3348,8 +3354,8 @@ int slaying_bonus(bool ranged, bool random)
     if (you.get_mutation_level(MUT_PROTEAN_GRACE))
         ret += protean_grace_amount();
 
-    if (you.duration[DUR_FUGUE])
-        ret += you.props[FUGUE_KEY].get_int();
+    if (you.duration[DUR_SONG_OF_SLAYING])
+        ret += you.props[SONG_OF_SLAYING_KEY].get_int();
 
     if (you.duration[DUR_WEREFURY])
         ret += you.props[WEREFURY_KEY].get_int();
@@ -4132,7 +4138,7 @@ void end_player_poison()
     you.redraw_hit_points = true;
 }
 
-bool miasma_player(actor *who, string source_aux)
+bool miasma_player()
 {
     ASSERT(!crawl_state.game_is_arena());
 
@@ -5438,6 +5444,7 @@ bool player::shielded() const
            || duration[DUR_DIVINE_SHIELD]
            || duration[DUR_SPWPN_SHIELDING]
            || duration[DUR_EPHEMERAL_SHIELD]
+           || duration[DUR_CONDENSATION_SHIELD]
            || get_mutation_level(MUT_LARGE_BONE_PLATES) > 0
            || qazlal_sh_boost() > 0
            || you.wearing_jewellery(RING_REFLECTION)
@@ -5479,7 +5486,8 @@ bool player::missile_repulsion() const
     return get_mutation_level(MUT_DISTORTION_FIELD) == 3
         || you.wearing_ego(OBJ_ARMOUR, SPARM_REPULSION)
         || scan_artefacts(ARTP_RMSL)
-        || have_passive(passive_t::upgraded_storm_shield);
+        || have_passive(passive_t::upgraded_storm_shield)
+        || you.duration[DUR_DEFLECT_MISSILES]; //used for messaging
 }
 
 /**
@@ -5936,10 +5944,7 @@ int player::armour_class_scaled(int scale) const
     int AC = base_ac(100);
 
     if (duration[DUR_ICY_ARMOUR])
-    {
-        AC += max(0, 500 + you.props[ICY_ARMOUR_KEY].get_int() * 8
-                     - unadjusted_body_armour_penalty() * 50);
-    }
+        AC += max(0, 300 + you.props[ICY_ARMOUR_KEY].get_int() * 50);
 
     if (has_mutation(MUT_ICEMAIL))
         AC += 100 * player_icemail_armour_class();

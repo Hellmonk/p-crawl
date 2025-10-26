@@ -347,7 +347,7 @@ static void _apply_post_zap_effect(spell_type spell, coord_def target)
     switch (spell)
     {
     case SPELL_KISS_OF_DEATH:
-        drain_player(100, true, true);
+        drain_player(20, true, true);
         break;
     case SPELL_BOMBARD:
         if (coinflip())
@@ -387,8 +387,6 @@ int calc_spell_power(spell_type spell)
 
     if (you.divine_exegesis)
         power += you.skill(SK_INVOCATIONS);
-
-    power = (power * you.intel()) / 10;
 
     // Wild magic boosts spell power, subdued magic decreases it.
     power += you.get_mutation_level(MUT_WILD_MAGIC);
@@ -1014,6 +1012,8 @@ unique_ptr<targeter> find_spell_targeter(spell_type spell, int pow, int range)
     case SPELL_POISONOUS_CLOUD:
     case SPELL_HOLY_BREATH:
         return make_unique<targeter_cloud>(&you, spell_to_cloud(spell), range);
+    case SPELL_STEAM_BURST:
+        return make_unique<targeter_cloud>(&you, spell_to_cloud(spell), 1);
     case SPELL_THUNDERBOLT:
         return make_unique<targeter_thunderbolt>(&you, range,
                    get_thunderbolt_last_aim(&you));
@@ -1033,10 +1033,8 @@ unique_ptr<targeter> find_spell_targeter(spell_type spell, int pow, int range)
                                                         gravitas_radius(pow));
     case SPELL_VIOLENT_UNRAVELLING:
         return make_unique<targeter_unravelling>();
-    case SPELL_INFESTATION:
-        return make_unique<targeter_smite>(&you, range, 2, 2, true, false, true,
-                                           [](const coord_def& p) -> bool {
-                                              return you.pos() != p; });
+    case SPELL_FORCEFUL_DISMISSAL:
+        return make_unique<targeter_dismissal>();
     case SPELL_PASSWALL:
         return make_unique<targeter_passwall>(range);
     case SPELL_DIG:
@@ -1051,6 +1049,10 @@ unique_ptr<targeter> find_spell_targeter(spell_type spell, int pow, int range)
         return make_unique<targeter_radius>(&you, LOS_SOLID_SEE, range, 0, 1);
     case SPELL_STARBURST:
         return make_unique<targeter_starburst>(&you, range, pow);
+    case SPELL_WINTERS_EMBRACE:
+        return make_unique<targeter_radius>(&you, LOS_SOLID_SEE, range, 0, 1);
+    case SPELL_WARP_GRAVITY:
+        return make_unique<targeter_radius>(&you, LOS_SOLID_SEE, range, 0, 1);
     case SPELL_IRRADIATE:
         return make_unique<targeter_maybe_radius>(&you, LOS_NO_TRANS, 1, 0, 1);
     case SPELL_DISCHARGE: // not entirely accurate...maybe should highlight
@@ -1072,6 +1074,10 @@ unique_ptr<targeter> find_spell_targeter(spell_type spell, int pow, int range)
         return make_unique<targeter_chain_lightning>();
     case SPELL_MAXWELLS_COUPLING:
         return make_unique<targeter_maxwells_coupling>();
+    case SPELL_BLOOD_EXPLOSION:
+        return make_unique<targeter_blood_explosion>();
+        case SPELL_PLANAR_SLEETSTORM:
+        return make_unique<targeter_sleetstorm>(range);
     case SPELL_FROZEN_RAMPARTS:
         return make_unique<targeter_walls>(&you, find_ramparts_walls());
     case SPELL_DISPERSAL:
@@ -1108,6 +1114,9 @@ unique_ptr<targeter> find_spell_targeter(spell_type spell, int pow, int range)
     case SPELL_SUBLIMATION_OF_BLOOD:
     case SPELL_BORGNJORS_REVIVIFICATION:
     case SPELL_BLASTMOTE:
+    case SPELL_TOMB_OF_DOROKLOHE:
+    case SPELL_GOLUBRIAS_PASSAGE:
+    case SPELL_INFESTATION:
         return make_unique<targeter_radius>(&you, LOS_SOLID_SEE, 0);
 
     // LOS radius:
@@ -1144,7 +1153,7 @@ unique_ptr<targeter> find_spell_targeter(spell_type spell, int pow, int range)
     // find_newmons_square
     case SPELL_SUMMON_SMALL_MAMMAL:
     case SPELL_AWAKEN_ARMOUR:
-    case SPELL_SUMMON_ICE_BEAST:
+    case SPELL_ICE_STATUE:
     case SPELL_SPHINX_SISTERS:
     case SPELL_SUMMON_CACTUS:
     case SPELL_SUMMON_HYDRA:
@@ -1157,6 +1166,8 @@ unique_ptr<targeter> find_spell_targeter(spell_type spell, int pow, int range)
     case SPELL_SPELLSPARK_SERVITOR:
     case SPELL_FORGE_LIGHTNING_SPIRE:
     case SPELL_BATTLESPHERE:
+    case SPELL_SUMMON_ELEMENTAL:
+    case SPELL_AMMO_TO_ANACONDAS:
         return make_unique<targeter_maybe_radius>(&you, LOS_NO_TRANS, 2, 0, 1);
     case SPELL_SUMMON_SEISMOSAURUS_EGG:
     case SPELL_HOARFROST_CANNONADE:
@@ -1207,6 +1218,8 @@ unique_ptr<targeter> find_spell_targeter(spell_type spell, int pow, int range)
                                                    _simple_find_all_hostiles());
     case SPELL_SCORCH:
         return make_unique<targeter_scorch>(you, range, false);
+    case SPELL_PHASE_KNIFE:
+        return make_unique<targeter_scorch>(you, range, false);
     case SPELL_DRAGON_CALL: // this is just convenience: you can start the spell
                             // with no enemies in sight
         return make_unique<targeter_multifireball>(&you,
@@ -1215,8 +1228,6 @@ unique_ptr<targeter> find_spell_targeter(spell_type spell, int pow, int range)
         return make_unique<targeter_bog>(&you, pow);
     case SPELL_FLAME_WAVE:
         return make_unique<targeter_flame_wave>(range);
-    case SPELL_GOLUBRIAS_PASSAGE:
-        return make_unique<targeter_passage>(range);
     case SPELL_SIGIL_OF_BINDING:
         return make_unique<targeter_multiposition>(&you,
                                                    find_sigil_locations(true));
@@ -1249,7 +1260,7 @@ unique_ptr<targeter> find_spell_targeter(spell_type spell, int pow, int range)
         return make_unique<targeter_mortar>(&you, range);
 
     case SPELL_PUTREFACTION:
-        return make_unique<targeter_putrefaction>(range);
+        return make_unique<targeter_rot>(&you);
 
     case SPELL_DIAMOND_SAWBLADES:
         return make_unique<targeter_multiposition>(&you,
@@ -1324,18 +1335,14 @@ static int _tetrahedral_number(int n)
  */
 int hex_success_chance(const int wl, int powc, int scale, bool round_up)
 {
-    const int pow = ench_power_stepdown(powc);
-    const int target = wl + 100 - pow;
-    const int denom = 101 * 100;
-    const int adjust = round_up ? denom - 1 : 0;
+    const int chance = (powc - wl) * 20;
 
-    if (target <= 0)
-        return scale;
-    if (target > 200)
+    if (chance <= 0)
         return 0;
-    if (target <= 100)
-        return (scale * (denom - _triangular_number(target)) + adjust) / denom;
-    return (scale * _triangular_number(201 - target) + adjust) / denom;
+    if (chance > 100)
+        return scale;
+
+    return round_up ? chance * scale : chance * scale;
 }
 
 // approximates _test_beam_hit in a deterministic fashion.
@@ -1423,10 +1430,7 @@ static vector<string> _desc_intoxicate_chance(const monster_info& mi,
     if (hitfunc && !hitfunc->affects_monster(mi))
         return vector<string>{"not susceptible"};
 
-    int conf_pct = 40 + pow / 3;
-
-    if (get_resist(mi.resists(), MR_RES_POISON) >= 1)
-        conf_pct =  conf_pct / 3;
+    int conf_pct = min(40 + pow * 3, 100);
 
     return vector<string>{make_stringf("chance to confuse: %d%%", conf_pct)};
 }
@@ -1495,9 +1499,7 @@ static vector<string> _desc_meph_chance(const monster_info& mi)
     if (get_resist(mi.resists(), MR_RES_POISON) >= 1 || mi.is(MB_CLARITY))
         return vector<string>{"not susceptible"};
 
-    int pct_chance = 2;
-    if (mi.hd < MEPH_HD_CAP)
-        pct_chance = 100 - (100 * mi.hd / MEPH_HD_CAP);
+    int pct_chance = 100 - (100 * mi.hd / 11);
     return vector<string>{make_stringf("chance to affect: %d%%", pct_chance)};
 }
 
@@ -1586,7 +1588,7 @@ static vector<string> _desc_enfeeble_chance(const monster_info& mi, int pow)
     if (wl != WILL_INVULN)
     {
         const int success = hex_success_chance(wl, pow, 100);
-        all_effects.push_back(make_stringf("chance to daze and blind: %d%%", success));
+        all_effects.push_back(make_stringf("chance to daze and slow: %d%%", success));
     }
 
     if (all_effects.empty())
@@ -2124,6 +2126,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     case SPELL_VIOLENT_UNRAVELLING:
         return cast_unravelling(spd.target, powc, fail);
 
+    case SPELL_FORCEFUL_DISMISSAL:
+        return cast_dismissal(spd.target, powc, fail);
+
     // other effects
     case SPELL_DISCHARGE:
         return cast_discharge(powc, you, fail);
@@ -2146,17 +2151,29 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     case SPELL_SCORCH:
         return cast_scorch(you, powc, fail);
 
+    case SPELL_PHASE_KNIFE:
+        return cast_phase_knife(powc, fail);
+
     case SPELL_POISONOUS_VAPOURS:
         return cast_poisonous_vapours(you, powc, target, fail);
 
     case SPELL_IRRADIATE:
         return cast_irradiate(powc, you, fail);
 
+    case SPELL_WARP_GRAVITY:
+        return warp_gravity(powc, fail, false);
+
+    case SPELL_FORCE_QUAKE:
+        return cast_force_quake(fail);
+
     case SPELL_LEDAS_LIQUEFACTION:
         return cast_liquefaction(powc, fail);
 
     case SPELL_OZOCUBUS_REFRIGERATION:
         return fire_los_attack_spell(spell, powc, &you, fail);
+
+    case SPELL_WINTERS_EMBRACE:
+        return cast_winters_embrace(powc, fail);
 
     case SPELL_OLGREBS_TOXIC_RADIANCE:
         return cast_toxic_radiance(&you, powc, fail);
@@ -2182,9 +2199,15 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     case SPELL_FROZEN_RAMPARTS:
         return cast_frozen_ramparts(powc, fail);
 
+    case SPELL_THUNDERBOLT_HD:
+        return cast_thunderbolt_hd(powc, fail);
+
     // Summoning spells, and other spells that create new monsters.
     case SPELL_SUMMON_SMALL_MAMMAL:
         return cast_summon_small_mammal(powc, fail);
+
+    case SPELL_AMMO_TO_ANACONDAS:
+        return cast_ammo_to_anacondas(powc, fail);
 
     case SPELL_CALL_CANINE_FAMILIAR:
         return cast_call_canine_familiar(powc, fail);
@@ -2192,8 +2215,8 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     case SPELL_AWAKEN_ARMOUR:
         return cast_awaken_armour(powc, fail);
 
-    case SPELL_SUMMON_ICE_BEAST:
-        return cast_summon_ice_beast(powc, fail);
+    case SPELL_ICE_STATUE:
+        return cast_summon_ice_statue(powc, fail);
 
     case SPELL_SUMMON_CACTUS:
         return cast_summon_cactus(powc, fail);
@@ -2212,6 +2235,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
 
     case SPELL_SUMMON_MANA_VIPER:
         return cast_summon_mana_viper(powc, fail);
+
+    case SPELL_SUMMON_ELEMENTAL:
+        return cast_summon_elemental(fail);
 
     case SPELL_SUMMON_SEISMOSAURUS_EGG:
         return cast_summon_seismosaurus_egg(you, powc, fail);
@@ -2246,6 +2272,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     case SPELL_HAUNT:
         return cast_haunt(powc, beam.target, fail);
 
+    case SPELL_GHOSTLY_LEGION:
+        return cast_ghostly_legion(powc, fail);
+
     case SPELL_DEATH_CHANNEL:
         return cast_death_channel(powc, god, fail);
 
@@ -2256,7 +2285,7 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
         return cast_battlesphere(&you, powc, fail);
 
     case SPELL_INFESTATION:
-        return cast_infestation(powc, beam, fail);
+        return cast_infestation(powc, fail);
 
     case SPELL_FOXFIRE:
         return cast_foxfire(you, powc, fail);
@@ -2323,20 +2352,38 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
         return cast_vile_clutch(powc, beam, fail);
 
     case SPELL_PUTREFACTION:
-        return cast_putrefaction(monster_at(target), powc, fail);
+        return cast_putrefaction(&you, powc, fail);
 
     // Our few remaining self-enchantments.
     case SPELL_SWIFTNESS:
         return cast_swiftness(powc, fail);
 
+    case SPELL_DEFLECT_MISSILES:
+        return deflection(powc, fail);
+
     case SPELL_OZOCUBUS_ARMOUR:
         return ice_armour(powc, fail);
+
+    case SPELL_HASTE:
+        return haste_spell(powc, fail);
+
+    case SPELL_PIERCING_SHOT:
+        return cast_piercing_shot(powc, fail);
+
+    case SPELL_SCRYING:
+        return scrying(powc, fail);
+
+    case SPELL_CONDENSATION_SHIELD:
+        return cast_condensation_shield(powc, fail);
+
+    case SPELL_PHASE_SHIFT:
+        return cast_phase_shift(powc, fail);
 
     case SPELL_SILENCE:
         return cast_silence(powc, fail);
 
-    case SPELL_FUGUE_OF_THE_FALLEN:
-        return cast_fugue_of_the_fallen(powc, fail);
+    case SPELL_SONG_OF_SLAYING:
+        return cast_song_of_slaying(powc, fail);
 
     case SPELL_DIMENSIONAL_BULLSEYE:
         return cast_dimensional_bullseye(powc, monster_at(target), fail);
@@ -2358,8 +2405,14 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     case SPELL_BLINK:
         return cast_blink(powc, fail);
 
+    case SPELL_CONTROLLED_BLINK:
+        return cast_controlled_blink();
+
     case SPELL_BLASTMOTE:
         return kindle_blastmotes(powc, fail);
+
+    case SPELL_TOMB_OF_DOROKLOHE:
+        return cast_tomb(powc, &you, you.mindex(), fail);
 
     case SPELL_PASSWALL:
         return cast_passwall(beam.target, powc, fail);
@@ -2374,7 +2427,7 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
         return cast_manifold_assault(you, powc, fail);
 
     case SPELL_GOLUBRIAS_PASSAGE:
-        return cast_golubrias_passage(powc, beam.target, fail);
+        return cast_golubrias_passage(powc, fail);
 
     case SPELL_FULMINANT_PRISM:
         return cast_fulminating_prism(&you, powc, beam.target, fail);
@@ -2415,6 +2468,12 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     case SPELL_MAXWELLS_COUPLING:
         return cast_maxwells_coupling(powc, fail);
 
+    case SPELL_BLOOD_EXPLOSION:
+        return cast_blood_explosion(powc, fail);
+
+    case SPELL_PLANAR_SLEETSTORM:
+        return cast_sleetstorm(powc, fail);
+
     case SPELL_ISKENDERUNS_MYSTIC_BLAST:
         return cast_imb(powc, fail);
 
@@ -2432,6 +2491,12 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
 
     case SPELL_PILEDRIVER:
         return cast_piledriver(beam.target, powc, fail);
+
+    case SPELL_STEAM_BURST:
+        return cast_steam_burst(powc, fail);
+
+    case SPELL_ARCANE_NOVA:
+        return cast_arcane_nova(powc, fail);
 
     // Just to do extra messaging; spell is handled by default zapping
     case SPELL_COMBUSTION_BREATH:
@@ -2555,16 +2620,22 @@ static dice_def _spell_damage(spell_type spell, int power)
     {
         case SPELL_FULMINANT_PRISM:
             return prism_damage(prism_hd(power, false), true);
+        case SPELL_WINTERS_EMBRACE:
+            return winter_damage(power);
         case SPELL_CONJURE_BALL_LIGHTNING:
-            return ball_lightning_damage(ball_lightning_hd(power, false), false);
+            return ball_lightning_damage(ball_lightning_hd(power, false));
         case SPELL_IOOD:
             return iood_damage(power, INFINITE_DISTANCE, false);
         case SPELL_IRRADIATE:
             return irradiate_damage(power, false);
+        case SPELL_WARP_GRAVITY:
+            return gravity_damage(power, false);
         case SPELL_SHATTER:
             return shatter_damage(power);
         case SPELL_SCORCH:
-            return scorch_damage(power, false);
+            return scorch_damage(power);
+        case SPELL_PHASE_KNIFE:
+            return phase_knife_damage(power);
         case SPELL_BATTLESPHERE:
             return battlesphere_damage_from_power(power);
         case SPELL_FROZEN_RAMPARTS:
@@ -2579,6 +2650,10 @@ static dice_def _spell_damage(spell_type spell, int power)
             return toxic_bog_damage();
         case SPELL_BOULDER:
             return boulder_damage(power, false);
+        case SPELL_BLOOD_EXPLOSION:
+            return blood_explosion_damage(power);
+        case SPELL_PLANAR_SLEETSTORM:
+            return sleetstorm_damage(power);
         case SPELL_THUNDERBOLT:
             return thunderbolt_damage(power, 1);
         case SPELL_HELLFIRE_MORTAR:
@@ -2610,6 +2685,7 @@ string spell_max_damage_string(spell_type spell)
     {
     case SPELL_MAXWELLS_COUPLING:
     case SPELL_FREEZING_CLOUD:
+    case SPELL_STEAM_BURST:
         // These have damage strings, but don't scale with power.
         return "";
     case SPELL_FORTRESS_BLAST:
@@ -2639,8 +2715,15 @@ string spell_damage_string(spell_type spell, bool evoked, int pow, bool terse)
     {
         case SPELL_MAXWELLS_COUPLING:
             return Options.char_set == CSET_ASCII ? "death" : "\u221e"; //"∞"
+        case SPELL_THUNDERBOLT_HD:
+        {
+            const int max = 50 + 10 * pow;
+            return make_stringf("50-%d", max);
+        }
         case SPELL_FREEZING_CLOUD:
             return desc_cloud_damage(CLOUD_COLD, false);
+        case SPELL_STEAM_BURST:
+            return desc_cloud_damage(CLOUD_STEAM, false);
         case SPELL_DISCHARGE:
         {
             const int max = discharge_max_damage(pow);

@@ -50,9 +50,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_FIREBALL, "Fireball",
-    spschool::enchantments | spschool::fire,
-    spflag::dir_or_target | spflag::needs_tracer,
-    5,
+    spschool::fire,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::destructive,
+    1,
     200,
     5, 5,
     0,
@@ -74,8 +74,8 @@ static const struct spell_desc spelldata[] =
     SPELL_BLASTMOTE, "Volatile Blastmotes",
     spschool::fire | spschool::translocation,
     spflag::destructive,
-    3,
-    50,
+    2,
+    100,
     -1, -1,
     0,
     TILEG_BLASTMOTE,
@@ -86,7 +86,7 @@ static const struct spell_desc spelldata[] =
     spschool::earth,
     spflag::dir_or_target | spflag::not_self | spflag::aim_at_space
         | spflag::utility,
-    4,
+    6,
     200,
     LOS_RADIUS, LOS_RADIUS,
     4,
@@ -141,7 +141,7 @@ static const struct spell_desc spelldata[] =
     SPELL_PLASMA_BEAM, "Plasma Beam",
     spschool::fire | spschool::air,
     spflag::noisy | spflag::destructive,
-    6,
+    4,
     200,
     LOS_RADIUS, LOS_RADIUS,
     20,
@@ -152,7 +152,7 @@ static const struct spell_desc spelldata[] =
     SPELL_PERMAFROST_ERUPTION, "Permafrost Eruption",
     spschool::ice | spschool::earth,
     spflag::destructive,
-    6,
+    3,
     200,
     6, 6, // reduce cases of hitting something outside LOS
     0,
@@ -176,7 +176,7 @@ static const struct spell_desc spelldata[] =
     spschool::air | spschool::translocation,
     spflag::noisy | spflag::dir_or_target, // hack - should have spflag::needs_tracer
                    // and maybe spflag::hasty?
-    4,
+    1,
     50,
     4, 4,
     0,
@@ -230,10 +230,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_HASTE, "Haste",
-    spschool::hexes,
-    spflag::helpful | spflag::hasty | spflag::selfench | spflag::utility
-                    | spflag::monster,
-    6,
+    spschool::enchantments,
+    spflag::helpful | spflag::hasty | spflag::selfench | spflag::utility,
+    9,
     200,
     -1, -1,
     0,
@@ -241,10 +240,32 @@ static const struct spell_desc spelldata[] =
 },
 
 {
+    SPELL_PIERCING_SHOT, "Piercing Shots",
+    spschool::enchantments,
+    spflag::utility,
+    5,
+    200,
+    -1, -1,
+    0,
+    TILEG_PIERCING_SHOT,
+},
+
+{
+    SPELL_SCRYING, "Scrying",
+    spschool::enchantments,
+    spflag::no_ghost,
+    7,
+    100,
+    -1, -1,
+    0,
+    TILEG_SCRYING,
+},
+
+{
     SPELL_PETRIFY, "Petrify",
     spschool::earth,
     spflag::dir_or_target | spflag::needs_tracer | spflag::WL_check,
-    4,
+    2,
     200,
     6, 6,
     0,
@@ -309,24 +330,24 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_FREEZING_CLOUD, "Freezing Cloud",
-    spschool::enchantments | spschool::ice | spschool::air,
+    spschool::ice | spschool::air,
     spflag::target | spflag::area | spflag::needs_tracer
-        | spflag::cloud,
-    5,
+        | spflag::cloud | spflag::destructive,
+    3,
     200,
     5, 5,
-    2,
+    0,
     TILEG_FREEZING_CLOUD,
 },
 
 {
     SPELL_MEPHITIC_CLOUD, "Mephitic Cloud",
-    spschool::enchantments | spschool::air,
+    spschool::hexes | spschool::air,
     spflag::dir_or_target | spflag::area
         | spflag::needs_tracer | spflag::cloud,
-    3,
-    100,
-    4, 4,
+    1,
+    25,
+    3, 3,
     0,
     TILEG_MEPHITIC_CLOUD,
 },
@@ -366,9 +387,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_DEATHS_DOOR, "Death's Door",
-    spschool::necromancy,
+    spschool::necromancy | spschool::enchantments,
     spflag::utility | spflag::no_ghost,
-    9,
+    5,
     200,
     -1, -1,
     0,
@@ -445,13 +466,24 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_POLAR_VORTEX, "Polar Vortex",
-    spschool::ice,
+    spschool::ice | spschool::air,
     spflag::area | spflag::destructive,
-    9,
+    8,
     200,
     POLAR_VORTEX_RADIUS, POLAR_VORTEX_RADIUS,
     0,
     TILEG_POLAR_VORTEX,
+},
+
+{
+    SPELL_PLANAR_SLEETSTORM, "Planar Sleetstorm",
+    spschool::ice | spschool::translocation,
+    spflag::area | spflag::destructive,
+    5,
+    200,
+    LOS_RADIUS, LOS_RADIUS,
+    0,
+    TILEG_PLANAR_SLEETSTORM,
 },
 
 {
@@ -468,9 +500,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_FIRE_STORM, "Fire Storm",
-    spschool::enchantments | spschool::fire,
+    spschool::fire | spschool::air,
     spflag::target | spflag::area | spflag::needs_tracer,
-    9,
+    7,
     200,
     5, 5,
     0,
@@ -504,11 +536,34 @@ static const struct spell_desc spelldata[] =
     SPELL_BLINK, "Blink",
     spschool::translocation,
     spflag::escape | spflag::selfench | spflag::utility,
-    2,
-    50,
+    3,
+    0,
     -1, -1,
     0,
     TILEG_BLINK,
+},
+
+{
+    SPELL_CONTROLLED_BLINK, "Controlled Blink",
+    spschool::translocation,
+    spflag::escape | spflag::selfench | spflag::utility,
+    9,
+    0,
+    -1, -1,
+    0,
+    TILEG_CONTROLLED_BLINK,
+},
+
+{
+    SPELL_PHASE_SHIFT, "Phase Shift",
+    spschool::translocation | spschool::enchantments,
+    spflag::helpful | spflag::utility,
+    3,
+    200,
+    -1, -1,
+    0,
+
+    TILEG_PHASE_SHIFT,
 },
 
 {
@@ -560,8 +615,19 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_HORRIBLE_THINGS, "Summon Horrible Things",
     spschool::summoning,
-    spflag::unholy | spflag::chaotic | spflag::mons_abjure,
+    spflag::unholy | spflag::chaotic | spflag::mons_abjure | spflag::monster,
     8,
+    200,
+    -1, -1,
+    0,
+    TILEG_SUMMON_HORRIBLE_THINGS,
+},
+
+{
+    SPELL_ELDRITCH_ICHOR, "Eldritch Ichor",
+    spschool::summoning,
+    spflag::unholy | spflag::chaotic,
+    9,
     200,
     -1, -1,
     0,
@@ -572,7 +638,7 @@ static const struct spell_desc spelldata[] =
     SPELL_MALIGN_GATEWAY, "Malign Gateway",
     spschool::summoning | spschool::translocation,
     spflag::unholy | spflag::chaotic,
-    7,
+    5,
     200,
     -1, -1,
     15,
@@ -593,10 +659,10 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_ANIMATE_DEAD, "Animate Dead",
-    spschool::necromancy,
+    spschool::necromancy | spschool::enchantments,
     spflag::helpful | spflag::utility
         | spflag::no_ghost,
-    4,
+    1,
     100,
     -1, -1,
     0,
@@ -631,7 +697,7 @@ static const struct spell_desc spelldata[] =
     SPELL_VAMPIRIC_DRAINING, "Vampiric Draining",
     spschool::necromancy,
     spflag::dir_or_target | spflag::not_self,
-    3,
+    4,
     100,
     1, 1,
     0,
@@ -641,10 +707,21 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_HAUNT, "Haunt",
     spschool::summoning | spschool::necromancy,
-    spflag::target | spflag::not_self | spflag::mons_abjure,
+    spflag::target | spflag::not_self | spflag::mons_abjure | spflag::monster,
     7,
     200,
     LOS_RADIUS, LOS_RADIUS,
+    0,
+    TILEG_HAUNT,
+},
+
+{
+    SPELL_GHOSTLY_LEGION, "Ghostly Legion",
+    spschool::summoning | spschool::necromancy,
+    spflag::none,
+    4,
+    200,
+    -1, -1,
     0,
     TILEG_HAUNT,
 },
@@ -685,7 +762,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_OZOCUBUS_REFRIGERATION, "Ozocubu's Refrigeration",
     spschool::ice,
-    spflag::area | spflag::destructive,
+    spflag::area,
     7,
     200,
     -1, -1,
@@ -707,7 +784,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_ICE_BEAST, "Summon Ice Beast",
     spschool::ice | spschool::summoning,
-    spflag::none,
+    spflag::monster,
     3,
     100,
     -1, -1,
@@ -717,9 +794,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_OZOCUBUS_ARMOUR, "Ozocubu's Armour",
-    spschool::ice,
+    spschool::ice | spschool::enchantments,
     spflag::no_ghost,
-    3,
+    1,
     100,
     -1, -1,
     0,
@@ -730,7 +807,7 @@ static const struct spell_desc spelldata[] =
     SPELL_CALL_IMP, "Call Imp",
     spschool::summoning,
     spflag::unholy,
-    2,
+    1,
     50,
     -1, -1,
     0,
@@ -888,12 +965,12 @@ static const struct spell_desc spelldata[] =
 },
 
 {
-    SPELL_PUTREFACTION, "Cigotuvi's Putrefaction",
+    SPELL_PUTREFACTION, "Cigotuvi's Creeping Rot",
     spschool::necromancy | spschool::air,
-    spflag::target | spflag::unclean,
-    4,
+    spflag::unclean,
+    1,
     100,
-    5, 5,
+    -1, -1,
     0,
     TILEG_CORPSE_ROT,
 },
@@ -934,7 +1011,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SHOCK, "Shock",
     spschool::enchantments | spschool::air,
-    spflag::dir_or_target | spflag::needs_tracer,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::destructive,
     1,
     25,
     LOS_RADIUS, LOS_RADIUS,
@@ -944,13 +1021,24 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_SWIFTNESS, "Swiftness",
-    spschool::air,
+    spschool::air | spschool::enchantments,
     spflag::hasty | spflag::selfench | spflag::utility,
-    3,
+    2,
     100,
     -1, -1,
     0,
     TILEG_SWIFTNESS,
+},
+
+{
+    SPELL_DEFLECT_MISSILES, "Deflect Missiles",
+    spschool::air | spschool::enchantments,
+    spflag::selfench | spflag::utility,
+    3,
+    100,
+    -1, -1,
+    0,
+    TILEG_DEFLECT_MISSILES,
 },
 
 {
@@ -968,8 +1056,8 @@ static const struct spell_desc spelldata[] =
     SPELL_AGONISING_TOUCH, "Agonising Touch",
     spschool::necromancy,
     spflag::dir_or_target | spflag::not_self | spflag::needs_tracer
-        | spflag::WL_check | spflag::monster,
-    5,
+        | spflag::WL_check,
+    1,
     200,
     1, 1,
     0,
@@ -1002,9 +1090,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_DEATH_CHANNEL, "Death Channel",
-    spschool::necromancy,
+    spschool::necromancy | spschool::enchantments,
     spflag::helpful | spflag::utility | spflag::selfench,
-    6,
+    3,
     200,
     -1, -1,
     0,
@@ -1082,7 +1170,7 @@ static const struct spell_desc spelldata[] =
     SPELL_CONFUSING_TOUCH, "Confusing Touch",
     spschool::hexes,
     spflag::selfench | spflag::WL_check, // Show success in the static targeter
-    3,
+    1,
     100,
     -1, -1,
     0,
@@ -1104,7 +1192,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_IGNITE_POISON, "Ignite Poison",
     spschool::fire,
-    spflag::area | spflag::destructive,
+    spflag::area,
     4,
     100,
     -1, -1,
@@ -1139,7 +1227,7 @@ static const struct spell_desc spelldata[] =
     spschool::hexes | spschool::ice,
     spflag::dir_or_target | spflag::not_self | spflag::needs_tracer
         | spflag::WL_check | spflag::silent,
-    2,
+    1,
     50,
     LOS_RADIUS, LOS_RADIUS,
     0,
@@ -1150,7 +1238,7 @@ static const struct spell_desc spelldata[] =
     SPELL_ENGLACIATION, "Metabolic Englaciation",
     spschool::hexes | spschool::ice,
     spflag::area,
-    5,
+    3,
     200,
     -1, -1,
     0,
@@ -1161,7 +1249,7 @@ static const struct spell_desc spelldata[] =
     SPELL_SILENCE, "Silence",
     spschool::hexes | spschool::air,
     spflag::area | spflag::silent, // of course!
-    5,
+    2,
     200,
     -1, -1,
     0,
@@ -1185,7 +1273,7 @@ static const struct spell_desc spelldata[] =
     spflag::area | spflag::escape,
     6,
     200,
-    1, 4,
+    4, 4,
     0,
     TILEG_DISPERSAL,
 },
@@ -1193,7 +1281,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DISCHARGE, "Static Discharge",
     spschool::enchantments | spschool::air,
-    spflag::area,
+    spflag::area | spflag::destructive,
     2,
     50,
     1, 1,
@@ -1217,8 +1305,8 @@ static const struct spell_desc spelldata[] =
     SPELL_INTOXICATE, "Alistair's Intoxication",
     spschool::hexes,
     spflag::none,
-    5,
-    150,
+    7,
+    20,
     -1, -1,
     0,
     TILEG_ALISTAIRS_INTOXICATION,
@@ -1228,7 +1316,7 @@ static const struct spell_desc spelldata[] =
     SPELL_LRD, "Lee's Rapid Deconstruction",
     spschool::earth,
     spflag::target | spflag::destructive,
-    5,
+    3,
     200,
     LOS_RADIUS, LOS_RADIUS,
     0,
@@ -1249,10 +1337,10 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_SIMULACRUM, "Sculpt Simulacrum",
-    spschool::ice,
+    spschool::ice | spschool::necromancy,
     spflag::dir_or_target | spflag::not_self | spflag::needs_tracer
         | spflag::unholy,
-    6,
+    2,
     200,
     1, 1,
     0,
@@ -1261,8 +1349,8 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_CONJURE_BALL_LIGHTNING, "Conjure Ball Lightning",
-    spschool::air | spschool::enchantments,
-    spflag::none,
+    spschool::air,
+    spflag::none | spflag::destructive,
     6,
     200,
     -1, -1,
@@ -1272,7 +1360,7 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_CHAIN_LIGHTNING, "Chain Lightning",
-    spschool::air | spschool::enchantments,
+    spschool::air,
     spflag::area,
     9,
     200,
@@ -1306,11 +1394,11 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_GOLUBRIAS_PASSAGE, "Passage of Golubria",
     spschool::translocation,
-    spflag::target | spflag::aim_at_space | spflag::escape | spflag::selfench,
+    spflag::escape | spflag::selfench,
     4,
     100,
-    2, LOS_RADIUS,
-    8, // when it closes
+    -1, -1,
+    0,
     TILEG_PASSAGE_OF_GOLUBRIA,
 },
 
@@ -1819,8 +1907,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_IOOD, "Orb of Destruction",
-    spschool::enchantments,
-    spflag::dir_or_target | spflag::not_self | spflag::needs_tracer,
+    spschool::earth,
+    spflag::dir_or_target | spflag::not_self | spflag::needs_tracer
+        | spflag::destructive,
     7,
     200,
     8, 8,
@@ -2057,7 +2146,7 @@ static const struct spell_desc spelldata[] =
     SPELL_INNER_FLAME, "Inner Flame",
     spschool::hexes | spschool::fire,
     spflag::target | spflag::not_self | spflag::WL_check | spflag::destructive,
-    3,
+    1,
     100,
     LOS_RADIUS, LOS_RADIUS,
     0,
@@ -2166,7 +2255,7 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_FORCE_LANCE, "Force Lance",
-    spschool::enchantments | spschool::translocation,
+    spschool::translocation,
     spflag::dir_or_target | spflag::needs_tracer | spflag::monster,
     4,
     100,
@@ -2335,14 +2424,14 @@ static const struct spell_desc spelldata[] =
 },
 
 {
-    SPELL_FUGUE_OF_THE_FALLEN, "Fugue of the Fallen",
-    spschool::necromancy,
+    SPELL_SONG_OF_SLAYING, "Song of Slaying",
+    spschool::enchantments,
     spflag::selfench,
-    3,
+    1,
     100,
     -1, -1,
     8,
-    TILEG_FUGUE_OF_THE_FALLEN,
+    TILEG_SONG_OF_SLAYING,
 },
 
 {
@@ -2549,9 +2638,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_SUMMON_FOREST, "Summon Forest",
-    spschool::summoning | spschool::translocation,
+    spschool::summoning | spschool::translocation | spschool::earth,
     spflag::none,
-    5,
+    2,
     200,
     -1, -1,
     10,
@@ -2560,9 +2649,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_FORGE_LIGHTNING_SPIRE, "Forge Lightning Spire",
-    spschool::air,
+    spschool::summoning | spschool::air,
     spflag::none,
-    4,
+    2,
     100,
     -1, -1,
     0,
@@ -2571,9 +2660,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_FORGE_BLAZEHEART_GOLEM, "Forge Blazeheart Golem",
-    spschool::fire,
+    spschool::summoning | spschool::fire,
     spflag::none,
-    4,
+    3,
     100,
     -1, -1,
     0,
@@ -2616,9 +2705,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_DRAGON_CALL, "Dragon's Call",
-    spschool::summoning,
+    spschool::summoning | spschool::fire,
     spflag::none,
-    9,
+    7,
     200,
     -1, -1,
     15,
@@ -2629,7 +2718,7 @@ static const struct spell_desc spelldata[] =
     SPELL_SPELLSPARK_SERVITOR, "Spellspark Servitor",
     spschool::enchantments,
     spflag::none,
-    7,
+    4,
     200,
     -1, -1,
     0,
@@ -2639,12 +2728,23 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_MANA_VIPER, "Summon Mana Viper",
     spschool::summoning | spschool::hexes,
-    spflag::mons_abjure,
-    5,
+    spflag::none,
+    2,
     100,
     -1, -1,
     0,
     TILEG_SUMMON_MANA_VIPER,
+},
+
+{
+    SPELL_SUMMON_ELEMENTAL, "Summon Elemental",
+    spschool::summoning,
+    spflag::none,
+    4,
+    100,
+    -1, -1,
+    0,
+    TILEG_SUMMON_ELEMENTAL,
 },
 
 {
@@ -2776,9 +2876,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_IRRADIATE, "Irradiate",
-    spschool::enchantments,
+    spschool::fire | spschool::hexes,
     spflag::area | spflag::chaotic,
-    5,
+    4,
     200,
     1, 1,
     0,
@@ -3067,9 +3167,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_VIOLENT_UNRAVELLING, "Yara's Violent Unravelling",
-    spschool::hexes,
+    spschool::hexes | spschool::fire,
     spflag::target | spflag::no_ghost | spflag::chaotic | spflag::destructive,
-    5,
+    3,
     200,
     LOS_RADIUS, LOS_RADIUS,
     0,
@@ -3177,11 +3277,11 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_INFESTATION, "Infestation",
-    spschool::necromancy,
-    spflag::target | spflag::unclean,
-    8,
+    spschool::necromancy | spschool::hexes | spschool::summoning,
+    spflag::none,
+    3,
     200,
-    LOS_RADIUS, LOS_RADIUS,
+    -1, -1,
     4,
     TILEG_INFESTATION,
 },
@@ -3232,11 +3332,11 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_BECKONING, "Lesser Beckoning",
-    spschool::translocation,
+    spschool::translocation | spschool::hexes,
     spflag::dir_or_target | spflag::not_self | spflag::needs_tracer,
     2,
     50,
-    3, 5,
+    4, 4,
     0,
     TILEG_BECKONING,
 },
@@ -3290,7 +3390,7 @@ static const struct spell_desc spelldata[] =
     SPELL_BORGNJORS_VILE_CLUTCH, "Borgnjor's Vile Clutch",
     spschool::necromancy | spschool::earth,
     spflag::dir_or_target | spflag::not_self | spflag::needs_tracer,
-    5,
+    3,
     200,
     6, 6,
     5,
@@ -3388,7 +3488,7 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_STARBURST, "Starburst",
-    spschool::enchantments | spschool::fire,
+    spschool::fire,
     spflag::area,
     6,
     200,
@@ -3398,11 +3498,22 @@ static const struct spell_desc spelldata[] =
 },
 
 {
+    SPELL_ARCANE_NOVA, "Arcane Nova",
+    spschool::fire,
+    spflag::area | spflag::destructive,
+    6,
+    200,
+    -1, -1,
+    0,
+    TILEG_STARBURST,
+},
+
+{
     SPELL_FOXFIRE, "Foxfire",
-    spschool::enchantments | spschool::fire,
-    spflag::none,
+    spschool::summoning | spschool::fire,
+    spflag::destructive,
     1,
-    25,
+    200,
     -1, -1,
     0,
     TILEG_FOXFIRE,
@@ -3422,7 +3533,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_HAILSTORM, "Hailstorm",
     spschool::enchantments | spschool::ice,
-    spflag::area,
+    spflag::area | spflag::destructive,
     3,
     100,
     3, 3, // Range special-cased in describe-spells
@@ -3432,9 +3543,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_NOXIOUS_BOG, "Eringya's Noxious Bog",
-    spschool::hexes,
+    spschool::hexes | spschool::earth,
     spflag::area | spflag::no_ghost | spflag::destructive,
-    6,
+    3,
     200,
     4, 4,
     0,
@@ -3468,9 +3579,9 @@ static const struct spell_desc spelldata[] =
     SPELL_FROZEN_RAMPARTS, "Frozen Ramparts",
     spschool::ice,
     spflag::area | spflag::no_ghost | spflag::destructive,
-    3,
-    50,
-    2, 2,
+    5,
+    100,
+    5, 5,
     8,
     TILEG_FROZEN_RAMPARTS,
 },
@@ -3479,7 +3590,7 @@ static const struct spell_desc spelldata[] =
     SPELL_MAXWELLS_COUPLING, "Maxwell's Capacitive Coupling",
     spschool::air,
     spflag::no_ghost | spflag::destructive,
-    8,
+    9,
     200,
     LOS_RADIUS, LOS_RADIUS,
     25,
@@ -3543,10 +3654,10 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_AWAKEN_ARMOUR, "Awaken Armour",
-    spschool::earth,
+    spschool::summoning | spschool::earth,
     spflag::none,
-    4,
-    50,
+    1,
+    100,
     -1, -1,
     0,
     TILEG_AWAKEN_ARMOUR,
@@ -3556,7 +3667,7 @@ static const struct spell_desc spelldata[] =
     SPELL_MANIFOLD_ASSAULT, "Manifold Assault",
     spschool::translocation,
     spflag::none,
-    7,
+    3,
     200,
     -1, -1,
     0,
@@ -3668,20 +3779,31 @@ static const struct spell_desc spelldata[] =
     spschool::fire,
     spflag::destructive,
     2,
-    50,
+    200,
     3, 3,
-    8,
+    0,
     TILEG_SCORCH,
 },
 
 {
+    SPELL_PHASE_KNIFE, "Phase Knife",
+    spschool::translocation,
+    spflag::none,
+    1,
+    100,
+    1, 1,
+    0,
+    TILEG_PHASE_KNIFE,
+},
+
+{
     SPELL_FLAME_WAVE, "Flame Wave",
-    spschool::enchantments | spschool::fire,
-    spflag::area,
+    spschool::fire,
+    spflag::area | spflag::destructive,
     4,
     100,
-    3, 3, // sort of...
-    12, // increases as it's channeled
+    5, 5, // sort of...
+    6, // increases as it's channeled
     TILEG_FLAME_WAVE,
 },
 
@@ -3689,7 +3811,7 @@ static const struct spell_desc spelldata[] =
     SPELL_ENFEEBLE, "Enfeeble",
     spschool::hexes,
     spflag::dir_or_target | spflag::needs_tracer | spflag::WL_check,
-    7,
+    5,
     200,
     LOS_RADIUS, LOS_RADIUS,
     0,
@@ -3711,7 +3833,7 @@ static const struct spell_desc spelldata[] =
     SPELL_ANGUISH, "Anguish",
     spschool::hexes | spschool::necromancy,
     spflag::area | spflag::WL_check,
-    4,
+    2,
     200,
     LOS_RADIUS, LOS_RADIUS,
     0,
@@ -3753,10 +3875,11 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_KISS_OF_DEATH, "Kiss of Death",
-    spschool::enchantments | spschool::necromancy,
-    spflag::dir_or_target | spflag::needs_tracer | spflag::not_self,
-    1,
-    25,
+    spschool::necromancy,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::not_self
+        | spflag::destructive,
+    3,
+    100,
     1, 1,
     0,
     TILEG_KISS_OF_DEATH,
@@ -3764,9 +3887,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_JINXBITE, "Jinxbite",
-    spschool::hexes,
+    spschool::hexes | spschool::enchantments,
     spflag::selfench,
-    2,
+    1,
     50,
     -1, -1,
     0,
@@ -3788,7 +3911,7 @@ static const struct spell_desc spelldata[] =
     SPELL_DIMENSIONAL_BULLSEYE, "Dimensional Bullseye",
     spschool::translocation | spschool::hexes,
     spflag::target | spflag::not_self | spflag::prefer_farthest,
-    4,
+    2,
     200,
     LOS_RADIUS, LOS_RADIUS,
     0,
@@ -3797,7 +3920,7 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_BOULDER, "Brom's Barrelling Boulder",
-    spschool::earth | spschool::enchantments,
+    spschool::earth,
     spflag::target | spflag::not_self,
     4,
     100,
@@ -3966,7 +4089,7 @@ static const struct spell_desc spelldata[] =
     SPELL_PILEDRIVER, "Maxwell's Portable Piledriver",
     spschool::translocation,
     spflag::target,
-    3,
+    4,
     100,
     5, 5,
     0,
@@ -3977,7 +4100,7 @@ static const struct spell_desc spelldata[] =
     SPELL_GELLS_GAVOTTE, "Gell's Gavotte",
     spschool::translocation,
     spflag::target | spflag::aim_at_space,
-    6,
+    7,
     200,
     1, 1,
     0,
@@ -3998,9 +4121,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_FULSOME_FUSILLADE, "Fulsome Fusillade",
-    spschool::enchantments,
+    spschool::fire | spschool::air | spschool::earth | spschool::ice,
     spflag::area | spflag::destructive | spflag::chaotic,
-    8,
+    4,
     200,
     LOS_RADIUS, LOS_RADIUS,
     0,
@@ -4012,7 +4135,7 @@ static const struct spell_desc spelldata[] =
     spschool::necromancy | spschool::ice,
     spflag::dir_or_target | spflag::unclean | spflag::destructive
     | spflag::not_self,
-    7,
+    4,
     200,
     5, 5,
     0,
@@ -4273,20 +4396,20 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_KINETIC_GRAPNEL, "Kinetic Grapnel",
-    spschool::summoning,
+    spschool::earth,
     spflag::dir_or_target | spflag::needs_tracer | spflag::destructive,
     1,
-    25,
+    100,
     4, 4,
     0,
     TILEG_KINETIC_GRAPNEL,
 },
 
 {
-    SPELL_DIAMOND_SAWBLADES, "Diamond Sawblades",
-    spschool::summoning,
+    SPELL_DIAMOND_SAWBLADES, "Icy Sawblades",
+    spschool::ice,
     spflag::none,
-    7,
+    6,
     200,
     -1, -1,
     0,
@@ -4311,7 +4434,7 @@ static const struct spell_desc spelldata[] =
     SPELL_SURPRISING_CROCODILE, "Eringya's Surprising Crocodile",
     spschool::summoning,
     spflag::target | spflag::not_self,
-    4,
+    5,
     100,
     1, 1,
     0,
@@ -4364,7 +4487,7 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_SPLINTERFROST_SHELL, "Splinterfrost Shell",
-    spschool::summoning | spschool::ice,
+    spschool::ice,
     spflag::target | spflag::not_self,
     7,
     200,
@@ -4398,7 +4521,7 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_FORTRESS_BLAST, "Fortress Blast",
-    spschool::summoning,
+    spschool::earth,
     spflag::area | spflag::destructive,
     6,
     75,
@@ -4488,9 +4611,9 @@ static const struct spell_desc spelldata[] =
 
 {
     SPELL_DETONATION_CATALYST, "Detonation Catalyst",
-    spschool::fire,
+    spschool::enchantments | spschool::fire,
     spflag::selfench,
-    5,
+    3,
     100,
     -1, -1,
     15,
@@ -4630,6 +4753,149 @@ static const struct spell_desc spelldata[] =
 },
 
 {
+    SPELL_STEAM_BURST, "Steam Burst",
+    spschool::ice | spschool::fire | spschool::air,
+    spflag::area | spflag::destructive | spflag::cloud,
+    2,
+    200,
+    -1, -1,
+    0,
+    TILEG_STEAM_BURST,
+},
+
+{
+    SPELL_TOMB_OF_DOROKLOHE, "Tomb of Doroklohe",
+    spschool::earth | spschool::enchantments,
+    spflag::none,
+    5,
+    200,
+    -1, -1,
+    10,
+    TILEG_TOMB_OF_DOROKLOHE,
+},
+
+{
+    SPELL_WARP_GRAVITY, "Warp Gravity",
+    spschool::earth | spschool::translocation,
+    spflag::destructive,
+    3,
+    200,
+    4, 4,
+    0,
+    TILEG_GRAVITAS,
+},
+
+{
+    SPELL_FORCE_QUAKE, "Force Quake",
+    spschool::earth | spschool::translocation,
+    spflag::destructive,
+    1,
+    200,
+    -1, -1,
+    0,
+    TILEG_FORCE_LANCE,
+},
+
+{
+    SPELL_WINTERS_EMBRACE, "Winter's Embrace",
+    spschool::ice | spschool::hexes,
+    spflag::destructive,
+    5,
+    200,
+    3, 3,
+    0,
+    TILEG_OZOCUBUS_REFRIGERATION,
+},
+
+{
+    SPELL_CONDENSATION_SHIELD, "Condensation Shield",
+    spschool::ice | spschool::enchantments,
+    spflag::utility,
+    2,
+    50,
+    -1, -1,
+    0,
+    TILEG_CONDENSATION_SHIELD,
+},
+
+{
+    SPELL_ICE_STATUE, "Ice Statue",
+    spschool::ice | spschool::summoning,
+    spflag::none,
+    2,
+    100,
+    -1, -1,
+    0,
+    TILEG_SUMMON_ICE_BEAST,
+},
+
+{
+    SPELL_BOLT_OF_INACCURACY, "Alistair's Dodgeable Bolt",
+    spschool::air,
+    spflag::destructive,
+    4,
+    100,
+    4, 4,
+    0,
+    TILEG_SHOCK,
+},
+
+{
+    SPELL_THUNDERBOLT_HD, "SUPER THUNDERBOLT HD",
+    spschool::air,
+    spflag::no_ghost | spflag::destructive,
+    8,
+    200,
+    -1, -1,
+    40,
+    TILEG_CHAIN_LIGHTNING,
+},
+
+{
+    SPELL_AMMO_TO_ANACONDAS, "Ammunition to Anacondas",
+    spschool::summoning,
+    spflag::no_ghost,
+    2,
+    100,
+    -1, -1,
+    0,
+    TILEG_STICKS_TO_SNAKES,
+},
+
+{
+    SPELL_FORCEFUL_DISMISSAL, "Forceful Dismissal",
+    spschool::summoning | spschool::translocation,
+    spflag::target | spflag::no_ghost | spflag::destructive,
+    3,
+    200,
+    LOS_RADIUS, LOS_RADIUS,
+    0,
+    TILEG_VIOLENT_UNRAVELLING,
+},
+
+{
+    SPELL_BLOOD_EXPLOSION, "Blood Explosion Spell",
+    spschool::necromancy | spschool::fire,
+    spflag::no_ghost | spflag::destructive,
+    4,
+    200,
+    LOS_RADIUS, LOS_RADIUS,
+    0,
+    TILEG_BLOOD_EXPLOSION,
+},
+
+{
+    SPELL_MAGMA_JET, "Magma Jet",
+    spschool::earth | spschool::fire,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::destructive,
+    4,
+    200,
+    5, 5,
+    0,
+    TILEG_MAGMA_JET,
+},
+
+{
     SPELL_NO_SPELL, "nonexistent spell",
     spschool::none,
     spflag::testing,
@@ -4668,19 +4934,15 @@ static const struct spell_desc spelldata[] =
     { tag, name, spschool::none, spflag::none, 7, 0, -1, -1, 0, TILEG_ERROR },
 
 AXED_SPELL(SPELL_AURA_OF_ABJURATION, "Aura of Abjuration")
-AXED_SPELL(SPELL_BOLT_OF_INACCURACY, "Bolt of Inaccuracy")
 AXED_SPELL(SPELL_CHANT_FIRE_STORM, "Chant Fire Storm")
 AXED_SPELL(SPELL_CIGOTUVIS_DEGENERATION, "Cigotuvi's Degeneration")
 AXED_SPELL(SPELL_CIGOTUVIS_EMBRACE, "Cigotuvi's Embrace")
-AXED_SPELL(SPELL_CONDENSATION_SHIELD, "Condensation Shield")
-AXED_SPELL(SPELL_CONTROLLED_BLINK, "Controlled Blink")
 AXED_SPELL(SPELL_CONTROL_TELEPORT, "Control Teleport")
 AXED_SPELL(SPELL_CONTROL_UNDEAD, "Control Undead")
 AXED_SPELL(SPELL_CONTROL_WINDS, "Control Winds")
 AXED_SPELL(SPELL_CORRUPT_BODY, "Corrupt Body")
 AXED_SPELL(SPELL_CURE_POISON, "Cure Poison")
 AXED_SPELL(SPELL_DARKNESS, "Darkness")
-AXED_SPELL(SPELL_DEFLECT_MISSILES, "Deflect Missiles")
 AXED_SPELL(SPELL_DELAYED_FIREBALL, "Delayed Fireball")
 AXED_SPELL(SPELL_DEMONIC_HORDE, "Demonic Horde")
 AXED_SPELL(SPELL_DRACONIAN_BREATH, "Draconian Breath")
@@ -4690,7 +4952,6 @@ AXED_SPELL(SPELL_EXPLOSIVE_BOLT, "Explosive Bolt")
 AXED_SPELL(SPELL_FAKE_RAKSHASA_SUMMON, "Rakshasa Summon")
 AXED_SPELL(SPELL_FIRE_BRAND, "Fire Brand")
 AXED_SPELL(SPELL_FLY, "Flight")
-AXED_SPELL(SPELL_FORCEFUL_DISMISSAL, "Forceful Dismissal")
 AXED_SPELL(SPELL_FREEZING_AURA, "Freezing Aura")
 AXED_SPELL(SPELL_FRENZY, "Frenzy")
 AXED_SPELL(SPELL_FULSOME_DISTILLATION, "Fulsome Distillation")
@@ -4705,7 +4966,6 @@ AXED_SPELL(SPELL_IRON_ELEMENTALS, "Summon Iron Elementals")
 AXED_SPELL(SPELL_LETHAL_INFUSION, "Lethal Infusion")
 AXED_SPELL(SPELL_MELEE, "Melee")
 AXED_SPELL(SPELL_MISLEAD, "Mislead")
-AXED_SPELL(SPELL_PHASE_SHIFT, "Phase Shift")
 AXED_SPELL(SPELL_POISON_WEAPON, "Poison Weapon")
 AXED_SPELL(SPELL_RANDOM_BOLT, "Random Bolt")
 AXED_SPELL(SPELL_REARRANGE_PIECES, "Rearrange the Pieces")
@@ -4721,7 +4981,6 @@ AXED_SPELL(SPELL_SONG_OF_SHIELDING, "Song of Shielding")
 AXED_SPELL(SPELL_SPECTRAL_WEAPON, "Spectral Weapon")
 AXED_SPELL(SPELL_STONESKIN, "Stoneskin")
 AXED_SPELL(SPELL_SUMMON_BUTTERFLIES, "Summon Butterflies")
-AXED_SPELL(SPELL_SUMMON_ELEMENTAL, "Summon Elemental")
 AXED_SPELL(SPELL_SUMMON_RAKSHASA, "Summon Rakshasa")
 AXED_SPELL(SPELL_SUMMON_TWISTER, "Summon Twister")
 AXED_SPELL(SPELL_SUNRAY, "Sunray")
@@ -4750,7 +5009,6 @@ AXED_SPELL(SPELL_HYDRA_FORM, "Hydra Form")
 AXED_SPELL(SPELL_VORTEX, "Vortex")
 AXED_SPELL(SPELL_GOAD_BEASTS, "Goad Beasts")
 AXED_SPELL(SPELL_TELEPORT_SELF, "Teleport Self")
-AXED_SPELL(SPELL_TOMB_OF_DOROKLOHE, "Tomb of Doroklohe")
 AXED_SPELL(SPELL_EXCRUCIATING_WOUNDS, "Excruciating Wounds")
 AXED_SPELL(SPELL_CONJURE_FLAME, "Conjure Flame")
 AXED_SPELL(SPELL_CORPSE_ROT, "Corpse Rot")

@@ -350,17 +350,6 @@ int get_mons_resist(const monster& mon, mon_resist_flags res)
     return get_resist(get_mons_resists(mon), res);
 }
 
-// Returns true if the monster successfully resists this attempt to poison it.
-bool monster_resists_this_poison(const monster& mons, bool force)
-{
-    const int res = mons.res_poison();
-    if (res >= 3)
-        return true;
-    if (!force && res >= 1 && x_chance_in_y(2, 3))
-        return true;
-    return false;
-}
-
 monster* monster_at(const coord_def &pos)
 {
     if (!in_bounds(pos))
@@ -1063,9 +1052,9 @@ int derived_undead_avg_hp(monster_type mtype, int hd, int scale)
 {
     static const map<monster_type, int> hp_per_hd_by_type = {
         { MONS_BOUND_SOUL,     100 },
-        { MONS_ZOMBIE,          85 },
-        { MONS_SPECTRAL_THING,  60 },
-        { MONS_DRAUGR,          55 },
+        { MONS_ZOMBIE,          20 },
+        { MONS_SPECTRAL_THING,  50 },
+        { MONS_DRAUGR,          10 },
         // Simulacra aren't tough, but you can create piles of them. - bwr
         { MONS_SIMULACRUM,      30 },
     };
@@ -5599,4 +5588,15 @@ int mons_leash_range(monster_type mc)
 bool mons_is_glowing(monster_type type)
 {
     return type == MONS_GLOW_WORM || type == MONS_GLOWING_IMP;
+}
+
+bool mons_is_boltable(const monster& targ)
+{
+    // never bolt an ally
+    if (targ.friendly())
+           return false;
+
+    return targ.alive()
+        && !targ.is_peripheral()
+        && mons_class_is_threatening(targ.type);
 }

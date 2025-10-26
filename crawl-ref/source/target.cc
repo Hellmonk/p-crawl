@@ -1244,6 +1244,26 @@ aff_type targeter_radius::is_affected(coord_def loc)
     return AFF_YES;
 }
 
+targeter_sleetstorm::targeter_sleetstorm(int _range)
+    : targeter_radius(&you, LOS_NO_TRANS, _range, 0, 1)
+{ }
+
+aff_type targeter_sleetstorm::is_affected(coord_def loc)
+{
+    const aff_type base_aff = targeter_radius::is_affected(loc);
+    if (base_aff == AFF_NO)
+        return AFF_NO;
+
+    monster* mons = monster_at(loc);
+
+    if (mons && ! never_harm_monster(&you, mons) && feat_is_water(env.grid(loc)))
+        return AFF_YES;
+    else if (!feat_is_water(env.grid(loc)))
+        return AFF_MAYBE;
+
+    return AFF_NO;
+}
+
 targeter_flame_wave::targeter_flame_wave(int _range)
     : targeter_radius(&you, LOS_NO_TRANS, _range, 0, 1)
 { }
@@ -1876,6 +1896,14 @@ targeter_ignite_poison::targeter_ignite_poison(actor *a)
 {
     for (radius_iterator ri(a->pos(), LOS_SOLID_SEE); ri; ++ri)
         if (ignite_poison_affects_cell(*ri, a))
+            affected_positions.insert(*ri);
+}
+
+targeter_rot::targeter_rot(actor *a)
+    : targeter_multiposition(a, { })
+{
+    for (radius_iterator ri(a->pos(), LOS_SOLID_SEE); ri; ++ri)
+        if (rot_affects_cell(*ri, a))
             affected_positions.insert(*ri);
 }
 
@@ -2839,4 +2867,67 @@ bool targeter_paragon_deploy::valid_aim(coord_def a)
         return notify_fail("Your paragon could not survive being deployed there.");
 
     return true;
+}
+
+targeter_dismissal::targeter_dismissal()
+    : targeter_smite(&you, LOS_RADIUS, 2, 2)
+{
+}
+
+static bool _dismissal_works_at(const coord_def c)
+{
+    const monster *mons = monster_at(c);
+    return mons && mons->is_summoned();
+}
+
+bool targeter_dismissal::valid_aim(coord_def a)
+{
+    if (!targeter_smite::valid_aim(a))
+        return false;
+
+    const monster* mons = monster_at(a);
+    if (mons && !_dismissal_works_at(a))
+        return notify_fail(mons->name(DESC_THE) + " is not a summoned creature.");
+
+    if (mons && _dismissal_works_at(a) && never_harm_monster(&you, mons, false))
+    {
+        return notify_fail(mons->name(DESC_THE) + " is protected by " +
+                           god_name(you.religion) + ".");
+    }
+
+    return true;
+}
+
+bool targeter_dismissal::set_aim(coord_def a)
+{
+    if (!targeter::set_aim(a))
+        return false;
+
+    if (_dismissal_works_at(a))
+    {
+        exp_range_min = 2;
+        exp_range_max = 2;
+    }
+    else
+    {
+        exp_range_min = exp_range_max = 0;
+        return false;
+    }
+
+    bolt beam;
+    beam.target = a;
+    beam.use_target_as_pos = true;
+    exp_map_min.init(INT_MAX);
+    beam.determine_affected_cells(exp_map_min, coord_def(), 0,
+                                  exp_range_min, true, true);
+    exp_map_max = exp_map_min;
+
+    return true;
+}
+
+targeter_blood_explosion::targeter_blood_explosion()
+    : targeter_multiposition(&you, find_blood_explosion_possibles())
+{
+    if (affected_positions.size() == 1)
+        positive = AFF_YES;
 }

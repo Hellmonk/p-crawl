@@ -39,11 +39,12 @@
 #include "unique-creature-list-type.h"
 #include "unique-item-status-type.h"
 
+#define CONDENSATION_SHIELD_KEY "condensation_shield_pow"
 #define ICY_ARMOUR_KEY "ozocubu's_armour_pow"
 #define BARBS_MOVE_KEY "moved_with_barbs_status"
 #define HORROR_PENALTY_KEY "horror_penalty"
 #define POWERED_BY_DEATH_KEY "powered_by_death_strength"
-#define FUGUE_KEY "fugue_of_the_fallen_bonus"
+#define SONG_OF_SLAYING_KEY "song_of_slaying_bonus"
 #define FORCE_MAPPABLE_KEY "force_mappable"
 #define TEMP_WATERWALK_KEY "temp_waterwalk"
 #define EMERGENCY_FLIGHT_KEY "emergency_flight"
@@ -1185,7 +1186,7 @@ void end_player_poison();
 int get_player_poisoning();
 int poison_survival();
 
-bool miasma_player(actor *who, string source_aux = "");
+bool miasma_player();
 
 bool sticky_flame_player(int intensity, int duration, string source, string source_aux = "");
 void dec_sticky_flame_player(int delay);

@@ -34,8 +34,8 @@ int englaciate(coord_def where, int pow, actor *agent)
     if (!victim || victim == agent)
         return 0;
 
-    if (agent->is_monster() && mons_aligned(agent, victim))
-        return 0; // don't let monsters hit friendlies
+    if (mons_aligned(agent, victim))
+        return 0; // don't hit friendlies
 
     monster* mons = victim->as_monster();
 
@@ -43,7 +43,7 @@ int englaciate(coord_def where, int pow, actor *agent)
     if (victim->is_peripheral() || never_harm_monster(agent, mons))
         return 0;
 
-    if (victim->res_cold() > 0)
+    if (victim->is_stationary())
     {
         if (!mons)
             canned_msg(MSG_YOU_UNAFFECTED);
@@ -52,17 +52,9 @@ int englaciate(coord_def where, int pow, actor *agent)
         return 0;
     }
 
-    int duration = div_rand_round(roll_dice(3, 1 + pow), 6)
-                    - div_rand_round(victim->get_hit_dice() - 1, 2);
-
-    if (duration <= 0)
-    {
-        if (!mons)
-            canned_msg(MSG_YOU_RESIST);
-        else
-            simple_monster_message(*mons, " resists.");
-        return 0;
-    }
+    const int rc = victim->res_cold();
+    int duration = 1 + pow + random2(2 + pow * 2) - random2(victim->get_hit_dice());
+    duration -= rc * 5;
 
     if ((!mons && you.get_mutation_level(MUT_COLD_BLOODED))
         || (mons && mons_class_flag(mons->type, M_COLD_BLOOD)))
@@ -70,8 +62,8 @@ int englaciate(coord_def where, int pow, actor *agent)
         duration *= 2;
     }
 
-    // Guarantee a minimum duration if not fully resisted.
-    duration = max(duration, 2 + random2(4));
+    // Guarantee a minimum duration.
+    duration = max(duration, 2 + random2(2));
 
     if (!mons)
         return slow_player(duration);
@@ -152,7 +144,7 @@ bool enfeeble_monster(monster &mon, int pow)
         hexes.push_back(ENCH_DIMINISHED_SPELLS);
     if (res_margin <= 0)
     {
-        hexes.push_back(ENCH_BLIND);
+        hexes.push_back(ENCH_SLOW);
         hexes.push_back(ENCH_DAZED);
     }
 
@@ -163,8 +155,8 @@ bool enfeeble_monster(monster &mon, int pow)
                    mon.resist_margin_phrase(res_margin).c_str());
     }
 
-    const int max_extra_dur = div_rand_round(pow, 40);
-    const int dur = 5 + random2avg(max_extra_dur, 3);
+    const int max_extra_dur = div_rand_round(pow, 5);
+    const int dur = 5 + random2(1 + max_extra_dur);
 
     for (auto hex : hexes)
     {
@@ -272,9 +264,9 @@ bool start_ranged_constriction(actor& caster, actor& target, int duration,
 dice_def rimeblight_dot_damage(int pow, bool random)
 {
     if (random)
-        return dice_def(2, 4 + div_rand_round(pow, 17));
+        return dice_def(2, 4 + div_rand_round(pow, 4));
     else
-        return dice_def(2, 4 + pow / 17);
+        return dice_def(2, 4 + pow / 4);
 }
 
 string describe_rimeblight_damage(int pow, bool terse)
@@ -312,7 +304,7 @@ bool apply_rimeblight(monster& victim, int power, bool quiet)
     if (victim.has_ench(ENCH_RIMEBLIGHT))
         return false;
 
-    int duration = (random_range(8, 12) + div_rand_round(power, 30))
+    int duration = (random_range(8, 12) + div_rand_round(power, 8))
                     * BASELINE_DELAY;
     victim.add_ench(mon_enchant(ENCH_RIMEBLIGHT, 0, &you, duration));
     victim.props[RIMEBLIGHT_POWER_KEY] = power;

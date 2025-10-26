@@ -130,7 +130,7 @@ protected:
     int apply_rev_penalty(int damage) const;
     virtual int calc_damage();
     int lighting_effects();
-    int test_hit(int to_hit, int ev, bool randomise_ev);
+    int test_hit(int to_hit, int ev, bool bullseye);
     int apply_defender_ac(int damage, int damage_max = 0,
                           ac_type ac_rule = ac_type::normal) const;
     // Determine if we're blocking (partially or entirely)
@@ -158,7 +158,6 @@ protected:
     void drain_defender();
     void drain_defender_speed();
     void maybe_trigger_jinxbite();
-    void maybe_trigger_fugue_wail(const coord_def pos);
     void maybe_trigger_autodazzler();
 
     bool paragon_defends_player();

@@ -967,7 +967,9 @@ bool actor_cloud_immune(const actor &act, cloud_type type)
 #endif
                    ;
         case CLOUD_MEPHITIC:
-            return act.res_poison() > 0 || act.clarity();
+            return bool(act.holiness() & MH_UNDEAD)
+                   || bool(act.holiness() & MH_NONLIVING)
+                   || bool(act.holiness() & MH_DEMONIC) || act.clarity();
         case CLOUD_POISON:
             return act.res_poison() > 0;
         case CLOUD_STEAM:
@@ -1063,8 +1065,7 @@ static int _actor_cloud_resist(const actor *act, const cloud_struct &cloud)
 
 static bool _mephitic_cloud_roll(const monster* mons)
 {
-    return mons->get_hit_dice() >= MEPH_HD_CAP ? one_chance_in(50)
-           : !x_chance_in_y(mons->get_hit_dice(), MEPH_HD_CAP);
+    return !x_chance_in_y(mons->get_hit_dice(), 11);
 }
 
 // Applies cloud messages and side-effects and returns true if the
@@ -1088,7 +1089,7 @@ static bool _actor_apply_cloud_side_effects(actor *act,
     {
         if (player)
         {
-            if (1 + random2(27) >= you.experience_level)
+            if (one_chance_in(4))
             {
                 mpr("You choke on the stench!");
                 // effectively one or two turns, since it will be
@@ -1153,7 +1154,7 @@ static bool _actor_apply_cloud_side_effects(actor *act,
 
     case CLOUD_MIASMA:
         if (player)
-            return miasma_player(cloud.agent(), cloud.cloud_name());
+            return miasma_player();
         else
             return miasma_monster(mons, cloud.agent());
 

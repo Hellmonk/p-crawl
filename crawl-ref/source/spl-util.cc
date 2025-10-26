@@ -489,6 +489,7 @@ bool spell_is_direct_attack(spell_type spell)
         if (spell == SPELL_VIOLENT_UNRAVELLING  // hex
             || spell == SPELL_FORCE_LANCE // transloc
             || spell == SPELL_BLINKBOLT
+            || spell == SPELL_FORCEFUL_DISMISSAL
             || spell == SPELL_BANISHMENT)
         {
             return true;
@@ -528,7 +529,8 @@ bool spell_is_direct_attack(spell_type spell)
         || spell == SPELL_HAILSTORM
         || spell == SPELL_PERMAFROST_ERUPTION
         || spell == SPELL_MANIFOLD_ASSAULT
-        || spell == SPELL_MAXWELLS_COUPLING) // n.b. not an area spell
+        || spell == SPELL_MAXWELLS_COUPLING
+        || spell == SPELL_BLOOD_EXPLOSION) // n.b. not an area spell
     {
         return true;
     }
@@ -541,14 +543,12 @@ bool spell_is_direct_attack(spell_type spell)
 // not via an evocable or other odd source.
 int spell_mana(spell_type which_spell, bool real_spell)
 {
-    const int level = _seekspell(which_spell)->level;
-
     if (real_spell)
     {
         if (you.duration[DUR_ENKINDLED] && spell_can_be_enkindled(which_spell))
             return 0;
 
-        int cost = level;
+        int cost = 2;
         if (you.wearing_ego(OBJ_GIZMOS, SPGIZMO_SPELLMOTOR))
             cost = max(1, cost - you.rev_tier());
 
@@ -556,11 +556,11 @@ int spell_mana(spell_type which_spell, bool real_spell)
             cost = max(1, cost - you.get_mutation_level(MUT_EFFICIENT_MAGIC));
 
         if (you.duration[DUR_BRILLIANCE] || you.unrand_equipped(UNRAND_FOLLY))
-            cost = cost/2 + cost%2; // round up
+            cost = max(1, cost - 1);
 
         return cost;
     }
-    return level;
+    return 2;
 }
 
 // applied in naughties (more difficult = higher level knowledge = worse)
@@ -1079,12 +1079,13 @@ int spell_effect_noise(spell_type spell)
     case SPELL_FIREBALL:
     case SPELL_VIOLENT_UNRAVELLING:
     case SPELL_IGNITION:
+    case SPELL_LRD:
         expl_size = 1;
         break;
 
-    case SPELL_LRD: // Can reach 3 only with crystal walls, which are rare
     case SPELL_FULMINANT_PRISM: // Players usually want the full size explosion
     case SPELL_TREMORSTONE:
+    case SPELL_FORCEFUL_DISMISSAL:
         expl_size = 2;
         break;
 
@@ -1193,6 +1194,7 @@ string casting_uselessness_reason(spell_type spell, bool temp)
     case SPELL_FORGE_BLAZEHEART_GOLEM:
     case SPELL_FORGE_LIGHTNING_SPIRE:
     case SPELL_AWAKEN_ARMOUR:
+    case SPELL_AMMO_TO_ANACONDAS:
         if (you.allies_forbidden())
             return "you cannot coerce anything to obey you.";
         break;
@@ -1281,6 +1283,7 @@ string spell_uselessness_reason(spell_type spell, bool temp, bool prevent,
     switch (spell)
     {
     case SPELL_BLINK:
+    case SPELL_CONTROLLED_BLINK:
         // XXX: this is a little redundant with you_no_tele_reason()
         // but trying to sort out temp and so on is a mess
         if (you.stasis())
@@ -1307,6 +1310,11 @@ string spell_uselessness_reason(spell_type spell, bool temp, bool prevent,
             if (!you.is_motile())
                 return "you can't move.";
         }
+        break;
+
+     case SPELL_DEFLECT_MISSILES:
+        if (temp && you.duration[DUR_DEFLECT_MISSILES])
+            return "you're already deflecting missiles.";
         break;
 
     case SPELL_DIMENSIONAL_BULLSEYE:
@@ -1481,6 +1489,11 @@ string spell_uselessness_reason(spell_type spell, bool temp, bool prevent,
     case SPELL_SIGIL_OF_BINDING:
         if (temp && cast_sigil_of_binding(0, false, true) == spret::abort)
             return "there is no room nearby to place a sigil.";
+        break;
+
+    case SPELL_ARCANE_NOVA:
+        if (temp && you.duration[DUR_NOVA])
+            return "you are already full of stellar energy.";
         break;
 
     case SPELL_CALL_CANINE_FAMILIAR:
@@ -1685,23 +1698,38 @@ bool spell_no_hostile_in_range(spell_type spell)
     case SPELL_IGNITE_POISON:
         return cast_ignite_poison(&you, -1, false, true) == spret::abort;
 
+    case SPELL_PUTREFACTION:
+        return cast_putrefaction(&you, -1, false, true) == spret::abort;
+
     case SPELL_STARBURST:
         return cast_starburst(-1, false, true) == spret::abort;
 
     case SPELL_HAILSTORM:
         return cast_hailstorm(-1, false, true) == spret::abort;
 
+    case SPELL_WINTERS_EMBRACE:
+        return cast_winters_embrace(-1, false, true) == spret::abort;
+
     case SPELL_GLOOM:
         return cast_gloom(&you, pow, false, true) == spret::abort;
 
-     case SPELL_MAXWELLS_COUPLING:
+    case SPELL_MAXWELLS_COUPLING:
          return cast_maxwells_coupling(pow, false, true) == spret::abort;
+
+    case SPELL_BLOOD_EXPLOSION:
+         return cast_blood_explosion(pow, false, true) == spret::abort;
 
      case SPELL_INTOXICATE:
          return cast_intoxicate(-1, false, true) == spret::abort;
 
     case SPELL_MANIFOLD_ASSAULT:
          return cast_manifold_assault(you, -1, false, false) == spret::abort;
+
+    case SPELL_WARP_GRAVITY:
+        return warp_gravity(-1, false, true) == spret::abort;
+
+    case SPELL_GHOSTLY_LEGION:
+        return cast_ghostly_legion(-1, false, true) == spret::abort;
 
     case SPELL_OZOCUBUS_REFRIGERATION:
          return trace_los_attack_spell(SPELL_OZOCUBUS_REFRIGERATION, pow, &you)
@@ -1727,6 +1755,9 @@ bool spell_no_hostile_in_range(spell_type spell)
 
     case SPELL_SCORCH:
         return find_near_hostiles(range, false, you).empty();
+
+    case SPELL_PHASE_KNIFE:
+        return find_near_hostiles(1, false, you).empty();
 
     case SPELL_ANGUISH:
         for (monster_near_iterator mi(you.pos(), LOS_NO_TRANS); mi; ++mi)
@@ -1958,7 +1989,6 @@ bool spell_can_be_enkindled(spell_type spell)
         case SPELL_GRAVE_CLAW:
         case SPELL_VAMPIRIC_DRAINING:
         case SPELL_BORGNJORS_VILE_CLUTCH:
-        case SPELL_PUTREFACTION:
         case SPELL_DISPEL_UNDEAD:
             return true;
 
@@ -1982,14 +2012,11 @@ const set<spell_type> removed_spells =
     SPELL_AWAKEN_EARTH,
     SPELL_BEASTLY_APPENDAGE,
     SPELL_BLADE_HANDS,
-    SPELL_BOLT_OF_INACCURACY,
     SPELL_CHANT_FIRE_STORM,
     SPELL_CIGOTUVIS_DEGENERATION,
     SPELL_CIGOTUVIS_EMBRACE,
     SPELL_CLOUD_CONE,
-    SPELL_CONDENSATION_SHIELD,
     SPELL_CONJURE_FLAME,
-    SPELL_CONTROLLED_BLINK,
     SPELL_CONTROL_TELEPORT,
     SPELL_CONTROL_UNDEAD,
     SPELL_CONTROL_WINDS,
@@ -1997,7 +2024,6 @@ const set<spell_type> removed_spells =
     SPELL_CORRUPT_BODY,
     SPELL_CURE_POISON,
     SPELL_DARKNESS,
-    SPELL_DEFLECT_MISSILES,
     SPELL_DELAYED_FIREBALL,
     SPELL_DEMONIC_HORDE,
     SPELL_DRACONIAN_BREATH,
@@ -2011,7 +2037,6 @@ const set<spell_type> removed_spells =
     SPELL_FIRE_CLOUD,
     SPELL_FLAME_TONGUE,
     SPELL_FLY,
-    SPELL_FORCEFUL_DISMISSAL,
     SPELL_FREEZING_AURA,
     SPELL_FRENZY,
     SPELL_FULSOME_DISTILLATION,
@@ -2033,7 +2058,6 @@ const set<spell_type> removed_spells =
     SPELL_MIASMA_CLOUD,
     SPELL_MISLEAD,
     SPELL_NECROMUTATION,
-    SPELL_PHASE_SHIFT,
     SPELL_POISON_CLOUD,
     SPELL_POISON_WEAPON,
     SPELL_RANDOM_BOLT,
@@ -2061,7 +2085,6 @@ const set<spell_type> removed_spells =
     SPELL_STORM_FORM,
     SPELL_STRIKING,
     SPELL_SUMMON_BUTTERFLIES,
-    SPELL_SUMMON_ELEMENTAL,
     SPELL_SUMMON_RAKSHASA,
     SPELL_SUMMON_SWARM,
     SPELL_SUMMON_TWISTER,
@@ -2069,7 +2092,6 @@ const set<spell_type> removed_spells =
     SPELL_SURE_BLADE,
     SPELL_TELEPORT_SELF,
     SPELL_THROW,
-    SPELL_TOMB_OF_DOROKLOHE,
     SPELL_TWISTED_RESURRECTION,
     SPELL_VAMPIRE_SUMMON,
     SPELL_VORTEX,

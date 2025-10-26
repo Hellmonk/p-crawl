@@ -53,7 +53,7 @@ string airstrike_intensity_display(int empty_space, tileidx_t& tile);
 string describe_resonance_strike_dam(dice_def dice);
 spret cast_momentum_strike(int pow, coord_def target, bool fail);
 spret cast_shatter(int pow, bool fail);
-dice_def shatter_damage(int pow, monster *mons = nullptr, bool random = false);
+dice_def shatter_damage(int pow, monster *mons = nullptr);
 int terrain_shatter_chance(coord_def where, const actor &agent);
 spret cast_irradiate(int powc, actor &caster, bool fail);
 dice_def irradiate_damage(int powc, bool random = true);
@@ -115,7 +115,7 @@ spret cast_glaciate(actor *caster, int pow, coord_def aim,
 
 spret cast_scorch(const actor& agent, int pow, bool fail = false);
 void explosive_brand(actor *wielder, coord_def where, int pow);
-dice_def scorch_damage(int pow, bool random);
+dice_def scorch_damage(int pow);
 
 vector<coord_def> get_ignition_blast_sources(const actor *agent,
                                              bool tracer = false);
@@ -192,3 +192,26 @@ void fire_life_bolt(actor& attacker, coord_def target);
 spret cast_watery_grave();
 
 spret cast_golden_breath(bolt& beam, int power, bool fail);
+
+void handle_force_quake();
+spret cast_force_quake(bool fail);
+void force_quake();
+dice_def force_quake_damage(int pow, bool random = false);
+
+dice_def winter_damage(int pow, bool random = false);
+spret cast_winters_embrace(int pow, bool fail, bool tracer = false);
+bool rot_affects_cell(const coord_def where, actor* agent);
+spret cast_putrefaction(actor* agent, int powc, bool fail, bool tracer = false);
+spret cast_thunderbolt_hd(int powc, bool fail);
+
+dice_def phase_knife_damage(int pow);
+spret cast_phase_knife(int pow, bool fail);
+dice_def nova_damage(int pow);
+spret fire_arcane_nova();
+spret cast_dismissal(coord_def target, int pow, bool fail);
+
+dice_def blood_explosion_damage(int pow);
+vector<monster *> find_blood_explosion_possibles();
+spret cast_blood_explosion(int pow, bool fail, bool tracer = false);
+dice_def sleetstorm_damage(int pow);
+spret cast_sleetstorm(int pow, bool fail);

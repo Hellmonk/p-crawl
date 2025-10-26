@@ -12,6 +12,7 @@ silence SILENCE
 static_discharge STATIC_DISCHARGE
 swiftness SWIFTNESS
 mass_repulsion MASS_REPULSION
+deflect_missiles DEFLECT_MISSILES
 
 %sdir gui/spells/conjuration
 battlesphere BATTLESPHERE
@@ -38,6 +39,7 @@ shatter SHATTER
 statue_form STATUE_FORM
 stone_arrow STONE_ARROW
 steelskin STEELSKIN
+tomb_of_doroklohe TOMB_OF_DOROKLOHE
 
 %sdir gui/spells/enchantment
 anguish ANGUISH
@@ -56,8 +58,11 @@ jinxbite JINXBITE
 mass_confusion MASS_CONFUSION
 sigil_of_binding SIGIL_OF_BINDING
 slow SLOW
+song_of_slaying SONG_OF_SLAYING
 tukimas_dance TUKIMAS_DANCE
 violent_unravelling VIOLENT_UNRAVELLING
+piercing_shot PIERCING_SHOT
+scrying SCRYING
 
 %sdir gui/spells/fire
 volatile_blastmotes BLASTMOTE
@@ -77,9 +82,12 @@ scorch SCORCH
 starburst STARBURST
 sticky_flame STICKY_FLAME
 throw_flame THROW_FLAME
+steam_burst STEAM_BURST
+magma_jet MAGMA_JET
 
 %sdir gui/spells/ice
 bolt_of_cold BOLT_OF_COLD
+condensation_shield CONDENSATION_SHIELD
 ensorcelled_hibernation ENSORCELLED_HIBERNATION
 freeze FREEZE
 freezing_cloud FREEZING_CLOUD
@@ -96,10 +104,12 @@ rimeblight RIMEBLIGHT
 throw_frost THROW_FROST
 throw_icicle THROW_ICICLE
 polar_vortex POLAR_VORTEX
+planar_sleetstorm PLANAR_SLEETSTORM
 
 %sdir gui/spells/necromancy
 agony AGONY
 animate_dead ANIMATE_DEAD
+blood_explosion BLOOD_EXPLOSION
 bolt_of_draining BOLT_OF_DRAINING
 borgnjors_revivification BORGNJORS_REVIVIFICATION
 borgnjors_vile_clutch BORGNJORS_VILE_CLUTCH
@@ -143,6 +153,7 @@ monstrous_menagerie MONSTROUS_MENAGERIE
 recall RECALL
 sphinx_sisters SPHINX_SISTERS
 summon_cactus_giant SUMMON_CACTUS_GIANT
+summon_elemental SUMMON_ELEMENTAL
 summon_demon SUMMON_DEMON
 summon_dragon SUMMON_DRAGON
 summon_forest SUMMON_FOREST
@@ -160,9 +171,12 @@ surprising_crocodile SURPRISING_CROCODILE
 apportation APPORTATION
 beckoning BECKONING
 blink BLINK
+controlled_blink CONTROLLED_BLINK
 disjunction DISJUNCTION
 dispersal DISPERSAL
 passage_of_golubria PASSAGE_OF_GOLUBRIA
+phase_knife PHASE_KNIFE
+phase_shift PHASE_SHIFT
 piledriver PILEDRIVER
 portal_projectile PORTAL_PROJECTILE
 teleport_other TELEPORT_OTHER

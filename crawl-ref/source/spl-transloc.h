@@ -50,7 +50,7 @@ spret cast_manifold_assault(actor& agent, int pow, bool fail, bool real = true,
 struct bolt;
 spret cast_apportation(int pow, bolt& beam, bool fail);
 bool golubria_valid_cell(coord_def p, bool just_check = false);
-spret cast_golubrias_passage(int pow, const coord_def& where, bool fail);
+spret cast_golubrias_passage(int pow, bool fail);
 
 spret cast_dispersal(int pow, bool fail);
 
@@ -78,3 +78,8 @@ spret cast_teleport_other(const coord_def& target, int power, bool fail);
 
 vector<coord_def> get_bestial_landing_spots(coord_def target);
 spret do_bestial_takedown(coord_def target);
+
+dice_def gravity_damage(int pow, bool random = true);
+bool fatal_attraction(const coord_def& pos, const actor *agent, int pow);
+spret warp_gravity(int pow, bool fail, bool tracer);
+spret cast_controlled_blink(bool safe = true);

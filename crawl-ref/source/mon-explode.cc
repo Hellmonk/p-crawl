@@ -85,7 +85,7 @@ static void _setup_inferno_explosion(bolt & beam, const monster& origin)
 
 static dice_def _blazeheart_damage(int hd)
 {
-    return dice_def(3, 6 + hd);
+    return dice_def(2, 6 + hd);
 }
 
 static void _setup_blazeheart_core_explosion(bolt & beam, const monster& origin)
@@ -119,10 +119,9 @@ void setup_spore_explosion(bolt & beam, const monster& origin)
     beam.ex_size = 1;
 }
 
-dice_def ball_lightning_damage(int hd, bool random)
+dice_def ball_lightning_damage(int hd)
 {
-    const int plus = random ? div_rand_round(hd * 5, 4) : hd * 5 / 4;
-    return dice_def(3, 5 + plus);
+    return dice_def(3, 5 + hd);
 }
 
 static void _setup_lightning_explosion(bolt & beam, const monster& origin)
@@ -133,7 +132,7 @@ static void _setup_lightning_explosion(bolt & beam, const monster& origin)
     beam.name      = "blast of lightning";
     beam.explode_noise_msg = "You hear a clap of thunder!";
     beam.colour    = LIGHTCYAN;
-    beam.ex_size   = x_chance_in_y(origin.get_hit_dice(), 24) ? 3 : 2;
+    beam.ex_size   = 2;
     if (origin.summoner)
         beam.origin_spell = SPELL_CONJURE_BALL_LIGHTNING;
 }
@@ -258,7 +257,7 @@ static const map<monster_type, monster_explosion> explosions {
     } },
     { MONS_BALL_LIGHTNING, {
         _setup_lightning_explosion,
-        [](int hd) { return ball_lightning_damage(hd, false); },
+        [](int hd) { return ball_lightning_damage(hd); },
     } },
     { MONS_LURKING_HORROR, {
         nullptr,

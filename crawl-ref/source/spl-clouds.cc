@@ -30,31 +30,6 @@
 #include "target.h"
 #include "terrain.h"
 
-spret cast_putrefaction(monster* target, int pow, bool fail)
-{
-    fail_check();
-
-    // Place one miasma cloud immediately beneath the target.
-    place_cloud(CLOUD_MIASMA, target->pos(), random_range(5, 9), &you);
-
-    // Then start a spread of fiant miasma that will become proper miasma a
-    // turn later.
-    map_cloud_spreader_marker *marker =
-    new map_cloud_spreader_marker(target->pos(), CLOUD_FAINT_MIASMA, 7,
-                                        random_range(18, 28), 5, 2, &you);
-
-    // Start the cloud at radius 1, regardless of the speed of the killing blow
-    marker->speed_increment -= you.time_taken - 7;
-    env.markers.add(marker);
-    env.markers.clear_need_activate();
-
-    mprf("Rot billows forth from %s wounds!", target->name(DESC_ITS).c_str());
-
-    drain_player(75 - div_rand_round(pow * 4, 10), true, true);
-
-    return spret::success;
-}
-
 spret kindle_blastmotes(int pow, bool fail)
 {
     if (cloud_at(you.pos()))
@@ -107,6 +82,7 @@ cloud_type spell_to_cloud(spell_type spell)
         { SPELL_POISONOUS_CLOUD, CLOUD_POISON },
         { SPELL_FREEZING_CLOUD, CLOUD_COLD },
         { SPELL_HOLY_BREATH, CLOUD_HOLY },
+        { SPELL_STEAM_BURST, CLOUD_STEAM },
     };
 
     return lookup(cloud_map, spell, CLOUD_NONE);
@@ -178,6 +154,21 @@ spret cast_big_c(int pow, spell_type spl, const actor *caster, bolt &beam,
     return spret::success;
 }
 
+spret cast_steam_burst(int pow, bool fail)
+{
+    if (cloud_at(you.pos()))
+    {
+        mpr("You're already standing in a cloud!");
+        return spret::abort;
+    }
+
+    fail_check();
+    mpr("Steam erupts around you!");
+    int size = 8 + div_rand_round(pow, 4);
+    big_cloud(CLOUD_STEAM, &you, you.pos(), pow, size, -1);
+    return spret::success;
+}
+
 /*
  * A cloud_func that places an individual cloud as part of a cloud area. This
  * function is called by apply_area_cloud();
@@ -199,7 +190,7 @@ static int _make_a_normal_cloud(coord_def where, int pow, int spread_rate,
                                 int excl_rad)
 {
     place_cloud(ctype, where,
-                (3 + random2(pow / 4) + random2(pow / 4) + random2(pow / 4)),
+                (3 + random2(pow / 2) + random2(pow / 2) + random2(pow / 2)),
                 agent, spread_rate, excl_rad);
 
     return 1;

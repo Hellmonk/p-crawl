@@ -2421,6 +2421,7 @@ static const map<monster_info_flags, tileidx_t> monster_status_icons = {
     { MB_WARDING, TILEI_WARDING },
     { MB_DIMINISHED_SPELLS, TILEI_DIMMED },
     { MB_STEELSKIN, TILEI_STEELSKIN },
+    { MB_PHASE_SHIFT, TILEI_LACED_WITH_CHAOS }, // XXX placeholder
 };
 
 set<tileidx_t> status_icons_for(const monster_info &mons)
@@ -3990,8 +3991,6 @@ tileidx_t tileidx_ability(const ability_type ability)
         return TILEG_ABILITY_SIPHON_ESSENCE;
     case ABIL_INVENT_GIZMO:
         return TILEG_ABILITY_INVENT_GIZMO;
-    case ABIL_IMBUE_SERVITOR:
-        return TILEG_ABILITY_IMBUE_SERVITOR;
     case ABIL_IMPRINT_WEAPON:
         return TILEG_ABILITY_IMPRINT_WEAPON;
     case ABIL_CACOPHONY:

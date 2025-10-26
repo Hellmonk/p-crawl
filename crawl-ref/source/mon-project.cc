@@ -33,8 +33,6 @@
 #endif
 #include "viewchar.h"
 
-static void _fuzz_direction(const actor *caster, monster& mon, int pow);
-
 spret cast_iood(actor *caster, int pow, bolt *beam, float vx, float vy,
                      int foe, bool fail, bool needs_tracer, monster_type orb_type)
 {
@@ -88,8 +86,6 @@ spret cast_iood(actor *caster, int pow, bolt *beam, float vx, float vy,
         mon->props[IOOD_Y].get_float() = beam->ray.r.start.y - 0.5;
         mon->props[IOOD_VX].get_float() = beam->ray.r.dir.x;
         mon->props[IOOD_VY].get_float() = beam->ray.r.dir.y;
-        _fuzz_direction(caster, *mon,
-                        orb_type == MONS_GLOBE_OF_ANNIHILATION ? 80 : pow);
     }
     else
     {
@@ -123,10 +119,7 @@ spret cast_iood(actor *caster, int pow, bolt *beam, float vx, float vy,
     // If the foe was adjacent to the caster, that might have destroyed it.
     if (mon->alive())
     {
-        // We need to take at least one full move (for the above), but let's
-        // randomize it and take more so players won't get guaranteed instant
-        // damage.
-        mon->lose_energy(EUT_MOVE, 2, random2(3)+2);
+        mon->lose_energy(EUT_MOVE);
 
         // Multi-orbs don't home during the first move, they'd likely
         // immediately explode otherwise.
@@ -261,32 +254,6 @@ static void _iood_stop(monster& mon, bool msg = true)
     monster_die(mon, KILL_RESET, NON_MONSTER);
 }
 
-static void _fuzz_direction(const actor *caster, monster& mon, int pow)
-{
-    const float x = mon.props[IOOD_X];
-    const float y = mon.props[IOOD_Y];
-    float vx = mon.props[IOOD_VX];
-    float vy = mon.props[IOOD_VY];
-
-    _normalize(vx, vy);
-
-    if (pow < 10)
-        pow = 10;
-    const float off = random_choose(-0.25, 0.25);
-    float tan = (random2(31) - 15) * 0.019; // approx from degrees
-    tan *= 75.0 / pow;
-    const int inaccuracy = caster ? caster->inaccuracy() : 0;
-    if (inaccuracy > 0)
-        tan *= 2 * inaccuracy;
-
-    // Cast either from left or right hand.
-    mon.props[IOOD_X] = x + vy*off;
-    mon.props[IOOD_Y] = y - vx*off;
-    // And off the direction a bit.
-    mon.props[IOOD_VX] = vx + vy*tan;
-    mon.props[IOOD_VY] = vy - vx*tan;
-}
-
 // Alas, too much differs to reuse beam shield blocks :(
 static bool _iood_shielded(monster& mon, actor &victim)
 {
@@ -306,16 +273,15 @@ static bool _iood_shielded(monster& mon, actor &victim)
 
 dice_def iood_damage(int pow, int dist, bool random)
 {
-    int flat = 60;
+    int flat = 12;
 
     if (dist < 4)
     {
-        pow = random ? div_rand_round(pow * dist * 3, 10)
-                     : pow * dist * 3 / 10;
-        flat = flat * dist * 3 / 10;
+        pow = random ? div_rand_round(pow * dist * 1, 4)
+                     : pow * dist * 1 / 4;
+        flat = flat * dist * 1 / 4;
     }
-    return dice_def(9, random ? div_rand_round(flat + pow, 12)
-                              : (flat + pow) / 12 );
+    return dice_def(4, flat + pow);
 }
 
 static void _iood_common_beam_setup(monster& orb, const coord_def& pos, bolt& beam)

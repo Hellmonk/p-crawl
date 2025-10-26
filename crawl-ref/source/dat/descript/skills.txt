@@ -74,7 +74,7 @@ Hexes
 Hexes try to bestow various status effects on nearby things. While few do direct
 damage, being ensorcelled can effectively take an opponent out of combat,
 although they often require overcoming an opponent's willpower to have an effect.
-Skill in Hexes can help overcome this.
+Greater spell power can help overcome this.
 
 Spells require a skill equal to their spell level in each of their schools
 before they can be cast. Spell power also increases with the average skill level
@@ -92,10 +92,10 @@ of the spell's schools.
 %%%%
 Necromancy
 
-Necromancy is the art of draining and gaining life, although most often
-associated with zombies and other undead. As such, Necromancy spells have a
-wide range of effects, ranging from spells to create or disrupt the undead to
-spells granting unholy healing in various forms.
+Necromancy deals with the magic of life and death. Though best known for
+creating undead servants (such as zombies), necromancy contains a wide variety
+of effects related to harming and healing others, though these effects are often
+limited based on the nature of their target.
 
 Spells require a skill equal to their spell level in each of their schools
 before they can be cast. Spell power also increases with the average skill level
@@ -113,8 +113,8 @@ of the spell's schools.
 %%%%
 Fire Magic
 
-Fire Magic focuses mainly on dealing fire damage over long distances, with many
-effective Conjurations.
+Fire Magic focuses mainly on dealing fire damage and has many ways to cause
+large explosions.
 
 Spells require a skill equal to their spell level in each of their schools
 before they can be cast. Spell power also increases with the average skill level
@@ -122,8 +122,9 @@ of the spell's schools.
 %%%%
 Ice Magic
 
-Ice Magic contains a range of direct damage spells, as well as some defensive
-effects - for example, crafting temporary ice armour.
+Ice Magic contains a range of direct damage spells, which tend to deal damage
+over a period of time or have secondary effects, as well as some defensive
+abilities - for example, crafting temporary ice armour.
 
 Spells require a skill equal to their spell level in each of their schools
 before they can be cast. Spell power also increases with the average skill level
@@ -131,10 +132,9 @@ of the spell's schools.
 %%%%
 Air Magic
 
-Air Magic provides spells to deal damage directly with the wind, as well as
-noisy but powerful lightning Conjurations. It also provides some utility
-spells, such as a call to the wind to assist your movement or a Hex to prevent
-most use of magic in the area surrounding you.
+Air Magic provides noisy, powerful, and risky lightning conjurations. It also
+provides some utility spells, such as a call to the wind to assist your movement
+or a Hex to prevent most use of magic in the area surrounding you.
 
 Spells require a skill equal to their spell level in each of their schools
 before they can be cast. Spell power also increases with the average skill level
@@ -142,10 +142,10 @@ of the spell's schools.
 %%%%
 Earth Magic
 
-Earth Magic contains spells able to deal large amounts of direct physical
-damage, which cannot be resisted like fire, cold and lightning damage can. It
-is also linked with Alchemy, with spells to liquefy the earth around you, or to
-turn your enemies to stone.
+Earth Magic contains spells able to deal direct physical damage, which may be
+reduced heavily by AC but is not resistible like fire, cold, or electrical
+damage. It also features many ways to temporarily or permanently modify terrain,
+such as digging.
 
 Spells require a skill equal to their spell level in each of their schools
 before they can be cast. Spell power also increases with the average skill level

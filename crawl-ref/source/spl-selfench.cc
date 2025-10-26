@@ -37,15 +37,12 @@ spret cast_deaths_door(int pow, bool fail)
     mpr("You stand defiantly in death's doorway!");
     mprf(MSGCH_SOUND, "You seem to hear sand running through an hourglass...");
 
-    you.set_duration(DUR_DEATHS_DOOR, 10 + random2avg(13, 3)
-                                       + div_rand_round(random2(pow), 10));
+    you.set_duration(DUR_DEATHS_DOOR, 10 + random2avg(11, 3) + random2(1 + pow));
 
-    const int hp = max(div_rand_round(pow, 10), 1);
+    const int hp = max(pow, 1);
     you.attribute[ATTR_DEATHS_DOOR_HP] = hp;
     set_hp(hp);
 
-    if (you.duration[DUR_DEATHS_DOOR] > 25 * BASELINE_DELAY)
-        you.duration[DUR_DEATHS_DOOR] = (23 + random2(5)) * BASELINE_DELAY;
     return spret::success;
 }
 
@@ -94,8 +91,9 @@ spret cast_revivification(int pow, bool fail)
     fail_check();
     mpr("Your body is healed in an amazingly painful way.");
 
-    const int loss = 6 + binomial(9, 8, pow);
-    dec_max_hp(loss * you.hp_max / 100);
+    const int loss = min(you.hp_max -1,
+                        max(1, 20 - div_rand_round(pow, 3) - random2(1 + pow)));
+    dec_max_hp(loss);
     set_hp(you.hp_max);
 
     if (you.duration[DUR_DEATHS_DOOR])
@@ -112,7 +110,7 @@ spret cast_swiftness(int power, bool fail)
 {
     fail_check();
 
-    you.set_duration(DUR_SWIFTNESS, 12 + random2(power)/2, 30,
+    you.set_duration(DUR_SWIFTNESS, 7 + random2(2 * power), 30,
                      "You feel quick.");
     you.attribute[ATTR_SWIFTNESS] = you.duration[DUR_SWIFTNESS];
 
@@ -164,49 +162,19 @@ int cast_selective_amnesia(const string &pre_msg)
     return -1;
 }
 
-spret cast_fugue_of_the_fallen(int pow, bool fail)
+spret cast_song_of_slaying(int pow, bool fail)
 {
     fail_check();
 
-    if (you.duration[DUR_FUGUE])
-        mpr("You release your grip on the fallen and begin the cycle anew!");
+    if (you.duration[DUR_SONG_OF_SLAYING])
+        mpr("You start a new song!");
     else
-        mpr("You call out to the remnants of the fallen!");
+        mpr("You start singing a song of slaying.");
 
-    you.set_duration(DUR_FUGUE, 25 + random2avg(pow, 2));
+    you.set_duration(DUR_SONG_OF_SLAYING, 12 + random2(6 + pow * 3));
 
-    you.props[FUGUE_KEY] = 0;
+    you.props[SONG_OF_SLAYING_KEY] = 0;
     return spret::success;
-}
-
-void do_fugue_wail(const coord_def pos)
-{
-    // Do burst of negative energy damage around the spot that was hit by an
-    // attack with max fugue stacks. Hit anything which isn't friendly and
-    // immune to negative energy.
-    vector <monster*> affected;
-    for (adjacent_iterator ai(pos); ai; ++ai)
-    {
-        monster* mon = monster_at(*ai);
-        if (mon && !mon->is_firewood() && !mon->wont_attack()
-            && mon->res_negative_energy() < 3)
-        {
-            affected.push_back(mon);
-        }
-    }
-
-    int pow = calc_spell_power(SPELL_FUGUE_OF_THE_FALLEN);
-
-    if (!affected.empty())
-        mpr("The fallen lash out in pain!");
-    for (monster *m : affected)
-    {
-        if (m->alive())
-        {
-            m->hurt(&you, roll_dice(2, 3 + div_rand_round(pow, 25)),
-                    BEAM_NEG, KILLED_BY_BEAM);
-        }
-    }
 }
 
 int silence_min_range(int pow)
@@ -224,8 +192,7 @@ spret cast_silence(int pow, bool fail)
     fail_check();
     mpr("A profound silence engulfs you.");
 
-    you.increase_duration(DUR_SILENCE, 20 + div_rand_round(pow,5)
-                            + random2avg(div_rand_round(pow,2), 2), 100);
+    you.increase_duration(DUR_SILENCE, 16 + pow + random2(1 + 2 * pow), 100);
     invalidate_agrid(true);
 
     if (you.beheld())
@@ -283,11 +250,10 @@ spret cast_jinxbite(int pow, bool fail)
          you.duration[DUR_JINXBITE] ? "more" : "some");
 
     const int base_dur = random_range(9, 15);
-    const int will_dur = random_range(base_dur, 15) +
-                         div_rand_round(spell_power_cap(SPELL_JINXBITE), 4);
+    const int will_dur = base_dur + random_range(20, 25);
 
-    you.increase_duration(DUR_JINXBITE, base_dur + div_rand_round(pow, 4), 28);
-    you.increase_duration(DUR_LOWERED_WL, will_dur, 28,
+    you.increase_duration(DUR_JINXBITE, base_dur + div_rand_round(pow, 2), 50);
+    you.increase_duration(DUR_LOWERED_WL, will_dur, 50,
                           "You feel your willpower being sapped.");
 
     return spret::success;
@@ -301,7 +267,7 @@ spret cast_confusing_touch(int power, bool fail)
                 << "." << endl;
 
     you.set_duration(DUR_CONFUSING_TOUCH,
-                     max(10 + div_rand_round(random2(1 + power), 5),
+                     max(6 + random2(1 + power),
                          you.duration[DUR_CONFUSING_TOUCH]),
                      20, nullptr);
     you.props[CONFUSING_TOUCH_KEY] = power;
@@ -318,5 +284,75 @@ spret cast_detonation_catalyst(bool fail)
     // base duration is very low to minimize precasting
     you.set_duration(DUR_DETONATION_CATALYST, random_range(3,5));
 
+    return spret::success;
+}
+
+void remove_condensation_shield()
+{
+    mprf(MSGCH_DURATION, "Your icy shield evaporates.");
+    you.duration[DUR_CONDENSATION_SHIELD] = 0;
+    you.redraw_armour_class = true;
+}
+
+spret cast_condensation_shield(int pow, bool fail)
+{
+    fail_check();
+    if (you.duration[DUR_CONDENSATION_SHIELD] > 0)
+        mpr("The disc of vapour around you crackles some more.");
+    else
+        mpr("A crackling disc of dense vapour forms in the air!");
+
+    you.increase_duration(DUR_CONDENSATION_SHIELD, 10 + random2(3 * pow), 60);
+    you.props[CONDENSATION_SHIELD_KEY] = pow;
+    you.redraw_armour_class = true;
+
+    return spret::success;
+}
+
+spret deflection(int pow, bool fail)
+{
+    fail_check();
+    you.set_duration(DUR_DEFLECT_MISSILES, 5 + random2(1 + pow), 30,
+        "You feel very safe from missiles.");
+
+    return spret::success;
+}
+
+spret haste_spell(int pow, bool fail)
+{
+    fail_check();
+    haste_player(10 + div_rand_round(pow, 2) + random2(1 + pow * 2));
+    return spret::success;
+}
+
+spret cast_piercing_shot(int pow, bool fail)
+{
+    fail_check();
+    int dur = 4 + pow + random2(2 + pow * 3);
+    you.increase_duration(DUR_PIERCING_SHOT, dur);
+
+    return spret::success;
+}
+
+spret scrying(int pow, bool fail)
+{
+    fail_check();
+    int dur = 5 + random2(5 + pow * 2);
+    you.increase_duration(DUR_REVELATION, dur);
+    return spret::success;
+}
+
+spret cast_arcane_nova(int pow, bool fail)
+{
+    fail_check();
+
+    if (you.duration[DUR_NOVA])
+    {
+        mpr("You're already filled with stellar energy!");
+        return spret::abort;
+    }
+
+    you.set_duration(DUR_NOVA, 5);
+    invalidate_agrid(true);
     return spret::success;
 }

@@ -156,6 +156,7 @@ static map<enchant_type, monster_info_flags> trivial_ench_mb_mappings = {
     { ENCH_STUN,            MB_STUNNED },
     { ENCH_USED_FREE_ACTION,  MB_FREE_ACTION_USED },
     { ENCH_STEELSKIN,       MB_STEELSKIN },
+    { ENCH_PHASE_SHIFT,     MB_PHASE_SHIFT },
 };
 
 static monster_info_flags ench_to_mb(const monster& mons, enchant_type ench)
@@ -1911,9 +1912,6 @@ bool monster_info::has_trivial_ench(enchant_type ench) const
 // the player's knowledge?
 bool monster_info::unravellable() const
 {
-    if (is(MB_ABJURABLE))
-        return true;
-
     // NOTE: assumes that all debuffable enchantments are trivially mapped
     // to MBs.
 

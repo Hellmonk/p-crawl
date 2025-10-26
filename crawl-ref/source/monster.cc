@@ -61,6 +61,7 @@
 #include "ouch.h"
 #include "religion.h"
 #include "spl-clouds.h" // explode_blastmotes_at
+#include "spl-damage.h"
 #include "spl-monench.h"
 #include "spl-other.h"
 #include "spl-summoning.h"
@@ -3039,6 +3040,9 @@ int monster::evasion(bool ignore_temporary, const actor* /*act*/) const
     if (has_ench(ENCH_AGILE))
         ev += AGILITY_BONUS;
 
+    if (has_ench(ENCH_PHASE_SHIFT))
+        ev += 35;
+
     if (is_constricted())
         ev /= 2;
 
@@ -3463,15 +3467,11 @@ bool monster::res_sticky_flame() const
 
 bool monster::res_miasma(bool /*temp*/) const
 {
-    if ((holiness() & (MH_HOLY | MH_DEMONIC | MH_UNDEAD | MH_NONLIVING))
+    if ((holiness() & (MH_HOLY | MH_UNDEAD | MH_NONLIVING))
         || get_mons_resist(*this, MR_RES_MIASMA))
     {
         return true;
     }
-
-    const item_def *armour = mslot_item(MSLOT_ARMOUR);
-    if (armour && is_unrandom_artefact(*armour, UNRAND_EMBRACE))
-        return true;
 
     return false;
 }
@@ -3584,43 +3584,20 @@ int monster::willpower() const
         return 0;
 
     const int type_wl = (get_monster_data(type))->willpower;
-    // Negative values get multiplied with monster hit dice.
-    int u = type_wl < 0 ?
-                get_hit_dice() * -type_wl * 4 / 3 :
-                mons_class_willpower(type, base_monster);
+
+    // use hit dice
+    int u = get_hit_dice();
 
     // Hepliaklqana ancestors scale with xl.
     if (mons_is_hepliaklqana_ancestor(type))
-        u = get_experience_level() * get_experience_level() / 2; // 0-160ish
+        u = get_experience_level() / 2; // 0-13ish
 
     // ghost demon struct overrides the monster values if it is non-negative
     if (mons_is_ghost_demon(type) && ghost->willpower >= 0)
         u = ghost->willpower;
 
-    // Draining/malmutation reduce monster base WL proportionately.
-    const int HD = get_hit_dice();
-    if (HD < get_experience_level())
-        u = u * HD / get_experience_level();
-
-    // Resistance from artefact properties.
-    u += WL_PIP * scan_artefacts(ARTP_WILLPOWER);
-
-    // Ego equipment resistance.
-    const int armour    = inv[MSLOT_ARMOUR];
-    const int shld      = inv[MSLOT_SHIELD];
-    const int jewellery = inv[MSLOT_JEWELLERY];
-
-    if (armour != NON_ITEM && env.item[armour].base_type == OBJ_ARMOUR)
-        u += get_armour_willpower(env.item[armour], false);
-
-    if (shld != NON_ITEM && env.item[shld].base_type == OBJ_ARMOUR)
-        u += get_armour_willpower(env.item[shld], false);
-
-    if (jewellery != NON_ITEM && env.item[jewellery].base_type == OBJ_JEWELLERY)
-        u += get_jewellery_willpower(env.item[jewellery], false);
-
     if (has_ench(ENCH_STRONG_WILLED)) //trog's hand
-        u += 80;
+        u *= 2;
 
     if (has_ench(ENCH_LOWERED_WL))
         u /= 2;
@@ -3875,6 +3852,12 @@ int monster::hurt(const actor *agent, int amount, beam_type flavour,
                     amount -= split;
                 }
             }
+        }
+
+        if (type == MONS_LIGHTNING_SPIRE && flavour == BEAM_ELECTRICITY
+            && agent->as_monster()->type != MONS_LIGHTNING_SPIRE)
+        {
+            cast_discharge(3 + get_hit_dice(), *this);
         }
 
         if (amount == INSTANT_DEATH)
@@ -4481,13 +4464,6 @@ bool monster::sicken(int amount)
 void monster::calc_speed()
 {
     speed = mons_base_speed(*this);
-
-    if (this->berserk_or_frenzied())
-        speed = berserk_mul(speed);
-    else if (has_ench(ENCH_HASTE))
-        speed = haste_mul(speed);
-    if (has_ench(ENCH_SLOW))
-        speed = haste_div(speed);
 }
 
 // Check speed and speed_increment sanity.
@@ -5403,8 +5379,11 @@ bool monster::maybe_free_action(energy_use_type et)
 
 bool monster::takes_two_turns(energy_use_type et)
 {
-    if (mons_class_flag(this->type, M_SLOW_ACTING) || has_ench(ENCH_SLOW))
+    if (mons_class_flag(this->type, M_SLOW_ACTING) || has_ench(ENCH_SLOW)
+        || has_ench(ENCH_PETRIFYING))
+    {
         return true;
+    }
     if (mons_class_flag(this->type, M_SLOW_ATTACKS))
         return et == EUT_ATTACK;
     if (mons_class_flag(this->type, M_SLOW_MOVEMENT) || has_ench(ENCH_FROZEN))
@@ -5526,6 +5505,19 @@ void monster::react_to_damage(const actor *oppressor, int damage,
     if (x_chance_in_y(scan_artefacts(ARTP_SILENCE), 100))
         silence_monster(*this, oppressor, (4 + random2(7) * BASELINE_DELAY));
 
+    if (oppressor == &you && you.duration[DUR_ICHOR]
+        && !this->is_firewood()
+        && !this->is_peripheral()
+        && !wont_attack()
+        && x_chance_in_y(20 + calc_spell_power(SPELL_ELDRITCH_ICHOR), 60))
+    {
+        mgen_data mg(MONS_TENTACLED_MONSTROSITY, BEH_FRIENDLY,
+                        pos(), this->mindex(), MG_NONE);
+
+        mg.set_summoned(&you, summ_dur(1), SPELL_ELDRITCH_ICHOR);
+        if (create_monster(mg))
+            mpr("A tentacled monstrosity appears!");
+    }
 
     if (mons_species() == MONS_BUSH
         && res_fire() < 0 && flavour == BEAM_FIRE

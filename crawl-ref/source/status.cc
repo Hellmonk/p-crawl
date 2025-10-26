@@ -387,6 +387,26 @@ bool fill_status_info(int status, status_info& inf)
         }
         break;
 
+    case STATUS_FORCE_QUAKE:
+    {
+        switch (you.attribute[ATTR_FORCE_QUAKE])
+        {
+        case 1:
+        case 2:
+            inf.light_text = "Quake";
+            inf.light_colour = WHITE;
+            break;
+        case 3:
+            inf.light_text = "Quake+";
+            inf.light_colour = WHITE;
+            break;
+
+        default:
+            break;
+        }
+        break;
+    }
+
     case STATUS_NET:
         if (you.attribute[ATTR_HELD])
         {
@@ -555,13 +575,10 @@ bool fill_status_info(int status, status_info& inf)
         }
         break;
 
-    case DUR_FUGUE:
+    case DUR_SONG_OF_SLAYING:
     {
-        int fugue_pow = you.props[FUGUE_KEY].get_int();
-        // Hey now / you're a damned star / get your fugue on / go slay
-        const char* fugue_star = fugue_pow == FUGUE_MAX_STACKS ? "*" : "";
-        inf.light_text = make_stringf("Fugue (%s%u%s)",
-                                      fugue_star, fugue_pow, fugue_star);
+        int song_pow = you.props[SONG_OF_SLAYING_KEY].get_int();
+        inf.light_text = make_stringf("Song (%u)",song_pow);
     }
     break;
 

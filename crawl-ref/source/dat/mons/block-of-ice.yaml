@@ -6,8 +6,8 @@ holiness: [nonliving]
 will: invuln
 attacks:
 hd: 3
-hp_10x: 285
-ac: 15
+hp_10x: 190
+ac: 5
 ev: 0
 intelligence: brainless
 uses: open_doors

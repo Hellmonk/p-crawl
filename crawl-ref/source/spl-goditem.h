@@ -74,6 +74,7 @@ const enchant_type dispellable_enchantments[] =
     ENCH_VEXED,
     ENCH_STUN,
     ENCH_STEELSKIN,
+    ENCH_PHASE_SHIFT,
 };
 
 bool player_is_debuffable();
