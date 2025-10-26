@@ -368,11 +368,11 @@ static string mons_human_readable_spell_damage_string(monster* monster,
         case SPELL_CONJURE_BALL_LIGHTNING:
             return "3x" + dice_def_string(ball_lightning_damage(mons_ball_lightning_hd(pow)));
         case SPELL_MARSHLIGHT:
-            return "2x" + dice_def_string(zap_damage(ZAP_FOXFIRE, pow));
+            return "2x" + dice_def_string(zap_damage(ZAP_FOXFIRE, pow, true));
         case SPELL_PLASMA_BEAM:
-            return "2x" + dice_def_string(zap_damage(ZAP_PLASMA, pow));
+            return "2x" + dice_def_string(zap_damage(ZAP_PLASMA, pow, true));
         case SPELL_PERMAFROST_ERUPTION:
-            return "2x" + dice_def_string(zap_damage(ZAP_PERMAFROST_ERUPTION_COLD, pow));
+            return "2x" + dice_def_string(zap_damage(ZAP_PERMAFROST_ERUPTION_COLD, pow, true));
         case SPELL_WATERSTRIKE:
             spell_beam.damage = waterstrike_damage(monster->spell_hd(sp));
             break;
@@ -382,7 +382,7 @@ static string mons_human_readable_spell_damage_string(monster* monster,
             spell_beam.damage = mi_calc_iood_damage(monster);
             break;
         case SPELL_POLAR_VORTEX:
-            return dice_def_string(polar_vortex_dice(pow)) + "*";
+            return dice_def_string(polar_vortex_dice(pow, true)) + "*";
         case SPELL_IRRADIATE:
             return mi_calc_irradiate_damage(*monster);
         case SPELL_VAMPIRIC_DRAINING:
