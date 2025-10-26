@@ -530,8 +530,8 @@ static const vector<spell_type> spellbook_templates[] =
 
 { // Book of Wicked Creation
     SPELL_SIMULACRUM,
-    SPELL_RIMEBLIGHT,
     SPELL_DEATH_CHANNEL,
+    SPELL_RIMEBLIGHT,
 },
 
 { // Compendium of Siegecraft

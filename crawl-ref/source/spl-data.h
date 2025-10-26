@@ -4135,7 +4135,7 @@ static const struct spell_desc spelldata[] =
     spschool::necromancy | spschool::ice,
     spflag::dir_or_target | spflag::unclean | spflag::destructive
     | spflag::not_self,
-    7,
+    4,
     200,
     5, 5,
     0,
