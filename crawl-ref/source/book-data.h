@@ -462,7 +462,6 @@ static const vector<spell_type> spellbook_templates[] =
 { // Book of Dangerous Friends
     SPELL_FORGE_BLAZEHEART_GOLEM,
     SPELL_IOOD,
-    SPELL_SPELLSPARK_SERVITOR,
 },
 
 { // Book of Touch
