@@ -807,6 +807,8 @@ bool noisy(int original_loudness, const coord_def& where,
     if (silenced(where) && !fake_noise)
         return false;
 
+    adj_loudness += you.get_mutation_level(MUT_NOISY) * 3;
+
     // [ds] Reduce noise propagation for Sprint.
     const int scaled_loudness =
         crawl_state.game_is_sprint()? max(1, div_rand_round(adj_loudness, 2))

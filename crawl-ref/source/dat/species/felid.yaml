@@ -28,7 +28,6 @@ mutations:
     MUT_MULTILIVED: 1
     MUT_FANGS: 1
     MUT_SHAGGY_FUR: 1
-    MUT_ACUTE_VISION: 1
     MUT_PAWS: 1
     MUT_CLAWS: 1
 recommended_jobs:

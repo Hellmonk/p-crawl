@@ -180,22 +180,6 @@ struct mut_stat_effect
     }
 };
 
-static const vector<mut_stat_effect> mut_stat_effects = {
-    //               s   i   d
-#if TAG_MAJOR_VERSION == 34
-    { MUT_STRONG_STIFF, 1, 0, -1 },
-    { MUT_FLEXIBLE_WEAK, -1, 0, 1 },
-#endif
-};
-
-static int _get_mut_effects(stat_type which_stat, bool innate_only)
-{
-    int total = 0;
-    for (const auto &e : mut_stat_effects)
-        total += e.apply(which_stat, innate_only);
-    return total;
-}
-
 static int _strength_modifier(bool innate_only)
 {
     int result = 0;
@@ -211,9 +195,6 @@ static int _strength_modifier(bool innate_only)
         result += get_form()->str_mod;
     }
 
-    // mutations
-    result += _get_mut_effects(STAT_STR, innate_only);
-
     return result;
 }
 
@@ -228,9 +209,6 @@ static int _int_modifier(bool innate_only)
 
         result += chei_stat_boost();
     }
-
-    // mutations
-    result += _get_mut_effects(STAT_INT, innate_only);
 
     return result;
 }
@@ -250,34 +228,14 @@ static int _dex_modifier(bool innate_only)
         result += get_form()->dex_mod;
     }
 
-    // mutations
-    result += _get_mut_effects(STAT_DEX, innate_only);
-
     return result;
-}
-
-static int _base_stat_with_muts(stat_type s)
-{
-    // XX semi code dup (with player::max_stat)
-    return min(you.base_stats[s] + _get_mut_effects(s, false), MAX_STAT_VALUE);
-}
-
-static int _base_stat_with_new_mut(stat_type which_stat, mutation_type mut)
-{
-    int base = _base_stat_with_muts(which_stat);
-    for (const auto &e : mut_stat_effects)
-        if (e.mut == mut)
-            base += e.apply(which_stat, false);
-    return base;
 }
 
 /// whether a mutation innately causes stat zero. Does not look at equpment etc.
 bool mutation_causes_stat_zero(mutation_type mut)
 {
     // not very elegant...
-    return _base_stat_with_new_mut(STAT_STR, mut) <= 0
-        || _base_stat_with_new_mut(STAT_INT, mut) <= 0
-        || _base_stat_with_new_mut(STAT_DEX, mut) <= 0;
+    return false;
 }
 
 static int _stat_modifier(stat_type stat, bool innate_only)
