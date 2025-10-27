@@ -1806,6 +1806,9 @@ static int _player_base_evasion_modifiers()
     if (you.get_mutation_level(MUT_SLOW_REFLEXES))
         evbonus -= you.get_mutation_level(MUT_SLOW_REFLEXES) * 5;
 
+    if (you.get_mutation_level(MUT_CLUMSY))
+        evbonus -= 20;
+
     // Consider this a 'permanent' bonus, since players in forms will often
     // remain in that form for a long time. This is slightly untrue for
     // hostile polymorph, however I don't think any of them affect the player's
@@ -3347,6 +3350,8 @@ int slaying_bonus(bool ranged, bool random)
 
     ret += 3 * augmentation_amount();
     ret += you.get_mutation_level(MUT_SHARP_SCALES);
+
+    ret -= 4 * you.get_mutation_level(MUT_WEAK);
 
     if (you.wearing_ego(OBJ_ARMOUR, SPARM_ARCHERY) && ranged)
         ret += 5;

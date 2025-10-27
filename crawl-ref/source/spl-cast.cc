@@ -392,6 +392,8 @@ int calc_spell_power(spell_type spell)
     power += you.get_mutation_level(MUT_WILD_MAGIC);
     power -= you.get_mutation_level(MUT_SUBDUED_MAGIC);
 
+    power -= you.get_mutation_level(MUT_DOPEY) * 5;
+
     // Augmentation boosts spell power at high HP.
     power += augmentation_amount();
 
