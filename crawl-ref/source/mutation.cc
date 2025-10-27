@@ -1227,9 +1227,6 @@ static bool _accept_mutation(mutation_type mutat, bool temp)
     // applied in a tempmut storm and disproportionately punishing if you don't.
     if (temp
         && (mutat == MUT_DEVOLUTION
-            || mutat == MUT_WEAK
-            || mutat == MUT_CLUMSY
-            || mutat == MUT_DOPEY
             || mutat == MUT_BERSERK))
     {
         return false;
@@ -1703,33 +1700,6 @@ bool mut_is_compatible(mutation_type mut, bool base_only)
     return true;
 }
 
-static const char* _stat_mut_desc(mutation_type mut, bool gain)
-{
-    stat_type stat = STAT_STR;
-    bool positive = gain;
-    switch (mut)
-    {
-    case MUT_WEAK:
-        positive = !positive;
-        stat = STAT_STR;
-        break;
-
-    case MUT_DOPEY:
-        positive = !positive;
-        stat = STAT_INT;
-        break;
-
-    case MUT_CLUMSY:
-        positive = !positive;
-        stat = STAT_DEX;
-        break;
-
-    default:
-        die("invalid stat mutation: %d", mut);
-    }
-    return stat_desc(stat, positive ? SD_INCREASE : SD_DECREASE);
-}
-
 /**
  * Do a resistance check for the given mutation permanence class.
  * Does not include divine intervention!
@@ -1941,11 +1911,6 @@ bool mutate(mutation_type which_mutation, const string &reason, bool failMsg,
         // More than three messages, need to give them by hand.
         switch (mutat)
         {
-        case MUT_WEAK:   case MUT_CLUMSY: case MUT_DOPEY:
-            mprf(MSGCH_MUTATION, "You feel %s.", _stat_mut_desc(mutat, true));
-            gain_msg = false;
-            break;
-
         case MUT_LARGE_BONE_PLATES:
             {
                 const string arms = pluralise(species::arm_name(you.species));
@@ -2142,11 +2107,6 @@ bool _delete_single_mutation_level(mutation_type mutat,
 
     switch (mutat)
     {
-    case MUT_WEAK:   case MUT_CLUMSY: case MUT_DOPEY:
-        mprf(MSGCH_MUTATION, "You feel %s.", _stat_mut_desc(mutat, false));
-        lose_msg = false;
-        break;
-
     case MUT_SPIT_POISON:
         // Breathe poison replaces spit poison (so it takes the slot).
         if (you.mutation[mutat] < 2)
