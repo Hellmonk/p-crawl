@@ -3085,7 +3085,7 @@ bool mons_self_destructs(const monster& m)
 bool should_shout_at_mons(const monster &m)
 {
     return !m.is_peripheral()
-        && x_chance_in_y(you.get_mutation_level(MUT_SCREAM) * 6, 100);
+        && x_chance_in_y(you.get_mutation_level(MUT_SCREAM) * 5, 100);
 }
 
 /// Does this monster trigger your attractitis? (Random.)

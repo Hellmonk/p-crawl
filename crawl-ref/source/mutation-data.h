@@ -95,27 +95,26 @@ static const mutation_def mut_data[] =
   {"You feel less resistant to poisons.", "", ""},
   TILEG_MUT_POISON_RESISTANCE,
 },
-#if TAG_MAJOR_VERSION == 34
 
-{ MUT_CARNIVOROUS, 0, 1, mutflag::good,
-  "carnivore",
+{ MUT_HUNTER, 3, 1, mutflag::good,
+  "hunter",
 
-  {"You are carnivorous and can eat meat at any time.", "", ""},
+  {"You never miss when attacking with a ranged or thrown weapon.", "", ""},
 
-  {"You hunger for flesh.", "", ""},
+  {"You feel deadly accurate.", "", ""},
 
-  {"You feel able to eat a more balanced diet.", "", ""},
+  {"Your aim feels unsure.", "", ""},
 },
-{ MUT_HERBIVOROUS, 0, 1, mutflag::bad,
-  "herbivore",
 
-  {"You are a herbivore.", "", ""},
+{ MUT_FENCER, 2, 1, mutflag::good,
+  "fencer",
 
-  {"", "", ""},
+  {"Your melee weapon damage is increased by your EV%.", "", ""},
 
-  {""},
+  {"You feel lithe and nimble.", "", ""},
+
+  {"You feel less nimble.", "", ""},
 },
-#endif
 
 { MUT_HEAT_RESISTANCE, 4, 1, mutflag::good | mutflag::substance,
   "fire resistance",
@@ -198,32 +197,32 @@ static const mutation_def mut_data[] =
   TILEG_MUT_SHOCK_VULNERABILITY,
 },
 
-{ MUT_REGENERATION, 0, 3, mutflag::good,
-  "regeneration",
+{ MUT_SUPER_CHARGING, 2, 1, mutflag::good,
+  "super device charging",
 
-  {"Your natural rate of healing is unusually fast.",
-   "You heal very quickly.",
-   "You regenerate."},
+  {"You charge evocable items 25% faster.",
+   "",
+   ""},
 
-  {"You begin to heal more quickly.",
-   "You begin to heal more quickly.",
-   "You begin to regenerate."},
+  {"You feel supercharged.",
+   "",
+   ""},
 
-  {"Your rate of healing slows.",
-   "Your rate of healing slows.",
-   "Your rate of healing slows."},
+  {"You feel less charged.",
+   "",
+   ""},
 
   TILEG_MUT_REGENERATION,
 },
 
-{ MUT_INHIBITED_REGENERATION, 0, 1, mutflag::bad,
-  "inhibited regeneration",
+{ MUT_POOR_CHARGING, 4, 1, mutflag::bad,
+  "poor device charging",
 
-  {"You do not regenerate when monsters are visible.", "", ""},
+  {"You charge evocable items 50% slower.", "", ""},
 
-  {"Your regeneration stops near monsters.", "", ""},
+  {"You feel uncharged.", "", ""},
 
-  {"You begin to regenerate regardless of the presence of monsters.", "", ""},
+  {"You feel normally charged.", "", ""},
 
   TILEG_MUT_INHIBITED_REGENERATION,
 },
@@ -323,19 +322,19 @@ static const mutation_def mut_data[] =
 },
 #endif
 
-{ MUT_TELEPORT, 3, 2, mutflag::bad,
+{ MUT_TELEPORT, 3, 1, mutflag::bad,
   "teleportitis",
 
   {"You are occasionally teleported next to monsters.",
-   "You are often teleported next to monsters.",
+   "",
    ""},
 
   {"You feel weirdly uncertain.",
-   "You feel even more weirdly uncertain.",
+   "",
    ""},
 
   {"You feel stable.",
-   "You feel stable.",
+   "",
    ""},
   TILEG_MUT_TELEPORT,
 },
@@ -360,7 +359,7 @@ static const mutation_def mut_data[] =
   TILEG_MUT_CONTAMINATION_SUSCEPTIBLE,
 },
 
-{ MUT_STRONG_WILLED, 5, 3, mutflag::good,
+{ MUT_STRONG_WILLED, 10, 3, mutflag::good,
   "strong-willed",
 
   {"You are strong-willed. (Will+)",
@@ -409,7 +408,7 @@ static const mutation_def mut_data[] =
    "You feel quick."},
 },
 
-{ MUT_ACUTE_VISION, 2, 1, mutflag::good,
+{ MUT_ACUTE_VISION, 0, 1, mutflag::good,
   "see invisible",
 
   {"You have supernaturally acute vision. (SInv)", "", ""},
@@ -429,7 +428,7 @@ static const mutation_def mut_data[] =
 },
 
 // Naga only
-{ MUT_SPIT_POISON, 8, 2, mutflag::good | mutflag::anatomy,
+{ MUT_SPIT_POISON, 0, 2, mutflag::good | mutflag::anatomy,
   "spit poison",
 
   {"You can spit poison.",
@@ -558,7 +557,7 @@ static const mutation_def mut_data[] =
   TILEG_MUT_CLARITY
 },
 
-{ MUT_BERSERK, 7, 2, mutflag::bad,
+{ MUT_BERSERK, 0, 2, mutflag::bad,
   "berserk",
 
   {"You sometimes lose your temper in combat.",
@@ -610,24 +609,24 @@ static const mutation_def mut_data[] =
 },
 #endif
 
-{ MUT_MUTATION_RESISTANCE, 4, 3, mutflag::good,
+{ MUT_MUTATION_RESISTANCE, 4, 1, mutflag::good,
   "mutation resistance",
 
-  {"You are somewhat resistant to further mutation.",
-   "You are somewhat resistant to both further mutation and mutation removal.",
-   "You are almost entirely resistant to further mutation and mutation removal."},
+  {"You are resistant to further mutation (80% chance).",
+   "",
+   ""},
 
   {"You feel genetically stable.",
-   "You feel genetically stable.",
-   "You feel genetically immutable."},
+   "",
+   ""},
 
   {"You feel genetically unstable.",
-   "You feel genetically unstable.",
-   "You feel genetically unstable."},
+   "",
+   ""},
   TILEG_MUT_MUTATION_RESISTANCE,
 },
 
-{ MUT_EVOLUTION, 4, 2, mutflag::good,
+{ MUT_EVOLUTION, 0, 2, mutflag::good,
   "evolution",
 
   {"You have hidden genetic potential.",
@@ -644,7 +643,7 @@ static const mutation_def mut_data[] =
   TILEG_MUT_GENERIC_GOOD_MUTATION,
 },
 
-{ MUT_DEVOLUTION, 4, 2, mutflag::bad,
+{ MUT_DEVOLUTION, 0, 2, mutflag::bad,
   "devolution",
 
   {"You have hidden genetic defects.",
@@ -758,7 +757,7 @@ static const mutation_def mut_data[] =
 },
 #endif
 
-{ MUT_NECRO_ENHANCER, 0, 2, mutflag::good,
+{ MUT_NECRO_ENHANCER, 2, 1, mutflag::good,
   "in touch with death",
 
   {"You are in touch with the powers of death.",
@@ -965,7 +964,7 @@ static const mutation_def mut_data[] =
    "", ""},
 },
 
-{ MUT_STINGER, 8, 1, mutflag::good | mutflag::anatomy,
+{ MUT_STINGER, 0, 1, mutflag::good | mutflag::anatomy,
   "stinger",
 
   {"Your tail ends in a venomous barb.", "", ""},
@@ -1091,26 +1090,25 @@ static const mutation_def mut_data[] =
    ""},
 },
 
-{ MUT_SHAGGY_FUR, 2, 3, mutflag::good | mutflag::anatomy,
+{ MUT_SHAGGY_FUR, 5, 1, mutflag::good | mutflag::anatomy,
   "shaggy fur",
 
-  {"You are covered in fur. (AC +1)",
-   "You are covered in thick fur. (AC +2)",
-   "Your thick and shaggy fur keeps you warm. (AC +3, rC+)"},
+  {"You are covered in thick fur. (AC +3)",
+   "",
+   ""},
 
   {"Fur sprouts all over your body.",
-   "Your fur grows into a thick mane.",
-   "Your thick fur grows shaggy and warm."},
+   "",
+   ""},
 
   {"You shed all your fur.",
-   "Your thick fur recedes somewhat.",
-   "Your shaggy fur recedes somewhat."},
+   "",
+   ""},
+   
   TILEG_MUT_SHAGGY_FUR,
-
-  {0, 0, "Your shaggy fur will keep you warm. (AC + 3, rC+)"}
 },
 
-{ MUT_HIGH_MAGIC, 2, 3, mutflag::good,
+{ MUT_HIGH_MAGIC, 5, 3, mutflag::good,
   "high MP",
 
   {"You have an increased reservoir of magic. (+10% MP)",
@@ -1127,7 +1125,7 @@ static const mutation_def mut_data[] =
   TILEG_MUT_HIGH_MP,
 },
 
-{ MUT_LOW_MAGIC, 9, 3, mutflag::bad,
+{ MUT_LOW_MAGIC, 10, 3, mutflag::bad,
   "low MP",
 
   {"Your magical capacity is low. (-10% MP)",
@@ -1144,37 +1142,37 @@ static const mutation_def mut_data[] =
   TILEG_MUT_LOW_MP,
 },
 
-{ MUT_WILD_MAGIC, 6, 3, mutflag::good,
+{ MUT_WILD_MAGIC, 6, 2, mutflag::good,
   "wild magic",
 
-  {"Your spells are a little harder to cast, but a little more powerful.",
-   "Your spells are harder to cast, but more powerful.",
-   "Your spells are much harder to cast, but much more powerful."},
+  {"Your spells are harder to cast, but more powerful. (Wiz-, pow +6)",
+   "Your spells are much harder to cast, but much more powerful. (Wiz--, pow +12",
+   ""},
 
   {"You feel less in control of your magic.",
-   "You feel less in control of your magic.",
-   "You feel your magical power running wild!"},
+   "You feel your magical power running wild!",
+   ""},
 
   {"You regain control of your magic.",
    "You feel more in control of your magic.",
-   "You feel more in control of your magic."},
+   ""},
   TILEG_MUT_WILD_MAGIC,
 },
 
-{ MUT_SUBDUED_MAGIC, 6, 3, mutflag::bad,
+{ MUT_SUBDUED_MAGIC, 6, 2, mutflag::bad,
   "subdued magic",
 
-  {"Your spells are a little easier to cast, but a little less powerful.",
-   "Your spells are easier to cast, but less powerful.",
-   "Your spells are much easier to cast, but much less powerful."},
+  {"Your spells are easier to cast, but less powerful. (Wiz+, pow -6)",
+   "Your spells are much easier to cast, but much less powerful. (Wiz++, pow -12",
+   ""},
 
   {"Your connection to magic feels subdued.",
    "Your connection to magic feels more subdued.",
-   "Your connection to magic feels nearly dormant."},
+   ""},
 
   {"Your magic regains its normal vibrancy.",
    "Your connection to magic feels less subdued.",
-   "Your connection to magic feels less subdued."},
+   ""},
   TILEG_MUT_SUBDUED_MAGIC,
 },
 
@@ -1252,17 +1250,17 @@ static const mutation_def mut_data[] =
 },
 #endif
 
-{ MUT_PASSIVE_MAPPING, 3, 2, mutflag::good,
+{ MUT_PASSIVE_MAPPING, 5, 1, mutflag::good,
   "sense surroundings",
 
   {"You passively map the area around you.",
-   "You passively map a large area around you.", ""},
+   "", ""},
 
   {"You feel a strange attunement to the structure of the dungeons.",
-   "Your attunement to dungeon structure grows further.", ""},
+   "", ""},
 
   {"You feel slightly disoriented.",
-   "You feel slightly disoriented.", ""},
+   "", ""},
 
   TILEG_MUT_PASSIVE_MAPPING,
 },
@@ -1335,12 +1333,12 @@ static const mutation_def mut_data[] =
   TILEG_MUT_NIGHTSTALKER,
 },
 
-{ MUT_SPINY, 0, 3, mutflag::good | mutflag::anatomy,
+{ MUT_SPINY, 2, 3, mutflag::good | mutflag::anatomy,
   "spiny",
 
-  {"You are partially covered in sharp spines.",
-   "You are mostly covered in sharp spines.",
-   "You are completely covered in sharp spines."},
+  {"You are partially covered in sharp spines (1d6).",
+   "You are mostly covered in sharp spines (2d6).",
+   "You are completely covered in sharp spines (3d6)."},
 
   {"Sharp spines emerge from parts of your body.",
    "Sharp spines emerge from more of your body.",
@@ -1546,39 +1544,39 @@ static const mutation_def mut_data[] =
    TILEG_MUT_EFFICIENT_METABOLISM,
  },
 
-{ MUT_NO_POTION_HEAL, 3, 2, mutflag::bad,
-  "no potion heal",
+{ MUT_NO_POTION_HEAL, 3, 1, mutflag::bad,
+  "inhibited healing",
 
-  {"Potions are less effective at restoring your health.",
-   "Potions cannot restore your health.",
+  {"Most sources of healing are half as effective.",
+   "",
    ""},
 
-  {"Your system partially rejects the healing effects of potions.",
-   "Your system completely rejects the healing effects of potions.",
+  {"Your system partially rejects healing effects.",
+   "",
    ""},
 
-  {"Your system completely accepts the healing effects of potions.",
-   "Your system partly accepts the healing effects of potions.",
+  {"Your system completely accepts healing effects.",
+   "",
    ""},
 
   TILEG_MUT_NO_POTION_HEAL,
 },
 
 // Scale mutations
-{ MUT_DISTORTION_FIELD, 0, 3, mutflag::good,
+{ MUT_DISTORTION_FIELD, 2, 1, mutflag::good,
   "repulsion field",
 
-  {"You are surrounded by a mild repulsion field. (EV +2)",
-   "You are surrounded by a moderate repulsion field. (EV +3)",
-   "You are surrounded by a strong repulsion field. (EV +4, RMsl)"},
+  {"You are surrounded by a repulsion field. (RMsl)",
+   "",
+   ""},
 
   {"You begin to radiate repulsive energy.",
-   "Your repulsive radiation grows stronger.",
-   "Your repulsive radiation grows stronger."},
+   "",
+   ""},
 
   {"You feel less repulsive.",
-   "You feel less repulsive.",
-   "You feel less repulsive."},
+   "",
+   ""},
   TILEG_MUT_GENERIC_GOOD_MUTATION,
 },
 
@@ -1600,7 +1598,7 @@ static const mutation_def mut_data[] =
     TILEG_MUT_ICY_BLUE_SCALES
 },
 
-{ MUT_IRIDESCENT_SCALES, 10, 3, mutflag::good | mutflag::substance | mutflag::anatomy | mutflag::scales,
+{ MUT_IRIDESCENT_SCALES, 0, 3, mutflag::good | mutflag::substance | mutflag::anatomy | mutflag::scales,
   "iridescent scales",
 
   {"You are partially covered in iridescent scales. (AC +2)",
@@ -1618,20 +1616,20 @@ static const mutation_def mut_data[] =
     TILEG_MUT_IRIDESCENT_SCALES
 },
 
-{ MUT_LARGE_BONE_PLATES, 2, 3, mutflag::good | mutflag::substance | mutflag::anatomy,
+{ MUT_LARGE_BONE_PLATES, 5, 1, mutflag::good | mutflag::substance | mutflag::anatomy,
   "large bone plates",
 
-  {"You are partially covered in large bone plates. (SH +4)",
-   "You are mostly covered in large bone plates. (SH +6)",
-   "You are completely covered in large bone plates. (SH +8)"},
+  {"You are covered in large bone plates. (SH +20)",
+   "",
+   ""},
 
-  {"Large bone plates grow over parts of your arms.",
-   "Large bone plates spread over more of your arms.",
-   "Large bone plates cover your arms completely."},
+  {"Large bone plates grow over your arms.",
+   "",
+   ""},
 
   {"Your large bone plates disappear.",
-   "Your large bone plates recede somewhat.",
-   "Your large bone plates recede somewhat."},
+   "",
+   ""},
 
     TILEG_MUT_LARGE_BONE_PLATES,
 },
@@ -1726,12 +1724,12 @@ static const mutation_def mut_data[] =
     TILEG_MUT_THIN_METALLIC_SCALES
 },
 
-{ MUT_THIN_SKELETAL_STRUCTURE, 2, 3, mutflag::good | mutflag::need_bones,
+{ MUT_THIN_SKELETAL_STRUCTURE, 7, 3, mutflag::good | mutflag::need_bones,
   "thin skeletal structure",
 
-  {"You have a somewhat thin skeletal structure. (Dex +2, Stealth+)",
-   "You have a moderately thin skeletal structure. (Dex +4, Stealth++)",
-   "You have an unnaturally thin skeletal structure. (Dex +6, Stealth+++)"},
+  {"You have a somewhat thin skeletal structure. (Stealth+)",
+   "You have a moderately thin skeletal structure. (Stealth++)",
+   "You have an unnaturally thin skeletal structure. (Stealth+++)"},
 
   {"Your bones become slightly less dense.",
    "Your bones become somewhat less dense.",
@@ -1762,7 +1760,7 @@ static const mutation_def mut_data[] =
     TILEG_MUT_YELLOW_SCALES
 },
 
-{ MUT_SHARP_SCALES, 0, 3, mutflag::good | mutflag::substance | mutflag::anatomy | mutflag::scales,
+{ MUT_SHARP_SCALES, 1, 3, mutflag::good | mutflag::substance | mutflag::anatomy | mutflag::scales,
   "sharp scales",
 
   {"You are partially covered in razor-sharp scales. (AC +1, Slay +1)",
@@ -1816,25 +1814,25 @@ static const mutation_def mut_data[] =
   TILEG_MUT_GENERIC_DEMONSPAWN_MUTATION,
 },
 
-{ MUT_BIG_BRAIN, 0, 3, mutflag::good,
+{ MUT_BIG_BRAIN, 2, 1, mutflag::good,
   "big brain",
 
-  {"You have an unusually large brain. (Int +2)",
-   "You have an extremely huge brain. (Int +4)",
-   "You have an absolutely massive brain. (Int +6, Wiz)"},
+  {"You have an unusually large brain. (Wiz)",
+   "",
+   ""},
 
-  {"Your brain expands.",
-   "Your brain expands.",
-   "Your brain expands to incredible size."},
+  {"Your brain expands to incredible size.",
+   "",
+   ""},
 
   {"Your brain returns to normal size.",
-   "Your brain shrinks.",
-   "Your brain shrinks."},
+   "",
+   ""},
 
     TILEG_MUT_BIG_BRAIN,
 },
 
-{ MUT_CAMOUFLAGE, 1, 3, mutflag::good | mutflag::substance,
+{ MUT_CAMOUFLAGE, 0, 3, mutflag::good | mutflag::substance,
   "camouflage",
 
   {"Your skin changes colour to match your surroundings (Stealth+).",
@@ -2343,7 +2341,7 @@ static const mutation_def mut_data[] =
     "Your ability to control magic is less disrupted."},
 },
 
-{ MUT_MP_WANDS, 7, 1, mutflag::good,
+{ MUT_MP_WANDS, 0, 1, mutflag::good,
   "MP-powered wands",
 
   {"You expend magic power (3 MP) to strengthen your wands.", "", ""},
@@ -2398,7 +2396,7 @@ static const mutation_def mut_data[] =
   TILEG_MUT_MISSING_EYE,
 },
 
-{ MUT_TEMPERATURE_SENSITIVITY, 0, 1, mutflag::bad,
+{ MUT_TEMPERATURE_SENSITIVITY, 1, 1, mutflag::bad,
   "temperature sensitive",
 
   {"You are sensitive to extremes of temperature. (rF-, rC-)", "", ""},
@@ -2590,12 +2588,12 @@ static const mutation_def mut_data[] =
 },
 
 // XX why does this have 3 levels, only 1 is used
-{ MUT_FLAT_HP, 0, 3, mutflag::good,
+{ MUT_FLAT_HP, 2, 3, mutflag::good,
   "extra vitality",
 
-    {"You have superior vitality. (+4 MHP)",
-     "You have much superior vitality. (+8 MHP)",
-     "You have exceptionally superior vitality. (+12 MHP)"},
+    {"You have superior vitality. (+7 MHP)",
+     "You have much superior vitality. (+14 MHP)",
+     "You have exceptionally superior vitality. (+21 MHP)"},
     {"You feel more vital.",
      "You feel more vital.",
      "You feel more vital."},
@@ -2616,7 +2614,7 @@ static const mutation_def mut_data[] =
 },
 
 // Sadly console size restrictions prevent more than one level of this existing
-{ MUT_DAYSTALKER, 0, 1, mutflag::good,
+{ MUT_DAYSTALKER, 1, 1, mutflag::bad,
   "+LOS",
 
     {"You have an extended range of vision and can be seen from far away.",

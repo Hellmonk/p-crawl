@@ -26,8 +26,6 @@ mutations:
     MUT_FAITH: 1
     MUT_NECRO_ENHANCER: 1
     MUT_ACCURSED: 1
-  13:
-    MUT_NECRO_ENHANCER: 1
 recommended_jobs:
   - cinder acolyte
   - hedge wizard
