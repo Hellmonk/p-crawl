@@ -5831,7 +5831,7 @@ const vector<int> TWO_THREE_FOUR = {2,3,4};
 
 vector<mutation_ac_changes> all_mutation_ac_changes = {
      mutation_ac_changes(MUT_GELATINOUS_BODY,           ONE_TWO_THREE)
-    ,mutation_ac_changes(MUT_TOUGH_SKIN,                ONE_TWO_THREE)
+    ,mutation_ac_changes(MUT_TOUGH_SKIN,                {3, 3, 3})
     ,mutation_ac_changes(MUT_SHAGGY_FUR,                ONE_TWO_THREE)
     ,mutation_ac_changes(MUT_PHYSICAL_VULNERABILITY,    {-5,-10,-15})
     ,mutation_ac_changes(MUT_IRIDESCENT_SCALES,         {2, 4, 6})
