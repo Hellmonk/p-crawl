@@ -3497,14 +3497,6 @@ static void _tag_read_you(reader &th)
             you.mutation[MUT_ANTENNAE] = you.innate_mutation[MUT_ANTENNAE] = 1;
     }
 
-    if (th.getMinorVersion() < TAG_MINOR_SAPROVOROUS
-        && you.species == SP_ONI)
-    {
-        // Remove the innate level of fast metabolism
-        you.mutation[MUT_FAST_METABOLISM] -= 1;
-        you.innate_mutation[MUT_FAST_METABOLISM] -= 1;
-    }
-
     if (th.getMinorVersion() < TAG_MINOR_DS_CLOUD_MUTATIONS
         && you.species == SP_DEMONSPAWN)
     {

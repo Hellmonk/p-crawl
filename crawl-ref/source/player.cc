@@ -1801,6 +1801,9 @@ static int _player_base_evasion_modifiers()
     if (you.get_mutation_level(MUT_CLUMSY))
         evbonus -= 20;
 
+    if (you.has_mutation(MUT_ROUGH_BLACK_SCALES))
+        evbonus -= 10;
+
     // Consider this a 'permanent' bonus, since players in forms will often
     // remain in that form for a long time. This is slightly untrue for
     // hostile polymorph, however I don't think any of them affect the player's
@@ -2180,9 +2183,9 @@ static void _recharge_xp_evokers(int exp)
 {
     FixedVector<item_def*, NUM_MISCELLANY> evokers(nullptr);
     list_charging_evokers(evokers);
-    
+
     int applied_xp = exp;
-    
+
     if (you.get_mutation_level(MUT_SUPER_CHARGING))
         applied_xp = div_rand_round(exp * 5, 4);
     else if (you.get_mutation_level(MUT_POOR_CHARGING))
@@ -3326,7 +3329,8 @@ bool player::cloud_immune(bool items) const
 {
     return have_passive(passive_t::cloud_immunity)
            || you.duration[DUR_TEMP_CLOUD_IMMUNITY]
-           || actor::cloud_immune(items);
+           || actor::cloud_immune(items)
+           || you.has_mutation(MUT_CLOUD_IMMUNITY);
 }
 
 /**
@@ -5849,6 +5853,7 @@ vector<mutation_ac_changes> all_mutation_ac_changes = {
     ,mutation_ac_changes(MUT_YELLOW_SCALES,             TWO_THREE_FOUR)
     ,mutation_ac_changes(MUT_SHARP_SCALES,              ONE_TWO_THREE)
     ,mutation_ac_changes(MUT_IRON_FUSED_SCALES,         {5, 5, 5})
+    ,mutation_ac_changes(MUT_ROUGH_BLACK_SCALES,        {6,6,6})
 };
 
 /**
@@ -6188,10 +6193,10 @@ void player::preview_stats_in_specific_form(int scale, const item_def& talisman,
 bool player::heal(int amount)
 {
     int oldhp = hp;
-    
+
     if (you.get_mutation_level(MUT_NO_POTION_HEAL))
         amount = div_rand_round(amount, 2);
-    
+
     ::inc_hp(amount);
     return oldhp < hp;
 }

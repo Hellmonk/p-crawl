@@ -227,7 +227,7 @@ static const mutation_def mut_data[] =
   TILEG_MUT_INHIBITED_REGENERATION,
 },
 
-{ MUT_FEED_OFF_SUFFERING, 4, 2, mutflag::good,
+{ MUT_FEED_OFF_SUFFERING, 0, 2, mutflag::good,
    "feed off suffering",
 
    {"You can sometimes gain power from killing poisoned or drained foes.",
@@ -239,7 +239,7 @@ static const mutation_def mut_data[] =
     TILEG_MUT_FEED_OFF_SUFFERING,
 },
 
-{ MUT_LUCKY, 4, 2, mutflag::good,
+{ MUT_LUCKY, 0, 2, mutflag::good,
    "lucky",
 
    {"You discover slightly more artefacts.", "You discover more artefacts.", ""},
@@ -247,40 +247,37 @@ static const mutation_def mut_data[] =
    {"You feel like your luck has run out.", "You feel a little less lucky.", ""},
 },
 
-#if TAG_MAJOR_VERSION == 34
+{ MUT_EXPENSIVE_CASTING, 3, 2, mutflag::bad,
+  "expensive casting",
 
-{ MUT_FAST_METABOLISM, 0, 3, mutflag::bad,
-  "fast metabolism",
-
-  {"You have a fast metabolism.",
-   "You have a very fast metabolism.",
-   "Your metabolism is lightning-fast."},
-
-  {"You feel a little hungry.",
-   "You feel a little hungry.",
-   "You feel a little hungry."},
-
-  {"Your metabolism slows.",
-   "Your metabolism slows.",
-   "Your metabolism slows."},
-},
-
-{ MUT_SLOW_METABOLISM, 0, 2, mutflag::good,
-  "slow metabolism",
-
-  {"You have a slow metabolism.",
-   "You need to consume almost no food.",
+  {"Your spells are more expensive to cast (+1 mp cost).",
+   "Your spells are much more expensive to cast (+2 mp cost).",
    ""},
 
-  {"Your metabolism slows.",
-   "Your metabolism slows.",
+  {"Your magic grows costly.",
+   "Your magic grows costly.",
    ""},
 
-  {"You feel a little hungry.",
-   "You feel a little hungry.",
+  {"Your magic returns to its normal price.",
+   "Your magic feels less costly.",
    ""},
 },
-#endif
+
+{ MUT_CLOUD_IMMUNITY, 4, 1, mutflag::good,
+  "cloud immunity",
+
+  {"You are immune to the effects of clouds.",
+   "",
+   ""},
+
+  {"You feel like you can breathe easier.",
+   "",
+   ""},
+
+  {"Your breathing feels rougher.",
+   "",
+   ""},
+},
 
 { MUT_WEAK, 8, 1, mutflag::bad,
   "weak",
@@ -1104,7 +1101,7 @@ static const mutation_def mut_data[] =
   {"You shed all your fur.",
    "",
    ""},
-   
+
   TILEG_MUT_SHAGGY_FUR,
 },
 
@@ -1651,24 +1648,22 @@ static const mutation_def mut_data[] =
 
     TILEG_MUT_MOLTEN_SCALES
 },
-#if TAG_MAJOR_VERSION == 34
 
-{ MUT_ROUGH_BLACK_SCALES, 0, 3, mutflag::good,
+{ MUT_ROUGH_BLACK_SCALES, 5, 1, mutflag::good,
   "rough black scales",
 
-  {"You are partially covered in rough black scales. (AC +2, Dex -1)",
-   "You are mostly covered in rough black scales. (AC +5, Dex -2)",
-   "You are completely covered in rough black scales. (AC +8, Dex -3)"},
+  {"You are covered in rough black scales. (AC +6, EV - 10)",
+   "",
+   ""},
 
-  {"Rough black scales grow over part of your body.",
-   "Rough black scales spread over more of your body.",
-   "Rough black scales cover your body completely."},
+  {"Rough black scales grow over your body.",
+   "",
+   ""},
 
   {"Your rough black scales disappear.",
-   "Your rough black scales recede somewhat.",
-   "Your rough black scales recede somewhat."},
+   "",
+   ""},
 },
-#endif
 
 { MUT_RUGGED_BROWN_SCALES, 0, 3, mutflag::good | mutflag::substance | mutflag::anatomy | mutflag::scales,
   "rugged brown scales",

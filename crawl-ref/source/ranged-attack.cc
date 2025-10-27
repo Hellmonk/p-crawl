@@ -90,7 +90,7 @@ bool ranged_attack::attack()
                       && defender->as_monster()->has_ench(ENCH_BULLSEYE_TARGET);
 
     ev_margin = test_hit(to_hit, ev, bullseye);
-    
+
     // guaranteed hit/miss for certain conditions
     if (attacker->is_player() && you.has_mutation(MUT_HUNTER))
         ev_margin = 100;
