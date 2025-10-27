@@ -1609,7 +1609,7 @@ int unarmed_base_damage(bool random)
     int damage = get_form()->get_base_unarmed_damage(random);
 
     if (you.has_usable_claws())
-        damage += you.has_claws() * 2;
+        damage += 6;
 
     if (you.form_uses_xl())
     {
