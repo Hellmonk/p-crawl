@@ -19,7 +19,6 @@ levelup_stats:
 mutations:
   1:
     MUT_FAST: 3
-    MUT_ACUTE_VISION: 1
 recommended_jobs:
   - brigand
   - artificer

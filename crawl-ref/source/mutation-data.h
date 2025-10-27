@@ -87,12 +87,12 @@ static const mutation_def mut_data[] =
   TILEG_MUT_AGILE,
 },
 
-{ MUT_POISON_RESISTANCE, 0, 1, mutflag::good | mutflag::substance,
-  "poison resistance",
+{ MUT_GOOD_DODGING, 2, 1, mutflag::good,
+  "good dodging",
 
-  {"You are resistant to poisons. (rPois)", "", ""},
-  {"You feel resistant to poisons.", "",  ""},
-  {"You feel less resistant to poisons.", "", ""},
+  {"Your dodging skill raises EV more (+2 per skill level)", "", ""},
+  {"You feel better about dodging.", "",  ""},
+  {"You feel like more of a target.", "", ""},
   TILEG_MUT_POISON_RESISTANCE,
 },
 
@@ -308,16 +308,14 @@ static const mutation_def mut_data[] =
   {"", "", ""},
   TILEG_MUT_CLUMSY,
 },
-#if TAG_MAJOR_VERSION == 34
 
-{ MUT_TELEPORT_CONTROL, 0, 1, mutflag::good,
-  "teleport control",
+{ MUT_POOR_DODGING, 2, 1, mutflag::bad,
+  "poor dodging",
 
-  {"You can control translocations.", "", ""},
-  {"You feel controlled.", "", ""},
-  {"You feel random.", "", ""},
+  {"Dodging skill is half as effective at raising EV.", "", ""},
+  {"", "", ""},
+  {"", "", ""},
 },
-#endif
 
 { MUT_TELEPORT, 3, 1, mutflag::bad,
   "teleportitis",
@@ -336,23 +334,23 @@ static const mutation_def mut_data[] =
   TILEG_MUT_TELEPORT,
 },
 
-{ MUT_PERSISTENT_DRAIN, 5, 1, mutflag::bad,
-  "persistent drain",
+{ MUT_FULL_RECOVERY, 2, 1, mutflag::good,
+  "full recovery",
 
-  {"Your health recovers twice as slowly from being drained.", "", ""},
+  {"You restore all missing HP and MP when descending to a new floor.", "", ""},
 
-  {"You begin to recover more slowly from draining effects.", "", ""},
+  {"You begin to recover more easily.", "", ""},
 
-  {"You recover from draining at a normal speed again.", "", ""},
+  {"You recover at a normal speed again.", "", ""},
   TILEG_MUT_PERSISTENT_DRAIN,
 },
 
-{ MUT_CONTAMINATION_SUSCEPTIBLE, 5, 1, mutflag::bad,
-  "contamination susceptible",
+{ MUT_POOR_RECOVERY, 2, 1, mutflag::bad,
+  "poor recovery",
 
-  {"You absorb twice as much mutagenic energy from being contaminated.", "", ""},
-  {"You feel more susceptible to contamination.", "", ""},
-  {"You feel less susceptible to contamination.", "", ""},
+  {"You recover less of your missing HP and MP when descending to a new floor.", "", ""},
+  {"You begin to recover less easily", "", ""},
+  {"You recover at a normal speed again.", "", ""},
   TILEG_MUT_CONTAMINATION_SUSCEPTIBLE,
 },
 
@@ -405,12 +403,12 @@ static const mutation_def mut_data[] =
    "You feel quick."},
 },
 
-{ MUT_ACUTE_VISION, 0, 1, mutflag::good,
-  "see invisible",
+{ MUT_TRAINED_BODY, 2, 1, mutflag::good,
+  "trained body",
 
-  {"You have supernaturally acute vision. (SInv)", "", ""},
-  {"Your vision sharpens.", "", ""},
-  {"Your vision seems duller.", "", ""},
+  {"Your unarmed combat damage is improved more by skill.", "", ""},
+  {"Your body feels honed.", "", ""},
+  {"Your body feels less honed.", "", ""},
 
   TILEG_MUT_ACUTE_VISION,
 },
@@ -441,80 +439,78 @@ static const mutation_def mut_data[] =
    ""},
   TILEG_MUT_SPIT_POISON,
 },
-#if TAG_MAJOR_VERSION == 34
 
-{ MUT_BREATHE_FLAMES, 0, 3, mutflag::good,
-  "breathe flames",
+{ MUT_HUNTED, 2, 3, mutflag::bad,
+  "hunted",
 
-  {"You can breathe flames.",
-   "You can breathe fire.",
-   "You can breathe blasts of fire."},
+  {"You must proceed quickly. (-100 turns / floor)",
+   "You are required to advance in great haste. (-150 turns / floor)",
+   "You've gotta go fast. (-200 turns / floor)"},
 
-  {"Your throat feels hot.",
-   "Your throat feels hot.",
-   "Your throat feels hot."},
+  {"You feel hunted.",
+   "You feel hunted.",
+   "You feel like you're running out of time."},
 
-  {"A chill runs up and down your throat.",
-   "A chill runs up and down your throat.",
-   "A chill runs up and down your throat."},
+  {"You no longer feel hunted.",
+   "You feel a little less hunted.",
+   "You feel a little less hunted."},
 },
 
-{ MUT_JUMP, 0, 3, mutflag::good,
-  "jump",
+{ MUT_UNSTEALTHY, 8, 3, mutflag::bad,
+  "unstealthy",
 
-  {"You can jump attack at a short distance.",
-   "You can jump attack at a medium distance.",
-   "You can jump attack at a long distance."},
+  {"You are less stealthy. (Stealth-)",
+   "You are much less stealthy. (Stealth--)",
+   "You are incredibly unstealthy. (Stealth---)"},
 
-  {"You feel more sure on your feet.",
-   "You feel more sure on your feet.",
-   "You feel more sure on your feet."},
+  {"You feel less stealthy.",
+   "You feel less stealthy.",
+   "You feel less stealthy."},
 
-  {"You feel less sure on your feet.",
-   "You feel less sure on your feet.",
-   "You feel less sure on your feet."},
+  {"You feel less unstealthy.",
+   "You feel less unstealthy.",
+   "You feel less unstealthy."},
 },
 
-{ MUT_BLINK, 0, 1, mutflag::good,
-  "blink",
+{ MUT_BRAWLER, 2, 1, mutflag::good,
+  "brawler",
 
-  {"You can translocate small distances at will.", "", ""},
-  {"You feel jittery.", "", ""},
-  {"You no longer feel jittery.", "", ""},
+  {"Your fighting skill also increases your damage.", "", ""},
+  {"You feel like starting a fight.", "", ""},
+  {"You feel meek.", "", ""},
 },
 
-{ MUT_STRONG_STIFF, 0, 3, mutflag::good,
-  "stiff muscles",
+{ MUT_NOISY, 3, 3, mutflag::bad,
+  "noisy",
 
-  {"Your muscles are strong, but stiff. (Str +1, Dex -1)",
-   "Your muscles are very strong, but stiff. (Str +2, Dex -2)",
-   "Your muscles are extremely strong, but stiff. (Str +3, Dex -3)"},
+  {"You cause everything to make additional noise.",
+   "You cause everything to make a lot of additional noise.",
+   "You cause everything to make an incredible amount of additional noise."},
 
-  {"Your muscles feel sore.",
-   "Your muscles feel sore.",
-   "Your muscles feel sore."},
+  {"You get louder.",
+   "You get louder.",
+   "You get deafeningly loud."},
 
-  {"Your muscles feel loose.",
-   "Your muscles feel loose.",
-   "Your muscles feel loose."},
+  {"You quiet down.",
+   "You grow quieter.",
+   "You grow quieter."},
 },
 
-{ MUT_FLEXIBLE_WEAK, 0, 3, mutflag::good,
-  "flexible muscles",
+{ MUT_NATURAL_SHIFTER, 2, 3, mutflag::good,
+  "natural shifter",
 
-  {"Your muscles are flexible, but weak (Str -1, Dex +1).",
-   "Your muscles are very flexible, but weak (Str -2, Dex +2).",
-   "Your muscles are extremely flexible, but weak (Str -3, Dex +3)."},
+  {"You have improved defenses while transformed. (AC +2, EV +10)",
+   "You have greatly improved defenses while transformed (AC +4, EV +20)",
+   "You have massively improved defenses while transformed (AC +6, EV +30)"},
 
-  {"Your muscles feel loose.",
-   "Your muscles feel loose.",
-   "Your muscles feel loose."},
+  {"You feel ready to transform.",
+   "You feel ready to transform.",
+   "You feel ready to transform."},
 
-  {"Your muscles feel sore.",
-   "Your muscles feel sore.",
-   "Your muscles feel sore."},
+  {"You want to get back in your own skin.",
+   "You feel less ready to transform.",
+   "You feel less ready to transform."},
 },
-#endif
 
 { MUT_SCREAM, 6, 2, mutflag::bad,
   "screaming",
@@ -2307,7 +2303,7 @@ static const mutation_def mut_data[] =
     "You reflexes speed back up."},
 },
 
-{ MUT_WEAK_WILLED, 0, 3, mutflag::bad,
+{ MUT_WEAK_WILLED, 10, 3, mutflag::bad,
   "weak-willed",
 
   {"You are slightly weak-willed. (Will-)",

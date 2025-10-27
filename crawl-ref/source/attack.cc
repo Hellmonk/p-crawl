@@ -758,14 +758,15 @@ int attack::calc_damage()
     else
     {
         int potential_damage, damage;
+        bool penalty = false;
 
         potential_damage = using_weapon() || wpn_skill == SK_THROWING
             ? adjusted_weapon_damage() : calc_base_unarmed_damage();
 
         if (using_weapon())
         {
-            bool penalty = weapon_skill_requirement(*weapon) > you.skill(wpn_skill);
-            potential_damage = apply_weapon_skill(potential_damage, wpn_skill, penalty);
+            penalty = weapon_skill_requirement(*weapon) > you.skill(wpn_skill);
+            potential_damage = apply_weapon_skill(potential_damage, wpn_skill);
 
             if (!is_range_weapon(*weapon) && you.has_mutation(MUT_FENCER))
             {
@@ -787,6 +788,12 @@ int attack::calc_damage()
         if (!defender->alive())
             return 0;
         damage = player_apply_final_multipliers(damage);
+
+        // weapon skill penalty applies after everything else, so slaying etc is
+        // worse when using an unskilled weapon.
+        if (penalty)
+            damage = div_rand_round(damage, 2);
+
         damage = apply_defender_ac(damage);
         damage = player_apply_postac_multipliers(damage);
 

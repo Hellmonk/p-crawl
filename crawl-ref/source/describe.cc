@@ -1393,8 +1393,8 @@ string damage_rating(const item_def *item, int *rating_value)
     int rating = (base_dam + extra_base_dam);
     rating += plusses;
     if (use_weapon_skill)
-        rating = apply_weapon_skill(rating, skill, penalty);
-    if (thrown && penalty)
+        rating = apply_weapon_skill(rating, skill);
+    if (penalty)
         rating /= 2;
 
     if (rating_value)

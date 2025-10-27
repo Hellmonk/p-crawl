@@ -1286,6 +1286,9 @@ static void _player_stair_healing()
 {
     int heal_fraction = 3;
 
+    heal_fraction -= you.get_mutation_level(MUT_POOR_RECOVERY);
+    heal_fraction += you.get_mutation_level(MUT_FULL_RECOVERY);
+
     inc_mp((you.max_magic_points - you.magic_points) * heal_fraction / 4);
 
     //inhibited healing mut halves "most" healing, but shouldn't affect this.

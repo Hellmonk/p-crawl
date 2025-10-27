@@ -197,8 +197,6 @@ save compatibility code in #if blocks that check for the current value
 of TAG_MAJOR_VERSION:
 
     #if TAG_MAJOR_VERSION == 34
-        if (you.mutation[MUT_TELEPORT_CONTROL] == 1)
-            you.mutation[MUT_TELEPORT_CONTROL] = 0;
         if (you.mutation[MUT_TRAMPLE_RESISTANCE] > 1)
             you.mutation[MUT_TRAMPLE_RESISTANCE] = 1;
     #endif

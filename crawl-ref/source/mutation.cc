@@ -124,26 +124,20 @@ vector<mutation_type> get_removed_mutations()
     static vector<mutation_type> removed_mutations =
     {
 #if TAG_MAJOR_VERSION == 34
-        MUT_BREATHE_FLAMES,
         MUT_BREATHE_POISON,
         MUT_CLING,
         MUT_CONSERVE_POTIONS,
         MUT_CONSERVE_SCROLLS,
         MUT_EXOSKELETON,
-        MUT_FLEXIBLE_WEAK,
         MUT_FOOD_JELLY,
         MUT_FUMES,
-        MUT_JUMP,
         MUT_SAPROVOROUS,
-        MUT_STRONG_STIFF,
         MUT_SUSTAIN_ATTRIBUTES,
-        MUT_TELEPORT_CONTROL,
         MUT_TRAMPLE_RESISTANCE,
         MUT_MUMMY_RESTORATION,
         MUT_NO_CHARM_MAGIC,
         MUT_MIASMA_IMMUNITY,
         MUT_BLURRY_VISION,
-        MUT_BLINK,
         MUT_UNBREATHING,
         MUT_GOURMAND,
         MUT_AWKWARD_TONGUE,
@@ -206,6 +200,8 @@ static const mutation_conflict mut_conflicts[] =
     { MUT_MUTATION_RESISTANCE, MUT_EVOLUTION,               true},
     { MUT_DAYSTALKER,          MUT_NIGHTSTALKER,            true},
     { MUT_SUPER_CHARGING,      MUT_POOR_CHARGING,           true},
+    { MUT_GOOD_DODGING,        MUT_POOR_DODGING,            true},
+    { MUT_FULL_RECOVERY,       MUT_POOR_RECOVERY,           true},
 
     { MUT_FANGS,               MUT_BEAK,                   false},
     { MUT_ANTENNAE,            MUT_HORNS,                  false},
@@ -1652,13 +1648,6 @@ bool mut_is_compatible(mutation_type mut, bool base_only)
         if ((mut == MUT_BERSERK || mut == MUT_TELEPORT) && you.stasis())
             return false;
 
-        if (mut == MUT_ACUTE_VISION && you.innate_sinv())
-            return false;
-
-        // Already immune.
-        if (mut == MUT_POISON_RESISTANCE && you.is_nonliving(!base_only, !base_only))
-            return false;
-
         // We can't use is_useless_skill() here, since species that can still wear
         // body armour can sacrifice armour skill with Ru.
         if ((mut == MUT_DEFORMED || mut == MUT_STURDY_FRAME)
@@ -1965,11 +1954,6 @@ bool mutate(mutation_type which_mutation, const string &reason, bool failMsg,
 
         case MUT_PASSIVE_MAPPING:
             add_daction(DACT_REAUTOMAP);
-            break;
-
-        case MUT_ACUTE_VISION:
-            // We might have to turn autopickup back on again.
-            autotoggle_autopickup(false);
             break;
 
         case MUT_NIGHTSTALKER:

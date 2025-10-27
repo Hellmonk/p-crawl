@@ -3490,9 +3490,6 @@ static void _tag_read_you(reader &th)
         // some mutations from this tag are handled by generic cleanup code
         // below.
 
-        if (you.species == SP_GARGOYLE)
-            _clear_mutation(MUT_POISON_RESISTANCE);
-
         if (you.species == SP_FORMICID)
             you.mutation[MUT_ANTENNAE] = you.innate_mutation[MUT_ANTENNAE] = 1;
     }
@@ -3664,12 +3661,6 @@ static void _tag_read_you(reader &th)
     {
         if (you.mutation[MUT_POOR_CONSTITUTION] > 2)
             you.mutation[MUT_POOR_CONSTITUTION] = 2;
-    }
-
-    if (th.getMinorVersion() < TAG_MINOR_BLINK_MUT)
-    {
-        if (you.mutation[MUT_BLINK] > 1)
-            you.mutation[MUT_BLINK] = 1;
     }
 
     if (th.getMinorVersion() < TAG_MINOR_SPIT_POISON_AGAIN)

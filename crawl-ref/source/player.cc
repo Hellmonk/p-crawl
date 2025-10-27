@@ -1482,7 +1482,6 @@ int player_res_poison(bool temp, bool items, bool forms)
     }
 
     // mutations:
-    rp += you.get_mutation_level(MUT_POISON_RESISTANCE, temp);
     rp += you.get_mutation_level(MUT_SLIMY_GREEN_SCALES, temp) == 3 ? 1 : 0;
 
     // Cap rPois at + before Virulence is applied
@@ -1798,6 +1797,9 @@ static int _player_base_evasion_modifiers()
     if (you.get_mutation_level(MUT_SLOW_REFLEXES))
         evbonus -= you.get_mutation_level(MUT_SLOW_REFLEXES) * 5;
 
+    if (you.form != transformation::none)
+        evbonus += you.get_mutation_level(MUT_NATURAL_SHIFTER) * 10;
+
     if (you.get_mutation_level(MUT_CLUMSY))
         evbonus -= 20;
 
@@ -1868,9 +1870,18 @@ static int _player_apply_evasion_multipliers(int prescaled_ev, const int scale)
 static int _player_evasion(int final_scale, bool ignore_temporary)
 {
     const int scale = 100;
+    int skmult = 8;
+
+    if (ignore_temporary)
+    {
+        if (you.has_mutation(MUT_GOOD_DODGING))
+            skmult = 10;
+        else if (you.has_mutation(MUT_POOR_DODGING))
+            skmult = 4;
+    }
 
     // Calculate 'base' evasion from all permanent modifiers
-    const int natural_evasion = you.skill(SK_DODGING, 8 * scale)
+    const int natural_evasion = you.skill(SK_DODGING, skmult * scale)
         - you.adjusted_body_armour_penalty()
         - you.adjusted_shield_penalty()
         + _player_base_evasion_modifiers() * scale;
@@ -2260,33 +2271,6 @@ static void _handle_xp_penance(int exp)
     }
 }
 
-/// update hp drain
-static void _handle_hp_drain(int exp)
-{
-    if (!you.hp_max_adj_temp)
-        return;
-
-    const int mul = you.has_mutation(MUT_PERSISTENT_DRAIN) ? 2 : 1;
-    int loss = div_rand_round(exp, 4 * mul);
-
-    // Make it easier to recover from very heavy levels of draining
-    // (they're nasty enough as it is)
-    loss = loss * (1 + (-you.hp_max_adj_temp / (25.0f * mul)));
-
-    dprf("Lost %d of %d draining points", loss, -you.hp_max_adj_temp);
-
-    you.hp_max_adj_temp += loss;
-
-    const bool drain_removed = you.hp_max_adj_temp >= 0;
-    if (drain_removed)
-        you.hp_max_adj_temp = 0;
-
-    calc_hp();
-
-    if (drain_removed)
-        mprf(MSGCH_RECOVERY, "Your life force feels restored.");
-}
-
 static void _handle_breath_recharge(int exp)
 {
     if (!(species::is_draconian(you.species) && you.experience_level >= 7
@@ -2459,7 +2443,6 @@ void apply_exp()
     // xp-gated effects that use sprint inflation
     _recharge_xp_evokers(skill_xp);
     _reduce_abyss_xp_timer(skill_xp);
-    _handle_hp_drain(skill_xp);
     _handle_banes(skill_xp);
     _handle_ostracism(skill_xp);
     _handle_breath_recharge(skill_xp);
@@ -3103,6 +3086,7 @@ int player_stealth()
     stealth += STEALTH_PIP * you.get_mutation_level(MUT_NIGHTSTALKER);
     stealth += STEALTH_PIP * you.get_mutation_level(MUT_THIN_SKELETAL_STRUCTURE);
     stealth += STEALTH_PIP * you.get_mutation_level(MUT_CAMOUFLAGE);
+    stealth -= STEALTH_PIP * you.get_mutation_level(MUT_UNSTEALTHY);
     if (you.has_mutation(MUT_TRANSLUCENT_SKIN))
         stealth += STEALTH_PIP;
 
@@ -3929,12 +3913,6 @@ void contaminate_player(int change, bool controlled, bool msg)
     int old_level  = you.magic_contamination / 1000;
     bool was_glowing = player_harmful_contamination();
     int new_level  = 0;
-
-    if (change > 0)
-    {
-        const int mul = you.has_mutation(MUT_CONTAMINATION_SUSCEPTIBLE) ? 2 : 1;
-        change *= mul;
-    }
 
     you.magic_contamination = max(0, min(3000,
                                          you.magic_contamination + change));
@@ -5960,6 +5938,9 @@ int player::armour_class_scaled(int scale) const
     if (has_mutation(MUT_ICEMAIL))
         AC += 100 * player_icemail_armour_class();
 
+    if (you.form != transformation::none)
+        AC += you.get_mutation_level(MUT_NATURAL_SHIFTER) * 200;
+
     if (has_mutation(MUT_TRICKSTER))
         AC += 100 * trickster_bonus();
 
@@ -7143,9 +7124,6 @@ bool player::can_see_invisible() const
 /// Can the player see invisible things without needing items' help?
 bool player::innate_sinv() const
 {
-    if (has_mutation(MUT_ACUTE_VISION))
-        return true;
-
     if (get_mutation_level(MUT_EYEBALLS) == 3)
         return true;
 

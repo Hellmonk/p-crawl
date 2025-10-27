@@ -568,8 +568,6 @@ namespace arena
         coord_def yplace(dgn_find_feature_marker(DNGN_ESCAPE_HATCH_UP));
         crawl_view.set_player_at(yplace);
 
-        you.mutation[MUT_ACUTE_VISION] = 3;
-
         you.your_name = "Arena";
 
         you.hp = you.hp_max = 99;
