@@ -880,24 +880,18 @@ static const mutation_def mut_data[] =
 },
 
 // body-slot facets
-{ MUT_HORNS, 7, 3, mutflag::good | mutflag::anatomy,
+{ MUT_HORNS, 5, 1, mutflag::bad | mutflag::anatomy,
   "horns",
 
-  {"You have a pair of small horns on your head.",
-   "You have a pair of horns on your head.",
-   "You have a pair of large horns on your head."},
+  {"You have a pair of horns on your head.", "", ""},
 
-  {"A pair of horns grows on your head!",
-   "The horns on your head grow some more.",
-   "The horns on your head grow some more."},
+  {"A pair of horns grows on your head!", "", ""},
 
-  {"The horns on your head shrink away.",
-   "The horns on your head shrink a bit.",
-   "The horns on your head shrink a bit."},
+  {"The horns on your head shrink away.", "", ""},
   TILEG_MUT_HORNS,
 },
 
-{ MUT_BEAK, 1, 1, mutflag::good | mutflag::anatomy,
+{ MUT_BEAK, 1, 1, mutflag::bad | mutflag::anatomy,
   "beak",
 
   {"You have a beak for a mouth.", "", ""},
@@ -906,89 +900,59 @@ static const mutation_def mut_data[] =
   TILEG_MUT_BEAK,
 },
 
-{ MUT_CLAWS, 2, 3, mutflag::good | mutflag::anatomy | mutflag::need_hands,
+{ MUT_CLAWS, 2, 1, mutflag::good | mutflag::anatomy | mutflag::need_hands,
   "claws",
 
-  {"You have sharp fingernails.",
-   "You have very sharp fingernails.",
-   "You have claws for hands."},
+  {"You have claws for hands.", "", ""},
 
-  {"Your fingernails lengthen.",
-   "Your fingernails sharpen.",
-   "Your hands twist into claws."},
+  {"Your hands twist into claws.", "", ""},
 
-  {"Your fingernails shrink to normal size.",
-   "Your fingernails look duller.",
-   "Your hands feel fleshier."},
+  {"Your hands feel fleshier.", "", ""},
   TILEG_MUT_CLAWS,
 },
 
-{ MUT_FANGS, 1, 3, mutflag::good | mutflag::anatomy,
+{ MUT_FANGS, 5, 1, mutflag::good | mutflag::anatomy,
   "fangs",
 
-  {"You have very sharp teeth.",
-   "You have extremely sharp teeth.",
-   "You have razor-sharp teeth."},
+  {"You have razor-sharp teeth.", "", ""},
 
-  {"Your teeth lengthen and sharpen.",
-   "Your teeth lengthen and sharpen some more.",
-   "Your teeth grow very long and razor-sharp."},
+  {"Your teeth lengthen and sharpen.", "", ""},
 
-  {"Your teeth shrink to normal size.",
-   "Your teeth shrink and become duller.",
-   "Your teeth shrink and become duller."},
+  {"Your teeth shrink to normal size.", "", ""},
   TILEG_MUT_FANGS,
 },
 
-{ MUT_HOOVES, 5, 3, mutflag::good | mutflag::anatomy | mutflag::need_feet,
+{ MUT_HOOVES, 5, 1, mutflag::bad | mutflag::anatomy | mutflag::need_feet,
   "hooves",
 
-  {"You have large cloven feet.",
-   "You have hoof-like feet.",
-   "You have hooves in place of feet."},
+  {"You have hooves in place of feet.", "", ""},
 
-  {"Your feet thicken and deform.",
-   "Your feet thicken and deform.",
-   "Your feet have mutated into hooves."},
+  {"Your feet thicken and deform.", "", ""},
 
-  {"Your hooves expand and flesh out into feet!",
-   "Your hooves look more like feet.",
-   "Your hooves look more like feet."},
+  {"Your hooves expand and flesh out into feet!", "", ""},
   TILEG_MUT_HOOVES,
 },
 
-{ MUT_ANTENNAE, 4, 3, mutflag::good | mutflag::anatomy,
+{ MUT_ANTENNAE, 4, 1, mutflag::good | mutflag::anatomy,
   "antennae",
 
-  {"You have a pair of small antennae on your head.",
-   "You have a pair of antennae on your head.",
-   "You have a pair of large antennae on your head. (SInv)"},
+  {"You have a pair of antennae on your head.", "", ""},
 
-  {"A pair of antennae grows on your head!",
-   "The antennae on your head grow some more.",
-   "The antennae on your head grow some more."},
+  {"A pair of antennae grows on your head!", "", ""},
 
-  {"The antennae on your head shrink away.",
-   "The antennae on your head shrink a bit.",
-   "The antennae on your head shrink a bit."},
+  {"The antennae on your head shrink away.", "", ""},
 
   TILEG_MUT_ANTENNAE,
 },
 
-{ MUT_TALONS, 5, 3, mutflag::good | mutflag::anatomy | mutflag::need_feet,
+{ MUT_TALONS, 5, 1, mutflag::bad | mutflag::anatomy | mutflag::need_feet,
   "talons",
 
-  {"You have sharp toenails.",
-   "You have razor-sharp toenails.",
-   "You have claws for feet."},
+  {"You have talons for feet.", "", ""},
 
-  {"Your toenails lengthen and sharpen.",
-   "Your toenails lengthen and sharpen.",
-   "Your feet stretch into talons."},
+  {"Your feet stretch into talons.", "", ""},
 
-  {"Your talons dull and shrink into feet.",
-   "Your talons look more like feet.",
-   "Your talons look more like feet."},
+  {"Your talons dull and shrink into feet.", "", ""},
   TILEG_MUT_TALONS,
 },
 
@@ -1020,33 +984,25 @@ static const mutation_def mut_data[] =
 },
 #endif
 
-{ MUT_CONSTRICTING_TAIL, 0, 2, mutflag::good | mutflag::anatomy,
+{ MUT_CONSTRICTING_TAIL, 0, 1, mutflag::good | mutflag::anatomy,
   "naga tail",
 
-  {"Your snake-like lower body moves slowly.",
-   "Your snake-like lower body moves slowly, but can constrict enemies.", ""},
+  {"Your snake-like lower body moves slowly, but can constrict enemies.",
+   "", ""},
   {"Your lower body turns into a snake tail.",
-   "Your tail grows strong enough to constrict your enemies.", ""},
+   "", ""},
   {"Your lower body returns to normal.",
-   "Your snake tail weakens and can no longer constrict your enemies.", ""},
-   0,
-   {0, "Your tail will grow strong enough to constrict your foes."}
+   "", ""},
 },
 
-{ MUT_STINGER, 8, 3, mutflag::good | mutflag::anatomy,
+{ MUT_STINGER, 8, 1, mutflag::good | mutflag::anatomy,
   "stinger",
 
-  {"Your tail ends in a venomous barb.",
-   "Your tail ends in a sharp venomous barb.",
-   "Your tail ends in a wickedly sharp and venomous barb."},
+  {"Your tail ends in a venomous barb.", "", ""},
 
-  {"A venomous barb forms on the end of your tail.",
-   "The barb on your tail looks sharper.",
-   "The barb on your tail looks very sharp."},
+  {"A venomous barb forms on the end of your tail.", "", ""},
 
-  {"The barb on your tail disappears.",
-   "The barb on your tail seems less sharp.",
-   "The barb on your tail seems less sharp."},
+  {"The barb on your tail disappears.", "", ""},
   TILEG_MUT_STINGER,
 },
 

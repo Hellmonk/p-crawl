@@ -129,9 +129,9 @@ int count = 0;
             NO_SLOT("That is much too large for your head.")
         else if (you.form == transformation::serpent)
             return 2;
-        else if (you.get_mutation_level(MUT_HORNS, false) >= 3)
+        else if (you.get_mutation_level(MUT_HORNS, false))
             NO_SLOT("You can't wear any headgear with your large horns!")
-        else if (you.get_mutation_level(MUT_ANTENNAE, false) >= 3)
+        else if (you.get_mutation_level(MUT_ANTENNAE, false))
             NO_SLOT("You can't wear any headgear with your large antennae!")
         else
             ++count;
@@ -150,9 +150,9 @@ int count = 0;
             NO_SLOT(make_stringf("Those are too small for your %s.", you.hand_name(true).c_str()))
         else if (you.species == SP_OCTOPODE || you.has_mutation(MUT_NO_ARMOUR))
             NO_SLOT(make_stringf("Those can't fit on your %s.", you.hand_name(true).c_str()))
-        else if (you.get_mutation_level(MUT_CLAWS, false) >= 3)
+        else if (you.get_mutation_level(MUT_CLAWS, false))
             NO_SLOT(make_stringf("Those can't fit over your huge %s.", you.hand_name(true).c_str()))
-        else if (you.get_mutation_level(MUT_DEMONIC_TOUCH, false) >= 3)
+        else if (you.get_mutation_level(MUT_DEMONIC_TOUCH, false))
             NO_SLOT("Your demonic touch would destroy those.")
         else
             ++count;
@@ -168,9 +168,9 @@ int count = 0;
             NO_SLOT(make_stringf("Those are too small for your %s.", you.foot_name(true).c_str()))
         else if (you.species == SP_OCTOPODE || you.has_mutation(MUT_NO_ARMOUR))
             NO_SLOT("You can't wear boots.")
-        else if (you.get_mutation_level(MUT_HOOVES, false) >= 3)
+        else if (you.get_mutation_level(MUT_HOOVES, false))
             NO_SLOT("Your hooves can't fit into boots.")
-        else if (you.get_mutation_level(MUT_TALONS, false) >= 3)
+        else if (you.get_mutation_level(MUT_TALONS, false))
             NO_SLOT("Your talons can't fit into boots.")
         else if (you.has_mutation(MUT_FLOAT))
             NO_SLOT("You have no feet!")
@@ -196,7 +196,7 @@ int count = 0;
             NO_SLOT("You don't have any shoulders.")
         else if (you.species == SP_OCTOPODE || you.has_mutation(MUT_NO_ARMOUR))
             NO_SLOT("You can't wear that.")
-        else if (you.get_mutation_level(MUT_WEAKNESS_STINGER, false) >= 3)
+        else if (you.get_mutation_level(MUT_WEAKNESS_STINGER, false))
             NO_SLOT("You can't wear that with your sharp stinger!")
 
         return 1;

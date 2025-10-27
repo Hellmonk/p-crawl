@@ -608,18 +608,7 @@ void fill_doll_equipment(dolls_data &result)
             else if (species::is_draconian(you.species))
                 result.parts[TILEP_PART_HELM] = TILEP_HELM_HORNS_DRAC;
             else
-                switch (you.get_mutation_level(MUT_HORNS))
-                {
-                    case 1:
-                        result.parts[TILEP_PART_HELM] = TILEP_HELM_HORNS1;
-                        break;
-                    case 2:
-                        result.parts[TILEP_PART_HELM] = TILEP_HELM_HORNS2;
-                        break;
-                    case 3:
-                        result.parts[TILEP_PART_HELM] = TILEP_HELM_HORNS3;
-                        break;
-                }
+                result.parts[TILEP_PART_HELM] = TILEP_HELM_HORNS2;
         }
         else
             result.parts[TILEP_PART_HELM] = 0;
