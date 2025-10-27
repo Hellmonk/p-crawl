@@ -200,7 +200,6 @@ static const mutation_conflict mut_conflicts[] =
     { MUT_ROBUST,              MUT_FRAIL,                   true},
     { MUT_HIGH_MAGIC,          MUT_LOW_MAGIC,               true},
     { MUT_WILD_MAGIC,          MUT_SUBDUED_MAGIC,           true},
-    { MUT_REGENERATION,        MUT_INHIBITED_REGENERATION,  true},
     { MUT_BERSERK,             MUT_CLARITY,                 true},
     { MUT_FAST,                MUT_SLOW,                    true},
     { MUT_HEAT_RESISTANCE,     MUT_HEAT_VULNERABILITY,      true},
@@ -227,10 +226,6 @@ static const mutation_conflict mut_conflicts[] =
     { MUT_HP_CASTING,          MUT_LOW_MAGIC,              false},
     { MUT_HP_CASTING,          MUT_EFFICIENT_MAGIC,        false},
 
-#if TAG_MAJOR_VERSION == 34
-    { MUT_NO_REGENERATION,     MUT_INHIBITED_REGENERATION, false},
-    { MUT_NO_REGENERATION,     MUT_REGENERATION,           false},
-#endif
 
 };
 

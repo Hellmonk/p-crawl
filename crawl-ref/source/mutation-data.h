@@ -87,7 +87,7 @@ static const mutation_def mut_data[] =
   TILEG_MUT_AGILE,
 },
 
-{ MUT_POISON_RESISTANCE, 4, 1, mutflag::good | mutflag::substance,
+{ MUT_POISON_RESISTANCE, 0, 1, mutflag::good | mutflag::substance,
   "poison resistance",
 
   {"You are resistant to poisons. (rPois)", "", ""},
@@ -117,72 +117,48 @@ static const mutation_def mut_data[] =
 },
 #endif
 
-{ MUT_HEAT_RESISTANCE, 4, 3, mutflag::good | mutflag::substance,
+{ MUT_HEAT_RESISTANCE, 4, 1, mutflag::good | mutflag::substance,
   "fire resistance",
 
-  {"You are heat resistant. (rF+)",
-   "You are very heat resistant. (rF++)",
-   "You are almost immune to the effects of heat. (rF+++)"},
+  {"You are heat resistant. (rF+)", "", ""},
 
-  {"You feel resistant to heat.",
-   "You feel more resistant to heat.",
-   "You feel more resistant to heat."},
+  {"You feel resistant to heat.", "", ""},
 
-  {"You no longer feel heat resistant.",
-   "You feel less heat resistant.",
-   "You feel less heat resistant."},
+  {"You no longer feel heat resistant.", "", ""},
   TILEG_MUT_HEAT_RESISTANCE,
 },
 
-{ MUT_COLD_RESISTANCE, 4, 3, mutflag::good | mutflag::substance,
+{ MUT_COLD_RESISTANCE, 4, 1, mutflag::good | mutflag::substance,
   "cold resistance",
 
-  {"You are cold resistant. (rC+)",
-   "You are very cold resistant. (rC++)",
-   "You are almost immune to the effects of cold. (rC+++)"},
+  {"You are cold resistant. (rC+)", "", ""},
 
-  {"You feel resistant to cold.",
-   "You feel more resistant to cold.",
-   "You feel more resistant to cold."},
+  {"You feel resistant to cold.", "", ""},
 
-  {"You no longer feel cold resistant.",
-   "You feel less cold resistant.",
-   "You feel less cold resistant."},
+  {"You no longer feel cold resistant.", "", ""},
   TILEG_MUT_COLD_RESISTANCE,
 },
 
-{ MUT_HEAT_VULNERABILITY, 3, 3, mutflag::bad | mutflag::substance,
+{ MUT_HEAT_VULNERABILITY, 3, 1, mutflag::bad | mutflag::substance,
   "heat vulnerability",
 
-  {"You are vulnerable to heat. (rF-)",
-   "You are very vulnerable to heat. (rF--)",
-   "You are extremely vulnerable to heat. (rF---)"},
+  {"You are vulnerable to heat. (rF-)", "", ""},
 
-  {"You feel vulnerable to heat.",
-   "You feel vulnerable to heat.",
-   "You feel vulnerable to heat."},
+  {"You feel vulnerable to heat.", "", ""},
 
-  {"You no longer feel vulnerable to heat.",
-   "You feel less vulnerable to heat.",
-   "You feel less vulnerable to heat."},
+  {"You no longer feel vulnerable to heat.", "", ""},
   TILEG_MUT_HEAT_VULNERABILITY,
 },
 
-{ MUT_COLD_VULNERABILITY, 3, 3, mutflag::bad | mutflag::substance,
+{ MUT_COLD_VULNERABILITY, 3, 1, mutflag::bad | mutflag::substance,
 
   "cold vulnerability",
 
-  {"You are vulnerable to cold. (rC-)",
-   "You are very vulnerable to cold. (rC--)",
-   "You are extremely vulnerable to cold. (rC---)"},
+  {"You are vulnerable to cold. (rC-)", "", ""},
 
-  {"You feel vulnerable to cold.",
-   "You feel vulnerable to cold.",
-   "You feel vulnerable to cold."},
+  {"You feel vulnerable to cold.", "", ""},
 
-  {"You no longer feel vulnerable to cold.",
-   "You feel less vulnerable to cold.",
-   "You feel less vulnerable to cold."},
+  {"You no longer feel vulnerable to cold.", "", ""},
   TILEG_MUT_COLD_VULNERABILITY,
 },
 
@@ -204,7 +180,7 @@ static const mutation_def mut_data[] =
   TILEG_MUT_DEMONIC_GUARDIAN,
 },
 
-{ MUT_SHOCK_RESISTANCE, 2, 1, mutflag::good | mutflag::substance,
+{ MUT_SHOCK_RESISTANCE, 4, 1, mutflag::good | mutflag::substance,
   "electricity resistance",
 
   {"You are resistant to electric shocks. (rElec)", "", ""},
@@ -213,7 +189,7 @@ static const mutation_def mut_data[] =
   TILEG_MUT_SHOCK_RESISTANCE,
 },
 
-{ MUT_SHOCK_VULNERABILITY, 2, 1, mutflag::bad | mutflag::substance,
+{ MUT_SHOCK_VULNERABILITY, 3, 1, mutflag::bad | mutflag::substance,
   "electricity vulnerability",
 
   {"You are vulnerable to electric shocks.", "", ""},
@@ -222,7 +198,7 @@ static const mutation_def mut_data[] =
   TILEG_MUT_SHOCK_VULNERABILITY,
 },
 
-{ MUT_REGENERATION, 2, 3, mutflag::good,
+{ MUT_REGENERATION, 0, 3, mutflag::good,
   "regeneration",
 
   {"Your natural rate of healing is unusually fast.",
@@ -240,7 +216,7 @@ static const mutation_def mut_data[] =
   TILEG_MUT_REGENERATION,
 },
 
-{ MUT_INHIBITED_REGENERATION, 3, 1, mutflag::bad,
+{ MUT_INHIBITED_REGENERATION, 0, 1, mutflag::bad,
   "inhibited regeneration",
 
   {"You do not regenerate when monsters are visible.", "", ""},
