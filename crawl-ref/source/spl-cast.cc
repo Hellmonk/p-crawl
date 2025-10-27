@@ -389,8 +389,8 @@ int calc_spell_power(spell_type spell)
         power += you.skill(SK_INVOCATIONS);
 
     // Wild magic boosts spell power, subdued magic decreases it.
-    power += you.get_mutation_level(MUT_WILD_MAGIC);
-    power -= you.get_mutation_level(MUT_SUBDUED_MAGIC);
+    power += you.get_mutation_level(MUT_WILD_MAGIC) * 6;
+    power -= you.get_mutation_level(MUT_SUBDUED_MAGIC) * 6;
 
     power -= you.get_mutation_level(MUT_DOPEY) * 5;
 

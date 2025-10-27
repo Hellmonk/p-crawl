@@ -1069,7 +1069,7 @@ int get_teleportitis_level()
     if (you.stasis())
         return 0;
 
-    return you.get_mutation_level(MUT_TELEPORT) * 6;
+    return you.get_mutation_level(MUT_TELEPORT) * 10;
 }
 
 // Computes bonuses to regeneration from most sources. Does not handle
@@ -1092,9 +1092,6 @@ static int _player_bonus_regen()
         if (is_artefact(*item))
             rr += REGEN_PIP * artefact_property(*item, ARTP_REGENERATION);
     }
-
-    // Fast heal mutation.
-    rr += you.get_mutation_level(MUT_REGENERATION) * REGEN_PIP;
 
     rr += get_form()->regen_bonus();
 
@@ -1127,8 +1124,7 @@ static bool _mons_inhibits_regen(const monster &m)
 bool regeneration_is_inhibited(const monster *m)
 {
     // used mainly for resting: don't add anything here that can be waited off
-    if (you.get_mutation_level(MUT_INHIBITED_REGENERATION) == 1
-        || you.form == transformation::vampire
+    if (you.form == transformation::vampire
         || you.form == transformation::bat_swarm)
     {
         if (m)
@@ -1373,7 +1369,6 @@ int player_res_cold(bool temp, bool items)
     rc -= you.get_mutation_level(MUT_COLD_VULNERABILITY, temp);
     rc -= you.get_mutation_level(MUT_TEMPERATURE_SENSITIVITY, temp);
     rc += you.get_mutation_level(MUT_ICY_BLUE_SCALES, temp) == 3 ? 1 : 0;
-    rc += you.get_mutation_level(MUT_SHAGGY_FUR, temp) == 3 ? 1 : 0;
 
     if (rc < -1)
         rc = -1;
@@ -1792,9 +1787,6 @@ static int _player_base_evasion_modifiers()
     // mutations
     evbonus += you.get_mutation_level(MUT_GELATINOUS_BODY);
 
-    if (you.get_mutation_level(MUT_DISTORTION_FIELD))
-        evbonus += you.get_mutation_level(MUT_DISTORTION_FIELD) + 1;
-
     // XXX: rescale these modifiers to allow +0.5 EV bonuses past the soft cap?
     if (you.get_mutation_level(MUT_PROTEAN_GRACE))
         evbonus += protean_grace_amount();
@@ -1926,8 +1918,10 @@ int player_armour_shield_spell_penalty()
 int player_wizardry()
 {
     return you.wearing_jewellery(RING_WIZARDRY)
-           + (you.get_mutation_level(MUT_BIG_BRAIN) == 3 ? 1 : 0)
+           + you.get_mutation_level(MUT_BIG_BRAIN)
            + you.scan_artefacts(ARTP_WIZARDRY)
+           + you.get_mutation_level(MUT_SUBDUED_MAGIC)
+           - you.get_mutation_level(MUT_WILD_MAGIC)
            + you.wearing_ego(OBJ_ARMOUR, SPARM_WIZARDRY);
 }
 
@@ -1975,7 +1969,7 @@ int player_shield_class(int scale, bool random, bool ignore_temporary)
     // mutations
     // +4, +6, +8 (displayed values)
     shield += (you.get_mutation_level(MUT_LARGE_BONE_PLATES) > 0
-               ? you.get_mutation_level(MUT_LARGE_BONE_PLATES) * 200 + 200
+               ? you.get_mutation_level(MUT_LARGE_BONE_PLATES) * 2000
                : 0);
 
     // Icemail and Ephemeral Shield aren't active all of the time, so consider
@@ -2186,6 +2180,13 @@ static void _recharge_xp_evokers(int exp)
 {
     FixedVector<item_def*, NUM_MISCELLANY> evokers(nullptr);
     list_charging_evokers(evokers);
+    
+    int applied_xp = exp;
+    
+    if (you.get_mutation_level(MUT_SUPER_CHARGING))
+        applied_xp = div_rand_round(exp * 5, 4);
+    else if (you.get_mutation_level(MUT_POOR_CHARGING))
+        applied_xp = div_rand_round(exp, 2);
 
     for (int i = 0; i < NUM_MISCELLANY; ++i)
     {
@@ -2198,7 +2199,7 @@ static void _recharge_xp_evokers(int exp)
             continue;
 
         const int old_charges = evoker_charges(i);
-        debt = max(0, debt - exp);
+        debt = max(0, debt - applied_xp);
         const int gained = evoker_charges(i) - old_charges;
         if (gained)
             print_xp_evoker_recharge(*evoker, gained, silenced(you.pos()));
@@ -3769,7 +3770,7 @@ int get_real_hp(bool trans, bool drained)
     hitp *= 10 + species::get_hp_modifier(you.species);
     hitp /= 10;
 
-    hitp += you.get_mutation_level(MUT_FLAT_HP) * 4;
+    hitp += you.get_mutation_level(MUT_FLAT_HP) * 7;
 
     const bool hep_frail = have_passive(passive_t::frail)
                            || player_under_penance(GOD_HEPLIAKLQANA);
@@ -5488,7 +5489,7 @@ void player::shield_block_succeeded(actor *attacker)
 
 bool player::missile_repulsion() const
 {
-    return get_mutation_level(MUT_DISTORTION_FIELD) == 3
+    return get_mutation_level(MUT_DISTORTION_FIELD)
         || you.wearing_ego(OBJ_ARMOUR, SPARM_REPULSION)
         || scan_artefacts(ARTP_RMSL)
         || have_passive(passive_t::upgraded_storm_shield)
@@ -5837,7 +5838,7 @@ const vector<int> TWO_THREE_FOUR = {2,3,4};
 vector<mutation_ac_changes> all_mutation_ac_changes = {
      mutation_ac_changes(MUT_GELATINOUS_BODY,           ONE_TWO_THREE)
     ,mutation_ac_changes(MUT_TOUGH_SKIN,                {3, 3, 3})
-    ,mutation_ac_changes(MUT_SHAGGY_FUR,                ONE_TWO_THREE)
+    ,mutation_ac_changes(MUT_SHAGGY_FUR,                {3, 3, 3})
     ,mutation_ac_changes(MUT_PHYSICAL_VULNERABILITY,    {-5,-10,-15})
     ,mutation_ac_changes(MUT_IRIDESCENT_SCALES,         {2, 4, 6})
     ,mutation_ac_changes(MUT_RUGGED_BROWN_SCALES,       ONE_TWO_THREE)
@@ -6187,6 +6188,10 @@ void player::preview_stats_in_specific_form(int scale, const item_def& talisman,
 bool player::heal(int amount)
 {
     int oldhp = hp;
+    
+    if (you.get_mutation_level(MUT_NO_POTION_HEAL))
+        amount = div_rand_round(amount, 2);
+    
     ::inc_hp(amount);
     return oldhp < hp;
 }

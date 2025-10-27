@@ -1285,8 +1285,14 @@ static void _player_stair_clear_status()
 static void _player_stair_healing()
 {
     int heal_fraction = 3;
-    you.heal((you.hp_max - you.hp) * heal_fraction / 4);
+    
     inc_mp((you.max_magic_points - you.magic_points) * heal_fraction / 4);
+    
+    //inhibited healing mut halves "most" healing, but shouldn't affect this.
+    if (you.get_mutation_level(MUT_NO_POTION_HEAL))
+        heal_fraction *= 2;
+    
+    you.heal((you.hp_max - you.hp) * heal_fraction / 4);
     _player_stair_clear_status();
 
     you.redraw_hit_points = true;

@@ -127,7 +127,6 @@ vector<mutation_type> get_removed_mutations()
         MUT_ROUGH_BLACK_SCALES,
         MUT_BREATHE_FLAMES,
         MUT_BREATHE_POISON,
-        MUT_CARNIVOROUS,
         MUT_CLING,
         MUT_CONSERVE_POTIONS,
         MUT_CONSERVE_SCROLLS,
@@ -136,7 +135,6 @@ vector<mutation_type> get_removed_mutations()
         MUT_FLEXIBLE_WEAK,
         MUT_FOOD_JELLY,
         MUT_FUMES,
-        MUT_HERBIVOROUS,
         MUT_JUMP,
         MUT_SAPROVOROUS,
         MUT_SLOW_METABOLISM,
@@ -209,6 +207,8 @@ static const mutation_conflict mut_conflicts[] =
     { MUT_MUTATION_RESISTANCE, MUT_DEVOLUTION,              true},
     { MUT_EVOLUTION,           MUT_DEVOLUTION,              true},
     { MUT_MUTATION_RESISTANCE, MUT_EVOLUTION,               true},
+    { MUT_DAYSTALKER,          MUT_NIGHTSTALKER,            true},
+    { MUT_SUPER_CHARGING,      MUT_POOR_CHARGING,           true},
 
     { MUT_FANGS,               MUT_BEAK,                   false},
     { MUT_ANTENNAE,            MUT_HORNS,                  false},
@@ -1712,10 +1712,8 @@ bool mut_is_compatible(mutation_type mut, bool base_only)
 static bool _resist_mutation(mutation_permanence_class mutclass,
                              bool beneficial)
 {
-    if (you.get_mutation_level(MUT_MUTATION_RESISTANCE) == 3)
-        return true;
 
-    const int mut_resist_chance = mutclass == MUTCLASS_TEMPORARY ? 2 : 3;
+    const int mut_resist_chance = 5;
     if (you.get_mutation_level(MUT_MUTATION_RESISTANCE)
         && !one_chance_in(mut_resist_chance))
     {
@@ -2264,9 +2262,8 @@ bool delete_mutation(mutation_type which_mutation, const string &reason,
     {
         if (!god_gift)
         {
-            if (you.get_mutation_level(MUT_MUTATION_RESISTANCE) > 1
-                && (you.get_mutation_level(MUT_MUTATION_RESISTANCE) == 3
-                    || coinflip()))
+            if (you.get_mutation_level(MUT_MUTATION_RESISTANCE)
+                && !one_chance_in(5))
             {
                 if (failMsg)
                     mprf(MSGCH_MUTATION, "You feel rather odd for a moment.");
@@ -2691,11 +2688,7 @@ static const facet_def _demon_facets[] =
     { 0, { MUT_DEMONIC_TOUCH, MUT_DEMONIC_TOUCH, MUT_DEMONIC_TOUCH },
       { -33, -33, -33 } },
     // Scale mutations
-    { 1, { MUT_DISTORTION_FIELD, MUT_DISTORTION_FIELD, MUT_DISTORTION_FIELD },
-      { -33, -33, 0 } },
     { 1, { MUT_ICY_BLUE_SCALES, MUT_ICY_BLUE_SCALES, MUT_ICY_BLUE_SCALES },
-      { -33, -33, 0 } },
-    { 1, { MUT_LARGE_BONE_PLATES, MUT_LARGE_BONE_PLATES, MUT_LARGE_BONE_PLATES },
       { -33, -33, 0 } },
     { 1, { MUT_MOLTEN_SCALES, MUT_MOLTEN_SCALES, MUT_MOLTEN_SCALES },
       { -33, -33, 0 } },
@@ -2715,8 +2708,6 @@ static const facet_def _demon_facets[] =
     { 1, { MUT_STURDY_FRAME, MUT_STURDY_FRAME, MUT_STURDY_FRAME },
       { -33, -33, 0 } },
     { 1, { MUT_SANGUINE_ARMOUR, MUT_SANGUINE_ARMOUR, MUT_SANGUINE_ARMOUR },
-      { -33, -33, 0 } },
-    { 1, { MUT_BIG_BRAIN, MUT_BIG_BRAIN, MUT_BIG_BRAIN },
       { -33, -33, 0 } },
     { 1, { MUT_SHARP_SCALES, MUT_SHARP_SCALES, MUT_SHARP_SCALES },
       { -33, -33, 0 } },
