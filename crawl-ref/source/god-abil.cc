@@ -4323,7 +4323,6 @@ static map<const char*, vector<mutation_type>> sacrifice_vector_map =
     /// Mutations granted by ABIL_RU_SACRIFICE_PURITY
     { PURITY_SAC_KEY, {
         MUT_SCREAM,
-        MUT_INHIBITED_REGENERATION,
         MUT_NO_POTION_HEAL,
         MUT_DOPEY,
         MUT_CLUMSY,
