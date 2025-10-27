@@ -629,6 +629,14 @@ string attack::defender_name(bool allow_reflexive)
 
 int attack::player_apply_misc_modifiers(int damage)
 {
+    if (using_weapon())
+    {
+        if (is_axe(*weapon) && you.has_mutation(MUT_AXE_MASTER))
+            return damage + 3;
+        if (is_polearm(*weapon) && you.has_mutation(MUT_POLE_MASTER))
+            return damage + 5;
+    }
+
     return damage;
 }
 
@@ -1232,7 +1240,9 @@ void attack::calc_elemental_brand_damage(beam_type flavour,
 
 int attack::player_stab_weapon_bonus(int damage)
 {
-    int stab_skill = you.skill(wpn_skill, 1) + you.skill(SK_STEALTH, 2);
+
+    int skmult = you.has_mutation(MUT_STABBER) ? 2 : 1;
+    int stab_skill = you.skill(wpn_skill, skmult) + you.skill(SK_STEALTH, 2 * skmult);
 
     damage += stab_skill;
 

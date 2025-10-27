@@ -197,9 +197,6 @@ struct mutation_conflict
  */
 static const mutation_conflict mut_conflicts[] =
 {
-    { MUT_STRONG,              MUT_WEAK,                    true},
-    { MUT_CLEVER,              MUT_DOPEY,                   true},
-    { MUT_AGILE,               MUT_CLUMSY,                  true},
     { MUT_ROBUST,              MUT_FRAIL,                   true},
     { MUT_HIGH_MAGIC,          MUT_LOW_MAGIC,               true},
     { MUT_WILD_MAGIC,          MUT_SUBDUED_MAGIC,           true},
@@ -1719,19 +1716,16 @@ static const char* _stat_mut_desc(mutation_type mut, bool gain)
     {
     case MUT_WEAK:
         positive = !positive;
-    case MUT_STRONG:
         stat = STAT_STR;
         break;
 
     case MUT_DOPEY:
         positive = !positive;
-    case MUT_CLEVER:
         stat = STAT_INT;
         break;
 
     case MUT_CLUMSY:
         positive = !positive;
-    case MUT_AGILE:
         stat = STAT_DEX;
         break;
 
@@ -1952,7 +1946,6 @@ bool mutate(mutation_type which_mutation, const string &reason, bool failMsg,
         // More than three messages, need to give them by hand.
         switch (mutat)
         {
-        case MUT_STRONG: case MUT_AGILE:  case MUT_CLEVER:
         case MUT_WEAK:   case MUT_CLUMSY: case MUT_DOPEY:
             mprf(MSGCH_MUTATION, "You feel %s.", _stat_mut_desc(mutat, true));
             gain_msg = false;
@@ -2154,7 +2147,6 @@ bool _delete_single_mutation_level(mutation_type mutat,
 
     switch (mutat)
     {
-    case MUT_STRONG: case MUT_AGILE:  case MUT_CLEVER:
     case MUT_WEAK:   case MUT_CLUMSY: case MUT_DOPEY:
         mprf(MSGCH_MUTATION, "You feel %s.", _stat_mut_desc(mutat, false));
         lose_msg = false;
