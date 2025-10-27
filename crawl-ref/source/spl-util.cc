@@ -549,6 +549,9 @@ int spell_mana(spell_type which_spell, bool real_spell)
             return 0;
 
         int cost = 2;
+
+        cost += you.get_mutation_level(MUT_EXPENSIVE_CASTING);
+
         if (you.wearing_ego(OBJ_GIZMOS, SPGIZMO_SPELLMOTOR))
             cost = max(1, cost - you.rev_tier());
 
