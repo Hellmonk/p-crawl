@@ -561,6 +561,16 @@ corpse
 
 A corpse. Useless and dead.
 %%%%
+crystal anvil
+
+A magical anvil used for enchanting equipment. Evoking it will allow you to
+increase the enchantment of your weapon or a piece of armour by 1. Special
+unique artifacts and items already at maximum enchantment cannot be affected
+this way.
+
+Evocations skill has no effect on the enchantment increase, but will reduce
+the experience required to recharge the item as usual.
+%%%%
 crystal plate armour
 
 An incredibly heavy but extremely effective suit of crystalline armour.

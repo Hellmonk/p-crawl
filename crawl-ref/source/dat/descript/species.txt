@@ -85,8 +85,8 @@ of close and ranged combat.
 %%%%
 Mountain Dwarf
 
-Mountain Dwarves are strong melee fighters and capable heavy-armoured casters.
-They can use scrolls to enchant even some artefacts.
+Mountain Dwarves are robust melee fighters and capable heavy-armoured casters.
+They begin with a crystal anvil that allows them to enchant equipment.
 %%%%
 Mummy
 

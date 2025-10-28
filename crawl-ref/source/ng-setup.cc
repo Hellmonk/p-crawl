@@ -301,6 +301,9 @@ void give_items_skills(const newgame_def& ng)
     if (you.char_class == JOB_GLADIATOR)
         give_throwing_ammo(1);
 
+    if (you.species == SP_MOUNTAIN_DWARF)
+        newgame_make_item(OBJ_MISCELLANY, MISC_CRYSTAL_ANVIL);
+
     if (you.has_mutation(MUT_NO_GRASPING)) // i.e. felids
         you.skills[SK_THROWING] = 0;
 
@@ -328,9 +331,6 @@ void give_items_skills(const newgame_def& ng)
         if (!you_worship(GOD_XOM))
             you.piety_max[you.religion] = you.raw_piety;
     }
-
-    if (crawl_state.game_is_descent())
-        you.attribute[ATTR_VOUCHER] = 1;
 }
 
 static void _setup_tutorial_miscs()

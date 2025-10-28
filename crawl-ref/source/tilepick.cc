@@ -3192,6 +3192,9 @@ static tileidx_t _tileidx_misc(const item_def &item)
 
     case MISC_MAGNET:
         return TILE_MISC_MAGNET;
+
+    case MISC_CRYSTAL_ANVIL:
+        return TILE_MISC_CRYSTAL_ANVIL;
     }
 
     return TILE_ERROR;

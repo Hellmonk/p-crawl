@@ -22,6 +22,7 @@ mutations:
   1:
     MUT_ARTEFACT_ENCHANTING: 1
     MUT_RUNIC_MAGIC: 1
+    MUT_AXE_MASTER: 1
 recommended_jobs:
   - fighter
   - monk

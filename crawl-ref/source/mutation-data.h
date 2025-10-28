@@ -2632,11 +2632,12 @@ static const mutation_def mut_data[] =
   {"You no longer brawl whenever you drink a healing potion.", "", ""},
 },
 
+// Dummy mutation for species display, see ng-setup for implementation.
 { MUT_ARTEFACT_ENCHANTING, 0, 1, mutflag::good,
-  "artefact enchanting",
-  {"You can use scrolls of enchantment on lesser artefacts.", "", ""},
-  {"You can now use scrolls of enchantment on lesser artefacts.", "", ""},
-  {"You can no longer use scrolls of enchantment on lesser artefacts.", "", ""},
+  "dwarven enchanting",
+  {"You begin with a crystal anvil that can help enchant your equipment.", "", ""},
+  {"", "", ""},
+  {"", "", ""},
 },
 
 { MUT_RUNIC_MAGIC, 0, 1, mutflag::good,
