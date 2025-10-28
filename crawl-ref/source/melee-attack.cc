@@ -2435,6 +2435,9 @@ int melee_attack::player_apply_final_multipliers(int damage, bool aux)
     if (you.duration[DUR_MIGHT])
         damage = damage * 2;
 
+    if (you.has_mutation(MUT_DIVINE_STRENGTH))
+        damage = damage * 2;
+
     apply_rev_penalty(damage);
 
     if (dmg_mult)

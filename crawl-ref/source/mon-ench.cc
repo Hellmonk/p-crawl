@@ -2558,3 +2558,16 @@ int summ_dur(int degree)
 
     return fuzz_value(aut, 60, 40);
 }
+
+bool mons_is_suffering(const monster& mon)
+{
+    mon_enchant_list enchantments = mon.enchantments;
+
+    for (auto &entry : enchantments)
+    {
+        if (ench_triggers_trickster(entry.first))
+            return true;
+    }
+
+    return false;
+}

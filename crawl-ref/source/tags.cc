@@ -3601,12 +3601,6 @@ static void _tag_read_you(reader &th)
         // not safe for SP_MUT_FIX
         _fixup_species_mutations(MUT_HEAT_VULNERABILITY);
     }
-    // not sure this is safe for SP_MUT_FIX, leaving it out for now
-    if (you.species == SP_GREY_DRACONIAN || you.species == SP_GARGOYLE
-        || you.species == SP_GHOUL || you.species == SP_MUMMY)
-    {
-        _fixup_species_mutations(MUT_UNBREATHING);
-    }
 
     if (you.species == SP_FELID && you.has_innate_mutation(MUT_FAST))
         _fixup_species_mutations(MUT_FAST);
@@ -3627,19 +3621,6 @@ static void _tag_read_you(reader &th)
     }
 
     #undef SP_MUT_FIX
-
-    if (th.getMinorVersion() < TAG_MINOR_SPIT_POISON
-        && you.species == SP_NAGA)
-    {
-        if (you.innate_mutation[MUT_SPIT_POISON] < 2)
-        {
-            you.mutation[MUT_SPIT_POISON] =
-                    you.innate_mutation[MUT_SPIT_POISON] = 2;
-        }
-        // cleanup handled below
-        if (you.mutation[MUT_BREATHE_POISON])
-            you.mutation[MUT_SPIT_POISON] = 3;
-    }
 
     // Give nagas constrict, tengu flight, and mummies restoration/enhancers.
     if (th.getMinorVersion() < TAG_MINOR_REAL_MUTS
@@ -3698,9 +3679,6 @@ static void _tag_read_you(reader &th)
 
     if (th.getMinorVersion() < TAG_MINOR_RECOMPRESS_BADMUTS)
     {
-        if (you.mutation[MUT_BERSERK] > 2)
-            you.mutation[MUT_BERSERK] = 2;
-
         if (you.mutation[MUT_TELEPORT] > 2)
             you.mutation[MUT_TELEPORT] = 2;
     }
@@ -3711,7 +3689,6 @@ static void _tag_read_you(reader &th)
         _fixup_species_mutations(MUT_RUGGED_BROWN_SCALES);
         _fixup_species_mutations(MUT_TOUGH_SKIN);
         _fixup_species_mutations(MUT_ROLLPAGE);
-        _fixup_species_mutations(MUT_AWKWARD_TONGUE);
     }
 
     if (th.getMinorVersion() < TAG_MINOR_COMPRESS_MAPPING)
@@ -3729,9 +3706,6 @@ static void _tag_read_you(reader &th)
     const int xl_remaining = you.get_max_xl() - you.experience_level;
     if (xl_remaining < 0)
         adjust_level(xl_remaining);
-
-    if (th.getMinorVersion() < TAG_MINOR_EVOLUTION_XP)
-        set_evolution_mut_xp(you.has_mutation(MUT_DEVOLUTION));
 #endif
 
     count = unmarshallUByte(th);
@@ -4408,7 +4382,7 @@ static void _tag_read_you(reader &th)
         {
             const mutation_type app = static_cast<mutation_type>(mut.get_int());
             const int levels = you.get_base_mutation_level(app);
-            const int beast_lvl = app == MUT_TENTACLE_SPIKE ? 3 : 2;
+            const int beast_lvl = app == 1;
             const int innate_lvl = you.get_innate_mutation_level(app);
             // Preserve extra mutation levels acquired after transforming.
             const int extra = max(0, levels - innate_lvl - beast_lvl);

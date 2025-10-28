@@ -79,6 +79,14 @@
 
 #define PHIAL_RANGE 5
 
+static int _evoker_skill_power()
+{
+    int mutbonus = 0;
+    if (you.has_mutation(MUT_STRONG_EVOKERS))
+        mutbonus = 1 + you.get_mutation_level(MUT_STRONG_EVOKERS);
+    return you.skill(SK_EVOCATIONS) + mutbonus;
+}
+
 static bool _evoke_horn_of_geryon()
 {
     if (!player_summon_check(MONS_SIN_BEAST))
@@ -118,7 +126,7 @@ static bool _evoke_horn_of_geryon()
 
 static int _lightning_rod_power()
 {
-    return 5 + you.skill(SK_EVOCATIONS, 3);
+    return 5 + _evoker_skill_power() * 3;
 }
 
 /**
@@ -275,7 +283,7 @@ static bool _box_of_beasts()
     // two rolls to reduce std deviation - +-6 so can get < max even at 27 sk
     int rnd_factor = random2(7);
     rnd_factor -= random2(7);
-    const int hd_min = min(27, you.skill(SK_EVOCATIONS) + rnd_factor);
+    const int hd_min = min(27, _evoker_skill_power() + rnd_factor);
     const int tier = mutant_beast_tier(hd_min);
     ASSERT(tier < NUM_BEAST_TIERS);
 
@@ -305,7 +313,7 @@ static bool _box_of_beasts()
 static bool _place_webs()
 {
     bool webbed = false;
-    const int evo_skill = you.skill(SK_EVOCATIONS);
+    const int evo_skill = _evoker_skill_power();
     // At 0 evo skill, this is about a 1/3 chance of webbing each
     // enemy. At 27 skill, it's about an 9/10 chance.
     const int web_chance = 36 + evo_skill * 2;
@@ -370,7 +378,7 @@ static bool _sack_of_spiders_veto_mon(monster_type mon)
 
 static bool _spill_out_spiders()
 {
-    const int evo_skill = you.skill_rdiv(SK_EVOCATIONS);
+    const int evo_skill = _evoker_skill_power();
     // 2 at min skill, 3-4 at mid, 4-6 at max
     const int min_pals = 2 + div_rand_round(2 * evo_skill, 27);
     const int max_buds = 2 + div_rand_round(4 * evo_skill, 27);
@@ -467,7 +475,7 @@ static bool _harp_of_healing()
         return false;
     }
 
-    int pow = you.skill(SK_EVOCATIONS);
+    int pow = _evoker_skill_power();
 
     you.set_duration(DUR_HARP, 2 + pow);
     mpr("You begin to play the harp.");
@@ -509,21 +517,21 @@ void end_playing_harp(bool voluntary)
 
 static bool _mages_chalice()
 {
-    int pow = you.skill(SK_EVOCATIONS);
+    int pow = _evoker_skill_power();
     potionlike_effect(POT_BRILLIANCE, pow);
     return true;
 }
 
 static bool _haste_rune()
 {
-    int pow = you.skill(SK_EVOCATIONS);
+    int pow = _evoker_skill_power();
     potionlike_effect(POT_HASTE, pow);
     return true;
 }
 
 static bool _meat_bone()
 {
-    int pow = you.skill(SK_EVOCATIONS);
+    int pow = _evoker_skill_power();
     if (you.can_drink(true))
         mpr("You eat a tiny piece of monster meat.");
     else
@@ -535,7 +543,7 @@ static bool _meat_bone()
 
 static bool _butterfly_jar()
 {
-    int pow = you.skill(SK_EVOCATIONS);
+    int pow = _evoker_skill_power();
     if (summon_butterflies(pow) == spret::success)
         return true;
 
@@ -544,7 +552,7 @@ static bool _butterfly_jar()
 
 static bool _purple_statuette()
 {
-    bool good = x_chance_in_y(50 + 5 * you.skill(SK_EVOCATIONS), 100);
+    bool good = x_chance_in_y(50 + 5 * _evoker_skill_power(), 100);
     mutate(good ? RANDOM_GOOD_MUTATION : RANDOM_BAD_MUTATION,
                   "purple statuette", false);
     return true;
@@ -552,14 +560,14 @@ static bool _purple_statuette()
 
 static bool _magnet()
 {
-    int pow = you.skill(SK_EVOCATIONS);
+    int pow = _evoker_skill_power();
     potionlike_effect(POT_ATTRACTION, pow);
     return true;
 }
 
 static bool _lantern_of_shadows()
 {
-    int pow = you.skill(SK_EVOCATIONS);
+    int pow = _evoker_skill_power();
     you.set_duration(DUR_LANTERN, 4 + random_range(div_rand_round(pow,2),
                                                    div_rand_round(pow * 3,2)));
     update_vision_range();
@@ -642,7 +650,7 @@ static bool _pandemonium_pizza()
 static bool _jumper_cable()
 {
     // fixed damage.
-    int damage = 40 - you.skill(SK_EVOCATIONS) * 3;
+    int damage = max(2, 40 - _evoker_skill_power() * 3);
     damage = resist_adjust_damage(&you, BEAM_ELECTRICITY, damage);
 
     if (damage > you.hp)
@@ -686,7 +694,7 @@ static bool _acid_vat(dist *target)
     if (!target)
         target = &target_local;
 
-    int power = you.skill(SK_EVOCATIONS);
+    int power = _evoker_skill_power();
 
     spret ret = your_spells(SPELL_ACID_BALL, power, false, nullptr, target);
 
@@ -702,7 +710,7 @@ static bool _light_staff(dist *target)
     if (!target)
         target = &target_local;
 
-    int power = you.skill(SK_EVOCATIONS);
+    int power = _evoker_skill_power();
 
     spret ret = your_spells(SPELL_BOLT_OF_LIGHT, power, false, nullptr, target);
 
@@ -720,7 +728,7 @@ static bool _amulet_of_resistance()
         return false;
     }
 
-    potionlike_effect(POT_RESISTANCE, you.skill(SK_EVOCATIONS));
+    potionlike_effect(POT_RESISTANCE, _evoker_skill_power());
     return true;
 }
 
@@ -894,7 +902,7 @@ void wind_blast(actor* agent, int pow, coord_def target)
 
 static int _phial_power()
 {
-    return 10 + you.skill(SK_EVOCATIONS, 4);
+    return 10 + _evoker_skill_power() * 4;
 }
 
 static bool _phial_of_floods(dist *target)
@@ -994,7 +1002,7 @@ static spret _phantom_mirror(dist *target)
         canned_msg(MSG_NOTHING_HAPPENS);
         return spret::fail;
     }
-    const int power = you.skill(SK_EVOCATIONS);
+    const int power = _evoker_skill_power();
     int dur = min(500, 50 + 10 * random2(6) + 10 * random2(1 + power * 5));
 
     mon->mark_summoned(SPELL_PHANTOM_MIRROR, dur, true, true);
@@ -1118,7 +1126,7 @@ static coord_def _fuzz_tremorstone_target(coord_def center)
 
 static int _tremorstone_power()
 {
-    return you.skill(SK_EVOCATIONS);
+    return _evoker_skill_power();
 }
 
 /**
@@ -1195,7 +1203,7 @@ static const vector<random_pick_entry<cloud_type>> condenser_clouds =
 
 static spret _condenser()
 {
-    const int pow = 15 + you.skill(SK_EVOCATIONS, 7) / 2;
+    const int pow = 15 + _evoker_skill_power() * 7 / 2;
 
     random_picker<cloud_type, NUM_CLOUD_TYPES> cloud_picker;
 
@@ -1268,7 +1276,7 @@ static spret _condenser()
 
 static int _gravitambourine_power()
 {
-    return 15 + you.skill(SK_EVOCATIONS, 7) / 2;
+    return 15 + _evoker_skill_power() * 7 / 2;
 }
 
 static bool _gravitambourine(dist *target)

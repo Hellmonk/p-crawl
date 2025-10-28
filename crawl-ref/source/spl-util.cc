@@ -556,7 +556,11 @@ int spell_mana(spell_type which_spell, bool real_spell)
             cost = max(1, cost - you.rev_tier());
 
         if (you.has_mutation(MUT_EFFICIENT_MAGIC))
-            cost = max(1, cost - you.get_mutation_level(MUT_EFFICIENT_MAGIC));
+        {
+            const int level = _seekspell(which_spell)->level;
+            if (level <= 1 + you.get_mutation_level(MUT_EFFICIENT_MAGIC))
+                cost = max(1, cost - 1);
+        }
 
         if (you.duration[DUR_BRILLIANCE] || you.unrand_equipped(UNRAND_FOLLY))
             cost = max(1, cost - 1);

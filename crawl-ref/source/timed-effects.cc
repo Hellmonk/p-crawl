@@ -210,34 +210,7 @@ static void _jiyva_effects(int /*time_delta*/)
 
 static void _evolve(int /*time_delta*/)
 {
-    if (!you.can_safely_mutate())
-        return;
-
-    const bool malignant = you.has_mutation(MUT_DEVOLUTION);
-    if (!malignant && !you.has_mutation(MUT_EVOLUTION))
-        return;
-
-    if (you.attribute[ATTR_EVOL_XP] > 0)
-        return;
-    set_evolution_mut_xp(malignant);
-
-    mpr("You feel a genetic drift.");
-    const mutation_type typ = malignant ? RANDOM_BAD_MUTATION : RANDOM_GOOD_MUTATION;
-    const char* const reason = malignant ? "hidden defects" : "hidden potential";
-    if (!mutate(typ, reason, false, false, false, false, MUTCLASS_NORMAL))
-        return;
-
-    int &muts = you.props[EVOLUTION_MUTS_KEY].get_int();
-    ++muts;
-    if (muts >= 2)
-    {
-        muts -= 2;
-        if (malignant)
-            delete_mutation(MUT_DEVOLUTION, "hidden defects expressed", false);
-        else
-            delete_mutation(MUT_EVOLUTION, "hidden potential expressed", false);
-    }
-    more();
+    return;
 }
 
 static bool _multiplicity_clone(monster* mon)
