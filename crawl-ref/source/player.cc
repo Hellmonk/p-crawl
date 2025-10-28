@@ -1884,8 +1884,8 @@ static int _player_evasion(int final_scale, bool ignore_temporary)
 
     // Calculate 'base' evasion from all permanent modifiers
     const int natural_evasion = you.skill(SK_DODGING, skmult * scale)
-        - you.adjusted_body_armour_penalty()
-        - you.adjusted_shield_penalty()
+        - you.adjusted_body_armour_penalty() * 10 * scale
+        - you.adjusted_shield_penalty() * scale
         + _player_base_evasion_modifiers() * scale;
 
     // Everything below this are transient modifiers
@@ -1907,25 +1907,6 @@ static int _player_evasion(int final_scale, bool ignore_temporary)
     }
 
     return (final_evasion * final_scale) / scale;
-}
-
-// Returns the spellcasting penalty (increase in spell failure) for the
-// player's worn body armour and shield.
-int player_armour_shield_spell_penalty()
-{
-
-    int body_armour_penalty =
-        max(19 * you.adjusted_body_armour_penalty(), 0);
-
-    // This is actually cutting the base ER of our armour by half (not 1/4th),
-    // since that ER has already been squared by this point.
-    if (you.has_mutation(MUT_RUNIC_MAGIC))
-        body_armour_penalty /= 4;
-
-    const int total_penalty = body_armour_penalty
-                 + 19 * you.adjusted_shield_penalty();
-
-    return max(total_penalty, 0);
 }
 
 /**
@@ -3079,7 +3060,7 @@ int player_stealth()
     if (arm)
     {
         // subtract the body armour penalty
-        stealth -= you.adjusted_body_armour_penalty() / 10;
+        stealth -= you.adjusted_body_armour_penalty();
 
         const int pips = armour_type_prop(arm->sub_type, ARMF_STEALTH);
         stealth += pips * STEALTH_PIP;
@@ -5524,7 +5505,7 @@ int player::adjusted_body_armour_penalty() const
     if (armour_skill >= base_ev_penalty)
         return 0;
 
-    return 10 * (base_ev_penalty - armour_skill);
+    return base_ev_penalty - armour_skill;
 }
 
 /**
@@ -5546,6 +5527,14 @@ int player::adjusted_shield_penalty() const
         return 0;
 
     return base_shield_penalty - sh_skill;
+}
+
+int player::armour_spell_penalty() const
+{
+    if (get_mutation_level(MUT_RUNIC_MAGIC))
+        return unadjusted_body_armour_penalty() / 2 - you.skill(SK_ARMOUR);
+
+    return adjusted_body_armour_penalty();
 }
 
 static artefact_prop_type _enhancer_for_skill(skill_type sk)
@@ -8753,7 +8742,7 @@ bool player::allies_forbidden()
 
 // The player's ability to cast a spell of a particular school
 // Adjusted by effects like wizardry
-int player::adjusted_casting_level(skill_type skill)
+int player::adjusted_casting_level(skill_type skill, bool include_armour)
 {
     if (skill < SK_FIRST_MAGIC_SCHOOL || skill > SK_LAST_MAGIC)
         return 0;
@@ -8767,6 +8756,9 @@ int player::adjusted_casting_level(skill_type skill)
     }
 
     sklevel += player_wizardry();
+
+    if (include_armour)
+        sklevel = max(0, sklevel - armour_spell_penalty());
 
     return sklevel;
 }

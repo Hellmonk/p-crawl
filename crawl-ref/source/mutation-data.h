@@ -2641,7 +2641,7 @@ static const mutation_def mut_data[] =
 
 { MUT_RUNIC_MAGIC, 0, 1, mutflag::good,
   "runic magic",
-  {"Your spellcasting is much less encumbered by armour.", "", ""},
+  {"Your armour has halved encumbrance (rounded down) for spellcasting.", "", ""},
   {"Your spellcasting becomes less encumbered by armour.", "", ""},
   {"Your spellcasting no longer less encumbered by armour.", "", ""},
 },
