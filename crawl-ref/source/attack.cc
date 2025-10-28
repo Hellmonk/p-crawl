@@ -632,9 +632,11 @@ int attack::player_apply_misc_modifiers(int damage)
     if (using_weapon())
     {
         if (is_axe(*weapon) && you.has_mutation(MUT_AXE_MASTER))
-            return damage + 3;
+            damage += 3;
         if (is_polearm(*weapon) && you.has_mutation(MUT_POLE_MASTER))
-            return damage + 5;
+            damage += 5;
+        if (is_bow(*weapon) && you.has_mutation(MUT_MASTER_ARCHER))
+            damage += 5;
     }
 
     return damage;

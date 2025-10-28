@@ -2036,28 +2036,18 @@ static void _player_on_kill_effects(monster& mons, killer_type killer,
 #endif
         }
 
-        if (you.has_mutation(MUT_FEED_OFF_SUFFERING)
-            && (mons.has_ench(ENCH_POISON) || mons.has_ench(ENCH_DRAINED))
-            && x_chance_in_y(1 + you.get_mutation_level(MUT_FEED_OFF_SUFFERING), 4))
+        if (you.has_mutation(MUT_FEED_OFF_SUFFERING) && mons_is_suffering(mons))
         {
             feed = true;
-            int min = you.get_mutation_level(MUT_FEED_OFF_SUFFERING);
-            hp_heal += random_range(min, min + mons.get_experience_level() / 3);
-            mp_heal += random_range(min, min + mons.get_experience_level() / 3);
+            mp_heal += you.get_mutation_level(MUT_FEED_OFF_SUFFERING);
         }
 
         bool healing = hp_heal && you.hp < you.hp_max && !you.duration[DUR_DEATHS_DOOR]
             && !you.duration[DUR_SICKNESS];
         bool powering = mp_heal && you.magic_points < you.max_magic_points;
 
-        if (feed && (healing || powering))
-        {
-            mprf("You siphon power from %s's fading %s.",
-                  mons.name(DESC_THE).c_str(),
-                  mons.has_ench(ENCH_POISON) && mons.has_ench(ENCH_DRAINED) ?
-                  "poison and negative energy" : (mons.has_ench(ENCH_POISON) ?
-                  "poison" : "negative energy"));
-        }
+        if (feed && powering)
+            mprf("You siphon power from %s.", mons.name(DESC_THE).c_str());
 
         if (healing)
         {

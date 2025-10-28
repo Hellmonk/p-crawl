@@ -1080,6 +1080,7 @@ int player_spec_alchemy();
 int player_spec_summ();
 int player_spec_forgecraft();
 int player_spec_tloc();
+int player_spec_enchantment();
 
 int player_speed();
 
@@ -1212,6 +1213,7 @@ void dec_frozen_ramparts(int delay);
 void reset_rampage_heal_duration();
 void apply_rampage_heal();
 void trickster_trigger(const monster& victim, enchant_type ench);
+bool ench_triggers_trickster(enchant_type ench);
 int trickster_bonus();
 int enkindle_max_charges();
 void maybe_harvest_memory(const monster& victim);

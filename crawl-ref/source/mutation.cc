@@ -124,24 +124,15 @@ vector<mutation_type> get_removed_mutations()
     static vector<mutation_type> removed_mutations =
     {
 #if TAG_MAJOR_VERSION == 34
-        MUT_BREATHE_POISON,
         MUT_CLING,
         MUT_CONSERVE_POTIONS,
         MUT_CONSERVE_SCROLLS,
         MUT_EXOSKELETON,
         MUT_FOOD_JELLY,
         MUT_FUMES,
-        MUT_SAPROVOROUS,
         MUT_SUSTAIN_ATTRIBUTES,
         MUT_TRAMPLE_RESISTANCE,
-        MUT_MUMMY_RESTORATION,
         MUT_NO_CHARM_MAGIC,
-        MUT_MIASMA_IMMUNITY,
-        MUT_BLURRY_VISION,
-        MUT_UNBREATHING,
-        MUT_GOURMAND,
-        MUT_AWKWARD_TONGUE,
-        MUT_NOISE_DAMPENING,
 #endif
     };
 
@@ -189,19 +180,19 @@ static const mutation_conflict mut_conflicts[] =
     { MUT_ROBUST,              MUT_FRAIL,                   true},
     { MUT_HIGH_MAGIC,          MUT_LOW_MAGIC,               true},
     { MUT_WILD_MAGIC,          MUT_SUBDUED_MAGIC,           true},
-    { MUT_BERSERK,             MUT_CLARITY,                 true},
     { MUT_FAST,                MUT_SLOW,                    true},
     { MUT_HEAT_RESISTANCE,     MUT_HEAT_VULNERABILITY,      true},
     { MUT_COLD_RESISTANCE,     MUT_COLD_VULNERABILITY,      true},
     { MUT_SHOCK_RESISTANCE,    MUT_SHOCK_VULNERABILITY,     true},
     { MUT_STRONG_WILLED,       MUT_WEAK_WILLED,             true},
-    { MUT_MUTATION_RESISTANCE, MUT_DEVOLUTION,              true},
-    { MUT_EVOLUTION,           MUT_DEVOLUTION,              true},
-    { MUT_MUTATION_RESISTANCE, MUT_EVOLUTION,               true},
+    { MUT_MUTATION_RESISTANCE, MUT_UNSTABLE_GENOME,         true},
     { MUT_DAYSTALKER,          MUT_NIGHTSTALKER,            true},
     { MUT_SUPER_CHARGING,      MUT_POOR_CHARGING,           true},
     { MUT_GOOD_DODGING,        MUT_POOR_DODGING,            true},
     { MUT_FULL_RECOVERY,       MUT_POOR_RECOVERY,           true},
+    { MUT_DIVINE_DEXTERITY,    MUT_RECKLESS,                true},
+    { MUT_DIVINE_DEXTERITY,    MUT_CLUMSY,                  true},
+    { MUT_FORLORN,             MUT_EPHEMERAL_SHIELD,        true},
 
     { MUT_FANGS,               MUT_BEAK,                   false},
     { MUT_ANTENNAE,            MUT_HORNS,                  false},
@@ -1218,12 +1209,8 @@ static bool _accept_mutation(mutation_type mutat, bool temp)
     // a temporary mut. Stat mutations are too boring to have a relevant effect
     // on this timescale, and Berserkitis in particular is easy to miss being
     // applied in a tempmut storm and disproportionately punishing if you don't.
-    if (temp
-        && (mutat == MUT_DEVOLUTION
-            || mutat == MUT_BERSERK))
-    {
+    if (temp && mutat == MUT_UNSTABLE_GENOME)
         return false;
-    }
 
     const mutation_def& mdef = _get_mutation_def(mutat);
 
@@ -1645,7 +1632,7 @@ bool mut_is_compatible(mutation_type mut, bool base_only)
             return false;
 
         // Formicids have stasis and so prevent mutations that would do nothing.
-        if ((mut == MUT_BERSERK || mut == MUT_TELEPORT) && you.stasis())
+        if (mut == MUT_TELEPORT && you.stasis())
             return false;
 
         // We can't use is_useless_skill() here, since species that can still wear
@@ -1672,9 +1659,6 @@ bool mut_is_compatible(mutation_type mut, bool base_only)
         return false;
 
     if (mut == MUT_TELEPORT && (you.no_tele() || player_in_branch(BRANCH_ABYSS)))
-        return false;
-
-    if (mut == MUT_BERSERK && you.is_lifeless_undead())
         return false;
 
     if (mut == MUT_DEMONIC_GUARDIAN && you.allies_forbidden())
@@ -1971,15 +1955,6 @@ bool mutate(mutation_type which_mutation, const string &reason, bool failMsg,
             invalidate_agrid(true);
             break;
 
-        case MUT_EVOLUTION:
-        case MUT_DEVOLUTION:
-            if (cur_base_level == 1)
-            {
-                you.props[EVOLUTION_MUTS_KEY] = 0;
-                set_evolution_mut_xp(mutat == MUT_DEVOLUTION);
-            }
-            break;
-
         default:
             break;
         }
@@ -2118,12 +2093,6 @@ bool _delete_single_mutation_level(mutation_type mutat,
     case MUT_SILENCE_AURA:
     case MUT_FOUL_SHADOW:
         invalidate_agrid(true);
-        break;
-
-    case MUT_EVOLUTION:
-    case MUT_DEVOLUTION:
-        if (!you.mutation[mutat])
-            you.props[EVOLUTION_MUTS_KEY] = 0;
         break;
 
     default:
@@ -2566,7 +2535,7 @@ string mutation_desc(mutation_type mut, int level, bool colour,
     {
         ostringstream ostr;
         int num = protean_grace_amount();
-        ostr << mdef.have[0] << num << " EV, Slay +" << num << ")";
+        ostr << mdef.have[0] << num << " (Slay +" << num << ")";
         result = ostr.str();
     }
     else if (mut == MUT_MP_WANDS && you.has_mutation(MUT_HP_CASTING))
@@ -3209,12 +3178,7 @@ int protean_grace_amount()
 {
     int amount = you.how_mutated(false, false, true);
 
-    // A soft cap for Xom, Jiyva, and Demonspawn.
-    // XXX: rewrite _player_base_evasion_modifiers() to allow +0.5 EV bonuses?
-    if (amount > 7)
-        amount = 7 + floor((amount - 7) / 2);
-
-    return amount;
+    return min(13, amount);
 }
 
 const string bane_name(bane_type bane, bool dbkey)

@@ -2078,6 +2078,21 @@ bool is_crossbow(const item_def &item)
     }
 }
 
+bool is_bow(const item_def &item)
+{
+    if (!is_weapon(item))
+        return false;
+    switch (item.sub_type)
+    {
+    case WPN_SHORTBOW:
+    case WPN_ORCBOW:
+    case WPN_LONGBOW:
+        return true;
+    default:
+        return false;
+    }
+}
+
 bool is_axe(const item_def &item)
 {
     if (!is_weapon(item))

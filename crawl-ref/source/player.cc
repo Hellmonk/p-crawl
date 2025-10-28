@@ -1519,7 +1519,7 @@ int player_spec_fire()
 
     sf += you.wearing(OBJ_STAVES, STAFF_FIRE);
 
-    sf += 2 * you.wearing_ego(OBJ_ARMOUR, SPARM_ELEMENTS);
+    sf += you.wearing_ego(OBJ_ARMOUR, SPARM_ELEMENTS);
 
     if (you.unrand_equipped(UNRAND_ELEMENTAL_STAFF))
         sf++;
@@ -1533,7 +1533,7 @@ int player_spec_cold()
 
     sc += you.wearing(OBJ_STAVES, STAFF_COLD);
 
-    sc += 2 * you.wearing_ego(OBJ_ARMOUR, SPARM_ELEMENTS);
+    sc += you.wearing_ego(OBJ_ARMOUR, SPARM_ELEMENTS);
 
     if (you.unrand_equipped(UNRAND_ELEMENTAL_STAFF))
         sc++;
@@ -1548,7 +1548,7 @@ int player_spec_earth()
     // Staves
     se += you.wearing(OBJ_STAVES, STAFF_EARTH);
 
-    se += 2 * you.wearing_ego(OBJ_ARMOUR, SPARM_ELEMENTS);
+    se += you.wearing_ego(OBJ_ARMOUR, SPARM_ELEMENTS);
 
     if (you.unrand_equipped(UNRAND_ELEMENTAL_STAFF))
         se++;
@@ -1563,7 +1563,7 @@ int player_spec_air()
     // Staves
     sa += you.wearing(OBJ_STAVES, STAFF_AIR);
 
-    sa += 2 * you.wearing_ego(OBJ_ARMOUR, SPARM_ELEMENTS);
+    sa += you.wearing_ego(OBJ_ARMOUR, SPARM_ELEMENTS);
 
     if (you.unrand_equipped(UNRAND_ELEMENTAL_STAFF))
         sa++;
@@ -1592,7 +1592,7 @@ int player_spec_hex()
 
 int player_spec_summ()
 {
-    return 0;
+    return you.get_mutation_level(MUT_SUMMONING_ENHANCER);
 }
 
 int player_spec_forgecraft()
@@ -1607,7 +1607,12 @@ int player_spec_alchemy()
 
 int player_spec_tloc()
 {
-    return 0;
+    return you.get_mutation_level(MUT_TRANSLOCATIONS_ENHANCER);
+}
+
+int player_spec_enchantment()
+{
+    return you.get_mutation_level(MUT_ENCHANTMENT_ENHANCER);
 }
 
 // If temp is set to false, temporary sources of resistance won't be
@@ -1786,12 +1791,8 @@ static int _player_base_evasion_modifiers()
     // mutations
     evbonus += you.get_mutation_level(MUT_GELATINOUS_BODY);
 
-    // XXX: rescale these modifiers to allow +0.5 EV bonuses past the soft cap?
-    if (you.get_mutation_level(MUT_PROTEAN_GRACE))
-        evbonus += protean_grace_amount();
-
     if (you.has_mutation(MUT_TENGU_FLIGHT))
-        evbonus += 4;
+        evbonus += 15;
 
     // transformation penalties/bonuses not covered by size alone:
     if (you.get_mutation_level(MUT_SLOW_REFLEXES))
@@ -1871,6 +1872,7 @@ static int _player_evasion(int final_scale, bool ignore_temporary)
 {
     const int scale = 100;
     int skmult = 8;
+    int divine_mult = you.has_mutation(MUT_DIVINE_DEXTERITY) ? 2 : 1;
 
     if (ignore_temporary)
     {
@@ -1888,14 +1890,16 @@ static int _player_evasion(int final_scale, bool ignore_temporary)
 
     // Everything below this are transient modifiers
     if (ignore_temporary)
-        return (natural_evasion * final_scale) / scale;
+        return (natural_evasion * divine_mult * final_scale) / scale;
 
     // Apply temporary bonuses, penalties, and multipliers
     int final_evasion =
        _player_apply_evasion_multipliers(natural_evasion, scale)
        + (_player_temporary_evasion_modifiers() * scale);
 
-    // no evasion while paralyzed
+    final_evasion *= divine_mult;
+
+    // no evasion while paralyzed, petrified, or backlit
     if (you.duration[DUR_PARALYSIS] || you.form == transformation::tree
          || you.duration[DUR_PETRIFIED] || you.backlit(false))
     {
@@ -1999,7 +2003,7 @@ int player_shield_class(int scale, bool random, bool ignore_temporary)
         && you.get_mutation_level(MUT_EPHEMERAL_SHIELD)
         && you.duration[DUR_EPHEMERAL_SHIELD])
     {
-        shield += you.get_mutation_level(MUT_EPHEMERAL_SHIELD) * 1400;
+        shield += you.get_mutation_level(MUT_EPHEMERAL_SHIELD) * 7000;
     }
 
     if (you.duration[DUR_SPWPN_SHIELDING])
@@ -2011,6 +2015,12 @@ int player_shield_class(int scale, bool random, bool ignore_temporary)
     shield += qazlal_sh_boost() * 100;
     shield += you.wearing_jewellery(RING_REFLECTION) * 100;
     shield += you.scan_artefacts(ARTP_SHIELDING) * 200;
+
+    if (you.has_mutation(MUT_DIVINE_DEXTERITY))
+        shield *= 2;
+
+    if (you.has_mutation(MUT_RECKLESS))
+        shield /= 2;
 
     return random ? div_rand_round(shield * scale, 100) : ((shield * scale) / 100);
 }
@@ -8500,7 +8510,7 @@ void player_end_berserk()
  */
 bool sanguine_armour_valid()
 {
-    return you.hp <= you.hp_max * 2 / 3 && you.has_mutation(MUT_SANGUINE_ARMOUR);
+    return you.hp <= you.hp_max / 2 && you.has_mutation(MUT_SANGUINE_ARMOUR);
 }
 
 /// Trigger sanguine armour, updating the duration & messaging as appropriate.
@@ -8534,7 +8544,7 @@ void refresh_weapon_protection()
     you.redraw_armour_class = true;
 }
 
-static bool _ench_triggers_trickster(enchant_type ench)
+bool ench_triggers_trickster(enchant_type ench)
 {
     switch (ench)
     {
@@ -8599,7 +8609,7 @@ static int _trickster_max_boost()
 // Increment AC boost when applying a negative status effect to a monster.
 void trickster_trigger(const monster& victim, enchant_type ench)
 {
-    if (!_ench_triggers_trickster(ench))
+    if (!ench_triggers_trickster(ench))
         return;
 
     if (!you.can_see(victim) || !you.see_cell_no_trans(victim.pos()) || victim.friendly())
