@@ -4186,7 +4186,7 @@ void melee_attack::emit_foul_stench()
 
 static int _minotaur_headbutt_chance()
 {
-    return 23 + you.experience_level;
+    return 50;
 }
 
 void melee_attack::do_minotaur_retaliation()
