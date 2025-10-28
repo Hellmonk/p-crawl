@@ -24,4 +24,5 @@ enum object_selector
     OSEL_AMULET                  = -20,
     OSEL_ARTEFACT_WEAPON         = -21,
     OSEL_MARKED_ITEMS            = -22,
+    OSEL_ENCHANTABLE_ANY         = -23,
 };

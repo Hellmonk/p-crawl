@@ -60,4 +60,5 @@ static const unordered_map<misc_item_type, evoker_data, std::hash<int>> xp_evoke
     { MISC_BEGINNER_GUIDE, { "guide_debt", "guide_plus", 300, 1 } },
     { MISC_HASTE_RUNESTONE, { "haste_debt", "haste_plus", 250, 1 } },
     { MISC_MEAT_BONE, { "meat_debt", "meat_plus", 150, 1 } },
+    { MISC_CRYSTAL_ANVIL, { "anvil_debt", "anvil_plus", 330, 1 } },
 };

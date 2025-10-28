@@ -2850,24 +2850,19 @@ string get_item_description(const item_def &item,
             if (item.base_type == OBJ_ARMOUR
                 || item.base_type == OBJ_WEAPONS)
             {
-                if (you.has_mutation(MUT_ARTEFACT_ENCHANTING))
+                if (is_unrandom_artefact(item))
                 {
-                    if (!item.is_identified())
-                        description << "\nIt is an ancient artefact.";
-                    else if (is_unrandom_artefact(item)
-                             || (item.base_type == OBJ_ARMOUR
+                    description << "\nIt is a unique artefact.";
+                    description << "\nThis ancient artefact cannot be changed "
+                        "by magic or mundane means.";
+                }
+                else if ((item.base_type == OBJ_ARMOUR
                                  && item.plus >= armour_max_enchant(item))
                              || (item.base_type == OBJ_WEAPONS
                                  && item.plus >= MAX_WPN_ENCHANT))
-                    {
-                        description << "\nEnchanting this artefact any further "
-                            "is beyond even your skills.";
-                    }
-                }
-                else
                 {
-                    description << "\nThis ancient artefact cannot be changed "
-                        "by magic or mundane means.";
+                        description << "\nEnchanting this artefact any further "
+                            "is impossible.";
                 }
             }
             // Randart jewellery has already displayed this line.

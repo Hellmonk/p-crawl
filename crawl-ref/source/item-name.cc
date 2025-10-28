@@ -1041,6 +1041,7 @@ static string misc_type_name(int type)
     case MISC_BEGINNER_GUIDE:            return "beginner guide";
     case MISC_HASTE_RUNESTONE:           return "runestone of haste";
     case MISC_MEAT_BONE:                 return "meat bone";
+    case MISC_CRYSTAL_ANVIL:             return "crystal anvil";
 
     default:
         return "buggy miscellaneous item";
