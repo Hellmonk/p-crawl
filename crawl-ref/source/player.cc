@@ -579,12 +579,8 @@ static void _enter_water(dungeon_feature_type old_feat,
 
 bool player_swim_faction()
 {
-    if (you.free_action_available() == FACT_SWIM
-        && feat_is_water(env.grid(you.pos()))
-        && you.ground_level())
-    {
+    if (you.free_action_available() == FACT_SWIM && you.in_water())
         return true;
-    }
 
     return false;
 }
@@ -1656,14 +1652,6 @@ int player_movement_speed(bool check_terrain, bool temp)
 
     int mv = get_form()->base_move_speed;
 
-    if (check_terrain && feat_is_water(env.grid(you.pos())))
-    {
-        if (you.get_mutation_level(MUT_NIMBLE_SWIMMER) >= 2)
-            mv -= 4;
-        else if (you.in_water() && you.slow_in_water())
-            mv += 6; // Wading through water is very slow.
-    }
-
     // moving on liquefied ground, or while maintaining the
     // effect takes longer
     if (check_terrain && (you.liquefied_ground()
@@ -1853,12 +1841,12 @@ static int _player_apply_evasion_multipliers(int prescaled_ev, const int scale)
     if (you.duration[DUR_PETRIFYING] || you.caught())
         prescaled_ev /= 2;
 
-    // Merfolk get a 25% evasion bonus near water.
+    // Merfolk get a 50% evasion bonus near water.
     if (feat_is_water(env.grid(you.pos()))
         && you.get_mutation_level(MUT_NIMBLE_SWIMMER) >= 2)
     {
-        const int ev_bonus = max(2 * scale, prescaled_ev / 4);
-        return prescaled_ev + ev_bonus;
+        const int ev_bonus = max(2 * scale, prescaled_ev / 2);
+        prescaled_ev += ev_bonus;
     }
 
     if (you.is_constricted())

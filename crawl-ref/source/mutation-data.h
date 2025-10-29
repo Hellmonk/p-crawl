@@ -2472,8 +2472,8 @@ static const mutation_def mut_data[] =
 { MUT_NIMBLE_SWIMMER, 0, 2, mutflag::good | mutflag::anatomy,
   "nimble swimmer",
 
-  {"You are camouflaged when in or above water. (Stealth+)",
-   "You are very nimble when in or above water. (Stealth+, EV+, Speed+++)", ""},
+  {"You are camouflaged when in water. (Stealth+)",
+   "You are very nimble when in water. (Stealth+, EV+, Free Action)", ""},
   {"You feel comfortable near water.",
    "You feel very comfortable near water.", ""},
   {"You feel less comfortable near water.",

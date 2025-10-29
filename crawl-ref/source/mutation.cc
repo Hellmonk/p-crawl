@@ -1664,7 +1664,7 @@ bool mut_is_compatible(mutation_type mut, bool base_only)
     if (mut == MUT_DEMONIC_GUARDIAN && you.allies_forbidden())
         return false;
 
-    if (mut == MUT_NIMBLE_SWIMMER && !feat_is_water(env.grid(you.pos())))
+    if (mut == MUT_NIMBLE_SWIMMER && !you.in_water())
         return false;
 
     return true;
