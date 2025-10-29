@@ -2757,9 +2757,6 @@ void level_change(bool skip_attribute_increase)
             redraw_screen();
             update_screen();
 #endif
-            if (!skip_attribute_increase)
-                species_stat_gain(you.species);
-
             switch (you.species)
             {
             case SP_NAGA:
@@ -3120,6 +3117,26 @@ bool dur_expiring(duration_type dur)
     }
 
     return value <= duration_expire_point(dur);
+}
+
+void random_gnoll_skillup()
+{
+    vector<skill_type> possibles;
+    for (int i = SK_FIRST_SKILL; i < NUM_SKILLS; ++i)
+    {
+        const skill_type sk = static_cast<skill_type>(i);
+        if (is_removed_skill(sk) || you.skills[sk] >= MAX_SKILL_LEVEL)
+            continue;
+
+        possibles.push_back(sk);
+    }
+    if (possibles.empty())
+    {
+        mpr("There are no more skills for you to train.");
+        return;
+    }
+    shuffle_array(possibles);
+    you.skills[possibles[0]] += 1;
 }
 
 static void _display_char_status(int value, const char *fmt, ...)
@@ -5617,39 +5634,39 @@ int player::skill(skill_type sk, int scale, bool real, bool temp) const
     switch (sk)
     {
     case SK_ENCHANTMENTS:
-        level = min(level + scan_artefacts(ARTP_ENHANCE_ENCH) * scale, 27 * scale);
+        level = level + scan_artefacts(ARTP_ENHANCE_ENCH) * scale;
         break;
 
     case SK_NECROMANCY:
-        level = min(level + scan_artefacts(ARTP_ENHANCE_NECRO) * scale, 27 * scale);
+        level = level + scan_artefacts(ARTP_ENHANCE_NECRO) * scale;
         break;
 
     case SK_HEXES:
-        level = min(level + scan_artefacts(ARTP_ENHANCE_HEXES) * scale, 27 * scale);
+        level = level + scan_artefacts(ARTP_ENHANCE_HEXES) * scale;
         break;
 
     case SK_SUMMONINGS:
-        level = min(level + scan_artefacts(ARTP_ENHANCE_SUMM) * scale, 27 * scale);
+        level = level + scan_artefacts(ARTP_ENHANCE_SUMM) * scale;
         break;
 
     case SK_TRANSLOCATIONS:
-        level = min(level + scan_artefacts(ARTP_ENHANCE_TLOC) * scale, 27 * scale);
+        level = level + scan_artefacts(ARTP_ENHANCE_TLOC) * scale;
         break;
 
     case SK_FIRE_MAGIC:
-        level = min(level + scan_artefacts(ARTP_ENHANCE_FIRE) * scale, 27 * scale);
+        level = level + scan_artefacts(ARTP_ENHANCE_FIRE) * scale;
         break;
 
     case SK_ICE_MAGIC:
-        level = min(level + scan_artefacts(ARTP_ENHANCE_ICE) * scale, 27 * scale);
+        level = level + scan_artefacts(ARTP_ENHANCE_ICE) * scale;
         break;
 
     case SK_AIR_MAGIC:
-        level = min(level + scan_artefacts(ARTP_ENHANCE_AIR) * scale, 27 * scale);
+        level = level + scan_artefacts(ARTP_ENHANCE_AIR) * scale;
         break;
 
     case SK_EARTH_MAGIC:
-        level = min(level + scan_artefacts(ARTP_ENHANCE_EARTH) * scale, 27 * scale);
+        level = level + scan_artefacts(ARTP_ENHANCE_EARTH) * scale;
         break;
 
     case SK_SHAPESHIFTING:

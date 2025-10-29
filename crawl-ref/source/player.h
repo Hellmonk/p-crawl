@@ -1099,6 +1099,7 @@ unsigned int exp_needed(int lev);
 bool will_gain_life(int lev);
 
 bool dur_expiring(duration_type dur);
+void random_gnoll_skillup();
 void display_char_status();
 
 void forget_map(bool rot = false);

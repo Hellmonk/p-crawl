@@ -1320,8 +1320,6 @@ static string _skill_target_desc(skill_type skill, int scaled_target,
 static void _append_skill_target_desc(string &description, skill_type skill,
                                         int scaled_target)
 {
-    if (!you.has_mutation(MUT_DISTRIBUTED_TRAINING))
-        description += "\n    " + _skill_target_desc(skill, scaled_target, 100);
     if (you.training[skill] > 0 && you.training[skill] < 100)
     {
         description += "\n    " + _skill_target_desc(skill, scaled_target,
@@ -3564,11 +3562,6 @@ static vector<command_type> _allowed_actions(const item_def& item)
     }
     actions.push_back(CMD_DROP);
     actions.push_back(CMD_ADJUST_INVENTORY);
-    if (!you.has_mutation(MUT_DISTRIBUTED_TRAINING)
-        && _is_below_training_target(item, false))
-    {
-        actions.push_back(CMD_SET_SKILL_TARGET);
-    }
 
     if (!crawl_state.game_is_tutorial())
         actions.push_back(CMD_INSCRIBE_ITEM);

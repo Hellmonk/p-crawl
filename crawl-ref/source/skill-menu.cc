@@ -938,6 +938,8 @@ void SkillMenu::cancel_help()
  */
 bool SkillMenu::do_skill_enabled_check()
 {
+    return true;
+
     if (skills_being_trained())
         return true;
 

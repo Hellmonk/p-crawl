@@ -778,6 +778,8 @@ bool skills_being_trained()
 // If not, go to the skill menu and return true.
 bool check_selected_skills()
 {
+    return true;
+
     if (skills_being_trained())
         return false;
     if (!trainable_skills())
@@ -809,8 +811,6 @@ bool check_selected_skills()
     }
 
     mpr("You need to enable at least one skill for training.");
-    // Training will be fixed up on load if this ASSERT triggers.
-    ASSERT(!you.has_mutation(MUT_DISTRIBUTED_TRAINING));
     more();
     reset_training();
     skill_menu();
