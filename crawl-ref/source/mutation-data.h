@@ -2464,7 +2464,7 @@ static const mutation_def mut_data[] =
 { MUT_DISTRIBUTED_TRAINING, 0, 1, mutflag::good,
   "distributed training",
 
-  {"Your experience applies equally to all skills.", "", ""},
+  {"You start with extra skill, but train skills randomly on most level-ups.", "", ""},
   {"Your experience now applies equally to all skills.", "", ""},
   {"Your experience no longer applies equally to all skills.", "", ""},
 },

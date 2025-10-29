@@ -13,6 +13,7 @@
 #include "macro.h"
 #include "message.h"
 #include "monster.h"
+#include "mutation.h"
 #include "notes.h"
 #include "ouch.h"
 #include "options.h"
@@ -74,7 +75,13 @@ static void _handle_stat_change(stat_type stat);
  */
 bool attribute_increase()
 {
-    skill_menu(SKMF_EXPERIENCE, 1);
+    if (you.has_mutation(MUT_DISTRIBUTED_TRAINING) && (you.experience_level % 3))
+        random_gnoll_skillup();
+
+    if (you.has_mutation(MUT_DISTRIBUTED_TRAINING) && !(you.experience_level % 5))
+        random_gnoll_skillup();
+    else
+        skill_menu(SKMF_EXPERIENCE, 1);
     return true;
 }
 
