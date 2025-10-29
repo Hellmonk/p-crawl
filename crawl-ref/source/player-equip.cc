@@ -162,6 +162,8 @@ int count = 0;
     case SLOT_BOOTS:
         if (species::wears_barding(you.species) || you.has_mutation(MUT_FORMLESS))
             NO_SLOT("You don't have any feet!")
+        else if (you.has_mutation(MUT_MERTAIL))
+            NO_SLOT("Boots would make your tail itchy.")
         else if (player_size <= SIZE_LITTLE)
             NO_SLOT(make_stringf("Those are too big for your %s.", you.foot_name(true).c_str()))
         else if (player_size >= SIZE_LARGE)
