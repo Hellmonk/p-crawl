@@ -76,6 +76,8 @@ free_action_type actor::free_action_available() const
         return FACT_ANY;
     else if (you.get_mutation_level(MUT_NIMBLE_SWIMMER) > 1 && you.in_water())
         return FACT_SWIM;
+    else if (you.get_mutation_level(MUT_FAST))
+        return FACT_MOVE;
     else if (you.duration[DUR_SWIFTNESS] && you.attribute[ATTR_SWIFTNESS] >= 0)
         return FACT_MOVE;
 

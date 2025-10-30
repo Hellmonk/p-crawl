@@ -21,7 +21,8 @@ mutations:
   1:
     MUT_CONSTRICTING_TAIL: 1
     MUT_DEFORMED: 1
-    MUT_SPIT_POISON: 1
+    MUT_SLOW: 1
+    MUT_POOR_DODGING: 1
 recommended_jobs:
   - berserker
   - shapeshifter
