@@ -126,7 +126,6 @@ vector<mutation_type> get_removed_mutations()
 #if TAG_MAJOR_VERSION == 34
         MUT_CLING,
         MUT_CONSERVE_POTIONS,
-        MUT_CONSERVE_SCROLLS,
         MUT_EXOSKELETON,
         MUT_FOOD_JELLY,
         MUT_FUMES,
