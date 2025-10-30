@@ -1380,9 +1380,9 @@ static const mutation_def mut_data[] =
 { MUT_GELATINOUS_BODY, 0, 3, mutflag::good | mutflag::jiyva | mutflag::substance,
   "gelatinous body",
 
-  {"Your rubbery body absorbs attacks. (AC +1, EV +1)",
-   "Your pliable body absorbs attacks. (AC +2, EV +2)",
-   "Your gelatinous body deflects attacks. (AC +3, EV +3)"},
+  {"Your rubbery body absorbs attacks. (AC +1, EV +10)",
+   "Your pliable body absorbs attacks. (AC +2, EV +20)",
+   "Your gelatinous body deflects attacks. (AC +3, EV +30)"},
 
   {"Your body becomes stretchy.",
    "Your body becomes more malleable.",
@@ -2469,7 +2469,7 @@ static const mutation_def mut_data[] =
   "nimble swimmer",
 
   {"You are camouflaged when in water. (Stealth+)",
-   "You are very nimble when in water. (Stealth+, EV+, Free Action)", ""},
+   "You are very nimble when in water. (Stealth+, EV+, Water Free Action)", ""},
   {"You feel comfortable near water.",
    "You feel very comfortable near water.", ""},
   {"You feel less comfortable near water.",
