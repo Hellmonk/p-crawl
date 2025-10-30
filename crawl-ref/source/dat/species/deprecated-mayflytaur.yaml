@@ -21,8 +21,6 @@ mutations:
   1:
     MUT_SHORT_LIFESPAN: 1
     MUT_BIG_WINGS: 1
-  6:
-    MUT_MANA_REGENERATION: 1
   14:
     MUT_NEGATIVE_ENERGY_RESISTANCE: 1
 fake_mutations:

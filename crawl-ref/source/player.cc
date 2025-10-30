@@ -1176,9 +1176,6 @@ int player_mp_regen()
 
     int regen_amount = 7 + you.max_magic_points / 2;
 
-    if (you.get_mutation_level(MUT_MANA_REGENERATION))
-        regen_amount *= 2;
-
     // Amulets and artefacts.
     vector<item_def*> eq = you.equipment.get_slot_items(SLOT_ALL_EQUIPMENT, false, true);
     for (item_def* item : eq)

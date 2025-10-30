@@ -371,6 +371,11 @@ static int _skill_power(spell_type spell)
                 power += you.skill(spell_type2skill(bit), 2);
         power /= skillcount;
     }
+
+    // deep elves get extra power from spellcasting skill
+    if (you.get_mutation_level(MUT_SPELLCASTING_EXPERT))
+        power += you.skill(SK_SPELLCASTING) / 2;
+
     return power + you.skill(SK_SPELLCASTING);
 }
 
