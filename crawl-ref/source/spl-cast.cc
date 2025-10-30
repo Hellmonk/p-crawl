@@ -347,7 +347,7 @@ static void _apply_post_zap_effect(spell_type spell, coord_def target)
     switch (spell)
     {
     case SPELL_KISS_OF_DEATH:
-        drain_player(20, true, true);
+        drain_player(10, true, true);
         break;
     case SPELL_BOMBARD:
         if (coinflip())

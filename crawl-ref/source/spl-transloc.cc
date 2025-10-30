@@ -2166,7 +2166,7 @@ spret word_of_chaos(int pow, bool fail)
     }
 
     you.increase_duration(DUR_WORD_OF_CHAOS_COOLDOWN, 15 + random2(10));
-    drain_player(50, false, true);
+    drain_player(10, false, true);
     return spret::success;
 }
 

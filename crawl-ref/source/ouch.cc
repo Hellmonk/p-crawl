@@ -234,7 +234,7 @@ int check_your_resists(int hurted, beam_type flavour, string source,
         if (doEffects)
         {
             // drain_player handles the messaging here
-            drain_player(original, true);
+            drain_player(1 + original / 7, true);
         }
         break;
 
@@ -515,8 +515,7 @@ bool drain_player(int power, bool announce_full, bool ignore_protection, bool qu
 
     if (power > 0)
     {
-        const int mhp = 1 + div_rand_round(power * get_real_hp(false, false),
-                750);
+        const int mhp = power;
         you.hp_max_adj_temp -= mhp;
         you.hp_max_adj_temp = max(-(get_real_hp(false, false) - 1),
                 you.hp_max_adj_temp);
@@ -526,7 +525,6 @@ bool drain_player(int power, bool announce_full, bool ignore_protection, bool qu
 
         if (!quiet)
             mpr("You feel drained.");
-        xom_is_stimulated(15);
         return true;
     }
 

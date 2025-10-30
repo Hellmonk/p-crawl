@@ -125,7 +125,6 @@ vector<mutation_type> get_removed_mutations()
     {
 #if TAG_MAJOR_VERSION == 34
         MUT_CLING,
-        MUT_CONSERVE_POTIONS,
         MUT_EXOSKELETON,
         MUT_FOOD_JELLY,
         MUT_FUMES,
@@ -1770,7 +1769,7 @@ bool mutate(mutation_type which_mutation, const string &reason, bool failMsg,
             // fallthrough to normal mut
         case MUTCLASS_NORMAL:
             mprf(MSGCH_MUTATION, "Your body decomposes!");
-            drain_player(30, false, true, true);
+            drain_player(6, false, true, true);
             return true;
         case MUTCLASS_INNATE:
             // You can't miss out on innate mutations just because you're

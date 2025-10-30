@@ -1733,7 +1733,7 @@ void unequip_artefact_effect(item_def &item,  bool *show_msgs, bool meld)
         mpr("You feel strangely numb.");
 
     if (proprt[ARTP_DRAIN] && !meld)
-        drain_player(150, true, true);
+        drain_player(15, true, true);
 
     if (is_unrandom_artefact(item))
     {

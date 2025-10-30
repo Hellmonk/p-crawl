@@ -1053,7 +1053,7 @@ static void _handle_emergency_flight()
     }
     else
     {
-        const int drain = div_rand_round(15 * you.time_taken, BASELINE_DELAY);
+        const int drain = div_rand_round(10 * you.time_taken, BASELINE_DELAY);
         drain_player(drain, true, true);
     }
 }

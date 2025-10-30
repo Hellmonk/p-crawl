@@ -1244,15 +1244,13 @@ static const mutation_def mut_data[] =
   {"", "", ""},
 },
 
-#if TAG_MAJOR_VERSION == 34
-{ MUT_CONSERVE_POTIONS, 0, 1, mutflag::good,
-  "conserve potions",
+{ MUT_POOR_APTITUDE, 0, 1, mutflag::bad,
+  "poor aptitude",
 
-  {"You are very good at protecting items from cold.", "", ""},
-  {"You feel less concerned about cold.", "", ""},
+  {"You receive no skill point every third experience level.", "", ""},
+  {"", "", ""},
   {"", "", ""},
 },
-#endif
 
 { MUT_PASSIVE_FREEZE, 1, 1, mutflag::good,
   "passive freeze",
