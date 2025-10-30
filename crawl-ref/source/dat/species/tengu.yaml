@@ -9,7 +9,7 @@ species_flags:
 aptitudes:
   xp: 0
   hp: -2
-  mp_mod: 1
+  mp_mod: 0
   wl: 3
 str: 8
 int: 8
@@ -20,6 +20,8 @@ mutations:
     MUT_BEAK: 1
     MUT_TALONS: 1
     MUT_ACROBATIC: 1
+    MUT_WILD_MAGIC: 1
+    MUT_AIR_AFFINITY: 1
   7:
     MUT_TENGU_FLIGHT: 1
 recommended_jobs:

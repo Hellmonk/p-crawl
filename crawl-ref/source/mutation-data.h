@@ -1191,15 +1191,13 @@ static const mutation_def mut_data[] =
   TILEG_MUT_FORLORN,
 },
 
-#if TAG_MAJOR_VERSION == 34
-{ MUT_STOCHASTIC_TORMENT_RESISTANCE, 0, 1, mutflag::good,
-  "removed torment resistance",
+{ MUT_AIR_AFFINITY, 0, 1, mutflag::good,
+  "air affinity",
 
-  {"You are somewhat able to resist unholy torments.","",""},
-  {"You feel a strange anaesthesia.", "", ""},
+  {"You begin the game with +1 air magic skill.","",""},
+  {"", "", ""},
   {"", "", ""},
 },
-#endif
 
 { MUT_PASSIVE_MAPPING, 5, 1, mutflag::good,
   "sense surroundings",
@@ -1237,16 +1235,16 @@ static const mutation_def mut_data[] =
 
   TILEG_MUT_CONDENSATION_SHIELD,
 },
-#if TAG_MAJOR_VERSION == 34
 
-{ MUT_CONSERVE_SCROLLS, 0, 1, mutflag::good,
-  "conserve scrolls",
+{ MUT_EARTH_AFFINITY, 0, 1, mutflag::good,
+  "earth affinity",
 
-  {"You are very good at protecting items from fire.", "", ""},
-  {"You feel less concerned about heat.", "", ""},
+  {"You begin the game with +1 earth magic skill.", "", ""},
+  {"", "", ""},
   {"", "", ""},
 },
 
+#if TAG_MAJOR_VERSION == 34
 { MUT_CONSERVE_POTIONS, 0, 1, mutflag::good,
   "conserve potions",
 
