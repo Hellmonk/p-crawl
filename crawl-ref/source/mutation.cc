@@ -2678,7 +2678,7 @@ static const facet_def _demon_facets[] =
       { -33, 0, 0 } },
     { 2, { MUT_FOUL_STENCH, MUT_FOUL_STENCH, MUT_FOUL_STENCH },
       { -33, 0, 0 } },
-    { 2, { MUT_MANA_REGENERATION, MUT_MANA_SHIELD, MUT_MANA_LINK },
+    { 2, { MUT_SPELLCASTING_EXPERT, MUT_MANA_SHIELD, MUT_MANA_LINK },
       { -33, 0, 0 } },
     { 2, { MUT_FOUL_SHADOW, MUT_FOUL_SHADOW, MUT_FOUL_SHADOW },
       { -33, 0, 0 } },

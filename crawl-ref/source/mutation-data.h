@@ -1360,11 +1360,11 @@ static const mutation_def mut_data[] =
   TILEG_MUT_MANA_SHIELD,
 },
 
-{ MUT_MANA_REGENERATION, 0, 1, mutflag::good,
-  "magic regeneration",
+{ MUT_SPELLCASTING_EXPERT, 0, 1, mutflag::good,
+  "spellcasting expert",
 
-  {"You regenerate magic rapidly.", "", ""},
-  {"Your magic begins to regenerate rapidly.", "", ""},
+  {"You gain more spellpower from spellcasting skill.", "", ""},
+  {"", "", ""},
   {"", "", ""},
 
   TILEG_MUT_MANA_REGENERATION,
@@ -1764,9 +1764,9 @@ static const mutation_def mut_data[] =
 },
 
 { MUT_BIG_BRAIN, 2, 1, mutflag::good,
-  "big brain",
+  "high intelligence",
 
-  {"You have an unusually large brain. (Wiz)",
+  {"You are extremely intelligent. (Wiz)",
    "",
    ""},
 
