@@ -22,6 +22,7 @@ mutations:
   1:
     MUT_FROG_LEGS: 1
     MUT_DAYSTALKER: 1
+    MUT_FENCER: 1
   13:
     MUT_FROG_LEGS: 1
 recommended_jobs:

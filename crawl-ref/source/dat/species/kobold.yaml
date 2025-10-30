@@ -4,7 +4,7 @@ name: Kobold
 difficulty: Intermediate
 difficulty_priority: 90
 aptitudes:
-  xp: 1
+  xp: 0
   hp: -2
   mp_mod: 0
   wl: 3

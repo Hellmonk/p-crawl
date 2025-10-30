@@ -8,9 +8,9 @@ difficulty_priority: 40
 species_flags:
   - no_feet
 aptitudes:
-  xp: -1
-  hp: -3
-  mp_mod: 1
+  xp: 0
+  hp: -4
+  mp_mod: 2
   wl: 6
   shields: False
 size: little
