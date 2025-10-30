@@ -125,7 +125,7 @@ int count = 0;
     case SLOT_HELMET:
         if (you.has_mutation(MUT_FORMLESS))
             NO_SLOT("You don't have a head.")
-        else if (you.has_mutation(MUT_NO_ARMOUR))
+        else if (you.species == SP_OCTOPODE || you.has_mutation(MUT_NO_ARMOUR))
             NO_SLOT("That is much too large for your head.")
         else if (you.form == transformation::serpent)
             return 2;

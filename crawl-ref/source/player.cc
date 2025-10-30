@@ -1746,7 +1746,7 @@ static int _player_base_evasion_modifiers()
     evbonus += you.wearing_ego(OBJ_ARMOUR, SPARM_EVASION);
 
     // mutations
-    evbonus += you.get_mutation_level(MUT_GELATINOUS_BODY);
+    evbonus += you.get_mutation_level(MUT_GELATINOUS_BODY) * 10;
 
     if (you.has_mutation(MUT_TENGU_FLIGHT))
         evbonus += 15;
