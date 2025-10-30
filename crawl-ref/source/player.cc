@@ -1647,18 +1647,6 @@ int player_movement_speed(bool check_terrain, bool temp)
     else if (player_under_penance(GOD_CHEIBRIADOS))
         mv += 2 + min(div_rand_round(you.piety_max[GOD_CHEIBRIADOS], 20), 8);
 
-    // Mutations: -2, -3, -4, unless innate and shapechanged.
-    if (int fast = you.get_mutation_level(MUT_FAST))
-        mv -= fast + 1;
-
-    if (int slow = you.get_mutation_level(MUT_SLOW)
-                   + you.has_mutation(MUT_FROG_LEGS)
-                   + you.has_mutation(MUT_CONSTRICTING_TAIL) * 2)
-    {
-        mv *= 10 + slow * 2;
-        mv /= 10;
-    }
-
     if (you.has_bane(BANE_LETHARGY))
         mv = mv * 13 / 10;
 

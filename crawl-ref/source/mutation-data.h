@@ -371,36 +371,36 @@ static const mutation_def mut_data[] =
   TILEG_MUT_STRONG_WILLED,
 },
 
-{ MUT_FAST, 0, 3, mutflag::good,
+{ MUT_FAST, 0, 1, mutflag::good,
   "speed",
 
-  {"You move with supernatural speed. (Speed+)",
-   "You move with supernatural speed. (Speed++)",
-   "You move with supernatural speed. (Speed+++)"},
+  {"You move with supernatural speed. (Movement Free Action)",
+   "",
+   ""},
 
   {"You feel quick.",
-   "You feel quick.",
-   "You feel quick."},
+   "",
+   ""},
 
   {"You feel sluggish.",
-   "You feel sluggish.",
-   "You feel sluggish."},
+   "",
+   ""},
 },
 
-{ MUT_SLOW, 0, 3, mutflag::bad,
-  "slowness",
+{ MUT_SLOW, 0, 1, mutflag::bad,
+  "ponderous",
 
-  {"You cover ground slowly.",
-   "You cover ground very slowly.",
-   "You cover ground extremely slowly."},
+  {"You are ponderous and move slowly around enemies.",
+   "",
+   ""},
 
   {"You feel sluggish.",
-   "You feel sluggish.",
-   "You feel sluggish."},
+   "",
+   ""},
 
   {"You feel quick.",
-   "You feel quick.",
-   "You feel quick."},
+   "",
+   ""},
 },
 
 { MUT_TRAINED_BODY, 2, 1, mutflag::good,

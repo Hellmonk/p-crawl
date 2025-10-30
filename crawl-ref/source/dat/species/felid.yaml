@@ -25,6 +25,7 @@ mutations:
   1:
     MUT_NO_GRASPING: 1
     MUT_NO_ARMOUR: 1
+    MUT_GOOD_DODGING: 1
     MUT_MULTILIVED: 1
     MUT_FANGS: 1
     MUT_SHAGGY_FUR: 1

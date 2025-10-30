@@ -160,6 +160,13 @@ void player_did_deliberate_movement()
     shake_off_sticky_flame();
 }
 
+static bool _player_ponderous()
+{
+    return  you.has_mutation(MUT_SLOW)
+            || you.wearing_ego(OBJ_ARMOUR, SPARM_PONDEROUSNESS);
+
+}
+
 static bool _cancel_ice_move()
 {
     vector<string> effects;
@@ -1137,7 +1144,7 @@ void move_player_action(coord_def move)
         _apply_move_time_taken();
 
         // stun the player after moving if there was a monster onscreen before moving
-        if (you.is_nervous() && you.wearing_ego(OBJ_ARMOUR, SPARM_PONDEROUSNESS))
+        if (you.is_nervous() && _player_ponderous())
             you.stun(&you);
         else if (you.duration[DUR_FROZEN] || you.attribute[ATTR_SWIFTNESS] < 0)
             you.stun(&you);

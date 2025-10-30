@@ -4,9 +4,9 @@ name: Spriggan
 difficulty: Intermediate
 difficulty_priority: 60
 aptitudes:
-  xp: -1
-  hp: -3
-  mp_mod: 1
+  xp: 0
+  hp: -4
+  mp_mod: 3
   wl: 7
 size: little
 str: 4
@@ -18,7 +18,9 @@ levelup_stats:
   - dex
 mutations:
   1:
-    MUT_FAST: 3
+    MUT_FAST: 1
+    MUT_HUNTED: 1
+    MUT_ENCHANTMENT_ENHANCER: 1
 recommended_jobs:
   - brigand
   - artificer

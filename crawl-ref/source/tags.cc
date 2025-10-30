@@ -3468,13 +3468,6 @@ static void _tag_read_you(reader &th)
     // *REMINDER*: if you fix up an innate mutation, remember to adjust both
     // `you.mutation` and `you.innate_mutation`.
 
-#if TAG_MAJOR_VERSION == 34
-    you.mutation[MUT_FAST] = you.innate_mutation[MUT_FAST];
-    you.mutation[MUT_SLOW] = you.innate_mutation[MUT_SLOW];
-    if (you.species != SP_NAGA)
-        _clear_mutation(MUT_SPIT_POISON);
-#endif
-
     // TODO: this code looks really out of context, it should at least have
     // an ASSERT identifying count, but I'm not 100% sure what that would be
     for (int j = count; j < NUM_MUTATIONS; ++j)
@@ -3585,17 +3578,8 @@ static void _tag_read_you(reader &th)
         _fixup_species_mutations(MUT_HEAT_VULNERABILITY);
     }
 
-    if (you.species == SP_FELID && you.has_innate_mutation(MUT_FAST))
-        _fixup_species_mutations(MUT_FAST);
-
     if (species::is_draconian(you.species))
         _fixup_species_mutations(MUT_ARMOURED_TAIL);
-
-    if ((you.species == SP_NAGA || you.species == SP_BARACHI)
-        && you.has_innate_mutation(MUT_SLOW))
-    {
-        _fixup_species_mutations(MUT_SLOW);
-    }
 
     if (you.species == SP_MUMMY || you.species == SP_POLTERGEIST
         || you.species == SP_REVENANT)
