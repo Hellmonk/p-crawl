@@ -940,12 +940,6 @@ void move_player_action(coord_def move)
     monster* targ_monst = monster_at(targ);
     if (fedhas_passthrough(targ_monst) && you.is_motile())
     {
-        // Moving on a plant takes 1.5 x normal move delay. We
-        // will print a message about it but only when moving
-        // from open space->plant (hopefully this will cut down
-        // on the message spam).
-        you.time_taken = div_rand_round(you.time_taken * 3, 2);
-
         monster* current = monster_at(you.pos());
         if (!current || !fedhas_passthrough(current))
         {
@@ -1128,7 +1122,7 @@ void move_player_action(coord_def move)
                  DESC_THE).c_str());
             destroy_wall(targ);
             noisy(6, you.pos());
-            drain_player(15, false, true);
+            drain_player(1, false, true);
             dug = true;
         }
 

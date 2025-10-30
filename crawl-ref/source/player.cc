@@ -1614,28 +1614,12 @@ int player_prot_life(bool temp, bool items)
 {
     int pl = 0;
 
-    // piety-based rN doesn't count as temporary (XX why)
-    if (you_worship(GOD_SHINING_ONE))
-        pl += piety_rank(you.piety()) / 2;
-
-    pl += cur_form(temp)->res_neg();
-
     // completely stoned, unlike statue which has some life force
     if (temp && you.petrified())
         pl += 3;
 
-    if (items)
-    {
-        // pearl dragon counts
-        const item_def *body_armour = you.body_armour();
-        if (body_armour)
-            pl += armour_type_prop(body_armour->sub_type, ARMF_RES_NEG);
-
-        pl += you.wearing(OBJ_STAVES, STAFF_DEATH);
-    }
-
-    // undead/demonic power
-    pl += you.get_mutation_level(MUT_NEGATIVE_ENERGY_RESISTANCE, temp);
+    if (you.undead_state() != US_ALIVE)
+        pl = 3;
 
     pl = min(3, pl);
 
@@ -6370,7 +6354,7 @@ int player::res_negative_energy(bool intrinsic_only) const
 
 bool player::res_torment() const
 {
-    if (you.get_mutation_level(MUT_TORMENT_RESISTANCE) >= 2)
+    if (you.undead_state() != US_ALIVE)
         return true;
 
     return get_form()->res_neg() == 3

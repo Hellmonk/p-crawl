@@ -5446,7 +5446,7 @@ void ru_draw_out_power()
     int mp_inc = div_rand_round(you.piety(), 48);
     mp_inc += roll_dice(div_rand_round(you.piety(), 40), 4);
     inc_mp(mp_inc);
-    drain_player(30, false, true);
+    drain_player(5, false, true);
 }
 
 // Damage scales with XL amd piety.
@@ -5706,7 +5706,7 @@ bool ru_apocalypse()
     mpr("You reveal the great annihilating truth to your foes!");
     noisy(30, you.pos());
     apply_area_visible(_apply_apocalypse, you.pos());
-    drain_player(100, false, true);
+    drain_player(20, false, true);
     return true;
 }
 
