@@ -10,6 +10,7 @@ aptitudes:
   hp: 1
   mp_mod: 0
   wl: 4
+  stealth: 3
   invocations: False
 str: 9
 int: 10

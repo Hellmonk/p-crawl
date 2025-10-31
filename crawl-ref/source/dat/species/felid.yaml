@@ -12,6 +12,7 @@ aptitudes:
   hp: -4
   mp_mod: 2
   wl: 6
+  stealth: 6
   shields: False
 size: little
 str: 4
