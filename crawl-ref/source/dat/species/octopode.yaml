@@ -17,6 +17,7 @@ aptitudes:
   mp_mod: 0
   wl: 3
   armour: False
+  stealth: 5
 can_swim: true
 str: 7
 int: 10
@@ -24,7 +25,6 @@ dex: 7
 levelup_stat_frequency: 5
 mutations:
   1:
-    MUT_CAMOUFLAGE: 1
     MUT_GELATINOUS_BODY: 1
     MUT_NIMBLE_SWIMMER: 1
     MUT_TENTACLE_ARMS: 1

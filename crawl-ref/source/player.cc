@@ -3016,7 +3016,7 @@ int player_stealth()
     if (you.berserk() || you.get_mutation_level(MUT_NO_STEALTH) || you.backlit())
         return 0;
 
-    int stealth = 2;
+    int stealth = species_apt(SK_STEALTH, you.species);
 
     stealth += you.skill(SK_STEALTH);
 

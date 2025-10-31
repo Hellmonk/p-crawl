@@ -8,6 +8,7 @@ aptitudes:
   hp: 0
   mp_mod: 0
   wl: 3
+  stealth: 3
 str: 7
 int: 7
 dex: 7

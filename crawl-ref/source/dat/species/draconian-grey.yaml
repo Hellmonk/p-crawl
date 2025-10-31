@@ -14,6 +14,7 @@ aptitudes:
   mp_mod: 0
   wl: 3
   armour: False
+  stealth: 2
 can_swim: true
 str: 10
 int: 8

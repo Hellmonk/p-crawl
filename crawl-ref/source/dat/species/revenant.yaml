@@ -13,6 +13,7 @@ aptitudes:
   hp: 1
   mp_mod: 0
   wl: 3
+  stealth: 2
   shapeshifting: False
 undead_type: undead
 str: 11
