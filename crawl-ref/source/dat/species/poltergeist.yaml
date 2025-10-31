@@ -30,14 +30,9 @@ levelup_stats:
 mutations:
   1:
     MUT_FLOAT: 1
-    MUT_NEGATIVE_ENERGY_RESISTANCE: 3
-    MUT_COLD_RESISTANCE: 1
-    MUT_TORMENT_RESISTANCE: 2
     MUT_FORMLESS: 1
     MUT_TRICKSTER: 1
-    MUT_ACCURSED: 1
-  13:
-    MUT_FORMLESS: 1
+    MUT_HEX_ENHANCER: 1
 fake_mutations:
   - long: You are insubstantial and cannot be petrified, ensnared, or set on fire.
     short: insubstantial

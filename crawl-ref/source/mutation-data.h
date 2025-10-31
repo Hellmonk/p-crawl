@@ -2675,7 +2675,7 @@ static const mutation_def mut_data[] =
 
 { MUT_SPELLCLAWS, 0, 1, mutflag::good,
    "spellclaws",
-   {"You perform a melee attack whenever you cast damage-dealing spells.", "", ""},
+   {"You perform a melee attack whenever you cast destructive spells.", "", ""},
    {"You feel destructive magic coursing through your claws.", "", ""},
    {"You no longer feel destructive magic coursing through your claws.", "", ""},
    TILEG_MUT_SPELLCLAWS,

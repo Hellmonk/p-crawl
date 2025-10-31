@@ -8568,6 +8568,8 @@ bool ench_triggers_trickster(enchant_type ench)
         case ENCH_WRETCHED:
         case ENCH_DEEP_SLEEP:
         case ENCH_VEXED:
+        case ENCH_STUN:
+        case ENCH_POISON:
             return true;
 
         default:
@@ -8577,7 +8579,7 @@ bool ench_triggers_trickster(enchant_type ench)
 
 static int _trickster_max_boost()
 {
-    return 6 + you.experience_level * 4 / 5;
+    return 4 + you.experience_level * 2 / 3;
 }
 
 // Increment AC boost when applying a negative status effect to a monster.
@@ -8589,7 +8591,7 @@ void trickster_trigger(const monster& victim, enchant_type ench)
     if (!you.can_see(victim) || !you.see_cell_no_trans(victim.pos()) || victim.friendly())
         return;
 
-    const int min_bonus = 3 + you.experience_level / 6;
+    const int min_bonus = 2 + you.experience_level / 6;
 
     if (!you.props.exists(TRICKSTER_POW_KEY))
     {
@@ -8598,12 +8600,10 @@ void trickster_trigger(const monster& victim, enchant_type ench)
     }
 
     // Start the bonus off at meaningful level, but give less for each effect
-    // beyond that (and make it extra-hard to stack up the maximum bonus)
+    // beyond that
     int& bonus = you.props[TRICKSTER_POW_KEY].get_int();
     if (bonus < min_bonus)
         bonus = min_bonus;
-    else if (bonus >= 15)
-        bonus += random2(2);
     else
         bonus += 1;
 
@@ -8629,7 +8629,7 @@ int trickster_bonus()
 
 int enkindle_max_charges()
 {
-    return 3 + you.experience_level * 3 / 20;
+    return 3;
 }
 
 void maybe_harvest_memory(const monster& victim)

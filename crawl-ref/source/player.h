@@ -65,7 +65,7 @@
 #define HARP_STARTED_KEY "harp_started"
 #define FREE_ACTION_USED_KEY "free_action_used"
 
-constexpr int ENKINDLE_CHARGE_COST = 40;
+constexpr int ENKINDLE_CHARGE_COST = 150;
 #define ENKINDLE_CHARGES_KEY "enkindle_charges"
 #define ENKINDLE_PROGRESS_KEY "enkindle_progress"
 #define ENKINDLE_GIFT_GIVEN_KEY "enkindle_gifted"
