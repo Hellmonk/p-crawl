@@ -9,9 +9,9 @@ species_flags:
   - no_blood
   - no_ears
 aptitudes:
-  xp: -1
+  xp: 0
   hp: 1
-  mp_mod: 1
+  mp_mod: 0
   wl: 3
   shapeshifting: False
 undead_type: undead
@@ -24,13 +24,9 @@ levelup_stats:
   - int
 mutations:
   1:
-    MUT_NEGATIVE_ENERGY_RESISTANCE: 3
-    MUT_TORMENT_RESISTANCE: 2
-    MUT_COLD_RESISTANCE: 1
     MUT_CLAWS: 1
     MUT_LOW_MAGIC: 2
     MUT_SPELLCLAWS: 1
-    MUT_ACCURSED: 1
   3:
     MUT_MNEMOPHAGE: 1
 recommended_jobs:

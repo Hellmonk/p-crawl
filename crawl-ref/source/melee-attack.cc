@@ -4756,29 +4756,25 @@ bool spellclaws_attack(int spell_level)
 
     melee_attack attk(&you, best_victim);
 
-    // If an attack would take more time than casting a spell, reduce its damage
-    // proportionally.
     int mult = 100;
-    int delay = you.attack_delay().roll();
-    if (delay > 10)
-        mult = 1000 / delay;
 
     if (you.duration[DUR_ENKINDLED])
     {
         attk.to_hit = AUTOMATIC_HIT;
-        mult += mult * spellclaws_level_mult[spell_level - 1] / 100;
+        mult += mult * 2;
     }
 
     attk.dmg_mult = mult - 100;
 
     // Save name first, in case the monster dies from the attack.
     string targ_name = best_victim->name(DESC_THE);
+    int hd = best_victim->get_hit_dice();
     attk.launch_attack_set();
 
     if (you.duration[DUR_ENKINDLED] && you.hp < you.hp_max)
     {
         mprf("You rip the existence from %s to re-knit yourself!", targ_name.c_str());
-        you.heal(attk.total_damage_done * 3 / 4);
+        you.heal(1 + random2(hd));
     }
 
     return true;

@@ -4308,8 +4308,6 @@ bool player_has_ability(ability_type abil, bool include_unusable)
     case ABIL_INVENT_GIZMO:
         return you.species == SP_COGLIN
         && !you.props.exists(INVENT_GIZMO_USED_KEY);
-    case ABIL_CACOPHONY:
-        return you.get_mutation_level(MUT_FORMLESS) == 2;
     case ABIL_BAT_SWARM:
         return you.form == transformation::vampire;
     case ABIL_ENKINDLE:

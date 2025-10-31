@@ -414,7 +414,7 @@ int calc_spell_power(spell_type spell)
         power -= 1 * you.props[HORROR_PENALTY_KEY].get_int();
 
     if (you.duration[DUR_ENKINDLED] && spell_can_be_enkindled(spell))
-        power = (power + (you.experience_level)) * 3 / 2;
+        power = power * 3 / 2;
 
     if (you.has_mutation(MUT_DIVINE_INTELLECT))
         power *= 2;
