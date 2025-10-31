@@ -948,7 +948,7 @@ static const mutation_def mut_data[] =
    "",
    ""},
 
-  {"You feel the strength of the gods.", "", ""},
+  {"You feel the strength of titans.", "", ""},
 
   {"", "", ""},
 },
@@ -1194,7 +1194,7 @@ static const mutation_def mut_data[] =
 { MUT_AIR_AFFINITY, 0, 1, mutflag::good,
   "air affinity",
 
-  {"You begin the game with +1 air magic skill.","",""},
+  {"You have +1 air magic skill.","",""},
   {"", "", ""},
   {"", "", ""},
 },
@@ -1239,7 +1239,7 @@ static const mutation_def mut_data[] =
 { MUT_EARTH_AFFINITY, 0, 1, mutflag::good,
   "earth affinity",
 
-  {"You begin the game with +1 earth magic skill.", "", ""},
+  {"You have +1 earth magic skill.", "", ""},
   {"", "", ""},
   {"", "", ""},
 },

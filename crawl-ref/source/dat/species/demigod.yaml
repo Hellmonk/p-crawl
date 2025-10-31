@@ -6,9 +6,9 @@ adjective: Divine
 difficulty: Advanced
 difficulty_priority: 80
 aptitudes:
-  xp: -2
+  xp: 0
   hp: 1
-  mp_mod: 2
+  mp_mod: 0
   wl: 4
   invocations: False
 str: 9
@@ -21,7 +21,6 @@ mutations:
   1:
     MUT_HIGH_MAGIC: 1
     MUT_FORLORN: 1
-    MUT_DIVINE_ATTRS: 1
 recommended_jobs:
   - shapeshifter
   - conjurer
