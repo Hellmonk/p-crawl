@@ -2360,15 +2360,13 @@ static const mutation_def mut_data[] =
   TILEG_MUT_NO_FORMS,
 },
 
-#if TAG_MAJOR_VERSION == 34
-{ MUT_NO_REGENERATION, 0, 1, mutflag::bad,
-  "no regeneration",
+{ MUT_COMBAT_MASTER, 0, 1, mutflag::good,
+  "combat master",
 
-  {"You do not regenerate.", "", ""},
-  {"You stop regenerating.", "", ""},
-  {"You start regenerating.", "", ""},
+  {"Your weapon skills increase damage by twice as much.", "", ""},
+  {"", "", ""},
+  {"", "", ""},
 },
-#endif
 
 { MUT_TREASURE_SENSE, 0, 1, mutflag::good,
   "treasure sense",

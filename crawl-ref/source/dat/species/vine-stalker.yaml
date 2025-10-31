@@ -9,7 +9,7 @@ species_flags:
 aptitudes:
   xp: 0
   hp: -3
-  mp_mod: 1
+  mp_mod: 3
   wl: 5
 str: 10
 int: 8

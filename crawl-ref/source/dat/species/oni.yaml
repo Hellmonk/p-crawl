@@ -20,8 +20,8 @@ mutations:
   1:
     MUT_TOUGH_SKIN: 1
     MUT_HORNS: 1
-    MUT_DOUBLE_POTION_HEAL: 1
-    MUT_DRUNKEN_BRAWLING: 1
+    MUT_POOR_DODGING: 1
+    MUT_BRAWLER: 1
 recommended_jobs:
   - gladiator
   - berserker

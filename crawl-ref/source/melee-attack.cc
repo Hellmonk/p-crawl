@@ -1950,7 +1950,7 @@ public:
         const int fang_damage = damage;
 
         if (you.get_mutation_level(MUT_ANTIMAGIC_BITE))
-            return fang_damage + 5;
+            return fang_damage + div_rand_round(you.get_hit_dice(), 3);
 
         if (you.get_mutation_level(MUT_ACIDIC_BITE))
             return fang_damage + (random ? roll_dice(2, 4) : 4);
@@ -2346,11 +2346,8 @@ bool melee_attack::player_aux_apply(unarmed_attack_type atk)
                     && !defender->is_summoned()
                     && !defender->is_firewood())
                 {
-                    int drain = random2(damage_done * 2) + 1;
-                    // Augment mana drain--1.25 "standard" effectiveness at 0 mp,
-                    // 0.25 at mana == max_mana
-                    drain = (int)((1.25 - you.magic_points / you.max_magic_points)
-                                  * drain);
+                    int drain = 1 + random2(2);
+
                     if (drain)
                     {
                         mpr("You feel invigorated.");

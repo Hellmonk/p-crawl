@@ -19,6 +19,7 @@ mutations:
   1:
     MUT_MERTAIL: 1
     MUT_NIMBLE_SWIMMER: 2
+    MUT_POLE_MASTER: 1
 recommended_jobs:
   - gladiator
   - berserker
