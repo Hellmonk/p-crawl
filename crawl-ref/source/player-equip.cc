@@ -2332,14 +2332,7 @@ static void _handle_regen_item_equip(const item_def& item)
                                          ? "amulet"
                                          : lowercase_string(equip_slot_name(eq_slot, true));
 
-#if TAG_MAJOR_VERSION == 34
-    if (regen_hp && !regen_mp && you.get_mutation_level(MUT_NO_REGENERATION))
-    {
-        mprf("The %s feel%s cold and inert.", item_name.c_str(),
-             plural ? "" : "s");
-        return;
-    }
-#endif
+
     if (regen_mp && !regen_hp && !player_regenerates_mp())
     {
         mprf("The %s feel%s cold and inert.", item_name.c_str(),

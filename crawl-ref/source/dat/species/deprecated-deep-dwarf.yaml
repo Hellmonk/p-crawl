@@ -20,8 +20,6 @@ levelup_stats:
   - int
 mutations:
   1:
-    MUT_NO_REGENERATION: 1
-  14:
     MUT_NEGATIVE_ENERGY_RESISTANCE: 1
 fake_mutations:
   - long: You are resistant to damage.

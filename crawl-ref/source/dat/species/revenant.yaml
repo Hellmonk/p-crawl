@@ -24,7 +24,6 @@ levelup_stats:
   - int
 mutations:
   1:
-    MUT_CLAWS: 1
     MUT_LOW_MAGIC: 2
     MUT_SPELLCLAWS: 1
   3:

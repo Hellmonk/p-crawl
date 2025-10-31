@@ -19,7 +19,7 @@ mutations:
   1:
     MUT_HORNS: 1
     MUT_REFLEXIVE_HEADBUTT: 1
-    MUT_BRAWLER: 1
+    MUT_COMBAT_MASTER: 1
     MUT_STURDY_FRAME: 1
     MUT_DOPEY: 1
 recommended_jobs:

@@ -3437,11 +3437,7 @@ bool is_useless_item(const item_def &item, bool temp, bool ident)
             return you.spirit_shield(false) || you.has_mutation(MUT_HP_CASTING);
 
         case AMU_REGENERATION:
-            return
-#if TAG_MAJOR_VERSION == 34
-                   you.get_mutation_level(MUT_NO_REGENERATION) > 0 ||
-#endif
-                    (temp && regeneration_is_inhibited());
+            return temp && regeneration_is_inhibited();
 
         case AMU_MANA_REGENERATION:
             return !you.max_magic_points;
