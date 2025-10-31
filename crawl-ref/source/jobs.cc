@@ -141,12 +141,6 @@ void give_job_skills(job_type job)
         }
         you.skills[skill] += amount;
     }
-
-    if (you.has_mutation(MUT_AIR_AFFINITY))
-        you.skills[SK_AIR_MAGIC]++;
-
-    if (you.has_mutation(MUT_EARTH_AFFINITY))
-        you.skills[SK_EARTH_MAGIC]++;
 }
 
 vector<spell_type> get_job_spells(job_type job)

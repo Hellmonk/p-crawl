@@ -2736,6 +2736,16 @@ void level_change(bool skip_attribute_increase)
                 }
                 break;
 
+            case SP_DEMIGOD:
+                if (you.experience_level == 7)
+                {
+                    mutation_type mut = random_choose(MUT_DIVINE_STRENGTH,
+                                                      MUT_DIVINE_DEXTERITY,
+                                                      MUT_DIVINE_INTELLECT);
+                    perma_mutate(mut, 1, "divine heritage");
+                }
+                break;
+
             case SP_BASE_DRACONIAN:
                 if (you.experience_level >= 7)
                 {
@@ -5632,10 +5642,12 @@ int player::skill(skill_type sk, int scale, bool real, bool temp) const
 
     case SK_AIR_MAGIC:
         level = level + scan_artefacts(ARTP_ENHANCE_AIR) * scale;
+        level = level + you.get_mutation_level(MUT_AIR_AFFINITY) * scale;
         break;
 
     case SK_EARTH_MAGIC:
         level = level + scan_artefacts(ARTP_ENHANCE_EARTH) * scale;
+        level = level + you.get_mutation_level(MUT_EARTH_AFFINITY) * scale;
         break;
 
     case SK_SHAPESHIFTING:
@@ -5686,9 +5698,8 @@ int sanguine_armour_bonus()
 
 int stone_body_armour_bonus()
 {
-    // max 20
-    return 200 + 100 * you.experience_level * 2 / 5
-               + 100 * max(0, you.experience_level - 7) * 2 / 5;
+    // max 15
+    return 200 + 100 * you.experience_level / 2;
 }
 
 /**
