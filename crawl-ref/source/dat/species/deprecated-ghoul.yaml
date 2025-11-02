@@ -22,8 +22,6 @@ levelup_stats:
   - str
 mutations:
   1:
-    MUT_NEGATIVE_ENERGY_RESISTANCE: 3
-    MUT_TORMENT_RESISTANCE: 2
     MUT_COLD_RESISTANCE: 1
     MUT_CLAWS: 1
     MUT_DEVOUR_ON_KILL: 1

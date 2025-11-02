@@ -9,7 +9,7 @@ species_flags:
   - draconian
   - no_hair
 aptitudes:
-  xp: -1
+  xp: 0
   hp: 1
   mp_mod: 0
   wl: 3
@@ -24,7 +24,8 @@ mutations:
     MUT_COLD_BLOODED: 1
     MUT_ARMOURED_TAIL: 1
   7:
-    MUT_STRONG_WILLED: 1
+    MUT_STRONG_WILLED: 2
+    MUT_ENCHANTMENT_AFFINITY: 2
   14:
     MUT_INVIOLATE_MAGIC: 1
 fake_mutations:

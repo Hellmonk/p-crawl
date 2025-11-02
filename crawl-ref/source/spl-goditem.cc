@@ -1097,8 +1097,6 @@ int torment_player(const actor *attacker, torment_source_type taux)
         {
             hploss /= 2;
         }
-        if (you.has_mutation(MUT_TORMENT_RESISTANCE))
-            hploss /= 2;
     }
 
     // Kiku protects you from torment to a degree.

@@ -21,7 +21,8 @@ mutations:
   1:
     MUT_FAST: 1
     MUT_HUNTED: 1
-    MUT_ENCHANTMENT_ENHANCER: 1
+    MUT_ENCHANTMENT_AFFINITY: 1
+    MUT_HEX_ENHANCER: 1
 recommended_jobs:
   - brigand
   - artificer

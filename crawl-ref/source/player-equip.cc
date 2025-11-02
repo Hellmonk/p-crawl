@@ -1665,11 +1665,8 @@ void equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
         add_bane(NUM_BANES, "Equipping an artefact");
     }
 
-    if (proprt[ARTP_RAMPAGING] && msg && !unmeld
-        && !you.has_mutation(MUT_ROLLPAGE))
-    {
+    if (proprt[ARTP_RAMPAGING] && msg && !unmeld)
         mpr("You feel ready to rampage towards enemies.");
-    }
 
     if (proprt[ARTP_ARCHMAGI] && msg && !unmeld)
     {
@@ -2124,8 +2121,7 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
             break;
 
         case SPARM_RAMPAGING:
-            if (!you.has_mutation(MUT_ROLLPAGE))
-                mpr("You feel ready to rampage towards enemies.");
+            mpr("You feel ready to rampage towards enemies.");
             break;
 
         case SPARM_INFUSION:

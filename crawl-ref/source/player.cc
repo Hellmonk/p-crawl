@@ -1096,13 +1096,6 @@ static int _player_bonus_regen()
     if (you.duration[DUR_POWERED_BY_DEATH])
         rr += you.props[POWERED_BY_DEATH_KEY].get_int() * 100;
 
-    // Rampage healing grants a variable regen boost while active.
-    if (you.get_mutation_level(MUT_ROLLPAGE) > 1
-        && you.duration[DUR_RAMPAGE_HEAL])
-    {
-        rr += you.props[RAMPAGE_HEAL_KEY].get_int() * 65;
-    }
-
     return rr;
 }
 
@@ -1302,8 +1295,6 @@ int player_res_steam(bool temp, bool items)
     int res = 0;
     const int rf = player_res_fire(temp, items);
 
-    res += you.get_mutation_level(MUT_STEAM_RESISTANCE) * 2;
-
     if (items)
     {
         const item_def *body_armour = you.body_armour();
@@ -1378,12 +1369,6 @@ int player_res_corrosion(bool temp, bool items)
 
     if (have_passive(passive_t::resist_corrosion))
         return 1;
-
-    if (you.get_mutation_level(MUT_ACID_RESISTANCE)
-        || you.get_mutation_level(MUT_YELLOW_SCALES) >= 3)
-    {
-        return 1;
-    }
 
     if (items)
     {
@@ -1750,6 +1735,9 @@ static int _player_base_evasion_modifiers()
 
     if (you.has_mutation(MUT_TENGU_FLIGHT))
         evbonus += 15;
+
+    if (you.has_mutation(MUT_SLIMY_EVASION))
+        evbonus += 12;
 
     // transformation penalties/bonuses not covered by size alone:
     if (you.get_mutation_level(MUT_SLOW_REFLEXES))
@@ -2229,9 +2217,9 @@ static void _handle_breath_recharge(int exp)
     }
 
     if (!you.props.exists(DRACONIAN_BREATH_RECHARGE_KEY))
-        you.props[DRACONIAN_BREATH_RECHARGE_KEY] = 50;
+        you.props[DRACONIAN_BREATH_RECHARGE_KEY] = 110;
 
-    int loss = div_rand_round(exp, 1);
+    int loss = exp;
     if (you.form == transformation::dragon)
         loss *= 2;
     you.props[DRACONIAN_BREATH_RECHARGE_KEY].get_int() -= loss;
@@ -4527,14 +4515,7 @@ void reset_rampage_heal_duration()
 
 void apply_rampage_heal()
 {
-    if (!you.has_mutation(MUT_ROLLPAGE))
-        return;
-
-    reset_rampage_heal_duration();
-
-    const int heal = you.props[RAMPAGE_HEAL_KEY].get_int();
-    if (heal < RAMPAGE_HEAL_MAX)
-        you.props[RAMPAGE_HEAL_KEY] = heal + 1;
+    return;
 }
 
 bool invis_allowed(bool quiet, string *fail_reason, bool temp)
@@ -5155,7 +5136,6 @@ bool player::airborne() const
 bool player::rampaging() const
 {
     return you.unrand_equipped(UNRAND_SEVEN_LEAGUE_BOOTS)
-            || you.has_mutation(MUT_ROLLPAGE)
             || you.form == transformation::spider
             || actor::rampaging();
 }
@@ -5810,7 +5790,7 @@ vector<mutation_ac_changes> all_mutation_ac_changes = {
     ,mutation_ac_changes(MUT_THIN_METALLIC_SCALES,      TWO_THREE_FOUR)
     ,mutation_ac_changes(MUT_YELLOW_SCALES,             TWO_THREE_FOUR)
     ,mutation_ac_changes(MUT_SHARP_SCALES,              ONE_TWO_THREE)
-    ,mutation_ac_changes(MUT_IRON_FUSED_SCALES,         {5, 5, 5})
+    ,mutation_ac_changes(MUT_IRON_FUSED_SCALES,         {4, 4, 4})
     ,mutation_ac_changes(MUT_ROUGH_BLACK_SCALES,        {6,6,6})
 };
 

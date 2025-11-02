@@ -344,31 +344,31 @@ static vector<ability_def> &_get_ability_list()
         { ABIL_GOLDEN_BREATH, "Golden Breath",
             0, 0, 0, 5, {}, abflag::drac_charges },
         { ABIL_COMBUSTION_BREATH, "Combustion Breath",
-            0, 0, 0, 5, {fail_basis::xl, 30, 1},
+            0, 0, 0, 5, {},
             abflag::drac_charges },
         { ABIL_GLACIAL_BREATH, "Glacial Breath",
-            0, 0, 0, 5, {fail_basis::xl, 30, 1},
+            0, 0, 0, 5, {},
             abflag::drac_charges },
         { ABIL_BREATHE_POISON, "Breathe Poison Gas",
             0, 0, 0, 6, {fail_basis::xl, 30, 1},
             abflag::breath | abflag::dir_or_target },
         { ABIL_NOXIOUS_BREATH, "Noxious Breath",
-            0, 0, 0, 6, {fail_basis::xl, 30, 1},
+            0, 0, 0, 6, {},
             abflag::drac_charges },
         { ABIL_GALVANIC_BREATH, "Galvanic Breath",
-            0, 0, 0, LOS_MAX_RANGE, {fail_basis::xl, 30, 1},
+            0, 0, 0, LOS_MAX_RANGE, {},
             abflag::drac_charges },
         { ABIL_NULLIFYING_BREATH, "Nullifying Breath",
-            0, 0, 0, LOS_MAX_RANGE, {fail_basis::xl, 30, 1},
+            0, 0, 0, LOS_MAX_RANGE, {},
             abflag::drac_charges },
         { ABIL_STEAM_BREATH, "Steam Breath",
-            0, 0, 0, 6, {fail_basis::xl, 20, 1},
+            0, 0, 0, 6, {},
             abflag::drac_charges },
         { ABIL_CAUSTIC_BREATH, "Caustic Breath",
-            0, 0, 0, 3, {fail_basis::xl, 30, 1},
+            0, 0, 0, 3, {},
             abflag::drac_charges },
         { ABIL_MUD_BREATH, "Mud Breath",
-            0, 0, 0, 3, {fail_basis::xl, 30, 1},
+            0, 0, 0, 3, {},
             abflag::drac_charges },
         { ABIL_DAMNATION, "Hurl Damnation",
             0, 150, 0, 6, {fail_basis::xl, 50, 1}, abflag::none },
@@ -4286,10 +4286,6 @@ bool player_has_ability(ability_type abil, bool include_unusable)
                && (!form_changes_anatomy() || include_unusable);
     case ABIL_HOP:
         return you.get_mutation_level(MUT_FROG_LEGS);
-    case ABIL_BREATHE_POISON:
-        return you.get_mutation_level(MUT_SPIT_POISON) >= 2;
-    case ABIL_SPIT_POISON:
-        return you.get_mutation_level(MUT_SPIT_POISON) == 1;
     case ABIL_GOLDEN_BREATH:
         return you.form == transformation::dragon
                && !species::is_draconian(you.species);

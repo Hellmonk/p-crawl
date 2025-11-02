@@ -422,22 +422,20 @@ static const mutation_def mut_data[] =
   TILEG_MUT_GENERIC_BAD_MUTATION,
 },
 
-// Naga only
-{ MUT_SPIT_POISON, 0, 2, mutflag::good | mutflag::anatomy,
-  "spit poison",
+{ MUT_FIRE_AFFINITY, 0, 2, mutflag::good,
+  "fire affinity",
 
-  {"You can spit poison.",
-   "You can exhale a cloud of poison.",
+  {"You have +1 fire magic skill.",
+   "You have +2 fire magic skill.",
    ""},
 
-  {"There is a nasty taste in your mouth for a moment.",
-   "There is a nasty taste in your mouth for a moment.",
+  {"You feel attuned to fire.",
+   "You feel attuned to fire.",
    ""},
 
-  {"You feel an ache in your throat.",
-   "You feel an ache in your throat.",
+  {"You feel less attuned to fire.",
+   "You feel less attuned to fire.",
    ""},
-  TILEG_MUT_SPIT_POISON,
 },
 
 { MUT_HUNTED, 2, 3, mutflag::bad,
@@ -689,30 +687,37 @@ static const mutation_def mut_data[] =
   {"You feel less enchanting.", "", ""},
 },
 
-{ MUT_TORMENT_RESISTANCE, 0, 2, mutflag::good | mutflag::substance,
-  "torment resistance",
+{ MUT_ICE_AFFINITY, 0, 2, mutflag::good,
+  "ice affinity",
 
-  {"You are resistant to unholy torment.",
-   "You are immune to unholy pain and torment.", ""},
-  {"You feel a strange anaesthesia.",
-   "You feel a very strange anaesthesia.", ""},
-  {"", "", ""},
-  TILEG_MUT_TORMENT_RES,
+
+  {"You have +1 ice magic skill.",
+   "You have +2 ice magic skill.",
+   ""},
+
+  {"You feel attuned to ice.",
+   "You feel attuned to ice.",
+   ""},
+
+  {"You feel less attuned to ice.",
+   "You feel less attuned to ice.",
+   ""},
 },
 
-{ MUT_NEGATIVE_ENERGY_RESISTANCE, 0, 3, mutflag::good | mutflag::substance,
-  "negative energy resistance",
+{ MUT_SUMMONING_AFFINITY, 0, 2, mutflag::good,
+  "summoning affinity",
 
-  {"You resist negative energy. (rN+)",
-   "You are quite resistant to negative energy. (rN++)",
-   "You are immune to negative energy. (rN+++)"},
+  {"You have +1 summoning skill.",
+   "You have +2 summoning skill.",
+   ""},
 
-  {"You feel resistant to negative energy.",
-   "You feel more resistant to negative energy.",
-   "You feel more resistant to negative energy."},
+  {"You feel ready to call allies.",
+   "You feel ready to call allies.",
+   ""},
 
-  {"", "", ""},
-  TILEG_MUT_NEGATIVE_ENERGY_RESISTANCE,
+  {"You feel less ready to call allies.",
+   "You feel less ready to call allies.",
+   ""},
 },
 
 { MUT_TRANSLOCATIONS_ENHANCER, 2, 1, mutflag::good,
@@ -1025,19 +1030,19 @@ static const mutation_def mut_data[] =
   {"", "", ""},
 },
 
-{ MUT_ROLLPAGE, 0, 2, mutflag::good,
-  "rollpage",
+{ MUT_HEX_AFFINITY, 0, 2, mutflag::good,
+  "hex affinity",
 
-  {"You regenerate magic when rolling toward enemies. (Rampage MPRegen)",
-   "You regenerate magic and health when rolling toward enemies. (Rampage Regen)",
+  {"You have +1 hexes skill.",
+   "You have +2 hexes skill.",
    ""},
 
-  {"You begin to regenerate magic when rolling toward enemies.",
-   "You begin to regenerate health when rolling toward enemies.",
+  {"You feel bewitching.",
+   "You feel bewitching.",
    ""},
 
-  {"You can no longer roll toward enemies.",
-   "You can no longer regenerate health when rolling toward enemies.",
+  {"You feel less bewitching.",
+   "You feel less bewitching.",
    ""},
 },
 
@@ -1191,12 +1196,15 @@ static const mutation_def mut_data[] =
   TILEG_MUT_FORLORN,
 },
 
-{ MUT_AIR_AFFINITY, 0, 1, mutflag::good,
+{ MUT_AIR_AFFINITY, 0, 2, mutflag::good,
   "air affinity",
 
-  {"You have +1 air magic skill.","",""},
-  {"", "", ""},
-  {"", "", ""},
+  {"You have +1 air magic skill.",
+   "You have +2 air magic skill.",""},
+  {"You feel attuned to the air.",
+   "You feel attuned to the air.", ""},
+  {"You feel less attuned to the air.",
+   "You feel less attuned to the air.", ""},
 },
 
 { MUT_PASSIVE_MAPPING, 5, 1, mutflag::good,
@@ -1236,12 +1244,15 @@ static const mutation_def mut_data[] =
   TILEG_MUT_CONDENSATION_SHIELD,
 },
 
-{ MUT_EARTH_AFFINITY, 0, 1, mutflag::good,
+{ MUT_EARTH_AFFINITY, 0, 2, mutflag::good,
   "earth affinity",
 
-  {"You have +1 earth magic skill.", "", ""},
-  {"", "", ""},
-  {"", "", ""},
+  {"You have +1 earth magic skill.",
+   "You have +2 earth magic skill.", ""},
+  {"You feel attuned to the earth.",
+   "You feel attuned to the earth.", ""},
+  {"You feel less attuned to the earth.",
+   "You feel less attuned to the earth.", ""},
 },
 
 { MUT_POOR_APTITUDE, 0, 1, mutflag::bad,
@@ -1876,31 +1887,39 @@ static const mutation_def mut_data[] =
   {"You feel sticky.", "", ""},
   {"You feel slippery.", "", ""},
 },
-
-{ MUT_EXOSKELETON, 0, 2, mutflag::good,
-  "exoskeleton",
-
-  {"Your body is surrounded by an exoskeleton. (buggy)",
-   "Your body is surrounded by a tough exoskeleton. (buggy)",
-   ""},
-
-  {"Your exoskeleton hardens.",
-   "Your exoskeleton becomes even harder.",
-   ""},
-
-  {"Your exoskeleton softens.",
-   "Your exoskeleton softens.",
-   ""},
-},
-
-{ MUT_FUMES, 0, 2, mutflag::good,
-  "fuming",
-
-  {"You emit clouds of smoke.", "You frequently emit clouds of smoke.", ""},
-  {"You fume.", "You fume more.", ""},
-  {"You stop fuming.", "You fume less.", ""},
-},
 #endif
+
+{ MUT_EVOCATIONS_AFFINITY, 0, 2, mutflag::good,
+  "evocations affinity",
+
+  {"You have +1 evocations skill.",
+   "You have +2 evocations skill.",
+   ""},
+
+  {"You feel an affinity for magical devices.",
+   "You feel an affinity for magical devices.",
+   ""},
+
+  {"You feel less of an affinity for magical devices.",
+   "You feel less of an affinity for magical devices.",
+   ""},
+},
+
+{ MUT_ENCHANTMENT_AFFINITY, 0, 2, mutflag::good,
+  "enchantment affinity",
+
+  {"You have +1 enchantment skill.",
+   "You have +2 enchantment skill.",
+   ""},
+
+  {"You feel enchanting.",
+   "You feel enchanting.",
+   ""},
+
+  {"You feel less enchanting.",
+   "You feel less enchanting.",
+   ""},
+},
 
 { MUT_BLACK_MARK, 0, 1, mutflag::good,
   "black mark",
@@ -2376,13 +2395,12 @@ static const mutation_def mut_data[] =
   {"You no longer feel aware of treasure.", "", ""},
 },
 
-{ MUT_ACID_RESISTANCE, 0, 1, mutflag::good | mutflag::substance,
-  "acid resistance",
+{ MUT_HARDENED_SCALES, 0, 1, mutflag::good | mutflag::substance,
+  "hardened scales",
 
-  {"You are resistant to acid. (rCorr)", "", ""},
-  {"You feel resistant to acid.", "",  ""},
-  {"You feel less resistant to acid.", "", ""},
-  TILEG_MUT_ACID_RES,
+  {"Your hardened scales can block attacks. (SH +16)", "", ""},
+  {"Your scales feel hard.", "",  ""},
+  {"Your scales feel less hard.", "", ""},
 },
 
 { MUT_QUADRUMANOUS, 0, 1, mutflag::good,
@@ -2419,13 +2437,12 @@ static const mutation_def mut_data[] =
   {"Your retaliatory reflexes feel dull.", "", ""},
 },
 
-{ MUT_STEAM_RESISTANCE, 0, 1, mutflag::good | mutflag::substance,
-  "steam resistance",
+{ MUT_SLIMY_EVASION, 0, 1, mutflag::good | mutflag::substance,
+  "slippery",
 
-  {"You are immune to the effects of steam.", "", ""},
-  {"You are now immune to the effects of steam.", "", ""},
-  {"You are no longer immune to the effects of steam.", "", ""},
-  TILEG_MUT_STEAM_RES,
+  {"Your slimy exterior helps you evade blows. (EV + 12)", "", ""},
+  {"You feel slippery.", "", ""},
+  {"You are no longer slippery.", "", ""},
 },
 
 { MUT_NO_GRASPING, 0, 1, mutflag::bad,
