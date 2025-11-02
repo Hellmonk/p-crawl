@@ -33,7 +33,7 @@ mutations:
     MUT_FLOAT: 1
     MUT_FORMLESS: 1
     MUT_TRICKSTER: 1
-    MUT_HEX_ENHANCER: 1
+    MUT_HEX_AFFINITY: 2
 fake_mutations:
   - long: You are insubstantial and cannot be petrified, ensnared, or set on fire.
     short: insubstantial

@@ -663,11 +663,8 @@ static spret _rampage_forward(coord_def move)
     ASSERT(!crawl_state.game_is_arena());
 
     const bool enhanced = you.unrand_equipped(UNRAND_SEVEN_LEAGUE_BOOTS);
-    const bool rolling = you.has_mutation(MUT_ROLLPAGE);
-    const string noun = enhanced ? "stride" :
-                         rolling ? "roll" : "rampage";
-    const string verb = enhanced ? "striding" :
-                         rolling ? "rolling" : "rampaging";
+    const string noun = enhanced ? "stride" : "rampage";
+    const string verb = enhanced ? "striding" : "rampaging";
 
     if (crawl_state.is_replaying_keys())
     {
@@ -1266,7 +1263,7 @@ void move_player_action(coord_def move)
 
     you.apply_berserk_penalty = !attacking;
 
-    if (rampaged && !you.has_mutation(MUT_ROLLPAGE))
+    if (rampaged)
         did_god_conduct(DID_HASTY, 1, true);
 
     if (you_worship(GOD_WU_JIAN) && !attacking && !dug)

@@ -125,9 +125,7 @@ vector<mutation_type> get_removed_mutations()
     {
 #if TAG_MAJOR_VERSION == 34
         MUT_CLING,
-        MUT_EXOSKELETON,
         MUT_FOOD_JELLY,
-        MUT_FUMES,
         MUT_SUSTAIN_ATTRIBUTES,
         MUT_TRAMPLE_RESISTANCE,
         MUT_NO_CHARM_MAGIC,
@@ -1519,18 +1517,6 @@ static bool _draconian_dragon_form_exception(mutation_type mut)
     {
         if (mut == MUT_ARMOURED_TAIL)
             return true;
-
-        monster_type drag = species::dragon_form(you.species);
-        if (mut == MUT_SHOCK_RESISTANCE && drag == MONS_STORM_DRAGON)
-            return true;
-        if ((mut == MUT_ACIDIC_BITE || mut == MUT_ACID_RESISTANCE) && drag == MONS_ACID_DRAGON)
-            return true;
-        if (mut == MUT_STINGER && drag == MONS_SWAMP_DRAGON)
-            return true;
-        if (mut == MUT_STEAM_RESISTANCE && drag == MONS_STEAM_DRAGON)
-            return true;
-        if (mut == MUT_IRON_FUSED_SCALES && drag == MONS_IRON_DRAGON)
-            return true;
     }
 
     return false;
@@ -1608,10 +1594,6 @@ bool mut_is_compatible(mutation_type mut, bool base_only)
 
         // Need tentacles to grow something on them.
         if (mut == MUT_TENTACLE_SPIKE && !you.has_innate_mutation(MUT_TENTACLE_ARMS))
-            return false;
-
-        // To get upgraded spit poison, you must have it innately
-        if (mut == MUT_SPIT_POISON && !you.has_innate_mutation(MUT_SPIT_POISON))
             return false;
 
         // Only Draconians (and gargoyles) can get wings.
@@ -1900,14 +1882,6 @@ bool mutate(mutation_type which_mutation, const string &reason, bool failMsg,
             }
             break;
 
-        case MUT_SPIT_POISON:
-            // Breathe poison replaces spit poison (so it takes the slot).
-            if (cur_base_level >= 2)
-                for (int i = 0; i < 52; ++i)
-                    if (you.ability_letter_table[i] == ABIL_SPIT_POISON)
-                        you.ability_letter_table[i] = ABIL_BREATHE_POISON;
-            break;
-
         default:
             break;
         }
@@ -2059,14 +2033,6 @@ bool _delete_single_mutation_level(mutation_type mutat,
 
     switch (mutat)
     {
-    case MUT_SPIT_POISON:
-        // Breathe poison replaces spit poison (so it takes the slot).
-        if (you.mutation[mutat] < 2)
-            for (int i = 0; i < 52; ++i)
-                if (you.ability_letter_table[i] == ABIL_SPIT_POISON)
-                    you.ability_letter_table[i] = ABIL_BREATHE_POISON;
-        break;
-
     case MUT_NIGHTSTALKER:
         update_vision_range();
         break;
@@ -2681,7 +2647,7 @@ static const facet_def _demon_facets[] =
     { 2, { MUT_FOUL_SHADOW, MUT_FOUL_SHADOW, MUT_FOUL_SHADOW },
       { -33, 0, 0 } },
     // Tier 3 facets
-    { 3, { MUT_DEMONIC_WILL, MUT_TORMENT_RESISTANCE, MUT_HURL_DAMNATION },
+    { 3, { MUT_DEMONIC_WILL, MUT_ICE_AFFINITY, MUT_HURL_DAMNATION },
       { 50, 50, 50 } },
     { 3, { MUT_ROBUST, MUT_ROBUST, MUT_ROBUST },
       { 50, 50, 50 } },

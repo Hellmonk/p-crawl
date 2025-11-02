@@ -2756,7 +2756,7 @@ static string _extra_passive_effects()
                                                           : "+\u221e"; //"∞"
         passives.emplace_back(
             make_stringf("%s%s",
-                         you.has_mutation(MUT_ROLLPAGE) ? "roll" : "rampage",
+                         "rampage",
                          infinite ? inf : "").c_str());
     }
 

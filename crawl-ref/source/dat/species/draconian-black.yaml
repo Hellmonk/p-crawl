@@ -9,8 +9,8 @@ species_flags:
   - draconian
   - no_hair
 aptitudes:
-  xp: -1
-  hp: 1
+  xp: 0
+  hp: 0
   mp_mod: 0
   wl: 3
   armour: False
@@ -25,6 +25,7 @@ mutations:
     MUT_ARMOURED_TAIL: 1
   7:
     MUT_SHOCK_RESISTANCE: 1
+    MUT_AIR_AFFINITY: 2
   14:
     MUT_BIG_WINGS: 1
 fake_mutations:

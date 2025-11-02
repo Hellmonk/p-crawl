@@ -617,9 +617,9 @@ static beam_type _chaos_beam_flavour(bolt* beam)
 dice_def combustion_breath_damage(int pow, bool allow_random)
 {
     if (allow_random)
-        return dice_def(3, 4 + div_rand_round(pow * 10, 9));
+        return dice_def(2, 4 + div_rand_round(pow * 10, 9));
     else
-        return dice_def(3, 4 + pow * 10 / 9);
+        return dice_def(2, 4 + pow * 10 / 9);
 }
 
 static void _copy_affected_counts(bolt& dest, const bolt& source) noexcept

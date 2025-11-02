@@ -3445,20 +3445,8 @@ static void _tag_read_you(reader &th)
 
         if (you.innate_mutation[j] + you.temp_mutation[j] > you.mutation[j])
         {
-            if (th.getMinorVersion() >= TAG_MINOR_SPIT_POISON_AGAIN
-                && th.getMinorVersion() < TAG_MINOR_SPIT_POISON_AGAIN_AGAIN
-                && j == MUT_SPIT_POISON)
-            {
-                // this special case needs to be handled differently or
-                // the level will be set too high; innate is what's corrupted.
-                you.mutation[j] = you.innate_mutation[j] = 1;
-                you.temp_mutation[j] = 0;
-            }
-            else
-            {
-                mprf(MSGCH_ERROR, "Mutation #%d out of sync, fixing up.", j);
+            mprf(MSGCH_ERROR, "Mutation #%d out of sync, fixing up.", j);
                 you.mutation[j] = you.innate_mutation[j] + you.temp_mutation[j];
-            }
         }
 #endif
     }
@@ -3538,7 +3526,6 @@ static void _tag_read_you(reader &th)
     SP_MUT_FIX(MUT_QUADRUMANOUS, SP_FORMICID);
     SP_MUT_FIX(MUT_NO_DRINK, SP_MUMMY);
     SP_MUT_FIX(MUT_REFLEXIVE_HEADBUTT, SP_MINOTAUR);
-    SP_MUT_FIX(MUT_STEAM_RESISTANCE, SP_PALE_DRACONIAN);
     SP_MUT_FIX(MUT_PAWS, SP_FELID);
     SP_MUT_FIX(MUT_NO_GRASPING, SP_FELID);
     SP_MUT_FIX(MUT_NO_ARMOUR, SP_FELID);
@@ -3564,13 +3551,6 @@ static void _tag_read_you(reader &th)
         || you.species == SP_MERFOLK || you.species == SP_OCTOPODE)
     {
         _fixup_species_mutations(MUT_NIMBLE_SWIMMER);
-    }
-    if (you.species == SP_GARGOYLE || you.species == SP_MUMMY
-        || you.species == SP_GHOUL)
-    {
-        // not safe for SP_MUT_FIX because demonspawn use this and it doesn't
-        // handle ds muts
-        _fixup_species_mutations(MUT_TORMENT_RESISTANCE);
     }
     if (you.species == SP_MUMMY)
     {
@@ -3611,39 +3591,6 @@ static void _tag_read_you(reader &th)
             you.mutation[MUT_POOR_CONSTITUTION] = 2;
     }
 
-    if (th.getMinorVersion() < TAG_MINOR_SPIT_POISON_AGAIN)
-    {
-        if (you.mutation[MUT_SPIT_POISON] > 1)
-            you.mutation[MUT_SPIT_POISON] -= 1;
-        // Before TAG_MINOR_SPIT_POISON_AGAIN_AGAIN this second if was missing.
-        if (you.innate_mutation[MUT_SPIT_POISON] > 1)
-            you.innate_mutation[MUT_SPIT_POISON] -= 1;
-    }
-    else if (th.getMinorVersion() < TAG_MINOR_SPIT_POISON_AGAIN_AGAIN)
-    {
-        // Between these two tags the value for you.innate_mutation could get
-        // corrupted. No valid save after TAG_MINOR_SPIT_POISON_AGAIN should
-        // have innate set to 2 for this for this mutation.
-
-        // this doesn't correct you.mutation, because the 2,2 configuration
-        // can result from two cases: (i) a save was upgraded across
-        // TAG_MINOR_SPIT_POISON_AGAIN, had its mutations corrupted, and
-        // then was fixed up to 2,2 on load, or (ii) a save-pre-
-        // TAG_MINOR_SPIT_POISON_AGAIN had exhale poison, had 1 subtracted
-        // from mutation, and ends up as 2,2. So, some lucky upgrades will get
-        // exhale poison.
-
-        if (you.innate_mutation[MUT_SPIT_POISON] == 2)
-            you.innate_mutation[MUT_SPIT_POISON] = 1;
-    }
-
-    if (th.getMinorVersion() < TAG_MINOR_YELLOW_DRACONIAN_RACID
-        && you.species == SP_YELLOW_DRACONIAN)
-    {
-        you.mutation[MUT_ACID_RESISTANCE] = 1;
-        you.innate_mutation[MUT_ACID_RESISTANCE] = 1;
-    }
-
     if (th.getMinorVersion() < TAG_MINOR_RECOMPRESS_BADMUTS)
     {
         if (you.mutation[MUT_TELEPORT] > 2)
@@ -3655,7 +3602,6 @@ static void _tag_read_you(reader &th)
     {
         _fixup_species_mutations(MUT_RUGGED_BROWN_SCALES);
         _fixup_species_mutations(MUT_TOUGH_SKIN);
-        _fixup_species_mutations(MUT_ROLLPAGE);
     }
 
     if (th.getMinorVersion() < TAG_MINOR_COMPRESS_MAPPING)
