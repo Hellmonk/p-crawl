@@ -6,10 +6,10 @@ holiness: [demonic]
 will: 80
 attacks:
  - {type: hit, flavour: cold, damage: 16}
-hd: 8
+hd: 6
 hp_10x: 440
 ac: 12
-ev: 10
+ev: 0
 intelligence: human
 uses: open_doors
 size: medium

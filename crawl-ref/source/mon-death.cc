@@ -2141,17 +2141,20 @@ static void _player_on_kill_effects(monster& mons, killer_type killer,
         // Enable the status
         reset_powered_by_death_duration();
 
-        // Maybe increase strength. The chance decreases with number
-        // of existing stacks.
         const int pbd_level = you.get_mutation_level(MUT_POWERED_BY_DEATH);
         const int pbd_str = you.props[POWERED_BY_DEATH_KEY].get_int();
-        if (x_chance_in_y(10 - pbd_str, 10))
+
+        // Maybe increase strength. The chance decreases with number
+        // of existing stacks.
+        if (x_chance_in_y(6 - pbd_str, 6))
         {
             const int pbd_inc = random2(1 + pbd_level);
             you.props[POWERED_BY_DEATH_KEY] = pbd_str + pbd_inc;
             dprf("Powered by Death strength +%d=%d", pbd_inc,
                  pbd_str + pbd_inc);
         }
+
+        you.heal(pbd_str);
     }
 
     // Revenant kill bonus

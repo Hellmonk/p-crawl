@@ -5,10 +5,11 @@ exp: 294
 holiness: [demonic]
 will: 60
 attacks:
- - {type: hit, flavour: swoop, damage: 17}
- - {type: hit, damage: 10}
-hd: 7
-hp_10x: 455
+ - {type: hit, flavour: swoop, damage: 7}
+ - {type: hit, damage: 6}
+ - {type: hit, damage: 6}
+hd: 4
+hp_10x: 250
 ac: 16
 ev: 10
 shout: moan

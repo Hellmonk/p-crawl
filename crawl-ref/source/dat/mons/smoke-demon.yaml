@@ -11,7 +11,7 @@ attacks:
 hd: 3
 hp_10x: 370
 ac: 5
-ev: 40
+ev: 80
 spells: smoke_demon
 shout: roar
 intelligence: human

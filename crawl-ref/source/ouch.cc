@@ -815,8 +815,7 @@ static void _powered_by_pain(int dam)
     const int level = you.get_mutation_level(MUT_POWERED_BY_PAIN);
 
     if (level > 0
-        && (random2(dam) > 4 + div_rand_round(you.experience_level, 4)
-            || dam >= you.hp_max / 2))
+        && (random2(dam) > 6 || dam >= you.hp_max / 2))
     {
         switch (random2(4))
         {
@@ -826,7 +825,7 @@ static void _powered_by_pain(int dam)
             if (you.magic_points < you.max_magic_points)
             {
                 mpr("You focus on the pain.");
-                int mp = roll_dice(3, 2 + 3 * level);
+                int mp = roll_dice(1, 2 + level);
                 canned_msg(MSG_GAIN_MAGIC);
                 inc_mp(mp);
                 break;
@@ -835,7 +834,7 @@ static void _powered_by_pain(int dam)
         }
         case 2:
             mpr("You focus on the pain.");
-            potionlike_effect(POT_MIGHT, level * 20);
+            potionlike_effect(POT_MIGHT, level * 10);
             break;
         case 3:
             mpr("You focus on the pain.");

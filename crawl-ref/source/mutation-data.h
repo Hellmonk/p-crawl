@@ -1311,9 +1311,9 @@ static const mutation_def mut_data[] =
 { MUT_POWERED_BY_DEATH, 0, 3, mutflag::good,
   "powered by death",
 
-  {"You regenerate a little health from kills.",
-   "You regenerate health from kills.",
-   "You regenerate a lot of health from kills."},
+  {"You restore a little health from kills.",
+   "You restore health from kills.",
+   "You restore a lot of health from kills."},
 
   {"A wave of death washes over you.",
    "The wave of death grows in power.",
@@ -1613,7 +1613,7 @@ static const mutation_def mut_data[] =
 { MUT_ROUGH_BLACK_SCALES, 5, 1, mutflag::good,
   "rough black scales",
 
-  {"You are covered in rough black scales. (AC +6, EV - 10)",
+  {"You are covered in rough black scales. (AC +6, EV -10)",
    "",
    ""},
 
@@ -1976,31 +1976,31 @@ static const mutation_def mut_data[] =
   TILEG_MUT_DEMONIC_WILL,
 },
 
-{ MUT_WEAKNESS_STINGER, 0, 3, mutflag::good | mutflag::anatomy,
+{ MUT_WEAKNESS_STINGER, 0, 1, mutflag::good | mutflag::anatomy,
   "weakness stinger",
 
-  {"You have a small tail.",
-   "You have a tail ending in a sharp stinger.",
-   "You have a sharp stinger which inflicts weakening toxins."},
+  {"You have a sharp stinger which inflicts weakening toxins.",
+   "",
+   ""},
 
-  {"You grow a small tail.",
-   "Your tail grows a sharp stinger.",
-   "Your stinger grows larger and begins to produce weakening toxins."},
+  {"You grow a sharp stinger.",
+   "",
+   ""},
 
   {"", "", ""},
   TILEG_MUT_WEAKNESS_STINGER,
 },
 
-{ MUT_DEMONIC_TOUCH, 0, 3, mutflag::good | mutflag::anatomy | mutflag::need_hands,
+{ MUT_DEMONIC_TOUCH, 0, 1, mutflag::good | mutflag::anatomy | mutflag::need_hands,
   "demonic touch",
 
-  {"Your touch may inflict minor irresistible damage on your foes.",
-   "Your touch may inflict irresistible damage on your foes.",
-   "Your touch may irresistibly damage your foes and sap their willpower."},
+  {"Your touch may irresistibly damage your foes and sap their willpower.",
+   "",
+   ""},
 
-  {"Your hands begin to faintly glow with unholy energy.",
-   "Your hands glow brighter with unholy energy.",
-   "Your hands twist and begin to emit a powerful aura of unholy energy."},
+  {"Your hands begin to glow with unholy energy.",
+   "",
+   ""},
 
   {"", "", ""},
   TILEG_MUT_DEMONIC_TOUCH,
@@ -2608,7 +2608,7 @@ static const mutation_def mut_data[] =
 
 { MUT_FOUL_SHADOW, 0, 3, mutflag::good,
   "foul shadow",
-  {"You are faintly shadowed, very rarely releasing foul flame when damaged in melee.",
+  {"You are faintly shadowed, rarely releasing foul flame when damaged in melee.",
    "You are shadowed, sometimes releasing foul flame when damaged in melee.",
    "You are darkly shadowed, frequently releasing foul flame when damaged in melee."},
   {"Your body darkens with foul flame.",

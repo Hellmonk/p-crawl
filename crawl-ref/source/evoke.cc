@@ -1862,7 +1862,11 @@ bool evoke_item(item_def& item, dist *preselect)
             break;
         }
         if (did_work && !unevokable)
+        {
             count_action(CACT_EVOKE, item.sub_type, OBJ_MISCELLANY);
+            if (you.get_mutation_level(MUT_DEMONIC_MAGIC) == 3)
+                do_demonic_magic(9, 3);
+        }
         break;
 
     default:

@@ -6,11 +6,11 @@ exp: 779
 holiness: [demonic]
 will: 140
 attacks:
- - {type: hit, flavour: drain, damage: 25}
-hd: 11
-hp_10x: 605
+ - {type: hit, flavour: drain, damage: 12}
+hd: 5
+hp_10x: 600
 ac: 18
-ev: 10
+ev: 30
 spells: soul_eater
 intelligence: human
 uses: open_doors

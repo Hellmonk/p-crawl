@@ -2002,11 +2002,8 @@ spret your_spells(spell_type spell, int powc, bool actual_spell,
 
         const int demonic_magic = you.get_mutation_level(MUT_DEMONIC_MAGIC);
 
-        if ((demonic_magic == 3 && evoked_wand)
-            || (demonic_magic > 0 && (actual_spell || you.divine_exegesis)))
-        {
-            do_demonic_magic(spell_difficulty(spell) * 6, demonic_magic);
-        }
+        if (demonic_magic > 0 && (actual_spell || you.divine_exegesis))
+            do_demonic_magic(spell_difficulty(spell) + 3, demonic_magic);
 
         if (you.props.exists(BATTLESPHERE_KEY)
             && (actual_spell || you.divine_exegesis)
