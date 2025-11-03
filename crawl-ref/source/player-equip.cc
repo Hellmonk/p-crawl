@@ -139,8 +139,7 @@ int count = 0;
         return count;
 
     case SLOT_GLOVES:
-        if (you.has_mutation(MUT_QUADRUMANOUS))
-            ++count;
+        NO_SLOT("Gloves were removed, sorry.")
 
         if (you.has_mutation(MUT_FORMLESS))
             NO_SLOT("You don't have hands.")
@@ -189,6 +188,8 @@ int count = 0;
         NO_SLOT("You can't fit into that!")
 
     case SLOT_CLOAK:
+        NO_SLOT("Cloaks were removed, sorry.")
+
         // If octopodes are allowed to wear bardings, then surely they can also
         // get a cloak, too.
         if (you.form == transformation::sphinx && !you.has_mutation(MUT_NO_ARMOUR))
@@ -219,14 +220,15 @@ int count = 0;
     }
 
     case SLOT_AMULET:
+        NO_SLOT("Amulets were removed, sorry.")
+
         if (you.has_mutation(MUT_NO_JEWELLERY))
             NO_SLOT("You can't wear amulets.")
 
         return 1;
 
     case SLOT_GIZMO:
-        if (you.species != SP_COGLIN)
-            NO_SLOT("You lack an exoframe to install that in.")
+            NO_SLOT("removed.")
 
         return 1;
 

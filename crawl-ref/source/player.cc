@@ -2859,29 +2859,6 @@ void level_change(bool skip_attribute_increase)
                 break;
             }
 
-            case SP_COGLIN:
-            {
-                switch (you.experience_level)
-                {
-                    case 3:
-                    case 7:
-                    case 11:
-                        coglin_announce_gizmo_name();
-                        break;
-
-                    case COGLIN_GIZMO_XL:
-                    {
-                        mpr("You feel a burst of inspiration! You are finally "
-                            "ready to make a one-of-a-kind gizmo!");
-                        mprf("(press <w>%c</w> on the <w>%s</w>bility menu to create your gizmo)",
-                                get_talent(ABIL_INVENT_GIZMO, false).hotkey,
-                                command_to_string(CMD_USE_ABILITY).c_str());
-                    }
-                    break;
-                }
-                break;
-            }
-
             case SP_REVENANT:
                 if (new_exp == 3)
                     _revenant_spell_gift();
