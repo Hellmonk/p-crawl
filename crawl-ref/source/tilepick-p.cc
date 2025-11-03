@@ -588,7 +588,6 @@ tileidx_t tileidx_player()
     {
         switch (you.species)
         {
-        case SP_ARMATAUR: ch = TILEP_TRAN_SLAUGHTER_ARMATAUR;  break;
         case SP_GARGOYLE: ch = TILEP_TRAN_SLAUGHTER_GARGOYLE;  break;
         case SP_NAGA:     ch = TILEP_TRAN_SLAUGHTER_NAGA;      break;
         case SP_FELID:    ch = TILEP_TRAN_SLAUGHTER_FELID;     break;
@@ -707,7 +706,6 @@ tileidx_t tilep_species_to_base_tile(int sp, int level)
     case SP_PURPLE_DRACONIAN:
     case SP_PALE_DRACONIAN:
         return TILEP_BASE_DRACONIAN + _draconian_colour(sp, level);
-    case SP_ARMATAUR:
 #if TAG_MAJOR_VERSION == 34
     case SP_CENTAUR:
 #endif
@@ -747,8 +745,6 @@ tileidx_t tilep_species_to_base_tile(int sp, int level)
         return TILEP_BASE_BARACHI;
     case SP_GNOLL:
         return TILEP_BASE_GNOLL;
-    case SP_DJINNI:
-        return TILEP_BASE_DJINNI;
     case SP_COGLIN:
         return TILEP_BASE_COGLIN;
     case SP_POLTERGEIST:
@@ -838,7 +834,6 @@ void tilep_race_default(int sp, int level, dolls_data *doll)
             hair = TILEP_HAIR_GREEN;
             break;
         case SP_NAGA:
-        case SP_DJINNI:
             hair = TILEP_HAIR_PART2_RED;
             break;
         case SP_SPRIGGAN:

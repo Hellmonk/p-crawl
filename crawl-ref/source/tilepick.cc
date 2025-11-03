@@ -2572,14 +2572,13 @@ tileidx_t tileidx_player_shadow()
 
     switch (you.species)
     {
-        case SP_ARMATAUR:       return TILEP_MONS_PLAYER_SHADOW_ARMATAUR;
         case SP_BARACHI:        return TILEP_MONS_PLAYER_SHADOW_BARACHI;
         case SP_COGLIN:         return TILEP_MONS_PLAYER_SHADOW_COGLIN;
         case SP_DEMIGOD:        return TILEP_MONS_PLAYER_SHADOW_DEMIGOD;
         case SP_DEMONSPAWN:     return TILEP_MONS_PLAYER_SHADOW_DEMONSPAWN;
-        case SP_DJINNI:         return TILEP_MONS_PLAYER_SHADOW_DJINN;
         case SP_MOUNTAIN_DWARF: return TILEP_MONS_PLAYER_SHADOW_DWARF;
-        case SP_DEEP_ELF:       return TILEP_MONS_PLAYER_SHADOW_ELF;
+        case SP_DEEP_ELF:
+        case SP_SLUDGE_ELF:     return TILEP_MONS_PLAYER_SHADOW_ELF;
         case SP_FELID:          return TILEP_MONS_PLAYER_SHADOW_FELID;
         case SP_FORMICID:       return TILEP_MONS_PLAYER_SHADOW_FORMICID;
         case SP_GARGOYLE:       return TILEP_MONS_PLAYER_SHADOW_GARGOYLE;
@@ -4527,6 +4526,7 @@ static tileidx_t _tileidx_player_species_base(const species_type species)
         case SP_MOUNTAIN_DWARF:
             return TILEG_SP_MOUNTAIN_DWARF;
         case SP_DEEP_ELF:
+        case SP_SLUDGE_ELF:
             return TILEG_SP_DEEP_ELF;
         case SP_KOBOLD:
             return TILEG_SP_KOBOLD;
@@ -4540,8 +4540,6 @@ static tileidx_t _tileidx_player_species_base(const species_type species)
             return TILEG_SP_TROLL;
         case SP_BASE_DRACONIAN:
             return TILEG_SP_DRACONIAN;
-        case SP_ARMATAUR:
-            return TILEG_SP_ARMATAUR;
         case SP_DEMIGOD:
             return TILEG_SP_DEMIGOD;
         case SP_SPRIGGAN:
@@ -4571,8 +4569,6 @@ static tileidx_t _tileidx_player_species_base(const species_type species)
             return TILEG_SP_BARACHI;
         case SP_GNOLL:
             return TILEG_SP_GNOLL;
-        case SP_DJINNI:
-            return TILEG_SP_DJINNI;
 #if TAG_MAJOR_VERSION == 34
         case SP_METEORAN:
             return TILEG_SP_METEORAN;

@@ -5,12 +5,14 @@ name: Sludge Elf
 short_name: SE
 adjective: Elven
 genus: Elf
-difficulty: False
+difficulty: Intermediate
+difficulty_priority: 70
 aptitudes:
   xp: 0
   hp: -1
   mp_mod: 1
   wl: 3
+  stealth: 3
 str: 8
 int: 8
 dex: 8
@@ -18,5 +20,16 @@ levelup_stat_frequency: 4
 levelup_stats:
   - dex
   - int
+mutations:
+  1:
+    MUT_NATURAL_SHIFTER: 1
+    MUT_PROTEAN_GRACE: 1
+  9:
+    MUT_NATURAL_SHIFTER: 1
+  18:
+    MUT_NATURAL_SHIFTER: 1
+recommended_jobs:
+  - shapeshifter
+  - chaos knight
 
 orc_name: Sludge Orc

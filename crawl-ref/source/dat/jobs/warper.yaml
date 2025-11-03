@@ -20,7 +20,6 @@ weapon_choice: plain
 recommended_species:
   - felid
   - spriggan
-  - armataur
   - draconian
   - coglin
 skills:

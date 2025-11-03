@@ -4769,11 +4769,8 @@ int get_sacrifice_piety(ability_type sac, bool include_skill)
             // schedule, but this seems too leaky.
             // Dj are guaranteed to lose a spell for the first and third sac,
             // which is pretty sad too.
-            if (you.species == SP_DEMONSPAWN
-                || you.species == SP_DJINNI && (you.get_mutation_level(MUT_INEXPERIENCED) % 2 == 0))
-            {
+            if (you.species == SP_DEMONSPAWN && (you.get_mutation_level(MUT_INEXPERIENCED) % 2 == 0))
                 piety_gain += 10;
-            }
             break;
         case ABIL_RU_SACRIFICE_COURAGE:
             piety_gain += 6 * you.get_mutation_level(MUT_INEXPERIENCED);
