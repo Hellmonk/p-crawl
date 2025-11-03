@@ -1879,15 +1879,15 @@ static const mutation_def mut_data[] =
   {"You feel steady.", "", ""},
   {"You feel unsteady.", "", ""},
 },
-
-{ MUT_CLING, 0, 1, mutflag::good,
-  "cling",
-
-  {"You can cling to walls.", "", ""},
-  {"You feel sticky.", "", ""},
-  {"You feel slippery.", "", ""},
-},
 #endif
+
+{ MUT_SINGLE_MINDED, 0, 1, mutflag::bad,
+  "single-minded",
+
+  {"You may have at most one skill greater than level 3.", "", ""},
+  {"You feel single-minded.", "", ""},
+  {"You less single-minded.", "", ""},
+},
 
 { MUT_EVOCATIONS_AFFINITY, 0, 2, mutflag::good,
   "evocations affinity",

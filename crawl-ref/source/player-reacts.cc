@@ -473,6 +473,24 @@ static void _handle_uskayaw_time(int time_taken)
         you.props[USKAYAW_BOND_TIMER] =  max(0, bond_timer - time_taken);
 }
 
+static void _check_troll_highest_skill()
+{
+    int sk;
+    int level = 0;
+
+    for (int i = 0; i < NUM_SKILLS; ++i)
+    {
+        if (you.skills[i] > level)
+        {
+            level = you.skills[i];
+            sk = i;
+        }
+    }
+
+    if (level > 3)
+        you.props[TROLL_FOCUS_SKILL_KEY] = sk;
+}
+
 static void _handle_hoarding()
 {
     const int potion_lv = you.get_mutation_level(MUT_HOARD_POTIONS);
@@ -1289,6 +1307,9 @@ void player_reacts()
 
     if (you.duration[DUR_PRIMORDIAL_NIGHTFALL])
         update_vision_range();
+
+    if (you.has_mutation(MUT_SINGLE_MINDED) && !you.props.exists(TROLL_FOCUS_SKILL_KEY))
+        _check_troll_highest_skill();
 
     incr_gem_clock();
     incr_zot_clock();
