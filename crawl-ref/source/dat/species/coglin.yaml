@@ -18,8 +18,6 @@ levelup_stat_frequency: 4
 mutations:
   1:
     MUT_WIELD_OFFHAND: 1
-    MUT_SLOW_WIELD: 1
-    MUT_WARMUP_STRIKES: 1
     MUT_NO_JEWELLERY: 1
 recommended_jobs:
   - artificer

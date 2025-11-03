@@ -4301,9 +4301,6 @@ bool player_has_ability(ability_type abil, bool include_unusable)
         return you.form == transformation::storm;
     case ABIL_SIPHON_ESSENCE:
         return you.form == transformation::death;
-    case ABIL_INVENT_GIZMO:
-        return you.species == SP_COGLIN
-        && !you.props.exists(INVENT_GIZMO_USED_KEY);
     case ABIL_BAT_SWARM:
         return you.form == transformation::vampire;
     case ABIL_ENKINDLE:
