@@ -1641,18 +1641,17 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_CACODEMON,
       {
-       { SPELL_DOOM_BOLT, 22, MON_SPELL_MAGICAL },
        { SPELL_VITRIFY, 20, MON_SPELL_MAGICAL },
-       { SPELL_SLOW, 13, MON_SPELL_MAGICAL },
-       { SPELL_DIG, 13, MON_SPELL_MAGICAL },
+       { SPELL_SLOW, 20, MON_SPELL_MAGICAL },
+       { SPELL_DIG, 20, MON_SPELL_MAGICAL },
       }
     },
 
     {  MST_ZYKZYL,
       {
-       { SPELL_MALMUTATE, 15, MON_SPELL_MAGICAL },
+       { SPELL_MALMUTATE, 20, MON_SPELL_MAGICAL },
        { SPELL_ENFEEBLE, 20, MON_SPELL_MAGICAL },
-       { SPELL_BOLT_OF_FLESH, 13, MON_SPELL_MAGICAL },
+       { SPELL_BOLT_OF_FLESH, 20, MON_SPELL_MAGICAL },
       }
     },
 
@@ -1677,8 +1676,8 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_BRIMSTONE_FIEND,
       {
-       { SPELL_HURL_DAMNATION, 34, MON_SPELL_MAGICAL },
-       { SPELL_SYMBOL_OF_TORMENT, 17, MON_SPELL_MAGICAL },
+       { SPELL_HURL_DAMNATION, 20, MON_SPELL_MAGICAL },
+       { SPELL_SYMBOL_OF_TORMENT, 20, MON_SPELL_MAGICAL },
       }
     },
 
@@ -1699,8 +1698,8 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_HELL_SENTINEL,
       {
-       { SPELL_HURL_DAMNATION, 28, MON_SPELL_MAGICAL },
-       { SPELL_IRON_SHOT, 14, MON_SPELL_MAGICAL },
+       { SPELL_HURL_DAMNATION, 20, MON_SPELL_MAGICAL },
+       { SPELL_IRON_SHOT, 20, MON_SPELL_MAGICAL },
       }
     },
 

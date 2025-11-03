@@ -4,12 +4,12 @@ exp: 421
 holiness: [demonic]
 will: 60
 attacks:
- - {type: sting, flavour: reach_sting, damage: 15}
+ - {type: sting, flavour: reach, damage: 15}
  - {type: hit, flavour: weakness, damage: 8}
-hd: 8
-hp_10x: 520
+hd: 4
+hp_10x: 220
 ac: 3
-ev: 7
+ev: 20
 shout: screech
 intelligence: human
 uses: open_doors

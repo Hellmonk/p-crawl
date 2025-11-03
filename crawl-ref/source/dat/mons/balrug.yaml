@@ -7,10 +7,10 @@ holiness: [demonic]
 will: 160
 attacks:
  - {type: hit, flavour: fire, damage: 25}
-hd: 14
+hd: 7
 hp_10x: 770
 ac: 5
-ev: 12
+ev: 10
 spells: balrug
 shout: shout
 intelligence: human

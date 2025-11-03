@@ -7,10 +7,10 @@ holiness: [demonic]
 will: 80
 attacks:
  - {type: hit, flavour: fire, damage: 30}
-hd: 10
-hp_10x: 550
+hd: 5
+hp_10x: 250
 ac: 10
-ev: 12
+ev: 10
 shout: shout
 intelligence: human
 uses: open_doors

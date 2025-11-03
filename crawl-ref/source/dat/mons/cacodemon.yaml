@@ -6,11 +6,11 @@ exp: 1139
 holiness: [demonic]
 will: 160
 attacks:
- - {type: hit, flavour: vuln, damage: 22}
- - {type: hit, flavour: vuln, damage: 22}
-hd: 13
-hp_10x: 975
-ac: 11
+ - {type: hit, flavour: vuln, damage: 14}
+ - {type: hit, flavour: vuln, damage: 14}
+hd: 9
+hp_10x: 800
+ac: 8
 ev: 10
 spells: cacodemon
 shout: laugh

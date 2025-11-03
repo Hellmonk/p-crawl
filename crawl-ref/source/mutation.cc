@@ -2588,74 +2588,87 @@ static string _future_mutation_description(mutation_type mut_type, int levels)
 static const facet_def _demon_facets[] =
 {
     // Body Slot facets
-    { 0, { MUT_CLAWS, MUT_CLAWS, MUT_CLAWS },
-      { -33, -33, -33 } },
-    { 0, { MUT_HORNS, MUT_HORNS, MUT_HORNS },
-      { -33, -33, -33 } },
-    { 0, { MUT_ANTENNAE, MUT_ANTENNAE, MUT_ANTENNAE },
-      { -33, -33, -33 } },
-    { 0, { MUT_HOOVES, MUT_HOOVES, MUT_HOOVES },
-      { -33, -33, -33 } },
-    { 0, { MUT_WEAKNESS_STINGER, MUT_WEAKNESS_STINGER, MUT_WEAKNESS_STINGER },
-      { -33, -33, -33 } },
-    { 0, { MUT_DEMONIC_TOUCH, MUT_DEMONIC_TOUCH, MUT_DEMONIC_TOUCH },
-      { -33, -33, -33 } },
+    { 0, { MUT_CLAWS, RANDOM_MUTATION, RANDOM_MUTATION },
+      { -15, -15, 0 } },
+    { 0, { MUT_HORNS, RANDOM_MUTATION, RANDOM_MUTATION },
+      { -15, -15, 0 } },
+    { 0, { MUT_ANTENNAE, RANDOM_MUTATION, RANDOM_MUTATION },
+      { -15, -15, 0 } },
+    { 0, { MUT_HOOVES, RANDOM_MUTATION, RANDOM_MUTATION },
+      { -15, -15, 0 } },
+    { 0, { MUT_WEAKNESS_STINGER, RANDOM_MUTATION, RANDOM_MUTATION },
+      { -15, -15, 0 } },
+    { 0, { MUT_DEMONIC_TOUCH, RANDOM_MUTATION, RANDOM_MUTATION },
+      { -15, -15, 0 } },
     // Scale mutations
     { 1, { MUT_ICY_BLUE_SCALES, MUT_ICY_BLUE_SCALES, MUT_ICY_BLUE_SCALES },
-      { -33, -33, 0 } },
+      { -15, -15, 0 } },
     { 1, { MUT_MOLTEN_SCALES, MUT_MOLTEN_SCALES, MUT_MOLTEN_SCALES },
-      { -33, -33, 0 } },
+      { -15, -15, 0 } },
     { 1, { MUT_RUGGED_BROWN_SCALES, MUT_RUGGED_BROWN_SCALES,
            MUT_RUGGED_BROWN_SCALES },
-      { -33, -33, 0 } },
-    { 1, { MUT_SLIMY_GREEN_SCALES, MUT_SLIMY_GREEN_SCALES, MUT_SLIMY_GREEN_SCALES },
-      { -33, -33, 0 } },
+      { -15, -15, 0 } },
     { 1, { MUT_THIN_METALLIC_SCALES, MUT_THIN_METALLIC_SCALES,
         MUT_THIN_METALLIC_SCALES },
-      { -33, -33, 0 } },
+      { -15, -15, 0 } },
     { 1, { MUT_THIN_SKELETAL_STRUCTURE, MUT_THIN_SKELETAL_STRUCTURE,
            MUT_THIN_SKELETAL_STRUCTURE },
-      { -33, -33, 0 } },
-    { 1, { MUT_YELLOW_SCALES, MUT_YELLOW_SCALES, MUT_YELLOW_SCALES },
-      { -33, -33, 0 } },
+      { -15, -15, 0 } },
     { 1, { MUT_STURDY_FRAME, MUT_STURDY_FRAME, MUT_STURDY_FRAME },
-      { -33, -33, 0 } },
+      { -15, -15, 0 } },
     { 1, { MUT_SANGUINE_ARMOUR, MUT_SANGUINE_ARMOUR, MUT_SANGUINE_ARMOUR },
-      { -33, -33, 0 } },
+      { -15, -15, 0 } },
     { 1, { MUT_SHARP_SCALES, MUT_SHARP_SCALES, MUT_SHARP_SCALES },
-      { -33, -33, 0 } },
-    // Tier 2 facets
-    { 2, { MUT_IGNITE_BLOOD, MUT_IGNITE_BLOOD, MUT_IGNITE_BLOOD },
-      { -33, 0, 0 } },
-    { 2, { MUT_CONDENSATION_SHIELD, MUT_ICEMAIL, MUT_ICEMAIL },
-      { -33, 0, 0 } },
-    { 2, { MUT_DEMONIC_MAGIC, MUT_DEMONIC_MAGIC, MUT_DEMONIC_MAGIC },
-      { -33, 0, 0 } },
-    { 2, { MUT_POWERED_BY_DEATH, MUT_POWERED_BY_DEATH, MUT_POWERED_BY_DEATH },
-      { -33, 0, 0 } },
-    { 2, { MUT_DEMONIC_GUARDIAN, MUT_DEMONIC_GUARDIAN, MUT_DEMONIC_GUARDIAN },
-      { -33, 0, 0 } },
-    { 2, { MUT_SPINY, MUT_SPINY, MUT_SPINY },
-      { -33, 0, 0 } },
-    { 2, { MUT_POWERED_BY_PAIN, MUT_POWERED_BY_PAIN, MUT_POWERED_BY_PAIN },
-      { -33, 0, 0 } },
-    { 2, { MUT_FOUL_STENCH, MUT_FOUL_STENCH, MUT_FOUL_STENCH },
-      { -33, 0, 0 } },
-    { 2, { MUT_SPELLCASTING_EXPERT, MUT_MANA_SHIELD, MUT_MANA_LINK },
-      { -33, 0, 0 } },
-    { 2, { MUT_FOUL_SHADOW, MUT_FOUL_SHADOW, MUT_FOUL_SHADOW },
-      { -33, 0, 0 } },
-    // Tier 3 facets
-    { 3, { MUT_DEMONIC_WILL, MUT_ICE_AFFINITY, MUT_HURL_DAMNATION },
-      { 50, 50, 50 } },
-    { 3, { MUT_ROBUST, MUT_ROBUST, MUT_ROBUST },
-      { 50, 50, 50 } },
-    { 3, { MUT_HEX_ENHANCER, MUT_BLACK_MARK, MUT_SILENCE_AURA },
-      { 50, 50, 50 } },
-    { 3, { MUT_AUGMENTATION, MUT_AUGMENTATION, MUT_AUGMENTATION },
-      { 50, 50, 50 } },
-    { 3, { MUT_CORRUPTING_PRESENCE, MUT_CORRUPTING_PRESENCE, MUT_WORD_OF_CHAOS },
-      { 50, 50, 50 } },
+      { -15, -15, 0 } },
+    // Tier 2 mutations
+    { 0, { MUT_HUNTER, RANDOM_MUTATION, RANDOM_MUTATION },
+      { 0, 0, 0 } },
+    { 0, { MUT_FEED_OFF_SUFFERING, RANDOM_MUTATION, RANDOM_MUTATION },
+      { 0, 0, 0 } },
+    { 0, { MUT_SUPER_CHARGING, RANDOM_MUTATION, RANDOM_MUTATION },
+      { 0, 0, 0 } },
+    { 0, { MUT_LUCKY, RANDOM_MUTATION, RANDOM_MUTATION },
+      { 0, 0, 0 } },
+    { 0, { MUT_EPHEMERAL_SHIELD, RANDOM_MUTATION, RANDOM_MUTATION },
+      { 0, 0, 0 } },
+    { 0, { MUT_TIME_WARPED_BLOOD, RANDOM_MUTATION, RANDOM_MUTATION },
+      { 0, 0, 0 } },
+    { 0, { MUT_PASSIVE_FREEZE, RANDOM_MUTATION, RANDOM_MUTATION },
+      { 0, 0, 0 } },
+    { 0, { MUT_DISTORTION_FIELD, RANDOM_MUTATION, RANDOM_MUTATION },
+      { 0, 0, 0 } },
+    { 0, { MUT_BIG_BRAIN, RANDOM_MUTATION, RANDOM_MUTATION },
+      { 0, 0, 0 } },
+    // Tier 3 (originally 2) facets
+    { 3, { MUT_IGNITE_BLOOD, MUT_IGNITE_BLOOD, MUT_IGNITE_BLOOD },
+      { -15, 0, 0 } },
+    { 3, { MUT_CONDENSATION_SHIELD, MUT_ICEMAIL, MUT_ICEMAIL },
+      { -15, 0, 0 } },
+    { 3, { MUT_DEMONIC_MAGIC, MUT_DEMONIC_MAGIC, MUT_DEMONIC_MAGIC },
+      { -15, 0, 0 } },
+    { 3, { MUT_DEMONIC_GUARDIAN, MUT_DEMONIC_GUARDIAN, MUT_DEMONIC_GUARDIAN },
+      { -15, 0, 0 } },
+    { 3, { MUT_SPINY, MUT_SPINY, MUT_SPINY },
+      { -15, 0, 0 } },
+    { 3, { MUT_POWERED_BY_PAIN, MUT_POWERED_BY_PAIN, MUT_POWERED_BY_PAIN },
+      { -15, 0, 0 } },
+    { 3, { MUT_FOUL_STENCH, MUT_FOUL_STENCH, MUT_FOUL_STENCH },
+      { -15, 0, 0 } },
+    { 3, { MUT_FOUL_SHADOW, MUT_FOUL_SHADOW, MUT_FOUL_SHADOW },
+      { -15, 0, 0 } },
+    { 3, { MUT_POWERED_BY_DEATH, MUT_POWERED_BY_DEATH, MUT_POWERED_BY_DEATH },
+      { -15, 0, 0 } },
+    // Tier 4 (originally 3) facets
+    { 4, { MUT_STRONG_WILLED, MUT_DEMONIC_WILL, MUT_HURL_DAMNATION },
+      { 15, 25, 50 } },
+    { 4, { MUT_ROBUST, MUT_ROBUST, MUT_ROBUST },
+      { 15, 25, 50 } },
+    { 4, { MUT_HEX_ENHANCER, MUT_BLACK_MARK, MUT_SILENCE_AURA },
+      { 15, 25, 50 } },
+    { 4, { MUT_AUGMENTATION, MUT_AUGMENTATION, MUT_AUGMENTATION },
+      { 15, 25, 50 } },
+    { 4, { MUT_CORRUPTING_PRESENCE, MUT_CORRUPTING_PRESENCE, MUT_WORD_OF_CHAOS },
+      { 15, 25, 50 } },
 };
 
 static bool _works_at_tier(const facet_def& facet, int tier)
@@ -2692,13 +2705,7 @@ static bool _slot_is_unique(const mut_array_t &mut,
 
 static vector<demon_mutation_info> _select_ds_mutations()
 {
-    int ct_of_tier[] = { 1, 1, 2, 1 };
-    // 1 in 10 chance to create a monstrous set
-    if (one_chance_in(10))
-    {
-        ct_of_tier[0] = 3;
-        ct_of_tier[1] = 0;
-    }
+    int ct_of_tier[] = { 1, 1, 1, 2, 1 };
 
 try_again:
     vector<demon_mutation_info> ret;
@@ -2731,19 +2738,26 @@ try_again:
             {
                 mutation_type m = next_facet->muts[i];
 
+                if (m == RANDOM_MUTATION)
+                    continue;
+
                 ret.emplace_back(m, next_facet->when[i], absfacet);
 
                 if (i==0)
                 {
-                    if (m == MUT_CONDENSATION_SHIELD || m == MUT_IGNITE_BLOOD)
+                    if (m == MUT_CONDENSATION_SHIELD || m == MUT_IGNITE_BLOOD
+                        || m == MUT_PASSIVE_FREEZE)
+                    {
                         elemental++;
+                    }
 
                     if (m == MUT_FOUL_STENCH || m == MUT_IGNITE_BLOOD)
                         cloud_producing++;
 
                     if (m == MUT_SPINY
                         || m == MUT_FOUL_STENCH
-                        || m == MUT_FOUL_SHADOW)
+                        || m == MUT_FOUL_SHADOW
+                        || m == MUT_PASSIVE_FREEZE)
                     {
                         retaliation++;
                     }
@@ -2819,7 +2833,7 @@ _schedule_ds_mutations(vector<mutation_type> muts)
 
     vector<player::demon_trait> out;
 
-    for (int level = 2; level <= 27; ++level)
+    for (int level = 2; level <= 24; ++level)
         slots_left.push_back(level);
 
     while (!muts_left.empty())

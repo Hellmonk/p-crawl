@@ -1851,8 +1851,7 @@ public:
                             || you.has_mutation(MUT_WEAKNESS_STINGER)
                             ? 6 : 0;
 
-        return base + max(0, you.get_mutation_level(MUT_ARMOURED_TAIL) - 1) * 4
-                    + you.get_mutation_level(MUT_WEAKNESS_STINGER);
+        return base + max(0, you.get_mutation_level(MUT_ARMOURED_TAIL) - 1) * 4;
     }
 
     string get_name() const override
@@ -1865,7 +1864,7 @@ public:
 
     int get_brand() const override
     {
-        if (you.get_mutation_level(MUT_WEAKNESS_STINGER) == 3)
+        if (you.get_mutation_level(MUT_WEAKNESS_STINGER))
             return SPWPN_WEAKNESS;
 
         return you.get_mutation_level(MUT_STINGER) ? SPWPN_SPELLVAMP : SPWPN_NORMAL;
@@ -2027,13 +2026,13 @@ public:
 
     int get_damage(bool random) const override
     {
-        const int max = you.get_mutation_level(MUT_DEMONIC_TOUCH) * 4;
+        const int max = you.get_mutation_level(MUT_DEMONIC_TOUCH) * 12;
         return damage + (random ? random2(max + 1) : max);
     }
 
     int get_brand() const override
     {
-        if (you.get_mutation_level(MUT_DEMONIC_TOUCH) == 3)
+        if (you.get_mutation_level(MUT_DEMONIC_TOUCH))
             return SPWPN_VULNERABILITY;
 
         return SPWPN_NORMAL;
