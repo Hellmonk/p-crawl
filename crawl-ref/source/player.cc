@@ -5590,6 +5590,7 @@ int player::skill(skill_type sk, int scale, bool real, bool temp) const
     {
     case SK_ENCHANTMENTS:
         level = level + scan_artefacts(ARTP_ENHANCE_ENCH) * scale;
+        level = level + you.get_mutation_level(MUT_ENCHANTMENT_AFFINITY) * scale;
         break;
 
     case SK_NECROMANCY:
@@ -5598,10 +5599,12 @@ int player::skill(skill_type sk, int scale, bool real, bool temp) const
 
     case SK_HEXES:
         level = level + scan_artefacts(ARTP_ENHANCE_HEXES) * scale;
+        level = level + you.get_mutation_level(MUT_HEX_AFFINITY) * scale;
         break;
 
     case SK_SUMMONINGS:
         level = level + scan_artefacts(ARTP_ENHANCE_SUMM) * scale;
+        level = level + you.get_mutation_level(MUT_SUMMONING_AFFINITY) * scale;
         break;
 
     case SK_TRANSLOCATIONS:
@@ -5610,10 +5613,12 @@ int player::skill(skill_type sk, int scale, bool real, bool temp) const
 
     case SK_FIRE_MAGIC:
         level = level + scan_artefacts(ARTP_ENHANCE_FIRE) * scale;
+        level = level + you.get_mutation_level(MUT_FIRE_AFFINITY) * scale;
         break;
 
     case SK_ICE_MAGIC:
         level = level + scan_artefacts(ARTP_ENHANCE_ICE) * scale;
+        level = level + you.get_mutation_level(MUT_ICE_AFFINITY) * scale;
         break;
 
     case SK_AIR_MAGIC:
@@ -5626,11 +5631,21 @@ int player::skill(skill_type sk, int scale, bool real, bool temp) const
         level = level + you.get_mutation_level(MUT_EARTH_AFFINITY) * scale;
         break;
 
+    case SK_EVOCATIONS:
+        level = level + you.get_mutation_level(MUT_EVOCATIONS_AFFINITY) * scale;
+        break;
+
     case SK_SHAPESHIFTING:
         level += you.wearing_jewellery(RING_WILDSHAPE) * 3 * scale;
 
     default:
         break;
+    }
+
+    if (you.has_mutation(MUT_SINGLE_MINDED) && you.props.exists(TROLL_FOCUS_SKILL_KEY)
+        && static_cast<skill_type>(you.props[TROLL_FOCUS_SKILL_KEY].get_int()) != sk)
+    {
+        level = min(level, 3 * scale);
     }
 
     if (level > MAX_SKILL_LEVEL * scale)

@@ -124,7 +124,6 @@ vector<mutation_type> get_removed_mutations()
     static vector<mutation_type> removed_mutations =
     {
 #if TAG_MAJOR_VERSION == 34
-        MUT_CLING,
         MUT_FOOD_JELLY,
         MUT_SUSTAIN_ATTRIBUTES,
         MUT_TRAMPLE_RESISTANCE,
