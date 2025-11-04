@@ -7,14 +7,13 @@ str: 0
 int: 7
 dex: 5
 spells:
+  - SPELL_FIREBALL
+  - SPELL_INNER_FLAME
   - SPELL_FOXFIRE
   - SPELL_SCORCH
-  - SPELL_BLASTMOTE
-  - SPELL_INNER_FLAME
-  - SPELL_FLAME_WAVE
 equipment:
   - "robe"
-  - "potion of magic"
+  - "scroll of revelation"
 recommended_species:
   - deep elf
   - mountain dwarf
@@ -23,8 +22,6 @@ recommended_species:
   - demigod
   - gargoyle
 skills:
-  dodging: 2
-  stealth: 2
-  spellcasting: 2
-  fire magic: 3
+  spellcasting: 1
+  fire magic: 2
 create_enum: false

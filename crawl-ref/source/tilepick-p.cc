@@ -893,17 +893,6 @@ void tilep_job_default(int job, dolls_data *doll)
             parts[TILEP_PART_LEG]   = TILEP_LEG_METAL_SILVER;
             break;
 
-#if TAG_MAJOR_VERSION == 34
-        case JOB_SKALD:
-            parts[TILEP_PART_BODY]  = TILEP_BODY_SHIRT_WHITE3;
-            parts[TILEP_PART_LEG]   = TILEP_LEG_SKIRT_OFS;
-            parts[TILEP_PART_HELM]  = TILEP_HELM_HELM_IRON;
-            parts[TILEP_PART_ARM]   = TILEP_ARM_GLOVE_GRAY;
-            parts[TILEP_PART_BOOTS] = TILEP_BOOTS_MIDDLE_GRAY;
-            parts[TILEP_PART_CLOAK] = TILEP_CLOAK_BLUE;
-            break;
-#endif
-
         case JOB_CHAOS_KNIGHT:
             parts[TILEP_PART_BODY]  = TILEP_BODY_MESH_BLACK;
             parts[TILEP_PART_LEG]   = TILEP_LEG_PANTS_SHORT_DARKBROWN;
@@ -1027,7 +1016,7 @@ void tilep_job_default(int job, dolls_data *doll)
             parts[TILEP_PART_BOOTS] = TILEP_BOOTS_SHORT_BROWN;
             break;
 
-        case JOB_ENCHANTER:
+        case JOB_HEXER:
             parts[TILEP_PART_BODY]  = TILEP_BODY_ROBE_YELLOW;
             parts[TILEP_PART_HELM]  = TILEP_HELM_WIZARD_GRAY;
             parts[TILEP_PART_HAND1] = TILEP_HAND1_STAFF_MAGE;
@@ -1043,7 +1032,7 @@ void tilep_job_default(int job, dolls_data *doll)
             parts[TILEP_PART_BOOTS] = TILEP_BOOTS_SHORT_BROWN;
             break;
 
-        case JOB_FORGEWRIGHT:
+        case JOB_SKALD:
             parts[TILEP_PART_BODY]  = TILEP_BODY_ROBE_GREEN;
             parts[TILEP_PART_HAND1] = TILEP_HAND1_GANDALF;
             parts[TILEP_PART_HAND2] = TILEP_HAND2_BOOK_GREEN_DIM;
@@ -1059,7 +1048,7 @@ void tilep_job_default(int job, dolls_data *doll)
             parts[TILEP_PART_CLOAK] = TILEP_CLOAK_RED;
             break;
 
-        case JOB_HEXSLINGER:
+        case JOB_ARCANE_SHOT:
             parts[TILEP_PART_BODY]  = TILEP_BODY_ROBE_BROWN;
             parts[TILEP_PART_HELM]  = TILEP_HELM_WIZARD_GRAY;
             parts[TILEP_PART_HAND1] = TILEP_HAND1_SARUMAN;

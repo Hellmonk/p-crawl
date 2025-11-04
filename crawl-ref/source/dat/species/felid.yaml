@@ -34,7 +34,7 @@ mutations:
     MUT_CLAWS: 1
 recommended_jobs:
   - berserker
-  - enchanter
+  - hexer
   - shapeshifter
   - ice elementalist
   - air elementalist

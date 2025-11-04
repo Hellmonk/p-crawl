@@ -7,14 +7,12 @@ str: 0
 int: 7
 dex: 5
 spells:
-  - SPELL_SANDBLAST
+  - SPELL_KINETIC_GRAPNEL
   - SPELL_PASSWALL
-  - SPELL_STONE_ARROW
-  - SPELL_PETRIFY
-  - SPELL_BOULDER
+  - SPELL_LRD
 equipment:
-  - "robe"
-  - "potion of magic"
+  - "mace"
+  - "scroll of revelation"
 recommended_species:
   - deep elf
   - spriggan
@@ -23,8 +21,6 @@ recommended_species:
   - octopode
   - revenant
 skills:
-  dodging: 2
-  stealth: 2
-  spellcasting: 2
-  earth magic: 3
+  spellcasting: 1
+  earth magic: 2
 create_enum: false

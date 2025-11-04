@@ -39,8 +39,8 @@ fake_mutations:
     short: insubstantial
 recommended_jobs:
   - chaos knight
-  - enchanter
-  - hexslinger
+  - hexer
+  - arcane shot
   - necromancer
   - earth elementalist
   - ice elementalist

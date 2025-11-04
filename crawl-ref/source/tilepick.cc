@@ -4471,16 +4471,16 @@ static tileidx_t _tileidx_player_job_base(const job_type job)
             return TILEG_JOB_HUNTER;
         case JOB_CONJURER:
             return TILEG_JOB_CONJURER;
-        case JOB_ENCHANTER:
-            return TILEG_JOB_ENCHANTER;
+        case JOB_HEXER:
+            return TILEG_JOB_HEXER;
         case JOB_FIRE_ELEMENTALIST:
             return TILEG_JOB_FIRE_ELEMENTALIST;
         case JOB_ICE_ELEMENTALIST:
             return TILEG_JOB_ICE_ELEMENTALIST;
         case JOB_SUMMONER:
             return TILEG_JOB_SUMMONER;
-        case JOB_FORGEWRIGHT:
-            return TILEG_JOB_FORGEWRIGHT;
+        case JOB_SKALD:
+            return TILEG_JOB_SKALD;
         case JOB_AIR_ELEMENTALIST:
             return TILEG_JOB_AIR_ELEMENTALIST;
         case JOB_EARTH_ELEMENTALIST:
@@ -4501,8 +4501,8 @@ static tileidx_t _tileidx_player_job_base(const job_type job)
             return TILEG_JOB_ARTIFICER;
         case JOB_DELVER:
             return TILEG_JOB_DELVER;
-        case JOB_HEXSLINGER:
-            return TILEG_JOB_HEXSLINGER;
+        case JOB_ARCANE_SHOT:
+            return TILEG_JOB_ARCANE_SHOT;
         case JOB_REAVER:
             return TILEG_JOB_REAVER;
         case JOB_CINDER_ACOLYTE:

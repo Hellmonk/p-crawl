@@ -120,8 +120,7 @@ JOB_GROUP_TEMPLATE = """
 """
 
 # SK_WEAPON is used when weapon is chosen by player
-ALL_SKILLS = ('fighting', 'short blades', 'long blades', 'axes',
-    'maces and flails', 'polearms', 'staves', 'ranged weapons',
+ALL_SKILLS = ('fighting', 'melee weapons', 'ranged weapons',
     'throwing', 'armour', 'dodging', 'stealth',
     'shields', 'unarmed combat', 'spellcasting', 'enchantments',
     'hexes', 'summonings', 'necromancy', 'translocations',

@@ -8,8 +8,7 @@ dex: 6
 equipment:
   - "dagger plus:2"
   - "robe"
-  - "cloak"
-  - "dart ego:poisoned q:9"
+  - "dart ego:atropa q:9"
   - "dart ego:curare q:3"
 recommended_species:
   - troll
@@ -18,9 +17,6 @@ recommended_species:
   - vine stalker
   - gnoll
 skills:
-  fighting: 2
-  dodging: 1
-  stealth: 4
-  throwing: 2
-  weapon: 2
+  stealth: 2
+  throwing: 1
 create_enum: false

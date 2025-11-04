@@ -7,8 +7,8 @@ int: 1
 dex: 8
 equipment:
   - "shortbow"
-  - "leather armour"
-  - "scroll of butterflies no_exclude"
+  - "robe"
+  - "scroll of revelation"
 recommended_species:
   - minotaur
   - gnoll
@@ -16,8 +16,6 @@ recommended_species:
   - kobold
   - spriggan
 skills:
-  fighting: 2
-  dodging: 2
   stealth: 1
-  weapon: 4
+  ranged weapons: 2
 create_enum: false

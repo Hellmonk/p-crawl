@@ -9,16 +9,16 @@ dex: 0
 spells:
   - SPELL_SCORCH
 equipment:
-  - "robe"
-weapon_choice: plain
+  - "mace"
+  - "scroll of revelation"
 recommended_species:
   - mountain dwarf
   - draconian
   - oni
   - gnoll
 skills:
-  fighting: 3
-  weapon: 3
+  fighting: 1
+  weapon: 1
   spellcasting: 1
-  fire magic: 3
+  fire magic: 1
 create_enum: false
