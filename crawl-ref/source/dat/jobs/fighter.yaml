@@ -6,10 +6,11 @@ str: 8
 int: 0
 dex: 4
 equipment:
+  - "long sword"
   - "scale mail"
   - "buckler"
-  - "potion of might q:2"
-weapon_choice: good
+  - "meat bone"
+  - "scroll of revelation"
 recommended_species:
   - mountain dwarf
   - troll
@@ -18,8 +19,7 @@ recommended_species:
   - formicid
   - revenant
 skills:
-  fighting: 3
-  armour: 3
-  shields: 3
-  weapon: 2
+  armour: 1
+  shields: 1
+  melee weapons: 1
 create_enum: false

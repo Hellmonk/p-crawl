@@ -1,6 +1,6 @@
-enum: JOB_HEXSLINGER
-name: "Hexslinger"
-short_name: Hs
+enum: JOB_ARCANE_SHOT
+name: "Arcane Shot"
+short_name: As
 category: Warrior-mage
 category_priority: 90
 str: 0
@@ -8,14 +8,12 @@ int: 5
 dex: 7
 spells:
   - SPELL_JINXBITE
-  - SPELL_SIGIL_OF_BINDING
   - SPELL_INNER_FLAME
-  - SPELL_CAUSE_FEAR
   - SPELL_DIMENSIONAL_BULLSEYE
 equipment:
+  - "shortbow"
   - "robe"
-  - "scroll of poison"
-  - "sling plus:1"
+  - "scroll of revelation"
 recommended_species:
   - formicid
   - deep elf
@@ -23,10 +21,7 @@ recommended_species:
   - spriggan
   - gnoll
 skills:
-  fighting: 1
-  dodging: 2
-  spellcasting: 1
-  hexes: 3
-  fire magic: 1
-  weapon: 2
-create_enum: false
+  hexes: 1
+  enchantments: 1
+  ranged weapons: 1
+create_enum: true

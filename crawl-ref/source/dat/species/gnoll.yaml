@@ -21,10 +21,10 @@ recommended_jobs:
   - cinder acolyte
   - reaver
   - warper
-  - hexslinger
+  - arcane shot
   - shapeshifter
   - wanderer
-  - forgewright
+  - skald
 
 child_name: Pup
 orc_name: Hyenorc

@@ -8,11 +8,11 @@ int: 7
 dex: 5
 spells:
   - SPELL_FREEZE
-  - SPELL_FROZEN_RAMPARTS
   - SPELL_OZOCUBUS_ARMOUR
+  - SPELL_HAILSTORM
 equipment:
   - "robe"
-  - "potion of magic"
+  - "scroll of revelation"
 recommended_species:
   - merfolk
   - barachi
@@ -21,8 +21,6 @@ recommended_species:
   - gargoyle
   - revenant
 skills:
-  dodging: 2
-  stealth: 2
-  spellcasting: 2
-  ice magic: 4
+  spellcasting: 1
+  ice magic: 2
 create_enum: false

@@ -21,8 +21,8 @@ mutations:
 recommended_jobs:
   - brigand
   - berserker
-  - hexslinger
-  - enchanter
+  - arcane shot
+  - hexer
   - conjurer
   - earth elementalist
 

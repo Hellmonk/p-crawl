@@ -7,9 +7,8 @@ int: 2
 dex: 7
 equipment:
   - "robe"
-  - "potion of ambrosia"
-  - "orb ego:light"
-weapon_choice: plain
+  - "scroll of revelation"
+  - "ring of faith"
 recommended_species:
   - mountain dwarf
   - troll
@@ -17,7 +16,6 @@ recommended_species:
   - gargoyle
   - demonspawn
 skills:
-  fighting: 3
-  dodging: 3
-  weapon: 3
+  unarmed combat: 1
+  invocations: 3
 create_enum: false

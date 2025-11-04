@@ -6,14 +6,14 @@ str: 0
 int: 7
 dex: 5
 spells:
-  - SPELL_SUMMON_SMALL_MAMMAL
   - SPELL_CALL_IMP
-  - SPELL_CALL_CANINE_FAMILIAR
-  - SPELL_SURPRISING_CROCODILE
-  - SPELL_SUMMON_SEISMOSAURUS_EGG
+  - SPELL_AWAKEN_ARMOUR
+  - SPELL_AMMO_TO_ANACONDAS
 equipment:
-  - "robe"
-  - "potion of magic"
+  - "leather armour"
+  - "spear"
+  - "dart ego:datura q:4"
+  - "scroll of revelation"
 recommended_species:
   - deep elf
   - oni
@@ -21,8 +21,6 @@ recommended_species:
   - merfolk
   - tengu
 skills:
-  dodging: 2
-  stealth: 2
-  spellcasting: 2
-  summonings: 4
+  armour: 1
+  summonings: 2
 create_enum: false
