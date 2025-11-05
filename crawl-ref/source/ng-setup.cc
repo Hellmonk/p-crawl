@@ -244,20 +244,12 @@ void give_items_skills(const newgame_def& ng)
         you.religion = GOD_TROG;
         you.raw_piety = 35;
 
-        if (you_can_wear(SLOT_BODY_ARMOUR) != false)
-            you.skills[SK_ARMOUR] += 2;
-        else
-        {
-            you.skills[SK_DODGING]++;
-            if (!is_useless_skill(SK_ARMOUR))
-                you.skills[SK_ARMOUR]++; // converted later
-        }
         break;
 
     case JOB_ARTIFICER:
-    {
         make_random_artificer_evocable();
-    }
+        break;
+
     case JOB_CHAOS_KNIGHT:
     {
         you.religion = GOD_XOM;
