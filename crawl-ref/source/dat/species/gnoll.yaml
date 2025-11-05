@@ -19,7 +19,6 @@ mutations:
     MUT_DISTRIBUTED_TRAINING: 1
 recommended_jobs:
   - cinder acolyte
-  - reaver
   - warper
   - arcane shot
   - shapeshifter

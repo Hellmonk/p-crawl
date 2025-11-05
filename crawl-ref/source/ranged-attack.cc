@@ -431,11 +431,7 @@ int ranged_attack::player_apply_final_multipliers(int damage, bool /*aux*/)
 
 bool ranged_attack::mulch_bonus() const
 {
-    return mulched
-        && throwing()
-        && projectile
-        && ammo_type_damage(projectile->sub_type)
-        && projectile->sub_type != MI_STONE;
+    return false;
 }
 
 int ranged_attack::player_apply_postac_multipliers(int damage)

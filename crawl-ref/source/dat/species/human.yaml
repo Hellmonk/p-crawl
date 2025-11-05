@@ -16,7 +16,6 @@ levelup_stat_frequency: 4
 recommended_jobs:
   - berserker
   - cinder acolyte
-  - conjurer
   - necromancer
   - ice elementalist
 mutations:

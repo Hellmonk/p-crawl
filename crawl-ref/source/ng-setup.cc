@@ -256,11 +256,7 @@ void give_items_skills(const newgame_def& ng)
 
     case JOB_ARTIFICER:
     {
-        if (species_apt(SK_ARMOUR) < species_apt(SK_DODGING))
-            you.skills[SK_DODGING]++;
-        else
-            you.skills[SK_ARMOUR]++;
-        break;
+        make_random_artificer_evocable();
     }
     case JOB_CHAOS_KNIGHT:
     {
@@ -269,11 +265,6 @@ void give_items_skills(const newgame_def& ng)
         int timeout_rnd = random2(40);
         timeout_rnd += random2(40); // force a sequence point between random2s
         you.gift_timeout = max(5, timeout_rnd);
-
-        if (species_apt(SK_ARMOUR) < species_apt(SK_DODGING))
-            you.skills[SK_DODGING]++;
-        else
-            you.skills[SK_ARMOUR]++;
         break;
     }
 
@@ -651,4 +642,21 @@ static void _setup_generic(const newgame_def& ng,
     else
         you.save = new package(get_savedir_filename(you.your_name).c_str(),
                                true, true);
+}
+
+void make_random_artificer_evocable()
+{
+    misc_item_type evocable = random_choose(MISC_TIN_OF_TREMORSTONES,
+                                            MISC_CONDENSER_VANE,
+                                            MISC_ACID_CAULDRON,
+                                            MISC_CRYSTAL_ANVIL,
+                                            MISC_SKELETON_KEY,
+                                            MISC_GRAVITAMBOURINE,
+                                            MISC_BUTTERFLY_JAR,
+                                            MISC_LAMP_OF_IMMOLATION,
+                                            MISC_AMULET_OF_RESISTANCE,
+                                            MISC_PHANTOM_MIRROR,
+                                            MISC_LANTERN_OF_SHADOWS);
+
+    newgame_make_item(OBJ_MISCELLANY, evocable);
 }

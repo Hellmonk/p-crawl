@@ -1121,10 +1121,8 @@ void free_stationary_net(int item_index)
         return;
 
     const coord_def pos = item.pos;
-    // Probabilistically mulch net based on damage done, otherwise
-    // reset damage counter (ie: item.net_durability).
-    const bool mulch = item.props.exists(TRAP_PROJECTILE_KEY)
-                    || x_chance_in_y(-item.net_durability, 9);
+    // mulch net
+    const bool mulch = true;
     if (mulch)
         destroy_item(item_index);
     else

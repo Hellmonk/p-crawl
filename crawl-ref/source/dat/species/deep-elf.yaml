@@ -26,13 +26,11 @@ mutations:
     MUT_MASTER_ARCHER: 1
 recommended_jobs:
   - hedge wizard
-  - conjurer
   - summoner
   - necromancer
   - fire elementalist
   - ice elementalist
   - air elementalist
   - earth elementalist
-  - alchemist
 
 orc_name: Deep Orc
