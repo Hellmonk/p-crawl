@@ -24,11 +24,9 @@ mutations:
 recommended_jobs:
   - berserker
   - shapeshifter
-  - conjurer
   - fire elementalist
   - ice elementalist
   - air elementalist
   - earth elementalist
-  - alchemist
 
 orc_name: Orconian

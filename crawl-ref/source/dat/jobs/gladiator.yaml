@@ -9,7 +9,8 @@ equipment:
   - "trident"
   - "leather armour"
   - "helmet"
-  - "javelin q:3"
+  - "javelin q:12"
+  - "throwing net q:3"
 recommended_species:
   - mountain dwarf
   - merfolk

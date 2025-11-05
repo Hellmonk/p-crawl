@@ -7,10 +7,9 @@ int: 7
 dex: 5
 spells:
   - SPELL_CALL_IMP
-  - SPELL_AWAKEN_ARMOUR
-  - SPELL_AMMO_TO_ANACONDAS
+  - SPELL_ICE_STATUE
+  - SPELL_CALL_CANINE_FAMILIAR
 equipment:
-  - "leather armour"
   - "spear"
   - "dart ego:datura q:4"
   - "scroll of revelation"
@@ -21,6 +20,6 @@ recommended_species:
   - merfolk
   - tengu
 skills:
-  armour: 1
+  spellcasting: 1
   summonings: 2
 create_enum: false

@@ -28,9 +28,7 @@ recommended_jobs:
   - artificer
   - warper
   - hexer
-  - conjurer
   - earth elementalist
-  - alchemist
 
 orc_name: Spriggorc
 walking_verb: Sprint

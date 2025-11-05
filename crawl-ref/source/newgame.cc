@@ -139,8 +139,7 @@ static bool _char_defined(const newgame_def& ng)
 }
 
 static char_choice_restriction _job_allowed(species_type sp, job_type job) {
-    if (job == JOB_DELVER && crawl_state.game_is_sprint())
-        return CC_BANNED;
+
     return job_allowed(sp, job);
 }
 
@@ -1548,9 +1547,6 @@ void job_group::attach(const newgame_def& ng, const newgame_def& defaults,
     {
         if (job == JOB_UNKNOWN)
             break;
-
-        if (job == JOB_DELVER && ng.type == GAME_TYPE_SPRINT)
-            continue;
 
         if (ng.species != SP_UNKNOWN
             && _job_allowed(ng.species, job) == CC_BANNED)

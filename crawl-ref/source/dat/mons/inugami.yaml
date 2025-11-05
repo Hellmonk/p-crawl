@@ -5,11 +5,11 @@ exp: 34
 genus: hound
 will: 40
 attacks:
- - {type: bite, damage: 14}
+ - {type: bite, damage: 9}
 hd: 4
-hp_10x: 55
+hp_10x: 50
 ac: 5
-ev: 13
+ev: 20
 shout: bark
 intelligence: animal
 size: small

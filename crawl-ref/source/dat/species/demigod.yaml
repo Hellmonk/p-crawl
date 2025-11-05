@@ -24,7 +24,6 @@ mutations:
     MUT_FORLORN: 1
 recommended_jobs:
   - shapeshifter
-  - conjurer
   - fire elementalist
   - ice elementalist
   - air elementalist

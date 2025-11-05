@@ -2865,8 +2865,10 @@ void bolt::drop_object()
             && (you.pos() == pos() && you.attribute[ATTR_HELD]
             || m && m->caught()))
         {
-            maybe_split_nets(env.item[idx], pos());
+            destroy_item(env.item[idx]);
         }
+        else if (!m)
+            destroy_item(env.item[idx]);
     }
 }
 

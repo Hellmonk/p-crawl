@@ -54,6 +54,7 @@
 
 static shared_ptr<quiver::action> _fire_prompt_for_item();
 static int  _get_dart_chance(const int hd);
+static bool _thrown_object_destroyed(const item_def &item);
 
 bool is_penetrating_attack(const actor& attacker, const item_def* weapon,
                            const item_def& projectile)
@@ -784,7 +785,7 @@ static void _player_shoot(bolt &pbolt, item_def &item, item_def const *launcher)
     // when we walk over it.
     if (item.base_type == OBJ_MISSILES)
         item.flags |= ISFLAG_THROWN;
-    pbolt.item_mulches = !tossing;
+    pbolt.item_mulches = !tossing && _thrown_object_destroyed(item);
     pbolt.drop_item = !pbolt.item_mulches && !returning;
     pbolt.hit = 0;
 
@@ -918,6 +919,15 @@ bool mons_throw(monster* mons, bolt &beam, bool teleport)
     // dubious...
     if (mons->alive() && mons->weapon())
         _handle_cannon_fx(*mons, *(mons->weapon()), target);
+
+    return true;
+}
+
+static bool _thrown_object_destroyed(const item_def &item)
+{
+    // nets are destroyed when they miss, or when the monster breaks free or dies
+    if (item.sub_type == MI_THROWING_NET)
+        return false;
 
     return true;
 }
