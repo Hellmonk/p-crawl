@@ -952,9 +952,8 @@ enum old_species_type
     OLD_SP_GREY_ELF = -4,
     OLD_SP_GNOME = -5,
     OLD_SP_MOUNTAIN_DWARF = -6,
-    OLD_SP_SLUDGE_ELF = -7,
-    OLD_SP_DJINNI = -8,
-    OLD_SP_LAVA_ORC = -9,
+    OLD_SP_DJINNI = -7,
+    OLD_SP_LAVA_ORC = -8,
     NUM_OLD_SPECIES = -OLD_SP_LAVA_ORC
 };
 
@@ -968,7 +967,6 @@ static string _species_name(int race)
     case OLD_SP_GREY_ELF: return "Grey Elf";
     case OLD_SP_GNOME: return "Gnome";
     case OLD_SP_MOUNTAIN_DWARF: return "Mountain Dwarf";
-    case OLD_SP_SLUDGE_ELF: return "fSludge Elf";
     case OLD_SP_DJINNI: return "Djinni";
     case OLD_SP_LAVA_ORC: return "Lava Orc";
     }
@@ -992,7 +990,6 @@ static const char* _species_abbrev(int race)
     case OLD_SP_GREY_ELF: return "GE";
     case OLD_SP_GNOME: return "Gn";
     case OLD_SP_MOUNTAIN_DWARF: return "MD";
-    case OLD_SP_SLUDGE_ELF: return "xE";
     case OLD_SP_DJINNI: return "Dj";
     case OLD_SP_LAVA_ORC: return "LO";
     }
