@@ -1,0 +1,28 @@
+enum: JOB_HEXER
+name: "Hexer"
+short_name: Hx
+category: Warrior-mage
+category_priority: 80
+str: 0
+int: 7
+dex: 5
+spells:
+  - SPELL_CONFUSING_TOUCH
+  - SPELL_HIBERNATION
+  - SPELL_MEPHITIC_CLOUD
+  - SPELL_PETRIFY
+equipment:
+  - "dagger plus:1"
+  - "scroll of revelation"
+recommended_species:
+  - deep elf
+  - felid
+  - kobold
+  - spriggan
+  - naga
+  - poltergeist
+skills:
+  hexes: 1
+  stealth: 1
+  melee weapons: 1
+create_enum: true
