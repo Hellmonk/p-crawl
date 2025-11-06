@@ -1,0 +1,27 @@
+enum: JOB_SKALD
+name: "Skald"
+short_name: "Sk"
+category: Mage
+category_priority: 80
+str: 2
+int: 7
+dex: 3
+spells:
+  - SPELL_SONG_OF_SLAYING
+  - SPELL_OZOCUBUS_ARMOUR
+  - SPELL_RENDING_BLADE
+equipment:
+  - "long sword"
+  - "scroll of revelation"
+  - "harp of healing"
+recommended_species:
+  - mountain dwarf
+  - coglin
+  - barachi
+  - human
+  - vine stalker
+  - merfolk
+skills:
+  melee weapons: 1
+  enchantments: 2
+create_enum: false
