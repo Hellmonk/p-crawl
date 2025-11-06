@@ -1,3 +1,4 @@
+TAG_MAJOR_VERSION: 34
 enum: SP_SLUDGE_ELF
 monster: MONS_ELF
 name: Sludge Elf
