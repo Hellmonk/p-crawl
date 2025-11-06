@@ -25,4 +25,4 @@ skills:
   hexes: 1
   stealth: 1
   melee weapons: 1
-create_enum: true
+create_enum: false
