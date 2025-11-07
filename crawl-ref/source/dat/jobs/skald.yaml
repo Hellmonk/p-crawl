@@ -1,4 +1,4 @@
-enum: JOB_SKALD
+enum: JOB_SKALD_TWO
 name: "Skald"
 short_name: "Sk"
 category: Mage
