@@ -1579,11 +1579,15 @@ int archer_bonus_damage(int hd)
     return hd * 4 / 3;
 }
 
-int apply_weapon_skill(int damage, skill_type wpn_skill, bool penalty)
+int apply_weapon_skill(int damage, skill_type wpn_skill)
 {
     const int sklvl = you.skill(wpn_skill, 1);
     damage += sklvl;
-    return penalty ? damage / 2 : damage;
+
+    if (you.has_mutation(MUT_BRAWLER))
+        damage += you.skill(SK_FIGHTING, 1);
+
+    return damage;
 }
 
 int throwing_base_damage_bonus(const item_def &proj, bool random)
@@ -1609,7 +1613,7 @@ int unarmed_base_damage(bool random)
     int damage = get_form()->get_base_unarmed_damage(random);
 
     if (you.has_usable_claws())
-        damage += you.has_claws() * 2;
+        damage += 6;
 
     if (you.form_uses_xl())
     {
@@ -1622,9 +1626,11 @@ int unarmed_base_damage(bool random)
 
 int unarmed_base_damage_bonus(bool random)
 {
+    int mul = 3 + 2 * you.get_mutation_level(MUT_TRAINED_BODY);
+
     if (you.form_uses_xl())
         return 0;
     if (random)
-        return you.skill_rdiv(SK_UNARMED_COMBAT);
-    return you.skill(SK_UNARMED_COMBAT);
+        return you.skill_rdiv(SK_UNARMED_COMBAT) * mul;
+    return you.skill(SK_UNARMED_COMBAT) * mul;
 }

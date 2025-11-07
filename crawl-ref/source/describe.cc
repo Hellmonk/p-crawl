@@ -1393,8 +1393,8 @@ string damage_rating(const item_def *item, int *rating_value)
     int rating = (base_dam + extra_base_dam);
     rating += plusses;
     if (use_weapon_skill)
-        rating = apply_weapon_skill(rating, skill, penalty);
-    if (thrown && penalty)
+        rating = apply_weapon_skill(rating, skill);
+    if (penalty)
         rating /= 2;
 
     if (rating_value)
@@ -1760,7 +1760,7 @@ static string _equipment_property_change_description(const item_def &item,
     const int cur_ac = you.base_ac(100);
     const int cur_ev = you.evasion_scaled(100, true);
     const int cur_sh = player_displayed_shield_class(100, true);
-    const int cur_spell_pen = max(0, you.adjusted_body_armour_penalty());
+    const int cur_spell_pen = max(0, you.armour_spell_penalty());
     int new_ac, new_ev, new_sh;
 
     if (remove)
@@ -1774,8 +1774,9 @@ static string _equipment_property_change_description(const item_def &item,
     if (item.base_type == OBJ_ARMOUR && get_armour_slot(item) == SLOT_BODY_ARMOUR)
     {
         // penalty with the new item
-        spell_penalty = max(0, -property(item, PARM_EVASION) / 10
-                  - you.get_mutation_level(MUT_STURDY_FRAME) * 2
+        spell_penalty = max(0, (-property(item, PARM_EVASION) / 10
+                  - you.get_mutation_level(MUT_STURDY_FRAME) * 2) /
+                    (1 + you.get_mutation_level(MUT_RUNIC_MAGIC))
                   - you.skill(SK_ARMOUR));
 
         // the difference; this can be negative so we report the change.

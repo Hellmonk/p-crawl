@@ -389,14 +389,20 @@ int calc_spell_power(spell_type spell)
         power += you.skill(SK_INVOCATIONS);
 
     // Wild magic boosts spell power, subdued magic decreases it.
-    power += you.get_mutation_level(MUT_WILD_MAGIC);
-    power -= you.get_mutation_level(MUT_SUBDUED_MAGIC);
+    power += you.get_mutation_level(MUT_WILD_MAGIC) * 6;
+    power -= you.get_mutation_level(MUT_SUBDUED_MAGIC) * 6;
+
+    power -= you.get_mutation_level(MUT_DOPEY) * 5;
 
     // Augmentation boosts spell power at high HP.
     power += augmentation_amount();
 
-    // Enhancers boost / deboost by 3 power apiece
+    // Enhancers boost / deboost by 4 power apiece
     power = _apply_enhancement(power, _spell_enhancement(spell));
+
+    // Emergency power triggers like aug but in reverse
+    if (you.hp * 100 / get_real_hp(true, true) < 40)
+        power += 5 * you.get_mutation_level(MUT_EMERGENCY_POWER);
 
     // Each level of horror reduces spellpower by 1
     if (you.duration[DUR_HORROR])
@@ -404,6 +410,9 @@ int calc_spell_power(spell_type spell)
 
     if (you.duration[DUR_ENKINDLED] && spell_can_be_enkindled(spell))
         power = (power + (you.experience_level)) * 3 / 2;
+
+    if (you.has_mutation(MUT_DIVINE_INTELLECT))
+        power *= 2;
 
     const int cap = spell_power_cap(spell);
     if (cap > 0)
@@ -445,6 +454,9 @@ static int _spell_enhancement(spell_type spell)
     if (typeflags & spschool::air)
         enhanced += player_spec_air();
 
+    if (typeflags & spschool::enchantments)
+        enhanced += player_spec_enchantment();
+
     if (you.unrand_equipped(UNRAND_BATTLE))
     {
         if (vehumet_supports_spell(spell))
@@ -472,7 +484,7 @@ static int _apply_enhancement(const int initial_power,
 {
     int power = initial_power;
 
-    return power + enhancer_levels * 3;
+    return power + enhancer_levels * 4;
 }
 
 void inspect_spells()
@@ -1309,12 +1321,6 @@ bool spell_has_targeter(spell_type spell)
     return bool(find_spell_targeter(spell, 1, 1));
 }
 
-// Returns the nth triangular number.
-static int _triangular_number(int n)
-{
-    return n * (n+1) / 2;
-}
-
 // _tetrahedral_number: returns the nth tetrahedral number.
 // This is the number of triples of nonnegative integers with sum < n.
 static int _tetrahedral_number(int n)
@@ -1990,18 +1996,11 @@ spret your_spells(spell_type spell, int powc, bool actual_spell,
         _apply_post_zap_effect(spell, orig_target_pos);
 
         const int demonic_magic = you.get_mutation_level(MUT_DEMONIC_MAGIC);
-        const bool ephemeral_shield = you.get_mutation_level(MUT_EPHEMERAL_SHIELD);
 
         if ((demonic_magic == 3 && evoked_wand)
             || (demonic_magic > 0 && (actual_spell || you.divine_exegesis)))
         {
             do_demonic_magic(spell_difficulty(spell) * 6, demonic_magic);
-        }
-
-        if (ephemeral_shield && (actual_spell || you.divine_exegesis))
-        {
-            you.set_duration(DUR_EPHEMERAL_SHIELD, 2);
-            you.redraw_armour_class = true;
         }
 
         if (you.props.exists(BATTLESPHERE_KEY)
@@ -3056,7 +3055,7 @@ bool warn_about_contam_cost(int max_contam)
     if (!Options.warn_contam_cost || you.magic_contamination >= 1000)
         return false;
 
-    const int mul = you.has_mutation(MUT_CONTAMINATION_SUSCEPTIBLE) ? 2 : 1;
+    const int mul = 1;
 
     if (you.magic_contamination + (max_contam * mul) >= 1000)
         return !yesno("Casting this now could dangerously contaminate you. Continue?", true, 'n');

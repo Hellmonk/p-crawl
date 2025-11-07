@@ -879,6 +879,7 @@ public:
     // Combat-related adjusted penalty calculation methods
     int unadjusted_body_armour_penalty() const;
     int adjusted_body_armour_penalty() const;
+    int armour_spell_penalty() const;
     int adjusted_shield_penalty() const;
 
     // Calculates total permanent AC/EV/SH if the player was/wasn't wearing a
@@ -920,7 +921,7 @@ public:
     void rev_down(int time_taken);
 
     bool allies_forbidden();
-    int adjusted_casting_level(skill_type skill);
+    int adjusted_casting_level(skill_type skill, bool include_armour = true);
 
     // TODO: move this somewhere else
     void refresh_rampage_hints();
@@ -1033,7 +1034,6 @@ bool is_effectively_light_armour(const item_def *item);
 bool player_effectively_in_light_armour();
 
 int player_shield_racial_factor();
-int player_armour_shield_spell_penalty();
 
 int player_movement_speed(bool check_terrain = true, bool temp = true);
 
@@ -1080,6 +1080,7 @@ int player_spec_alchemy();
 int player_spec_summ();
 int player_spec_forgecraft();
 int player_spec_tloc();
+int player_spec_enchantment();
 
 int player_speed();
 
@@ -1212,6 +1213,7 @@ void dec_frozen_ramparts(int delay);
 void reset_rampage_heal_duration();
 void apply_rampage_heal();
 void trickster_trigger(const monster& victim, enchant_type ench);
+bool ench_triggers_trickster(enchant_type ench);
 int trickster_bonus();
 int enkindle_max_charges();
 void maybe_harvest_memory(const monster& victim);

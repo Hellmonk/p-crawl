@@ -549,11 +549,18 @@ int spell_mana(spell_type which_spell, bool real_spell)
             return 0;
 
         int cost = 2;
+
+        cost += you.get_mutation_level(MUT_EXPENSIVE_CASTING);
+
         if (you.wearing_ego(OBJ_GIZMOS, SPGIZMO_SPELLMOTOR))
             cost = max(1, cost - you.rev_tier());
 
         if (you.has_mutation(MUT_EFFICIENT_MAGIC))
-            cost = max(1, cost - you.get_mutation_level(MUT_EFFICIENT_MAGIC));
+        {
+            const int level = _seekspell(which_spell)->level;
+            if (level <= 1 + you.get_mutation_level(MUT_EFFICIENT_MAGIC))
+                cost = max(1, cost - 1);
+        }
 
         if (you.duration[DUR_BRILLIANCE] || you.unrand_equipped(UNRAND_FOLLY))
             cost = max(1, cost - 1);
@@ -1138,7 +1145,12 @@ string casting_uselessness_reason(spell_type spell, bool temp)
             return "you're too confused to cast spells.";
 
         if (!meets_casting_requirement(spell))
-            return "you aren't skilled enough to cast this spell.";
+        {
+            if (!meets_casting_requirement(spell, false))
+                return "you aren't skilled enough to cast this spell.";
+            else
+                return "your insufficient armour skill prevents you from casting this spell.";
+        }
 
         if (you.has_mutation(MUT_HP_CASTING))
         {
@@ -1206,7 +1218,7 @@ string casting_uselessness_reason(spell_type spell, bool temp)
 }
 
 // Is the player sufficiently skilled to cast the spell?
-bool meets_casting_requirement(spell_type spell)
+bool meets_casting_requirement(spell_type spell, bool include_armour)
 {
     const spschools_type disciplines = get_spell_disciplines(spell);
     const int skillcount = count_bits(disciplines);
@@ -1216,7 +1228,7 @@ bool meets_casting_requirement(spell_type spell)
         for (const auto bit : spschools_type::range())
         {
             if (disciplines & bit)
-                if (spell_difficulty(spell) > you.adjusted_casting_level(spell_type2skill(bit)))
+                if (spell_difficulty(spell) > you.adjusted_casting_level(spell_type2skill(bit), include_armour))
                     return false;
         }
     }

@@ -22,9 +22,9 @@ levelup_stats:
   - dex
 mutations:
   1:
-    MUT_TOUGH_SKIN: 3
+    MUT_TOUGH_SKIN: 1
     MUT_FAST: 2
     MUT_DEFORMED: 1
-    MUT_HOOVES: 3
+    MUT_HOOVES: 1
 
 orc_name: Centorc

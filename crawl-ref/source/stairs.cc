@@ -1234,7 +1234,7 @@ static void _lock_stairs()
     }
 }
 
-static void _player_stair_clear_status()
+static void _player_stair_handle_status()
 {
     undrain_hp(9999);
     you.magic_contamination = 0;
@@ -1280,14 +1280,38 @@ static void _player_stair_clear_status()
     you.duration[DUR_POISON_VULN] = 0;
     you.duration[DUR_CONF]      = 0;
     you.duration[DUR_POISONING] = 0;
+
+    if (you.has_mutation(MUT_BAD_VIBES))
+    {
+        if (you.get_mutation_level(MUT_BAD_VIBES) > 1)
+            slow_player(10 + random2(10));
+
+        you.corrode(nullptr, "bad vibes");
+    }
+
+    if (you.has_mutation(MUT_UNSTABLE_GENOME) && x_chance_in_y(4, 10))
+    {
+        mutation_type mtype = you.get_mutation_level(MUT_UNSTABLE_GENOME) > 1 ?
+                              RANDOM_BAD_MUTATION : RANDOM_MUTATION;
+        mutate(mtype, "unstable genetics", false, false, false);
+    }
 }
 
 static void _player_stair_healing()
 {
     int heal_fraction = 3;
-    you.heal((you.hp_max - you.hp) * heal_fraction / 4);
+
+    heal_fraction -= you.get_mutation_level(MUT_POOR_RECOVERY);
+    heal_fraction += you.get_mutation_level(MUT_FULL_RECOVERY);
+
     inc_mp((you.max_magic_points - you.magic_points) * heal_fraction / 4);
-    _player_stair_clear_status();
+
+    //inhibited healing mut halves "most" healing, but shouldn't affect this.
+    if (you.get_mutation_level(MUT_NO_POTION_HEAL))
+        heal_fraction *= 2;
+
+    you.heal((you.hp_max - you.hp) * heal_fraction / 4);
+    _player_stair_handle_status();
 
     you.redraw_hit_points = true;
     you.redraw_armour_class = true;

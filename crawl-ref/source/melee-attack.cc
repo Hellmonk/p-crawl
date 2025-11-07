@@ -1730,7 +1730,7 @@ public:
     int get_chance() const {
         const int base = get_base_chance();
         if (xl_based_chance())
-            return base * (30 + you.experience_level) / 59;
+            return base;
         return base;
     }
     virtual bool is_usable() const {return false; };
@@ -1753,7 +1753,7 @@ public:
 
     bool is_usable() const override
     {
-        return you.get_mutation_level(MUT_CONSTRICTING_TAIL) >= 2
+        return you.get_mutation_level(MUT_CONSTRICTING_TAIL)
                 || you.has_mutation(MUT_TENTACLE_ARMS)
                     && you.has_usable_tentacle()
                 || you.form == transformation::serpent;
@@ -1771,18 +1771,18 @@ public:
         if (you.has_hooves())
         {
             // Max hoof damage: 10.
-            return damage + you.get_mutation_level(MUT_HOOVES) * 5 / 3;
+            return damage + (1 + you.skill(SK_UNARMED_COMBAT)) / 2;
         }
 
         if (you.has_talons())
         {
-            // Max talon damage: 9.
-            return damage + 1 + you.get_mutation_level(MUT_TALONS);
+            // Max talon damage: 14.
+            return damage + you.skill(SK_UNARMED_COMBAT);
         }
 
-        // Max spike damage: 8.
+        // Max spike damage: 14.
         // ... yes, apparently tentacle spikes are "kicks".
-        return damage + you.get_mutation_level(MUT_TENTACLE_SPIKE);
+        return damage + you.skill(SK_UNARMED_COMBAT);
     }
 
     string get_verb() const override
@@ -1813,11 +1813,11 @@ class AuxHeadbutt: public AuxAttackType
 {
 public:
     AuxHeadbutt()
-    : AuxAttackType(5, 67, "headbutt") { };
+    : AuxAttackType(10, 50, "headbutt") { };
 
     int get_damage(bool /*random*/) const override
     {
-        return damage + you.get_mutation_level(MUT_HORNS) * 3;
+        return damage + you.skill(SK_UNARMED_COMBAT);
     }
 
     bool is_usable() const override
@@ -1830,7 +1830,7 @@ class AuxPeck: public AuxAttackType
 {
 public:
     AuxPeck()
-    : AuxAttackType(6, 67, "peck") { };
+    : AuxAttackType(5, 100, "peck") { };
 
     bool is_usable() const override
     {
@@ -1849,11 +1849,9 @@ public:
         const int base = you.fishtail
                             || you.has_mutation(MUT_ARMOURED_TAIL)
                             || you.has_mutation(MUT_WEAKNESS_STINGER)
-                            || you.has_mutation(MUT_WEAKNESS_STINGER)
                             ? 6 : 0;
 
         return base + max(0, you.get_mutation_level(MUT_ARMOURED_TAIL) - 1) * 4
-                    + you.get_mutation_level(MUT_STINGER) * 3
                     + you.get_mutation_level(MUT_WEAKNESS_STINGER);
     }
 
@@ -1886,24 +1884,17 @@ class AuxPunch: public AuxAttackType
 {
 public:
     AuxPunch()
-    : AuxAttackType(5, 0, "punch") { };
+    : AuxAttackType(3, 0, "punch") { };
 
     int get_damage(bool random) const override
     {
-        const int base_dam = damage + (random ? you.skill_rdiv(SK_UNARMED_COMBAT, 1, 2)
-                                              : you.skill(SK_UNARMED_COMBAT) / 2);
+        const int base_dam = damage + you.skill(SK_UNARMED_COMBAT, 2);
 
         if (you.form == transformation::blade_hands)
             return base_dam + 6;
 
         if (you.has_usable_claws())
-        {
-            const int claws = you.has_claws();
-            const int die_size = 3;
-            // Don't use maybe_roll_dice because we want max, not mean.
-            return base_dam + (random ? roll_dice(claws, die_size)
-                                      : claws * die_size);
-        }
+            return base_dam + 3;
 
         return base_dam;
     }
@@ -1932,10 +1923,8 @@ public:
 
     int get_base_chance() const override
     {
-        // Huh, this is a bit low. 5% at 0 UC, 50% at 27 UC..!
-        // We don't div-rand-round because we want this to be
-        // consistent for mut descriptions.
-        return 5 + you.skill(SK_UNARMED_COMBAT, 5) / 3;
+        //25-70%
+        return 25 + you.skill(SK_UNARMED_COMBAT, 5);
     }
 
     bool is_usable() const override
@@ -1953,19 +1942,15 @@ class AuxBite: public AuxAttackType
 {
 public:
     AuxBite()
-    : AuxAttackType(1, 40, "bite") { };
+    : AuxAttackType(5, 50, "bite") { };
 
     int get_damage(bool random) const override
     {
         // duplicated in _describe_talisman_form
-        const int fang_damage = damage + you.has_usable_fangs() * 2;
+        const int fang_damage = damage;
 
         if (you.get_mutation_level(MUT_ANTIMAGIC_BITE))
-        {
-            const int hd = you.get_hit_dice();
-            const int denom = 3;
-            return fang_damage + (random ? div_rand_round(hd, denom) : hd / denom);
-        }
+            return fang_damage + 5;
 
         if (you.get_mutation_level(MUT_ACIDIC_BITE))
             return fang_damage + (random ? roll_dice(2, 4) : 4);
@@ -2448,6 +2433,9 @@ int melee_attack::player_apply_final_multipliers(int damage, bool aux)
         damage = div_rand_round(damage, 2);
 
     if (you.duration[DUR_MIGHT])
+        damage = damage * 2;
+
+    if (you.has_mutation(MUT_DIVINE_STRENGTH))
         damage = damage * 2;
 
     apply_rev_penalty(damage);
@@ -3989,7 +3977,7 @@ void melee_attack::do_passive_freeze()
 
         monster* mon = attacker->as_monster();
 
-        const int orig_hurted = random2(11);
+        const int orig_hurted = random2(7);
         // Don't display the adjusted messages...
         const int hurted = mons_adjust_flavoured(mon, beam, orig_hurted, false);
 
@@ -4074,8 +4062,7 @@ void melee_attack::do_spines()
 
         if (mut && attacker->alive() && coinflip())
         {
-            int dmg = random_range(mut,
-                div_rand_round(you.experience_level * 2, 3) + mut * 3);
+            int dmg = roll_dice(mut, 6);
             int hurt = attacker->apply_ac(dmg);
 
             dprf(DIAG_COMBAT, "Spiny: dmg = %d hurt = %d", dmg, hurt);
@@ -4463,6 +4450,9 @@ void melee_attack::cleave_setup()
 // cleave damage modifier for additional attacks: 50% of base damage
 int melee_attack::cleave_damage_mod(int dam)
 {
+    if (attacker->is_player() && you.get_mutation_level(MUT_AXE_MASTER))
+        return dam;
+
     return div_rand_round(dam * 5, 10);
 }
 

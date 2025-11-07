@@ -20,12 +20,8 @@ levelup_stat_frequency: 4
 mutations:
   1:
     MUT_CONSTRICTING_TAIL: 1
-    MUT_ACUTE_VISION: 1
     MUT_DEFORMED: 1
     MUT_SPIT_POISON: 1
-    MUT_POISON_RESISTANCE: 1
-  13:
-    MUT_CONSTRICTING_TAIL: 1
 recommended_jobs:
   - berserker
   - shapeshifter

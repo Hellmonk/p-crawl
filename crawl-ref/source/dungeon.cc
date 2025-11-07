@@ -5839,6 +5839,9 @@ void place_spec_shop(const coord_def& where, shop_spec &spec)
         break;
     }
 
+    if (you.has_mutation(MUT_ADAPTABLE))
+        num_items++;
+
     shop.pos = where;
     _set_grd(where, DNGN_ENTER_SHOP);
 

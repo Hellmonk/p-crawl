@@ -131,7 +131,7 @@ int archer_bonus_damage(int hd);
 int aux_to_hit();
 
 int stat_modify_damage(int base_dam, skill_type wpn_skill, bool using_weapon);
-int apply_weapon_skill(int base_dam, skill_type wpn_skill, bool penalty);
+int apply_weapon_skill(int base_dam, skill_type wpn_skill);
 int apply_fighting_skill(int base_dam, bool aux, bool random);
 int throwing_base_damage_bonus(const item_def &projectile, bool random);
 int brand_adjust_weapon_damage(int base_dam, int brand, bool random);

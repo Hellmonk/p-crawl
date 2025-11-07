@@ -91,6 +91,9 @@ bool ranged_attack::attack()
 
     ev_margin = test_hit(to_hit, ev, bullseye);
 
+    // guaranteed hit/miss for certain conditions
+    if (attacker->is_player() && you.has_mutation(MUT_HUNTER))
+        ev_margin = 100;
     if (defender->is_player() && you.duration[DUR_DEFLECT_MISSILES])
         ev_margin = -100;
 

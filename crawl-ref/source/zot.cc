@@ -45,6 +45,14 @@ static bool _zot_clock_active_in(branch_type br)
     return br != BRANCH_ABYSS && !zot_immune() && !crawl_state.game_is_sprint();
 }
 
+static int _zot_lifespan_reducer()
+{
+    if (!you.has_mutation(MUT_HUNTED))
+        return 0;
+
+    return 50 + you.get_mutation_level(MUT_HUNTED) * 50;
+}
+
 // Is the zot clock running, or is it paused or stopped altogether?
 bool zot_clock_active()
 {
@@ -78,7 +86,7 @@ int bezotting_level_in(branch_type br)
     if (!_zot_clock_active_in(br))
         return 0;
 
-    const int remaining_turns = turns_until_zot_in(br);
+    const int remaining_turns = turns_until_zot_in(br) - _zot_lifespan_reducer();
     if (remaining_turns < 50)
         return 3;
     if (remaining_turns < 100)
@@ -120,7 +128,7 @@ void reset_zot_clock()
         return;
     int &zot = _zot_clock();
 
-    zot = 0;
+    zot = _zot_lifespan_reducer();
 }
 
 static int _added_zot_time()

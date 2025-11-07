@@ -2743,11 +2743,8 @@ static string _extra_passive_effects()
     if (you.clarity())
         passives.emplace_back("clarity");
 
-    if (you.rmut_from_item()
-        || you.get_mutation_level(MUT_MUTATION_RESISTANCE) == 3)
-    {
+    if (you.rmut_from_item())
         passives.emplace_back("resist mutation");
-    }
 
     if (you.spirit_shield())
         passives.emplace_back("guardian spirit");

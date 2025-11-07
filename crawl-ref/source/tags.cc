@@ -3469,54 +3469,6 @@ static void _tag_read_you(reader &th)
     // `you.mutation` and `you.innate_mutation`.
 
 #if TAG_MAJOR_VERSION == 34
-    if (th.getMinorVersion() < TAG_MINOR_STAT_MUT)
-    {
-        // Convert excess mutational stats into base stats.
-        mutation_type stat_mutations[] = { MUT_STRONG, MUT_CLEVER, MUT_AGILE };
-        stat_type stat_types[] = { STAT_STR, STAT_INT, STAT_DEX };
-        for (int j = 0; j < 3; ++j)
-        {
-            mutation_type mut = stat_mutations[j];
-            stat_type stat = stat_types[j];
-            int total_mutation_level = you.temp_mutation[mut] + you.mutation[mut];
-            if (total_mutation_level > 2)
-            {
-                int new_level = max(0, min(you.temp_mutation[mut] - you.mutation[mut], 2));
-                you.temp_mutation[mut] = new_level;
-            }
-            if (you.mutation[mut] > 2)
-            {
-                int excess = you.mutation[mut] - 4;
-                if (excess > 0)
-                    you.base_stats[stat] += excess;
-                you.mutation[mut] = 2;
-            }
-        }
-        mutation_type bad_stat_mutations[] = { MUT_WEAK, MUT_DOPEY, MUT_CLUMSY };
-        for (int j = 0; j < 3; ++j)
-        {
-            mutation_type mut = bad_stat_mutations[j];
-            int level = you.mutation[mut];
-            switch (level)
-            {
-            case 0:
-            case 1:
-                you.mutation[mut] = 0;
-                break;
-            case 2:
-            case 3:
-                you.mutation[mut] = 1;
-                break;
-            default:
-                you.mutation[mut] = 2;
-                break;
-            };
-            if (you.temp_mutation[mut] > 2 && you.mutation[mut] < 2)
-                you.temp_mutation[mut] = 1;
-            else
-                you.temp_mutation[mut] = 0;
-        }
-    }
     you.mutation[MUT_FAST] = you.innate_mutation[MUT_FAST];
     you.mutation[MUT_SLOW] = you.innate_mutation[MUT_SLOW];
     if (you.species != SP_NAGA)
@@ -3538,26 +3490,8 @@ static void _tag_read_you(reader &th)
         // some mutations from this tag are handled by generic cleanup code
         // below.
 
-        if (you.species == SP_GARGOYLE)
-            _clear_mutation(MUT_POISON_RESISTANCE);
-
         if (you.species == SP_FORMICID)
-            you.mutation[MUT_ANTENNAE] = you.innate_mutation[MUT_ANTENNAE] = 3;
-    }
-
-    if (th.getMinorVersion() < TAG_MINOR_SAPROVOROUS
-        && you.species == SP_ONI)
-    {
-        // Remove the innate level of fast metabolism
-        you.mutation[MUT_FAST_METABOLISM] -= 1;
-        you.innate_mutation[MUT_FAST_METABOLISM] -= 1;
-    }
-
-    if (th.getMinorVersion() < TAG_MINOR_ROT_IMMUNITY
-                                        && you.species == SP_VINE_STALKER)
-    {
-        you.mutation[MUT_NO_POTION_HEAL] =
-                you.innate_mutation[MUT_NO_POTION_HEAL] = 2;
+            you.mutation[MUT_ANTENNAE] = you.innate_mutation[MUT_ANTENNAE] = 1;
     }
 
     if (th.getMinorVersion() < TAG_MINOR_DS_CLOUD_MUTATIONS
@@ -3667,12 +3601,6 @@ static void _tag_read_you(reader &th)
         // not safe for SP_MUT_FIX
         _fixup_species_mutations(MUT_HEAT_VULNERABILITY);
     }
-    // not sure this is safe for SP_MUT_FIX, leaving it out for now
-    if (you.species == SP_GREY_DRACONIAN || you.species == SP_GARGOYLE
-        || you.species == SP_GHOUL || you.species == SP_MUMMY)
-    {
-        _fixup_species_mutations(MUT_UNBREATHING);
-    }
 
     if (you.species == SP_FELID && you.has_innate_mutation(MUT_FAST))
         _fixup_species_mutations(MUT_FAST);
@@ -3694,19 +3622,6 @@ static void _tag_read_you(reader &th)
 
     #undef SP_MUT_FIX
 
-    if (th.getMinorVersion() < TAG_MINOR_SPIT_POISON
-        && you.species == SP_NAGA)
-    {
-        if (you.innate_mutation[MUT_SPIT_POISON] < 2)
-        {
-            you.mutation[MUT_SPIT_POISON] =
-                    you.innate_mutation[MUT_SPIT_POISON] = 2;
-        }
-        // cleanup handled below
-        if (you.mutation[MUT_BREATHE_POISON])
-            you.mutation[MUT_SPIT_POISON] = 3;
-    }
-
     // Give nagas constrict, tengu flight, and mummies restoration/enhancers.
     if (th.getMinorVersion() < TAG_MINOR_REAL_MUTS
         && (you.species == SP_NAGA
@@ -3727,12 +3642,6 @@ static void _tag_read_you(reader &th)
     {
         if (you.mutation[MUT_POOR_CONSTITUTION] > 2)
             you.mutation[MUT_POOR_CONSTITUTION] = 2;
-    }
-
-    if (th.getMinorVersion() < TAG_MINOR_BLINK_MUT)
-    {
-        if (you.mutation[MUT_BLINK] > 1)
-            you.mutation[MUT_BLINK] = 1;
     }
 
     if (th.getMinorVersion() < TAG_MINOR_SPIT_POISON_AGAIN)
@@ -3761,29 +3670,6 @@ static void _tag_read_you(reader &th)
             you.innate_mutation[MUT_SPIT_POISON] = 1;
     }
 
-    // Slow regeneration split into two single-level muts:
-    // * Inhibited regeneration (no regen in los of monsters, what Gh get)
-    // * No regeneration (what DDs get)
-    {
-        if (you.species == SP_DEEP_DWARF
-            && (you.mutation[MUT_INHIBITED_REGENERATION] > 0
-                || you.mutation[MUT_NO_REGENERATION] != 1))
-        {
-            you.innate_mutation[MUT_INHIBITED_REGENERATION] = 0;
-            you.mutation[MUT_INHIBITED_REGENERATION] = 0;
-            you.innate_mutation[MUT_NO_REGENERATION] = 1;
-            you.mutation[MUT_NO_REGENERATION] = 1;
-        }
-        else if (you.species == SP_GHOUL
-                 && you.mutation[MUT_INHIBITED_REGENERATION] > 1)
-        {
-            you.innate_mutation[MUT_INHIBITED_REGENERATION] = 1;
-            you.mutation[MUT_INHIBITED_REGENERATION] = 1;
-        }
-        else if (you.mutation[MUT_INHIBITED_REGENERATION] > 1)
-            you.mutation[MUT_INHIBITED_REGENERATION] = 1;
-    }
-
     if (th.getMinorVersion() < TAG_MINOR_YELLOW_DRACONIAN_RACID
         && you.species == SP_YELLOW_DRACONIAN)
     {
@@ -3791,22 +3677,8 @@ static void _tag_read_you(reader &th)
         you.innate_mutation[MUT_ACID_RESISTANCE] = 1;
     }
 
-    if (th.getMinorVersion() < TAG_MINOR_COMPRESS_BADMUTS)
-    {
-        if (you.mutation[MUT_SCREAM] > 2)
-            you.mutation[MUT_SCREAM] = 2;
-
-        if (you.species == SP_VINE_STALKER)
-            _fixup_species_mutations(MUT_NO_POTION_HEAL);
-        else if (you.mutation[MUT_NO_POTION_HEAL] > 2)
-            you.mutation[MUT_NO_POTION_HEAL] = 2;
-    }
-
     if (th.getMinorVersion() < TAG_MINOR_RECOMPRESS_BADMUTS)
     {
-        if (you.mutation[MUT_BERSERK] > 2)
-            you.mutation[MUT_BERSERK] = 2;
-
         if (you.mutation[MUT_TELEPORT] > 2)
             you.mutation[MUT_TELEPORT] = 2;
     }
@@ -3817,7 +3689,6 @@ static void _tag_read_you(reader &th)
         _fixup_species_mutations(MUT_RUGGED_BROWN_SCALES);
         _fixup_species_mutations(MUT_TOUGH_SKIN);
         _fixup_species_mutations(MUT_ROLLPAGE);
-        _fixup_species_mutations(MUT_AWKWARD_TONGUE);
     }
 
     if (th.getMinorVersion() < TAG_MINOR_COMPRESS_MAPPING)
@@ -3835,9 +3706,6 @@ static void _tag_read_you(reader &th)
     const int xl_remaining = you.get_max_xl() - you.experience_level;
     if (xl_remaining < 0)
         adjust_level(xl_remaining);
-
-    if (th.getMinorVersion() < TAG_MINOR_EVOLUTION_XP)
-        set_evolution_mut_xp(you.has_mutation(MUT_DEVOLUTION));
 #endif
 
     count = unmarshallUByte(th);
@@ -4467,7 +4335,7 @@ static void _tag_read_you(reader &th)
         you.duration[DUR_TRANSFORMATION] = 0;
         const mutation_type app = static_cast<mutation_type>(you.attribute[ATTR_UNUSED3]);
         const int levels = you.get_base_mutation_level(app);
-        const int beast_levels = app == MUT_HORNS ? 2 : 3;
+        const int beast_levels = 1;
         // Preserve extra mutation levels acquired after transforming.
         const int extra = max(0, levels - you.get_innate_mutation_level(app)
                                         - beast_levels);
@@ -4514,7 +4382,7 @@ static void _tag_read_you(reader &th)
         {
             const mutation_type app = static_cast<mutation_type>(mut.get_int());
             const int levels = you.get_base_mutation_level(app);
-            const int beast_lvl = app == MUT_TENTACLE_SPIKE ? 3 : 2;
+            const int beast_lvl = app == 1;
             const int innate_lvl = you.get_innate_mutation_level(app);
             // Preserve extra mutation levels acquired after transforming.
             const int extra = max(0, levels - innate_lvl - beast_lvl);

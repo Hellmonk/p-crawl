@@ -177,6 +177,7 @@ bool item_skills(const item_def &item, set<skill_type> &skills);
 // launcher and ammo functions:
 bool is_range_weapon(const item_def &item) PURE;
 bool is_crossbow(const item_def &item) PURE;
+bool is_bow(const item_def &item) PURE;
 bool is_axe(const item_def &item) PURE;
 bool is_polearm(const item_def &item) PURE;
 bool is_short_blade(const item_def &item) PURE;
