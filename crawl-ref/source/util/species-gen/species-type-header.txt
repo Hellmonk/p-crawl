@@ -19,8 +19,8 @@ enum species_type
     SP_HIGH_ELF,
 #endif
     SP_DEEP_ELF,
-#if TAG_MAJOR_VERSION == 34
     SP_SLUDGE_ELF,
+#if TAG_MAJOR_VERSION == 34
     SP_HALFLING,
     SP_HILL_ORC,
 #endif
@@ -62,8 +62,8 @@ enum species_type
 #endif
     SP_FELID,
     SP_OCTOPODE,
-    SP_DJINNI,
 #if TAG_MAJOR_VERSION == 34
+    SP_DJINNI,
     SP_LAVA_ORC,
 #endif
     SP_GARGOYLE,
@@ -71,8 +71,8 @@ enum species_type
     SP_VINE_STALKER,
     SP_BARACHI,
     SP_GNOLL,
-    SP_ARMATAUR,
 #if TAG_MAJOR_VERSION == 34
+    SP_ARMATAUR,
     SP_MAYFLYTAUR,
     SP_METEORAN,
 #endif

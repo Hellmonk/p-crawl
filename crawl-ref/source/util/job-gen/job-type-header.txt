@@ -31,9 +31,7 @@ enum job_type
     JOB_SUMMONER,
     JOB_AIR_ELEMENTALIST,
     JOB_EARTH_ELEMENTALIST,
-#if TAG_MAJOR_VERSION == 34
     JOB_SKALD,
-#endif
     JOB_ALCHEMIST,
     JOB_CHAOS_KNIGHT,
     JOB_SHAPESHIFTER,
@@ -55,5 +53,6 @@ enum job_type
     JOB_CINDER_ACOLYTE,
     JOB_REAVER,
     JOB_FORGEWRIGHT,
+    JOB_HEXER,
 
     // Auto-generated enums start here
