@@ -910,7 +910,7 @@ static bool _acquire_manual(item_def &book)
     {
         const int skl = _skill_rdiv(sk);
 
-        if (skl == 27 || is_useless_skill(sk))
+        if (skl == 9 || is_useless_skill(sk))
             continue;
 
         int w = (skl < 12) ? skl + 3 : max(0, 25 - skl);

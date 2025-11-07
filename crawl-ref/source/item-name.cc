@@ -3492,7 +3492,7 @@ bool is_useless_item(const item_def &item, bool temp, bool ident)
             return useless;
         }
         // If we're here, it's a manual.
-        if (you.skills[item.plus] >= 27)
+        if (you.skills[item.plus] >= 9)
             return true;
         return is_useless_skill((skill_type)item.plus);
 

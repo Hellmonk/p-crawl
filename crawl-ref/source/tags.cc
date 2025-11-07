@@ -3179,7 +3179,7 @@ static void _tag_read_you(reader &th)
     for (int j = 0; j < count; ++j)
     {
         you.skills[j]          = unmarshallUByte(th);
-        ASSERT(you.skills[j] <= 27 || you.wizard);
+        ASSERT(you.skills[j] <= 9 || you.wizard);
 
         you.train[j]    = (training_status)unmarshallByte(th);
         you.train_alt[j]    = (training_status)unmarshallByte(th);

@@ -211,7 +211,7 @@ class Skill:
 
 def parse_skill(s):
     char, colour = get_fields(s, ["min", "max"])
-    return Skill(parse_num(s["min"], 0, 27), parse_num(s["max"], 0, 27))
+    return Skill(parse_num(s["min"], 0, 9), parse_num(s["max"], 0, 9))
 
 # XXX: Based off equipment_slot. See also transform.cc
 ALL_SLOTS = {

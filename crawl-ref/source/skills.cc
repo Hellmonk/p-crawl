@@ -1752,11 +1752,11 @@ static string _stk_weight(species_type species)
 unsigned get_skill_rank(unsigned skill_lev)
 {
     // Translate skill level into skill ranking {dlb}:
-    return (skill_lev <= 7)  ? 0 :
-                           (skill_lev <= 14) ? 1 :
-                           (skill_lev <= 20) ? 2 :
-                           (skill_lev <= 26) ? 3
-                           /* level 27 */    : 4;
+    return (skill_lev <= 3)  ? 0 :
+                           (skill_lev <= 5) ? 1 :
+                           (skill_lev <= 7) ? 2 :
+                           (skill_lev <= 8) ? 3
+                           /* level 9 */    : 4;
 }
 
 /**

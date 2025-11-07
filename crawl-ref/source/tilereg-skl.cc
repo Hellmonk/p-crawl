@@ -243,7 +243,7 @@ void SkillRegion::update()
         if (is_useless_skill(skill))
             continue;
         InventoryTile desc;
-        if (you.skills[skill] >= 27)
+        if (you.skills[skill] >= 9)
             desc.tile = tileidx_skill(skill, TRAINING_MASTERED);
         else if (!you.training[skill])
             desc.tile = tileidx_skill(skill, TRAINING_INACTIVE);
@@ -252,7 +252,7 @@ void SkillRegion::update()
         desc.idx      = idx;
         desc.quantity = you.skills[skill];
 
-        if (!you.can_currently_train[skill] || you.skills[skill] >= 27)
+        if (!you.can_currently_train[skill] || you.skills[skill] >= 9)
             desc.flag |= TILEI_FLAG_INVALID;
 
         m_items.push_back(desc);
