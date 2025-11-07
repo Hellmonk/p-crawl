@@ -1,5 +1,5 @@
 enum: JOB_SKALD_TWO
-name: "Skald"
+name: "testjob"
 short_name: "Sk"
 category: Mage
 category_priority: 80

@@ -4480,7 +4480,7 @@ static tileidx_t _tileidx_player_job_base(const job_type job)
         case JOB_SUMMONER:
             return TILEG_JOB_SUMMONER;
         case JOB_SKALD_TWO:
-            return TILEG_JOB_SKALD;
+            return TILEG_JOB_SKALD_TWO;
         case JOB_AIR_ELEMENTALIST:
             return TILEG_JOB_AIR_ELEMENTALIST;
         case JOB_EARTH_ELEMENTALIST:
