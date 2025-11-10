@@ -4469,8 +4469,6 @@ static tileidx_t _tileidx_player_job_base(const job_type job)
             return TILEG_JOB_BERSERKER;
         case JOB_HUNTER:
             return TILEG_JOB_HUNTER;
-        case JOB_CONJURER:
-            return TILEG_JOB_CONJURER;
         case JOB_HEXER:
             return TILEG_JOB_HEXER;
         case JOB_FIRE_ELEMENTALIST:
@@ -4499,8 +4497,6 @@ static tileidx_t _tileidx_player_job_base(const job_type job)
             return TILEG_JOB_ARTIFICER;
         case JOB_ARCANE_SHOT:
             return TILEG_JOB_ARCANE_SHOT;
-        case JOB_REAVER:
-            return TILEG_JOB_REAVER;
         case JOB_CINDER_ACOLYTE:
             return TILEG_JOB_CINDER_ACOLYTE;
         default:

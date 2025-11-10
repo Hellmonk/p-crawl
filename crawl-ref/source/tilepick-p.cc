@@ -999,14 +999,6 @@ void tilep_job_default(int job, dolls_data *doll)
             parts[TILEP_PART_BOOTS] = TILEP_BOOTS_SHORT_BROWN;
             break;
 
-        case JOB_CONJURER:
-            parts[TILEP_PART_BODY]  = TILEP_BODY_ROBE_MAGENTA;
-            parts[TILEP_PART_HELM]  = TILEP_HELM_WIZARD_GRAY;
-            parts[TILEP_PART_HAND1] = TILEP_HAND1_STAFF_MAGE2;
-            parts[TILEP_PART_HAND2] = TILEP_HAND2_BOOK_RED_DIM;
-            parts[TILEP_PART_BOOTS] = TILEP_BOOTS_SHORT_BROWN;
-            break;
-
         case JOB_HEXER:
             parts[TILEP_PART_BODY]  = TILEP_BODY_ROBE_YELLOW;
             parts[TILEP_PART_HELM]  = TILEP_HELM_WIZARD_GRAY;
