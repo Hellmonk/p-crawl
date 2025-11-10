@@ -3,7 +3,7 @@ equivalent_mons: anaconda
 long_name: amphisbaena-form
 wiz_name: amphisbaena
 description: an enormous two-headed serpent.
-skill: {min: 12, max: 20}
+skill: {min: 4, max: 6}
 talisman: serpent
 melds: [weapon, offhand, body, boots, barding, gloves, cloak]
 resists: {poison: 1}

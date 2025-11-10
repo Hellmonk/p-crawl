@@ -2,7 +2,7 @@ enum: walking_scroll
 equivalent_mons: walking_tome
 short_name: Scroll
 description: a walking scroll.
-skill: {min: 0, max: 7}
+skill: {min: 0, max: 9}
 talisman: inkwell
 melds: [physical]
 resists: {fire: -1}
