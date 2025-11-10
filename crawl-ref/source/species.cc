@@ -313,7 +313,7 @@ namespace species
     bool is_nonliving(species_type species)
     {
         // XXX: move to data?
-        return species == SP_GARGOYLE || species == SP_DJINNI;
+        return species == SP_GARGOYLE;
     }
 
     bool can_swim(species_type species)
@@ -358,10 +358,7 @@ namespace species
      */
     string walking_title(species_type sp)
     {
-        if (sp == SP_ARMATAUR)
-            return "Roll";
-        // XXX: To form 'hopping' and 'hopper' properly
-        else if (sp == SP_BARACHI)
+        if (sp == SP_BARACHI)
             return "Hopp";
         return walking_verb(sp);
     }

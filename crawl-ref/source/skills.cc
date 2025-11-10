@@ -1879,11 +1879,8 @@ string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
                 result = "Kraken";
             else if (species == SP_ONI && skill_rank == 5)
                 result = "Yokozuna";
-            else if (str >= dex && (species == SP_DJINNI || species == SP_POLTERGEIST)
-                        && skill_rank == 5)
-            {
+            else if (str >= dex && species == SP_POLTERGEIST && skill_rank == 5)
                 result = "Weightless Champion";
-            }
             else if (str > intel + dex && species == SP_DEMIGOD
                         && skill_rank == 5)
             {
@@ -1921,9 +1918,7 @@ string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
             break;
 
         case SK_SPELLCASTING:
-            if (species == SP_DJINNI && skill_rank == 5)
-                result = "Wishgranter";
-            else if (species == SP_COGLIN && skill_rank == 5)
+            if (species == SP_COGLIN && skill_rank == 5)
                 result = "Cogmind";
             else if (species == SP_DEMIGOD && skill_rank == 5)
                 result = "Ascendant";
@@ -1974,8 +1969,6 @@ string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
                 result = "Highly Combustible";
             else if (species == SP_GARGOYLE && skill_rank == 5)
                 result = "Molten";
-            else if (species == SP_DJINNI && skill_rank == 5)
-                result = "Smokeless Flame";
             else if (species == SP_POLTERGEIST && skill_rank == 5)
                 result = "Fire Storm";
             break;
@@ -1983,8 +1976,6 @@ string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
         case SK_ICE_MAGIC:
             if (species::is_draconian(species) && skill_rank == 5)
                 result = "Ice Dragon";
-            else if (species == SP_DJINNI && skill_rank == 5)
-                result = "Marid";
             else if (species == SP_POLTERGEIST && skill_rank == 5)
                 result = "Polar Vortex";
             break;
@@ -2023,10 +2014,6 @@ string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
                 result = "Black Lotus";
             else if (species == SP_VINE_STALKER && skill_rank == 5 && god == GOD_DITHMENOS)
                 result = "Nightshade";
-            else if (species == SP_ARMATAUR && skill_rank == 5 && god == GOD_QAZLAL)
-                result = "Rolling Thunder";
-            else if (species == SP_ARMATAUR && skill_rank == 5 && is_good_god(god))
-                result = "Holy Roller";
             else if (species == SP_COGLIN && skill_rank == 5 && god == GOD_FEDHAS)
                 result = "Cobgoblin"; // hm.
             else if (species == SP_REVENANT && skill_rank == 5 && god == GOD_XOM)

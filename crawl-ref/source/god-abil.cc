@@ -4770,7 +4770,7 @@ int get_sacrifice_piety(ability_type sac, bool include_skill)
             // Dj are guaranteed to lose a spell for the first and third sac,
             // which is pretty sad too.
             if (you.species == SP_DEMONSPAWN
-                || you.species == SP_DJINNI && (you.get_mutation_level(MUT_INEXPERIENCED) % 2 == 0))
+                    && (you.get_mutation_level(MUT_INEXPERIENCED) % 2 == 0))
             {
                 piety_gain += 10;
             }
