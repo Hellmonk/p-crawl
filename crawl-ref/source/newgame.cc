@@ -139,8 +139,7 @@ static bool _char_defined(const newgame_def& ng)
 }
 
 static char_choice_restriction _job_allowed(species_type sp, job_type job) {
-    if (job == JOB_DELVER && crawl_state.game_is_sprint())
-        return CC_BANNED;
+
     return job_allowed(sp, job);
 }
 
@@ -1127,19 +1126,19 @@ static job_group jobs_order[] =
     {
         "Adventurer",
         coord_def(1, 0), 20,
-        { JOB_ARTIFICER, JOB_SHAPESHIFTER, JOB_WANDERER, JOB_DELVER, }
+        { JOB_ARTIFICER, JOB_SHAPESHIFTER, JOB_WANDERER }
     },
     {
         "Warrior-mage",
         coord_def(1, 5), 26,
-        { JOB_WARPER, JOB_HEXSLINGER, JOB_ENCHANTER, JOB_REAVER }
+        { JOB_WARPER, JOB_ARCANE_SHOT, JOB_HEXER, JOB_SKALD }
     },
     {
         "Mage",
         coord_def(2, 0), 22,
-        { JOB_HEDGE_WIZARD, JOB_CONJURER, JOB_SUMMONER, JOB_NECROMANCER,
-          JOB_FORGEWRIGHT, JOB_FIRE_ELEMENTALIST, JOB_ICE_ELEMENTALIST,
-          JOB_AIR_ELEMENTALIST, JOB_EARTH_ELEMENTALIST, JOB_ALCHEMIST }
+        { JOB_HEDGE_WIZARD, JOB_SUMMONER, JOB_NECROMANCER,
+          JOB_FIRE_ELEMENTALIST, JOB_ICE_ELEMENTALIST,
+          JOB_AIR_ELEMENTALIST, JOB_EARTH_ELEMENTALIST }
     }
 };
 
@@ -1548,9 +1547,6 @@ void job_group::attach(const newgame_def& ng, const newgame_def& defaults,
     {
         if (job == JOB_UNKNOWN)
             break;
-
-        if (job == JOB_DELVER && ng.type == GAME_TYPE_SPRINT)
-            continue;
 
         if (ng.species != SP_UNKNOWN
             && _job_allowed(ng.species, job) == CC_BANNED)

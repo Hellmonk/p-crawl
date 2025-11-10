@@ -1584,6 +1584,9 @@ int apply_weapon_skill(int damage, skill_type wpn_skill)
     const int sklvl = you.skill(wpn_skill, 1);
     damage += sklvl;
 
+    if (you.has_mutation(MUT_COMBAT_MASTER))
+        damage += sklvl;
+
     if (you.has_mutation(MUT_BRAWLER))
         damage += you.skill(SK_FIGHTING, 1);
 

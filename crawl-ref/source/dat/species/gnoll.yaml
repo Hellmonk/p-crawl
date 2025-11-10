@@ -8,23 +8,22 @@ aptitudes:
   hp: 0
   mp_mod: 0
   wl: 3
+  stealth: 3
 str: 7
 int: 7
 dex: 7
 levelup_stat_frequency: 4
 mutations:
   1:
-    MUT_TREASURE_SENSE: 1
     MUT_FANGS: 1
     MUT_DISTRIBUTED_TRAINING: 1
 recommended_jobs:
   - cinder acolyte
-  - reaver
   - warper
-  - hexslinger
+  - arcane shot
   - shapeshifter
   - wanderer
-  - forgewright
+  - skald
 
 child_name: Pup
 orc_name: Hyenorc

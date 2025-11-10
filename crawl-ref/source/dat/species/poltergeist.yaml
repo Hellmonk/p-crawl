@@ -17,6 +17,7 @@ aptitudes:
   hp: -1
   mp_mod: 0
   wl: 4
+  stealth: 5
   armour: False
   shapeshifting: False
 undead_type: undead
@@ -30,25 +31,19 @@ levelup_stats:
 mutations:
   1:
     MUT_FLOAT: 1
-    MUT_NEGATIVE_ENERGY_RESISTANCE: 3
-    MUT_COLD_RESISTANCE: 1
-    MUT_TORMENT_RESISTANCE: 2
     MUT_FORMLESS: 1
     MUT_TRICKSTER: 1
-    MUT_ACCURSED: 1
-  13:
-    MUT_FORMLESS: 1
+    MUT_HEX_AFFINITY: 2
 fake_mutations:
   - long: You are insubstantial and cannot be petrified, ensnared, or set on fire.
     short: insubstantial
 recommended_jobs:
   - chaos knight
-  - enchanter
-  - hexslinger
+  - hexer
+  - arcane shot
   - necromancer
   - earth elementalist
   - ice elementalist
-  - alchemist
 
 orc_name: Phantasmorc
 walking_verb: Float

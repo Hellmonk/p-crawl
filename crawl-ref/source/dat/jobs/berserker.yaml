@@ -6,17 +6,15 @@ str: 9
 int: -1
 dex: 4
 equipment:
-  - "animal skin"
-weapon_choice: plain
+  - "hand axe"
+  - "scroll of revelation"
 recommended_species:
   - mountain dwarf
   - oni
   - merfolk
   - minotaur
   - gargoyle
-  - armataur
 skills:
-  fighting: 3
-  dodging: 2
-  weapon: 3
+  fighting: 2
+  melee weapons: 1
 create_enum: false

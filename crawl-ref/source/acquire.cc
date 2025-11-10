@@ -536,6 +536,7 @@ static const vector<pair<misc_item_type, int> > _misc_base_weights()
         {MISC_STAFF_OF_LIGHT,       20},
         {MISC_BEGINNER_GUIDE,       20},
         {MISC_HASTE_RUNESTONE,      20},
+        {MISC_CRYSTAL_ANVIL,        20},
     };
     // The player never needs more than one of any of these, but they do stack.
     for (auto &p : choices)
@@ -909,7 +910,7 @@ static bool _acquire_manual(item_def &book)
     {
         const int skl = _skill_rdiv(sk);
 
-        if (skl == 27 || is_useless_skill(sk))
+        if (skl == 9 || is_useless_skill(sk))
             continue;
 
         int w = (skl < 12) ? skl + 3 : max(0, 25 - skl);

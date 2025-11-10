@@ -342,6 +342,7 @@ enum misc_item_type
     MISC_BEGINNER_GUIDE,
     MISC_HASTE_RUNESTONE,
     MISC_MEAT_BONE,
+    MISC_CRYSTAL_ANVIL,
 
     NUM_MISCELLANY,
     MISC_DECK_UNKNOWN = NUM_MISCELLANY,
@@ -391,6 +392,7 @@ const vector<misc_item_type> misc_types =
     MISC_BEGINNER_GUIDE,
     MISC_HASTE_RUNESTONE,
     MISC_MEAT_BONE,
+    MISC_CRYSTAL_ANVIL,
 };
 
 enum missile_type

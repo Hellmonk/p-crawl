@@ -1,7 +1,7 @@
 enum: quill
 description: covered in sharp quills.
 equivalent_mons: player
-skill: {min: 0, max: 7}
+skill: {min: 0, max: 3}
 talisman: quill
 melds: [aux]
 special_damage: 1d2+(6/7)

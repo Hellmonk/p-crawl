@@ -4,10 +4,11 @@ name: Kobold
 difficulty: Intermediate
 difficulty_priority: 90
 aptitudes:
-  xp: 1
+  xp: 0
   hp: -2
   mp_mod: 0
   wl: 3
+  stealth: 4
 size: small
 str: 5
 int: 9
@@ -16,12 +17,12 @@ levelup_stat_frequency: 5
 mutations:
   1:
     MUT_NIGHTSTALKER: 3
+    MUT_PASSIVE_MAPPING: 1
 recommended_jobs:
   - brigand
   - berserker
-  - hexslinger
-  - enchanter
-  - conjurer
+  - arcane shot
+  - hexer
   - earth elementalist
 
 orc_name: Orcobold

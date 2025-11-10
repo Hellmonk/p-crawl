@@ -1,9 +1,9 @@
+TAG_MAJOR_VERSION: 34
 enum: SP_ARMATAUR
 monster: MONS_ARMATAUR
 name: Armataur
 short_name: At
-difficulty: Simple
-difficulty_priority: 30
+difficulty: False
 species_flags:
   - small_torso
   - barding
@@ -20,16 +20,8 @@ levelup_stat_frequency: 4
 mutations:
   1:
     MUT_TOUGH_SKIN: 3
-    MUT_ROLLPAGE: 1
     MUT_ARMOURED_TAIL: 2
     MUT_DEFORMED: 1
-  7:
-    MUT_ROLLPAGE: 1
-recommended_jobs:
-  - fighter
-  - berserker
-  - warper
-  - hedge wizard
 
 altar_action: curl up in front of
 child_name: Pup

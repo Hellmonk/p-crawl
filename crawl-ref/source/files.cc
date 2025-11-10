@@ -3363,13 +3363,7 @@ static bool _convert_obsolete_species()
                 "if you want to keep it as a Lava Orc.");
         }
         change_species_to(SP_MOUNTAIN_DWARF);
-        // No need for conservation
-        you.innate_mutation[MUT_CONSERVE_SCROLLS]
-                                = you.mutation[MUT_CONSERVE_SCROLLS] = 0;
-        // This is not an elegant way to deal with lava, but at this point the
-        // level isn't loaded so we can't check the grid features. In
-        // addition, even if the player isn't over lava, they might still get
-        // trapped.
+
         fly_player(100);
         return true;
     }

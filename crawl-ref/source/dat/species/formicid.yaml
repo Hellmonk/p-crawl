@@ -8,10 +8,11 @@ species_flags: # n.b. ants have hair
   - no_bones
   - no_ears
 aptitudes:
-  xp: 1
+  xp: 0
   hp: 0
   mp_mod: 0
   wl: 4
+  stealth: 4
 str: 12
 int: 7
 dex: 9
@@ -31,10 +32,8 @@ fake_mutations:
 recommended_jobs:
   - fighter
   - hunter
-  - hexslinger
+  - arcane shot
   - earth elementalist
-  - alchemist
-  - forgewright
 
 child_name: Larva
 orc_name: Orcmicid

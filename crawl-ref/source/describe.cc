@@ -1320,8 +1320,6 @@ static string _skill_target_desc(skill_type skill, int scaled_target,
 static void _append_skill_target_desc(string &description, skill_type skill,
                                         int scaled_target)
 {
-    if (!you.has_mutation(MUT_DISTRIBUTED_TRAINING))
-        description += "\n    " + _skill_target_desc(skill, scaled_target, 100);
     if (you.training[skill] > 0 && you.training[skill] < 100)
     {
         description += "\n    " + _skill_target_desc(skill, scaled_target,
@@ -2850,24 +2848,19 @@ string get_item_description(const item_def &item,
             if (item.base_type == OBJ_ARMOUR
                 || item.base_type == OBJ_WEAPONS)
             {
-                if (you.has_mutation(MUT_ARTEFACT_ENCHANTING))
+                if (is_unrandom_artefact(item))
                 {
-                    if (!item.is_identified())
-                        description << "\nIt is an ancient artefact.";
-                    else if (is_unrandom_artefact(item)
-                             || (item.base_type == OBJ_ARMOUR
+                    description << "\nIt is a unique artefact.";
+                    description << "\nThis ancient artefact cannot be changed "
+                        "by magic or mundane means.";
+                }
+                else if ((item.base_type == OBJ_ARMOUR
                                  && item.plus >= armour_max_enchant(item))
                              || (item.base_type == OBJ_WEAPONS
                                  && item.plus >= MAX_WPN_ENCHANT))
-                    {
-                        description << "\nEnchanting this artefact any further "
-                            "is beyond even your skills.";
-                    }
-                }
-                else
                 {
-                    description << "\nThis ancient artefact cannot be changed "
-                        "by magic or mundane means.";
+                        description << "\nEnchanting this artefact any further "
+                            "is impossible.";
                 }
             }
             // Randart jewellery has already displayed this line.
@@ -3569,11 +3562,6 @@ static vector<command_type> _allowed_actions(const item_def& item)
     }
     actions.push_back(CMD_DROP);
     actions.push_back(CMD_ADJUST_INVENTORY);
-    if (!you.has_mutation(MUT_DISTRIBUTED_TRAINING)
-        && _is_below_training_target(item, false))
-    {
-        actions.push_back(CMD_SET_SKILL_TARGET);
-    }
 
     if (!crawl_state.game_is_tutorial())
         actions.push_back(CMD_INSCRIBE_ITEM);

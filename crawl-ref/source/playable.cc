@@ -34,8 +34,6 @@ static inline vector<job_type> all_jobs()
         const auto job = static_cast<job_type>(i);
         if (job_is_removed(job))
             continue;
-        if (job == JOB_DELVER && crawl_state.game_is_sprint())
-            continue;
         jobs.push_back(job);
     }
     return jobs;

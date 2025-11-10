@@ -7,10 +7,11 @@ genus: Elf
 difficulty: Simple
 difficulty_priority: 40
 aptitudes:
-  xp: -1
+  xp: 0
   hp: -2
-  mp_mod: 2
+  mp_mod: 4
   wl: 4
+  stealth: 3
 str: 5
 int: 12
 dex: 10
@@ -19,17 +20,17 @@ levelup_stats:
   - int
 mutations:
   1:
-    MUT_MANA_REGENERATION: 1
+    MUT_SPELLCASTING_EXPERT: 1
+    MUT_BIG_BRAIN: 1
+    MUT_WEAK: 1
+    MUT_MASTER_ARCHER: 1
 recommended_jobs:
   - hedge wizard
-  - conjurer
   - summoner
-  - forgewright
   - necromancer
   - fire elementalist
   - ice elementalist
   - air elementalist
   - earth elementalist
-  - alchemist
 
 orc_name: Deep Orc

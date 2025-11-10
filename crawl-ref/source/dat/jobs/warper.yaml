@@ -7,28 +7,20 @@ str: 3
 int: 5
 dex: 4
 spells:
-  - SPELL_BLINK
-  - SPELL_BECKONING
-  - SPELL_TELEPORT_OTHER
-  - SPELL_PILEDRIVER
+  - SPELL_PHASE_KNIFE
   - SPELL_ELECTRIC_CHARGE
+  - SPELL_FORCE_QUAKE
+  - SPELL_BLINK
 equipment:
-  - "leather armour"
   - "scroll of blinking"
+  - "scroll of revelation"
   - "dart ego:disjunction q:4"
-weapon_choice: plain
 recommended_species:
   - felid
   - spriggan
-  - armataur
   - draconian
   - coglin
 skills:
-  fighting: 2
-  throwing: 1
-  armour: 1
-  dodging: 2
-  spellcasting: 2
-  translocations: 3
-  weapon: 2
+  spellcasting: 1
+  translocations: 2
 create_enum: false

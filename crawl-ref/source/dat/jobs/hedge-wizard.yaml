@@ -7,28 +7,21 @@ str: 2
 int: 6
 dex: 4
 spells:
-  - SPELL_MAGIC_DART
-  - SPELL_BLINK
+  - SPELL_KINETIC_GRAPNEL
+  - SPELL_FIREBALL
+  - SPELL_SHOCK
+  - SPELL_FREEZE
   - SPELL_CALL_IMP
-  - SPELL_GRAVE_CLAW
-  - SPELL_MEPHITIC_CLOUD
 equipment:
-  - "dagger"
-  - "robe"
+  - "ring of wizardry"
   - "hat"
-  - "potion of magic"
+  - "scroll of revelation"
 recommended_species:
   - deep elf
   - naga
   - draconian
   - octopode
   - human
-  - djinni
 skills:
-  dodging: 2
-  stealth: 2
   spellcasting: 3
-  translocations: 1
-  summonings: 1
-  necromancy: 1
 create_enum: false

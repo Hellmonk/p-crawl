@@ -450,7 +450,7 @@ bool Note::hidden() const
     if (type == NOTE_GAIN_SKILL || type == NOTE_LOSE_SKILL)
     {
         return !(Options.note_all_skill_levels
-                 || second <= 27 && Options.note_skill_levels[second]
+                 || second <= 9 && Options.note_skill_levels[second]
                  || Options.note_skill_max && _is_highest_skill(first));
     }
     // Hide gems being shattered by default.

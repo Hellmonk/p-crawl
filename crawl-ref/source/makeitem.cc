@@ -1785,6 +1785,7 @@ misc_item_type get_misc_item_type(int force_type, bool exclude)
             MISC_BEGINNER_GUIDE,
             MISC_HASTE_RUNESTONE,
             MISC_MEAT_BONE,
+            MISC_CRYSTAL_ANVIL,
         };
     }
     if (choices.size())

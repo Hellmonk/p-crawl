@@ -1700,10 +1700,10 @@ void game_options::reset_options()
     autoinscriptions.clear();
     note_skill_levels.reset();
     note_skill_levels.set(1);
-    note_skill_levels.set(5);
-    note_skill_levels.set(10);
-    note_skill_levels.set(15);
-    note_skill_levels.set(27);
+    note_skill_levels.set(3);
+    note_skill_levels.set(6);
+    note_skill_levels.set(8);
+    note_skill_levels.set(9);
 
     clear_cset_overrides();
 
@@ -4091,7 +4091,7 @@ bool game_options::read_custom_option(opt_parse_state &state, bool runscripts)
         for (unsigned i = 0; i < thesplit.size(); ++i)
         {
             int num = atoi(thesplit[i].c_str());
-            if (num > 0 && num <= 27)
+            if (num > 0 && num <= 9)
                 note_skill_levels.set(num, !state.minus_equal());
             else
             {

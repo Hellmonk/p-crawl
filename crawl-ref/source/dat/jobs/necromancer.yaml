@@ -6,25 +6,19 @@ str: 0
 int: 7
 dex: 5
 spells:
-  - SPELL_SOUL_SPLINTER
-  - SPELL_GRAVE_CLAW
-  - SPELL_VAMPIRIC_DRAINING
+  - SPELL_AGONISING_TOUCH
   - SPELL_ANIMATE_DEAD
-  - SPELL_CURSE_OF_AGONY
+  - SPELL_GRAVE_CLAW
 equipment:
   - "dagger"
-  - "robe"
-  - "potion of magic"
+  - "scroll of revelation"
 recommended_species:
   - deep elf
-  - djinni
   - mountain dwarf
   - demonspawn
   - mummy
   - revenant
 skills:
-  dodging: 2
-  stealth: 2
-  spellcasting: 2
-  necromancy: 4
+  spellcasting: 1
+  necromancy: 2
 create_enum: false

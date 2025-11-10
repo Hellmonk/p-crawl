@@ -4770,7 +4770,7 @@ int get_sacrifice_piety(ability_type sac, bool include_skill)
             // Dj are guaranteed to lose a spell for the first and third sac,
             // which is pretty sad too.
             if (you.species == SP_DEMONSPAWN
-                || you.species == SP_DJINNI && (you.get_mutation_level(MUT_INEXPERIENCED) % 2 == 0))
+                    && (you.get_mutation_level(MUT_INEXPERIENCED) % 2 == 0))
             {
                 piety_gain += 10;
             }
@@ -5446,7 +5446,7 @@ void ru_draw_out_power()
     int mp_inc = div_rand_round(you.piety(), 48);
     mp_inc += roll_dice(div_rand_round(you.piety(), 40), 4);
     inc_mp(mp_inc);
-    drain_player(30, false, true);
+    drain_player(5, false, true);
 }
 
 // Damage scales with XL amd piety.
@@ -5706,7 +5706,7 @@ bool ru_apocalypse()
     mpr("You reveal the great annihilating truth to your foes!");
     noisy(30, you.pos());
     apply_area_visible(_apply_apocalypse, you.pos());
-    drain_player(100, false, true);
+    drain_player(20, false, true);
     return true;
 }
 

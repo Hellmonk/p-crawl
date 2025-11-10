@@ -1097,13 +1097,6 @@ int torment_player(const actor *attacker, torment_source_type taux)
         {
             hploss /= 2;
         }
-        if (you.has_mutation(MUT_TORMENT_RESISTANCE))
-            hploss /= 2;
-#if TAG_MAJOR_VERSION == 34
-        // Save compatibility for old demonspawn mutation -- now deterministic
-        if (you.has_mutation(MUT_STOCHASTIC_TORMENT_RESISTANCE))
-            hploss /= 2;
-#endif
     }
 
     // Kiku protects you from torment to a degree.

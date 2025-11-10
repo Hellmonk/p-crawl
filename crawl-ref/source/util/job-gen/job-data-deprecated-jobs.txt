@@ -3,16 +3,6 @@
     "AK", "Abyssal Knight",
 } },
 
-{ JOB_SKALD, {
-    "Sk", "Skald",
-    0, 0, 0,
-    { },
-    { },
-    { },
-    weapon_choice::none,
-    { },
-} },
-
 { JOB_DEATH_KNIGHT, {
     "DK", "Death Knight",
     0, 0, 0,

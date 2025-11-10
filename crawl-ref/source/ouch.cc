@@ -234,7 +234,7 @@ int check_your_resists(int hurted, beam_type flavour, string source,
         if (doEffects)
         {
             // drain_player handles the messaging here
-            drain_player(original, true);
+            drain_player(1 + original / 7, true);
         }
         break;
 
@@ -515,8 +515,7 @@ bool drain_player(int power, bool announce_full, bool ignore_protection, bool qu
 
     if (power > 0)
     {
-        const int mhp = 1 + div_rand_round(power * get_real_hp(false, false),
-                750);
+        const int mhp = power;
         you.hp_max_adj_temp -= mhp;
         you.hp_max_adj_temp = max(-(get_real_hp(false, false) - 1),
                 you.hp_max_adj_temp);
@@ -526,7 +525,6 @@ bool drain_player(int power, bool announce_full, bool ignore_protection, bool qu
 
         if (!quiet)
             mpr("You feel drained.");
-        xom_is_stimulated(15);
         return true;
     }
 
@@ -817,8 +815,7 @@ static void _powered_by_pain(int dam)
     const int level = you.get_mutation_level(MUT_POWERED_BY_PAIN);
 
     if (level > 0
-        && (random2(dam) > 4 + div_rand_round(you.experience_level, 4)
-            || dam >= you.hp_max / 2))
+        && (random2(dam) > 6 || dam >= you.hp_max / 2))
     {
         switch (random2(4))
         {
@@ -828,7 +825,7 @@ static void _powered_by_pain(int dam)
             if (you.magic_points < you.max_magic_points)
             {
                 mpr("You focus on the pain.");
-                int mp = roll_dice(3, 2 + 3 * level);
+                int mp = roll_dice(1, 2 + level);
                 canned_msg(MSG_GAIN_MAGIC);
                 inc_mp(mp);
                 break;
@@ -837,7 +834,7 @@ static void _powered_by_pain(int dam)
         }
         case 2:
             mpr("You focus on the pain.");
-            potionlike_effect(POT_MIGHT, level * 20);
+            potionlike_effect(POT_MIGHT, level * 10);
             break;
         case 3:
             mpr("You focus on the pain.");

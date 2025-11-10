@@ -34,6 +34,7 @@
 #include "invent.h"
 #include "item-prop.h"
 #include "items.h"
+#include "item-use.h"
 #include "level-state-type.h"
 #include "libutil.h"
 #include "losglobal.h"
@@ -701,6 +702,32 @@ static bool _acid_vat(dist *target)
     if (ret == spret::abort)
         return false;
 
+    return true;
+}
+
+static bool _crystal_anvil()
+{
+    item_def *target = nullptr;
+    auto success = use_an_item_menu(target, OPER_ANY, OSEL_ENCHANTABLE_ANY, "Enchant which item?",
+                       [=](){return true;});
+
+    if (success == OPER_NONE)
+        return false;
+
+    if (!target)
+        return false;
+
+    bool worked = false;
+
+    if (target->base_type == OBJ_ARMOUR && enchant_armour(*target, false))
+        worked = true;
+    else if (target->base_type == OBJ_WEAPONS && enchant_weapon(*target, false))
+        worked = true;
+
+    if (!worked)
+        return false;
+
+    you.redraw_armour_class = true;
     return true;
 }
 
@@ -1601,6 +1628,16 @@ bool evoke_item(item_def& item, dist *preselect)
                 return false;
             break;
 
+        case MISC_CRYSTAL_ANVIL:
+            if (_crystal_anvil())
+            {
+                expend_xp_evoker(item.sub_type);
+                mpr("The anvil dulls.");
+            }
+            else
+                return false;
+            break;
+
         case MISC_BUTTERFLY_JAR:
             if (_butterfly_jar())
             {
@@ -1825,7 +1862,11 @@ bool evoke_item(item_def& item, dist *preselect)
             break;
         }
         if (did_work && !unevokable)
+        {
             count_action(CACT_EVOKE, item.sub_type, OBJ_MISCELLANY);
+            if (you.get_mutation_level(MUT_DEMONIC_MAGIC) == 3)
+                do_demonic_magic(9, 3);
+        }
         break;
 
     default:

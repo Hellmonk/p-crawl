@@ -9,11 +9,12 @@ species_flags:
   - draconian
   - no_hair
 aptitudes:
-  xp: -1
-  hp: 1
+  xp: 0
+  hp: 0
   mp_mod: 0
   wl: 3
   armour: False
+  stealth: 2
 str: 10
 int: 8
 dex: 6
@@ -24,6 +25,7 @@ mutations:
     MUT_ARMOURED_TAIL: 1
   7:
     MUT_COLD_RESISTANCE: 1
+    MUT_ICE_AFFINITY: 2
 fake_mutations:
   - long: You can breathe waves of cold which freeze foes solid.
     short: glacial breath

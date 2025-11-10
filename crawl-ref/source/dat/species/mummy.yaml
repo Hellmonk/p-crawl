@@ -6,10 +6,11 @@ difficulty_priority: 20
 species_flags:
   - no_blood
 aptitudes:
-  xp: -1
-  hp: 0
-  mp_mod: 0
+  xp: 0
+  hp: 1
+  mp_mod: 2
   wl: 5
+  stealth: 2
   shapeshifting: False
 undead_type: undead
 str: 11
@@ -18,18 +19,13 @@ dex: 7
 levelup_stat_frequency: 5
 mutations:
   1:
-    MUT_NEGATIVE_ENERGY_RESISTANCE: 3
-    MUT_COLD_RESISTANCE: 1
-    MUT_TORMENT_RESISTANCE: 2
-    MUT_NO_DRINK: 1
     MUT_HEAT_VULNERABILITY: 1
     MUT_FAITH: 1
     MUT_NECRO_ENHANCER: 1
-    MUT_ACCURSED: 1
+    MUT_POOR_APTITUDE: 1
 recommended_jobs:
   - cinder acolyte
   - hedge wizard
-  - conjurer
   - necromancer
   - ice elementalist
   - summoner

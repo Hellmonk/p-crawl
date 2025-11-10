@@ -579,12 +579,8 @@ static void _enter_water(dungeon_feature_type old_feat,
 
 bool player_swim_faction()
 {
-    if (you.free_action_available() == FACT_SWIM
-        && feat_is_water(env.grid(you.pos()))
-        && you.ground_level())
-    {
+    if (you.free_action_available() == FACT_SWIM && you.in_water())
         return true;
-    }
 
     return false;
 }
@@ -1100,13 +1096,6 @@ static int _player_bonus_regen()
     if (you.duration[DUR_POWERED_BY_DEATH])
         rr += you.props[POWERED_BY_DEATH_KEY].get_int() * 100;
 
-    // Rampage healing grants a variable regen boost while active.
-    if (you.get_mutation_level(MUT_ROLLPAGE) > 1
-        && you.duration[DUR_RAMPAGE_HEAL])
-    {
-        rr += you.props[RAMPAGE_HEAL_KEY].get_int() * 65;
-    }
-
     return rr;
 }
 
@@ -1179,9 +1168,6 @@ int player_mp_regen()
         return 0;
 
     int regen_amount = 7 + you.max_magic_points / 2;
-
-    if (you.get_mutation_level(MUT_MANA_REGENERATION))
-        regen_amount *= 2;
 
     // Amulets and artefacts.
     vector<item_def*> eq = you.equipment.get_slot_items(SLOT_ALL_EQUIPMENT, false, true);
@@ -1309,8 +1295,6 @@ int player_res_steam(bool temp, bool items)
     int res = 0;
     const int rf = player_res_fire(temp, items);
 
-    res += you.get_mutation_level(MUT_STEAM_RESISTANCE) * 2;
-
     if (items)
     {
         const item_def *body_armour = you.body_armour();
@@ -1385,12 +1369,6 @@ int player_res_corrosion(bool temp, bool items)
 
     if (have_passive(passive_t::resist_corrosion))
         return 1;
-
-    if (you.get_mutation_level(MUT_ACID_RESISTANCE)
-        || you.get_mutation_level(MUT_YELLOW_SCALES) >= 3)
-    {
-        return 1;
-    }
 
     if (items)
     {
@@ -1621,28 +1599,12 @@ int player_prot_life(bool temp, bool items)
 {
     int pl = 0;
 
-    // piety-based rN doesn't count as temporary (XX why)
-    if (you_worship(GOD_SHINING_ONE))
-        pl += piety_rank(you.piety()) / 2;
-
-    pl += cur_form(temp)->res_neg();
-
     // completely stoned, unlike statue which has some life force
     if (temp && you.petrified())
         pl += 3;
 
-    if (items)
-    {
-        // pearl dragon counts
-        const item_def *body_armour = you.body_armour();
-        if (body_armour)
-            pl += armour_type_prop(body_armour->sub_type, ARMF_RES_NEG);
-
-        pl += you.wearing(OBJ_STAVES, STAFF_DEATH);
-    }
-
-    // undead/demonic power
-    pl += you.get_mutation_level(MUT_NEGATIVE_ENERGY_RESISTANCE, temp);
+    if (you.undead_state() != US_ALIVE)
+        pl = 3;
 
     pl = min(3, pl);
 
@@ -1655,14 +1617,6 @@ int player_movement_speed(bool check_terrain, bool temp)
     return 10;
 
     int mv = get_form()->base_move_speed;
-
-    if (check_terrain && feat_is_water(env.grid(you.pos())))
-    {
-        if (you.get_mutation_level(MUT_NIMBLE_SWIMMER) >= 2)
-            mv -= 4;
-        else if (you.in_water() && you.slow_in_water())
-            mv += 6; // Wading through water is very slow.
-    }
 
     // moving on liquefied ground, or while maintaining the
     // effect takes longer
@@ -1677,18 +1631,6 @@ int player_movement_speed(bool check_terrain, bool temp)
         mv += 2 + min(div_rand_round(you.piety(), 20), 8);
     else if (player_under_penance(GOD_CHEIBRIADOS))
         mv += 2 + min(div_rand_round(you.piety_max[GOD_CHEIBRIADOS], 20), 8);
-
-    // Mutations: -2, -3, -4, unless innate and shapechanged.
-    if (int fast = you.get_mutation_level(MUT_FAST))
-        mv -= fast + 1;
-
-    if (int slow = you.get_mutation_level(MUT_SLOW)
-                   + you.has_mutation(MUT_FROG_LEGS)
-                   + you.has_mutation(MUT_CONSTRICTING_TAIL) * 2)
-    {
-        mv *= 10 + slow * 2;
-        mv /= 10;
-    }
 
     if (you.has_bane(BANE_LETHARGY))
         mv = mv * 13 / 10;
@@ -1789,10 +1731,13 @@ static int _player_base_evasion_modifiers()
     evbonus += you.wearing_ego(OBJ_ARMOUR, SPARM_EVASION);
 
     // mutations
-    evbonus += you.get_mutation_level(MUT_GELATINOUS_BODY);
+    evbonus += you.get_mutation_level(MUT_GELATINOUS_BODY) * 10;
 
     if (you.has_mutation(MUT_TENGU_FLIGHT))
         evbonus += 15;
+
+    if (you.has_mutation(MUT_SLIMY_EVASION))
+        evbonus += 12;
 
     // transformation penalties/bonuses not covered by size alone:
     if (you.get_mutation_level(MUT_SLOW_REFLEXES))
@@ -1853,12 +1798,12 @@ static int _player_apply_evasion_multipliers(int prescaled_ev, const int scale)
     if (you.duration[DUR_PETRIFYING] || you.caught())
         prescaled_ev /= 2;
 
-    // Merfolk get a 25% evasion bonus near water.
+    // Merfolk get a 50% evasion bonus near water.
     if (feat_is_water(env.grid(you.pos()))
         && you.get_mutation_level(MUT_NIMBLE_SWIMMER) >= 2)
     {
-        const int ev_bonus = max(2 * scale, prescaled_ev / 4);
-        return prescaled_ev + ev_bonus;
+        const int ev_bonus = max(2 * scale, prescaled_ev / 2);
+        prescaled_ev += ev_bonus;
     }
 
     if (you.is_constricted())
@@ -2272,9 +2217,9 @@ static void _handle_breath_recharge(int exp)
     }
 
     if (!you.props.exists(DRACONIAN_BREATH_RECHARGE_KEY))
-        you.props[DRACONIAN_BREATH_RECHARGE_KEY] = 50;
+        you.props[DRACONIAN_BREATH_RECHARGE_KEY] = 110;
 
-    int loss = div_rand_round(exp, 1);
+    int loss = exp;
     if (you.form == transformation::dragon)
         loss *= 2;
     you.props[DRACONIAN_BREATH_RECHARGE_KEY].get_int() -= loss;
@@ -2769,9 +2714,6 @@ void level_change(bool skip_attribute_increase)
             redraw_screen();
             update_screen();
 #endif
-            if (!skip_attribute_increase)
-                species_stat_gain(you.species);
-
             switch (you.species)
             {
             case SP_NAGA:
@@ -2779,6 +2721,16 @@ void level_change(bool skip_attribute_increase)
                 {
                     mprf(MSGCH_INTRINSIC_GAIN, "Your skin feels tougher.");
                     you.redraw_armour_class = true;
+                }
+                break;
+
+            case SP_DEMIGOD:
+                if (you.experience_level == 7)
+                {
+                    mutation_type mut = random_choose(MUT_DIVINE_STRENGTH,
+                                                      MUT_DIVINE_DEXTERITY,
+                                                      MUT_DIVINE_INTELLECT);
+                    perma_mutate(mut, 1, "divine heritage");
                 }
                 break;
 
@@ -2907,29 +2859,6 @@ void level_change(bool skip_attribute_increase)
                 break;
             }
 
-            case SP_COGLIN:
-            {
-                switch (you.experience_level)
-                {
-                    case 3:
-                    case 7:
-                    case 11:
-                        coglin_announce_gizmo_name();
-                        break;
-
-                    case COGLIN_GIZMO_XL:
-                    {
-                        mpr("You feel a burst of inspiration! You are finally "
-                            "ready to make a one-of-a-kind gizmo!");
-                        mprf("(press <w>%c</w> on the <w>%s</w>bility menu to create your gizmo)",
-                                get_talent(ABIL_INVENT_GIZMO, false).hotkey,
-                                command_to_string(CMD_USE_ABILITY).c_str());
-                    }
-                    break;
-                }
-                break;
-            }
-
             case SP_REVENANT:
                 if (new_exp == 3)
                     _revenant_spell_gift();
@@ -3052,7 +2981,7 @@ int player_stealth()
     if (you.berserk() || you.get_mutation_level(MUT_NO_STEALTH) || you.backlit())
         return 0;
 
-    int stealth = 2;
+    int stealth = species_apt(SK_STEALTH, you.species);
 
     stealth += you.skill(SK_STEALTH);
 
@@ -3132,6 +3061,26 @@ bool dur_expiring(duration_type dur)
     }
 
     return value <= duration_expire_point(dur);
+}
+
+void random_gnoll_skillup()
+{
+    vector<skill_type> possibles;
+    for (int i = SK_FIRST_SKILL; i < NUM_SKILLS; ++i)
+    {
+        const skill_type sk = static_cast<skill_type>(i);
+        if (is_removed_skill(sk) || you.skills[sk] >= MAX_SKILL_LEVEL)
+            continue;
+
+        possibles.push_back(sk);
+    }
+    if (possibles.empty())
+    {
+        mpr("There are no more skills for you to train.");
+        return;
+    }
+    shuffle_array(possibles);
+    you.skills[possibles[0]] += 1;
 }
 
 static void _display_char_status(int value, const char *fmt, ...)
@@ -3834,11 +3783,7 @@ int get_real_mp(bool include_items)
 /// Does the player currently regenerate hp? Used for resting.
 bool player_regenerates_hp()
 {
-    return !regeneration_is_inhibited()
-#if TAG_MAJOR_VERSION == 34
-    && !you.has_mutation(MUT_NO_REGENERATION)
-#endif
-    ;
+    return !regeneration_is_inhibited();
 }
 
 bool player_regenerates_mp()
@@ -4547,14 +4492,7 @@ void reset_rampage_heal_duration()
 
 void apply_rampage_heal()
 {
-    if (!you.has_mutation(MUT_ROLLPAGE))
-        return;
-
-    reset_rampage_heal_duration();
-
-    const int heal = you.props[RAMPAGE_HEAL_KEY].get_int();
-    if (heal < RAMPAGE_HEAL_MAX)
-        you.props[RAMPAGE_HEAL_KEY] = heal + 1;
+    return;
 }
 
 bool invis_allowed(bool quiet, string *fail_reason, bool temp)
@@ -5175,7 +5113,6 @@ bool player::airborne() const
 bool player::rampaging() const
 {
     return you.unrand_equipped(UNRAND_SEVEN_LEAGUE_BOOTS)
-            || you.has_mutation(MUT_ROLLPAGE)
             || you.form == transformation::spider
             || actor::rampaging();
 }
@@ -5629,39 +5566,50 @@ int player::skill(skill_type sk, int scale, bool real, bool temp) const
     switch (sk)
     {
     case SK_ENCHANTMENTS:
-        level = min(level + scan_artefacts(ARTP_ENHANCE_ENCH) * scale, 27 * scale);
+        level = level + scan_artefacts(ARTP_ENHANCE_ENCH) * scale;
+        level = level + you.get_mutation_level(MUT_ENCHANTMENT_AFFINITY) * scale;
         break;
 
     case SK_NECROMANCY:
-        level = min(level + scan_artefacts(ARTP_ENHANCE_NECRO) * scale, 27 * scale);
+        level = level + scan_artefacts(ARTP_ENHANCE_NECRO) * scale;
         break;
 
     case SK_HEXES:
-        level = min(level + scan_artefacts(ARTP_ENHANCE_HEXES) * scale, 27 * scale);
+        level = level + scan_artefacts(ARTP_ENHANCE_HEXES) * scale;
+        level = level + you.get_mutation_level(MUT_HEX_AFFINITY) * scale;
         break;
 
     case SK_SUMMONINGS:
-        level = min(level + scan_artefacts(ARTP_ENHANCE_SUMM) * scale, 27 * scale);
+        level = level + scan_artefacts(ARTP_ENHANCE_SUMM) * scale;
+        level = level + you.get_mutation_level(MUT_SUMMONING_AFFINITY) * scale;
         break;
 
     case SK_TRANSLOCATIONS:
-        level = min(level + scan_artefacts(ARTP_ENHANCE_TLOC) * scale, 27 * scale);
+        level = level + scan_artefacts(ARTP_ENHANCE_TLOC) * scale;
         break;
 
     case SK_FIRE_MAGIC:
-        level = min(level + scan_artefacts(ARTP_ENHANCE_FIRE) * scale, 27 * scale);
+        level = level + scan_artefacts(ARTP_ENHANCE_FIRE) * scale;
+        level = level + you.get_mutation_level(MUT_FIRE_AFFINITY) * scale;
         break;
 
     case SK_ICE_MAGIC:
-        level = min(level + scan_artefacts(ARTP_ENHANCE_ICE) * scale, 27 * scale);
+        level = level + scan_artefacts(ARTP_ENHANCE_ICE) * scale;
+        level = level + you.get_mutation_level(MUT_ICE_AFFINITY) * scale;
         break;
 
     case SK_AIR_MAGIC:
-        level = min(level + scan_artefacts(ARTP_ENHANCE_AIR) * scale, 27 * scale);
+        level = level + scan_artefacts(ARTP_ENHANCE_AIR) * scale;
+        level = level + you.get_mutation_level(MUT_AIR_AFFINITY) * scale;
         break;
 
     case SK_EARTH_MAGIC:
-        level = min(level + scan_artefacts(ARTP_ENHANCE_EARTH) * scale, 27 * scale);
+        level = level + scan_artefacts(ARTP_ENHANCE_EARTH) * scale;
+        level = level + you.get_mutation_level(MUT_EARTH_AFFINITY) * scale;
+        break;
+
+    case SK_EVOCATIONS:
+        level = level + you.get_mutation_level(MUT_EVOCATIONS_AFFINITY) * scale;
         break;
 
     case SK_SHAPESHIFTING:
@@ -5669,6 +5617,12 @@ int player::skill(skill_type sk, int scale, bool real, bool temp) const
 
     default:
         break;
+    }
+
+    if (you.has_mutation(MUT_SINGLE_MINDED) && you.props.exists(TROLL_FOCUS_SKILL_KEY)
+        && static_cast<skill_type>(you.props[TROLL_FOCUS_SKILL_KEY].get_int()) != sk)
+    {
+        level = min(level, 3 * scale);
     }
 
     if (level > MAX_SKILL_LEVEL * scale)
@@ -5712,9 +5666,8 @@ int sanguine_armour_bonus()
 
 int stone_body_armour_bonus()
 {
-    // max 20
-    return 200 + 100 * you.experience_level * 2 / 5
-               + 100 * max(0, you.experience_level - 7) * 2 / 5;
+    // max 15
+    return 200 + 100 * you.experience_level / 2;
 }
 
 /**
@@ -5829,7 +5782,7 @@ vector<mutation_ac_changes> all_mutation_ac_changes = {
     ,mutation_ac_changes(MUT_THIN_METALLIC_SCALES,      TWO_THREE_FOUR)
     ,mutation_ac_changes(MUT_YELLOW_SCALES,             TWO_THREE_FOUR)
     ,mutation_ac_changes(MUT_SHARP_SCALES,              ONE_TWO_THREE)
-    ,mutation_ac_changes(MUT_IRON_FUSED_SCALES,         {5, 5, 5})
+    ,mutation_ac_changes(MUT_IRON_FUSED_SCALES,         {4, 4, 4})
     ,mutation_ac_changes(MUT_ROUGH_BLACK_SCALES,        {6,6,6})
 };
 
@@ -6368,7 +6321,7 @@ int player::res_negative_energy(bool intrinsic_only) const
 
 bool player::res_torment() const
 {
-    if (you.get_mutation_level(MUT_TORMENT_RESISTANCE) >= 2)
+    if (you.undead_state() != US_ALIVE)
         return true;
 
     return get_form()->res_neg() == 3
@@ -8583,6 +8536,8 @@ bool ench_triggers_trickster(enchant_type ench)
         case ENCH_WRETCHED:
         case ENCH_DEEP_SLEEP:
         case ENCH_VEXED:
+        case ENCH_STUN:
+        case ENCH_POISON:
             return true;
 
         default:
@@ -8592,7 +8547,7 @@ bool ench_triggers_trickster(enchant_type ench)
 
 static int _trickster_max_boost()
 {
-    return 6 + you.experience_level * 4 / 5;
+    return 4 + you.experience_level * 2 / 3;
 }
 
 // Increment AC boost when applying a negative status effect to a monster.
@@ -8604,7 +8559,7 @@ void trickster_trigger(const monster& victim, enchant_type ench)
     if (!you.can_see(victim) || !you.see_cell_no_trans(victim.pos()) || victim.friendly())
         return;
 
-    const int min_bonus = 3 + you.experience_level / 6;
+    const int min_bonus = 2 + you.experience_level / 6;
 
     if (!you.props.exists(TRICKSTER_POW_KEY))
     {
@@ -8613,12 +8568,10 @@ void trickster_trigger(const monster& victim, enchant_type ench)
     }
 
     // Start the bonus off at meaningful level, but give less for each effect
-    // beyond that (and make it extra-hard to stack up the maximum bonus)
+    // beyond that
     int& bonus = you.props[TRICKSTER_POW_KEY].get_int();
     if (bonus < min_bonus)
         bonus = min_bonus;
-    else if (bonus >= 15)
-        bonus += random2(2);
     else
         bonus += 1;
 
@@ -8644,7 +8597,7 @@ int trickster_bonus()
 
 int enkindle_max_charges()
 {
-    return 3 + you.experience_level * 3 / 20;
+    return 3;
 }
 
 void maybe_harvest_memory(const monster& victim)

@@ -1,9 +1,9 @@
+TAG_MAJOR_VERSION: 34
 enum: SP_DJINNI
 monster: MONS_DJINNI
 name: Djinni
 short_name: Dj
-difficulty: Intermediate
-difficulty_priority: 70
+difficulty: False
 species_flags:
   - no_feet
   - no_blood
@@ -12,6 +12,7 @@ aptitudes:
   hp: -1
   mp_mod: 0
   wl: 4
+  stealth: 3
 str: 7
 int: 9
 dex: 8
@@ -30,13 +31,6 @@ mutations:
 fake_mutations:
   - long: You are immune to sickness and miasma.
     short: sickness immunity
-recommended_jobs:
-  - conjurer
-  - warper
-  - hedge wizard
-  - fire elementalist
-  - ice elementalist
-  - air elementalist
 
 orc_name: Orcfreeti
 walking_verb: Float

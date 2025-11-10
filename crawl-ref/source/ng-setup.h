@@ -23,3 +23,4 @@ void initial_dungeon_setup();
 
 void give_throwing_ammo(int n);
 void give_items_skills(const newgame_def& ng);
+void make_random_artificer_evocable();

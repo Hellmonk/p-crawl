@@ -10,6 +10,7 @@ aptitudes:
   hp: 0
   mp_mod: 0
   wl: 3
+  stealth: 2
 can_swim: true
 str: 8
 int: 7
@@ -19,12 +20,12 @@ mutations:
   1:
     MUT_MERTAIL: 1
     MUT_NIMBLE_SWIMMER: 2
+    MUT_POLE_MASTER: 1
 recommended_jobs:
   - gladiator
   - berserker
   - shapeshifter
   - summoner
   - ice elementalist
-  - alchemist
 
 orc_name: Merforc

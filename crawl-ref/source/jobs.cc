@@ -130,13 +130,14 @@ void give_job_skills(job_type job)
     {
         skill_type skill = entry.first;
         int amount = entry.second;
+
+        if (you.has_mutation(MUT_DISTRIBUTED_TRAINING))
+            amount++;
+
         if (skill == SK_WEAPON)
         {
             const item_def *weap = you.weapon();
             skill = weap ? item_attack_skill(*weap) : SK_UNARMED_COMBAT;
-            //XXX: WTF?
-            if (you.has_mutation(MUT_NO_GRASPING) && job == JOB_FIGHTER)
-                amount += 2;
         }
         you.skills[skill] += amount;
     }

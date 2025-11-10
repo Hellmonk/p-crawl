@@ -1,19 +1,19 @@
-enum: JOB_ENCHANTER
-name: "Enchanter"
+enum: JOB_HEXER
+name: "Hexer"
+short_name: Hx
 category: Warrior-mage
 category_priority: 80
 str: 0
 int: 7
 dex: 5
 spells:
-  - SPELL_HIBERNATION
   - SPELL_CONFUSING_TOUCH
-  - SPELL_TUKIMAS_DANCE
-  - SPELL_GLOOM
+  - SPELL_HIBERNATION
+  - SPELL_MEPHITIC_CLOUD
+  - SPELL_PETRIFY
 equipment:
   - "dagger plus:1"
-  - "robe"
-  - "potion of invisibility q:2"
+  - "scroll of revelation"
 recommended_species:
   - deep elf
   - felid
@@ -22,9 +22,7 @@ recommended_species:
   - naga
   - poltergeist
 skills:
-  dodging: 2
-  spellcasting: 2
-  hexes: 3
-  stealth: 3
-  weapon: 1
+  hexes: 1
+  stealth: 1
+  melee weapons: 1
 create_enum: false

@@ -1851,8 +1851,7 @@ public:
                             || you.has_mutation(MUT_WEAKNESS_STINGER)
                             ? 6 : 0;
 
-        return base + max(0, you.get_mutation_level(MUT_ARMOURED_TAIL) - 1) * 4
-                    + you.get_mutation_level(MUT_WEAKNESS_STINGER);
+        return base + max(0, you.get_mutation_level(MUT_ARMOURED_TAIL) - 1) * 4;
     }
 
     string get_name() const override
@@ -1865,7 +1864,7 @@ public:
 
     int get_brand() const override
     {
-        if (you.get_mutation_level(MUT_WEAKNESS_STINGER) == 3)
+        if (you.get_mutation_level(MUT_WEAKNESS_STINGER))
             return SPWPN_WEAKNESS;
 
         return you.get_mutation_level(MUT_STINGER) ? SPWPN_SPELLVAMP : SPWPN_NORMAL;
@@ -1950,7 +1949,7 @@ public:
         const int fang_damage = damage;
 
         if (you.get_mutation_level(MUT_ANTIMAGIC_BITE))
-            return fang_damage + 5;
+            return fang_damage + div_rand_round(you.get_hit_dice(), 3);
 
         if (you.get_mutation_level(MUT_ACIDIC_BITE))
             return fang_damage + (random ? roll_dice(2, 4) : 4);
@@ -2027,13 +2026,13 @@ public:
 
     int get_damage(bool random) const override
     {
-        const int max = you.get_mutation_level(MUT_DEMONIC_TOUCH) * 4;
+        const int max = you.get_mutation_level(MUT_DEMONIC_TOUCH) * 12;
         return damage + (random ? random2(max + 1) : max);
     }
 
     int get_brand() const override
     {
-        if (you.get_mutation_level(MUT_DEMONIC_TOUCH) == 3)
+        if (you.get_mutation_level(MUT_DEMONIC_TOUCH))
             return SPWPN_VULNERABILITY;
 
         return SPWPN_NORMAL;
@@ -2346,11 +2345,8 @@ bool melee_attack::player_aux_apply(unarmed_attack_type atk)
                     && !defender->is_summoned()
                     && !defender->is_firewood())
                 {
-                    int drain = random2(damage_done * 2) + 1;
-                    // Augment mana drain--1.25 "standard" effectiveness at 0 mp,
-                    // 0.25 at mana == max_mana
-                    drain = (int)((1.25 - you.magic_points / you.max_magic_points)
-                                  * drain);
+                    int drain = 1 + random2(2);
+
                     if (drain)
                     {
                         mpr("You feel invigorated.");
@@ -4186,7 +4182,7 @@ void melee_attack::emit_foul_stench()
 
 static int _minotaur_headbutt_chance()
 {
-    return 23 + you.experience_level;
+    return 50;
 }
 
 void melee_attack::do_minotaur_retaliation()
@@ -4756,29 +4752,25 @@ bool spellclaws_attack(int spell_level)
 
     melee_attack attk(&you, best_victim);
 
-    // If an attack would take more time than casting a spell, reduce its damage
-    // proportionally.
     int mult = 100;
-    int delay = you.attack_delay().roll();
-    if (delay > 10)
-        mult = 1000 / delay;
 
     if (you.duration[DUR_ENKINDLED])
     {
         attk.to_hit = AUTOMATIC_HIT;
-        mult += mult * spellclaws_level_mult[spell_level - 1] / 100;
+        mult += mult * 2;
     }
 
     attk.dmg_mult = mult - 100;
 
     // Save name first, in case the monster dies from the attack.
     string targ_name = best_victim->name(DESC_THE);
+    int hd = best_victim->get_hit_dice();
     attk.launch_attack_set();
 
     if (you.duration[DUR_ENKINDLED] && you.hp < you.hp_max)
     {
         mprf("You rip the existence from %s to re-knit yourself!", targ_name.c_str());
-        you.heal(attk.total_damage_done * 3 / 4);
+        you.heal(1 + random2(hd));
     }
 
     return true;

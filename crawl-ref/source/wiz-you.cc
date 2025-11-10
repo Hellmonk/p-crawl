@@ -427,7 +427,7 @@ void wizard_set_skill_level(skill_type skill)
                                  old_amount);
     double amount = prompt_for_float(prompt.c_str());
 
-    if (amount < 0 || amount > 27)
+    if (amount < 0 || amount > 9)
     {
         canned_msg(MSG_OK);
         return;
@@ -435,7 +435,7 @@ void wizard_set_skill_level(skill_type skill)
 
     set_skill_level(skill, amount);
 
-    if (amount == 27)
+    if (amount == 9)
     {
         you.train[skill] = TRAINING_DISABLED;
         you.train_alt[skill] = TRAINING_DISABLED;
@@ -459,8 +459,8 @@ void wizard_set_all_skills()
         canned_msg(MSG_OK);
     else
     {
-        if (amount > 27)
-            amount = 27;
+        if (amount > 9)
+            amount = 9;
 
         for (skill_type sk = SK_FIRST_SKILL; sk < NUM_SKILLS; ++sk)
         {
@@ -469,7 +469,7 @@ void wizard_set_all_skills()
 
             set_skill_level(sk, amount);
 
-            if (amount == 27)
+            if (amount == 9)
             {
                 you.train[sk] = TRAINING_DISABLED;
                 you.training[sk] = 0;

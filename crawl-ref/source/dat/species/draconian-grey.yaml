@@ -9,11 +9,12 @@ species_flags:
   - draconian
   - no_hair
 aptitudes:
-  xp: -1
-  hp: 1
+  xp: 0
+  hp: 0
   mp_mod: 0
   wl: 3
   armour: False
+  stealth: 2
 can_swim: true
 str: 10
 int: 8
@@ -28,7 +29,8 @@ mutations:
   1:
     MUT_COLD_BLOODED: 1
     MUT_ARMOURED_TAIL: 1
-  14:
+  7:
     MUT_IRON_FUSED_SCALES: 1
+    MUT_EARTH_AFFINITY: 2
 
 orc_name: Grey Orconian

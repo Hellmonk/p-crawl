@@ -8,10 +8,11 @@ difficulty_priority: 40
 species_flags:
   - no_feet
 aptitudes:
-  xp: -1
-  hp: -3
-  mp_mod: 1
+  xp: 0
+  hp: -4
+  mp_mod: 2
   wl: 6
+  stealth: 6
   shields: False
 size: little
 str: 4
@@ -25,6 +26,7 @@ mutations:
   1:
     MUT_NO_GRASPING: 1
     MUT_NO_ARMOUR: 1
+    MUT_GOOD_DODGING: 1
     MUT_MULTILIVED: 1
     MUT_FANGS: 1
     MUT_SHAGGY_FUR: 1
@@ -32,11 +34,10 @@ mutations:
     MUT_CLAWS: 1
 recommended_jobs:
   - berserker
-  - enchanter
+  - hexer
   - shapeshifter
   - ice elementalist
   - air elementalist
-  - conjurer
   - summoner
 
 altar_action: sit before

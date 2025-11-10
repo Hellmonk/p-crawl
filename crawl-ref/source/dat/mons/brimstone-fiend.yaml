@@ -6,13 +6,13 @@ exp: 2027
 holiness: [demonic]
 will: invuln
 attacks:
- - {type: hit, damage: 25}
  - {type: hit, damage: 15}
  - {type: hit, damage: 15}
-hd: 18
+ - {type: hit, damage: 15}
+hd: 10
 hp_10x: 990
 ac: 15
-ev: 6
+ev: 0
 spells: brimstone_fiend
 shout: roar
 intelligence: human

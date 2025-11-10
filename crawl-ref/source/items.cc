@@ -3961,6 +3961,7 @@ colour_t item_def::miscellany_colour() const
         case MISC_LIGHTNING_ROD:
         case MISC_LANTERN_OF_SHADOWS:
         case MISC_BEGINNER_GUIDE:
+        case MISC_CRYSTAL_ANVIL:
             return LIGHTGREY;
         case MISC_PHIAL_OF_FLOODS:
             return LIGHTBLUE;

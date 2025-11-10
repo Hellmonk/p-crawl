@@ -1041,6 +1041,7 @@ static string misc_type_name(int type)
     case MISC_BEGINNER_GUIDE:            return "beginner guide";
     case MISC_HASTE_RUNESTONE:           return "runestone of haste";
     case MISC_MEAT_BONE:                 return "meat bone";
+    case MISC_CRYSTAL_ANVIL:             return "crystal anvil";
 
     default:
         return "buggy miscellaneous item";
@@ -3436,11 +3437,7 @@ bool is_useless_item(const item_def &item, bool temp, bool ident)
             return you.spirit_shield(false) || you.has_mutation(MUT_HP_CASTING);
 
         case AMU_REGENERATION:
-            return
-#if TAG_MAJOR_VERSION == 34
-                   you.get_mutation_level(MUT_NO_REGENERATION) > 0 ||
-#endif
-                    (temp && regeneration_is_inhibited());
+            return temp && regeneration_is_inhibited();
 
         case AMU_MANA_REGENERATION:
             return !you.max_magic_points;
@@ -3491,7 +3488,7 @@ bool is_useless_item(const item_def &item, bool temp, bool ident)
             return useless;
         }
         // If we're here, it's a manual.
-        if (you.skills[item.plus] >= 27)
+        if (you.skills[item.plus] >= 9)
             return true;
         return is_useless_skill((skill_type)item.plus);
 

@@ -347,7 +347,7 @@ static void _apply_post_zap_effect(spell_type spell, coord_def target)
     switch (spell)
     {
     case SPELL_KISS_OF_DEATH:
-        drain_player(20, true, true);
+        drain_player(10, true, true);
         break;
     case SPELL_BOMBARD:
         if (coinflip())
@@ -371,6 +371,11 @@ static int _skill_power(spell_type spell)
                 power += you.skill(spell_type2skill(bit), 2);
         power /= skillcount;
     }
+
+    // deep elves get extra power from spellcasting skill
+    if (you.get_mutation_level(MUT_SPELLCASTING_EXPERT))
+        power += you.skill(SK_SPELLCASTING) / 2;
+
     return power + you.skill(SK_SPELLCASTING);
 }
 
@@ -409,7 +414,7 @@ int calc_spell_power(spell_type spell)
         power -= 1 * you.props[HORROR_PENALTY_KEY].get_int();
 
     if (you.duration[DUR_ENKINDLED] && spell_can_be_enkindled(spell))
-        power = (power + (you.experience_level)) * 3 / 2;
+        power = power * 3 / 2;
 
     if (you.has_mutation(MUT_DIVINE_INTELLECT))
         power *= 2;
@@ -1997,11 +2002,8 @@ spret your_spells(spell_type spell, int powc, bool actual_spell,
 
         const int demonic_magic = you.get_mutation_level(MUT_DEMONIC_MAGIC);
 
-        if ((demonic_magic == 3 && evoked_wand)
-            || (demonic_magic > 0 && (actual_spell || you.divine_exegesis)))
-        {
-            do_demonic_magic(spell_difficulty(spell) * 6, demonic_magic);
-        }
+        if (demonic_magic > 0 && (actual_spell || you.divine_exegesis))
+            do_demonic_magic(spell_difficulty(spell) + 3, demonic_magic);
 
         if (you.props.exists(BATTLESPHERE_KEY)
             && (actual_spell || you.divine_exegesis)

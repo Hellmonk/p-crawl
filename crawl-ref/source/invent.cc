@@ -540,6 +540,8 @@ string no_selectables_message(int item_selector)
     case OSEL_QUIVER_ACTION:
     case OSEL_QUIVER_ACTION_FORCE:
         return "You don't have any quiverable items.";
+    case OSEL_ENCHANTABLE_ANY:
+        return "You aren't wearing anything that can be enchanted.";
     }
 
     return "You aren't carrying any such object.";
@@ -1235,6 +1237,10 @@ bool item_is_selected(const item_def &i, int selector)
 
     case OSEL_MARKED_ITEMS:
         return i.flags & ISFLAG_MARKED_FOR_MENU;
+
+    case OSEL_ENCHANTABLE_ANY:
+        return item_is_equipped(i) && (is_enchantable_weapon(i, true)
+                                        || is_enchantable_armour(i, true));
 
     default:
         return false;

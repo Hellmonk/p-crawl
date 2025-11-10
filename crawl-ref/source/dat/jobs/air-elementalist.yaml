@@ -8,22 +8,19 @@ int: 7
 dex: 5
 spells:
   - SPELL_SHOCK
-  - SPELL_DISCHARGE
+  - SPELL_MEPHITIC_CLOUD
   - SPELL_SWIFTNESS
-  - SPELL_AIRSTRIKE
+  - SPELL_BOLT_OF_INACCURACY
 equipment:
   - "robe"
-  - "potion of magic"
+  - "scroll of revelation"
 recommended_species:
   - deep elf
   - tengu
   - draconian
   - naga
   - vine stalker
-  - djinni
 skills:
-  dodging: 2
-  stealth: 2
-  spellcasting: 2
-  air magic: 3
+  spellcasting: 1
+  air magic: 2
 create_enum: false

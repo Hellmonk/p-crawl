@@ -6,10 +6,11 @@ str: 6
 int: 0
 dex: 6
 equipment:
+  - "trident"
   - "leather armour"
   - "helmet"
+  - "javelin q:12"
   - "throwing net q:3"
-weapon_choice: good
 recommended_species:
   - mountain dwarf
   - merfolk
@@ -18,8 +19,7 @@ recommended_species:
   - coglin
   - vine stalker
 skills:
-  fighting: 2
-  throwing: 2
-  dodging: 3
-  weapon: 3
+  throwing: 1
+  dodging: 1
+  melee weapons: 1
 create_enum: false

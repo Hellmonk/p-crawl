@@ -160,6 +160,13 @@ void player_did_deliberate_movement()
     shake_off_sticky_flame();
 }
 
+static bool _player_ponderous()
+{
+    return  you.has_mutation(MUT_SLOW)
+            || you.wearing_ego(OBJ_ARMOUR, SPARM_PONDEROUSNESS);
+
+}
+
 static bool _cancel_ice_move()
 {
     vector<string> effects;
@@ -656,11 +663,8 @@ static spret _rampage_forward(coord_def move)
     ASSERT(!crawl_state.game_is_arena());
 
     const bool enhanced = you.unrand_equipped(UNRAND_SEVEN_LEAGUE_BOOTS);
-    const bool rolling = you.has_mutation(MUT_ROLLPAGE);
-    const string noun = enhanced ? "stride" :
-                         rolling ? "roll" : "rampage";
-    const string verb = enhanced ? "striding" :
-                         rolling ? "rolling" : "rampaging";
+    const string noun = enhanced ? "stride" : "rampage";
+    const string verb = enhanced ? "striding" : "rampaging";
 
     if (crawl_state.is_replaying_keys())
     {
@@ -940,12 +944,6 @@ void move_player_action(coord_def move)
     monster* targ_monst = monster_at(targ);
     if (fedhas_passthrough(targ_monst) && you.is_motile())
     {
-        // Moving on a plant takes 1.5 x normal move delay. We
-        // will print a message about it but only when moving
-        // from open space->plant (hopefully this will cut down
-        // on the message spam).
-        you.time_taken = div_rand_round(you.time_taken * 3, 2);
-
         monster* current = monster_at(you.pos());
         if (!current || !fedhas_passthrough(current))
         {
@@ -1128,7 +1126,7 @@ void move_player_action(coord_def move)
                  DESC_THE).c_str());
             destroy_wall(targ);
             noisy(6, you.pos());
-            drain_player(15, false, true);
+            drain_player(1, false, true);
             dug = true;
         }
 
@@ -1143,7 +1141,7 @@ void move_player_action(coord_def move)
         _apply_move_time_taken();
 
         // stun the player after moving if there was a monster onscreen before moving
-        if (you.is_nervous() && you.wearing_ego(OBJ_ARMOUR, SPARM_PONDEROUSNESS))
+        if (you.is_nervous() && _player_ponderous())
             you.stun(&you);
         else if (you.duration[DUR_FROZEN] || you.attribute[ATTR_SWIFTNESS] < 0)
             you.stun(&you);
@@ -1265,7 +1263,7 @@ void move_player_action(coord_def move)
 
     you.apply_berserk_penalty = !attacking;
 
-    if (rampaged && !you.has_mutation(MUT_ROLLPAGE))
+    if (rampaged)
         did_god_conduct(DID_HASTY, 1, true);
 
     if (you_worship(GOD_WU_JIAN) && !attacking && !dug)

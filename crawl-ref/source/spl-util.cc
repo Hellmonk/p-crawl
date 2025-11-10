@@ -1988,26 +1988,7 @@ bool spell_has_variable_range(spell_type spell)
 
 bool spell_can_be_enkindled(spell_type spell)
 {
-    switch (spell)
-    {
-        // Veh-supported spells that aren't actually blasty.
-        case SPELL_BATTLESPHERE:
-        case SPELL_SPELLSPARK_SERVITOR:
-        case SPELL_MEPHITIC_CLOUD:
-            return false;
-
-        // Non-Veh-supported spells (for reasons of Kiku overlap) that are still
-        // sufficiently destructive for revenants.
-        case SPELL_GRAVE_CLAW:
-        case SPELL_VAMPIRIC_DRAINING:
-        case SPELL_BORGNJORS_VILE_CLUTCH:
-        case SPELL_DISPEL_UNDEAD:
-            return true;
-
-        // Everything else uses the standard destructive list.
-        default:
-            return vehumet_supports_spell(spell);
-    }
+    return vehumet_supports_spell(spell);
 }
 
 /* How to regenerate this:

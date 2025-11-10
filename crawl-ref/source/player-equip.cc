@@ -125,7 +125,7 @@ int count = 0;
     case SLOT_HELMET:
         if (you.has_mutation(MUT_FORMLESS))
             NO_SLOT("You don't have a head.")
-        else if (you.has_mutation(MUT_NO_ARMOUR))
+        else if (you.species == SP_OCTOPODE || you.has_mutation(MUT_NO_ARMOUR))
             NO_SLOT("That is much too large for your head.")
         else if (you.form == transformation::serpent)
             return 2;
@@ -139,8 +139,7 @@ int count = 0;
         return count;
 
     case SLOT_GLOVES:
-        if (you.has_mutation(MUT_QUADRUMANOUS))
-            ++count;
+        NO_SLOT("Gloves were removed, sorry.")
 
         if (you.has_mutation(MUT_FORMLESS))
             NO_SLOT("You don't have hands.")
@@ -162,6 +161,8 @@ int count = 0;
     case SLOT_BOOTS:
         if (species::wears_barding(you.species) || you.has_mutation(MUT_FORMLESS))
             NO_SLOT("You don't have any feet!")
+        else if (you.has_mutation(MUT_MERTAIL))
+            NO_SLOT("Boots would make your tail itchy.")
         else if (player_size <= SIZE_LITTLE)
             NO_SLOT(make_stringf("Those are too big for your %s.", you.foot_name(true).c_str()))
         else if (player_size >= SIZE_LARGE)
@@ -187,6 +188,8 @@ int count = 0;
         NO_SLOT("You can't fit into that!")
 
     case SLOT_CLOAK:
+        NO_SLOT("Cloaks were removed, sorry.")
+
         // If octopodes are allowed to wear bardings, then surely they can also
         // get a cloak, too.
         if (you.form == transformation::sphinx && !you.has_mutation(MUT_NO_ARMOUR))
@@ -217,14 +220,15 @@ int count = 0;
     }
 
     case SLOT_AMULET:
+        NO_SLOT("Amulets were removed, sorry.")
+
         if (you.has_mutation(MUT_NO_JEWELLERY))
             NO_SLOT("You can't wear amulets.")
 
         return 1;
 
     case SLOT_GIZMO:
-        if (you.species != SP_COGLIN)
-            NO_SLOT("You lack an exoframe to install that in.")
+            NO_SLOT("removed.")
 
         return 1;
 
@@ -1663,11 +1667,8 @@ void equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
         add_bane(NUM_BANES, "Equipping an artefact");
     }
 
-    if (proprt[ARTP_RAMPAGING] && msg && !unmeld
-        && !you.has_mutation(MUT_ROLLPAGE))
-    {
+    if (proprt[ARTP_RAMPAGING] && msg && !unmeld)
         mpr("You feel ready to rampage towards enemies.");
-    }
 
     if (proprt[ARTP_ARCHMAGI] && msg && !unmeld)
     {
@@ -1731,7 +1732,7 @@ void unequip_artefact_effect(item_def &item,  bool *show_msgs, bool meld)
         mpr("You feel strangely numb.");
 
     if (proprt[ARTP_DRAIN] && !meld)
-        drain_player(150, true, true);
+        drain_player(15, true, true);
 
     if (is_unrandom_artefact(item))
     {
@@ -2122,8 +2123,7 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
             break;
 
         case SPARM_RAMPAGING:
-            if (!you.has_mutation(MUT_ROLLPAGE))
-                mpr("You feel ready to rampage towards enemies.");
+            mpr("You feel ready to rampage towards enemies.");
             break;
 
         case SPARM_INFUSION:
@@ -2330,14 +2330,7 @@ static void _handle_regen_item_equip(const item_def& item)
                                          ? "amulet"
                                          : lowercase_string(equip_slot_name(eq_slot, true));
 
-#if TAG_MAJOR_VERSION == 34
-    if (regen_hp && !regen_mp && you.get_mutation_level(MUT_NO_REGENERATION))
-    {
-        mprf("The %s feel%s cold and inert.", item_name.c_str(),
-             plural ? "" : "s");
-        return;
-    }
-#endif
+
     if (regen_mp && !regen_hp && !player_regenerates_mp())
     {
         mprf("The %s feel%s cold and inert.", item_name.c_str(),

@@ -19,30 +19,22 @@ static void _give_wanderer_weapon(skill_type wpn_skill, bool good_item)
 {
     if (wpn_skill == SK_THROWING)
     {
-        // good_item always assigns 7 ammo: 1-4 curare, the rest javelins
+        // good_item always assigns 20 ammo: 4-7 curare, the rest javelins
         if (good_item)
         {
-            const int num_curare = 1 + random2(4);
+            const int num_curare = 4 + random2(4);
             newgame_make_item(OBJ_MISSILES, MI_DART, num_curare,
                               0, SPMSL_CURARE);
 
             // Gives large rocks for large species, 2x boomerangs for small
-            const int num_javelins = 7 - num_curare;
+            const int num_javelins = 20 - num_curare;
             give_throwing_ammo(num_javelins);
         }
-        // Otherwise, we get 7-15 poisoned darts or 6-10 boomerangs.
+        // Otherwise, we get 25-30 boomerangs.
         else
         {
-            if (one_chance_in(3))
-            {
-                newgame_make_item(OBJ_MISSILES, MI_BOOMERANG,
-                              4 + roll_dice(2, 3), 0, SPMSL_NORMAL);
-            }
-            else
-            {
-                newgame_make_item(OBJ_MISSILES, MI_DART, 5 + roll_dice(2, 5),
-                              0, SPMSL_POISONED);
-            }
+            newgame_make_item(OBJ_MISSILES, MI_BOOMERANG,
+                              25 + random2(6), 0, SPMSL_NORMAL);
         }
         return; // don't give a dagger as well
     }
@@ -56,7 +48,7 @@ static void _give_wanderer_weapon(skill_type wpn_skill, bool good_item)
     switch (wpn_skill)
     {
     case SK_MELEE_WEAPONS:
-        sub_type = WPN_SHORT_SWORD;
+        sub_type = WPN_MACE;
         break;
 
     case SK_RANGED_WEAPONS:
@@ -186,6 +178,20 @@ static bool _wanderer_is_useful_skill(skill_type skill,
     if (skill == sk1 || skill == sk2)
         return false;
 
+    // Don't give melee weapons and ranged weapons to the same character
+    if (skill == SK_MELEE_WEAPONS && (sk1 == SK_RANGED_WEAPONS
+        || sk2 == SK_RANGED_WEAPONS))
+    {
+        return false;
+    }
+
+    // Don't give melee weapons and ranged weapons to the same character
+    if (skill == SK_RANGED_WEAPONS && (sk1 == SK_MELEE_WEAPONS
+        || sk2 == SK_MELEE_WEAPONS))
+    {
+        return false;
+    }
+
     // Don't give a shield with good staves / ranged weapons
     // (except for formicids, obviously)
     if (!you.has_mutation(MUT_QUADRUMANOUS)
@@ -229,7 +235,7 @@ static skill_type _wanderer_role_skill_select(bool defense,
 
     const skill_type defense_skills[] =
         { SK_FIGHTING, SK_DODGING, SK_ARMOUR, SK_SHIELDS, SK_EVOCATIONS,
-          SK_STEALTH, SK_THROWING };
+          SK_STEALTH, SK_THROWING, SK_INVOCATIONS };
 
     int defense_size = ARRAYSZ(defense_skills);
 
@@ -243,8 +249,8 @@ static skill_type _wanderer_role_skill_select(bool defense,
     {
         if (defense)
             skill = _apt_weighted_choice(defense_skills, defense_size);
-        // reduce the chance of a spell felid a bit
-        else if (you.has_mutation(MUT_NO_GRASPING) && one_chance_in(3))
+        // reduce the chance of spells a bit
+        else if (one_chance_in(3))
             skill = _apt_weighted_choice(physical_skills, physical_size);
         else
             skill = _apt_weighted_choice(offense_skills, offense_size);
@@ -262,51 +268,13 @@ static skill_type _wanderer_role_skill_select(bool defense,
 static void _setup_starting_skills(skill_type sk1, skill_type sk2,
                                    skill_type sk3, int levels)
 {
-    ASSERT(levels > 4);
-
-    int martial = 0;
-    int magical = 0;
-    set<skill_type> skills = {sk1, sk2, sk3};
-
-
     // give a baseline of our points away to our "role" skills, if they weren't
     // blanked by fallback, and decide the weight of martial and magical skills
-    you.skills[sk1] = 1;
+    you.skills[sk1] = 2;
+    you.skills[sk2] = 1;
+    you.skills[sk3] = 1;
     levels -= 1;
-    for (auto sk : skills)
-    {
-        if (sk <= SK_LAST_MUNDANE)
-            martial++;
-        else if (sk > SK_LAST_MUNDANE && sk <= SK_LAST_MAGIC)
-            magical++;
-        you.skills[sk]++;
-        levels--;
-    }
 
-    skill_type selected = SK_NONE;
-
-    do
-    {
-        selected = random_choose_weighted(8, sk1,
-                                          5, sk2,
-                                          5, sk3,
-                                          1 + 2 * martial, SK_FIGHTING,
-                                          1 + martial, SK_ARMOUR,
-                                          2 + magical / 2, SK_DODGING,
-                                          1, SK_THROWING,
-                                          2, SK_STEALTH,
-                                          1 + magical, SK_SPELLCASTING,
-                                          2, SK_EVOCATIONS,
-                                          1, SK_INVOCATIONS,
-                                          2, SK_SHAPESHIFTING);
-
-        if (!is_useless_skill(selected) && you.skills[selected] < 5)
-        {
-            you.skills[selected]++;
-            levels--;
-        }
-    }
-    while (levels > 0);
 }
 
 /**
@@ -425,7 +393,7 @@ static vector<spell_type> _give_wanderer_minor_spells(skill_type skill)
     vector<spell_type> spells;
     theme_book_spells(discipline_1, discipline_2,
                       exact_level_spell_filter,
-                      IT_SRC_NONE, 2, spells);
+                      IT_SRC_NONE, 1, spells);
     library_add_spells(spells, true);
     return spells;
 }
@@ -440,27 +408,12 @@ static void _good_potion_or_scroll()
 {
     // vector of weighted {object_class_type, subtype} pairs
     // xxx: could we use is_useless_item here? (not without dummy items...?)
-    const int ally_scr_type = item_for_set(ITEM_SET_ALLY_SCROLLS);
     const vector<pair<pair<object_class_type, int>, int>> options = {
-        { { OBJ_SCROLLS, SCR_FEAR }, 4 },
-        { { OBJ_SCROLLS, ally_scr_type }, 1 },
+        { { OBJ_SCROLLS, SCR_REVELATION }, 4 },
         { { OBJ_SCROLLS, SCR_BLINKING },
-            you.stasis() ? 0 : 4 },
+            you.stasis() ? 0 : 8 },
         { { OBJ_POTIONS, POT_HEAL_WOUNDS },
-            (you.has_mutation(MUT_NO_DRINK)
-             || you.get_mutation_level(MUT_NO_POTION_HEAL) >= 2) ? 0 : 2 },
-        { { OBJ_POTIONS, POT_HASTE },
-            (you.has_mutation(MUT_NO_DRINK)
-             || you.stasis()) ? 0 : 2 },
-        { { OBJ_POTIONS, POT_BERSERK_RAGE },
-            (you.stasis()
-             || you.is_lifeless_undead(false)) ? 0 : 2 },
-        { { OBJ_POTIONS, POT_MIGHT },
-            you.has_mutation(MUT_NO_DRINK) ? 0 : 1 },
-        { { OBJ_POTIONS, POT_BRILLIANCE },
-            you.has_mutation(MUT_NO_DRINK) ? 0 : 1 },
-        { { OBJ_POTIONS, POT_INVISIBILITY },
-            you.has_mutation(MUT_NO_DRINK) ? 0 : 1 },
+            (you.has_mutation(MUT_NO_DRINK)) ? 0 : 4 },
     };
 
     const pair<object_class_type, int> *option
@@ -479,19 +432,9 @@ static void _decent_potion_or_scroll()
     // vector of weighted {object_class_type, subtype} pairs
     // xxx: could we use is_useless_item here? (not without dummy items...?)
     const vector<pair<pair<object_class_type, int>, int>> options = {
-        { { OBJ_SCROLLS, SCR_TELEPORTATION },
-            you.stasis() ? 0 : 6 },
-        { { OBJ_SCROLLS, SCR_FOG }, 6 },
-        { { OBJ_SCROLLS, SCR_VULNERABILITY }, 2 },
-        { { OBJ_SCROLLS, SCR_SILENCE }, 2 },
-        { { OBJ_POTIONS, POT_CURING },
-            you.has_mutation(MUT_NO_DRINK) ? 0 : 5 },
-        { { OBJ_POTIONS, POT_LIGNIFY },
-            you.is_lifeless_undead(false) ? 0 : 5 },
-        { { OBJ_POTIONS, POT_ATTRACTION },
-            you.has_mutation(MUT_NO_DRINK) ? 0 : 5 },
-        { { OBJ_POTIONS, POT_MUTATION },
-            you.is_lifeless_undead(false) ? 0 : 1 },
+        { { OBJ_SCROLLS, SCR_BLINKING },
+            you.stasis() ? 0 : 3 },
+        { { OBJ_SCROLLS, SCR_REVELATION }, 6 },
     };
 
     const pair<object_class_type, int> *option
@@ -503,62 +446,7 @@ static void _decent_potion_or_scroll()
 // Create a random wand or misc evoker in the inventory.
 static void _wanderer_random_evokable()
 {
-    if (one_chance_in(3))
-    {
-        const auto area_evoker_type =
-            (misc_item_type)item_for_set(ITEM_SET_AREA_MISCELLANY);
-        const auto ally_evoker_type =
-            (misc_item_type)item_for_set(ITEM_SET_ALLY_MISCELLANY);
-        const auto control_evoker_type =
-            (misc_item_type)item_for_set(ITEM_SET_CONTROL_MISCELLANY);
-        misc_item_type selected_evoker =
-              random_choose(ally_evoker_type, control_evoker_type,
-                            MISC_PHANTOM_MIRROR, area_evoker_type,
-                            MISC_LIGHTNING_ROD);
-
-        newgame_make_item(OBJ_MISCELLANY, selected_evoker, 1);
-    }
-    else
-    {
-        const auto hex_wand_type = (wand_type)item_for_set(ITEM_SET_HEX_WANDS);
-        const auto beam_wand_type = (wand_type)item_for_set(ITEM_SET_BEAM_WANDS);
-        const auto blast_wand_type = (wand_type)item_for_set(ITEM_SET_BLAST_WANDS);
-        wand_type selected_wand =
-              random_choose(hex_wand_type, WAND_MINDBURST, WAND_POLYMORPH,
-                            WAND_FLAME, blast_wand_type, beam_wand_type);
-        int charges;
-        switch (selected_wand)
-        {
-        // completely nuts
-        case WAND_ACID:
-        case WAND_LIGHT:
-        case WAND_QUICKSILVER:
-        case WAND_ICEBLAST:
-        case WAND_ROOTS:
-        case WAND_WARPING:
-            charges = 2 + random2(3);
-        break;
-
-        // extremely strong
-        case WAND_CHARMING:
-        case WAND_PARALYSIS:
-        case WAND_MINDBURST:
-            charges = 5 + random2avg(16, 3);
-            break;
-
-        // a little less strong
-        case WAND_FLAME:
-        case WAND_POLYMORPH:
-            charges = 8 + random2avg(16, 3);
-            break;
-
-        default:
-            charges = 15;
-            break;
-        }
-
-        newgame_make_item(OBJ_WANDS, selected_wand, 1, charges);
-    }
+    make_random_artificer_evocable();
 }
 
 // Create a random low-level talisman in the inventory.
@@ -580,7 +468,7 @@ static void _wanderer_random_talisman()
 
 static void _give_wanderer_aux_armour(int plus = 0)
 {
-    vector<armour_type> auxs = { ARM_HAT, ARM_GLOVES, ARM_BOOTS, ARM_CLOAK };
+    vector<armour_type> auxs = { ARM_HAT, ARM_BOOTS };
 
     armour_type choice = NUM_ARMOURS;
     int seen = 0;
@@ -650,9 +538,9 @@ static vector<spell_type> _wanderer_good_equipment(skill_type skill)
         else
         {
             newgame_make_item(OBJ_WEAPONS, WPN_DAGGER, 1, 0);
-            newgame_make_item(OBJ_MISSILES, MI_DART, 1 + coinflip(), 0,
+            newgame_make_item(OBJ_MISSILES, MI_DART, 5 + random2(10), 0,
                               SPMSL_BLINDING);
-            newgame_make_item(OBJ_MISSILES, MI_DART, 1 + coinflip(), 0,
+            newgame_make_item(OBJ_MISSILES, MI_DART, 5 + random2(10), 0,
                               SPMSL_FRENZY);
         }
         break;
@@ -674,16 +562,16 @@ static vector<spell_type> _wanderer_good_equipment(skill_type skill)
     case SK_AIR_MAGIC:
     case SK_EARTH_MAGIC:
     case SK_HEXES:
-        return _give_wanderer_major_spells(skill, 3, 4);
+        return _give_wanderer_major_spells(skill, 2, 3);
 
     case SK_SPELLCASTING:
-        return _give_wanderer_major_spells(skill, 4, 3);
+        return _give_wanderer_major_spells(skill, 3, 2);
 
     case SK_UNARMED_COMBAT:
     {
-        // 2 random good potions/scrolls
+        // 1 random good potions/scrolls and an aux item
         _good_potion_or_scroll();
-        _good_potion_or_scroll();
+        _give_wanderer_aux_armour(2);
         break;
     }
 
@@ -695,6 +583,16 @@ static vector<spell_type> _wanderer_good_equipment(skill_type skill)
     case SK_SHAPESHIFTING:
         // Random low-level talisman
         _wanderer_random_talisman();
+        break;
+
+    case SK_INVOCATIONS:
+        if (you.has_mutation(MUT_NO_JEWELLERY))
+        {
+            _good_potion_or_scroll();
+            _give_wanderer_aux_armour(2);
+        }
+        else
+            newgame_make_item(OBJ_JEWELLERY, RING_FAITH);
         break;
 
     default:
@@ -745,9 +643,9 @@ static vector<spell_type> _wanderer_decent_equipment(skill_type skill,
         if (you_can_wear(SLOT_BODY_ARMOUR) != true)
             _give_wanderer_aux_armour();
         else if (coinflip())
-            newgame_make_item(OBJ_ARMOUR, ARM_RING_MAIL);
+            newgame_make_item(OBJ_ARMOUR, ARM_LEATHER_ARMOUR);
         else
-            newgame_make_item(OBJ_ARMOUR, ARM_SCALE_MAIL);
+            newgame_make_item(OBJ_ARMOUR, ARM_RING_MAIL);
         break;
 
     case SK_SHIELDS:
@@ -767,8 +665,10 @@ static vector<spell_type> _wanderer_decent_equipment(skill_type skill,
         return _give_wanderer_minor_spells(skill);
 
     case SK_EVOCATIONS:
-        newgame_make_item(OBJ_WANDS, coinflip() ? WAND_FLAME : WAND_POLYMORPH,
-                          1, 3 + random2(5));
+        if (coinflip())
+            newgame_make_item(OBJ_MISCELLANY, MISC_MAGNET);
+        else
+            _decent_potion_or_scroll();
         break;
 
     case SK_SHAPESHIFTING:
@@ -793,6 +693,7 @@ static vector<spell_type> _wanderer_decent_equipment(skill_type skill,
         }
     // intentional fallthrough
     case SK_UNARMED_COMBAT:
+    case SK_INVOCATIONS:
     case SK_NONE:
         _decent_potion_or_scroll();
         break;
@@ -809,17 +710,7 @@ static vector<spell_type> _wanderer_decent_equipment(skill_type skill,
 static void _wanderer_cover_equip_holes()
 {
     if (!you.body_armour())
-    {
-        newgame_make_item(OBJ_ARMOUR,
-                          you.strength() > you.intel() ? ARM_LEATHER_ARMOUR : ARM_ROBE);
-    }
-
-    // Give weapon, unless we started with some unarmed skill
-    if (!you.weapon() && you.skills[SK_UNARMED_COMBAT] == 0)
-    {
-        newgame_make_item(OBJ_WEAPONS,
-                          you.dex() > you.strength() ? WPN_DAGGER : WPN_CLUB);
-    }
+        newgame_make_item(OBJ_ARMOUR, ARM_ROBE);
 }
 
 static void _add_spells(set<spell_type> &all_spells,
@@ -889,16 +780,9 @@ void create_wanderer()
 
     // Give out an extra consumable, to ensure we have some kind of early game
     // tactical option.
-    coinflip() ? _good_potion_or_scroll() : _decent_potion_or_scroll();
+    _decent_potion_or_scroll();
 
-    // guarantee some spell levels if we get spells
-    if (!spells.empty())
-    {
-        you.skills[SK_SPELLCASTING]++;
-        _setup_starting_skills(gift_skill_1, gift_skill_2, gift_skill_3, 9);
-    }
-    else
-        _setup_starting_skills(gift_skill_1, gift_skill_2, gift_skill_3, 10);
+    _setup_starting_skills(gift_skill_1, gift_skill_2, gift_skill_3, 4);
 
     _handle_start_spells(spells);
 

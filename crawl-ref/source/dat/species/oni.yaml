@@ -9,6 +9,7 @@ aptitudes:
   hp: 3
   mp_mod: 0
   wl: 4
+  stealth: 1
 size: large
 str: 11
 int: 9
@@ -20,8 +21,8 @@ mutations:
   1:
     MUT_TOUGH_SKIN: 1
     MUT_HORNS: 1
-    MUT_DOUBLE_POTION_HEAL: 1
-    MUT_DRUNKEN_BRAWLING: 1
+    MUT_POOR_DODGING: 1
+    MUT_BRAWLER: 1
 recommended_jobs:
   - gladiator
   - berserker

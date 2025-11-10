@@ -3841,7 +3841,7 @@ static void _xom_cloud_trail(int /*sever*/)
 
 static void _xom_draining(int /*sever*/)
 {
-    int power = 100;
+    int power = 10;
     const string speech = _get_xom_speech("suffering");
     god_speaks(GOD_XOM, speech.c_str());
 

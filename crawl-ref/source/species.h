@@ -87,6 +87,7 @@ namespace species
 
 #define DRACONIAN_BREATH_USES_KEY "drac_breath_uses"
 #define DRACONIAN_BREATH_RECHARGE_KEY "drac_breath_recharge"
+#define TROLL_FOCUS_SKILL_KEY "troll_focus_skill"
 const int MAX_DRACONIAN_BREATH = 3;
 
 int draconian_breath_uses_available();

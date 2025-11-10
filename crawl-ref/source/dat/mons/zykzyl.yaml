@@ -6,10 +6,10 @@ holiness: [demonic]
 will: 160
 attacks:
  - {type: hit, damage: 31}
-hd: 11
-hp_10x: 1145
+hd: 8
+hp_10x: 800
 ac: 3
-ev: 7
+ev: 0
 spells: zykzyl
 shout: gurgle
 intelligence: human

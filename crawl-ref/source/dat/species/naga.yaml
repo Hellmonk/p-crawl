@@ -12,6 +12,7 @@ aptitudes:
   hp: 2
   mp_mod: 0
   wl: 5
+  stealth: 6
 size: large
 str: 10
 int: 8
@@ -21,16 +22,15 @@ mutations:
   1:
     MUT_CONSTRICTING_TAIL: 1
     MUT_DEFORMED: 1
-    MUT_SPIT_POISON: 1
+    MUT_SLOW: 1
+    MUT_POOR_DODGING: 1
 recommended_jobs:
   - berserker
   - shapeshifter
-  - enchanter
   - fire elementalist
   - ice elementalist
   - warper
   - hedge wizard
-  - alchemist
 
 walking_verb: Slither
 altar_action: coil in front of

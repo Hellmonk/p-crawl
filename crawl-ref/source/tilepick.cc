@@ -2572,13 +2572,12 @@ tileidx_t tileidx_player_shadow()
 
     switch (you.species)
     {
-        case SP_ARMATAUR:       return TILEP_MONS_PLAYER_SHADOW_ARMATAUR;
         case SP_BARACHI:        return TILEP_MONS_PLAYER_SHADOW_BARACHI;
         case SP_COGLIN:         return TILEP_MONS_PLAYER_SHADOW_COGLIN;
         case SP_DEMIGOD:        return TILEP_MONS_PLAYER_SHADOW_DEMIGOD;
         case SP_DEMONSPAWN:     return TILEP_MONS_PLAYER_SHADOW_DEMONSPAWN;
-        case SP_DJINNI:         return TILEP_MONS_PLAYER_SHADOW_DJINN;
         case SP_MOUNTAIN_DWARF: return TILEP_MONS_PLAYER_SHADOW_DWARF;
+        case SP_SLUDGE_ELF:
         case SP_DEEP_ELF:       return TILEP_MONS_PLAYER_SHADOW_ELF;
         case SP_FELID:          return TILEP_MONS_PLAYER_SHADOW_FELID;
         case SP_FORMICID:       return TILEP_MONS_PLAYER_SHADOW_FORMICID;
@@ -3192,6 +3191,9 @@ static tileidx_t _tileidx_misc(const item_def &item)
 
     case MISC_MAGNET:
         return TILE_MISC_MAGNET;
+
+    case MISC_CRYSTAL_ANVIL:
+        return TILE_MISC_CRYSTAL_ANVIL;
     }
 
     return TILE_ERROR;
@@ -4467,24 +4469,20 @@ static tileidx_t _tileidx_player_job_base(const job_type job)
             return TILEG_JOB_BERSERKER;
         case JOB_HUNTER:
             return TILEG_JOB_HUNTER;
-        case JOB_CONJURER:
-            return TILEG_JOB_CONJURER;
-        case JOB_ENCHANTER:
-            return TILEG_JOB_ENCHANTER;
+        case JOB_HEXER:
+            return TILEG_JOB_HEXER;
         case JOB_FIRE_ELEMENTALIST:
             return TILEG_JOB_FIRE_ELEMENTALIST;
         case JOB_ICE_ELEMENTALIST:
             return TILEG_JOB_ICE_ELEMENTALIST;
         case JOB_SUMMONER:
             return TILEG_JOB_SUMMONER;
-        case JOB_FORGEWRIGHT:
-            return TILEG_JOB_FORGEWRIGHT;
+        case JOB_SKALD:
+            return TILEG_JOB_SKALD;
         case JOB_AIR_ELEMENTALIST:
             return TILEG_JOB_AIR_ELEMENTALIST;
         case JOB_EARTH_ELEMENTALIST:
             return TILEG_JOB_EARTH_ELEMENTALIST;
-        case JOB_ALCHEMIST:
-            return TILEG_JOB_ALCHEMIST;
         case JOB_CHAOS_KNIGHT:
             return TILEG_JOB_CHAOS_KNIGHT;
         case JOB_SHAPESHIFTER:
@@ -4497,12 +4495,8 @@ static tileidx_t _tileidx_player_job_base(const job_type job)
             return TILEG_JOB_WANDERER;
         case JOB_ARTIFICER:
             return TILEG_JOB_ARTIFICER;
-        case JOB_DELVER:
-            return TILEG_JOB_DELVER;
-        case JOB_HEXSLINGER:
-            return TILEG_JOB_HEXSLINGER;
-        case JOB_REAVER:
-            return TILEG_JOB_REAVER;
+        case JOB_ARCANE_SHOT:
+            return TILEG_JOB_ARCANE_SHOT;
         case JOB_CINDER_ACOLYTE:
             return TILEG_JOB_CINDER_ACOLYTE;
         default:
@@ -4537,8 +4531,6 @@ static tileidx_t _tileidx_player_species_base(const species_type species)
             return TILEG_SP_TROLL;
         case SP_BASE_DRACONIAN:
             return TILEG_SP_DRACONIAN;
-        case SP_ARMATAUR:
-            return TILEG_SP_ARMATAUR;
         case SP_DEMIGOD:
             return TILEG_SP_DEMIGOD;
         case SP_SPRIGGAN:
@@ -4568,8 +4560,6 @@ static tileidx_t _tileidx_player_species_base(const species_type species)
             return TILEG_SP_BARACHI;
         case SP_GNOLL:
             return TILEG_SP_GNOLL;
-        case SP_DJINNI:
-            return TILEG_SP_DJINNI;
 #if TAG_MAJOR_VERSION == 34
         case SP_METEORAN:
             return TILEG_SP_METEORAN;
