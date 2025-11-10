@@ -1281,20 +1281,45 @@ static void _player_stair_handle_status()
     you.duration[DUR_CONF]      = 0;
     you.duration[DUR_POISONING] = 0;
 
+
+    // apply status on floor entry from mutation or artifacts
     if (you.has_mutation(MUT_BAD_VIBES))
     {
         if (you.get_mutation_level(MUT_BAD_VIBES) > 1)
-            slow_player(10 + random2(10));
+            slow_player(15 + random2(20));
 
-        you.corrode(nullptr, "bad vibes");
+        you.corrode(nullptr, "bad vibes", 15);
     }
 
+    int slow_sources = you.scan_artefacts(ARTP_SLOW);
+    if (slow_sources)
+        slow_player(15 * slow_sources + random2(15 * slow_sources));
+
+    int corr_sources = you.scan_artefacts(ARTP_CORRODE);
+    if (corr_sources)
+        you.corrode(nullptr, "your corrosive artifact", corr_sources * 10);
+
+    int sil_sources = you.scan_artefacts(ARTP_SILENCE);
+    if (sil_sources)
+        silence_player(sil_sources * 6 + random2(sil_sources * 11));
+
+    int haste_sources = you.scan_artefacts(ARTP_HASTE);
+    if (haste_sources)
+        haste_player(haste_sources * 5 + random2(haste_sources * 5));
+
+    int might_sources = you.scan_artefacts(ARTP_MIGHT);
+    if (might_sources)
+        you.increase_duration(DUR_MIGHT, might_sources * 5 + random2(might_sources * 10));
+
+    // per floor mutations, from genome or artifacts
     if (you.has_mutation(MUT_UNSTABLE_GENOME) && x_chance_in_y(4, 10))
     {
         mutation_type mtype = you.get_mutation_level(MUT_UNSTABLE_GENOME) > 1 ?
                               RANDOM_BAD_MUTATION : RANDOM_MUTATION;
         mutate(mtype, "unstable genetics", false, false, false);
     }
+
+    maybe_artifact_mutate();
 }
 
 static void _player_stair_healing()

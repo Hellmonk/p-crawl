@@ -247,7 +247,7 @@ static void _tweak_randart(item_def &item)
     for (unsigned int i = 0, choice = 'a'; i < ARTP_NUM_PROPERTIES; ++i)
     {
 #if TAG_MAJOR_VERSION == 34
-        if (i == ARTP_METABOLISM || i == ARTP_ACCURACY || i == ARTP_TWISTER)
+        if (i == ARTP_METABOLISM || i == ARTP_ACCURACY)
             continue;
 #endif
         auto prop = (artefact_prop_type)i;

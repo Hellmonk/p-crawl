@@ -373,6 +373,7 @@ static map<jewellery_type, vector<artp_value>> jewellery_artps = {
 
     { RING_MAGICAL_POWER, { { ARTP_MAGICAL_POWER, 5 } } },
     { RING_WIZARDRY, { { ARTP_WIZARDRY, 1} } },
+    { RING_DETECTION, { { ARTP_DETECTION, 1 } } },
     { RING_STEALTH, { { ARTP_STEALTH, 1 } } },
 
     { RING_PROTECTION_FROM_FIRE, { { ARTP_FIRE, 1 } } },
@@ -626,14 +627,6 @@ static bool _artp_can_go_on_item(artefact_prop_type prop, int prop_val,
         case ARTP_ANGRY:
         case ARTP_NOISE:
             return item_class == OBJ_WEAPONS && !is_range_weapon(item);
-        // could probably loosen artp conflict restrictions?
-        case ARTP_SILENCE:
-            return non_swappable
-                && !item.is_type(OBJ_JEWELLERY, AMU_MANA_REGENERATION)
-                && !_any_artps_in_item_props({ ARTP_ENHANCE_HEXES,
-                    ARTP_ENHANCE_SUMM, ARTP_ENHANCE_NECRO,
-                    ARTP_ENHANCE_TLOC, ARTP_ENHANCE_FIRE, ARTP_ENHANCE_ICE,
-                    ARTP_ENHANCE_AIR, ARTP_ENHANCE_EARTH}, intrinsic_props, extant_props);
         case ARTP_REGENERATION:
             // XXX: regen disabled on talismans because of an untransform crash
             // related to talismans being slotless
@@ -726,9 +719,7 @@ static int _gen_good_res_artp() { return 1; }
 static int _gen_bad_res_artp() { return -1; }
 
 /// Generate 'good' values for ARTP_HP/ARTP_MAGICAL_POWER
-static int _gen_good_hpmp_artp() { return random_range(4, 9) +
-                                          (one_chance_in(3) ? random_range(1, 3)
-                                                            : 0); }
+static int _gen_good_hpmp_artp() { return 3 + random2(7); }
 
 /// Generate 'bad' values for ARTP_HP/ARTP_MAGICAL_POWER
 static int _gen_bad_hpmp_artp() { return -_gen_good_hpmp_artp(); }
@@ -751,7 +742,7 @@ static const artefact_prop_data artp_data[] =
         []() { return 1; }, nullptr, 0, 0  },
     { "rC", ARTP_VAL_ANY, 60,       // ARTP_COLD,
         []() { return 1; }, nullptr, 0, 0  },
-    { "rElec", ARTP_VAL_BOOL, 55,   // ARTP_ELECTRICITY,
+    { "rElec", ARTP_VAL_BOOL, 30,   // ARTP_ELECTRICITY,
         []() { return 1; }, nullptr, 0, 0  },
 #if TAG_MAJOR_VERSION == 34
     { "rPois", ARTP_VAL_BOOL, 0,   // ARTP_POISON,
@@ -759,7 +750,7 @@ static const artefact_prop_data artp_data[] =
     { "rN", ARTP_VAL_ANY, 0,       // ARTP_NEGATIVE_ENERGY,
         _gen_good_res_artp, nullptr, 2, 4 },
 #endif
-    { "Will", ARTP_VAL_ANY, 50,       // ARTP_WILLPOWER,
+    { "Will", ARTP_VAL_ANY, 60,       // ARTP_WILLPOWER,
         _gen_good_res_artp, _gen_bad_res_artp, 2, 4 },
 #if TAG_MAJOR_VERSION == 34
     { "SInv", ARTP_VAL_BOOL, 0,    // ARTP_SEE_INVISIBLE,
@@ -783,65 +774,59 @@ static const artefact_prop_data artp_data[] =
     { "*Tele", ARTP_VAL_BOOL,  0,   // ARTP_CAUSE_TELEPORTATION,
         nullptr, []() { return 1; }, 0, 0 },
 #endif
-    { "-Tele", ARTP_VAL_BOOL, 25,   // ARTP_PREVENT_TELEPORTATION,
+    { "-Tele", ARTP_VAL_BOOL, 0,   // ARTP_PREVENT_TELEPORTATION,
         nullptr, []() { return 1; }, 0, 0 },
     { "*Rage", ARTP_VAL_POS, 30,    // ARTP_ANGRY,
         nullptr, []() { return 20; }, 0, 0 },
 #if TAG_MAJOR_VERSION == 34
     { "Hungry", ARTP_VAL_POS, 0, nullptr, nullptr, 0, 0 },// ARTP_METABOLISM,
 #endif
-    { "^Contam", ARTP_VAL_POS, 20,   // ARTP_CONTAM
+    { "^Contam", ARTP_VAL_POS, 0,   // ARTP_CONTAM
         nullptr, []() { return 1; }, 0, 0 },
 #if TAG_MAJOR_VERSION == 34
     { "Acc", ARTP_VAL_ANY, 0, nullptr, nullptr, 0, 0 }, // ARTP_ACCURACY,
 #endif
-    { "Slay", ARTP_VAL_ANY, 30,     // ARTP_SLAYING,
-      []() { return 2 + random2(2); },
+    { "Slay", ARTP_VAL_ANY, 40,     // ARTP_SLAYING,
+      []() { return 2 + random2(4); },
       []() { return -(2 + random2(5)); }, 3, 2 },
 #if TAG_MAJOR_VERSION == 34
     { "*Curse", ARTP_VAL_POS, 0, nullptr, nullptr, 0 }, // ARTP_CURSE,
 #endif
-    { "Stlth", ARTP_VAL_ANY, 40,    // ARTP_STEALTH,
+    { "Stlth", ARTP_VAL_ANY, 50,    // ARTP_STEALTH,
         _gen_good_res_artp, _gen_bad_res_artp, 0, 0 },
     { "MP", ARTP_VAL_ANY, 15,       // ARTP_MAGICAL_POWER,
         _gen_good_hpmp_artp, _gen_bad_hpmp_artp, 0, 0 },
     { "Delay", ARTP_VAL_ANY, 0, nullptr, nullptr, 0, 0 }, // ARTP_BASE_DELAY,
-    { "HP", ARTP_VAL_ANY, 0,       // ARTP_HP,
+    { "HP", ARTP_VAL_ANY, 15,       // ARTP_HP,
         _gen_good_hpmp_artp, _gen_bad_hpmp_artp, 0, 0 },
-    { "Clar", ARTP_VAL_BOOL, 0, nullptr, nullptr, 0, 0 }, // ARTP_CLARITY,
+    { "Clar", ARTP_VAL_BOOL, 5, nullptr, nullptr, 0, 0 }, // ARTP_CLARITY,
     { "BAcc", ARTP_VAL_ANY, 0, nullptr, nullptr, 0, 0 },  // ARTP_BASE_ACC,
     { "BDam", ARTP_VAL_ANY, 0, nullptr, nullptr, 0, 0 },  // ARTP_BASE_DAM,
-    { "RMsl", ARTP_VAL_BOOL, 0, nullptr, nullptr, 0, 0 }, // ARTP_RMSL,
+    { "RMsl", ARTP_VAL_BOOL, 10, nullptr, nullptr, 0, 0 }, // ARTP_RMSL,
 #if TAG_MAJOR_VERSION == 34
     { "+Fog", ARTP_VAL_BOOL, 0, nullptr, nullptr, 0, 0 }, // ARTP_FOG,
 #endif
-    { "Regen", ARTP_VAL_BOOL, 35,   // ARTP_REGENERATION,
+    { "Regen", ARTP_VAL_BOOL, 0,   // ARTP_REGENERATION,
         []() { return 1; }, nullptr, 0, 0 },
-#if TAG_MAJOR_VERSION == 34
-    { "SustAt", ARTP_VAL_BOOL, 0, nullptr, nullptr, 0, 0 }, // ARTP_SUSTAT,
-#endif
+    { "Detect", ARTP_VAL_BOOL, 0, []() { return 1; }, nullptr, 0, 0 }, // ARTP_DETECTION,
     { "nupgr", ARTP_VAL_BOOL, 0, nullptr, nullptr, 0, 0 },// ARTP_NO_UPGRADE,
 #if TAG_MAJOR_VERSION == 34
     { "rCorr", ARTP_VAL_BOOL, 0,   // ARTP_RCORR,
         []() { return 1; }, nullptr, 0, 0 },
 #endif
-    { "rMut", ARTP_VAL_BOOL, 0, nullptr, nullptr, 0, 0 }, // ARTP_RMUT,
-#if TAG_MAJOR_VERSION == 34
-    { "+Twstr", ARTP_VAL_BOOL, 0,   // ARTP_TWISTER,
+    { "Mut", ARTP_VAL_BOOL, 10, nullptr, nullptr, 0, 0 }, // ARTP_MUTATE,
+    { "*Haste", ARTP_VAL_BOOL, 25,   // ARTP_HASTE,
         []() { return 1; }, nullptr, 0, 0 },
-#endif
     { "*Corrode", ARTP_VAL_BOOL, 25, // ARTP_CORRODE,
         nullptr, []() { return 1; }, 0, 0 },
     { "^Drain", ARTP_VAL_BOOL, 25, // ARTP_DRAIN,
         nullptr, []() { return 1; }, 0, 0 },
     { "*Slow", ARTP_VAL_BOOL, 25, // ARTP_SLOW,
         nullptr, []() { return 1; }, 0, 0 },
-#if TAG_MAJOR_VERSION == 34
-    { "^Fragile", ARTP_VAL_BOOL, 0, // ARTP_FRAGILE,
-        nullptr, []() { return 1; }, 0, 0 },
-#endif
+    { "*Might", ARTP_VAL_BOOL, 25, // ARTP_MIGHT,
+        []() { return 1; }, nullptr, 0, 0 },
     { "SH", ARTP_VAL_ANY, 0, nullptr, nullptr, 0, 0 }, // ARTP_SHIELDING,
-    { "Harm", ARTP_VAL_BOOL, 25, // ARTP_HARM,
+    { "Harm", ARTP_VAL_BOOL, 0, // ARTP_HARM,
         []() {return 1;}, nullptr, 0, 0},
     { "Rampage", ARTP_VAL_BOOL, 25, // ARTP_RAMPAGING,
         []() {return 1;}, nullptr, 0, 0},
@@ -877,7 +862,7 @@ static const artefact_prop_data artp_data[] =
         []() {return 1;}, nullptr, 0, 0},
     { "RegenMP", ARTP_VAL_BOOL, 0,   // ARTP_MANA_REGENERATION,
         []() { return 1; }, nullptr, 0, 0 },
-    { "Wiz", ARTP_VAL_BOOL, 0,   // ARTP_WIZARDRY,
+    { "Wiz", ARTP_VAL_BOOL, 5,   // ARTP_WIZARDRY,
         []() { return 1; }, nullptr, 0, 0 },
 #if TAG_MAJOR_VERSION == 34
     { "Forge", ARTP_VAL_BOOL, 0, // ARTP_ENHANCE_FORGECRAFT,
@@ -885,7 +870,7 @@ static const artefact_prop_data artp_data[] =
 #endif
     { "*Silence", ARTP_VAL_BOOL, 25, // ARTP_SILENCE,
         nullptr, []() { return 1; }, 0, 0 },
-    { "Bane", ARTP_VAL_BOOL, 20,     // ARTP_BANE,
+    { "Bane", ARTP_VAL_BOOL, 0,     // ARTP_BANE,
         nullptr, []() {return 1;}, 0, 0},
 };
 COMPILE_CHECK(ARRAYSZ(artp_data) == ARTP_NUM_PROPERTIES);
@@ -1727,6 +1712,10 @@ static bool _armour_ego_conflicts(artefact_properties_t &proprt)
         return proprt[ARTP_FIRE] || proprt[ARTP_COLD];
     case SPARM_INVISIBILITY:
         return proprt[ARTP_INVISIBLE];
+    case SPARM_HEALTH:
+        return proprt[ARTP_HP];
+    case SPARM_DETECTION:
+        return proprt[ARTP_DETECTION];
 
     default:
         return false;

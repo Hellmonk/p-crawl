@@ -5492,19 +5492,6 @@ void monster::react_to_damage(const actor *oppressor, int damage,
     if (!alive())
         return;
 
-    if (res_corr() < 3 && x_chance_in_y(corrosion_chance(scan_artefacts(ARTP_CORRODE)), 100))
-    {
-        corrode(oppressor, make_stringf("%s corrosive artefact",
-                                        name(DESC_ITS).c_str()).c_str());
-    }
-
-    const int slow = scan_artefacts(ARTP_SLOW);
-    if (x_chance_in_y(slow, 100))
-        do_slow_monster(*this, oppressor, (10 + random2(5)) * BASELINE_DELAY);
-
-    if (x_chance_in_y(scan_artefacts(ARTP_SILENCE), 100))
-        silence_monster(*this, oppressor, (4 + random2(7) * BASELINE_DELAY));
-
     if (oppressor == &you && you.duration[DUR_ICHOR]
         && !this->is_firewood()
         && !this->is_peripheral()

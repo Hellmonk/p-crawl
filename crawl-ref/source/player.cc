@@ -1641,16 +1641,6 @@ int player_movement_speed(bool check_terrain, bool temp)
     if (temp && you.duration[DUR_FROZEN])
         mv = div_rand_round(mv * 3, 2);
 
-    if (temp && you.duration[DUR_SWIFTNESS] > 0)
-    {
-        if (you.attribute[ATTR_SWIFTNESS] > 0)
-          mv = div_rand_round(3*mv, 4);
-        else if (mv >= 8)
-          mv = div_rand_round(3*mv, 2);
-        else if (mv == 7)
-          mv = div_rand_round(7*6, 5); // balance for the cap at 6
-    }
-
     // We'll use the old value of six as a minimum, with haste this could
     // end up as a speed of three, which is about as fast as we want
     // the player to be able to go (since 3 is 3.33x as fast and 2 is 5x,
@@ -1676,6 +1666,8 @@ int player_detection_level()
     det += you.wearing_jewellery(RING_DETECTION);
 
     det += you.wearing_ego(OBJ_ARMOUR, SPARM_DETECTION);
+
+    det += you.scan_artefacts(ARTP_DETECTION);
 
     // capped at two levels
     return min(2, det);
@@ -6664,7 +6656,7 @@ bool player::resists_dislodge(string event) const
 bool player::corrode(const actor* /*source*/, const char* corrosion_msg, int amount)
 {
     // always increase duration, but...
-    increase_duration(DUR_CORROSION, 10 + roll_dice(2, 4), 50,
+    increase_duration(DUR_CORROSION, 10 + roll_dice(2, 4) + random2(amount), 200,
                       make_stringf("%s corrodes you!",
                                    corrosion_msg).c_str());
 

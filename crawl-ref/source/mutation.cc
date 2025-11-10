@@ -3404,3 +3404,11 @@ void maybe_apply_bane_to_monster(monster& mons)
         }
     }
 }
+
+void maybe_artifact_mutate()
+{
+    int chance = you.scan_artefacts(ARTP_MUTATE);
+
+    if (x_chance_in_y(chance, 5))
+        mutate(RANDOM_MUTATION, "mutagenic artifact", false);
+}

@@ -993,36 +993,6 @@ int corrosion_chance(int sources)
     return 3 * sources;
 }
 
-/**
- * Maybe corrode the player after taking damage if they're wearing *Corrode.
- **/
-static void _maybe_corrode()
-{
-    int corrosion_sources = you.scan_artefacts(ARTP_CORRODE);
-    if (x_chance_in_y(corrosion_chance(corrosion_sources), 100))
-        you.corrode(nullptr, "Your corrosive artefact");
-}
-
-/**
- * Maybe slow the player after taking damage if they're wearing *Slow.
- **/
-static void _maybe_slow()
-{
-    int slow_sources = you.scan_artefacts(ARTP_SLOW);
-    if (x_chance_in_y(slow_sources, 100))
-        slow_player(10 + random2(5));
-}
-
-/**
- * Maybe silence the player after taking damage if they're wearing *Silence.
- **/
-static void _maybe_silence()
-{
-    int silence_sources = you.scan_artefacts(ARTP_SILENCE);
-    if (x_chance_in_y(silence_sources, 100))
-        silence_player(4 + random2(7));
-}
-
 static void _place_player_corpse(bool explode)
 {
     if (!in_bounds(you.pos()))
@@ -1386,12 +1356,6 @@ void ouch(int dam, kill_method_type death_type, mid_t source, const char *aux,
             _maybe_medusa_lithotoxin();
             if (sanguine_armour_valid())
                 activate_sanguine_armour();
-            if (death_type != KILLED_BY_POISON)
-            {
-                _maybe_corrode();
-                _maybe_slow();
-                _maybe_silence();
-            }
             if (drain_amount > 0)
                 drain_player(drain_amount, true, true);
         }

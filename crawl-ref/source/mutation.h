@@ -110,3 +110,4 @@ int xl_to_remove_bane(bane_type bane);
 bool skill_has_dilettante_penalty(skill_type skill);
 
 void maybe_apply_bane_to_monster(monster& mons);
+void maybe_artifact_mutate();

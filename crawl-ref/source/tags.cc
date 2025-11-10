@@ -5664,14 +5664,6 @@ void unmarshallItem(reader &th, item_def &item)
         artefact_set_property(item, ARTP_CAUSE_TELEPORTATION, 1);
     }
 
-    if (th.getMinorVersion() < TAG_MINOR_NO_TWISTER
-        && is_artefact(item)
-        && item.base_type != OBJ_BOOKS
-        && artefact_property(item, ARTP_TWISTER))
-    {
-        artefact_set_property(item, ARTP_TWISTER, 0);
-    }
-
     if (th.getMinorVersion() < TAG_MINOR_ALCHEMY_MERGER
         && is_artefact(item)
         && item.base_type != OBJ_BOOKS

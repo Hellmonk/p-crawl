@@ -131,10 +131,6 @@ int artefact_value(const item_def &item)
     if (prop[ARTP_ELECTRICITY])
         ret += 10;
 
-    // only one meaningful level (hard to get):
-    if (prop[ARTP_RMUT])
-        ret += 8;
-
     // abilities:
     if (prop[ARTP_FLY])
         ret += 3;

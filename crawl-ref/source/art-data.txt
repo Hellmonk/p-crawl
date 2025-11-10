@@ -90,7 +90,6 @@
 # * no_upgrade: Don't regenerate this item on load. Used for items with mutable
 #             state, e.g. Wyrmbane's growing enchantment.
 # * rmsl:     Passively repels missiles.
-# * rmut:     Grants mutation resistance.
 # * skip_ego: The item's ego is skipped in its inscription and description, to
 #             be replaced by INSCRIP: and DBRAND: entries.
 # * slow:     Randomly causes slowing when taking damage.
@@ -872,7 +871,7 @@ COLOUR:  LIGHTMAGENTA
 TILE:    urand_alchemist
 TILE_EQ: turban_purple
 WILL:    1
-BOOL:    elec, rMut
+BOOL:    elec
 
 ENUM:    FENCERS
 NAME:    fencer's gloves

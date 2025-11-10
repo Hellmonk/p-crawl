@@ -342,7 +342,7 @@ int actor::extra_harm(bool items) const
 
 bool actor::rmut_from_item() const
 {
-    return scan_artefacts(ARTP_RMUT);
+    return false;
 }
 
 int actor::evokable_invis() const

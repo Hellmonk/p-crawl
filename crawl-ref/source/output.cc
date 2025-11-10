@@ -2704,21 +2704,6 @@ static string _extra_passive_effects()
             make_stringf("random rage (%d%%)", anger).c_str());
     }
 
-    const int corrode = you.scan_artefacts(ARTP_CORRODE);
-    if (corrode)
-    {
-        passives.emplace_back(
-            make_stringf("corrode self (%d%%)",
-                         corrosion_chance(corrode)).c_str());
-    }
-
-    const int slow = you.scan_artefacts(ARTP_SLOW);
-    if (you.scan_artefacts(ARTP_SLOW))
-    {
-        passives.emplace_back(
-            make_stringf("slow self (%d%%)", slow).c_str());
-    }
-
     const int harm = you.extra_harm();
     if (harm)
     {

@@ -62,23 +62,17 @@ enum artefact_prop_type
     ARTP_FOG,
 #endif
     ARTP_REGENERATION,
-#if TAG_MAJOR_VERSION == 34
-    ARTP_SUSTAT,
-#endif
+    ARTP_DETECTION,
     ARTP_NO_UPGRADE,
 #if TAG_MAJOR_VERSION == 34
     ARTP_RCORR,
 #endif
-    ARTP_RMUT,
-#if TAG_MAJOR_VERSION == 34
-    ARTP_TWISTER,
-#endif
+    ARTP_MUTATE,
+    ARTP_HASTE,
     ARTP_CORRODE,
     ARTP_DRAIN,
     ARTP_SLOW,
-#if TAG_MAJOR_VERSION == 34
-    ARTP_FRAGILE,
-#endif
+    ARTP_MIGHT,
     ARTP_SHIELDING,
     ARTP_HARM,
     ARTP_RAMPAGING,
