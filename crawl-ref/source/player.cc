@@ -1078,11 +1078,6 @@ static int _player_bonus_regen()
     vector<item_def*> eq = you.equipment.get_slot_items(SLOT_ALL_EQUIPMENT, false, true);
     for (item_def* item : eq)
     {
-        if (item->base_type == OBJ_ARMOUR
-            && armour_type_prop(item->sub_type, ARMF_REGENERATION))
-        {
-            rr += REGEN_PIP;
-        }
         if (item->is_type(OBJ_JEWELLERY, AMU_REGENERATION))
             rr += REGEN_PIP;
         if (is_artefact(*item))
@@ -2981,7 +2976,8 @@ int player_stealth()
     if (arm)
     {
         // subtract the body armour penalty
-        stealth -= you.adjusted_body_armour_penalty();
+        if (arm->sub_type != ARM_SHADOW_DRAGON_ARMOUR)
+            stealth -= you.adjusted_body_armour_penalty();
 
         const int pips = armour_type_prop(arm->sub_type, ARMF_STEALTH);
         stealth += pips * STEALTH_PIP;
@@ -3294,6 +3290,15 @@ int slaying_bonus(bool ranged, bool random)
 
     if (you.has_bane(BANE_CLAUSTROPHOBIA))
         ret += you.props[CLAUSTROPHOBIA_KEY].get_int();
+
+    if (ranged)
+    {
+        const item_def *body_armour = you.body_armour();
+        if (body_armour)
+            ret += armour_type_prop(body_armour->sub_type, ARMF_RANGE_SLAY) * 5;
+
+        ret += 5 * you.scan_artefacts(ARTP_RANGE_SLAY);
+    }
 
     ret += get_form()->slay_bonus(random);
 

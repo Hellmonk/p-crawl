@@ -285,7 +285,13 @@ struct ability_def
         if (!piety_cost)
             return 0;
 
-        return piety_cost.base + piety_cost.add/2;
+        int ret = piety_cost.base + piety_cost.add/2;
+
+        const item_def *arm = you.body_armour();
+        if (arm && arm->sub_type == ARM_PEARL_DRAGON_ARMOUR)
+            ret = 1 + ret / 2;
+
+        return ret;
     }
 
     string piety_pips() const
@@ -4071,7 +4077,10 @@ static void _finalize_ability_costs(const ability_def& abil, int mp_cost, int hp
     else if (abil.ability != ABIL_WU_JIAN_WALLJUMP)
         you.turn_is_over = true;
 
-    const int piety_cost = abil.piety_cost.cost();
+    int piety_cost = abil.piety_cost.cost();
+    const item_def *arm = you.body_armour();
+    if (arm && arm->sub_type == ARM_PEARL_DRAGON_ARMOUR)
+        piety_cost = max(1, div_rand_round(piety_cost, 2));
 
     dprf("Cost: mp=%d; hp=%d; piety=%d",
          mp_cost, hp_cost, piety_cost);

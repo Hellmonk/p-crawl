@@ -116,11 +116,11 @@ static const vector<ego_weight_tuple> SHIELD_EGOS = {
     { ARM_ ## id ## _DRAGON_HIDE, "removed " name " dragon hide", 0, 0, 0,  \
       SLOT_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT, false, 0, {}, res },             \
     { ARM_ ## id ## _DRAGON_ARMOUR, name " dragon scales",  ac, evp, prc,   \
-      SLOT_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT, false, 37, {}, res }
+      SLOT_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT, false, 0, {}, res }
 #else
 #define DRAGON_ARMOUR(id, name, ac, evp, prc, res)                          \
     { ARM_ ## id ## _DRAGON_ARMOUR, name " dragon scales",  ac, evp, prc,   \
-      SLOT_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT, false, 37, {}, res }
+      SLOT_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT, false, 0, {}, res }
 #endif
 
 // Note: the Little-Giant range is used to make armours which are very
@@ -147,23 +147,23 @@ static const armour_def Armour_prop[] =
         SLOT_BODY_ARMOUR, SIZE_SMALL, SIZE_MEDIUM, true, 10, BASIC_BODY_EGOS },
     { ARM_RING_MAIL,            "ring mail",              5,  -20,   40,
         SLOT_BODY_ARMOUR, SIZE_SMALL,  SIZE_MEDIUM, true, 100, BASIC_BODY_EGOS },
-    { ARM_SCALE_MAIL,           "scale mail",             6, -40,   40,
+    { ARM_SCALE_MAIL,           "scale mail",             7, -40,   40,
         SLOT_BODY_ARMOUR, SIZE_SMALL,  SIZE_MEDIUM, true, 10, BASIC_BODY_EGOS },
-    { ARM_CHAIN_MAIL,           "chain mail",             8, -60,   60,
+    { ARM_CHAIN_MAIL,           "chain mail",             9, -60,   60,
         SLOT_BODY_ARMOUR, SIZE_SMALL,  SIZE_MEDIUM, true, 10, HEAVY_BODY_EGOS },
-    { ARM_PLATE_ARMOUR,         "plate armour",          10, -80,   180,
+    { ARM_PLATE_ARMOUR,         "plate armour",          12, -80,   180,
         SLOT_BODY_ARMOUR, SIZE_SMALL, SIZE_MEDIUM, true, 150, HEAVY_BODY_EGOS },
-    { ARM_CRYSTAL_PLATE_ARMOUR, "crystal plate armour",  14, -90,   600,
+    { ARM_CRYSTAL_PLATE_ARMOUR, "crystal plate armour",  16, -90,   600,
         SLOT_BODY_ARMOUR, SIZE_SMALL, SIZE_MEDIUM, false, 150 },
 
 #if TAG_MAJOR_VERSION == 34
     { ARM_TROLL_HIDE, "removed troll hide",              0,    0,      0,
        SLOT_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT, false, 0, {},
-       ARMF_REGENERATION, },
+       ARMF_RANGE_SLAY, },
 #endif
-    { ARM_TROLL_LEATHER_ARMOUR, "troll leather armour",  3,  -40,    150,
+    { ARM_TROLL_LEATHER_ARMOUR, "ranger leather armour",  4,  -10,    150,
        SLOT_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT, false, 100, {},
-       ARMF_REGENERATION },
+       ARMF_RANGE_SLAY },
 
     { ARM_CLOAK,                "cloak",                  1,   0,   45,
         SLOT_CLOAK,       SIZE_LITTLE, SIZE_LARGE, true, 0, {
@@ -267,22 +267,26 @@ static const armour_def Armour_prop[] =
         ARMF_RES_STEAM),
     DRAGON_ARMOUR(ACID,        "acid",                    6,  -50,  400,
         ARMF_RES_CORR),
-    DRAGON_ARMOUR(QUICKSILVER, "quicksilver",             9,  -70,  500,
-        ARMF_WILLPOWER),
+    { ARM_QUICKSILVER_DRAGON_ARMOUR, "quicksilver armour",  9,  -30,    150,
+       SLOT_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT, false, 100, {},
+       ard(ARMF_WILLPOWER, 2) },
     DRAGON_ARMOUR(SWAMP,       "swamp",                   7,  -70,  450,
         ARMF_RES_POISON),
     DRAGON_ARMOUR(FIRE,        "fire",                    8, -110,  500,
         ard(ARMF_RES_FIRE, 2) | ARMF_VUL_COLD),
     DRAGON_ARMOUR(ICE,         "ice",                     9, -110,  500,
         ard(ARMF_RES_COLD, 2) | ARMF_VUL_FIRE),
-    DRAGON_ARMOUR(PEARL,       "pearl",                  10, -110, 1000,
-        ARMF_RES_NEG),
+    { ARM_PEARL_DRAGON_ARMOUR, "pearl armour",  10,  -50,    150,
+       SLOT_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT, false, 100, {},
+       ARMF_NO_FLAGS },
     DRAGON_ARMOUR(STORM,       "storm",                  10, -150,  650,
         ARMF_RES_ELEC),
-    DRAGON_ARMOUR(SHADOW,      "shadow",                 11, -150,  650,
-        ard(ARMF_STEALTH, 4)),
-    DRAGON_ARMOUR(GOLDEN,      "golden",                 12, -230,  800,
-        ARMF_RES_FIRE | ARMF_RES_COLD | ARMF_RES_POISON),
+    { ARM_SHADOW_DRAGON_ARMOUR, "ninja armour",  10,  -60,    150,
+       SLOT_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT, false, 100, {},
+       ARMF_STEALTH },
+    { ARM_GOLDEN_DRAGON_ARMOUR, "gold armour",  13,  -90,    150,
+       SLOT_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT, false, 100, {},
+       ARMF_RES_FIRE | ARMF_RES_COLD | ARMF_RES_ELEC },
 
 #undef DRAGON_ARMOUR
 };
@@ -3062,8 +3066,6 @@ int shield_block_limit(const item_def &shield)
 bool is_regen_item(const item_def& item)
 {
     return is_artefact(item) && artefact_property(item, ARTP_REGENERATION)
-            || item.base_type == OBJ_ARMOUR
-              && armour_type_prop(item.sub_type, ARMF_REGENERATION)
             || item.is_type(OBJ_JEWELLERY, AMU_REGENERATION);
 }
 

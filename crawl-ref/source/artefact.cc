@@ -326,7 +326,7 @@ static void _populate_armour_intrinsic_artps(const armour_type arm,
     proprt[ARTP_ELECTRICITY] += armour_type_prop(arm, ARMF_RES_ELEC);
     proprt[ARTP_WILLPOWER] += armour_type_prop(arm, ARMF_WILLPOWER);
     proprt[ARTP_STEALTH] += armour_type_prop(arm, ARMF_STEALTH);
-    proprt[ARTP_REGENERATION] += armour_type_prop(arm, ARMF_REGENERATION);
+    proprt[ARTP_RANGE_SLAY] += armour_type_prop(arm, ARMF_RANGE_SLAY);
 }
 
 static map<stave_type, artefact_prop_type> staff_resist_artps = {
@@ -864,10 +864,8 @@ static const artefact_prop_data artp_data[] =
         []() { return 1; }, nullptr, 0, 0 },
     { "Wiz", ARTP_VAL_BOOL, 5,   // ARTP_WIZARDRY,
         []() { return 1; }, nullptr, 0, 0 },
-#if TAG_MAJOR_VERSION == 34
-    { "Forge", ARTP_VAL_BOOL, 0, // ARTP_ENHANCE_FORGECRAFT,
+    { "Ranger", ARTP_VAL_BOOL, 0, // ARTP_RANGE_SLAY,
         []() {return 1;}, nullptr, 0, 0},
-#endif
     { "*Silence", ARTP_VAL_BOOL, 25, // ARTP_SILENCE,
         nullptr, []() { return 1; }, 0, 0 },
     { "Bane", ARTP_VAL_BOOL, 0,     // ARTP_BANE,

@@ -34,7 +34,7 @@ enum armour_flag
     ARMF_RES_NEG            = 1 << 6,
     // misc (multilevel)
     ARMF_STEALTH            = 1 << 9,
-    ARMF_REGENERATION       = 1 << 13,
+    ARMF_RANGE_SLAY         = 1 << 13,
 
     ARMF_LAST_MULTI, // must be >= any multi, < any boolean, exact value doesn't matter
 
